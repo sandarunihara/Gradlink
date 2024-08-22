@@ -1,32 +1,37 @@
 <?php
+    class APP{
+        private $controller = "Home";
+        private $method = "index";
 
-class App {
-
-    private $controller='Home';
-    private $method='add';
-
-    private function splitURL(){
-        $URL = $_GET['url'] ?? 'home';
-        $URL = explode("/",$URL);
-        return $URL;
-    }
-
-
-    public function loadController(){
-        $URL=$this->splitURL();
-
-        $filename='../app/controllers/'.ucfirst($URL[0]).'.php';
-        if(file_exists($filename)){
-            require $filename;
-            $this->controller=ucfirst($URL[0]);
-        }else{
-            $filename='../app/controllers/_404.php'; 
-            require $filename;
-            $this->controller='_404';
+        private function splitURL(){
+            $URL =$_GET['url'] ?? 'home';
+            $URl = explode("/", trim($URL, "/"));
+            //show($URl);
+            return $URl;
         }
+        public function loadController(){
+            $URL = $this->splitURL();
 
-        $controller=new $this->controller;
-        call_user_func_array([$controller,$this->method],['a'=>'somthing','b'=>'b somthing']);
+            /*select controller*/
+            $filename ="../app/controllers/".ucfirst($URL[0]).".php";
+            if(file_exists($filename)){
+                require $filename;
+                $this->controller = ucfirst($URL[0]);
+                unset($URL[0]);
+            }else{
+                $filename ="../app/controller/_404.php";
+                require $filename;
+                $this->controller = "_404";
+            }
+            /*select method*/
+            if(!empty($URL[1])){
+                if(method_exists($this->controller, $URL[1])){
+                    $this->method = $URL[1];
+                    unset($URL[1]);
+                }
+            }
+            $controller = new $this->controller;
+            //show($URL);
+            call_user_func_array([$controller, $this->method], $URL);
+        }
     }
-
-}
