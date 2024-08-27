@@ -3,7 +3,7 @@
 class Companydash{
     use Controller;
     public function dashboard(){
-        $this-> view('company');
+        $this-> view('Company/companydashboard');
     }  
  
 }
