@@ -7,3 +7,4 @@
     
     $app = new App;
     $app->loadController();
+    
