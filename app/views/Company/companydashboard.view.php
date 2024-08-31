@@ -12,7 +12,7 @@
         <?php $this->renderComponent("companysidebar")  ?>
     </div>
     <div id="content">
-        <?php $this->renderoption("Dashboard") ?>
+        <?php $this->renderoption("Schedule") ?>
     </div>
     <div id="profile">
 
