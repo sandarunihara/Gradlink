@@ -1,12 +1,15 @@
 <?php
+trait Controller
+{
+    public function view($name)
+    {
 
-class Controller{
-    public function view($name){
-        $filename='../app/views/'.$name.'.view.php';
-        if(file_exists($filename)){
+        $filename = "../app/views/" . $name . ".view.php";
+
+        if (file_exists($filename)) {
             require $filename;
-        }else{
-            $filename='../app/views/404.view.php'; 
+        } else {
+            $filename = "../app/views/404.view.php";
             require $filename;
         }
     }
