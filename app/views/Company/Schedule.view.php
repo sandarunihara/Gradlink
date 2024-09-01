@@ -42,6 +42,23 @@
                 </div>
                 <div class="s_delnedit">
                     <i class="fas fa-pencil-alt"></i>
+                    <i class="fas fa-trash-alt fa-trash-alty"></i>
+                </div>
+            </div>
+            <div class="s_table">
+                <div>
+                    <p>Position : <span>Software Engineering</span></p>
+                    <p>Date Period : <span>2024-09-12 to 2024-09-30</span></p>
+                    <p>Interview Duration: <span>30-minute time slots</span></p>
+                    <p>Interview Availability</p>
+                    <ul>
+                        <li>Monday: 9:00 AM to 12:00 PM</li>
+                        <li>Tuesday: 1:00 PM to 5:00 PM</li>
+                        <li>Wednesday: 9:00 AM to 5:00 PM</li>
+                    </ul>
+                </div>
+                <div class="s_delnedit">
+                    <i class="fas fa-pencil-alt"></i>
                     <i class="fas fa-trash-alt"></i>
                 </div>
             </div>
