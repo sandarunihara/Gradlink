@@ -212,13 +212,24 @@ table td {
 }
 
 .add-btn {
-    background-color: #4a8af4;
-    color: #fff;
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.add-btn:hover {
+    background-color: #0872dc;
+
 }
 
 .blocked-btn {
-    background-color: #ff0000;
-    color: #fff;
+    background-color: #ffffff;
+    color: #ed0f0f;
+    border: 1px solid #ed0f0f;
+}
+
+.blocked-btn:hover {
+    background-color: #ed0f0f;
+    color: #ffffff;
 }
 
 .logout a{

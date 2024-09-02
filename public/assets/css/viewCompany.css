@@ -228,3 +228,18 @@ body {
     cursor: pointer;
     align-self: flex-start;
 }
+
+.logout a{
+    bottom: 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.logout a.active, .logout a:hover {
+    background-color: #e0ebff;
+}

@@ -104,7 +104,7 @@
                     </tbody>
                 </table>
                 <div class="action-buttons">
-                    <button class="add-btn">+ Add</button>
+                    <button class="add-btn" onclick="navigateToAddCompany();" >+ Add</button>
                     <button class="blocked-btn">Blocked List</button>
                 </div>
             </section>
