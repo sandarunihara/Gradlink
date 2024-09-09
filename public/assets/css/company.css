@@ -5,13 +5,16 @@ body{
     font-family: 'Poppins', sans-serif;
     display: flex;
 }
+.main{
+    margin-left: 30px;
+}
 
 /* ***************  SIDEBAR ***************** */
 
 .sidebar{
     background: linear-gradient(135deg, #364CC6, #00032e);
     height: 630px;
-    width: 290px;
+    width: 250px;
     border-radius: 20px;
     padding-left: 5px;
     padding-right: 5px;
@@ -20,24 +23,26 @@ body{
 }
 .option{
     display: flex;
+    gap: 20px;
     align-items: center;
-    gap: 30px;
     margin-top: 1px;
     border-radius: 15px;
     transition: background-color 0.1s, color 0.1s;
     cursor: pointer;
+    text-decoration: none;
 }
 .option i{
-    font-size: 30px;
-    flex-shrink: 0;
-    margin-left: 35px;
+    font-size: 18px;
+    margin-left: 25px;
     color: white;
+    
     /* transition: color 0.3s; */
 }
 .option p {
     font-weight: bold;
     text-align: center;
     color: white; 
+    width: fit-content;
     /* transition: color 0.3s; */
 }
 .option:hover {
@@ -85,7 +90,7 @@ h1{
     width: fit-content;
     font-weight: bolder;
     font-size: 40px;
-    border-bottom: #364CC6 3px solid;
+    /* border-bottom: #364CC6 3px solid; */
 }
 .d_main{
     display: flex;

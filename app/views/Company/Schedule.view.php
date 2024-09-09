@@ -1,4 +1,4 @@
-<div>
+<div class="main">
     <div class="d">
         <div class="d_topic">
             <h1>Schedule</h1>
