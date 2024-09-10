@@ -1,0 +1,97 @@
+.sr_main{
+    background: #E9EDFF;
+    width: 1100px;
+    height: 570px;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.sr_search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+
+.s_background{
+    padding-top: 20px;
+    height: 500px;
+    overflow-y: auto;
+}
+.ss_create{
+    width: 200px;
+}
+.ss_create a{
+    text-decoration: none;
+}
+.ss_create button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    height: 45px;
+    width: 170px;
+    background: linear-gradient(135deg, #6ba2dc, #008cff);
+    color: white;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px rgba(160, 160, 160, 0.25);
+    transition: transform 0.1s ease, background 0.3s ease;
+}
+.ss_create button:hover{
+    background: linear-gradient(135deg, #008cff, #6ba2dc);
+    transform: scale(1.05);
+}
+.ss_create i{
+    background-color: #ffffff;
+    padding: 4px 4px;
+    border-radius: 100%;
+    color: #007bff;
+}
+.s_table{
+    background-color: white;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    height: fit-content;
+    width: 900px;
+    margin-left: 60px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    transition: transform 0.7s ease;
+    margin-bottom: 20px;
+}
+.s_table:hover{
+    transform: scale(1.05);
+}
+.s_table p{
+    font-size: large;
+}
+.s_table span{
+    font-weight: bold;
+}
+.s_delnedit{
+    display: flex;
+    justify-content: right;
+    align-items: end;
+    gap: 20px;
+    padding: 20px;
+}
+.fa-pencil-alt{
+    padding: 8px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.fa-pencil-alt:hover{
+    background-color: rgb(0, 176, 0);
+}
+.fa-trash-alty{
+    padding: 8px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.fa-trash-alty:hover{
+    background-color: red;
+}

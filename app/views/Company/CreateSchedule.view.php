@@ -1,81 +1,100 @@
-<div class="main">
-    <div class="d">
-        <div class="d_topic">
-            <h1>Schedule</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Schedulecreate.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="body">
+    <div class="dashboard">
+        <div class="side">
+            <?php $this->renderComponent("companysidebar")  ?>
         </div>
-        <div class="d_pro">
-            <div>
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div>
-                <i class="fas fa-bell"></i>
-            </div>
-            <div>
-                <i class="fas fa-user-circle"></i>
+        <div id="content">
+            <div class="main">
+                <div class="d">
+                    <div>
+                        <h1>Students Requests</h1>
+                    </div>
+                    <div class="d_pro">
+                        <div class="d_profile">
+                            <i class="fas fa-calendar-alt"></i>
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div>
+                            <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
+                            <p><span>WSO2</span>Company</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sc_main">
+                    <div class="sc">
+                        <a href="../Schedule/Dashboard" class="sc_container">
+                            <i class="fas fa-chevron-left"></i>
+                            <h3>Create Interview Schedule</h3>
+                        </a>
+                    </div>
+                    <div class="sc_background">
+                        <div class="sc_iner">
+                            <div class="sc_pos">
+                                <h4>Position:</h4>
+                                <select id="position">
+                                    <option value="qa">Quality Assurance</option>
+                                    <option value="se">Software Engineer</option>
+                                    <option value="wd">Wed Developer</option>
+                                </select>
+                            </div>
+                            <div class="sc_dateNdur">
+                                <div class="sc_date">
+                                    <h4>Date Period:</h4>
+                                    <input type="date" />
+                                    <p>-</p>
+                                    <input type="date" />
+                                </div>
+                                <div class="sc_dur">
+                                    <h4>Interview Duration:</h4>
+                                    <select id="duration">
+                                        <option value="15">15 min</option>
+                                        <option value="30">30 min</option>
+                                        <option value="45">45 min</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sc_time">
+                                <h4>Select the Day</h4>
+                                <button class="sc_tbtn" id="add-time-slot" onclick="addTimeSlot()">
+                                    <i class="fas fa-plus"></i>
+                                    <p>Time Slots</p>
+                                </button>
+                            </div>
+                            <div id="time-slots-container" class="sc_time-slots">
+                                <div class="time-slot">
+                                    <input type="date">
+                                    <input type="time">
+                                    <input type="time">
+                                    <button></button>
+                                </div>
+                            </div>
+                            <div class="sc_btn">
+                                <button type="submit" class="sc_btn">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
             </div>
         </div>
     </div>
-    <div class="sc_main">
-        <div class="sc">
-            <div class="sc_container">
-                <i class="fas fa-chevron-left"></i>
-                <h3>Create Interview Schedule</h3>
-            </div>
-        </div>
-        <div class="sc_background">
-            <div class="sc_iner">
-                <div class="sc_pos">
-                    <h4>Position:</h4>
-                    <select id="position">
-                        <option value="qa">Quality Assurance</option>
-                        <option value="se">Software Engineer</option>
-                        <option value="wd">Wed Developer</option>
-                    </select>
-                </div>
-                <div class="sc_dateNdur">
-                    <div class="sc_date">
-                        <h4>Date Period:</h4>
-                        <input type="date" />
-                        <p>-</p>
-                        <input type="date" />
-                    </div>
-                    <div class="sc_dur">
-                        <h4>Interview Duration:</h4>
-                        <select id="duration">
-                            <option value="15">15 min</option>
-                            <option value="30">30 min</option>
-                            <option value="45">45 min</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="sc_time">
-                    <h4>Select the Day</h4>
-                    <button class="sc_tbtn" id="add-time-slot" onclick="addTimeSlot()">
-                        <i class="fas fa-plus"></i>
-                        <p>Time Slots</p>
-                    </button>
-                </div>
-                <div id="time-slots-container" class="sc_time-slots">
-                    <div class="time-slot">
-                        <input type="date">
-                        <input type="time">
-                        <input type="time">
-                        <button ></button>
-                    </div>
-                </div>
-                <div class="sc_btn">
-                    <button type="submit" class="sc_btn">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
-
-
-
-    </div>
-</div>
-<script>
+    <script>
     function addTimeSlot() {
         // Create a new time slot div
         const timeSlotDiv = document.createElement('div');
@@ -126,3 +145,23 @@
         }, 500); // Match this duration with the CSS transition duration
     }
 </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
