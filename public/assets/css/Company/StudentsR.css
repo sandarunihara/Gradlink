@@ -1,0 +1,123 @@
+
+.sr_main{
+    background: #E9EDFF;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.sr_search{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+.sr_search-container{
+    padding-left: 40px;
+    width: 200px;
+}
+.sr_search-container input{
+    border: none;
+    height: 40px;
+    width: 250px;
+    border-radius: 10px;
+}
+.sr_search-container i{
+    position: absolute;
+    margin-top: -28px;
+    margin-left: 220px;
+    cursor: pointer;
+}
+.sr_filter-container{
+    padding-left: 40px;
+    width: 200px;
+}
+.sr_filter-container select{
+    border: none;
+    height: 40px;
+    width: 120px;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+.sr_t{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.sr_table{
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
+    /* width: 1000px;
+    height: 520px; */
+    border-radius: 10px;
+}
+.sr_sr{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+.sr_sr select{
+    height: 40px;
+    width: 250px;
+    border: 1px solid rgb(164, 164, 164);
+    border-radius: 10px;
+}
+.sr_table_t{
+    width: 100%;
+}
+
+.student-table {
+    width: 100%;
+    border-spacing: 0 5px;
+}
+
+.student-table th, .student-table td {
+    text-align: center;
+}
+
+.student-table th {
+    margin: 0;
+    padding: 0;
+    background-color: #d7d7d7;
+    font-weight: 600;
+    color: #000000;
+}
+.student-table tbody {
+    display: block;
+    max-height: 340px; /* Adjust this value as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+
+.student-table thead,
+.student-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.action-select {
+    width: 80%;
+    padding: 5px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #495057;
+}
+
+.view-profile-btn {
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-profile-btn:hover {
+    background-color: #0056b3;
+}

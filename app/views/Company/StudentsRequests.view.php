@@ -3,11 +3,13 @@
 
 <head>
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/company.css">
-    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Dashboard.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/StudentsR.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="body">
     <div class="dashboard">
         <div class="side">
@@ -17,7 +19,7 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>DashBoard</h1>
+                        <h1>Students Requests</h1>
                     </div>
                     <div class="d_pro">
                         <div class="d_profile">
@@ -58,8 +60,6 @@
                             </div>
                             <!-- Table -->
                             <div>
-
-
                                 <table class="student-table">
                                     <thead class="sr_table_t">
                                         <th>
@@ -67,6 +67,9 @@
                                         </th>
                                         <th>
                                             <h5>Student Degree</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Position</h5>
                                         </th>
                                         <th>
                                             <h5>Action</h5>
@@ -79,6 +82,7 @@
                                         <tr class="sr_row">
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -90,6 +94,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -101,6 +106,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -112,6 +118,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -123,6 +130,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -134,6 +142,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -145,6 +154,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -156,6 +166,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -167,6 +178,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -178,6 +190,7 @@
                                         <tr>
                                             <td>Sandaru Nihara</td>
                                             <td>CS</td>
+                                            <td>Web development</td>
                                             <td>
                                                 <select class="action-select">
                                                     <option value="shortlist">Shortlist</option>
@@ -186,22 +199,15 @@
                                             </td>
                                             <td><button class="view-profile-btn">View Profile</button></td>
                                         </tr>
-
-
-
                                     </tbody>
                                 </table>
-
-
-
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+</html>

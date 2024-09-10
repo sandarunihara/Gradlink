@@ -1,0 +1,83 @@
+.pro_main{
+    width: 1100px;
+    height: 570px;
+    padding-left: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+}
+.whitepart{
+    width: 500px;
+    padding-right: 10px;
+}
+.pro_head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pro_head p{
+    font-size: 30px;
+    font-weight: 600;
+}
+.pro_head i{
+    font-size: 30px;
+    color: #005fc4;
+}
+.whitepart img{
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    margin-left: 50px;
+}
+.welcomemsg{
+    font-size: 25px;
+}
+.welcomemsg span{
+    color: rgb(252, 174, 73);
+    font-weight: 500;
+}
+.gmsg{
+    color: rgb(252, 174, 73);
+}
+.address{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.otherpart{
+    width: 600px;
+    background: linear-gradient(180deg, #FF5000,black);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.top{
+    font-size:40px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-weight: bold;
+}
+.description{
+    padding-left: 50px;
+    padding-right: 50px;
+    color: white;
+}
+.visitsite{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+.web{
+    width: fit-content;
+    text-decoration: none;
+    background-color: white;
+    padding: 15px 30px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+.web:hover{
+    color: white;
+    background-color: #FF5000;
+}

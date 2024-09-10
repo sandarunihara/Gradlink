@@ -3,6 +3,8 @@
 
 <head>
     <title>Document</title>
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css"> 
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">   
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
