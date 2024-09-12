@@ -50,6 +50,17 @@ h1{
     align-items: center;
     gap: 5px;
 }
+.d_pro a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: color 0.7s ease;
+}
+.d_pro a:hover{
+    color: #007bff;
+}
 .d_pro img{
     height: 60px;
     width: 60px;
