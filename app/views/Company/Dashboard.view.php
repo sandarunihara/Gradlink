@@ -27,8 +27,10 @@
                             <i class="fas fa-bell"></i>
                         </div>
                         <div>
+                            <a href='../Profile/dashboard'>
                             <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
                             <p><span>WSO2</span>Company</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -95,7 +97,7 @@
                                 </ul>
                             </div>
                             <div class="d_view_all">
-                                <a href="#">
+                                <a href="../StudentsRequests/dashboard">
                                     View All
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
