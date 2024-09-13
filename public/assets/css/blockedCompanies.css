@@ -1,0 +1,191 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f4ff;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    background-color: #fff;
+    padding: 20px;
+    width: 14%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* transition: all 0.5s linear; */
+}
+
+.logo img {
+    width: 100%;
+    /* height: auto; */
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.nav-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item i {
+    margin-right: 10px;
+}
+
+.nav-menu  a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    /* display: flex; */
+    align-items: center;
+    flex-grow: 1;
+}
+
+.nav-item.active, .nav-item:hover {
+    background-color: #e0ebff;
+}
+
+.logout{
+    bottom: 0;
+}
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    /* background-color: #f9fcff; */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left
+{
+    flex-direction: row;
+    display: flex;
+    gap: 10%;
+}
+.header-left h1 {
+    font-size: 26px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-info small {
+    font-size: 14px;
+    color: #777;
+}
+
+.company-list {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-header h2 {
+    font-size: 22px;
+    color: #fd0c0c;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table thead {
+    background-color: #f1f5ff;
+}
+
+table th, table td {
+    padding: 1.2%;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+table th {
+    font-size: 16px;
+    color: #333;
+}
+
+table td {
+    font-size: 14px;
+    color: #555;
+}
+
+.remove-btn {
+    background-color: #ef4f4f;
+    border: 2px solid #f93434;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.remove-btn:hover {
+    background-color: #f17e7e;
+    color: #fff;
+}
+
+.logout a{
+    bottom: 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.logout a.active, .logout a:hover {
+    background-color: #e0ebff;
+}
