@@ -95,6 +95,7 @@
     transition: opacity 0.3s ease; 
     cursor: pointer;
 }
+
 .postcard:hover .top-left-link {
     opacity: 1; 
 }
