@@ -51,6 +51,11 @@
     height: 100px;
     resize: none;
 }
+.perioddeadline{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
 .period{
     display: flex;
     gap: 20px;

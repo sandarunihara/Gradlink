@@ -36,9 +36,9 @@
                 </div>
                 <div class="main_container">
                     <div class="sc">
-                        <a href="../Advertisements/Dashboard" class="sc_container">
+                        <a href="../Advertisements/send" class="sc_container">
                             <i class="fas fa-chevron-left"></i>
-                            <h3>Create Interview Schedule</h3>
+                            <h3>Back</h3>
                         </a>
                     </div>
                     <div class="sub_container">

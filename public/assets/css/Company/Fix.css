@@ -4,13 +4,16 @@ body{
     height: 100%;
     font-family: 'Poppins', sans-serif;
 }
-
+#content{
+    margin-left: 250px;
+}
 h1{
     width: fit-content;
     border-bottom: 3px solid black;
     font-weight: bolder;
 }
 .side{
+    position: fixed;
     display: flex;
     flex-direction: column;
     width: fit-content;

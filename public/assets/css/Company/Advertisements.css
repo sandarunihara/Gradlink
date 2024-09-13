@@ -1,0 +1,100 @@
+.overview{
+    margin-top: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
+    margin-right: 50px;
+    height: 620px;
+    width: 110%;
+    overflow-y: auto;
+}
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-right: 20px;
+}
+.stat-card {
+    background: linear-gradient(135deg, #FFC371, #fd808a);
+    color: white;
+    border-left: black solid 8px;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 100px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease,border-left 0.3s ease;
+}
+.stat-card:hover{
+    transform: scale(1.05);
+    border-left: black solid 15px;
+}
+.stat-card h2 {
+    font-size: 16px;
+    margin: 0;
+}
+.stat-card p {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0 0;
+}
+.postcard{
+    display: flex;
+    text-decoration: none;
+    color: black;
+    flex-direction: column;
+    background-color: #E9EDFF;
+    width: 300px;
+    height: 420px;
+    padding-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    transition: transform 0.7s ease;
+    cursor: default;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.postcard:hover{
+    transform: scale(1.05);
+}
+.postcard img{
+    width: 100%;
+    height: 200px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.postdetails{
+    padding: 10px;
+}
+.postdetails p{
+    font-weight: bold;
+}
+.postdetails span{
+    font-weight: 400;
+}
+.image{
+    display: flex;
+    position: relative;
+}
+.image a{
+    text-decoration: none;
+    color: black;
+
+}
+.top-left-link {
+    position: absolute;
+    top: 10px; /* Adjust the top margin */
+    right: 10px; 
+    background-color: #007bff; /* Semi-transparent background */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease; 
+    cursor: pointer;
+}
+.postcard:hover .top-left-link {
+    opacity: 1; 
+}
