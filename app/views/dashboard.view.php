@@ -109,6 +109,35 @@
                 </div>
             </section>
 
+            <!-- Pending Companies -->
+            <section class="company-list">
+                <div class="list-header">
+                    <h2>Pending Companies</h2>
+                    
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Contact Person</th>
+                            <th>Email</th>
+                            <th>Contact Number</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>WSO2</td>
+                            <td>Tharindu Perera</td>
+                            <td>tharindu@gmail.com</td>
+                            <td>071 273 4321</td>
+                            <td><button class="view-btn" onclick="naviagteToViewPendingCompany();" >View</button></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+                
+            </section>
 
         </main>
     </div>

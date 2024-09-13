@@ -5,3 +5,7 @@ function naviagteToViewCompany() {
 function navigateToAddCompany() {
     window.location.href = "/Gradlink/public/addCompany";
 }
+
+function naviagteToViewPendingCompany() {
+    window.location.href = "/Gradlink/public/viewPendingCompany";
+}
