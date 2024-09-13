@@ -9,3 +9,7 @@ function navigateToAddCompany() {
 function naviagteToViewPendingCompany() {
     window.location.href = "/Gradlink/public/viewPendingCompany";
 }
+
+function navigateToBlockList() {
+    window.location.href = "/Gradlink/public/blockedCompanies";
+}

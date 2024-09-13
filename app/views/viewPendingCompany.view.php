@@ -98,27 +98,12 @@
                             <button class="btn">Generate</button>
                         </div>
                     </div>
-
-                    <!-- <div class="row" >
-                        <input class="btn email-btn" type="submit" value="Send an Email">
-                    </div> -->
                 </form>
                 <div class="row action-buttons" >
                 <button class="btn update-btn">Update</button>
-
                 <button class="btn delete-btn">Delete</button>
                 <button class="btn email-btn"><b>Send An Email</b></button>
-                        
                 </div>
-
-                <!-- <div class="button-line">
-                    <button class="view-profile-btn">View Profile</button>
-                    <div class="action-buttons">
-                        <button class="btn block-btn">Block</button>
-                        <button class="btn delete-btn">Delete</button>
-                        <button class="btn update-btn">Update</button>
-                    </div>
-                </div> -->
             </section>
         </main>
     </div>

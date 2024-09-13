@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Companies</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/dashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/blockedCompanies.css">
 </head>
 
 <body>
@@ -73,46 +73,10 @@
                 </div>
             </header>
 
-            <section class="company-list">
-                <div class="list-header">
-                    <h2>Company List</h2>
-                    <div class="search-box">
-                        <input type="text" placeholder="Search Company" />
-                        <button> Search
-                        </button>
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Contact Person</th>
-                            <th>Email</th>
-                            <th>Contact Number</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>WSO2</td>
-                            <td>Tharindu Perera</td>
-                            <td>tharindu@gmail.com</td>
-                            <td>071 273 4321</td>
-                            <td><button class="view-btn" onclick="naviagteToViewCompany();" >View</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-                <div class="action-buttons">
-                    <button class="add-btn" onclick="navigateToAddCompany();" >+ Add</button>
-                    <button class="blocked-btn" onclick="navigateToBlockList();">Blocked List</button>
-                </div>
-            </section>
-
             <!-- Pending Companies -->
             <section class="company-list">
                 <div class="list-header">
-                    <h2>Pending Companies</h2>
+                    <h2>Blocked Company List</h2>
                     
                 </div>
                 <table>
@@ -131,7 +95,7 @@
                             <td>Tharindu Perera</td>
                             <td>tharindu@gmail.com</td>
                             <td>071 273 4321</td>
-                            <td><button class="view-btn" onclick="naviagteToViewPendingCompany();" >View</button></td>
+                            <td><button class="remove-btn" onclick="naviagteToViewPendingCompany();" >Remove</button></td>
                         </tr>
                         <!-- Add more rows as needed -->
                     </tbody>
