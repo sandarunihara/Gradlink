@@ -3,7 +3,6 @@ trait Controller
 {
     public function view($name)
     {
-
         $filename = "../app/views/" . $name . ".view.php";
 
         if (file_exists($filename)) {
@@ -13,4 +12,14 @@ trait Controller
             require $filename;
         }
     }
+
+    public function renderComponent($componentName, $componentProps = []){
+        $fileName = "../app/views/components/" . $componentName . ".view.php";
+        if (file_exists($fileName)) {
+            require $fileName;
+        } else {
+            echo "Component not found";
+        }
+    }
 }
+

@@ -5,6 +5,6 @@ class ViewPendingCompany
     public function index()
     {
         // redirect("company-dashboard");
-        $this->view('viewPendingCompany');
+        $this->view('Coordinator/Company/viewPendingCompany');
     }
 }

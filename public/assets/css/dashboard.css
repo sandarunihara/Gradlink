@@ -16,54 +16,6 @@ body {
     width: 100%;
 }
 
-.sidebar {
-    background-color: #fff;
-    padding: 20px;
-    width: 14%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* transition: all 0.5s linear; */
-}
-
-.logo img {
-    width: 100%;
-    /* height: auto; */
-}
-
-.nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.nav-item {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
-
-.nav-item i {
-    margin-right: 10px;
-}
-
-.nav-menu  a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 5px;
-    /* display: flex; */
-    align-items: center;
-    flex-grow: 1;
-}
-
-.nav-item.active, .nav-item:hover {
-    background-color: #e0ebff;
-}
-
-.logout{
-    bottom: 0;
-}
 .main-content {
     flex-grow: 1;
     padding: 30px;
@@ -230,19 +182,4 @@ table td {
 .blocked-btn:hover {
     background-color: #ed0f0f;
     color: #ffffff;
-}
-
-.logout a{
-    bottom: 0;
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-}
-
-.logout a.active, .logout a:hover {
-    background-color: #e0ebff;
 }

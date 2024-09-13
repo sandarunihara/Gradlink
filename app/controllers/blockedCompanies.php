@@ -5,7 +5,7 @@ class BlockedCompanies
     public function index()
     {
         // redirect("company-dashboard");
-        $this->view('blockedCompanies');
+        $this->view('Coordinator/Company/blockedCompanies');
     }
 }
 

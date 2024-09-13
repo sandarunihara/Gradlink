@@ -5,6 +5,6 @@ class Login
     public function index()
     {
         // redirect("company-dashboard");
-        $this->view('login');
+        $this->view('Coordinator/Company/login');
     }
 }

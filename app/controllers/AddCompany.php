@@ -5,7 +5,7 @@ class AddCompany
     public function index()
     {
         // redirect("company-dashboard");
-        $this->view('addCompany');
+        $this->view('Coordinator/Company/addCompany');
     }
 }
 
