@@ -41,33 +41,34 @@
                             <h3>Create Interview Schedule</h3>
                         </a>
                     </div>
-                    <div class="sub_container">
+                    <!-- Form data -->
+                    <form class="sub_container" method="POST" action="">
                         <div class="position">
                             <h4>Position:</h4>
-                            <select id="position">
-                                <option value="qa">Quality Assurance</option>
-                                <option value="se">Software Engineer</option>
-                                <option value="wd">Wed Developer</option>
+                            <select id="position" name="position" required>
+                                <option value="Quality Assurance">Quality Assurance</option>
+                                <option value="Software Engineer">Software Engineer</option>
+                                <option value="Wed Developer">Wed Developer</option>
                             </select>
                         </div>
                         <div class="details">
                             <div>
                                 <h4>Description:</h4>
-                                <textarea name="description" id="description" cols="50" rows="10"></textarea>
+                                <textarea name="description" id="description" cols="50" rows="10" required></textarea>
                             </div>
                             <div>
                                 <h4>Qualifications:</h4>
-                                <textarea name="qualifications" id="qualifications" cols="50" rows="10"></textarea>
+                                <textarea name="qualifications" id="qualifications" cols="50" rows="10" required></textarea>
                             </div>
                         </div>
                         <div class="perioddeadline">
                             <div class="period">
                                 <h4>Internship Period:</h4>
-                                <input type="text" id="period" />
+                                <input type="text" id="period" name="period" required/>
                             </div>
                             <div class="period">
                                 <h4>Application deadline:</h4>
-                                <input type="date" id="period" />
+                                <input type="date" id="deadline" name="deadline" required/>
                             </div>
                         </div>
                         
@@ -76,17 +77,17 @@
                                 <h4>No of interns:</h4>
                                 <div class="number-input">
                                     <button class="fbtn" type="button" onclick="decrement()">-</button>
-                                    <input type="text" id="interns-count" value="5" readonly>
+                                    <input type="text" id="interns" name="interns" value="5" readonly required>
                                     <button class="sbtn" type="button" onclick="increment()">+</button>
                                 </div>
                             </div>
                             <div class="position">
                                 <h4>Work type:</h4>
-                                <select id="position">
-                                    <option value="qa">Remote</option>
-                                    <option value="se">Onsite</option>
-                                    <option value="wd">Hybrid</option>
-                                    <option value="wd">Flexible</option>
+                                <select id="worktype" name="worktype" required>
+                                    <option value="Remote">Remote</option>
+                                    <option value="Onsite">Onsite</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="Flexible">Flexible</option>
                                 </select>
                             </div>
                         </div>
@@ -94,12 +95,10 @@
                             <h4>Add Image:</h4>
                             <input type="file" id="image" />
                         </div>
-                        <a href="../Advertisements/send">
-                            <button type="submit" class="sc_btn">
+                            <button type="submit" id="submit" class="sc_btn">
                                 Submit
                             </button>
-                        </a>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
