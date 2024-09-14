@@ -99,3 +99,44 @@
 .postcard:hover .top-left-link {
     opacity: 1; 
 }
+
+
+/* create button */
+.posts{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-left: 20px;
+}
+.ss_create{
+    width: 200px;
+}
+.ss_create a{
+    text-decoration: none;
+}
+.ss_create button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    height: 45px;
+    width: 170px;
+    background: linear-gradient(135deg, #6ba2dc, #008cff);
+    color: white;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px rgba(160, 160, 160, 0.25);
+    transition: transform 0.1s ease, background 0.3s ease;
+}
+.ss_create button:hover{
+    background: linear-gradient(135deg, #008cff, #6ba2dc);
+    transform: scale(1.05);
+}
+.ss_create i{
+    background-color: #ffffff;
+    padding: 4px 4px;
+    border-radius: 100%;
+    color: #007bff;
+}
