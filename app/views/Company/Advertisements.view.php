@@ -51,7 +51,17 @@
                                 <p>5</p>
                             </div>
                         </div>
-                        <h2>Posts</h2>
+                        <div class="posts">
+                            <h2>Posts</h2>
+                            <div class="ss_create">
+                            <a href="../Advertisements/create">
+                                <button>
+                                    <i class="fas fa-plus"></i>
+                                    <h4>Create Posts</h4>
+                                </button>
+                            </a>
+                        </div>     
+                        </div>
                         <div class="postcard" >
                             <div class="image">
                                 <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
