@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,13 +44,15 @@
                             <a href="../Advertisements/edit">
                                 <i class="fas fa-edit"></i>
                             </a>
-                        <h4>Position:<span>Web Developer</span></h4>
-                        <h4>Qualifications:<span>Candidates must be pursuing a degree in Computer Science or a related field, have a basic understanding of programming languages like Java, Python, or JavaScript, and be familiar with web technologies such as HTML, CSS, and React</span></h4>
-                        <h4>Description:<span>The intern will assist in developing, testing, and maintaining web applications, ensuring the functionality aligns with business requirements.</span></h4>
-                        <h4>Internship Period:<span>6 Months</span></h4>
-                        <h4>No of interns:<span>5</span></h4>
-                        <h4>Work type:<span>Onsite</span></h4>
-                        <h4>Application deadline:<span>2024-12-31</span></h4>
+                            <?php if (isset($data) && !empty($data)): ?>
+                                <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
+                                <h4>Qualifications:<span><?php echo $data[0]->qualifications ?></span></h4>
+                                <h4>Description:<span><?php echo $data[0]->description ?></span></h4>
+                                <h4>Internship Period:<span><?php echo $data[0]->period ?></span></h4>
+                                <h4>No of interns:<span><?php echo $data[0]->interns ?></span></h4>
+                                <h4>Work type:<span><?php echo $data[0]->worktype ?></span></h4>
+                                <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
+                            <?php endif; ?>
                         <a href="../Advertisements/dashboard">
                             <button type="submit" class="sc_btn">
                                 Post

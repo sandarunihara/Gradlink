@@ -5,6 +5,7 @@
     Trait Model{
         use Database;
 
+        public $errors = [];
         protected $limit = 10;
         protected $offset = 0;
         protected $order_type ='desc';
@@ -71,7 +72,7 @@
             $query = "INSERT INTO $this->table (".implode(",", $keys).") VALUES (:".implode(", :", $keys).")";
             //echo $query;
             $this->query($query, $data);
-            return false;
+            return true;
         }
         public function update($id, $data, $id_column ='id'){
 
