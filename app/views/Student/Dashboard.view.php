@@ -27,7 +27,7 @@
                             <i class="fas fa-bell"></i>
                         </div>
                         <div>
-                            <a href=''>
+                            <a href="../StudentProfile/dashboard">
                             <img src="<?php echo ROOT ?>/assets/img/Student/nayana.jpg" height ="400px" weight="400px"class="logo" />
                             <p><span>Nayana</span>Student</p>
                             </a>
@@ -43,12 +43,16 @@
                     <div class="d_allsummery">
                         <div class="stats">
                             <div class="stat-card">
+                                <a href="../StudentAppliedCompanies/dashboard" style = "text-decoration: none; color: inherit">
                                 <h2>Applied Comapanies</h2>
                                 <p>5</p>
+                                </a>
                             </div>
                             <div class="stat-card">
+                                <a href="../StudentScheduleInterview/dashboard" style = "text-decoration: none; color: inherit">
                                 <h2>Schedule Interviews</h2>
                                 <p>3</p>
+                                </a>
                             </div>
                         </div>
                     </div>
