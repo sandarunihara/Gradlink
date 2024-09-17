@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="<?php echo ROOT ?>/assets/js/Cscript.js" defer></script>
 </head>
 
 <body class="body">
@@ -23,8 +24,18 @@
                     </div>
                     <div class="d_pro">
                         <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
+                            <a href="../companydash/calendar">
+                                <i class="fas fa-calendar-alt"></i>
+                            </a>
+                            <div class="notification-wrapper">
+                                <div class="notification-icon" onclick="toggleDropdown()" >
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div id="notificationDropdown" class="dropdown-content">
+                                    <i class="fas fa-close" onclick="toggleclose()"></i>
+                                    <p>No new notifications</p>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <a href='../Profile/dashboard'>

@@ -6,6 +6,10 @@ class Companydash{
         $this-> view('Company/Dashboard');
     }  
 
+    public function calendar(){
+        $this-> view('Components/calendar');
+    }
+
 
     public function renderoption($componentName, $componentProps = []){
         $fileName = "../app/views/Company/" . $componentName . ".view.php";
