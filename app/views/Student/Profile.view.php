@@ -1,1 +1,1 @@
-this is student profile
+This is profile page

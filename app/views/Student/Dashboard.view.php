@@ -54,6 +54,12 @@
                                 <p>3</p>
                                 </a>
                             </div>
+                            <div class="stat-card">
+                                <h2>Status: Pending</h2>
+                                <h2>Email: nayana@gmial.com</h2>
+                                <h2>Registration Number: 2022/CS/111</h2>
+                                <h2>Round: 1 Round</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
