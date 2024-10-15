@@ -36,6 +36,8 @@
             $data = array_merge($data, $data_not);
             return $this->query($query, $data);
         }
+
+
         public function first($data, $data_not = []){
             $keys = array_keys($data);
             $keys_not = array_keys($data_not);
@@ -57,6 +59,8 @@
                 return $result[0];
             return false;
         }
+
+
         public function insert($data){
         
             /*remove unwanted data*/
@@ -74,6 +78,8 @@
             $this->query($query, $data);
             return true;
         }
+
+
         public function update($id, $data, $id_column ='id'){
 
             /*remove unwanted data*/
@@ -102,6 +108,8 @@
             
             return false;
         }
+
+        
         public function delete($id, $id_column ='id'){
             $data [$id_column] = $id;
             $query = "DELETE FROM $this->table WHERE $id_column = :$id_column";

@@ -4,16 +4,12 @@ body{
     height: 100%;
     font-family: 'Poppins', sans-serif;
 }
-#content{
-    margin-left: 250px;
-}
 h1{
     width: fit-content;
     border-bottom: 3px solid black;
     font-weight: bolder;
 }
 .side{
-    position: fixed;
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -80,7 +76,6 @@ h1{
 
 
 .notification-wrapper {
-    /* position: relative; */
     display: flex;
     flex-direction: column;
 }
@@ -89,7 +84,6 @@ h1{
     display: none;
     position: absolute;
     margin-top: 50px;
-    /* right: 0; */
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 5px;

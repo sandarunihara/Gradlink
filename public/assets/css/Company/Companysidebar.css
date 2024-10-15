@@ -37,6 +37,9 @@
 .sidebar.collapsed .option:hover{
     background-color: transparent;
 }
+.sidebar.collapsed .option.active{
+    background-color: transparent;
+}
 .sidebar.collapsed .option i:hover{
     transform: scale(1.1);
 }
@@ -64,7 +67,7 @@
     gap: 20px;
     align-items: center;
     margin-top: 10px;
-    border-radius: 15px;
+    border-radius: 10px;
     transition: background-color 0.1s, color 0.1s;
     cursor: pointer;
     text-decoration: none;
@@ -95,4 +98,14 @@
 }
 .logout{
     margin-top:50px ;
+}
+
+
+.option.active {
+    background-color: white; /* Change the background color of the active item */
+}
+
+.option.active i,
+.option.active p {
+    color: black; /* Change the text and icon color for the active item */
 }
