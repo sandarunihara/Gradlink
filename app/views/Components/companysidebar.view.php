@@ -63,9 +63,23 @@
 </div>
 
 <script>
+
     document.getElementById("toggleSidebar").addEventListener("click", function () {
     var sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("collapsed");
+});
+
+// Function to set the active class based on the current URL
+document.addEventListener("DOMContentLoaded", function () {
+    var links = document.querySelectorAll(".option"); 
+    var fullPath = window.location.pathname; //  "/Gradlink/public/Companydash/Dashboard"
+    var relativePath = fullPath.replace("/Gradlink/public", "..");
+
+    links.forEach(function (link) {
+        if (link.getAttribute("href") === relativePath) {
+            link.classList.add("active");
+        }
+    });
 });
 
 </script>

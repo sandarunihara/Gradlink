@@ -58,6 +58,5 @@ class C_Advertisement{
         return $result;
     }
 
-
     
 }

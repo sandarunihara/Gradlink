@@ -50,6 +50,7 @@
     background-color: #E9EDFF;
     padding-top: 1px;
     padding-left: 15px;
+    padding-right: 15px;
     padding-bottom: 10px;
     margin-top: 15px;
     border-radius: 10px;
@@ -63,7 +64,6 @@
 }
 .d_alllist{
     background-color: white;
-    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
@@ -107,12 +107,11 @@
 }
 .d_view_all a{
     text-decoration: none;
-    padding: 5px 10px;
     border-radius: 5px;
     margin-bottom: -10px;
     align-items: center;
     color: black;
-    margin-right: 20px;
+    margin-right: 5px;
     transition: color 0.5s ease;
 }
 .d_view_all a:hover{
