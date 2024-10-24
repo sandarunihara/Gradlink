@@ -103,6 +103,13 @@
             </div>
         </div>
     </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script>
+        // toast model
+        
+
+    </script>
 </body>
 
 </html>

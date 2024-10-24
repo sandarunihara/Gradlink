@@ -150,7 +150,7 @@
     </div>
 
     <div id="toast-container" class="toast-container"></div>
-
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
         function increment() {
@@ -183,7 +183,7 @@
             // image is not in the script
 
             if (!position || !description || !qualifications || !period || !deadline || !interns || !worktype) {
-                showToast("Please fill in all required fields.");
+                errorToast("Please fill in all required fields.");
                 return;
             }
 
@@ -222,32 +222,10 @@
 
         function submitForm() {
             document.getElementById('ad-form').submit();
+            successToast("Advertisement created successfully");
         }
 
 
-        // toast model
-        function showToast(message) {
-            const toastContainer = document.getElementById('toast-container');
-
-            // Create a new toast element
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-
-            // Set the message and add a close button
-            toast.innerHTML = `${message}<span class="toast-close-btn" onclick="closeToast(this)">✖</span>`;
-
-            // Append the toast to the container
-            toastContainer.appendChild(toast);
-
-            // Automatically remove the toast after 5 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 5000);
-        }
-
-        function closeToast(toastElement) {
-            toastElement.parentElement.remove();
-        }
     </script>
 </body>
 

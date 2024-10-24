@@ -66,9 +66,9 @@
                                                 data-worktype="<?php echo htmlspecialchars($data[0]->worktype, ENT_QUOTES) ?>"
                                                 onclick="openConfirmationModal(this)">
                                             </i>
-                                            
+
                                             <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -203,6 +203,7 @@
     </div>
 
     <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
         // Increment and decrement the number of interns
@@ -235,7 +236,7 @@
             // image is not in the script
 
             if (!position || !description || !qualifications || !period || !deadline || !interns || !worktype) {
-                showToast("Please fill in all required fields.");
+                errorToast("Please fill in all required fields.");
                 return;
             }
             // Show confirmation modal if form is valid
@@ -270,33 +271,11 @@
         }
 
         function submitForm() {
+            successToast("Advertisement updated successfully");
             document.getElementById('ad-form').submit();
         }
 
-        // toast model
-        function showToast(message) {
-            const toastContainer = document.getElementById('toast-container');
-
-            // Create a new toast element
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-
-            // Set the message and add a close button
-            toast.innerHTML = `${message}<span class="toast-close-btn" onclick="closeToast(this)">✖</span>`;
-
-            // Append the toast to the container
-            toastContainer.appendChild(toast);
-
-            // Automatically remove the toast after 5 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 5000);
-        }
-
-        function closeToast(toastElement) {
-            toastElement.parentElement.remove();
-        }
-
+       
         // Get the modal popup for confirm update
 
         function openconfirmupdateModal() {
@@ -318,10 +297,10 @@
             document.getElementById('deleteconfirmation-modal').style.display = 'none';
         }
 
-        function confirmDelete(id){
+        function confirmDelete(id) {
             window.location.href = '../delete/' + id;
+            successToast("Advertisement deleted successfully");
         }
-
     </script>
 
 </body>
