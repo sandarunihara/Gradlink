@@ -68,7 +68,7 @@
                         <div class="postcard" >
                             <div class="image">
                                 <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
-                                <a href="../Advertisements/send" class="top-left-link">View</a>
+                                <a href="../Advertisements/send/<?php echo $advertisement->id; ?>"  class="top-left-link">View</a>
                             </div>    
                             <div class="postdetails">
                                 <p>Position:<span><?php echo $advertisement->position; ?></span></p>

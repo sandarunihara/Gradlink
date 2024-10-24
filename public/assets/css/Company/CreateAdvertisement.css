@@ -120,3 +120,158 @@
 .sc_btn:hover{
     background-color: #0056b3;
 }
+
+
+/* Modal */
+
+.modal { /* Hidden by default */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.modal-content {
+    background-color: white;
+    margin:5% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 8px;
+    transform: scale(0); /* Initial scale for zoom-in effect */
+    opacity: 0; /* Initial opacity */
+    animation: zoomIn 0.3s forwards;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0); /* Start with no size */
+        opacity: 0; /* Fully transparent */
+    }
+    100% {
+        transform: scale(1); /* Full size */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.btn-m{
+    display: flex;
+    gap: 20px;
+}
+.yes-btn, .no-btn , .cancel-btn{
+    padding: 10px 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.cancel-btn:hover{
+    background-color: rgb(207, 207, 207);
+    color: black;
+}
+
+.yes-btn {
+    background-color: #07970c;
+    color: white;
+    font-weight: bold;
+    transition: transform 0.3s ease
+}
+.yes-btn:hover{
+    transform: scale(1.05);
+}
+
+.no-btn {
+    background-color: white;
+    border: #f44336 solid 1px;
+    color: black;
+    font-weight: bold;
+}
+.no-btn:hover{
+    background-color: #f44336;
+    color: black;
+}
+
+
+.modal-details{
+    display: flex;
+}
+
+.image{
+    overflow-y: hidden;
+    width: 50%;
+}
+.image img{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.inform {
+    padding-left: 15px;
+    width: 50%;
+    box-shadow: 1px -1px 1px rgba(28, 28, 28, 0.25); /* Horizontal and vertical offset to right and bottom */
+    border-top-right-radius: 10px;
+}
+.Qua-des{
+    display: flex;
+    gap: 30px;
+    box-shadow: 1px 1px 1px 0px rgba(28, 28, 28, 0.25);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.Qualifications{
+    width: 50%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.q-details{
+    max-height: 200px;
+    overflow-y: auto;
+}
+.Description{
+    width: 50%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.d-details{
+    max-height: 200px;
+    overflow-y: auto;
+}
+/* .fade-out {
+    animation: fadeOutScale 0.5s forwards;
+}
+
+@keyframes fadeOutScale {
+    0% {
+        transform: scale(1); /* Full size */
+        /* opacity: 1; Fully visible */
+    /* } */
+    /* 100% { */
+        /* transform: scale(0); End with no size */
+        /* opacity: 0; Fully transparent */
+    /* } */
+/* } */ 
+
+
+
+
+
+
+
+
+
+
+
+
