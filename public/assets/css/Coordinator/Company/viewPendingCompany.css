@@ -1,0 +1,182 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f4ff;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left
+{
+    flex-direction: row;
+    display: flex;
+    gap: 10%;
+}
+.header-left h1 {
+    font-size: 26px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-info small {
+    font-size: 14px;
+    color: #777;
+}
+.company-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.company-form {
+    display: grid;
+    grid-template-columns: 1fr 7fr; /* Two columns: labels and inputs */
+    column-gap: 40px; /* Gap between label and input */
+    align-items: center;
+}
+
+.form-group {
+    display: contents; /* Allows form groups to follow grid structure */
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-right: 2%;
+    justify-self: start;
+    white-space: nowrap; /* Ensures label stays on one line */
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    cursor: auto;
+}
+
+.form-group textarea {
+    resize: none;
+    height: 100px;
+}
+
+.input-group {
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    align-items: baseline;
+}
+
+.input-group input {
+    width: auto; 
+    flex-grow: 1; 
+}
+
+.input-group button {
+    background-color: white;
+    border: 2px solid #000000;
+    color: #000000;
+}
+
+
+.action-buttons {
+    margin-top: 20px;
+    justify-content: end;
+    display: flex;
+    gap: 1%;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 35px;
+    width: 14%;
+    font-size: medium;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%; 
+}
+
+.email-btn {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.email-btn:hover{
+    background-color: #0872dc;
+}
+
+.update-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    
+}
+
+.update-btn:hover{
+    background-color: #0872dc;
+}
+
+.delete-btn {
+    background-color: #ffffff;
+    color: #ed0f0f;
+    border: 1px solid #ed0f0f;
+    
+}
+
+.delete-btn:hover{
+    background-color: #ed0f0f;
+    color: #ffffff;
+}
+
