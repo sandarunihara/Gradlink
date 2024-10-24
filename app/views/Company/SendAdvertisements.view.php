@@ -56,18 +56,19 @@
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
                                         </div>
                                         <div class="ed-del">
-                                        <i class="fas fa-pen" 
-                                            data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
-                                            data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>" 
-                                            data-qualifications="<?php echo htmlspecialchars($data[0]->qualifications, ENT_QUOTES) ?>" 
-                                            data-period="<?php echo htmlspecialchars($data[0]->period, ENT_QUOTES) ?>"
-                                            data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
-                                            data-interns="<?php echo htmlspecialchars($data[0]->interns, ENT_QUOTES) ?>"
-                                            data-worktype="<?php echo htmlspecialchars($data[0]->worktype, ENT_QUOTES) ?>"
-                                            onclick="openConfirmationModal(this)">
-                                        </i>
-
-                                            <i class="fas fa-trash"></i>
+                                            <i class="fas fa-pen"
+                                                data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
+                                                data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
+                                                data-qualifications="<?php echo htmlspecialchars($data[0]->qualifications, ENT_QUOTES) ?>"
+                                                data-period="<?php echo htmlspecialchars($data[0]->period, ENT_QUOTES) ?>"
+                                                data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
+                                                data-interns="<?php echo htmlspecialchars($data[0]->interns, ENT_QUOTES) ?>"
+                                                data-worktype="<?php echo htmlspecialchars($data[0]->worktype, ENT_QUOTES) ?>"
+                                                onclick="openConfirmationModal(this)">
+                                            </i>
+                                            
+                                            <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +169,7 @@
                     <!-- this is not in the script  -->
                 </div>
                 <div class="sc_btn">
-                    <button class="cancel_btn"  onclick="closeConfirmationModal()">
+                    <button class="cancel_btn" onclick="closeConfirmationModal()">
                         Cancel
                     </button>
                     <button type="submit" class="sub_btn" onclick="validateAndShowModal(event)">
@@ -179,7 +180,29 @@
         </div>
     </div>
 
-    <div id="toast-container" class="toast-container"></div>                            
+    <div id="updateconfirmation-modal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to Update the Advertisements?</p>
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="submitForm()">Yes</button>
+                <button class="updateno-btn" onclick="closeconfirmupdateModal()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteconfirmation-modal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to Delete the Advertisements?</p>
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="confirmDelete('<?php echo $data[0]->id; ?>')">Yes</button>
+                <button class="updateno-btn" onclick="closeconfirmdeleteModal()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
 
     <script>
         // Increment and decrement the number of interns
@@ -216,7 +239,7 @@
                 return;
             }
             // Show confirmation modal if form is valid
-            submitForm();
+            openconfirmupdateModal()
         }
 
         function openConfirmationModal(element) {
@@ -272,6 +295,31 @@
 
         function closeToast(toastElement) {
             toastElement.parentElement.remove();
+        }
+
+        // Get the modal popup for confirm update
+
+        function openconfirmupdateModal() {
+            document.getElementById('updateconfirmation-modal').style.display = 'block';
+            modal.style.display = 'flex'; // Use flex for centering modal
+        }
+
+        function closeconfirmupdateModal() {
+            document.getElementById('updateconfirmation-modal').style.display = 'none';
+        }
+
+        // Get the modal popup for confirm delete
+        function openconfirmdeleteModal() {
+            document.getElementById('deleteconfirmation-modal').style.display = 'block';
+            modal.style.display = 'flex'; // Use flex for centering modal
+        }
+
+        function closeconfirmdeleteModal() {
+            document.getElementById('deleteconfirmation-modal').style.display = 'none';
+        }
+
+        function confirmDelete(id){
+            window.location.href = '../delete/' + id;
         }
 
     </script>

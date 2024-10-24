@@ -19,7 +19,7 @@
                     return $result;
                 }  
             }
-            return false;
+            return $stmt;
         }
         public function get_row($query, $data = []){
             $con = $this->connect();

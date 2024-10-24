@@ -71,6 +71,21 @@ class Advertisements{
                     'worktype' => $_POST['worktype'] ?? '',
                     'deadline' => $_POST['deadline'] ?? ''
                 ];
+
+                if ($model->validate($_POST)) {
+                    $result=$model->update($id,$updatedata);
+                    if ($result) {
+                        // Redirect to the same page after successful submission
+                        header("Location: " . $_SERVER['REQUEST_URI']);
+                        exit;
+                    } else {
+                        echo "There was an issue saving the advertisement.";
+                    }
+                }else {
+                    $data['errors'] = $model->errors;
+                    // Handle validation errors
+                    print_r($data['errors']);
+                }
             }
             // Pass the data data to the view
             $this->view('Company/SendAdvertisements', ['data' => $data]);
@@ -81,8 +96,16 @@ class Advertisements{
 
 
 
-    public function edit(){
-        $this-> view('Company/EditAdvertisements');
+    public function delete($id){
+        $model = new C_Advertisement;
+        $result = $model->delete($id);
+        // Try to delete the advertisement by ID
+        if ($result) {
+            header('Location: ../dashboard');
+            exit;
+        } else {
+            echo "Error: Could not delete the advertisement.";
+        }
     }
 
 }
