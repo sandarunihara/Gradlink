@@ -10,7 +10,7 @@
         </div>
         <div class="nav-item active">
             <i class="material-icons">business</i>
-            <a href="#">Companies</a>
+            <a href="/GRadlink/public/dashboardCompany">Companies</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">school</i>
@@ -18,7 +18,7 @@
         </div>
         <div class="nav-item">
             <i class="material-icons">tab</i>
-            <a href="#">Advertisements</a>
+            <a href="/GRadlink/public/dashboardAdvertisement">Advertisements</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">article</i>
