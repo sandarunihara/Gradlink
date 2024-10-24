@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Company</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/addCompany.css">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/addCompany.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
 
 </head>
 
