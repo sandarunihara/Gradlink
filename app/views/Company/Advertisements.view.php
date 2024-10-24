@@ -54,41 +54,42 @@
                         <div class="posts">
                             <h2>Posts</h2>
                             <div class="ss_create">
-                            <a href="../Advertisements/create">
-                                <button>
-                                    <i class="fas fa-plus"></i>
-                                    <h4>Create Posts</h4>
-                                </button>
-                            </a>
-                        </div>     
-                        </div>
-                        <div class="allpost">
-                        <?php if (isset($data) && !empty($data)): ?>
-                        <?php foreach ($data as $advertisement): ?>
-                        <div class="postcard" >
-                            <div class="image">
-                                <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
-                                <a href="../Advertisements/send/<?php echo $advertisement->id; ?>"  class="top-left-link">View</a>
-                            </div>    
-                            <div class="postdetails">
-                                <p>Position:<span><?php echo $advertisement->position; ?></span></p>
-                                <p>type:<span><?php echo $advertisement->worktype; ?></span></p>
-                                <p>No of interns:<span><?php echo $advertisement->interns; ?></span></p>
-                                <p>Periods:<span><span><?php echo $advertisement->period; ?></span></p>
-                                <p>Deadline:<span><?php echo $advertisement->deadline; ?></span></p>
+                                <a href="../Advertisements/create">
+                                    <button>
+                                        <i class="fas fa-plus"></i>
+                                        <h4>Create Posts</h4>
+                                    </button>
+                                </a>
                             </div>
                         </div>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                        <h3>No advertisements found</h3>
-                        <?php endif; ?>
+                        <div class="allpost">
+                            <?php if (isset($data) && !empty($data)): ?>
+                                <?php foreach ($data as $advertisement): ?>
+                                    <div class="postcard">
+                                        <div class="image">
+                                            <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
+                                            <a href="../Advertisements/send/<?php echo $advertisement->id; ?>" class="top-left-link">View</a>
+                                        </div>
+                                        <div class="postdetails">
+                                            <p>Position:<span><?php echo $advertisement->position; ?></span></p>
+                                            <p>type:<span><?php echo $advertisement->worktype; ?></span></p>
+                                            <p>No of interns:<span><?php echo $advertisement->interns; ?></span></p>
+                                            <p>Periods:<span><span><?php echo $advertisement->period; ?></span></p>
+                                            <p>Deadline:<span><?php echo $advertisement->deadline; ?></span></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <h3>No advertisements found</h3>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 </body>
 
 </html>

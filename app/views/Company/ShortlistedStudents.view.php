@@ -209,6 +209,8 @@
             </div>
         </div>
     </div>
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 </body>
 
 </html>
