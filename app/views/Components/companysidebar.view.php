@@ -67,7 +67,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     var links = document.querySelectorAll(".option"); 
     var fullPath = window.location.pathname; //  "/Gradlink/public/Companydash/Dashboard"
-    var relativePath = fullPath.replace("/Gradlink/public", "..");
+    var relativePath = fullPath.replace("/Gradlink/public/company", "..");
 
     links.forEach(function (link) {
         if (link.getAttribute("href") === relativePath) {
