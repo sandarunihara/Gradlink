@@ -55,7 +55,6 @@ class Advertisements{
     public function send($id){
         
         $model = new C_Advertisement;
-    
         // Find the advertisement by ID
         $data = $model->find(['id' => $id]);
         if ($data) {

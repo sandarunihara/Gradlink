@@ -6,43 +6,7 @@
     position: relative;
 }
 
-.sidebar.collapsed .sidebaroption {
-    height: 630px;
-    margin-top: 50px;
-}
-.sidebar.collapsed {
-    width: 75px; 
-    display: flex;
-    flex-direction: column;
-}
-.sidebar.collapsed .text {
-    display: none;
-}
-.sidebar.collapsed i{
-    font-size: 20px;
-    margin-top: 20px;
-    margin-left: 0px;
-    transition: transform 0.3s ease;
-}
-.sidebar.collapsed .logodiv .logo{
-    height: 50px;
-    width: 50px;
-    margin-top: 20px;
-}
-.sidebar.collapsed .option{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-.sidebar.collapsed .option:hover{
-    background-color: transparent;
-}
-.sidebar.collapsed .option.active{
-    background-color: transparent;
-}
-.sidebar.collapsed .option i:hover{
-    transform: scale(1.1);
-}
+
 .logodiv{
     display: flex;
     justify-items: center;
