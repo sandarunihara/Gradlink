@@ -1,0 +1,200 @@
+.pro_container{
+    width: 1150px;
+    margin-top: 30px;
+    /* margin-bottom: 50px; */
+    margin-right: 50px;
+    margin-bottom: 50px;
+    padding: 0px 10px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    background: #E9EDFF;
+    box-shadow: 0 0 5px #ccc;
+}
+.backreq{
+    width: fit-content;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    transition: 0.3s;
+}
+.backreq:hover{
+    color: #ff0000;
+}
+.stu_details{
+    margin-top: 10px;
+    margin-left: 30px;
+}
+.stu_pro{
+    display: flex;
+    gap: 80px;
+    margin-top: 10px;
+}
+.stu_pro img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #494949;
+}
+.stu_info{
+    margin-top: 10px;
+}
+.stu_info span{
+    font-size: 30px;
+    font-weight: 600;
+}
+.mail_no{
+    margin-top: -10px;
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.acc_link{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.acc_link i{
+    font-size: 20px;
+}
+.fa-linkedin{
+    color: #005fc4;
+}
+.acc_link a{
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.acc_link a:hover{
+    color: #2f00ff;
+}
+.stu_pro_skill{
+    margin-top: 50px;
+}
+.skills{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.skills p{
+    margin: 0;
+    background-color: #FFFFFF;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: #D2D2D2 1px solid;
+}
+.topic1{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.topic1 i{
+    transition: transform 0.3s ease;
+}
+.cetificates a{
+    text-decoration: none;
+    color: #2f00ff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.cetificates a:hover{
+    color: #ff0000;
+}
+.cv{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 30px;
+}
+.cv i{
+    font-size: 20px;
+}
+.cv a{
+    text-decoration: none;
+    color: #2f00ff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.cv a:hover{
+    color: #ff0000;
+}
+.all_ar{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.acce_rej{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    background-color: #FFFFFF;
+    width: fit-content;
+    padding: 5px 70px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
+    margin-top: 20px;
+}
+.btn{
+    display: flex;
+    gap: 30px;
+}
+.reject{
+    border: #ff0000 1px solid;
+    border-radius: 12px;
+    padding: 10px 30px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size:15px;
+    transition: 0.3s;
+}
+.reject:hover{
+    background-color: #ff0000;
+    color: #ffffff;
+}
+.accept{
+    border: none;
+    background-color: #00EB37;
+    border-radius: 12px;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-size:15px;
+    transition: 0.3s;
+}
+.accept:hover{
+    background-color: #00BE2C;
+    color: #ffffff;
+}
+
+
+/* Toggle sections */
+
+.toggle-content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: height 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+}
+
+.toggle-content.show {
+    height: auto; /* Allows the content to expand based on its full height */
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.topic1 i {
+    transition: transform 0.3s ease; /* Smooth icon rotation */
+}
+
+.rotate {
+    transform: rotate(90deg); /* Rotate icon downwards */
+}
+
+
+

@@ -91,7 +91,7 @@
                                                     <option value="reject">Reject</option>
                                                 </select>
                                             </td>
-                                            <td><button class="view-profile-btn">View Profile</button></td>
+                                            <td><a href="../Studentpro/dashboard"><button class="view-profile-btn">View Profile</button></a></td>
                                         </tr>
                                         <tr>
                                             <td>Sandaru Nihara</td>
