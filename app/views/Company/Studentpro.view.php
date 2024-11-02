@@ -117,8 +117,8 @@
                             <div class="acce_rej">
                                 <h3>Action :</h3>
                                 <div class="btn">
-                                    <button class="reject">Reject</button>
-                                    <button class="accept">Accept</button>
+                                    <button onclick="openrejectModal()" class="reject">Reject</button>
+                                    <button onclick="openconfirmModal()" class="accept">Accept</button>
                                 </div>
                             </div>
                         </div>
@@ -128,6 +128,30 @@
 
         </div>
     </div>
+
+    <!-- confirmation-modal -->
+    <div id="accept-modal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to Shortlist this Student?</p>
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="">Yes</button>
+                <button class="updateno-btn" onclick="closeconfirmModal()">No</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="reject-modal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to Reject this Student?</p>
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="">Yes</button>
+                <button class="updateno-btn" onclick="closerejectModal()">No</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         function toggleSection(sectionId, iconId) {
@@ -149,9 +173,28 @@
             // Toggle icon rotation
             icon.classList.toggle('rotate');
         }
+
+        // Get the modal
+        function openconfirmModal() {
+            document.getElementById('accept-modal').style.display = 'block';
+            modal.style.display = 'flex'; // Use flex for centering modal
+        }
+
+        function closeconfirmModal() {
+            document.getElementById('accept-modal').style.display = 'none';
+        }
+        
+        
+        
+        function openrejectModal() {
+            document.getElementById('reject-modal').style.display = 'block';
+            modal.style.display = 'flex'; // Use flex for centering modal
+        }
+
+        function closerejectModal() {
+            document.getElementById('reject-modal').style.display = 'none';
+        }
     </script>
-
-
 
 
 </body>

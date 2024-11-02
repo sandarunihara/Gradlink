@@ -62,6 +62,8 @@
                                 </a>
                             </div>
                         </div>
+                        <input type="text" id="searchInput" placeholder="Search position...">
+
                         <div class="allpost">
                             <?php if (isset($data) && !empty($data)): ?>
                                 <?php foreach ($data as $advertisement): ?>
@@ -71,10 +73,10 @@
                                             <a href="../Advertisements/send/<?php echo $advertisement->id; ?>" class="top-left-link">View</a>
                                         </div>
                                         <div class="postdetails">
-                                            <p>Position:<span><?php echo $advertisement->position; ?></span></p>
-                                            <p>type:<span><?php echo $advertisement->worktype; ?></span></p>
+                                            <p>Position:<span class="position"><?php echo $advertisement->position; ?></span></p>
+                                            <p>Type:<span><?php echo $advertisement->worktype; ?></span></p>
                                             <p>No of interns:<span><?php echo $advertisement->interns; ?></span></p>
-                                            <p>Periods:<span><span><?php echo $advertisement->period; ?></span></p>
+                                            <p>Periods:<span><?php echo $advertisement->period; ?></span></p>
                                             <p>Deadline:<span><?php echo $advertisement->deadline; ?></span></p>
                                         </div>
                                     </div>
@@ -90,6 +92,21 @@
     </div>
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const postcards = document.querySelectorAll('.postcard');
+
+            postcards.forEach(card => {
+                const position = card.querySelector('.position').textContent.toLowerCase();
+                if (position.includes(searchValue)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
