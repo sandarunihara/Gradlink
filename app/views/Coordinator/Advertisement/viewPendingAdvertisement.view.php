@@ -7,7 +7,7 @@
     <title>Register Company</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/viewPendingCompany.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Advertisement/viewPendingAdvertisement.css">
 </head>
 
 <body>
