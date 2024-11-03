@@ -26,7 +26,7 @@
         </div>
         <div class="nav-item">
             <i class="material-icons">event</i>
-            <a href="#">Sessions</a>
+            <a href="/GRadlink/public/dashboardSession">Sessions</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">help</i>
