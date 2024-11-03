@@ -14,7 +14,7 @@
         </div>
         <div class="nav-item">
             <i class="material-icons">school</i>
-            <a href="#">Students</a>
+            <a href="/GRadlink/public/dashboardStudent">Students</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">tab</i>
