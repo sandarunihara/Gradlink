@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advertisements</title>
+    <title>Students</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Student/dashboardStudent.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
@@ -33,9 +33,9 @@
 
             <section class="company-list">
                 <div class="list-header">
-                    <h2>Ongoing Advertisement List</h2>
+                    <h2>Registered Students</h2>
                     <div class="search-box">
-                        <input type="text" placeholder="Search Company" />
+                        <input type="text" placeholder="Search Students" />
                         <button> Search
                         </button>
                     </div>
@@ -43,75 +43,48 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Company Name</th>
-                            <th>Position</th>
-                            <th>No of Interns</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Registration No.</th>
+                            <th>Index No.</th>
+                            <th>Name</th>
+                            <th>NIC</th>
+                            <th>Degree</th>
+                            <th>Year</th>
+                            <th>email</th>
+                            <th>Contact No</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>WSO2</td>
-                            <td>Software Engineer</td>
+                            <td>2022/CS/123</td>
+                            <td>22001235</td>
+                            <td>D.M. Perera</td>
+                            <td>200223900437</td>
+                            <td>CS</td>
                             <td>2</td>
-                            <td>10/10/2024</td>
-                            <td>30/10/2024</td>
+                            <td>dinuth@gmail.com</td>
+                            <td>0771345678</td>
                             <td><button class="view-btn">View</button></td>
-                            <!-- View -> Go to the advertisement -->
+                            <!-- View -> Go to the student profile -->
                         </tr>
                         <tr>
-                            <td>WSO2</td>
-                            <td>QA</td>
-                            <td>5</td>
-                            <td>10/10/2024</td>
-                            <td>30/10/2024</td>
+                            <td>2022/CS/123</td>
+                            <td>22001235</td>
+                            <td>D.M. Perera</td>
+                            <td>200223900437</td>
+                            <td>CS</td>
+                            <td>2</td>
+                            <td>dinuth@gmail.com</td>
+                            <td>0771345678</td>
                             <td><button class="view-btn">View</button></td>
+                            <!-- View -> Go to the student profile -->
                         </tr>
-                        <!-- Add more rows as needed -->
                     </tbody>
                 </table>
 
             </section>
 
-            <!-- Pending Advertisements -->
-            <section class="company-list">
-                <div class="list-header">
-                    <h2>Pending Advertisements</h2>
-
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Position</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Creative Pixels</td>
-                            <td>UI Designer</td>
-                            <td>10/10/2024</td>
-                            <td>20/10/2024</td>
-                            <td>
-                                <select class="status-btn" id="status" name="status">
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                </select>
-                            </td>
-                            <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-
-            </section>
+            
 
         </main>
     </div>
