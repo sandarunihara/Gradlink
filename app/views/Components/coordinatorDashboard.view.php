@@ -22,7 +22,7 @@
         </div>
         <div class="nav-item">
             <i class="material-icons">article</i>
-            <a href="#">Applications</a>
+            <a href="/GRadlink/public/dashboardApplication">Applications</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">event</i>
