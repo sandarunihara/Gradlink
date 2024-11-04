@@ -1,0 +1,83 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #C4D9EF;
+    overflow-y: hidden;
+}
+.f-container{
+    width: 100%;
+    height: 100vh;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+    margin-top:50px;
+}
+h1{
+    font-size: 50px;
+    color: #000000;
+}
+.topic{
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+.users{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.role{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.role a{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    background-color: white;
+    border: #0984E3 2px solid;
+    padding: 10px 90px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #000000;
+    transition: 0.3s;
+}
+.role a:hover{
+    background-color: #0984E3;
+}
+
+/* Exit animation for home */
+.page-exit {
+    animation: slideOutLeft 1s forwards; /* Duration set to 1s */
+}
+
+@keyframes slideOutLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+/* Entrance animation for users */
+.page-enter {
+    animation: slideInRight 0.5s forwards; /* Duration set to 1s */
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
