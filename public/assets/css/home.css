@@ -246,3 +246,37 @@ i:hover{
     opacity: 0;
     transform: translateX(100%); /* Slide out to the left */
 }
+
+
+/* Exit animation for home */
+.page-exit {
+    animation: slideOutLeft 0.5s forwards; /* Duration set to 1s */
+}
+
+@keyframes slideOutLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+/* Entrance animation for users */
+.page-enter {
+    animation: slideInRight 1s forwards; /* Duration set to 1s */
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
