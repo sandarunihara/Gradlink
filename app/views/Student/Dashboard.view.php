@@ -36,7 +36,7 @@
                 </div>
                 
                 <div>
-                    <h2>Good morning Nayana!</h2>
+                    <h2 id="greeting"></h2>
                 </div>
 
                 <div class="d_main">
@@ -67,3 +67,18 @@
         </div>
 </body>
 </html>
+<script>
+    function greeting(){
+        const currentHour = new Date().getHours();
+        let greetingMessage;
+        if (currentHour < 12){
+            greetingMessage = "Good Morning";
+        } else if (currentHour < 18){
+            greetingMessage = "Good Afternoon";
+        } else {
+            greetingMessage = "Good Evening";
+        }
+        return greetingMessage;
+    }
+    document.getElementById("greeting").textContent = greeting();
+</script>
