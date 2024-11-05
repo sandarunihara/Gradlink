@@ -27,10 +27,10 @@
                             <i class="fas fa-bell"></i>
                         </div>
                         <div>
-                        <a href='../Profile/dashboard'>
-                            <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
-                            <p><span>WSO2</span>Company</p>
-                        </a>
+                            <a href='../Profile/dashboard'>
+                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
+                                <p><span>WSO2</span>Company</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <!-- Form data -->
-                    <form class="sub_container" method="POST" action="">
+                    <form id="ad-form" class="sub_container" method="POST" action="">
                         <div class="position">
                             <h4>Position:</h4>
                             <select id="position" name="position" required>
@@ -64,14 +64,14 @@
                         <div class="perioddeadline">
                             <div class="period">
                                 <h4>Internship Period:</h4>
-                                <input type="text" id="period" name="period" required/>
+                                <input type="text" id="period" name="period" required />
                             </div>
                             <div class="period">
                                 <h4>Application deadline:</h4>
-                                <input type="date" id="deadline" name="deadline" required/>
+                                <input type="date" id="deadline" name="deadline" required />
                             </div>
                         </div>
-                        
+
                         <div class="internt">
                             <div class="interns">
                                 <h4>No of interns:</h4>
@@ -94,29 +94,138 @@
                         <div class="addimg">
                             <h4>Add Image:</h4>
                             <input type="file" id="image" />
+                            <!-- this is not in the script  -->
                         </div>
-                            <button type="submit" id="submit" class="sc_btn">
-                                Submit
-                            </button>
+                        <button type="submit" class="sc_btn" onclick="validateAndShowModal(event)">
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!--    **************** MODAL *******************      -->
+
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-details">
+                <div class="image">
+                    <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
+                </div>
+                <div class="inform">
+                    <h4>Position:<span> </span></h4>
+                    <h4>Internship Period:<span></span></h4>
+                    <h4>No of interns:<span></span></h4>
+                    <h4>Work type:<span></span></h4>
+                    <h4>Application deadline:<span></span></h4>
+                </div>
+            </div>
+            <div class="Qua-des">
+                <div class="Qualifications">
+                    <h4>Qualifications:</h4>
+                    <div class="q-details">
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="Description">
+                    <h4>Description:</h4>
+                    <div class="d-details">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="cancel-btn" onclick="closeConfirmationModal()">Cancel</button>
+                <div class="btn-m">
+                    <a href="../Advertisements/dashboard">
+                        <button class="no-btn">Discard</button>
+                    </a>
+                        <button class="yes-btn" onclick="submitForm()">Post</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
     <script>
         function increment() {
-            let count = document.getElementById('interns-count').value;
+            let count = document.getElementById('interns').value;
             count = parseInt(count) + 1;
-            document.getElementById('interns-count').value = count;
+            document.getElementById('interns').value = count;
         }
 
         function decrement() {
-            let count = document.getElementById('interns-count').value;
+            let count = document.getElementById('interns').value;
             if (count > 1) { // Prevent going below 1
                 count = parseInt(count) - 1;
-                document.getElementById('interns-count').value = count;
+                document.getElementById('interns').value = count;
             }
         }
+
+
+        // Get the modal popup
+
+        function validateAndShowModal(event) {
+            event.preventDefault();
+            // Validate form data before opening modal
+            const position = document.getElementById('position').value;
+            const description = document.getElementById('description').value;
+            const qualifications = document.getElementById('qualifications').value;
+            const period = document.getElementById('period').value;
+            const deadline = document.getElementById('deadline').value;
+            const interns = document.getElementById('interns').value;
+            const worktype = document.getElementById('worktype').value;
+            // image is not in the script
+
+            if (!position || !description || !qualifications || !period || !deadline || !interns || !worktype) {
+                errorToast("Please fill in all required fields.");
+                return;
+            }
+
+            // Update the modal content with the form data
+            document.querySelector('.modal-details h4:nth-child(1) span').textContent = position;
+            document.querySelector('.modal-details h4:nth-child(2) span').textContent = period;
+            document.querySelector('.modal-details h4:nth-child(3) span').textContent = interns;
+            document.querySelector('.modal-details h4:nth-child(4) span').textContent = worktype;
+            document.querySelector('.modal-details h4:nth-child(5) span').textContent = deadline;
+            
+            document.querySelector('.q-details p').textContent = qualifications;
+            document.querySelector('.d-details p').textContent = description;
+
+            // Show confirmation modal if form is valid
+            openConfirmationModal();
+        }
+
+        function openConfirmationModal() {
+            document.getElementById('confirmation-modal').style.display = 'block';
+            modal.style.display = 'flex'; // Use flex for centering modal
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('confirmation-modal').style.display = 'none';
+
+            // const modal = document.getElementById("confirmation-modal");
+            // modal.classList.add("fade-out");
+
+            // // Hide the modal after the animation ends
+            // modal.addEventListener("animationend", function () {
+            //     modal.style.display = "none";
+            //     modal.classList.remove("fade-out"); // Remove class after the animation
+            // });
+
+        }
+
+        function submitForm() {
+            document.getElementById('ad-form').submit();
+            successToast("Advertisement created successfully");
+        }
+
+
     </script>
 </body>
 

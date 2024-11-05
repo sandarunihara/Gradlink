@@ -12,13 +12,14 @@
     border-bottom-right-radius: 10px;
 }
 .d_allsummery{
-    margin-top: 10px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 .stats {
     display: flex;
+    width: 100%;
     gap: 20px;
     margin-right: 20px;
 }
@@ -30,7 +31,7 @@
     padding: 40px;
     color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.5s ease,border-left 0.3s ease;
+    transition: transform 0.3s ease,border-left 0.3s ease;
 }
 .stat-card:hover{
     transform: scale(1.05);
@@ -49,7 +50,8 @@
     background-color: #E9EDFF;
     padding-top: 1px;
     padding-left: 15px;
-    padding-bottom: 5px;
+    padding-right: 15px;
+    padding-bottom: 10px;
     margin-top: 15px;
     border-radius: 10px;
     transition: transform 0.7s ease;
@@ -57,11 +59,11 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .d_request:hover{
-    transform: scale(1.05);
+    transform: scale(1.02);
+    
 }
 .d_alllist{
     background-color: white;
-    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
@@ -96,12 +98,24 @@
 }
 
 .d_view_all{
+    opacity: 0;
     text-align: right;
+    transition: opacity 0.5s ease;
+}
+.d_request:hover .d_view_all{
+    opacity: 1;
 }
 .d_view_all a{
     text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: -10px;
+    align-items: center;
     color: black;
-    margin-right: 20px;
+    margin-right: 5px;
+    transition: color 0.5s ease;
+}
+.d_view_all a:hover{
+   color: #007bff;
 }
 .d_infor{
     background-color: #E9EDFF;

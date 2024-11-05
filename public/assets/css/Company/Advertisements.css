@@ -4,7 +4,6 @@
     border-radius: 10px;
     margin-right: 50px;
     height: 620px;
-    width: 110%;
     overflow-y: auto;
 }
 .stats {
@@ -38,7 +37,25 @@
     margin: 10px 0 0;
 }
 .allpost{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1200px) {
+    .allpost {
+        grid-template-columns: repeat(3, 1fr); /* 3 postcards per row for smaller screens */
+    }
+}
+
+@media (max-width: 800px) {
+    .allpost {
+        grid-template-columns: repeat(2, 1fr); /* 2 postcards per row for tablets */
+    }
+}
+
+@media (max-width: 500px) {
+    .allpost {
+        grid-template-columns: 1fr; /* 1 postcard per row for mobile */
+    }
 }
 .postcard{
     display: flex;
@@ -46,7 +63,7 @@
     color: black;
     flex-direction: column;
     background-color: #E9EDFF;
-    width: 300px;
+    width: 270px;
     height: 420px;
     padding-bottom: 5px;
     margin-top: 15px;
@@ -58,7 +75,7 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .postcard:hover{
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 .postcard img{
     width: 100%;

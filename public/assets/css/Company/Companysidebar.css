@@ -6,40 +6,7 @@
     position: relative;
 }
 
-.sidebar.collapsed .sidebaroption {
-    height: 630px;
-    margin-top: 50px;
-}
-.sidebar.collapsed {
-    width: 75px; 
-    display: flex;
-    flex-direction: column;
-}
-.sidebar.collapsed .text {
-    display: none;
-}
-.sidebar.collapsed i{
-    font-size: 20px;
-    margin-top: 20px;
-    margin-left: 0px;
-    transition: transform 0.3s ease;
-}
-.sidebar.collapsed .logodiv .logo{
-    height: 50px;
-    width: 50px;
-    margin-top: 20px;
-}
-.sidebar.collapsed .option{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-.sidebar.collapsed .option:hover{
-    background-color: transparent;
-}
-.sidebar.collapsed .option i:hover{
-    transform: scale(1.1);
-}
+
 .logodiv{
     display: flex;
     justify-items: center;
@@ -64,7 +31,7 @@
     gap: 20px;
     align-items: center;
     margin-top: 10px;
-    border-radius: 15px;
+    border-radius: 10px;
     transition: background-color 0.1s, color 0.1s;
     cursor: pointer;
     text-decoration: none;
@@ -95,4 +62,14 @@
 }
 .logout{
     margin-top:50px ;
+}
+
+
+.option.active {
+    background-color: white; /* Change the background color of the active item */
+}
+
+.option.active i,
+.option.active p {
+    color: black; /* Change the text and icon color for the active item */
 }

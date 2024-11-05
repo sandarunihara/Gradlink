@@ -3,12 +3,6 @@
         <img src="<?php echo ROOT ?>/assets/img/grad.png" height="200" width="200" class="logo" />
     </div>
     <div id="sidebaroption" class="sidebaroption ">
-        <a class="option dash" id="toggleSidebar">
-            <i class="fas fa-bars"></i>
-            <div class="text">
-                <p>Close Sidebar</p>
-            </div>
-        </a>
         <a class="option dash" href="../Companydash/Dashboard">
             <i class="fas option-i fa-home"></i>
             <div class="text">
@@ -63,9 +57,23 @@
 </div>
 
 <script>
-    document.getElementById("toggleSidebar").addEventListener("click", function () {
-    var sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("collapsed");
+
+//     document.getElementById("toggleSidebar").addEventListener("click", function () {
+//     var sidebar = document.getElementById("sidebar");
+//     sidebar.classList.toggle("collapsed");
+// });
+
+// Function to set the active class based on the current URL
+document.addEventListener("DOMContentLoaded", function () {
+    var links = document.querySelectorAll(".option"); 
+    var fullPath = window.location.pathname; //  "/Gradlink/public/Companydash/Dashboard"
+    var relativePath = fullPath.replace("/Gradlink/public/company", "..");
+
+    links.forEach(function (link) {
+        if (link.getAttribute("href") === relativePath) {
+            link.classList.add("active");
+        }
+    });
 });
 
 </script>
