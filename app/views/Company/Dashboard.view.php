@@ -3,9 +3,12 @@
 
 <head>
     <title>Document</title>
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css"> 
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">   
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="<?php echo ROOT ?>/assets/js/Cscript.js" defer></script>
 </head>
 
 <body class="body">
@@ -21,12 +24,24 @@
                     </div>
                     <div class="d_pro">
                         <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
+                            <a href="../companydash/calendar">
+                                <i class="fas fa-calendar-alt"></i>
+                            </a>
+                            <div class="notification-wrapper">
+                                <div class="notification-icon" onclick="toggleDropdown()" >
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div id="notificationDropdown" class="dropdown-content">
+                                    <i class="fas fa-close" onclick="toggleclose()"></i>
+                                    <p>No new notifications</p>
+                                </div>
+                            </div>
                         </div>
                         <div>
+                            <a href='../Profile/dashboard'>
                             <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
                             <p><span>WSO2</span>Company</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -93,7 +108,7 @@
                                 </ul>
                             </div>
                             <div class="d_view_all">
-                                <a href="#">
+                                <a href="../StudentsRequests/dashboard">
                                     View All
                                     <i class="fas fa-arrow-right"></i>
                                 </a>

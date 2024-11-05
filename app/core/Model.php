@@ -5,6 +5,9 @@
     Trait Model{
         use Database;
 
+        
+
+        public $errors = [];
         protected $limit = 10;
         protected $offset = 0;
         protected $order_type ='desc';
@@ -35,6 +38,8 @@
             $data = array_merge($data, $data_not);
             return $this->query($query, $data);
         }
+
+
         public function first($data, $data_not = []){
             $keys = array_keys($data);
             $keys_not = array_keys($data_not);
@@ -56,6 +61,8 @@
                 return $result[0];
             return false;
         }
+
+
         public function insert($data){
         
             /*remove unwanted data*/
@@ -71,41 +78,68 @@
             $query = "INSERT INTO $this->table (".implode(",", $keys).") VALUES (:".implode(", :", $keys).")";
             //echo $query;
             $this->query($query, $data);
-            return false;
+            return true;
         }
-        public function update($id, $data, $id_column ='id'){
 
-            /*remove unwanted data*/
-            if(!empty($this->allowedColumns)){
-                foreach ($data as $key => $value) {
-                    if(!in_array($key, $this->allowedColumns)){
-                        unset($data[$key]);
+
+        public function update($id, $data, $id_column = 'id') {
+
+            try {
+                /* Remove unwanted data */
+                if (!empty($this->allowedColumns)) {
+                    foreach ($data as $key => $value) {
+                        if (!in_array($key, $this->allowedColumns)) {
+                            unset($data[$key]);
+                        }
                     }
                 }
+        
+                $keys = array_keys($data);
+                $query = "UPDATE $this->table SET ";
+        
+                foreach ($keys as $key) {
+                    $query .= $key . " = :$key, ";
+                }
+        
+                $query = trim($query, ", ");
+                $query .= " WHERE $id_column = :$id_column";
+        
+                // Add the ID to the data array
+                $data[$id_column] = $id;
+        
+                // Execute the query
+                $this->query($query, $data);
+        
+                // Return a success message if update is successful
+                return [
+                    'status' => 'success',
+                    'message' => 'Record updated successfully.'
+                ];
+        
+            } catch (Exception $e) {
+                // Catch any errors and return an error message
+                return [
+                    'status' => 'error',
+                    'message' => 'Failed to update record: ' . $e->getMessage()
+                ];
             }
-            
-            $keys = array_keys($data);
-            $query = "UPDATE $this->table SET ";
-            
-            foreach ($keys as $key) {
-                $query .= $key . " = :". $key . ", ";
-            }
+        }
+        
 
-            $query = trim($query, ", ");
-
-            $query .= " WHERE $id_column = :$id_column";
-            //echo $query;
-            
+        
+        public function delete($id, $id_column = 'id') {
             $data[$id_column] = $id;
-            $this->query($query, $data);
-            
-            return false;
-        }
-        public function delete($id, $id_column ='id'){
-            $data [$id_column] = $id;
             $query = "DELETE FROM $this->table WHERE $id_column = :$id_column";
-            //echo $query;
-            $this->query($query, $data);
-            return false;
+        
+            // Execute the query
+            $stmt = $this->query($query, $data);
+
+            // Check if any rows were affected (deleted)
+            if ($stmt->rowCount() > 0) {
+                return "Record deleted successfully.";
+            } else {
+                return "Error: Record could not be deleted.";
+            }
         }
+        
     }
