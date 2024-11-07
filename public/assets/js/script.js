@@ -1,4 +1,4 @@
-function naviagteToViewCompany() {
+function navigateToViewCompany() {
     window.location.href = "/Gradlink/public/viewCompany";
 }
 
