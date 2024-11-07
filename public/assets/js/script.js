@@ -6,7 +6,7 @@ function navigateToAddCompany() {
     window.location.href = "/Gradlink/public/addCompany";
 }
 
-function naviagteToViewPendingCompany() {
+function navigateToViewPendingCompany() {
     window.location.href = "/Gradlink/public/viewPendingCompany";
 }
 
@@ -14,8 +14,8 @@ function navigateToBlockList() {
     window.location.href = "/Gradlink/public/blockedCompanies";
 }
 
-function naviagteToDashboardCompany() {
-    alert("hey");
+function navigateToDashboardCompany() {
+    // alert("hey");
     window.location.href = "/Gradlink/public/dashboardCompany";
 }
 
