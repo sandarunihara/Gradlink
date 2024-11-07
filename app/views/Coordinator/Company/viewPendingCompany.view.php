@@ -7,6 +7,7 @@
     <title>Register Company</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/viewPendingCompany.css">
 </head>
 
@@ -31,6 +32,9 @@
                     </div>
                 </div>
             </header>
+
+            <?php $this->renderComponent("companyTabs") ?>
+
             <section class="company-info">
                 <form class="company-form">
                     <div class="form-group">

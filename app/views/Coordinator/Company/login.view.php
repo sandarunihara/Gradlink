@@ -27,7 +27,7 @@
                     <label for="remember">Remember me</label>
                     <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
-                <button type="submit" class="login-btn" onclick="naviagteToDashboardCompany();">Login</button>
+                <button type="submit" class="login-btn" onclick="navigateToDashboardCompany();">Login</button>
             </form>
             <div class="register-link">
                 Not registered yet? <a href="#">Create a new account</a>

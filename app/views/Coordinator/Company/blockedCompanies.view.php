@@ -7,6 +7,7 @@
     <title>Companies</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Company/blockedCompanies.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
 </head>
 
@@ -31,6 +32,8 @@
                     </div>
                 </div>
             </header>
+
+            <?php $this->renderComponent("companyTabs") ?>
 
             <!-- Pending Companies -->
             <section class="company-list">
