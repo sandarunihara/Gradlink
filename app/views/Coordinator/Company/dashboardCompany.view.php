@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/dashboardCompany.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
 
 </head>
 
@@ -30,15 +31,12 @@
                 </div>
             </header>
 
-            <!-- Tabs Section -->
-            <div class="tabs">
-                <button class="tab-button active" onclick="openTab(event, 'company-list')">Company List</button>
-                <button class="tab-button" onclick="openTab(event, 'pending-companies')">Pending Companies</button>
-            </div>
+            <?php $activeTab = 'company-list'; ?>
+            <?php $this->renderComponent("companyTabs") ?>
 
             <div class="tab-content">
                 <!-- Company List Tab -->
-                <div id="company-list" class="tab-pane active">
+                <div id="company-list" class="tab-pane active ">
                     <section class="company-list">
                         <div class="list-header">
                             <h2>Company List</h2>
@@ -63,7 +61,7 @@
                                     <td>Tharindu Perera</td>
                                     <td>tharindu@gmail.com</td>
                                     <td>071 273 4321</td>
-                                    <td><button class="view-btn" onclick="navigateToViewCompany();"  >View</button></td>
+                                    <td><button class="view-btn" onclick="navigateToViewCompany();">View</button></td>
                                 </tr>
                                 <!-- Add more rows as needed -->
                             </tbody>
@@ -75,41 +73,13 @@
                     </section>
                 </div>
 
-                <!-- Pending Companies Tab -->
-                <div id="pending-companies" class="tab-pane">
-                    <section class="company-list">
-                        <div class="list-header">
-                            <h2>Pending Companies</h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Company Name</th>
-                                    <th>Contact Person</th>
-                                    <th>Email</th>
-                                    <th>Contact Number</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>WSO2</td>
-                                    <td>Tharindu Perera</td>
-                                    <td>tharindu@gmail.com</td>
-                                    <td>071 273 4321</td>
-                                    <td><button class="view-btn" onclick="navigateToViewPendingCompany();">View</button></td>
-                                </tr>
-                                <!-- Add more rows as needed -->
-                            </tbody>
-                        </table>
-                    </section>
-                </div>
+
             </div>
         </main>
     </div>
 
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
-    <script>
+    <!-- <script>
         // JavaScript for Tabs
         function openTab(event, tabId) {
             const tabButtons = document.querySelectorAll(".tab-button");
@@ -123,7 +93,7 @@
             event.currentTarget.classList.add("active");
             document.getElementById(tabId).classList.add("active");
         }
-    </script>
+    </script> -->
 </body>
 
 </html>
