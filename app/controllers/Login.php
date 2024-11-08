@@ -14,15 +14,19 @@ class Login
             switch($userNum){
                 case 9:
                     $user = new Student;
+					$path = 'Student/StudentDash/Dashboard';
                     break;
                 case 4:
                     $user = new Company;
+					$path = 'Company/CompanyDash/Dashboard';
                     break;
                 case 5:
                     $user = new PDCAssistant;
+					$path = 'PDCAssistant/PDCAssistantDash/Dashboard';
                     break;
                 case 12:
                     $user = new PDCCoordinator;
+					$path = 'PDCCoordinator/PDCCoordinatorDash/Dashboard';
                     break;
                 default:
                     
@@ -38,7 +42,7 @@ class Login
 				if($row->PASSWORD === $_POST['password'])
 				{
 					$_SESSION['USER'] = $row;
-					redirect('home');
+					redirect($path);
 				}
 			}
 
