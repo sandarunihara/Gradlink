@@ -30,7 +30,7 @@
         </div>
         <div class="nav-item">
             <i class="material-icons">help</i>
-            <a href="#">Complain</a>
+            <a href="#">Complains</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">account_circle</i>

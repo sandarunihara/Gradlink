@@ -38,14 +38,11 @@
             <div class="tab-content">
                 <div id="applications-list" class="tab-pane active ">
 
+                    <!-- Working Students -->
                     <section class="company-list">
                         <div class="list-header">
-                            <h2>Applications</h2>
-                            <div class="search-box">
-                                <input type="text" placeholder="Search Students" />
-                                <button> Search
-                                </button>
-                            </div>
+                            <h2>Working Students</h2>
+
                         </div>
                         <table>
                             <thead>
@@ -53,9 +50,12 @@
                                     <th>Registration No.</th>
                                     <th>Name</th>
                                     <th>Degree</th>
-                                    <th>Applied Company</th>
+                                    <th>Company</th>
                                     <th>Position</th>
-                                    <th>Advertisement ID</th>
+                                    <th>Email</th>
+                                    <th>Duration</th>
+                                    <th>Started Date</th>
+                                    <th>Ending Date</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -63,28 +63,22 @@
                             <tbody>
                                 <tr>
                                     <td>2022/CS/123</td>
-                                    <td>D.M. Perera</td>
+                                    <td>T.Y. Silva</td>
                                     <td>CS</td>
                                     <td>WSO2</td>
                                     <td>Software Engineer</td>
-                                    <td>003</td>
-                                    <td>
-                                        <select class="status-btn" id="status" name="status">
-                                            <option value="pending">Pending</option>
-                                            <option value="approved">Approved</option>
-                                            <option value="rejected">Rejected</option>
-                                        </select>
-                                    </td>
+                                    <td>thisal@gmail.com</td>
+                                    <td>6 months</td>
+                                    <td>2024/10/14</td>
+                                    <td>2025/04/14</td>
+                                    <td>working</td>
                                     <td><button class="view-btn">View Profile</button></td>
-                                    <!-- View -> Go to the student profile -->
                                 </tr>
-
+                                <!-- Add more rows as needed -->
                             </tbody>
                         </table>
 
                     </section>
-
-                    
                 </div>
             </div>
 
