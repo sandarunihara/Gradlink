@@ -18,7 +18,7 @@
             <header class="header">
                 <div class="header-left">
                     <i class="material-icons">menu</i>
-                    <h1>Advertisements</h1>
+                    <h1> Advertisements</h1>
                 </div>
 
                 <div class="header-right">
@@ -36,52 +36,45 @@
             <?php $this->renderComponent("advertisementTabs") ?>
 
             <div class="tab-content">
-                <div id="ongoingad-list" class="tab-pane active ">
+                <div id="pendingad-list" class="tab-pane active ">
+
+                    <!-- Pending Advertisements -->
                     <section class="company-list">
                         <div class="list-header">
-                            <h2>Ongoing Advertisement List</h2>
-                            <div class="search-box">
-                                <input type="text" placeholder="Search Company" />
-                                <button> Search
-                                </button>
-                            </div>
+                            <h2>Pending Advertisements</h2>
+
                         </div>
                         <table>
                             <thead>
                                 <tr>
                                     <th>Company Name</th>
                                     <th>Position</th>
-                                    <th>No of Interns</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>WSO2</td>
-                                    <td>Software Engineer</td>
-                                    <td>2</td>
+                                    <td>Creative Pixels</td>
+                                    <td>UI Designer</td>
                                     <td>10/10/2024</td>
-                                    <td>30/10/2024</td>
-                                    <td><button class="view-btn">View</button></td>
-                                    <!-- View -> Go to the advertisement -->
-                                </tr>
-                                <tr>
-                                    <td>WSO2</td>
-                                    <td>QA</td>
-                                    <td>5</td>
-                                    <td>10/10/2024</td>
-                                    <td>30/10/2024</td>
-                                    <td><button class="view-btn">View</button></td>
+                                    <td>20/10/2024</td>
+                                    <td>
+                                        <select class="status-btn" id="status" name="status">
+                                            <option value="pending">Pending</option>
+                                            <option value="approved">Approved</option>
+                                            <option value="rejected">Rejected</option>
+                                        </select>
+                                    </td>
+                                    <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
                                 </tr>
                                 <!-- Add more rows as needed -->
                             </tbody>
                         </table>
 
                     </section>
-                </div>
-            </div>
 
         </main>
     </div>
