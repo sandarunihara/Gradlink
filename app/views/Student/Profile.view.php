@@ -35,32 +35,32 @@
             <div>
     <div>
     <div>
-        Profile picture
+        <h1>Profile picture</h1>
     </div>
     <div>
-        interested areas
+        <h1>interested areas</h1>
     </div>
     <div>
-        short description
+        <h1>short description</h1>
     </div>
     <div>
-        User details
-        <h1>Full Name:</h1>
-        <h1>Email:</h1>
-        <h1>Degree Name:</h1>
-        <h1>Registration Name:</h1>
-        <h1>Contact Number:</h1>
-        <h1>Likedin Profile:</h1>
-        <h1>Github Profile:</h1>
+        <h1>User details</h1>
+        <h2>Full Name:</h2>
+        <h2>Email:</h2>
+        <h2>Degree Name:</h2>
+        <h2>Registration Name:</h2>
+        <h2>Contact Number:</h2>
+        <h2>Likedin Profile:</h2>
+        <h2>Github Profile:</h2>
     </div>
     <div>
-        Qualifications
+        <h1>Qualifications</h1>
     </div>
     <div>
-        Experience
+        <h1>Experience</h1>
     </div>
     <div>
-        Certifications
+        <h1>Certifications</h1>
     </div>
     <button>Edit</button>
     <button>Delete profile</button>
