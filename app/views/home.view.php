@@ -18,8 +18,8 @@
                 <p class="wel-s"><span class="welcome">Welcome</span> to the <br /><span class="ui">Undergraduate Internship</span></br><span class="ms"> Management System</span></p>
                 <p class="wel-p">Connecting talents with opportunities and bridging the gap </br> between academic and industry.</p>
                 <div class="btns">
-                    <a href="<?php echo ROOT ?>/Home/userrole" class="login">Login</a>
-                    <a href="<?php echo ROOT ?>/Home/userrole" class="register">Register</a>
+                    <a href="<?php echo ROOT ?>/Home/loginuserrole" class="login">Login</a>
+                    <a href="<?php echo ROOT ?>/Home/reguserrole" class="register">Register</a>
                 </div>
             </div>
             <div class="r-container">

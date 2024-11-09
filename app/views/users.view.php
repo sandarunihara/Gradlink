@@ -11,7 +11,6 @@
 
 <body>
     <div class="f-container page" id="page">
-        <!-- Content of the users.view.php -->
         <div class="logo">
             <img class="glogo" src="<?php echo ROOT ?>/assets/img/grad.png" alt="" height="200" width="300">
         </div>
@@ -20,20 +19,31 @@
         </div>
         <div class="users">
             <div class="role">
-                <a href="<?php echo ROOT ?>/Home/userrole" class="student">Student</a>
-                <a href="<?php echo ROOT ?>/Home/userrole" class="company">Company</a>
-                <a href="<?php echo ROOT ?>/Home/userrole" class="admin">PDC</a>
-                <a href="<?php echo ROOT ?>/Home/userrole" class="admin">PDC Admin</a>
+                <?php
+                // Check the current URL
+                $currentUrl = $_SERVER['REQUEST_URI'];
+
+                // If the current URL matches the specified paths, set a different link
+                if ($currentUrl === '/Gradlink/public/Home/reguserrole') {
+                    $baseLink  = ROOT . '/Home/register';
+                } elseif ($currentUrl === '/Gradlink/public/Home/loginuserrole') {
+                    $baseLink  = ROOT . '/Home/login';
+                }
+                ?>
+                <a href="<?php echo $baseLink . '?role=student'; ?>" class="student">Student</a>
+                <a href="<?php echo $baseLink . '?role=company'; ?>" class="company">Company</a>
+                <a href="<?php echo $baseLink . '?role=pdc'; ?>" class="admin">PDC</a>
+                <a href="<?php echo $baseLink . '?role=pdcadmin'; ?>" class="admin">PDC Admin</a>
             </div>
         </div>
     </div>
 
     <script>
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     // Add the 'page-enter' class as soon as the page loads to trigger the entrance animation
-    //     document.body.classList.add('page-enter');
-    // });
-</script>
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     // Add the 'page-enter' class as soon as the page loads to trigger the entrance animation
+        //     document.body.classList.add('page-enter');
+        // });
+    </script>
 
 </body>
 

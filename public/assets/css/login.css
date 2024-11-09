@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #C4D9EF;
+    overflow-x: hidden;
+}
+
+.f-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    height: fit-content;
+}
+
+.login-f {
+    position: absolute;
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px white;
+    padding: 60px 10px;
+    width: 500px;
+    height: 500px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.input-box {
+    position: relative;
+    margin: 20px 0;
+    text-align: center;
+}
+
+input {
+    width: 300px;
+    height: 40px;
+    border: none;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    background: transparent;
+    margin: 10px 0;
+    padding: 0 10px;
+    font-size: 20px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+input::placeholder {
+    color: transparent; /* Hide default placeholder */
+}
+label {
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    transition: all 0.2s ease;
+    pointer-events: none; /* Prevent clicks on the label */
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    top: 1px; /* Move the label up */
+    left: 20px; /* Align with the input */
+    font-size: 14px; /* Reduce font size */
+    background-color: #C4D9EF;
+    color: rgb(0, 0, 0); /* Change color */
+}
