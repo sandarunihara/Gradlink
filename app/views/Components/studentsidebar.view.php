@@ -39,7 +39,7 @@
                 <p>Tech Talk</p>
             </div>
         </a>
-        <a class="option logout">
+        <a class="option logout" href="<?=ROOT?>/logout">
             <i class="fas fa-sign-out-alt"></i>
             <div>
                 <p>Log out</p>
