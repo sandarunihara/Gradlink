@@ -30,7 +30,7 @@
         </div>
         <div class="nav-item">
             <i class="material-icons">help</i>
-            <a href="#">Complains</a>
+            <a href="/GRadlink/public/dashboardCompanyComplain">Complains</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">account_circle</i>
