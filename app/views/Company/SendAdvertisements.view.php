@@ -261,6 +261,7 @@
             document.getElementById('workingMode').value = workingMode;
             // document.getElementById('image').value = image;
 
+            
             const modal = document.getElementById('confirmation-modal').style.display = 'block';
             modal.style.display = 'flex'; // Use flex for centering modal
         }
