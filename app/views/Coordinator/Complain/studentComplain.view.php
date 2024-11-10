@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Complain/dashboardComplain.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Application/dashboardApplication.css">
 </head>
 
 <body>
@@ -32,20 +32,17 @@
                 </div>
             </header>
 
-            <?php $activeTab = 'company-complaint-list'; ?>
+            <?php $activeTab = 'student-complaint-list'; ?>
             <?php $this->renderComponent("complaintTabs") ?>
 
             <div class="tab-content">
                 <div id="applications-list" class="tab-pane active ">
 
+                    <!-- Working Students -->
                     <section class="company-list">
                         <div class="list-header">
-                            <h2>Company Complaints</h2>
-                            <div class="search-box">
-                                <input type="text" placeholder="Search Students" />
-                                <button> Search
-                                </button>
-                            </div>
+                            <h2>Student Complaints</h2>
+
                         </div>
                         <table>
                             <thead>
@@ -53,31 +50,27 @@
                                     <th>Complaint ID</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Company </th>
                                     <th>Name</th>
+                                    <th>Registration No.</th>
                                     <th>Description</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>0001</td>
-                                    <td>2024/10/10</td>
-                                    <td>9.00am</td>
-                                    <td>WSO2</td>
-                                    <td>M.A. Perera</td>
+                                    <td>0005</td>
+                                    <td>2024/10/14</td>
+                                    <td>11.00pm</td>
+                                    <td>T.Y. Silva</td>
+                                    <td>2022/CS/034</td>
                                     <td>aaaaaaaaaaaaaa</td>
-                                    
                                     <!-- <td><button class="view-btn">View Profile</button></td> -->
-                                    <!-- View -> Go to the student profile -->
                                 </tr>
-
+                                <!-- Add more rows as needed -->
                             </tbody>
                         </table>
 
                     </section>
-
-                    
                 </div>
             </div>
 
