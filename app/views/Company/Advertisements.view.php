@@ -62,21 +62,24 @@
                                 </a>
                             </div>
                         </div>
-                        <input type="text" id="searchInput" placeholder="Search position...">
 
                         <div class="allpost">
                             <?php if (isset($data) && !empty($data)): ?>
                                 <?php foreach ($data as $advertisement): ?>
                                     <div class="postcard">
                                         <div class="image">
-                                            <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
-                                            <a href="../Advertisements/send/<?php echo $advertisement->id; ?>" class="top-left-link">View</a>
+                                            <?php if (!empty($advertisement->image)): ?>
+                                                <img src="data:image/jpeg;base64,<?php echo $advertisement->image; ?>" class="logo" />
+                                            <?php else: ?>
+                                                <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
+                                            <?php endif; ?>
+                                            <a href="../Advertisements/send/<?php echo $advertisement->advertisementId; ?>" class="top-left-link">View</a>
                                         </div>
                                         <div class="postdetails">
                                             <p>Position:<span class="position"><?php echo $advertisement->position; ?></span></p>
-                                            <p>Type:<span><?php echo $advertisement->worktype; ?></span></p>
-                                            <p>No of interns:<span><?php echo $advertisement->interns; ?></span></p>
-                                            <p>Periods:<span><?php echo $advertisement->period; ?></span></p>
+                                            <p>Type:<span><?php echo $advertisement->workingMode; ?></span></p>
+                                            <p>No of interns:<span><?php echo $advertisement->numOfInterns; ?></span></p>
+                                            <p>status:<span><?php echo $advertisement->status; ?></span></p>
                                             <p>Deadline:<span><?php echo $advertisement->deadline; ?></span></p>
                                         </div>
                                     </div>

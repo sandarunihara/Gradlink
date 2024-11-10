@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <!-- Form data -->
-                    <form id="ad-form" class="sub_container" method="POST" action="">
+                    <form id="ad-form" class="sub_container" method="POST" action="" enctype="multipart/form-data">
                         <div class="position">
                             <h4>Position:</h4>
                             <select id="position" name="position" required>
@@ -62,10 +62,6 @@
                             </div>
                         </div>
                         <div class="perioddeadline">
-                            <div class="period">
-                                <h4>Internship Period:</h4>
-                                <input type="text" id="period" name="period" required />
-                            </div>
                             <div class="period">
                                 <h4>Application deadline:</h4>
                                 <input type="date" id="deadline" name="deadline" required />
@@ -93,7 +89,7 @@
                         </div>
                         <div class="addimg">
                             <h4>Add Image:</h4>
-                            <input type="file" id="image" />
+                            <input type="file" id="image" name="image" required />
                             <!-- this is not in the script  -->
                         </div>
                         <button type="submit" class="sc_btn" onclick="validateAndShowModal(event)">
@@ -111,11 +107,10 @@
         <div class="modal-content">
             <div class="modal-details">
                 <div class="image">
-                    <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
+                    <img src="" class="logo" />
                 </div>
                 <div class="inform">
-                    <h4>Position:<span> </span></h4>
-                    <h4>Internship Period:<span></span></h4>
+                    <h4>Position:<span></span></h4>
                     <h4>No of interns:<span></span></h4>
                     <h4>Work type:<span></span></h4>
                     <h4>Application deadline:<span></span></h4>
@@ -142,7 +137,7 @@
                     <a href="../Advertisements/dashboard">
                         <button class="no-btn">Discard</button>
                     </a>
-                        <button class="yes-btn" onclick="submitForm()">Post</button>
+                    <button class="yes-btn" onclick="submitForm()">Post</button>
                 </div>
             </div>
 
@@ -172,37 +167,53 @@
 
         function validateAndShowModal(event) {
             event.preventDefault();
-            // Validate form data before opening modal
+
+            // Get form data
             const position = document.getElementById('position').value;
             const description = document.getElementById('description').value;
             const qualifications = document.getElementById('qualifications').value;
-            const period = document.getElementById('period').value;
             const deadline = document.getElementById('deadline').value;
             const interns = document.getElementById('interns').value;
             const worktype = document.getElementById('worktype').value;
-            // image is not in the script
+            const image = document.getElementById('image').files[0];
 
-            if (!position || !description || !qualifications || !period || !deadline || !interns || !worktype) {
+            const maxFileSize = 5 * 1024 * 1024; // 5MB
+            if (image && image.size > maxFileSize) {
+                errorToast("The image file size exceeds the maximum allowed size of 5MB.");
+                return; // Prevent further form submission
+            }
+
+            if (!position || !description || !qualifications || !deadline || !interns || !worktype) {
                 errorToast("Please fill in all required fields.");
                 return;
             }
 
-            // Update the modal content with the form data
-            document.querySelector('.modal-details h4:nth-child(1) span').textContent = position;
-            document.querySelector('.modal-details h4:nth-child(2) span').textContent = period;
-            document.querySelector('.modal-details h4:nth-child(3) span').textContent = interns;
-            document.querySelector('.modal-details h4:nth-child(4) span').textContent = worktype;
-            document.querySelector('.modal-details h4:nth-child(5) span').textContent = deadline;
-            
-            document.querySelector('.q-details p').textContent = qualifications;
-            document.querySelector('.d-details p').textContent = description;
+            // Read the image file as a data URL
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result; // This is the base64 encoded image
 
-            // Show confirmation modal if form is valid
-            openConfirmationModal();
+                // Update the modal content with the form data
+                document.querySelector('.modal-details h4:nth-child(1) span').textContent = position;
+                document.querySelector('.modal-details h4:nth-child(2) span').textContent = interns;
+                document.querySelector('.modal-details h4:nth-child(3) span').textContent = worktype;
+                document.querySelector('.modal-details h4:nth-child(4) span').textContent = deadline;
+
+                document.querySelector('.q-details p').textContent = qualifications;
+                document.querySelector('.d-details p').textContent = description;
+
+                // Set the image src in the modal
+                document.querySelector('.modal-details .image img').src = imageUrl;
+
+                // Show the confirmation modal
+                openConfirmationModal();
+            };
+            reader.readAsDataURL(image); // This converts the image to base64
         }
 
         function openConfirmationModal() {
             document.getElementById('confirmation-modal').style.display = 'block';
+            const modal = document.getElementById("confirmation-modal");
             modal.style.display = 'flex'; // Use flex for centering modal
         }
 
@@ -224,8 +235,6 @@
             document.getElementById('ad-form').submit();
             successToast("Advertisement created successfully");
         }
-
-
     </script>
 </body>
 

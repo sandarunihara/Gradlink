@@ -14,17 +14,14 @@ class C_Advertisement{
         if (empty($data['description'])) {
             $this->errors['description'] = "description is required";
         }
-        if (empty($data['qualifications'])) {
-            $this->errors['qualifications'] = "qualifications is required";
+        if (empty($data['qualification'])) {
+            $this->errors['qualification'] = "qualification is required";
         }
-        if (empty($data['period'])) {
-            $this->errors['period'] = "period is required";
+        if (empty($data['numOfInterns'])) {
+            $this->errors['numOfInterns'] = "interns is required";
         }
-        if (empty($data['interns'])) {
-            $this->errors['interns'] = "interns is required";
-        }
-        if (empty($data['worktype'])) {
-            $this->errors['worktype'] = "worktype is required";
+        if (empty($data['workingMode'])) {
+            $this->errors['workingMode'] = "worktype is required";
         }
         if (empty($data['deadline'])) {
             $this->errors['deadline'] = "deadline is required";
