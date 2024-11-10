@@ -13,20 +13,39 @@ class Advertisements
         // Convert PDOStatement to an array
         // $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
+        // Get the current date
+        $currentDate = date('Y-m-d');
         // Check if data is empty
         if (empty($data)) {
             $this->view('Company/Advertisements');
         } else {
-            // Filter active advertisements
+            
+            foreach ($data as $advertisement) {
+                // Check if the deadline is in the past
+                if ($advertisement->deadline < $currentDate) {
+                    // Update the status to 'Inactive'
+                    $model->update($advertisement->advertisementId, ['status' => 'Deactive'], 'advertisementId');
+                }
+            }
+
             $activeData = array_filter($data, function ($advertisement) {
                 return $advertisement->status === 'Active';
             });
 
+            $deactiveData = array_filter($data, function ($advertisement) {
+                return $advertisement->status === 'Deactive';
+            });
+
             // Re-index the array after filtering
             $activeData = array_values($activeData);
+            $deactiveData = array_values($deactiveData);
 
-            if (!empty($activeData)) {
-                $this->view('Company/Advertisements', ['data' => $activeData]);
+            // Count active and deactivated advertisements
+            $activeCount = count($activeData);
+            $deactiveCount = count($deactiveData);
+
+            if (!empty($data)) {
+                $this->view('Company/Advertisements', ['data' => $data,'activeCount' => $activeCount,'deactiveCount' => $deactiveCount]);
             } else {
                 $this->view('Company/Advertisements');
             }

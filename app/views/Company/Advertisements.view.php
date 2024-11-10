@@ -44,15 +44,22 @@
                             </div>
                             <div class="stat-card">
                                 <h2>Active Advertisements</h2>
-                                <p>40</p>
+                                <p><?php echo $activeCount; ?></p>
                             </div>
                             <div class="stat-card">
                                 <h2>Deactive Advertisements</h2>
-                                <p>5</p>
+                                <p><?php echo $deactiveCount; ?></p>
                             </div>
                         </div>
                         <div class="posts">
-                            <h2>Posts</h2>
+                            <div class="post_fil">
+                                <h2>Posts</h2>
+                                <select id="status" name="status" required onchange="filterPosts()">
+                                    <option value="All">All</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Deactive">Deactive</option>
+                                </select>
+                            </div>
                             <div class="ss_create">
                                 <a href="../Advertisements/create">
                                     <button>
@@ -66,7 +73,7 @@
                         <div class="allpost">
                             <?php if (isset($data) && !empty($data)): ?>
                                 <?php foreach ($data as $advertisement): ?>
-                                    <div class="postcard">
+                                    <div class="postcard" data-status="<?php echo $advertisement->status; ?>">
                                         <div class="image">
                                             <?php if (!empty($advertisement->image)): ?>
                                                 <img src="data:image/jpeg;base64,<?php echo $advertisement->image; ?>" class="logo" />
@@ -79,7 +86,7 @@
                                             <p>Position:<span class="position"><?php echo $advertisement->position; ?></span></p>
                                             <p>Type:<span><?php echo $advertisement->workingMode; ?></span></p>
                                             <p>No of interns:<span><?php echo $advertisement->numOfInterns; ?></span></p>
-                                            <p>status:<span><?php echo $advertisement->status; ?></span></p>
+                                            <p>status:<span style="color: <?php echo ($advertisement->status === 'Active') ? 'green' : 'red'; ?>"><?php echo $advertisement->status; ?></span></p>
                                             <p>Deadline:<span><?php echo $advertisement->deadline; ?></span></p>
                                         </div>
                                     </div>
@@ -96,19 +103,24 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
     <script>
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase();
-            const postcards = document.querySelectorAll('.postcard');
+        function filterPosts() {
+            // Get the selected status
+            const selectedStatus = document.getElementById('status').value;
 
-            postcards.forEach(card => {
-                const position = card.querySelector('.position').textContent.toLowerCase();
-                if (position.includes(searchValue)) {
-                    card.style.display = 'block';
+            // Get all post cards
+            const postCards = document.querySelectorAll('.postcard');
+
+            // Loop through each post card and toggle visibility based on the selected status
+            postCards.forEach(post => {
+                const postStatus = post.getAttribute('data-status');
+
+                if (selectedStatus === 'All' ||  selectedStatus=== postStatus) {
+                    post.style.display = 'block';
                 } else {
-                    card.style.display = 'none';
+                    post.style.display = 'none';
                 }
             });
-        });
+        }
     </script>
 </body>
 
