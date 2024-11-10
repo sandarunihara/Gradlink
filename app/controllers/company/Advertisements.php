@@ -73,6 +73,7 @@ class Advertisements
                 $imageBase64 = base64_encode($imageData); // Encode image content in base64
                 // print_r($imageBase64);
             }
+            
 
             $data = [
                 'position' => $_POST['position'] ?? '',
@@ -82,7 +83,8 @@ class Advertisements
                 'workingMode' => $_POST['worktype'] ?? '',
                 'qualification' => $_POST['qualifications'] ?? '',
                 'deadline' => $_POST['deadline'] ?? '',
-                'image' => $imageBase64
+                'image' => $imageBase64,
+                'startDate' => date('Y-m-d')
             ];
 
 
