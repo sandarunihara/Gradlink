@@ -13,7 +13,7 @@ class Login
             
             switch($userNum){
                 case 9:
-                    $user = new Student;
+                    $user = new StudentPassword;
 					$path = 'Student/StudentDash/Dashboard';
                     break;
                 case 4:
