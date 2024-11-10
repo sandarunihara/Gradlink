@@ -45,25 +45,29 @@
                             <?php if (isset($data) && !empty($data)): ?>
                                 <div class="display-details">
                                     <div class="image">
-                                        <img src="<?php echo ROOT ?>/assets/img/interns.png" class="logo" />
+                                        <?php if (!empty($data[0]->image)): ?>
+                                            <img src="data:image/jpeg;base64,<?php echo $data[0]->image; ?>" class="logo" />
+                                        <?php else: ?>
+                                            <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
+                                        <?php endif; ?>
                                     </div>
                                     <div class="inform">
                                         <div>
                                             <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
-                                            <h4>Internship Period:<span><?php echo $data[0]->period ?></span></h4>
-                                            <h4>No of interns:<span><?php echo $data[0]->interns ?></span></h4>
-                                            <h4>Work type:<span><?php echo $data[0]->worktype ?></span></h4>
+                                            <!-- <h4>Internship Period:<span><?php echo $data[0]->period ?></span></h4> -->
+                                            <h4>No of interns:<span><?php echo $data[0]->numOfInterns ?></span></h4>
+                                            <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
                                         </div>
                                         <div class="ed-del">
                                             <i class="fas fa-pen"
                                                 data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
                                                 data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
-                                                data-qualifications="<?php echo htmlspecialchars($data[0]->qualifications, ENT_QUOTES) ?>"
-                                                data-period="<?php echo htmlspecialchars($data[0]->period, ENT_QUOTES) ?>"
+                                                data-qualification="<?php echo htmlspecialchars($data[0]->qualification, ENT_QUOTES) ?>"
                                                 data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
-                                                data-interns="<?php echo htmlspecialchars($data[0]->interns, ENT_QUOTES) ?>"
-                                                data-worktype="<?php echo htmlspecialchars($data[0]->worktype, ENT_QUOTES) ?>"
+                                                data-interns="<?php echo htmlspecialchars($data[0]->numOfInterns, ENT_QUOTES) ?>"
+                                                data-workingmode="<?php echo htmlspecialchars($data[0]->workingMode, ENT_QUOTES) ?>"
+                                                data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
                                                 onclick="openConfirmationModal(this)">
                                             </i>
 
@@ -74,9 +78,9 @@
                                 </div>
                                 <div class="Qua-des">
                                     <div class="Qualifications">
-                                        <h4>Qualifications:</h4>
+                                        <h4>Qualification:</h4>
                                         <div class="q-details">
-                                            <p><?php echo $data[0]->qualifications ?></p>
+                                            <p><?php echo $data[0]->qualification ?></p>
                                         </div>
                                     </div>
 
@@ -120,8 +124,8 @@
                     <div>
                         <h4>Qualifications:</h4>
                         <textarea
-                            name="qualifications"
-                            id="qualifications"
+                            name="qualification"
+                            id="qualification"
                             cols="50"
                             rows="10"
                             required></textarea>
@@ -145,8 +149,8 @@
                             <button class="fbtn" type="button" onclick="decrement()">-</button>
                             <input
                                 type="text"
-                                id="interns"
-                                name="interns"
+                                id="numOfInterns"
+                                name="numOfInterns"
                                 value="5"
                                 readonly
                                 required />
@@ -155,7 +159,7 @@
                     </div>
                     <div class="position">
                         <h4>Work type:</h4>
-                        <select id="worktype" name="worktype" required>
+                        <select id="workingMode" name="workingMode" required>
                             <option value="Remote">Remote</option>
                             <option value="Onsite">Onsite</option>
                             <option value="Hybrid">Hybrid</option>
@@ -165,7 +169,7 @@
                 </div>
                 <div class="addimg">
                     <h4>Add Image:</h4>
-                    <input type="file" id="image" />
+                    <input type="file" id="image" name='image' required/>
                     <!-- this is not in the script  -->
                 </div>
                 <div class="sc_btn">
@@ -196,7 +200,7 @@
             <h2>Are you sure?</h2>
             <p>Do you want to Delete the Advertisements?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="confirmDelete('<?php echo $data[0]->id; ?>')">Yes</button>
+                <button class="updateyes-btn" onclick="confirmDelete('<?php echo $data[0]->advertisementId; ?>')">Yes</button>
                 <button class="updateno-btn" onclick="closeconfirmdeleteModal()">No</button>
             </div>
         </div>
@@ -208,16 +212,16 @@
     <script>
         // Increment and decrement the number of interns
         function increment() {
-            let count = document.getElementById('interns').value;
+            let count = document.getElementById('numOfInterns').value;
             count = parseInt(count) + 1;
-            document.getElementById('interns').value = count;
+            document.getElementById('numOfInterns').value = count;
         }
 
         function decrement() {
-            let count = document.getElementById('interns').value;
+            let count = document.getElementById('numOfInterns').value;
             if (count > 1) { // Prevent going below 1
                 count = parseInt(count) - 1;
-                document.getElementById('interns').value = count;
+                document.getElementById('numOfInterns').value = count;
             }
         }
 
@@ -228,14 +232,14 @@
             // Validate form data before opening modal
             const position = document.getElementById('position').value;
             const description = document.getElementById('description').value;
-            const qualifications = document.getElementById('qualifications').value;
+            const qualification = document.getElementById('qualification').value;
             const period = document.getElementById('period').value;
             const deadline = document.getElementById('deadline').value;
-            const interns = document.getElementById('interns').value;
-            const worktype = document.getElementById('worktype').value;
+            const numOfInterns = document.getElementById('numOfInterns').value;
+            const workingMode = document.getElementById('workingMode').value;
             // image is not in the script
 
-            if (!position || !description || !qualifications || !period || !deadline || !interns || !worktype) {
+            if (!position || !description || !qualification || !period || !deadline || !numOfInterns || !workingMode) {
                 errorToast("Please fill in all required fields.");
                 return;
             }
@@ -246,20 +250,22 @@
         function openConfirmationModal(element) {
             const position = element.dataset.position;
             const description = element.dataset.description;
-            const qualifications = element.dataset.qualifications;
+            const qualification = element.dataset.qualification;
             const period = element.dataset.period;
             const deadline = element.dataset.deadline;
-            const interns = element.dataset.interns;
-            const worktype = element.dataset.worktype;
+            const numOfInterns = element.dataset.interns;
+            const workingMode = element.dataset.workingmode;
+            const image = element.dataset.image;
 
             // Now populate the modal fields
             document.getElementById('position').value = position;
             document.getElementById('description').value = description;
-            document.getElementById('qualifications').value = qualifications;
+            document.getElementById('qualification').value = qualification;
             document.getElementById('period').value = period;
             document.getElementById('deadline').value = deadline;
-            document.getElementById('interns').value = interns;
-            document.getElementById('worktype').value = worktype;
+            document.getElementById('numOfInterns').value = numOfInterns;
+            document.getElementById('workingMode').value = workingMode;
+            // document.getElementById('image').value = image;
 
             const modal = document.getElementById('confirmation-modal').style.display = 'block';
             modal.style.display = 'flex'; // Use flex for centering modal
@@ -271,11 +277,11 @@
         }
 
         function submitForm() {
-            successToast("Advertisement updated successfully");
             document.getElementById('ad-form').submit();
+            successToast("Advertisement updated successfully");
         }
 
-       
+
         // Get the modal popup for confirm update
 
         function openconfirmupdateModal() {

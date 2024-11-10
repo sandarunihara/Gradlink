@@ -3,6 +3,10 @@
 class Companydash{
     use Controller;
     public function dashboard(){
+        $user = "";
+        if (isset($_SESSION['USER'])) {
+            $user = $_SESSION['USER'];
+        }
         $this-> view('Company/Dashboard');
     }  
 

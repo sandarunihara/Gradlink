@@ -141,7 +141,7 @@
     background-color: white;
     margin:5% auto;
     padding: 20px;
-    width: 50%;
+    width: 70%;
     border-radius: 8px;
     transform: scale(0); /* Initial scale for zoom-in effect */
     opacity: 0; /* Initial opacity */
@@ -208,6 +208,7 @@
 .image{
     overflow-y: hidden;
     width: 50%;
+    height: 300px;
 }
 .image img{
     width: 100%;
