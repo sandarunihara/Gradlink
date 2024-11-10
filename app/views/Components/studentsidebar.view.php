@@ -9,7 +9,7 @@
                 <p>Dashboard</p>
             </div>
         </a>
-        <a class="option" href="../StudentProfile/dashboard">
+        <a class="option" href="../StudentProfile/profile">
             <i class="fas fa-user"></i>
             <div>
                 <p>Profile</p>
