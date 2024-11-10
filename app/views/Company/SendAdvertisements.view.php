@@ -60,6 +60,7 @@
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
                                         </div>
                                         <div class="ed-del">
+                                        <?php if ($data[0]->status === 'Active'): ?>
                                             <i class="fas fa-pen"
                                                 data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
                                                 data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
@@ -70,7 +71,7 @@
                                                 data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
                                                 onclick="openConfirmationModal(this)">
                                             </i>
-
+                                        <?php endif; ?>
                                             <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
 
                                         </div>
@@ -132,10 +133,6 @@
                     </div>
                 </div>
                 <div class="perioddeadline">
-                    <div class="period">
-                        <h4>Internship Period:</h4>
-                        <input type="text" id="period" name="period" required />
-                    </div>
                     <div class="period">
                         <h4>Application deadline:</h4>
                         <input type="date" id="deadline" name="deadline" required />
@@ -233,13 +230,12 @@
             const position = document.getElementById('position').value;
             const description = document.getElementById('description').value;
             const qualification = document.getElementById('qualification').value;
-            const period = document.getElementById('period').value;
             const deadline = document.getElementById('deadline').value;
             const numOfInterns = document.getElementById('numOfInterns').value;
             const workingMode = document.getElementById('workingMode').value;
             // image is not in the script
 
-            if (!position || !description || !qualification || !period || !deadline || !numOfInterns || !workingMode) {
+            if (!position || !description || !qualification  || !deadline || !numOfInterns || !workingMode) {
                 errorToast("Please fill in all required fields.");
                 return;
             }
@@ -251,7 +247,6 @@
             const position = element.dataset.position;
             const description = element.dataset.description;
             const qualification = element.dataset.qualification;
-            const period = element.dataset.period;
             const deadline = element.dataset.deadline;
             const numOfInterns = element.dataset.interns;
             const workingMode = element.dataset.workingmode;
@@ -261,7 +256,6 @@
             document.getElementById('position').value = position;
             document.getElementById('description').value = description;
             document.getElementById('qualification').value = qualification;
-            document.getElementById('period').value = period;
             document.getElementById('deadline').value = deadline;
             document.getElementById('numOfInterns').value = numOfInterns;
             document.getElementById('workingMode').value = workingMode;
