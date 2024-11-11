@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f4ff;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-left h1 {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-info small {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Center the container */
+.buttons {
+    background-color: #fff;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;  /* Increased space between buttons */
+}
+
+.company-btn, .Student-btn {
+    padding: 30px 50px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background-image: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.Student-btn {
+    background-image: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+/* Hover effect for buttons */
+.company-btn:hover, .Student-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.company-btn:active, .Student-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Views section styling */
+.views {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.company-view, .student-view {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Card styling */
+.company-card, .student-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.company-card-header, .student-card-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.company-card-header h3, .student-card-header h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.company-card-header p, .student-card-header p {
+    font-size: 14px;
+    color: #777;
+}
+
+.company-card-body, .student-card-body {
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
