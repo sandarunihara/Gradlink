@@ -1,15 +1,15 @@
-<?php 
-class StudentPassword
+<?php
+class company_password
 {
 	
 	use Model;
 
-	protected $table = 'studentpassword';
+	protected $table = 'company_password';
 
 	protected $allowedColumns = [
 
-		'UserId',
-		'PASSWORD',
+		'CompanyId',
+		'Password',
 	];
 	
 	public function validate($data)
@@ -34,4 +34,3 @@ class StudentPassword
 		return false;
 	}
 }
-

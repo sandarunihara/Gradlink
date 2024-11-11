@@ -1,5 +1,5 @@
 <?php
-    class Student
+    class student
     {
         
         use Model;
@@ -8,7 +8,7 @@
 
         protected $allowedColumns = [
 
-            'UserId',
+            'StudentId',
             'Name',
             'DegreeName',
             'Status',

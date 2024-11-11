@@ -11,16 +11,36 @@
 </head>
 <body>
     <?php
-        $UserId = $data['Student'] -> UserId;
+        $UserId = $data['Student'] -> StudentId;
         $Name = $data['Student'] -> Name;
-        $ShortDesc = $data['Student'] -> ShortDesc;
-        $DegreeName = $data['Student'] -> DegreeName;
-        $Email = $data['Email'] -> Email;
-        $ContactNum = $data['ContactNum'] -> ContactNum;
-        $InterestedArea = $data['InterestedArea'] -> InterestedArea;
-        $Github = $data['Github'] -> Github;
-        $Linkedin = $data['Linkedin'] -> Linkedin;
-        $ProfilePic = $data['ProfilePic'] -> ProfilePic;
+        // $ShortDesc = $data['Student'] -> ShortDesc;
+        // $DegreeName = $data['Student'] -> DegreeName;
+        // $Email = $data['Email'] -> Email;
+        // $ContactNum = $data['ContactNum'] -> ContactNum;
+        $InterestedArea = $data['InterestedArea'] -> InterestArea;
+        // $Github = $data['Github'] -> Github;
+        // $Linkedin = $data['Linkedin'] -> Linkedin;
+        // $ProfilePic = $data['ProfilePic'] -> ProfilePic;
+        
+        // $QualificationDegree = $data['Qualification'] -> Degree;
+        // $QualificationStartDate = $data['Qualification'] -> StartDate;
+        // $QualificationEndDate = $data['Qualification'] -> EndDate;
+        // $QualificationFieldOfStudy = $data['Qualification'] -> FieldOfStudy;
+        // $QualificationShortDesc = $data['Qualification'] -> ShortDesc;
+
+        // $ExperienceJobTitle = $data['Experience'] -> JobTitle;
+        // $ExPerienceCompany = $data['Experience'] -> Company;
+        // $ExperienceLocation = $data['Experience'] -> Location;
+        // $ExperienceEmploymentType = $data['Experience'] -> EmploymentType;
+        // $ExperienceStartDate = $data['Experience'] -> StartDate;
+        // $ExperienceEndDate = $data['Experience'] -> EndDate;
+        // $ExperienceShortDesc = $data['Experience'] -> ShortDesc;
+
+        // $CertificateName = $data['Certificate'] -> Name;
+        // $CertificateOrganization = $data['Certificate'] -> Organization;
+        // $CertificateIssueDate = $data['Certificate'] -> IssueDate;
+        // $CertificateExpirationDate = $data['Certificate'] -> ExpirationDate;
+        // $CertificateShortDesc = $data['Certificate'] -> ShortDesc;
     ?>
     <div class="side">
             <?php $this->renderComponent("studentsidebar")  ?>
@@ -68,15 +88,33 @@
             </div>
             <div>
                 <h1>Qualifications</h1>
+                <!-- <h2>Degree:</h2><?php echo($QualificationDegree)?>
+                <h2>Start Date:</h2><?php echo($QualificationStartDate)?>
+                <h2>End Date:</h2><?php echo($QualificationEndDate)?>
+                <h2>Field of Study:</h2><?php echo($QualificationFieldOfStudy)?>
+                <h2>Short Description:</h2><?php echo($QualificationShortDesc)?> -->
             </div>
             <div>
                 <h1>Experience</h1>
+                <!-- <h2>Job Title:</h2><?php echo($ExperienceJobTitle)?>
+                <h2>Company:</h2><?php echo($ExPerienceCompany)?>
+                <h2>Location:</h2><?php echo($ExperienceLocation)?>
+                <h2>Employment Type:</h2><?php echo($ExperienceEmploymentType)?>
+                <h2>Start Date:</h2><?php echo($ExperienceStartDate)?>
+                <h2>End Date:</h2><?php echo($ExperienceEndDate)?>
+                <h2>Short Description:</h2><?php echo($ExperienceShortDesc)?> -->
+
             </div>
             <div>
                 <h1>Certifications</h1>
+                <!-- <h2>Name:</h2><?php echo($CertificateName)?>
+                <h2>Organization:</h2><?php echo($CertificateOrganization)?>
+                <h2>Issue Date:</h2><?php echo($CertificateIssueDate)?>
+                <h2>Expiration Date:</h2><?php echo($CertificateExpirationDate)?>
+                <h2>Short Description:</h2><?php echo($CertificateShortDesc)?> -->
+
             </div>
-            <button>Edit</button>
-            <button>Delete profile</button>
+            <a href="<?=ROOT?>/Student/StudentProfile/ProfileEdit">Edit Profile</a>
         </div>
     </div>
 </body>
