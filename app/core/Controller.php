@@ -14,7 +14,7 @@
         }
 
         public function renderComponent($componentName, $componentProps = []){
-            $fileName = "../app/views/components/" . $componentName . ".view.php";
+            $fileName = "../app/views/Components/" . $componentName . ".view.php";
             if (file_exists($fileName)) {
                 require $fileName;
             } else {
