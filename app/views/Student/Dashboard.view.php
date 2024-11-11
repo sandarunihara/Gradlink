@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php
-        $UserId = $data['Student'] -> UserId;
+        $UserId = $data['Student'] -> StudentId;
         $Name = $data['Student'] -> Name;
         $Status = $data['Student'] -> Status;
         switch ($Status) {

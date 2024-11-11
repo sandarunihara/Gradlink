@@ -1,15 +1,15 @@
 <?php
-class PDCAssistant
+class pdc_assistant_password
 {
 	
 	use Model;
 
-	protected $table = 'pdcassistantpassword';
+	protected $table = 'pdc_assistant_password';
 
 	protected $allowedColumns = [
 
-		'UserId',
-		'PASSWORD',
+		'AssistantId',	
+		'Password',
 	];
 	
 	public function validate($data)

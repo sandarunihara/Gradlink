@@ -4,16 +4,15 @@ class Studentdash{
     use Controller;
     public function dashboard(){
         $data =[];
-        $arr['UserId'] = $_SESSION['USER'] -> UserId;
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         //show($_SESSION['USER']);
 
-        $student = new Student;
-        $email = new StudentEmail;
+        $student = new student;
+        //$email = new studentEmail;
         
 
         $data['Student'] = $student -> first($arr);
-        //show($data['Student']);
-        $data['Email'] = $email -> first($arr);
+        //$data['Email'] = $email -> first($arr);
 
         
         $this-> view('Student/Dashboard',$data);

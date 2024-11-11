@@ -1,15 +1,15 @@
 <?php
-class Company
+class pdc_coordinator_password
 {
 	
 	use Model;
 
-	protected $table = 'companypassword';
+	protected $table = 'pdc_coordinator_password';
 
 	protected $allowedColumns = [
 
-		'UserId',
-		'PASSWORD',
+		'CoordinatorId',
+		'Password',
 	];
 	
 	public function validate($data)

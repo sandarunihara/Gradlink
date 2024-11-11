@@ -1,15 +1,15 @@
-<?php
-class PDCCoordinator
+<?php 
+class student_password
 {
 	
 	use Model;
 
-	protected $table = 'PDCCoordinatorPassword';
+	protected $table = 'student_password';
 
 	protected $allowedColumns = [
 
-		'UserId',
-		'PASSWORD',
+		'StudentId',
+		'Password',
 	];
 	
 	public function validate($data)
@@ -34,3 +34,4 @@ class PDCCoordinator
 		return false;
 	}
 }
+
