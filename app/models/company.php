@@ -1,14 +1,14 @@
-<?php 
-class student_password
+<?php
+class company
 {
 	
 	use Model;
 
-	protected $table = 'student_password';
+	protected $table = 'company';
 
 	protected $allowedColumns = [
 
-		'StudentId',
+		'CompanyId',
 		'Password',
 	];
 	
@@ -34,4 +34,3 @@ class student_password
 		return false;
 	}
 }
-
