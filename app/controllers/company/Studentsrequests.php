@@ -3,29 +3,42 @@
 class StudentsRequests{
     use Controller;
     public function dashboard(){
-        $status="Reject";
 
-        $data = [
-            ['Student Name' => 'Alice Smith', 'Student Degree' => 'CS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'John Doe', 'Student Degree' => 'IS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Emma Johnson', 'Student Degree' => 'CS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'Michael Brown', 'Student Degree' => 'IS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Olivia Taylor', 'Student Degree' => 'CS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Liam Wilson', 'Student Degree' => 'IS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'Sophia Anderson', 'Student Degree' => 'CS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Noah Thomas', 'Student Degree' => 'IS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Ava Martin', 'Student Degree' => 'CS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'William Clark', 'Student Degree' => 'IS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Mia Lewis', 'Student Degree' => 'CS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'James Walker', 'Student Degree' => 'IS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'Amelia Harris', 'Student Degree' => 'CS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Lucas Robinson', 'Student Degree' => 'IS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Isabella Scott', 'Student Degree' => 'CS', 'Position' => 'Web Development', 'Action' => 'Pending']
-        ];
-
-
-        $this-> view('Company/StudentsRequests', ['data' => $data]);
+        $model = new C_Dashboard;
+        $data = $model->findId(); // we want to get using advertisementId from advertisment table where using company id
+        
+        $advertisementIds = []; // Array to store all advertisement IDs
+        // Loop through the result set and collect advertisement IDs
+        foreach ($data as $item) {
+            $advertisementIds[] = $item->advertisementId;
+        }
+        
+        $reqdata=[];
+        foreach($advertisementIds as $id){
+            $data=$model->findreq($id);
+            foreach ($data as $item) {
+                if ($item->Jobstatus !== 'shortlist'){
+                    $reqdata[] = [
+                        "RegNumber"=>$item->RegNumber,
+                        'Student Name' => $item->Name,
+                        'Student Degree'=>$item->DegreeName,
+                        'Position' => $item->position,
+                        'Action' => $item->Jobstatus
+                    ];
+                }
+            }
+            // print_r($data);
+        }
+        $this-> view('Company/StudentsRequests', ['data' => $reqdata]);
     }  
+
+
+    public function studentprofile($RegNumber){
+        $model=new C_Student;
+        $data=$model->findbyId($RegNumber);
+        // print_r($data);
+        $this-> view('Company/Studentpro' , ['data' => $data]);
+    }
 
 
 }

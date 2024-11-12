@@ -63,9 +63,7 @@ class C_Dashboard
     {
     // Prepare the SQL query with placeholders for parameters
     $query = "SELECT 
-                        student.Name,
-                        advertisement.position,
-                        studentadvertisement.Status
+                        *
                     FROM 
                         studentadvertisement
                     JOIN 

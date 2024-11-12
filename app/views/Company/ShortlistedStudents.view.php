@@ -40,6 +40,11 @@
                             <input type="text" placeholder="Search Student">
                             <i class="fas fa-search"></i>
                         </div>
+                        <select class="role-select">
+                            <option value="software-engineer">Software Engineer</option>
+                            <option value="qa">QA</option>
+                            <option value="web-development">Web Development</option>
+                        </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>
                             <select>
@@ -52,14 +57,6 @@
                     </div>
                     <div class="sr_t">
                         <div class="sr_table">
-                            <div class="sr_sr">
-                                <h3>Shortlisted Students</h3>
-                                <select class="role-select">
-                                    <option value="software-engineer">Software Engineer</option>
-                                    <option value="qa">QA</option>
-                                    <option value="web-development">Web Development</option>
-                                </select>
-                            </div>
                             <!-- Table -->
                             <div>
 
