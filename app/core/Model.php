@@ -4,10 +4,8 @@
 
     Trait Model{
         use Database;
-
-        
-
         public $errors = [];
+
         protected $limit = 10;
         protected $offset = 0;
         protected $order_type ='desc';
@@ -39,7 +37,6 @@
             return $this->query($query, $data);
         }
 
-
         public function first($data, $data_not = []){
             $keys = array_keys($data);
             $keys_not = array_keys($data_not);
@@ -62,7 +59,6 @@
             return false;
         }
 
-
         public function insert($data){
         
             /*remove unwanted data*/
@@ -78,6 +74,7 @@
             $query = "INSERT INTO $this->table (".implode(",", $keys).") VALUES (:".implode(", :", $keys).")";
             //echo $query;
             $this->query($query, $data);
+
             return true;
         }
 
@@ -141,5 +138,4 @@
                 return "Error: Record could not be deleted.";
             }
         }
-        
     }

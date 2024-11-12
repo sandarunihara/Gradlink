@@ -1,4 +1,5 @@
 <?php
+
     Trait Controller{
         public function view($name, $data =[]){
             if (!empty($data))

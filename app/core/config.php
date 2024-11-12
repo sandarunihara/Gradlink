@@ -1,4 +1,5 @@
 <?php
+
     if($_SERVER['SERVER_NAME'] == 'localhost'){
         // database configuration
         define('DBNAME', 'gradlink');   // database name
@@ -23,3 +24,4 @@
 
     //true means show errors
     define('DEBUG', true);
+
