@@ -1,5 +1,8 @@
 <?php
     Trait Database{
+
+        private $con;
+
         private function connect(){
             $string ="mysql:hostname=".DBHOST.";dbname=".DBNAME;
             $con = new PDO($string, DBUSER, DBPASS);
@@ -16,8 +19,10 @@
                     return $result;
                 }  
             }
-            return false;
+
+            return $stmt;
         }
+      
         public function get_row($query, $data = []){
             $con = $this->connect();
             $stmt = $con->prepare($query);

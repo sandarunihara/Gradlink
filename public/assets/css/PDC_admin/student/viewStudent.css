@@ -1,0 +1,178 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f4ff;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.student-title {
+    display: flex;
+    align-items: center;
+}
+
+.student-title h1 {
+    margin: 0;
+    font-size: 26px;
+    color: #4b0082;
+}
+
+.edit-btn {
+    background: none;
+    border-radius: 120%;
+    border: 2px solid #4b0082;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #4b0082;
+    padding: 3px;
+    width: 32px;
+}
+
+.edit-btn:hover{
+    background-color: #4c008212;
+    
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-info small {
+    font-size: 14px;
+    color: #777;
+}
+.student-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.student-form {
+    display: grid;
+    grid-template-columns: 1fr 7fr; /* Two columns: labels and inputs */
+    column-gap: 40px; /* Gap between label and input */
+    align-items: center;
+}
+
+.form-group {
+    display: contents; /* Allows form groups to follow grid structure */
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-right: 2%;
+    justify-self: start;
+    white-space: nowrap; /* Ensures label stays on one line */
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    cursor: auto;
+}
+
+.form-group textarea {
+    resize: none;
+    height: 100px;
+}
+
+.button-line{
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-buttons {
+    margin-top: 20px;
+    justify-content: end;
+    display: flex;
+    gap: 4%;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.update-btn {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.update-btn:hover{
+    background-color: #0872dc;
+}
+
+.block-btn {
+    background-color: #eb0000;
+    color: #fff;
+}
+
+.block-btn:hover{
+    background-color: #f20303;
+}
+
+
+.view-progress-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.view-progress-btn:hover{
+    background-color: #0872dc;
+}

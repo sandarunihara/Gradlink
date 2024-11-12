@@ -1,0 +1,219 @@
+.sc_main{
+    background: #E9EDFF;
+    padding: 20px;
+    width: 1100px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.sc_container{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 5px;
+    padding-left: 40px;
+    transition:color 0.5s ease;
+    cursor: pointer;
+}
+.sc_container:hover{
+    color: #006cdf;
+}
+
+.sc_iner{
+    width: 1000px;
+    height: 500px;
+    margin-left: 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px 10px;
+    overflow-y: auto;
+}
+.sc_pos{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.sc_pos select{
+    border-radius: 10px;
+    padding: 10px;
+    width: 250px;
+    border: solid 2px rgb(0, 110, 255);
+}
+.sc_dateNdur{
+    display: flex;
+    justify-content: space-between;
+}
+.sc_date{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sc_date input{
+    border-radius: 5px;
+    font-size: large;
+    font-style: normal;
+    padding: 10px;
+    width: 150px;
+    border: solid 2px rgb(223, 223, 223);
+}
+.sc_dur{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sc_dur select{
+    border-radius: 5px;
+    font-size: large;
+    font-style: normal;
+    padding: 10px;
+    width: 100px;
+    border: solid 2px rgb(223, 223, 223);
+}
+.sc_time{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.sc_tbtn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    width: 130px;
+    border: solid 2px #F49139;
+    border-radius: 8px;
+    background-color: white;
+    color: #f4b400;
+    transition:color 0.3s ease,background 0.3s ease,transform 0.3s ease;
+    cursor: pointer;
+}
+.sc_tbtn:hover{
+    background-color: #F49139;
+    color: #000000;
+}
+.sc_time-slots{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+.time-slot{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    transition: opacity 1s ease, height 1s ease;
+}
+.time-slot.show {
+    opacity: 1;
+    height: 40px; /* Adjust based on your design */
+}
+.time-slot input{
+    border-radius: 5px;
+    font-size: large;
+    font-style: normal;
+    padding: 10px;
+    width: 150px;
+    border: solid 2px rgb(223, 223, 223);
+}
+.time-slot button{
+    border: none;
+    background-color: white;
+}
+.timedel{
+    font-size: large;
+    cursor: pointer;
+    transition:color 0.3s ease;
+}
+.timedel:hover{
+    color: red;
+}
+.sc_btn{
+    display: flex;
+    justify-content: end;
+}
+.sc_btn button{
+    border: none;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #6ba2dc, #008cff);
+    box-shadow: 1px 1px 1px 1px rgba(160, 160, 160, 0.25);
+    transition: transform 0.1s ease, background 0.3s ease;
+    cursor: pointer;
+}
+.sc_btn button:hover{
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #008cff, #6ba2dc);
+}
+
+.modal { /* Hidden by default */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    border-radius: 8px;
+    transform: scale(0); /* Initial scale for zoom-in effect */
+    opacity: 0; /* Initial opacity */
+    animation: zoomIn 0.3s forwards;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0); /* Start with no size */
+        opacity: 0; /* Fully transparent */
+    }
+    100% {
+        transform: scale(1); /* Full size */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.yes-btn, .no-btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.yes-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.no-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.modal-buttons button:hover {
+    opacity: 0.8;
+}
+
+
+

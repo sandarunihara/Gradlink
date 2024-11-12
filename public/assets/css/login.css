@@ -6,7 +6,11 @@
 }
 
 body {
-    background-color: #f0f4ff;
+
+    background-image: url('../img/signinbg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+  background-color: #f0f4ff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,6 +70,21 @@ h1 {
     border-radius: 5px;
 }
 
+.signin-btn {
+    background-color: #4a8af4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signin-btn:hover {
+    background-color: #3773c6;
+}
+
 .checkbox-group {
     display: flex;
     align-items: center;
@@ -120,4 +139,6 @@ h1 {
 
 .register-link a:hover {
     text-decoration: underline;
+
 }
+
