@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="pro_container">
-                    <a href="../StudentsRequests/Dashboard" class="backreq">
+                    <a href="../dashboard" class="backreq">
                         <i class="fas fa-chevron-left"></i>
                         <h3>back</h3>
                     </a>
@@ -43,7 +43,7 @@
                         <div class="stu_pro">
                             <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
                             <div class="stu_info">
-                                <span>W.A.Sandaru Nihara</span>
+                                <span><?php echo $data[0]->Name ?></span>
                                 <p class="mail_no">sandarunihara@gmail.com<br>
                                     0712237230</p>
                                 <div class="links">

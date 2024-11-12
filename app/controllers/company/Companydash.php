@@ -31,14 +31,14 @@ class Companydash
                 $reqdata[] = [
                     'Name' => $item->Name,
                     'Position' => $item->position,
-                    'Status' => $item->Status
+                    'Status' => $item->Jobstatus
                 ];
             }
         }
         $numOfapplyStudents = count($studentIds);
 
 
-        $shortliststudent=$model->find(['Status'=>'shortlist'],'studentadvertisement');
+        $shortliststudent=$model->find(['Jobstatus'=>'shortlist'],'studentadvertisement');
             foreach($shortliststudent as $student){
                 $shortliststudentIds[]=$student->RegNumber;
             }
