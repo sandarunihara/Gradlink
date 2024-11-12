@@ -9,10 +9,6 @@ class APP {
         $URL = explode("/", trim($URL, "/"));
         return $URL;
     }
-    public function loadController()
-    {
-        $URL = $this->splitURL();
-
 
     public function loadController() {
         $URL = $this->splitURL();

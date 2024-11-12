@@ -1,10 +1,10 @@
 <?php
-class pdc_assistant_password
+class pdc_assistant
 {
 	
 	use Model;
 
-	protected $table = 'pdc_assistant_password';
+	protected $table = 'pdc_assistant';
 
 	protected $allowedColumns = [
 
