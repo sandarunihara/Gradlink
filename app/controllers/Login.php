@@ -40,12 +40,12 @@ class Login
 
 
 			$row = $user->first($arr);
-			
-			if($row)
 			{
 				if($row->Password === $_POST['password'])
 				{
 					$_SESSION['USER'] = $row;
+					// set a cookie for remembering the user
+					// setcookie('loginId', $row->loginId, time() + 3600, "/");
 					redirect($path);
 				}
 			}

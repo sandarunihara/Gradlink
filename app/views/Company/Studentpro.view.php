@@ -19,7 +19,7 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Students Requests</h1>
+                        <h1>Students Profile</h1>
                     </div>
                     <div class="d_pro">
                         <div class="d_profile">
@@ -44,16 +44,16 @@
                             <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
                             <div class="stu_info">
                                 <span><?php echo $data[0]->Name ?></span>
-                                <p class="mail_no">sandarunihara@gmail.com<br>
-                                    0712237230</p>
+                                <p class="mail_no"><?php echo $data[0]->Email ?><br>
+                                    0<?php echo $data[0]->ContactNum ?></p>
                                 <div class="links">
                                     <div class="acc_link">
                                         <i class="fab fa-linkedin"></i>
-                                        <a href="#">linkedin.com/sandarunihara</a>
+                                        <a href="<?php echo $data[0]->Linkedin ?>"><?php echo $data[0]->Linkedin ?></a>
                                     </div>
                                     <div class="acc_link">
                                         <i class="fab fa-github"></i>
-                                        <a href="#">github.com/sandarunihara</a>
+                                        <a href="<?php echo $data[0]->Github ?>"><?php echo $data[0]->Github ?></a>
                                     </div>
                                 </div>
 
@@ -114,11 +114,19 @@
                             </div>
                         </div>
                         <div class="all_ar">
-                            <div class="acce_rej">
+                            <div class="acce_rej" id="ShortlistSection">
                                 <h3>Action :</h3>
                                 <div class="btn">
                                     <button onclick="openrejectModal()" class="reject">Reject</button>
-                                    <button onclick="openconfirmModal()" class="accept">Accept</button>
+                                    <button onclick="openconfirmModal()" class="accept">Shortlist</button>
+                                </div>
+                            </div>
+
+                            <div class="acce_rej" id="RecruitSection">
+                                <h3>Action :</h3>
+                                <div class="btn">
+                                    <button onclick="openrejectModal()" class="reject">Reject</button>
+                                    <button onclick="openconfirmModal()" class="accept">Recruit</button>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +148,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="reject-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
@@ -183,9 +191,9 @@
         function closeconfirmModal() {
             document.getElementById('accept-modal').style.display = 'none';
         }
-        
-        
-        
+
+
+
         function openrejectModal() {
             document.getElementById('reject-modal').style.display = 'block';
             modal.style.display = 'flex'; // Use flex for centering modal
@@ -193,6 +201,29 @@
 
         function closerejectModal() {
             document.getElementById('reject-modal').style.display = 'none';
+        }
+    </script>
+
+
+    <script>
+        // Get the current URL
+        const currentUrl = window.location.href;
+
+        // Check if the URL contains "ShortlistedStudents/studentprofile"
+        if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
+            // Show action section, hide nope section
+            document.getElementById("RecruitSection").style.display = "block";
+            document.getElementById("ShortlistSection").style.display = "none";
+        }
+        // Check if the URL contains "StudentsRequests/studentprofile"
+        else if (currentUrl.includes("StudentsRequests/studentprofile")) {
+            // Show nope section, hide action section
+            document.getElementById("RecruitSection").style.display = "none";
+            document.getElementById("ShortlistSection").style.display = "block";
+        } else {
+            // Default behavior: hide both sections (optional)
+            document.getElementById("ShortlistSection").style.display = "none";
+            document.getElementById("RecruitSection").style.display = "none";
         }
     </script>
 
