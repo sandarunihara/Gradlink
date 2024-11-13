@@ -19,8 +19,11 @@
                     return $result;
                 }  
             }
+            
+
             return $stmt;
         }
+      
         public function get_row($query, $data = []){
             $con = $this->connect();
             $stmt = $con->prepare($query);

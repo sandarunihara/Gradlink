@@ -17,6 +17,12 @@
     flex-direction: column;
     gap: 20px;
 }
+.role{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 .stats {
     display: flex;
     width: 100%;
@@ -81,11 +87,11 @@
     gap: 100px;
     margin-bottom: 2px;
 }
-.status.shortlisted {
-    color: #4285f4;
+.status.shortlist {
+    color: #0056b3;
 }
 
-.status.rejected {
+.status.reject {
     color: #db4437;
 }
 

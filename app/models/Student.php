@@ -1,15 +1,19 @@
 <?php 
-class Student
+class student
 {
 	
 	use Model;
 
-	protected $table = 'studentpassword';
+	protected $table = 'student';
 
 	protected $allowedColumns = [
 
-		'UserId',
-		'PASSWORD',
+		'StudentId',
+		'Password',
+		'Name',
+		'DegreeName',
+		'Status',
+		'ShortDesc'
 	];
 	
 	public function validate($data)

@@ -12,6 +12,24 @@
 
 </head>
 <body>
+    <?php
+        $UserId = $data['Student'] -> StudentId;
+        $Name = $data['Student'] -> Name;
+        $Status = $data['Student'] -> Status;
+        switch ($Status) {
+            case '1':
+                $StatusString = 'Pending';
+                break;
+            case '2':
+                $StatusString = 'interview selected';
+            case '3':
+                $StatusString = 'doing Intern';
+            default:
+                //never occur
+                break;
+        }
+        //$Email = $data['Email'] -> Email;
+    ?>
     <div class="side">
             <?php $this->renderComponent("studentsidebar")  ?>
     </div>
@@ -27,23 +45,23 @@
                             <i class="fas fa-bell"></i>
                         </div>
                         <div>
-                            <a href="../StudentProfile/dashboard">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/nayana.jpg" height ="400px" weight="400px"class="logo" />
-                            <p><span>Nayana</span>Student</p>
+                            <a href="<?=ROOT?>/Student/StudentProfile/Profile">
+                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($Name)?>.jpg" height ="400px" weight="400px"class="logo" />
+                            <p><span><?php echo($Name)?></span>Student</p>
                             </a>
                         </div>
                     </div>
                 </div>
                 
                 <div>
-                    <h2 id="greeting"></h2>
+                    <h2><p id="greeting"></p><?php echo($Name)?></h2>
                 </div>
 
                 <div class="d_main">
                     <div class="d_allsummery">
                         <div class="stats">
                             <div class="stat-card">
-                                <a href="../StudentAppliedCompanies/dashboard" style = "text-decoration: none; color: inherit">
+                                <a href="<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies" style = "text-decoration: none; color: inherit">
                                 <h2>Applied Comapanies</h2>
                                 <p>5</p>
                                 </a>
@@ -55,9 +73,9 @@
                                 </a>
                             </div>
                             <div class="stat-card">
-                                <h2>Status: Pending</h2>
-                                <h2>Email: nayana@gmial.com</h2>
-                                <h2>Registration Number: 2022/CS/111</h2>
+                                <h2>Status: <?php echo($StatusString) ?></h2>
+                                <!-- <h2>Email: <?php echo($Email) ?></h2> -->
+                                <h2>Registration Number: <?php echo($UserId) ?></h2>
                                 <h2>Round: 1 Round</h2>
                             </div>
                         </div>

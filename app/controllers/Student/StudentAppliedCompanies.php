@@ -2,7 +2,7 @@
 
 class StudentAppliedCompanies{
     use Controller;
-    public function dashboard(){
+    public function AppliedCompanies(){
         $this-> view('Student/AppliedCompanies');
     }  
 

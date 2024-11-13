@@ -6,6 +6,16 @@
     height: 620px;
     overflow-y: auto;
 }
+.post_fil{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.post_fil select{
+    border-radius: 10px;
+    padding: 10px;
+    width: 100px;    
+}
 .stats {
     display: flex;
     gap: 20px;

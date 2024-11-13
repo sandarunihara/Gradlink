@@ -10,59 +10,112 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <?php
+        $UserId = $data['Student'] -> StudentId;
+        $Name = $data['Student'] -> Name;
+        // $ShortDesc = $data['Student'] -> ShortDesc;
+        // $DegreeName = $data['Student'] -> DegreeName;
+        // $Email = $data['Email'] -> Email;
+        // $ContactNum = $data['ContactNum'] -> ContactNum;
+        $InterestedArea = $data['InterestedArea'] -> InterestArea;
+        // $Github = $data['Github'] -> Github;
+        // $Linkedin = $data['Linkedin'] -> Linkedin;
+        // $ProfilePic = $data['ProfilePic'] -> ProfilePic;
+        
+        // $QualificationDegree = $data['Qualification'] -> Degree;
+        // $QualificationStartDate = $data['Qualification'] -> StartDate;
+        // $QualificationEndDate = $data['Qualification'] -> EndDate;
+        // $QualificationFieldOfStudy = $data['Qualification'] -> FieldOfStudy;
+        // $QualificationShortDesc = $data['Qualification'] -> ShortDesc;
+
+        // $ExperienceJobTitle = $data['Experience'] -> JobTitle;
+        // $ExPerienceCompany = $data['Experience'] -> Company;
+        // $ExperienceLocation = $data['Experience'] -> Location;
+        // $ExperienceEmploymentType = $data['Experience'] -> EmploymentType;
+        // $ExperienceStartDate = $data['Experience'] -> StartDate;
+        // $ExperienceEndDate = $data['Experience'] -> EndDate;
+        // $ExperienceShortDesc = $data['Experience'] -> ShortDesc;
+
+        // $CertificateName = $data['Certificate'] -> Name;
+        // $CertificateOrganization = $data['Certificate'] -> Organization;
+        // $CertificateIssueDate = $data['Certificate'] -> IssueDate;
+        // $CertificateExpirationDate = $data['Certificate'] -> ExpirationDate;
+        // $CertificateShortDesc = $data['Certificate'] -> ShortDesc;
+    ?>
     <div class="side">
             <?php $this->renderComponent("studentsidebar")  ?>
     </div>
+
     <div id="content">
-            <div class="main">
-                <div class="d">
-                    <div >
-                        <h1>DashBoard</h1>
+        <div class="main">
+            <div class="d">
+                <div >
+                    <h1>DashBoard</h1>
+                </div>
+                <div class="d_pro">
+                    <div class="d_profile">
+                        <i class="fas fa-calendar-alt"></i>
+                        <i class="fas fa-bell"></i>
                     </div>
-                    <div class="d_pro">
-                        <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div>
-                            <a href="../StudentProfile/dashboard">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/nayana.jpg" height ="400px" weight="400px"class="logo" />
-                            <p><span>Nayana</span>Student</p>
-                            </a>
-                        </div>
+                    <div>
+                        <a href="<?=ROOT?>/Student/StudentProfile/Profile">
+                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($ProfilePic)?>" height ="400px" weight="400px"class="logo" />
+                            <p><span><?php echo($Name)?></span>Student</p>
+                        </a>
                     </div>
                 </div>
+            </div>
+        
+        
             <div>
-    <div>
-    <div>
-        <h1>Profile picture</h1>
+                <h1>Profile picture</h1>
+            </div>
+            <div>
+                <h1>interested areas</h1><?php echo($InterestedArea)?>
+            </div>
+            <div>
+                <h1>short description</h1><?php echo($ShortDesc)?>
+            </div>
+            <div>
+                <h1>User details</h1>
+                <h2>Full Name:</h2><?php echo($Name)?>
+                <h2>Email:</h2><?php echo($Email)?>
+                <h2>Degree Name:</h2><?php echo($DegreeName)?>
+                <h2>Registration Number:</h2><?php echo($UserId)?>
+                <h2>Contact Number:</h2><?php echo($ContactNum)?>
+                <h2>Likedin Profile:</h2><?php echo($Linkedin)?>
+                <h2>Github Profile:</h2><?php echo($Github)?>
+            </div>
+            <div>
+                <h1>Qualifications</h1>
+                <!-- <h2>Degree:</h2><?php echo($QualificationDegree)?>
+                <h2>Start Date:</h2><?php echo($QualificationStartDate)?>
+                <h2>End Date:</h2><?php echo($QualificationEndDate)?>
+                <h2>Field of Study:</h2><?php echo($QualificationFieldOfStudy)?>
+                <h2>Short Description:</h2><?php echo($QualificationShortDesc)?> -->
+            </div>
+            <div>
+                <h1>Experience</h1>
+                <!-- <h2>Job Title:</h2><?php echo($ExperienceJobTitle)?>
+                <h2>Company:</h2><?php echo($ExPerienceCompany)?>
+                <h2>Location:</h2><?php echo($ExperienceLocation)?>
+                <h2>Employment Type:</h2><?php echo($ExperienceEmploymentType)?>
+                <h2>Start Date:</h2><?php echo($ExperienceStartDate)?>
+                <h2>End Date:</h2><?php echo($ExperienceEndDate)?>
+                <h2>Short Description:</h2><?php echo($ExperienceShortDesc)?> -->
+
+            </div>
+            <div>
+                <h1>Certifications</h1>
+                <!-- <h2>Name:</h2><?php echo($CertificateName)?>
+                <h2>Organization:</h2><?php echo($CertificateOrganization)?>
+                <h2>Issue Date:</h2><?php echo($CertificateIssueDate)?>
+                <h2>Expiration Date:</h2><?php echo($CertificateExpirationDate)?>
+                <h2>Short Description:</h2><?php echo($CertificateShortDesc)?> -->
+
+            </div>
+            <a href="<?=ROOT?>/Student/StudentProfile/ProfileEdit">Edit Profile</a>
+        </div>
     </div>
-    <div>
-        <h1>interested areas</h1>
-    </div>
-    <div>
-        <h1>short description</h1>
-    </div>
-    <div>
-        <h1>User details</h1>
-        <h2>Full Name:</h2>
-        <h2>Email:</h2>
-        <h2>Degree Name:</h2>
-        <h2>Registration Name:</h2>
-        <h2>Contact Number:</h2>
-        <h2>Likedin Profile:</h2>
-        <h2>Github Profile:</h2>
-    </div>
-    <div>
-        <h1>Qualifications</h1>
-    </div>
-    <div>
-        <h1>Experience</h1>
-    </div>
-    <div>
-        <h1>Certifications</h1>
-    </div>
-    <button>Edit</button>
-    <button>Delete profile</button>
 </body>
 </html>

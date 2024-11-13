@@ -40,6 +40,12 @@
                             <input id="searchInput" type="text" placeholder="Search Student">
                             <i class="fas fa-search"></i>
                         </div>
+                        <select class="role-select">
+                            <option value="all">All</option>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="qa">QA</option>
+                            <option value="Web Development">Web Development</option>
+                        </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>
                             <select class="status-select">
@@ -52,15 +58,6 @@
                     </div>
                     <div class="sr_t">
                         <div class="sr_table">
-                            <div class="sr_sr">
-                                <h3>Student Requests</h3>
-                                <select class="role-select">
-                                    <option value="all">All</option>
-                                    <option value="Software Engineer">Software Engineer</option>
-                                    <option value="qa">QA</option>
-                                    <option value="Web Development">Web Development</option>
-                                </select>
-                            </div>
                             <!-- Table -->
                             <div>
                                 <table class="student-table">
@@ -86,8 +83,8 @@
                                             <?php foreach ($data as $student): ?>
                                                 <?php
                                                 $status = $student['Action'];
-                                                $statusClass = ($status == 'Shortlist') ? 'Shortlist' : (($status == 'Reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'Shortlist') ? 'Shortlisted' : (($status == 'Reject') ? 'Rejected' : 'Pending');
+                                                $statusClass = ($status == 'shortlist') ? 'Shortlist' : (($status == 'reject') ? 'Reject' : 'Pending');
+                                                $statusText = ($status == 'shortlist') ? 'Shortlisted' : (($status == 'reject') ? 'Rejected' : 'Pending');
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
@@ -98,7 +95,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../Studentpro/dashboard"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["RegNumber"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>

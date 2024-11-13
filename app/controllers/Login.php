@@ -1,3 +1,4 @@
+
 <?php 
 class Login
 {
@@ -13,19 +14,23 @@ class Login
             
             switch($userNum){
                 case 9:
-                    $user = new Student;
+                    $user = new student;
+					$arr['StudentId'] = $_POST['userId'];
 					$path = 'Student/StudentDash/Dashboard';
                     break;
                 case 4:
-                    $user = new Company;
+                    $user = new company;
+					$arr['CompanyId'] = $_POST['userId'];
 					$path = 'Company/CompanyDash/Dashboard';
                     break;
                 case 5:
-                    $user = new PDCAssistant;
+                    $user = new pdc_assistant;
+					$arr['AssistantId'] = $_POST['userId'];
 					$path = 'PDCAssistant/PDCAssistantDash/Dashboard';
                     break;
                 case 12:
-                    $user = new PDCCoordinator;
+                    $user = new pdc_coordinator;
+					$arr['CoordinatorId'] = $_POST['userId'];
 					$path = 'PDCCoordinator/PDCCoordinatorDash/Dashboard';
                     break;
                 default:
@@ -33,13 +38,12 @@ class Login
             }
 
 
-			$arr['UserId'] = $_POST['userId'];
 
 			$row = $user->first($arr);
 			
 			if($row)
 			{
-				if($row->PASSWORD === $_POST['password'])
+				if($row->Password === $_POST['password'])
 				{
 					$_SESSION['USER'] = $row;
 					redirect($path);

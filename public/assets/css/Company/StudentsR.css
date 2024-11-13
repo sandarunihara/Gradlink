@@ -56,7 +56,7 @@
     padding-left: 50px;
     padding-top: 10px;
 }
-.sr_sr select{
+.role-select{
     height: 40px;
     width: 250px;
     border: 1px solid rgb(164, 164, 164);
@@ -84,7 +84,7 @@
 }
 .student-table tbody {
     display: block;
-    max-height: 340px; /* Adjust this value as needed */
+    max-height: 400px; /* Adjust this value as needed */
     overflow-y: auto;
     width: 100%;
 }

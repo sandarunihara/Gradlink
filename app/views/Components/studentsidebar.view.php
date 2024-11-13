@@ -9,7 +9,7 @@
                 <p>Dashboard</p>
             </div>
         </a>
-        <a class="option" href="../StudentProfile/dashboard">
+        <a class="option" href="../StudentProfile/profile">
             <i class="fas fa-user"></i>
             <div>
                 <p>Profile</p>
@@ -21,10 +21,10 @@
                 <p>Advertisements</p>
             </div>
         </a>
-        <a class="option" href="../StudentComplain/dashboard">
+        <a class="option" href="../StudentComplaint/complaint">
             <i class="fas fa-exclamation-circle"></i>
             <div>
-                <p>Complain</p>
+                <p>Complaint</p>
             </div>
         </a>
         <a class="option" href="../StudentProgress/dashboard">
