@@ -4,11 +4,12 @@ class C_Student{
     use Model;
 
     protected $table = 'student';
-    function findbyId($RegNumber)
+    function findbyId($StudentId)
     {
-        $query = "SELECT * FROM $this->table WHERE RegNumber = $RegNumber";
-
-        $result = $this->query($query);
+        $query = "SELECT * FROM $this->table WHERE StudentId = :StudentId";
+    
+        // Prepare the query
+        $result = $this->query($query, ['StudentId' => $StudentId]);
         return $result;
     }
 

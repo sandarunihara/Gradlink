@@ -40,7 +40,7 @@
                         <div class="stats">
                             <div class="stat-card">
                                 <h2>Total Student Applied</h2>
-                                <p>200</p>
+                                <p><?php echo $numOfapplyStudents ?></p>
                             </div>
                             <div class="stat-card">
                                 <h2>Active Advertisements</h2>
