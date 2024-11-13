@@ -21,7 +21,7 @@
                 <p>Advertisements</p>
             </div>
         </a>
-        <a class="option" href="../StudentComplaint/complaint">
+        <a class="option" href="<?=ROOT?>/Student/StudentComplaint/complaint">
             <i class="fas fa-exclamation-circle"></i>
             <div>
                 <p>Complaint</p>

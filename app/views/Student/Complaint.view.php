@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div>
+        <a href="<?=ROOT?>/Student/StudentComplaint/newComplaint">Add new complaint</a>
+    </div>
 </body>
 </html>
