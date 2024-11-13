@@ -13,34 +13,16 @@
     <?php
         $UserId = $data['Student'] -> StudentId;
         $Name = $data['Student'] -> Name;
-        // $ShortDesc = $data['Student'] -> ShortDesc;
-        // $DegreeName = $data['Student'] -> DegreeName;
-        // $Email = $data['Email'] -> Email;
-        // $ContactNum = $data['ContactNum'] -> ContactNum;
+        $DegreeName = $data['Student'] -> DegreeName;
+        $Email = $data['Student'] -> Email;
+        $ContactNum = $data['Student'] -> ContactNum;
+        $Github = $data['Student'] -> Github;
+        $Linkedin = $data['Student'] -> Linkedin;
+        $ShortDesc = $data['Student'] -> ShortDesc;
+
         $InterestedArea = $data['InterestedArea'] -> InterestArea;
-        // $Github = $data['Github'] -> Github;
-        // $Linkedin = $data['Linkedin'] -> Linkedin;
-        // $ProfilePic = $data['ProfilePic'] -> ProfilePic;
-        
-        // $QualificationDegree = $data['Qualification'] -> Degree;
-        // $QualificationStartDate = $data['Qualification'] -> StartDate;
-        // $QualificationEndDate = $data['Qualification'] -> EndDate;
-        // $QualificationFieldOfStudy = $data['Qualification'] -> FieldOfStudy;
-        // $QualificationShortDesc = $data['Qualification'] -> ShortDesc;
 
-        // $ExperienceJobTitle = $data['Experience'] -> JobTitle;
-        // $ExPerienceCompany = $data['Experience'] -> Company;
-        // $ExperienceLocation = $data['Experience'] -> Location;
-        // $ExperienceEmploymentType = $data['Experience'] -> EmploymentType;
-        // $ExperienceStartDate = $data['Experience'] -> StartDate;
-        // $ExperienceEndDate = $data['Experience'] -> EndDate;
-        // $ExperienceShortDesc = $data['Experience'] -> ShortDesc;
-
-        // $CertificateName = $data['Certificate'] -> Name;
-        // $CertificateOrganization = $data['Certificate'] -> Organization;
-        // $CertificateIssueDate = $data['Certificate'] -> IssueDate;
-        // $CertificateExpirationDate = $data['Certificate'] -> ExpirationDate;
-        // $CertificateShortDesc = $data['Certificate'] -> ShortDesc;
+        $ProfilePicName = $data['studentProfilePic'] -> ProfilePicName;
     ?>
     <div class="side">
             <?php $this->renderComponent("studentsidebar")  ?>
@@ -59,7 +41,7 @@
                     </div>
                     <div>
                         <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($ProfilePic)?>" height ="400px" weight="400px"class="logo" />
+                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($ProfilePicName)?>" class="logo" />
                             <p><span><?php echo($Name)?></span>Student</p>
                         </a>
                     </div>
@@ -69,6 +51,7 @@
         
             <div>
                 <h1>Profile picture</h1>
+                <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($ProfilePicName)?>" height ="200px" weight="200px" />
             </div>
             <div>
                 <h1>interested areas</h1><?php echo($InterestedArea)?>

@@ -13,7 +13,11 @@ class student
 		'Name',
 		'DegreeName',
 		'Status',
-		'ShortDesc'
+		'ShortDesc',
+		'Email',
+		'ContactNum',
+		'Github',
+		'Linkedin',
 	];
 	
 	public function validate($data)
