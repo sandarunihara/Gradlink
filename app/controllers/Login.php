@@ -21,7 +21,7 @@ class Login
                 case 4:
                     $user = new company;
 					$arr['CompanyId'] = $_POST['userId'];
-					$path = 'Company/CompanyDash/Dashboard';
+					$path = 'company/Companydash/Dashboard';
                     break;
                 case 5:
                     $user = new pdc_assistant;
