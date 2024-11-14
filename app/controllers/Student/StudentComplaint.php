@@ -18,12 +18,14 @@ class StudentComplaint{
 
     }
     public function newComplaint(){
-        $this-> view('Student/NewComplaint');
+        $data = [];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $student = new student;
+        $data['Student'] = $student -> first($arr);
+        $this-> view('Student/NewComplaint', $data);
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             
-            $data = [];
-            $data['StudentId'] = $_SESSION['USER'] -> StudentId;
             $data['Date'] = $_POST['date'];
             $data['Topic'] = $_POST['topic'];
             $data['Description'] = $_POST['description'];
@@ -31,13 +33,6 @@ class StudentComplaint{
             
             $complaint = new complaint;
             $result = $complaint -> insert($data);
-            
-            if($result){
-                echo "Complaint added successfully";
-            }else{
-                echo "Complaint not added";
-            }
-
         }
     }
 }
