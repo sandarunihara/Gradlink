@@ -3,13 +3,18 @@
 class StudentComplaint{
     use Controller;
     public function complaint(){
-
-        $data['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $data =[];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         
         $complaint = new complaint;
+        $student = new student;
         
-        $data = $complaint -> where($data);
-        //$this-> view('Student/Complaint');
+        $data['Complaints'] = $complaint -> where($arr,[], 'Date', 'do_not_order');
+        //show($data['Complaints']);
+        //show($data['Complaints'][0] -> Status);
+
+        $data['Student'] = $student -> first($arr);
+        $this-> view('Student/Complaint', $data);
 
     }
     public function newComplaint(){
@@ -19,6 +24,7 @@ class StudentComplaint{
             
             $data = [];
             $data['StudentId'] = $_SESSION['USER'] -> StudentId;
+            $data['Date'] = $_POST['date'];
             $data['Topic'] = $_POST['topic'];
             $data['Description'] = $_POST['description'];
             $data['Status'] = "notReviewed";

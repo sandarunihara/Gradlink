@@ -8,11 +8,15 @@
 <body>
     <div>
         <form action="" method="post">
+            <label for="date">Date</label>
+            <input type="date" name="date">
+            
             <label for="topic">Topic</label>
             <input type="text" name="topic">
             
             <label for="description">Description</label>
             <input type="text" name="description">
+            
             <button type="submit">Submit</button>
         </form>
     </div>

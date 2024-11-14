@@ -8,10 +8,12 @@
 
         protected $allowedColumns = [
 
-            'StudentId',
+            'ComplaintId',
             'Topic',
             'Date',
             'Description',
             'Status',
+            'CompanyId',
+            'StudentId'
         ];
     }

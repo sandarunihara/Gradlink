@@ -8,17 +8,16 @@
 
         protected $limit = 10;
         protected $offset = 0;
-        protected $order_type ='desc';
-        public $order_column ='id';
+        //$order_type = asc or desc or do_not_order
 
-        public function findAll(){
+        public function findAll($order_column, $order_type){
 
-            $query = "SELECT * FROM $this->table ORDER BY $this->order_column $this->order_type LIMIT $this->limit OFFSET $this->offset";
+            $query = "SELECT * FROM $this->table ORDER BY $order_column $order_type LIMIT $this->limit OFFSET $this->offset";
 
             return $this->query($query);
         }
 
-        public function where($data, $data_not =[]){
+        public function where($data, $data_not =[], $order_column, $order_type){ //where function example where($arr,[], 'Date', 'asc');
             $keys = array_keys($data);
             $keys_not = array_keys($data_not);
             $query = "SELECT * FROM $this->table WHERE ";
@@ -30,7 +29,9 @@
                 $query .= $key . " != :". $key . " && ";
             }
             $query = trim($query, " && ");
-            $query .= "ORDER BY $this->order_column $this->order_type LIMIT $this->limit OFFSET $this->offset";
+            if($order_type != 'do_not_order'){
+                $query .= " ORDER BY $order_column $order_type LIMIT $this->limit OFFSET $this->offset";
+            }
 
             //echo $query;
             $data = array_merge($data, $data_not);
