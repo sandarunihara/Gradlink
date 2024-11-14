@@ -40,7 +40,12 @@ class StudentsRequests{
         // print_r($StudentId);
         $model=new C_Student;
         $data=$model->findbyId($StudentId);
-        // print_r($data);
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
+            print_r($_POST); // This should print the form POST data
+            
+        }
+        
         $this-> view('Company/Studentpro' , ['data' => $data]);
     }
 
