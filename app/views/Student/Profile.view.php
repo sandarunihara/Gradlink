@@ -20,7 +20,6 @@
         $Linkedin = $data['Student'] -> Linkedin;
         $ShortDesc = $data['Student'] -> ShortDesc;
 
-        $InterestedArea = $data['InterestedArea'] -> InterestArea;
 
         $ProfilePicName = $data['studentProfilePic'] -> ProfilePicName;
     ?>
@@ -54,7 +53,10 @@
                 <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($ProfilePicName)?>" height ="200px" weight="200px" />
             </div>
             <div>
-                <h1>interested areas</h1><?php echo($InterestedArea)?>
+                <h1>interested areas</h1>
+                <?php foreach($data['Skills'] as $skill): ?>
+                    <p><?php echo($skill -> Skill)?></p>
+                <?php endforeach; ?>
             </div>
             <div>
                 <h1>short description</h1><?php echo($ShortDesc)?>
