@@ -70,9 +70,6 @@
                                         <th>
                                             <h5>View</h5>
                                         </th>
-                                        <th>
-                                            <h5>Delete</h5>
-                                        </th>
                                     </thead>
                                     <tbody>
                                         <?php if (isset($data) && !empty($data)): ?>
@@ -90,13 +87,12 @@
                                                             <span class="status"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href=""><button class="view-complaint-btn">View Complaint</button></a></td>
-                                                    <td><a href=""><button class="delete-complaint-btn">Delete Complaint</button></a></td>
+                                                    <td><a href="<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint->ComplaintId; ?>"><button class="view-complaint-btn">View Complaint</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="5">No Complaints found</td>
+                                                <td colspan="4">No Complaints found</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>

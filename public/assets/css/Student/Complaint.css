@@ -88,19 +88,7 @@
 .view-complaint-btn:hover {
     background-color: #0056b3;
 }
-.delete-complaint-btn{
-    width: 80%;
-    padding: 8px;
-    font-size: 14px;
-    background-color: #dc3545;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.delete-complaint-btn:hover {
-    background-color: #a71d2a;
-}
+
 .c_filter-container select{
     border: none;
     height: 40px;
