@@ -96,7 +96,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../Studentpro/dashboard"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../ShortlistedStudents/studentprofile/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>

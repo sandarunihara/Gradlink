@@ -83,8 +83,8 @@
                                             <?php foreach ($data as $student): ?>
                                                 <?php
                                                 $status = $student['Action'];
-                                                $statusClass = ($status == 'shortlist') ? 'Shortlist' : (($status == 'reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'shortlist') ? 'Shortlisted' : (($status == 'reject') ? 'Rejected' : 'Pending');
+                                                $statusClass = ($status == 'Shortlist') ? 'Shortlist' : (($status == 'Reject') ? 'Reject' : 'Pending');
+                                                $statusText = ($status == 'Shortlist') ? 'Shortlisted' : (($status == 'Reject') ? 'Rejected' : 'Pending');
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
@@ -95,7 +95,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["RegNumber"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>

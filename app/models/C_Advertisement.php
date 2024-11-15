@@ -34,25 +34,42 @@ class C_Advertisement{
         return false;
     }
 
-    function find($data) {
-        $keys = array_keys($data);
-        $query = "SELECT * FROM advertisement WHERE ";
-    
-        foreach ($keys as $key) {
-            $query .= $key . " = :" . $key . " AND ";
+    public function find($data) {
+        // Check if $data is an associative array or a single value
+        if (is_array($data)) {
+            $keys = array_keys($data);
+            $query = "SELECT * FROM advertisement WHERE ";
+        
+            foreach ($keys as $key) {
+                $query .= $key . " = :" . $key . " AND ";
+            }
+        
+            $query = trim($query, "AND "); // Trim the trailing "AND"
+            
+            $result = $this->query($query, $data);
+        } else {
+            // Assume $data is a single ID (like CompanyId)
+            $query = "SELECT * FROM advertisement WHERE CompanyId = :CompanyId";
+            $result = $this->query($query, ['CompanyId' => $data]);
         }
     
-        $query = trim($query, "AND "); // Trim the trailing "AND"
-        
-        $result = $this->query($query, $data);
         return $result;
     }
+    
 
     function findall() {
         $query = "SELECT * FROM advertisement";
     
         $result = $this->query($query);
         return $result;
+    }
+
+    public function gethighestadid()
+    {
+       $query = "SELECT advertisementId FROM advertisement ORDER BY advertisementId DESC LIMIT 1";
+       $result = $this->query($query);
+        return $result ? $result[0]->advertisementId : null;
+        
     }
 
     

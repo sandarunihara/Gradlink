@@ -66,19 +66,23 @@
                             <div class="d_alllist">
                                 <ul>
                                     <?php
-                                    // Get the first 8 elements from $data
-                                    $firstEight = array_slice($data, 0, 8);
-                                    
-
-                                    // Loop through the first 8 items and display them
-                                    foreach ($firstEight as $item) {
-                                        $statusClass = ($item['Status'] === 'Pending') ? 'status pending' : (($item['Status'] === 'shortlist') ? 'status shortlist' : 'status reject');
+                                    if (empty($data)) {
+                                        echo '<li>No requests found</li>';
+                                    }else{
+                                        // Get the first 8 elements from $data
+                                        $firstEight = array_slice($data, 0, 8);
                                         
-                                        echo '<li>';
-                                        echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
-                                        echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
-                                        echo '<span class="' . $statusClass . '">' . htmlspecialchars(ucfirst($item['Status'])) . '</span>';
-                                        echo '</li>';
+
+                                        // Loop through the first 8 items and display them
+                                        foreach ($firstEight as $item) {
+                                            $statusClass = ($item['Status'] === 'Pending') ? 'status pending' : (($item['Status'] === 'Shortlist') ? 'status shortlist' : 'status reject');
+                                            
+                                            echo '<li>';
+                                            echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
+                                            echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
+                                            echo '<span class="' . $statusClass . '">' . htmlspecialchars(ucfirst($item['Status'])) . '</span>';
+                                            echo '</li>';
+                                        }
                                     }
                                     ?>
                                 </ul>

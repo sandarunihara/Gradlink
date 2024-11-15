@@ -19,7 +19,7 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Students Requests</h1>
+                        <h1>Students Profile</h1>
                     </div>
                     <div class="d_pro">
                         <div class="d_profile">
@@ -44,16 +44,16 @@
                             <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
                             <div class="stu_info">
                                 <span><?php echo $data[0]->Name ?></span>
-                                <p class="mail_no">sandarunihara@gmail.com<br>
-                                    0712237230</p>
+                                <p class="mail_no"><?php echo $data[0]->Email ?><br>
+                                    0<?php echo $data[0]->ContactNum ?></p>
                                 <div class="links">
                                     <div class="acc_link">
                                         <i class="fab fa-linkedin"></i>
-                                        <a href="#">linkedin.com/sandarunihara</a>
+                                        <a href="<?php echo $data[0]->Linkedin ?>"><?php echo $data[0]->Linkedin ?></a>
                                     </div>
                                     <div class="acc_link">
                                         <i class="fab fa-github"></i>
-                                        <a href="#">github.com/sandarunihara</a>
+                                        <a href="<?php echo $data[0]->Github ?>"><?php echo $data[0]->Github ?></a>
                                     </div>
                                 </div>
 
@@ -110,17 +110,30 @@
                             <h2>Curriculum Vitae(CV)</h2>
                             <div class="cv">
                                 <i class="fas fa-file-pdf"></i>
-                                <a href="your-pdf-link.pdf" target="_blank">Download here</a>
+                                <a href="pdf-link.pdf" target="_blank">Download here</a>
                             </div>
                         </div>
                         <div class="all_ar">
-                            <div class="acce_rej">
-                                <h3>Action :</h3>
-                                <div class="btn">
-                                    <button onclick="openrejectModal()" class="reject">Reject</button>
-                                    <button onclick="openconfirmModal()" class="accept">Accept</button>
+                            <form id="actionForm" method="post" action="">
+                                <input type="hidden" name="submit_action" id="actionInput" value="">
+                                <div class="acce_rej" id="ShortlistSection">
+                                    <h3>Action :</h3>
+                                    <div class="btn">
+                                        <button type="button" value="reject" onclick="openRejectModal(event)" class="reject">Reject</button>
+                                        <button type="button" value="shortlist" onclick="openShortlistConfirmModal(event)" class="accept">Shortlist</button>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="acce_rej" id="RecruitSection">
+                                    <h3>Action :</h3>
+                                    <div class="btn">
+                                        <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
+                                        <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -129,28 +142,42 @@
         </div>
     </div>
 
-    <!-- confirmation-modal -->
-    <div id="accept-modal" class="updatemodal">
+    <!-- Shortlist Confirmation Modal -->
+    <div id="Shortlist-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
             <p>Do you want to Shortlist this Student?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="">Yes</button>
-                <button class="updateno-btn" onclick="closeconfirmModal()">No</button>
+                <button type="submit" name="shortlist" value="shortlist" class="updateyes-btn" onclick="confirmAction('shortlist')">Yes</button>
+                <button class="updateno-btn" onclick="closeShortlistConfirmModal()">No</button>
             </div>
         </div>
     </div>
-    
+
+    <!-- Recruit Confirmation Modal -->
+    <div id="Recruit-modal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to Recruit this Student?</p>
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="confirmAction('recruit')">Yes</button>
+                <button class="updateno-btn" onclick="closeRecruitConfirmModal()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Confirmation Modal -->
     <div id="reject-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
             <p>Do you want to Reject this Student?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="">Yes</button>
-                <button class="updateno-btn" onclick="closerejectModal()">No</button>
+                <button class="updateyes-btn" onclick="confirmAction('reject')">Yes</button>
+                <button class="updateno-btn" onclick="closeRejectModal()">No</button>
             </div>
         </div>
     </div>
+
 
 
     <script>
@@ -174,25 +201,73 @@
             icon.classList.toggle('rotate');
         }
 
-        // Get the modal
-        function openconfirmModal() {
-            document.getElementById('accept-modal').style.display = 'block';
-            modal.style.display = 'flex'; // Use flex for centering modal
+        // To open and close the modals and confirm actions
+        function openShortlistConfirmModal(event) {
+            event.preventDefault(); // Prevents the form from submitting immediately
+            document.getElementById('Shortlist-modal').style.display = 'flex';
         }
 
-        function closeconfirmModal() {
-            document.getElementById('accept-modal').style.display = 'none';
-        }
-        
-        
-        
-        function openrejectModal() {
-            document.getElementById('reject-modal').style.display = 'block';
-            modal.style.display = 'flex'; // Use flex for centering modal
+        function closeShortlistConfirmModal() {
+            document.getElementById('Shortlist-modal').style.display = 'none';
         }
 
-        function closerejectModal() {
+        function openRecruitConfirmModal(event) {
+            event.preventDefault();
+            document.getElementById('Recruit-modal').style.display = 'flex';
+        }
+
+        function closeRecruitConfirmModal() {
+            document.getElementById('Recruit-modal').style.display = 'none';
+        }
+
+        function openRejectModal(event) {
+            event.preventDefault();
+            document.getElementById('reject-modal').style.display = 'flex';
+        }
+
+        function closeRejectModal() {
             document.getElementById('reject-modal').style.display = 'none';
+        }
+
+        // Submits the form after confirmation
+        function confirmAction(action) {
+            console.log('Action:', action);
+
+            document.getElementById('actionInput').value = action;
+            // Close the modal
+            closeAllModals();
+
+            // Submit the form
+            document.getElementById('actionForm').submit();
+        }
+
+        function closeAllModals() {
+            document.getElementById('Shortlist-modal').style.display = 'none';
+            document.getElementById('Recruit-modal').style.display = 'none';
+            document.getElementById('reject-modal').style.display = 'none';
+        }
+    </script>
+
+
+    <script>
+        // Get the current URL
+        const currentUrl = window.location.href;
+
+        // Check if the URL contains "ShortlistedStudents/studentprofile"
+        if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
+            // Show action section, hide nope section
+            document.getElementById("RecruitSection").style.display = "block";
+            document.getElementById("ShortlistSection").style.display = "none";
+        }
+        // Check if the URL contains "StudentsRequests/studentprofile"
+        else if (currentUrl.includes("StudentsRequests/studentprofile")) {
+            // Show nope section, hide action section
+            document.getElementById("RecruitSection").style.display = "none";
+            document.getElementById("ShortlistSection").style.display = "block";
+        } else {
+            // Default behavior: hide both sections (optional)
+            document.getElementById("ShortlistSection").style.display = "none";
+            document.getElementById("RecruitSection").style.display = "none";
         }
     </script>
 

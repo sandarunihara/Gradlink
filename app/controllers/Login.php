@@ -21,7 +21,7 @@ class Login
                 case 4:
                     $user = new company;
 					$arr['CompanyId'] = $_POST['userId'];
-					$path = 'Company/CompanyDash/Dashboard';
+					$path = 'company/Companydash/Dashboard';
                     break;
                 case 5:
                     $user = new pdc_assistant;
@@ -40,12 +40,12 @@ class Login
 
 
 			$row = $user->first($arr);
-			
-			if($row)
 			{
 				if($row->Password === $_POST['password'])
 				{
 					$_SESSION['USER'] = $row;
+					// set a cookie for remembering the user
+					// setcookie('loginId', $row->loginId, time() + 3600, "/");
 					redirect($path);
 				}
 			}

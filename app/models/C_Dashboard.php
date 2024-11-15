@@ -67,7 +67,7 @@ class C_Dashboard
                     FROM 
                         studentadvertisement
                     JOIN 
-                        student ON studentadvertisement.RegNumber = student.RegNumber
+                        student ON studentadvertisement.StudentId = student.StudentId
                     JOIN 
                         advertisement ON studentadvertisement.AdvertisementId = advertisement.advertisementId
                     WHERE 
