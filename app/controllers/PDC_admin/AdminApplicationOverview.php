@@ -3,6 +3,6 @@
     class AdminApplicationOverview{
         use Controller;
         public function dashboard(){
-            $this-> view('PDC_admin/ApplicationOverview');
+            $this-> view('PDC_admin/Application/ApplicationOverview');
         }  
     }

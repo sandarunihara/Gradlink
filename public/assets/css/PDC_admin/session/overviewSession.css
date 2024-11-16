@@ -173,3 +173,28 @@ table td {
     background-color: #0872dc;
 
 }
+
+/* .delete-btn{
+    background-color: #ff0000;
+    color: white;
+}
+
+.delete-btn:hover{
+    background-color: #e34646;
+} */
+
+
+.delete-btn {
+    background-color: #ff0000;
+    border: 1px solid #ff0000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #e34646;
+    color: #fff;
+} 

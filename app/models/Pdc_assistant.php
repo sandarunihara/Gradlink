@@ -10,6 +10,8 @@ class pdc_assistant
 
 		'AssistantId',	
 		'Password',
+		'Name',
+		'Degree'
 	];
 	
 	public function validate($data)
