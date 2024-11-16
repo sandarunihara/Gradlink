@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="pro_container">
-                    <a href="../dashboard" class="backreq">
+                    <a href="<?php echo $url ?>" class="backreq">
                         <i class="fas fa-chevron-left"></i>
                         <h3>back</h3>
                     </a>
@@ -141,14 +141,13 @@
 
         </div>
     </div>
-
     <!-- Shortlist Confirmation Modal -->
     <div id="Shortlist-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
             <p>Do you want to Shortlist this Student?</p>
             <div class="updatemodal-buttons">
-                <button type="submit" name="shortlist" value="shortlist" class="updateyes-btn" onclick="confirmAction('shortlist')">Yes</button>
+                <button type="submit" name="shortlist" value="shortlist" class="updateyes-btn" onclick="confirmAction('Shortlist')">Yes</button>
                 <button class="updateno-btn" onclick="closeShortlistConfirmModal()">No</button>
             </div>
         </div>
@@ -160,7 +159,7 @@
             <h2>Are you sure?</h2>
             <p>Do you want to Recruit this Student?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="confirmAction('recruit')">Yes</button>
+                <button class="updateyes-btn" onclick="confirmAction('Recruit')">Yes</button>
                 <button class="updateno-btn" onclick="closeRecruitConfirmModal()">No</button>
             </div>
         </div>
@@ -178,9 +177,19 @@
         </div>
     </div>
 
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
 
 
     <script>
+        <?php if (!empty($error)) : ?>
+            errorToast("<?php echo addslashes($error); ?>");
+        <?php endif; ?>
+        <?php if (!empty($success)) : ?>
+            successToast("<?php echo addslashes($success); ?>");
+        <?php endif; ?>
+
         function toggleSection(sectionId, iconId) {
             const section = document.getElementById(sectionId);
             const icon = document.getElementById(iconId);
