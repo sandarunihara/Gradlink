@@ -19,19 +19,20 @@ class StudentProfile{
     }
     public function profileEdit(){        
         $data =[];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $student = new student;
+        $data['Student'] = $student -> first($arr);
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
-            $arr['UserId'] = $_SESSION['USER'] -> StudentId;
-            //$contactNum = new StudentContactNum;
+            //show($_POST['Github']);
+            $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
+
+            if($data['Result']['status'] == 'success'){
+                $this-> view('Student/ProfileEdit',$data);
+            }
             
-            
-            show($_POST);
-            $data['Result'] = $contactNum -> update($arr['StudentId'], $_POST, 'UserId');
-            //$this -> view('Student/ProfileEdit',$data);
-            show($data);
+        }else{
+            $this-> view('Student/ProfileEdit',$data);
         }
-
-        $this-> view('Student/ProfileEdit');
-
     }
 }

@@ -80,7 +80,7 @@
         }
 
 
-        public function update($id, $data, $id_column = 'id') {
+        public function update($id, $data, $id_column) {
 
             try {
                 /* Remove unwanted data */

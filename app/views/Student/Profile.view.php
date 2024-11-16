@@ -31,7 +31,7 @@
         <div class="main">
             <div class="d">
                 <div >
-                    <h1>DashBoard</h1>
+                    <h1>Profile</h1>
                 </div>
                 <div class="d_pro">
                     <div class="d_profile">
@@ -53,7 +53,7 @@
                 <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($ProfilePicName)?>" height ="200px" weight="200px" />
             </div>
             <div>
-                <h1>interested areas</h1>
+                <h1>Skills</h1>
                 <?php foreach($data['Skills'] as $skill): ?>
                     <p><?php echo($skill -> Skill)?></p>
                 <?php endforeach; ?>
