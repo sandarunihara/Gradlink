@@ -3,6 +3,10 @@
     class AdminSessionOverview{
         use Controller;
         public function dashboard(){
-            $this-> view('PDC_admin/SessionOverview');
+            
+            $model = new PDC_Session;
+            $sessionData = $model->findall();
+
+            $this->view('PDC_admin/Session/SessionOverview', ['sessionData' => $sessionData]);
         }
     }

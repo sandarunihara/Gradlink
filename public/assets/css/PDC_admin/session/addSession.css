@@ -27,32 +27,14 @@ body {
     align-items: center;
 }
 
-.student-title {
+.header-left
+{
+    flex-direction: row;
     display: flex;
-    align-items: center;
+    gap: 10%;
 }
-
-.student-title h1 {
-    margin: 0;
+.header-left h1 {
     font-size: 26px;
-    color: #4b0082;
-}
-
-.edit-btn {
-    background: none;
-    border-radius: 120%;
-    border: 2px solid #4b0082;
-    margin-left: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    color: #4b0082;
-    padding: 3px;
-    width: 32px;
-}
-
-.edit-btn:hover{
-    background-color: #4c008212;
-    
 }
 
 .header-right {
@@ -81,7 +63,7 @@ body {
     font-size: 14px;
     color: #777;
 }
-.student-info {
+.company-info {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -89,7 +71,7 @@ body {
     margin-top: 30px;
 }
 
-.student-form {
+.company-form {
     display: grid;
     grid-template-columns: 1fr 7fr; /* Two columns: labels and inputs */
     column-gap: 40px; /* Gap between label and input */
@@ -124,10 +106,24 @@ body {
     height: 100px;
 }
 
-.button-line{
-    display: flex;
-    justify-content: space-between;
+.input-group {
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    align-items: baseline;
 }
+
+.input-group input {
+    width: auto; 
+    flex-grow: 1; 
+}
+
+.input-group button {
+    background-color: white;
+    border: 2px solid #000000;
+    color: #000000;
+}
+
 
 .action-buttons {
     margin-top: 20px;
@@ -143,39 +139,113 @@ body {
     cursor: pointer;
 }
 
-.update-btn {
-    background-color: #007bff;
-    color: #ffffff;
+.row {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%; 
 }
 
-.update-btn:hover{
+.email-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 15px;
+    width: 16%;
+    margin-top: 35px;
+    font-size: medium;
+}
+
+.email-btn:hover{
     background-color: #0872dc;
 }
 
-.block-btn {
-    background-color: #eb0000;
-    color: #fff;
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    
 }
 
-.block-btn:hover{
-    background-color: #f20303;
+.form-group select:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 5px #000000(0, 123, 255, 0.5); 
 }
+
+
+.input-group button {
+    background-color: white;
+    border: 2px solid #000000;
+    color: #000000;
+}
+
+
+.action-buttons {
+    margin-top: 20px;
+    justify-content: end;
+    display: flex;
+    gap: 1%;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 35px;
+    width: 14%;
+    font-size: medium;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%; 
+}
+
+.email-btn {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.email-btn:hover{
+    background-color: #0872dc;
+}
+
+.confirm-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    
+}
+
+.confirm-btn:hover{
+    background-color: #0872dc;
+}
+
+.delete-btn {
+    background-color: #ffffff;
+    color: #ed0f0f;
+    border: 1px solid #ed0f0f;
+    
+}
+
+.delete-btn:hover{
+    background-color: #ed0f0f;
+    color: #ffffff;
+}
+
 
 .back-btn {
-    background-color: #000000;
-    color: #ffffff;
-    margin-left: auto;
-
-}
-
-.back-btn:hover{
-    background-color: #26282b;
-}
-
-.view-progress-btn {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -183,6 +253,6 @@ body {
     align-self: flex-start;
 }
 
-.view-progress-btn:hover{
-    background-color: #0872dc;
+.back-btn:hover{
+    background-color: #16191c;
 }

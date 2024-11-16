@@ -26,7 +26,7 @@ class Login
                 case 5:
                     $user = new pdc_assistant;
 					$arr['AssistantId'] = $_POST['userId'];
-					$path = 'PDCAssistant/PDCAssistantDash/Dashboard';
+					$path = 'PDC_admin/AdminDashboardOverview/Dashboard';
                     break;
                 case 12:
                     $user = new pdc_coordinator;

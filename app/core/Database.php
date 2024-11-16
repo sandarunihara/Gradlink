@@ -4,9 +4,14 @@
         private $con;
 
         private function connect(){
-            $string ="mysql:hostname=".DBHOST.";dbname=".DBNAME;
-            $con = new PDO($string, DBUSER, DBPASS);
-            return $con;
+            $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
+            try {
+                $con = new PDO($string, DBUSER, DBPASS);
+                $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                return $con;
+            } catch (PDOException $e) {
+                die("Database connection failed: " . $e->getMessage());
+            }
         }
         public function query($query, $data = []){
             $con = $this->connect();
@@ -35,6 +40,8 @@
                     return $result[0];
                 }  
             }
+
+            $con = null;
             return false;
         }
     }
