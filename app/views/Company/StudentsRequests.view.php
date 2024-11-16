@@ -95,7 +95,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -112,6 +112,11 @@
             </div>
         </div>
     </div>
+
+    
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
         document.getElementById('searchInput').addEventListener('input', filterTable);

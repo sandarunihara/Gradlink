@@ -29,9 +29,10 @@ class ShortlistedStudents{
                 exit();
             }
             foreach ($data as $item) {
-                if ($item->Jobstatus == 'Shortlist'){
+                if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Recruit'){
                     $reqdata[] = [
                         "StudentId"=>$item->StudentId,
+                        'AdvertisementId' => $item->advertisementId,
                         'Student Name' => $item->Name,
                         'Student Degree'=>$item->DegreeName,
                         'Position' => $item->position,
@@ -44,11 +45,37 @@ class ShortlistedStudents{
         $this-> view('Company/ShortlistedStudents', ['data' => $reqdata]);
     }
 
-    public function studentprofile($StudentId){
+    public function studentprofile($advertisementId,$StudentId){
         // print_r($StudentId);
         $model=new C_Student;
         $data=$model->findbyId($StudentId);
         // print_r($data);
-        $this-> view('Company/Studentpro' , ['data' => $data]);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
+            // print_r($_POST['submit_action']);
+            $updatemodel = new C_Dashboard;
+            $updatedata = [
+                'Jobstatus' => $_POST['submit_action']
+            ];
+            $studentdata = [
+                'Status' => $_POST['submit_action']
+            ];
+            $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
+            $studentUpdate=$model->update($StudentId, $studentdata,'StudentId');
+            if ($result['status']) {
+                // Redirect to the same page after successful submission
+                $success= "Student Job Status updated successfully.";
+                // $this-> view('Company/Studentpro' , ['data' => $data,'success'=>$success]);
+                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard' );
+                exit;
+            } else {
+                $error= "There was an issue update the Student Job Status.";
+                $this-> view('Company/Studentpro' , ['data' => $data,'error'=>$error,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard']);
+                exit;
+            }
+        }
+
+        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard']);
+
     }
 }
