@@ -40,6 +40,11 @@
                             <input type="text" placeholder="Search Student">
                             <i class="fas fa-search"></i>
                         </div>
+                        <select class="role-select">
+                            <option value="software-engineer">Software Engineer</option>
+                            <option value="qa">QA</option>
+                            <option value="web-development">Web Development</option>
+                        </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>
                             <select>
@@ -52,14 +57,6 @@
                     </div>
                     <div class="sr_t">
                         <div class="sr_table">
-                            <div class="sr_sr">
-                                <h3>Shortlisted Students</h3>
-                                <select class="role-select">
-                                    <option value="software-engineer">Software Engineer</option>
-                                    <option value="qa">QA</option>
-                                    <option value="web-development">Web Development</option>
-                                </select>
-                            </div>
                             <!-- Table -->
                             <div>
 
@@ -99,7 +96,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../Studentpro/dashboard"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../ShortlistedStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>

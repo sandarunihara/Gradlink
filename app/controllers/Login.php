@@ -14,22 +14,22 @@ class Login
             
             switch($userNum){
                 case 9:
-                    $user = new student_password;
+                    $user = new student;
 					$arr['StudentId'] = $_POST['userId'];
 					$path = 'Student/StudentDash/Dashboard';
                     break;
                 case 4:
-                    $user = new company_password;
+                    $user = new company;
 					$arr['CompanyId'] = $_POST['userId'];
-					$path = 'Company/CompanyDash/Dashboard';
+					$path = 'company/Companydash/Dashboard';
                     break;
                 case 5:
-                    $user = new pdc_assistant_password;
+                    $user = new pdc_assistant;
 					$arr['AssistantId'] = $_POST['userId'];
-					$path = 'PDCAssistant/PDCAssistantDash/Dashboard';
+					$path = 'PDC_admin/AdminDashboardOverview/Dashboard';
                     break;
                 case 12:
-                    $user = new pdc_coordinator_password;
+                    $user = new pdc_coordinator;
 					$arr['CoordinatorId'] = $_POST['userId'];
 					$path = 'PDCCoordinator/PDCCoordinatorDash/Dashboard';
                     break;
@@ -40,12 +40,12 @@ class Login
 
 
 			$row = $user->first($arr);
-			
-			if($row)
 			{
 				if($row->Password === $_POST['password'])
 				{
 					$_SESSION['USER'] = $row;
+					// set a cookie for remembering the user
+					// setcookie('loginId', $row->loginId, time() + 3600, "/");
 					redirect($path);
 				}
 			}

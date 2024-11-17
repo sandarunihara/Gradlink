@@ -28,7 +28,7 @@
                 //never occur
                 break;
         }
-        $Email = $data['Email'] -> Email;
+        //$Email = $data['Email'] -> Email;
     ?>
     <div class="side">
             <?php $this->renderComponent("studentsidebar")  ?>
@@ -74,7 +74,7 @@
                             </div>
                             <div class="stat-card">
                                 <h2>Status: <?php echo($StatusString) ?></h2>
-                                <h2>Email: <?php echo($Email) ?></h2>
+                                <!-- <h2>Email: <?php echo($Email) ?></h2> -->
                                 <h2>Registration Number: <?php echo($UserId) ?></h2>
                                 <h2>Round: 1 Round</h2>
                             </div>

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisements</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Advertisement/dashboardAdvertisement.css">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Advertisement/dashboardAdvertisement.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Components/companyTabs.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Components/coordinatorDashboard.css">
 </head>
 
 <body>

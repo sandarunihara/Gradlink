@@ -4,7 +4,7 @@
     <head>
         <title>Companies</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/overviewCompany.css">
+        <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/company/overviewCompany.css">
         <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -61,7 +61,7 @@
                                 <td>Tharindu Perera</td>
                                 <td>tharindu@gmail.com</td>
                                 <td>071 273 4321</td>
-                                <td><button class="view-btn" onclick="naviagteToViewCompany();" >View</button></td>
+                                <td><button class="view-btn" onclick="navigateToViewCompany();" >View</button></td>
                             </tr>
                             <!-- Add more rows as needed -->
                         </tbody>
@@ -93,7 +93,7 @@
                                 <td>Tharindu Perera</td>
                                 <td>tharindu@gmail.com</td>
                                 <td>071 273 4321</td>
-                                <td><button class="view-btn" onclick="naviagteToViewPendingCompany();" >View</button></td>
+                                <td><button class="view-btn" onclick="navigateToViewCompany();" >View</button></td>
                             </tr>
                             <!-- Add more rows as needed -->
                         </tbody>
@@ -103,7 +103,7 @@
 
             </main>
         </div>
-        <script src="<?= ROOT ?>/assets/js/script.js"></script>
+        <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
 
 
     </body>

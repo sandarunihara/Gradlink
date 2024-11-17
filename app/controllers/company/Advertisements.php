@@ -6,27 +6,51 @@ class Advertisements
     public function dashboard()
     {
 
+        $user = "";
+        if (isset($_SESSION['USER'])) {
+            $user = $_SESSION['USER'];
+        }
+
         $model = new C_Advertisement;
+        $modelstudent = new C_Dashboard;
 
-        $data = $model->findall();
+        // $data = $model->findall();
 
-        // Convert PDOStatement to an array
-        // $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $data = $model->find($user->CompanyId);
+        // $data = $model->find($user->CompanyId)->fetchAll(PDO::FETCH_OBJ);
+
 
         // Get the current date
         $currentDate = date('Y-m-d');
         // Check if data is empty
         if (empty($data)) {
-            $this->view('Company/Advertisements');
+            $this->view('Company/Advertisements',['data' => $data,'activeCount' => 0,'deactiveCount' => 0, 'numOfapplyStudents' => 0]);
         } else {
-            
+
+            $advertisementIds = [];
             foreach ($data as $advertisement) {
+                $advertisementIds[] = $advertisement->advertisementId;
                 // Check if the deadline is in the past
                 if ($advertisement->deadline < $currentDate) {
                     // Update the status to 'Inactive'
                     $model->update($advertisement->advertisementId, ['status' => 'Deactive'], 'advertisementId');
                 }
             }
+
+            $studentIds = [];
+            $applystudent = [];
+            foreach ($advertisementIds as $id) {
+                $applystudent = $modelstudent->find(['advertisementId' => $id], 'studentadvertisement');
+                if (!empty($applystudent)) {
+                    foreach ($applystudent as $student) {
+                        $studentIds[] = $student->StudentId;
+                    }
+                }else{
+                    $studentIds = [];
+                }
+            }
+            $numOfapplyStudents = count($studentIds);
+
 
             $activeData = array_filter($data, function ($advertisement) {
                 return $advertisement->status === 'Active';
@@ -44,38 +68,58 @@ class Advertisements
             $activeCount = count($activeData);
             $deactiveCount = count($deactiveData);
 
-            if (!empty($data)) {
-                $this->view('Company/Advertisements', ['data' => $data,'activeCount' => $activeCount,'deactiveCount' => $deactiveCount]);
-            } else {
-                $this->view('Company/Advertisements');
-            }
+            $this->view('Company/Advertisements', ['data' => $data,'activeCount' => $activeCount,'deactiveCount' => $deactiveCount, 'numOfapplyStudents' => $numOfapplyStudents]);
+            
         }
     }
 
+    public function getnextId() {
+        $adModel = new C_Advertisement();
+        $advertisementId = $adModel->gethighestadid();
+        if (!empty($advertisementId)) {
+            // Extract the numeric part of the current highest advertisementId
+            $numericPart = intval(substr($advertisementId, 1)); // Remove the prefix (e.g., 'a')
+            $nextId = $numericPart + 1;
+    
+            // Determine the number of digits required for the new ID
+            $paddingLength = max(3, strlen((string)$nextId));
+    
+            // Format the new advertisementId (e.g., 'a001', 'a1000', etc.)
+            return 'a' . str_pad($nextId, $paddingLength, '0', STR_PAD_LEFT);
+        } else {
+            // Start from 'a001' if there are no existing entries
+            return 'a001';
+        }
+    }
 
     public function create()
     {
+        $user = "";
+        if (isset($_SESSION['USER'])) {
+            $user = $_SESSION['USER'];
+        }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $model = new C_Advertisement;
-
-
+            
+            
             $maxFileSize = 5 * 1024 * 1024; // 5 MB
             // Handle the file upload and convert it to base64
             $imageBase64 = '';
             if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-
+                
                 if ($_FILES['image']['size'] > $maxFileSize) {
                     echo "Error: The file is too large. Maximum allowed size is 5MB.";
                     return;
                 }
-
+                
                 $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
                 $imageBase64 = base64_encode($imageData); // Encode image content in base64
                 // print_r($imageBase64);
             }
             
-
+            $Id=$this->getnextId();
             $data = [
+                'advertisementId'=>$Id,
                 'position' => $_POST['position'] ?? '',
                 'status' => 'Active',
                 'description' => $_POST['description'] ?? '',
@@ -84,9 +128,9 @@ class Advertisements
                 'qualification' => $_POST['qualifications'] ?? '',
                 'deadline' => $_POST['deadline'] ?? '',
                 'image' => $imageBase64,
-                'startDate' => date('Y-m-d')
+                'startDate' => date('Y-m-d'),
+                'CompanyId' => $user->CompanyId
             ];
-
 
             // Validate and insert the data into the database
             if ($model->validate($data)) {
@@ -165,3 +209,9 @@ class Advertisements
         }
     }
 }
+
+
+
+
+
+

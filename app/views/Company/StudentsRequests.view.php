@@ -40,6 +40,12 @@
                             <input id="searchInput" type="text" placeholder="Search Student">
                             <i class="fas fa-search"></i>
                         </div>
+                        <select class="role-select">
+                            <option value="all">All</option>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="qa">QA</option>
+                            <option value="Web Development">Web Development</option>
+                        </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>
                             <select class="status-select">
@@ -52,15 +58,6 @@
                     </div>
                     <div class="sr_t">
                         <div class="sr_table">
-                            <div class="sr_sr">
-                                <h3>Student Requests</h3>
-                                <select class="role-select">
-                                    <option value="all">All</option>
-                                    <option value="Software Engineer">Software Engineer</option>
-                                    <option value="qa">QA</option>
-                                    <option value="Web Development">Web Development</option>
-                                </select>
-                            </div>
                             <!-- Table -->
                             <div>
                                 <table class="student-table">
@@ -98,7 +95,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../Studentpro/dashboard"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -115,6 +112,11 @@
             </div>
         </div>
     </div>
+
+    
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
         document.getElementById('searchInput').addEventListener('input', filterTable);

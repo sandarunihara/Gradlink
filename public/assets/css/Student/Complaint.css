@@ -1,0 +1,133 @@
+.c_main{
+    background: #E9EDFF;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.c_search{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+.c_filter-container{
+    padding-left: 40px;
+    width: 200px;
+}
+.c_t{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.c_table{
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
+    /* width: 1000px;
+    height: 520px; */
+    border-radius: 10px;
+}
+.complaint-table th, .complaint-table td {
+    text-align: center;
+}
+.complaint-table th {
+    margin: 0;
+    padding: 0;
+    background-color: #d7d7d7;
+    font-weight: 600;
+    color: #000000;
+}
+.complaint-table tbody {
+    display: block;
+    max-height: 340px; /* Adjust this value as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+.complaint-table thead, .complaint-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.complaint-table{
+    width: 100%;
+    border-spacing: 0 5px;
+}
+.c_table_t{
+    width: 100%;
+}
+.reviewed {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    outline: none;
+    border-radius: 5px;
+    color: green;
+    border: 2px solid green;
+}
+.notReviewed {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    outline: none;
+    border-radius: 5px;
+    color: orange;
+    border: 2px solid orange;
+}
+.view-complaint-btn {
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-complaint-btn:hover {
+    background-color: #0056b3;
+}
+
+.c_filter-container select{
+    border: none;
+    height: 40px;
+    width: 120px;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+.add-complaint{
+    border: none;
+    height: 40px;
+    width: 250px;
+    border-radius: 10px;
+}
+.add-complaint button{
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.add-complaint button:hover{
+    background-color: #0056b3;
+}
+
+/* .sr_sr select{
+    height: 40px;
+    width: 250px;
+    border: 1px solid rgb(164, 164, 164);
+    border-radius: 10px;
+}
+.action-select {
+    width: 80%;
+    padding: 5px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #495057;
+} */
