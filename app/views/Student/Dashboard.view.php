@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php
-        $UserId = $data['Student'] -> StudentId;
+        $StudentId = $data['Student'] -> StudentId;
         $Name = $data['Student'] -> Name;
         $Email = $data['Student'] -> Email;
         $Status = $data['Student'] -> Status;
@@ -78,7 +78,7 @@
                     <div class="profile-summery">
                         <h2>Status: <?php echo($StatusString) ?></h2>
                         <h2>Email: <?php echo($Email) ?></h2>
-                        <h2>Registration Number: <?php echo($UserId) ?></h2>
+                        <h2>Registration Number: <?php echo($StudentId) ?></h2>
                         <h2>Round: 1 Round</h2>
                     </div>
                 </div>
