@@ -46,5 +46,27 @@ class company
 		return $result;
 	}
 
-	
+	public function findById($data): array|bool{
+        // Check if $data is an associative array or a single value
+		if(is_array(value: $data))
+		{
+			$keys = array_keys($data);
+            $query = "SELECT * FROM company WHERE ";
+        
+            foreach ($keys as $key) {
+                $query .= $key . " = :" . $key . " AND ";
+            }
+        
+            $query = trim($query, "AND "); // Trim the trailing "AND"
+            
+            $result = $this->query($query, $data);
+        } else {
+            // Assume $data is a single ID (like CompanyId)
+			$query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
+			$result = $this->query($query, ['CompanyId' => $data]);
+		}
+
+		return $result;
+		
+	}
 }
