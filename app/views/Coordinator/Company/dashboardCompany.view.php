@@ -66,7 +66,7 @@
                                 <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
                                 <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
                                     
-                                    <td><button class="view-btn" onclick="navigateToViewCompany();">View</button></td>
+                                <td><button class="view-btn" onclick="navigateToViewCompany('<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>');">View</button></td>
                                 </tr>
                                 <?php endforeach ?>
 

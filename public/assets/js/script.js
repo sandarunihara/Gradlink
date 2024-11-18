@@ -1,6 +1,7 @@
 
-function navigateToViewCompany() {
-    window.location.href = "/Gradlink/public/viewCompany";
+function navigateToViewCompany(company_id) {
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany?id=" +encodeURIComponent(company_id);
+
 }
 
 function navigateToAddCompany() {
