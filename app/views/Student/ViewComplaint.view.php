@@ -45,13 +45,13 @@
                 </div>
             </div>
 
-            <div class="c_main">
+            <div class="view-complaint-main">
                 <a href="<?=ROOT?>/Student/StudentComplaint/complaint" class="backreq">
                     <i class="fas fa-chevron-left"></i>
                     <h3>back</h3>
                 </a>
-                <div class="card-container">
-                    <div class="card">
+                <div class="complaint-container">
+                    <div class="complaint-card">
                         <h2><?php echo $Topic?></h2>
                         <p><?php echo $Decsription?></p>
                         <p>Status: 
@@ -65,7 +65,7 @@
                         </p>
                         <?php if($Status != "notReviewed") { ?>
                                 <p>Reply:<?php echo $Reply?></p>
-                                <a href="<?=ROOT?>/Student/StudentComplaint/deleteComplaint/<?php echo $ComplaintId; ?>"><button class="delete-complaint-btn">Delete Complaint</button></a>
+                                <a href="<?=ROOT?>/Student/StudentComplaint/deleteComplaint/<?php echo $ComplaintId; ?>"><button class="delete-complaint-button">Delete Complaint</button></a>
                         <?php } ?>
                     </div>
                 </div>

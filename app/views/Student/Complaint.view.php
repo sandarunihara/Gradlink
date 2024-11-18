@@ -39,12 +39,12 @@
                     </div>
                 </div>
                 <!-- content of the page -->
-                <div class="c_main">
-                    <div class="c_search">
+                <div class="complaint-main">
+                    <div class="complaint-navbar">
                         <div class = "add-complaint">
                             <a href="<?=ROOT?>/Student/StudentComplaint/newComplaint"><button>+ Add New</button></a>
                         </div>
-                        <div class="c_filter-container">
+                        <div class="complaint-filter-container">
                             <i class="fas fa-filter"></i>
                             <select class="status-select">
                                 <option value="all">All</option>
@@ -53,12 +53,12 @@
                             </select> 
                         </div>
                     </div>
-                    <div class="c_t">
-                        <div class="c_table">
+                    <div class="compliant-table-div">
+                        <div class="complaint-table-background">
                             <!-- Table -->
                             <div>
                                 <table class="complaint-table">
-                                    <thead class="c_table_t">
+                                    <thead class="complaint-table-headings">
                                         <th>
                                             <h5>Date</h5>
                                         </th>
@@ -79,7 +79,7 @@
                                                 $statusClass = ($status == 'reviewed') ? 'reviewed' : 'notReviewed';
                                                 $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
                                                 ?>
-                                                <tr class="c_row">
+                                                <tr class="complaint-row">
                                                     <td class="date"><?php echo htmlspecialchars($complaint -> Date); ?></td>
                                                     <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
                                                     <td>    
