@@ -8,6 +8,7 @@ class student_advertisement
 
 	protected $allowedColumns = [
 
+		'Date',
 		'StudentId',
         'AdvertisementId',
         'JobStatus',
