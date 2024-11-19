@@ -14,13 +14,9 @@
 <body>
     <?php
         $Name = $data['Student'] -> Name;
-        if(isset($data['Result'])){
-            if($data['Result']['status'] == 'success'){
-                //open the confermation box
-            }else{
-                //open the error box
-            }
-        }
+        $Github = $data['Student'] -> Github;
+        $Linkedin = $data['Student'] -> Linkedin;
+        $ShortDesc = $data['Student'] -> ShortDesc;
     ?>
     <div class="side">
         <?php $this->renderComponent("studentsidebar")  ?>
@@ -53,8 +49,16 @@
                 <div>
                     <form action="" method="post">
                         <div>
-                            <input name="Github" type="text">
                             <label for="github">Github</label>
+                            <input name="Github" type="text" value="<?= htmlspecialchars($Github) ?>">
+                        </div>
+                        <div>
+                            <label for="linkedin">Linkedin</label>
+                            <input name="Linkedin" type="text" value="<?= htmlspecialchars($Linkedin) ?>">
+                        </div>
+                        <div>
+                            <label for="shortDesc">Short Description</label>
+                            <textarea name="ShortDesc" id=""><?= htmlspecialchars($ShortDesc) ?></textarea>
                         </div>
                         <a href="<?=ROOT?>/Student/StudentProfile/profileEdit"><button type="submit">Save</button></a>
                     </form>

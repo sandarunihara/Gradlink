@@ -29,14 +29,16 @@ class StudentProfile{
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         $student = new student;
         $data['Student'] = $student -> first($arr);
+        
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST['Github']);
             $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
-
+            
             if($data['Result']['status'] == 'success'){
-                $this-> view('Student/ProfileEdit',$data);
-            }
+                //show($data['Result']);
+                    header('Location: '.ROOT.'/Student/StudentProfile/profile');
+                }
             
         }else{
             $this-> view('Student/ProfileEdit',$data);
