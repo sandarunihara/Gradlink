@@ -9,7 +9,7 @@ class StudentAd{
         $data['Student'] = $student -> first($arr);
 
         $advertisement = new advertisement;
-        $data['Advertisements'] = $advertisement -> where();
+        //$data['Advertisements'] = $advertisement -> where();
         $this-> view('Student/Internship', $data);
     }
 }
