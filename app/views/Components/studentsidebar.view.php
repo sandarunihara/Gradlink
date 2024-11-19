@@ -15,7 +15,7 @@
                 <p>Profile</p>
             </div>
         </a>
-        <a class="option" href="<?=ROOT?>/Student/StudentAd/dashboard">
+        <a class="option" href="<?=ROOT?>/Student/StudentAd/advertisement">
             <i class="fas fa-bullhorn"></i>
             <div>
                 <p>Advertisements</p>
