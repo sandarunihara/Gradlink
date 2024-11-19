@@ -14,7 +14,7 @@ class Login
 				case 9:
 					$user = new student;
 					$arr['StudentId'] = $_POST['userId'];
-					$path = 'Student/StudentDash/Dashboard';
+					$path = 'Student/Studentdash/dashboard';
 					break;
 				case 4:
 					$user = new company;
@@ -129,11 +129,11 @@ class Login
 					$row = $user->first($searchKey);
 					if ($row && $row->Password === null) {
 						$data['rowdata'] = $row;
-						
+						$_SESSION['USER_ID'] = $userId;
 						// $_SESSION['rowdata'] = $row;
 					} else {
 						$data['errors'] = "User already has a password";
-						redirect('login');
+						// redirect('login');
 					}
 				}
 			}
@@ -177,7 +177,9 @@ class Login
 						session_destroy();
 						if ($results['status'] === 'success') {
 							$data['success'] = "Password created successfully. Please login.";
-							// redirect('login');
+							redirect('login');
+							// $this->view('login', $data);
+							exit;
 						} else {
 							$data['errors'] = "Failed to create password. Please try again.";
 						}
