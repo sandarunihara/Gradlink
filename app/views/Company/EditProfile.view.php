@@ -5,7 +5,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">
-    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/profile.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/editpro.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -42,28 +42,26 @@
                     <div class="prophoto">
                         <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="pro_logo" width="200" height="200" />
                     </div>
-                    <div class="button">
-                    <button onclick="window.location.href='<?php echo ROOT; ?>/company/Profile/edit';">Edit profile</button>
-                    </div>
+                    
                     <div class="pro_head">
-                        <span class="name"><?php echo $data->Name ?></span></br>
-                        <span><?php echo $data->ShortDesc ?></span>
+                        <input class="name" name="Name" value="<?php echo $data->Name ?>"></br>
+                        <input name="ShortDesc" value="<?php echo $data->ShortDesc ?>">
                     </div>
                     <div class="formdata">
                         <div class="firstset">
                             <div class="formrow">
                                 <p class="label">Contact Email</p>
-                                <p><?php echo $data->Email ?></p>
+                                <input name="Email" value="<?php echo $data->Email ?>">
                             </div>
                             <div class="formrow">
                                 <p class="label">Contact Person</p>
-                                <p><?php echo $data->ContactPerson ?></p>
+                                <input name="ContactPerson" value="<?php echo $data->ContactPerson ?>">
                             </div>
                         </div>
                         <div class="firstset">
                             <div class="formrow">
                             <p class="label">Contact Number</p>
-                            <p><?php echo $data->ContactNum ?></p>
+                            <input name="ContactNum" value="<?php echo $data->ContactNum ?>">
                             </div>
                             <div class="formrow">
                                 <i onclick="linkedin()" class="fab fa-linkedin"></i>
@@ -83,9 +81,6 @@
     <script>
         function linkedin() {
             window.open(<?php echo $data->Linkedin ?>);
-        }
-        function goeditpro(){
-            window.location.href = "<?php echo ROOT ?>/Profile/edit";
         }
     </script>
 
