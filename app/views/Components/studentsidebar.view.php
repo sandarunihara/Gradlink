@@ -33,7 +33,7 @@
                 <p>Progress Report</p>
             </div>
         </a>
-        <a class="option" href="<?=ROOT?>/Student/StudentTT/dashboard">
+        <a class="option" href="<?=ROOT?>/Student/StudentTT/techtalk">
             <i class="fas fa-comments"></i>
             <div>
                 <p>Tech Talk</p>

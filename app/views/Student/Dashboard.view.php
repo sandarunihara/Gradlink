@@ -17,18 +17,6 @@
         $Name = $data['Student'] -> Name;
         $Email = $data['Student'] -> Email;
         $Status = $data['Student'] -> Status;
-        switch ($Status) {
-            case '1':
-                $StatusString = 'Pending';
-                break;
-            case '2':
-                $StatusString = 'interview selected';
-            case '3':
-                $StatusString = 'doing Intern';
-            default:
-                //never occur
-                break;
-        }
         $numOfInterviews = $data['numOfInterviews'];
         $numOfCompanies = $data['numOfCompanies'];
     ?>
@@ -76,7 +64,7 @@
                         </div>
                     </div>
                     <div class="profile-summery">
-                        <h2>Status: <?php echo($StatusString) ?></h2>
+                        <h2>Status: <?php echo($Status) ?></h2>
                         <h2>Email: <?php echo($Email) ?></h2>
                         <h2>Registration Number: <?php echo($StudentId) ?></h2>
                         <h2>Round: 1 Round</h2>

@@ -22,6 +22,13 @@
         $ShortDesc = $data['Student'] -> ShortDesc;
 
         $ProfilePicName = $data['studentProfilePic'] -> ProfilePicName;
+        if(isset($data['Result'])){
+            if($data['Result']['status'] == 'success'){
+                //open the confermation box
+            }else{
+                //open the error box
+            }
+        }
     ?>
     <div class="side">
         <?php $this->renderComponent("studentsidebar")  ?>
