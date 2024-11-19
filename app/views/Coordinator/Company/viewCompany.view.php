@@ -91,7 +91,8 @@
                     <div class="action-buttons">
                         <button class="btn block-btn">Block</button>
                         <button class="btn delete-btn">Delete</button>
-                        <button class="btn update-btn">Update</button>
+                        <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Update</button>
+                        <button class="btn update-btn" type="submit" id="save-btn" style="display: none;">Save</button>
                     </div>
                 </div>
             </section>

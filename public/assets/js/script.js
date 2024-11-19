@@ -26,7 +26,21 @@ function naviagteToViewPendingAdvertisement() {
 
 }
 
+function enableEditing() {
+    // Get all input and textarea elements
+    const inputs = document.querySelectorAll('input, textarea');
+    
+    // Loop through inputs and remove readonly attribute
+    inputs.forEach(input => {
+        input.removeAttribute('readonly');
+    });
 
+    // Show the Save button
+    document.getElementById('save-btn').style.display = 'inline-block';
+
+    // Disable the Edit button
+    document.getElementById('update-btn').hidden = true;
+}
 //Advertisement Dashboard Pending ad status
 
 document.getElementById("status").addEventListener("change", function() {
