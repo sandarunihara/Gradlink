@@ -8,9 +8,11 @@ class StudentAppliedCompanies{
 
         $student = new student;
         $data['Student'] = $student -> first($arr);
-
-        $student_advertisement = new student_advertisement;
         
+        $company = new company;
+        $student_advertisement = new student_advertisement;
+        $advertisement = new advertisement;
+
         $this-> view('Student/AppliedCompanies',$data);
     }  
 

@@ -40,112 +40,13 @@
             </div>
 
             <div class="main">
-                <div class="c_t">
-                    <div class="c_table">
-                        <!-- Table -->
-                        <div>
-                            <table class="complaint-table">
-                                <thead class="c_table_t">
-                                    <th>
-                                        <h5>Date</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Company Name</h5>
-                                    <th>
-                                        <h5>Position</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Status</h5>
-                                    </th>
-                                </thead>
-                                <!-- <tbody>
-                                    <?php if (isset($data) && !empty($data)): ?>
-                                        <?php foreach ($data['Complaints'] as $complaint): ?>
-                                            <?php
-                                            $status = $complaint -> Status;
-                                            $statusClass = ($status == 'reviewed') ? 'reviewed' : 'notReviewed';
-                                            $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
-                                            ?>
-                                            <tr class="c_row">
-                                                <td class="date"><?php echo htmlspecialchars($complaint -> Date); ?></td>
-                                                <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
-                                                <td>    
-                                                    <div class="<?php echo $statusClass; ?>">
-                                                        <span class="status"><?php echo $statusText; ?></span>
-                                                    </div>
-                                                </td>
-                                                <td><a href="<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint->ComplaintId; ?>"><button class="view-complaint-btn">View Complaint</button></a></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="4">No Complaints found</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </tbody> -->
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                Date
+                Company Name
+                Position
+                Status
             </div>
+
         </div>
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- style = "padding:10px 20px"
-<table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Company Name</th>
-                    <th>Position</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>05/12/2022</td>
-                    <td>WSO2</td>
-                    <td>Software Engineer</td>
-                    <td class="status pending">Pending</td>
-                </tr>
-                <tr>
-                    <td>05/12/2022</td>
-                    <td>Sysco LABS</td>
-                    <td>Network Engineer</td>
-                    <td class="status rejected">Rejected</td>
-                </tr>
-                <tr>
-                    <td>05/12/2022</td>
-                    <td>Codegen</td>
-                    <td>Software Engineer</td>
-                    <td class="status pending">Pending</td>
-                </tr>
-                <tr>
-                    <td>05/12/2022</td>
-                    <td>Cambio</td>
-                    <td>Software Engineer</td>
-                    <td class="status pending">Pending</td>
-                </tr>
-                <tr>
-                    <td>05/12/2022</td>
-                    <td>Cambio</td>
-                    <td>Software Engineer</td>
-                    <td class="status rejected">Rejected</td>
-                </tr>
-            </tbody>
-        </table> -->
