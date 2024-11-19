@@ -16,7 +16,9 @@
             <input type="text" name="userId" id="userId" required placeholder="userId" value="<?= htmlspecialchars($_POST['userId'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             <button type="submit"><i class="fa fa-arrow-right"></i></button>
         </form>
-        <?php if (isset($data['rowdata'])): ?>
+        <?php
+        if (isset($data['rowdata'])) :
+        ?>
             <p>Register Name:
                 <?php
                 echo htmlspecialchars($data['rowdata']->Name ?? '', ENT_QUOTES, 'UTF-8');
@@ -27,43 +29,51 @@
                 echo htmlspecialchars($data['rowdata']->Email ?? '', ENT_QUOTES, 'UTF-8');
                 ?>
             </p>
-        <?php endif; ?>
-        
-            <?php if (isset($data['rowdata']) || isset($data['errors'])): ?>
-        <form class="passwordcontainer" method="post">
-            <div>
-                <label for="password">Create New Password</label>
-                <input type="text" name="password" id="password" required placeholder="password">
-            </div>
-            <div>
-                <label for="confirmpassword">Confirm Password</label>
-                <input type="text" name="confirmpassword" id="confirmpassword" required placeholder="confirmpassword">
-            </div>
-            <button type="submit">Save Password</button>
-        </form>
+
+            <form class="passwordcontainer" method="post" onsubmit="return validatePasswords()">
+                <div>
+                    <label for="password">Create New Password</label>
+                    <input type="text" name="password" id="password" required placeholder="password">
+                </div>
+                <div>
+                    <label for="confirmpassword">Confirm Password</label>
+                    <input type="text" name="confirmpassword" id="confirmpassword" required placeholder="confirm password">
+                </div>
+                <button type="submit">Save Password</button>
+            </form>
         <?php endif; ?>
     </div>
 
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
-    <?php if (!empty($data['errors'])): ?>
-        <p>
-            <?php echo $data['errors']; ?>
-        </p>
-        <!-- <script>
-            errorToast($data['errors']);
-        </script> -->
+    <?php if (!empty($data['success'])): ?>
+        <script>
+            const success = "<?php echo addslashes($data['success']); ?>";
+            successToast("success");
+        </script>
     <?php endif; ?>
+    <?php if (!empty($data['errors'])): ?>
+        <script>
+            errorToast("<?php echo addslashes($data['errors']); ?>");
+        </script>
+    <?php endif; ?>
+
+
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmpassword').value;
+
+            if (password !== confirmPassword) {
+                errorToast("Passwords do not match. Please try again.");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
 
 </body>
 
 
 </html>
-
-
-
-
-
-
-

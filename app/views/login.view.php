@@ -49,6 +49,11 @@
             errorToast("Wrong UserId or Password");
         </script>
     <?php endif; ?>
+    <?php if (!empty($data['success'])): ?>
+        <script>
+            successToast("ok");
+        </script>
+    <?php endif; ?>
 </body>
 
 
