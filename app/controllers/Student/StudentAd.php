@@ -12,4 +12,7 @@ class StudentAd{
         //$data['Advertisements'] = $advertisement -> where();
         $this-> view('Student/Internship', $data);
     }
+    public function advertisementView(){
+        $this-> view('Student/InternshipView');
+    }
 }
