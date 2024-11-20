@@ -12,8 +12,11 @@
 
         public function findAll($order_column, $order_type){
 
-            $query = "SELECT * FROM $this->table ORDER BY $order_column $order_type LIMIT $this->limit OFFSET $this->offset";
-
+            if($order_type != 'do_not_order'){
+                $query = "SELECT * FROM $this->table ORDER BY $order_column $order_type LIMIT $this->limit OFFSET $this->offset";
+            }else{
+                $query = "SELECT * FROM $this->table LIMIT $this->limit OFFSET $this->offset";
+            }
             return $this->query($query);
         }
 
@@ -80,7 +83,7 @@
         }
 
 
-        public function update($id, $data, $id_column = 'id') {
+        public function update($id, $data, $id_column) {
 
             try {
                 /* Remove unwanted data */

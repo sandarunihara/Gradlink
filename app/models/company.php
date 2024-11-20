@@ -26,11 +26,35 @@ class company
 	{
 		$this->errors = [];
 
-		if (empty($data['name'])) {
-			$this->errors['name'] = "Company name is required";
+		if (empty($data['company_name'])) {
+			$this->errors['company_name'] = "Company name is required";
 		}
-		if (empty($data['contact'])) {
-			$this->errors['password'] = "Password is required";
+		if (empty($data['email'])) {
+			$this->errors['email'] = "Email is required";
+		}
+		if (empty($data['contact_number'])) {
+			$this->errors['contact_number'] = "Contact number is required";
+		}
+		if (empty($data['address_no'])) {
+			$this->errors['address_no'] = "Address No is required";
+		}
+		if (empty($data['address_lane'])) {
+			$this->errors['address_lane'] = "Address Lane is required";
+		}
+		if (empty($data['address_city'])) {
+			$this->errors['address_city'] = "Address City is required";
+		}
+		if (empty($data['address_district'])) {
+			$this->errors['address_district'] = "Address District is required";
+		}
+		if (empty($data['description'])) {
+			$this->errors['description'] = "Description is required";
+		}
+		if (empty($data['website'])) {
+			$this->errors['website'] = "Website is required";
+		}
+		if (empty($data['linkedin'])) {
+			$this->errors['linkedin'] = "Linkedin is required";
 		}
 		if (empty($this->errors)) {
 			return true;
@@ -46,27 +70,38 @@ class company
 		return $result;
 	}
 
-	public function findById($data): array|bool{
-        // Check if $data is an associative array or a single value
-		if(is_array(value: $data))
-		{
-			$keys = array_keys($data);
-            $query = "SELECT * FROM company WHERE ";
-        
-            foreach ($keys as $key) {
-                $query .= $key . " = :" . $key . " AND ";
-            }
-        
-            $query = trim($query, "AND "); // Trim the trailing "AND"
-            
-            $result = $this->query($query, $data);
-        } else {
-            // Assume $data is a single ID (like CompanyId)
-			$query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
-			$result = $this->query($query, ['CompanyId' => $data]);
-		}
+	public function findById($data)
+{
+    if (is_array($data)) {
+        // Build query dynamically for associative array
+        $keys = array_keys($data);
+        $query = "SELECT * FROM company WHERE ";
 
-		return $result;
-		
-	}
+        foreach ($keys as $key) {
+            $query .= $key . " = :" . $key . " AND ";
+        }
+
+        // Trim the trailing " AND"
+        $query = rtrim($query, " AND");
+
+        // Debug: Log the query and data
+        error_log("Generated Query: " . $query);
+        error_log("Data: " . print_r($data, true));
+
+        // Execute the query with the provided data
+        $result = $this->query($query, $data);
+    } else {
+        // Assume $data is a single value (like CompanyId)
+        $query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
+
+        // Debug: Log the query and data
+        error_log("Generated Query: " . $query);
+        error_log("Data: " . print_r(['CompanyId' => $data], true));
+
+        $result = $this->query($query, ['CompanyId' => $data]);
+    }
+
+    return $result;
+}
+
 }

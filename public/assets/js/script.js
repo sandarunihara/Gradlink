@@ -27,21 +27,35 @@ function naviagteToViewPendingAdvertisement() {
 }
 
 function enableEditing() {
+    // Hide Edit button and show Save button
+    document.getElementById('update-btn').style.display = 'none';
+    document.getElementById('save-btn').style.display = 'inline-block';
+
     // Get all input and textarea elements
     const inputs = document.querySelectorAll('input, textarea');
-    
-    // Loop through inputs and remove readonly attribute
+
+    // Remove readonly attribute from all inputs and textareas
     inputs.forEach(input => {
         input.removeAttribute('readonly');
     });
+}
 
-    // Show the Save button
-    document.getElementById('save-btn').style.display = 'inline-block';
 
-    // Disable the Edit button
-    document.getElementById('update-btn').hidden = true;
+function saveForm() {
+    // Hide Save button and show Edit button
+    document.getElementById('save-btn').style.display = 'none';
+    document.getElementById('update-btn').style.display = 'inline-block';
+
+    // Get all input and textarea elements
+    const inputs = document.querySelectorAll('input, textarea');
+
+    // Add readonly attribute back to all inputs and textareas
+    inputs.forEach(input => {
+        input.setAttribute('readonly', true);
+    });
 }
 //Advertisement Dashboard Pending ad status
+
 
 document.getElementById("status").addEventListener("change", function() {
     var statusDropdown = this;

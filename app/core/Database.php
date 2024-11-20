@@ -28,7 +28,7 @@
 
             return false;
         }
-      
+        
         public function get_row($query, $data = []){
             $con = $this->connect();
             $stmt = $con->prepare($query);
