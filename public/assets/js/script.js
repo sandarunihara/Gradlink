@@ -48,7 +48,4 @@ document.getElementById("status").addEventListener("change", function() {
 // Trigger the change event on page load to apply the correct initial color
 document.getElementById("status").dispatchEvent(new Event("change"));
 
-function naviagteToViewStudent() {
-    window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/dashboard";
-}
 

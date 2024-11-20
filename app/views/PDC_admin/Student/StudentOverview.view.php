@@ -87,7 +87,7 @@
 
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
 
 </body>
 

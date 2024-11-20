@@ -36,7 +36,7 @@
                 </div>
                 <div class="main_container">
                     <div class="sc">
-                        <a href="../Advertisements/Dashboard" class="sc_container">
+                        <a href="../Advertisements/dashboard" class="sc_container">
                             <i class="fas fa-chevron-left"></i>
                             <h3>Create Interview Schedule</h3>
                         </a>
@@ -177,7 +177,7 @@
             const worktype = document.getElementById('worktype').value;
             const image = document.getElementById('image').files[0];
 
-            const maxFileSize = 5 * 1024 * 1024; // 5MB
+            const maxFileSize = 0.9 * 1024 * 1024; // 5MB
             if (image && image.size > maxFileSize) {
                 errorToast("The image file size exceeds the maximum allowed size of 5MB.");
                 return; // Prevent further form submission

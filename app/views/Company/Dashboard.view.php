@@ -3,8 +3,8 @@
 
 <head>
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css"> 
-    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">   
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -19,7 +19,7 @@
         <div id="content">
             <div class="main">
                 <div class="d">
-                    <div >
+                    <div>
                         <h1>DashBoard</h1>
                     </div>
                     <div class="d_pro">
@@ -28,7 +28,7 @@
                                 <i class="fas fa-calendar-alt"></i>
                             </a>
                             <div class="notification-wrapper">
-                                <div class="notification-icon" onclick="toggleDropdown()" >
+                                <div class="notification-icon" onclick="toggleDropdown()">
                                     <i class="fas fa-bell"></i>
                                 </div>
                                 <div id="notificationDropdown" class="dropdown-content">
@@ -39,8 +39,8 @@
                         </div>
                         <div>
                             <a href='../Profile/dashboard'>
-                            <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
-                            <p><span>WSO2</span>Company</p>
+                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
+                                <p><span>WSO2</span>Company</p>
                             </a>
                         </div>
                     </div>
@@ -50,61 +50,41 @@
                         <div class="stats">
                             <div class="stat-card">
                                 <h2>Total Student Applied</h2>
-                                <p>200</p>
+                                <p><?php echo $numOfStudents; ?></p>
                             </div>
                             <div class="stat-card">
                                 <h2>Total Student Shortlisted</h2>
-                                <p>40</p>
+                                <p><?php echo $numOfShortlistStudents ?></p>
                             </div>
                             <div class="stat-card">
                                 <h2>Total Advertisements</h2>
-                                <p>40</p>
+                                <p><?php echo $numOfAdvertisements ?></p>
                             </div>
                         </div>
                         <div class="d_request">
                             <h3>Student Requests</h3>
                             <div class="d_alllist">
                                 <ul>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">Software Engineering</span>
-                                        <span class="status shortlisted">Shortlisted</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">QA</span>
-                                        <span class="status rejected">Rejected</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">Web Engineering</span>
-                                        <span class="status pending">Pending</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">Software Engineering</span>
-                                        <span class="status recruited">Recruited</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">QA</span>
-                                        <span class="status rejected">Rejected</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">Web development</span>
-                                        <span class="status recruited">Recruited</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">Web Engineering</span>
-                                        <span class="status pending">Pending</span>
-                                    </li>
-                                    <li>
-                                        <span class="role">Sandaru Nihara</span>
-                                        <span class="role">QA</span>
-                                        <span class="status pending">Pending</span>
-                                    </li>
+                                    <?php
+                                    if (empty($data)) {
+                                        echo '<li>No requests found</li>';
+                                    }else{
+                                        // Get the first 8 elements from $data
+                                        $firstEight = array_slice($data, 0, 8);
+                                        
+
+                                        // Loop through the first 8 items and display them
+                                        foreach ($firstEight as $item) {
+                                            $statusClass = ($item['Status'] === 'Pending') ? 'status pending' : (($item['Status'] === 'Shortlist') ? 'status shortlist' : 'status reject');
+                                            
+                                            echo '<li>';
+                                            echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
+                                            echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
+                                            echo '<span class="' . $statusClass . '">' . htmlspecialchars(ucfirst($item['Status'])) . '</span>';
+                                            echo '</li>';
+                                        }
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                             <div class="d_view_all">

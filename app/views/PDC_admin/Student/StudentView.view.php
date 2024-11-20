@@ -7,7 +7,6 @@
     <title>Student Profile</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/student/viewStudent.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -15,8 +14,6 @@
 
 <body>
     <div class="container">
-    <?php $this->renderComponent("pdc_adminsidebar")  ?>
-        
         <main class="content">
             <header class="header">
             <div class="student-title">
@@ -63,6 +60,7 @@
                     <div class="action-buttons">
                         <button class="btn block-btn">Block</button>
                         <button class="btn update-btn">Update</button>
+                        <button class="btn back-btn">Back</button>
                     </div>
                 </div>
             </section>

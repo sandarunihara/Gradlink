@@ -1,7 +1,7 @@
 <?php
 
     Trait Controller{
-        public function view($name, $data =[]){
+        public function view($name, $data =[]){ 
             if (!empty($data))
                 extract($data);
             $filename ="../app/views/".$name.".view.php";

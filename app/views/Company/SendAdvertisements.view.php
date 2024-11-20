@@ -60,18 +60,18 @@
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
                                         </div>
                                         <div class="ed-del">
-                                        <?php if ($data[0]->status === 'Active'): ?>
-                                            <i class="fas fa-pen"
-                                                data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
-                                                data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
-                                                data-qualification="<?php echo htmlspecialchars($data[0]->qualification, ENT_QUOTES) ?>"
-                                                data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
-                                                data-interns="<?php echo htmlspecialchars($data[0]->numOfInterns, ENT_QUOTES) ?>"
-                                                data-workingmode="<?php echo htmlspecialchars($data[0]->workingMode, ENT_QUOTES) ?>"
-                                                data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
-                                                onclick="openConfirmationModal(this)">
-                                            </i>
-                                        <?php endif; ?>
+                                            <?php if ($data[0]->status === 'Active'): ?>
+                                                <i class="fas fa-pen"
+                                                    data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
+                                                    data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
+                                                    data-qualification="<?php echo htmlspecialchars($data[0]->qualification, ENT_QUOTES) ?>"
+                                                    data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
+                                                    data-interns="<?php echo htmlspecialchars($data[0]->numOfInterns, ENT_QUOTES) ?>"
+                                                    data-workingmode="<?php echo htmlspecialchars($data[0]->workingMode, ENT_QUOTES) ?>"
+                                                    data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
+                                                    onclick="openConfirmationModal(this)">
+                                                </i>
+                                            <?php endif; ?>
                                             <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
 
                                         </div>
@@ -166,7 +166,7 @@
                 </div>
                 <div class="addimg">
                     <h4>Add Image:</h4>
-                    <input type="file" id="image" name='image' required/>
+                    <input type="file" id="image" name='image' required />
                     <!-- this is not in the script  -->
                 </div>
                 <div class="sc_btn">
@@ -207,6 +207,8 @@
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
+        
+
         // Increment and decrement the number of interns
         function increment() {
             let count = document.getElementById('numOfInterns').value;
@@ -235,7 +237,7 @@
             const workingMode = document.getElementById('workingMode').value;
             // image is not in the script
 
-            if (!position || !description || !qualification  || !deadline || !numOfInterns || !workingMode) {
+            if (!position || !description || !qualification || !deadline || !numOfInterns || !workingMode) {
                 errorToast("Please fill in all required fields.");
                 return;
             }
@@ -261,7 +263,7 @@
             document.getElementById('workingMode').value = workingMode;
             // document.getElementById('image').value = image;
 
-            
+
             const modal = document.getElementById('confirmation-modal').style.display = 'block';
             modal.style.display = 'flex'; // Use flex for centering modal
         }

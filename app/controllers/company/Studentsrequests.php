@@ -3,29 +3,67 @@
 class StudentsRequests{
     use Controller;
     public function dashboard(){
-        $status="Reject";
 
-        $data = [
-            ['Student Name' => 'Alice Smith', 'Student Degree' => 'CS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'John Doe', 'Student Degree' => 'IS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Emma Johnson', 'Student Degree' => 'CS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'Michael Brown', 'Student Degree' => 'IS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Olivia Taylor', 'Student Degree' => 'CS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Liam Wilson', 'Student Degree' => 'IS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'Sophia Anderson', 'Student Degree' => 'CS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Noah Thomas', 'Student Degree' => 'IS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Ava Martin', 'Student Degree' => 'CS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'William Clark', 'Student Degree' => 'IS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Mia Lewis', 'Student Degree' => 'CS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'James Walker', 'Student Degree' => 'IS', 'Position' => 'Web Development', 'Action' => 'Pending'],
-            ['Student Name' => 'Amelia Harris', 'Student Degree' => 'CS', 'Position' => 'Software Engineer', 'Action' => 'Shortlist'],
-            ['Student Name' => 'Lucas Robinson', 'Student Degree' => 'IS', 'Position' => 'QA', 'Action' => 'Reject'],
-            ['Student Name' => 'Isabella Scott', 'Student Degree' => 'CS', 'Position' => 'Web Development', 'Action' => 'Pending']
-        ];
-
-
-        $this-> view('Company/StudentsRequests', ['data' => $data]);
+        $user = "";
+        if (isset($_SESSION['USER'])) {
+            $user = $_SESSION['USER'];
+        }
+        
+        $model = new C_Dashboard;
+        $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
+        
+        $advertisementIds = [];
+        foreach ($data as $item) {
+            $advertisementIds[] = $item->advertisementId;
+        }
+        $reqdata=[];
+        foreach($advertisementIds as $id){
+            $data=$model->findreq($id);
+            foreach ($data as $item) {
+                if ($item->Jobstatus !== 'Shortlist' && $item->Jobstatus !== 'Recruit'){
+                    $reqdata[] = [
+                        "StudentId"=>$item->StudentId,
+                        'AdvertisementId' => $item->advertisementId,
+                        'Student Name' => $item->Name,
+                        'Student Degree'=>$item->DegreeName,
+                        'Position' => $item->position,
+                        'Action' => $item->Jobstatus
+                    ];
+                }
+            }
+        }
+        $this-> view('Company/StudentsRequests', ['data' => $reqdata]);
     }  
+
+
+    public function studentprofile($advertisementId,$StudentId){
+        // print_r($StudentId);
+        $model=new C_Student;
+        $data=$model->findbyId($StudentId);
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
+            // print_r($_POST); // This should print the form POST data
+            $model = new C_Dashboard;
+            $updatedata = [
+                'Jobstatus' => $_POST['submit_action']
+            ];
+            $result = $model->update($StudentId, $advertisementId, $updatedata);
+            if ($result['status']) {
+                // Redirect to the same page after successful submission
+                $success= "Student Job Status updated successfully.";
+                // $this-> view('Company/Studentpro' , ['data' => $data,'success'=>$success]);
+                header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard' );
+                exit;
+            } else {
+                $error= "There was an issue update the Student Job Status.";
+                $this-> view('Company/Studentpro' , ['data' => $data,'error'=>$error,'url'=>'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
+                exit;
+            }
+        }
+
+        
+        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
+    }
 
 
 }

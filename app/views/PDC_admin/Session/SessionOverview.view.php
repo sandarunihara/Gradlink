@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>Students</title>
+    <title>Session</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/overviewSession.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/overviewSession.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
 </head>
 
@@ -43,31 +43,37 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Session No.</th>
-                            <th>Date</th>
-                            <th>Time</th>
+                            <th>Session Name</th>
                             <th>Company</th>
-                            <th>Description</th>
+                            <th>Hall Number</th>
+                            <th>Date</th>
+                            <th>Time Slot</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>2024/10/05</td>
-                            <td>11.00am</td>
-                            <td>IFS</td>
-                            <td>Aaaaaaaaa</td>
-                            <td><button class="view-btn">View</button></td>
-                            
-                            <!-- <td><button class="view-btn">View</button></td> -->
-                            <!-- View -> Go to the student profile -->
-                        </tr>
+                        <?php if(!empty($sessionData)): ?>
+                            <?php foreach($sessionData as $session): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars(is_array($session) ? $session['session_name'] : $session->session_name) ?></td>
+                                    <td><?= htmlspecialchars(is_array($session) ? $session['company_name'] : $session->company_name) ?></td>
+                                    <td><?= htmlspecialchars(is_array($session) ? $session['hall_number'] : $session->hall_number) ?></td>
+                                    <td><?= htmlspecialchars(is_array($session) ? $session['session_date'] : $session->session_date) ?></td>
+                                    <td><?= htmlspecialchars(is_array($session) ? $session['time_slot'] : $session->time_slot) ?></td>
+                                    <td><button class="view-btn" onclick="navigateToShowSession(<?= is_array($session) ? $session['session_id'] : $session->session_id ?>)">View</button></td>
+                                    <td></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="9">No scheduled sessions found.</td>
+                            </tr>
+                        <?php endif; ?>
                         
                     </tbody>
                 </table>
                 <div class="action-buttons">
-                    <button class="add-btn" onclick="navigateToAddCompany();" >+ Add</button>
+                    <button class="add-btn" onclick="navigateToAddSession();" >+ Add</button>
                 </div>
 
             </section>
@@ -76,7 +82,7 @@
 
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
 
 </body>
 
