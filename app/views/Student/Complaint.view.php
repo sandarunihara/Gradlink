@@ -108,7 +108,7 @@
 
         function filterTable() {
             const selectedComplaints = document.querySelector('.status-select').value.toLowerCase().replace(/\s+/g, "");
-            const rows = document.querySelectorAll('.c_row');
+            const rows = document.querySelectorAll('.complaint-row');
 
             rows.forEach(row => {
                     const date = row.querySelector('.date').textContent;
