@@ -72,52 +72,164 @@
 .label{
     font-weight: 500;
 }
-.formrow i{
-    font-size: 30px;
-    color: rgb(73, 130, 252);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-.formrow a{
-    text-decoration: none;
-    text-decoration: underline;
-    color:black;
-    font-weight: 500;
-}
-.formrow a:hover{
-    color: rgb(252, 73, 73);
-}
-.formrow i:hover{
-    transform: scale(1.1);
-}
 .Address{
+    margin-top: 20px;
     display: flex;
+    gap: 15px;
     justify-content: center;
     align-items: center;
 }
+input[type="file"] {
+    display: none;
+}
+
+label {
+    cursor: pointer;
+}
+.name{
+    border-radius: 10px;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 5px 10px;
+}
+.ShortDesc{
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 100%;
+    padding: 5px 10px;
+}
+.formdata input{
+    border: none;
+    border-bottom: 1px solid black;
+    width: fit-content;
+    padding: 5px 10px;
+}
+.linkedin{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+i{
+    font-size: 20px;
+}
+.Website{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
 .button{
+    margin-top: 20px;
+    padding-right: 20px;
     display: flex;
     justify-content: end;
-    margin-top: -100px;
-    margin-bottom: 50px;
-    padding: 20px;
-    width: 100%;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 button{
-    margin-right: 20px;
-    padding: 5px 15px ;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
     border: none;
-    border-radius: 5px;
-    background-color: rgb(252, 225, 73);
+    background-color: #007bff;
+    color: white;
     font-weight: 500;
     cursor: pointer;
-    transition: transform 0.3s ease;
-
+    transition: all 0.3s;
 }
 button:hover{
-    transform: scale(1.1);
+    background-color: #005fc4;
+}
+.discard{
+    background-color: white;
+    border: #f44336 solid 1px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.discard:hover{
+    background-color: #f44336;
+    color: white;
 }
 
+/* Confirm Update Modal  */
+/* Confirm Update Modal  */
 
 
+.updatemodal { /* Hidden by default */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.updatemodal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    border-radius: 8px;
+    transform: scale(0); /* Initial scale for zoom-in effect */
+    opacity: 0; /* Initial opacity */
+    animation: zoomIn 0.3s forwards;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0); /* Start with no size */
+        opacity: 0; /* Fully transparent */
+    }
+    100% {
+        transform: scale(1); /* Full size */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.updatemodal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.updateyes-btn, .updateno-btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.updateyes-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.updateno-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.updatemodal-buttons button:hover {
+    opacity: 0.8;
+}
+
+.updateno-btn:hover {
+    background-color: #f44336;
+}
+.updateyes-btn:hover {
+    background-color: #4CAF50;
+}
 
