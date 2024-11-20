@@ -28,7 +28,7 @@
                         </div>
                         <div>
                             <a href='../Profile/dashboard'>
-                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
+                                <img src="data:image/jpeg;base64,<?php echo $data->profileimg; ?>" class="logo" />
                                 <p><span>WSO2</span>Company</p>
                             </a>
                         </div>
@@ -37,10 +37,10 @@
                 <div class="pro_main">
                     <!-- white part -->
                     <div class="coverphoto">
-                        <img src="<?php echo ROOT ?>/assets/img/signinbg.jpg" />
+                        <img src="data:image/jpeg;base64,<?php echo $data->coverimg; ?>" />
                     </div>
                     <div class="prophoto">
-                        <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="pro_logo" width="200" height="200" />
+                        <img src="data:image/jpeg;base64,<?php echo $data->profileimg; ?>" class="pro_logo" width="200" height="200" />
                     </div>
                     <div class="button">
                     <button onclick="window.location.href='<?php echo ROOT; ?>/company/Profile/edit';">Edit profile</button>

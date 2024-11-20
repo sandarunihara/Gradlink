@@ -40,7 +40,7 @@
                     <div class="coverphoto">
                         <label for="coverphoto">
                             <img
-                            src="<?php echo !empty($data->coverphoto) ? ROOT . '/assets/img/' . $data->coverphoto : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
+                            src="<?php echo !empty($data->coverimg)? 'data:image/jpeg;base64,' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>" 
                             id="coverPreview"
                             alt="Cover Preview" />
                         </label>
@@ -52,7 +52,7 @@
                     <div class="prophoto">
                         <label for="profilephoto">
                             <img
-                            src="<?php echo !empty($data->proimg) ? ROOT . '/assets/img/' . $data->proimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
+                            src="<?php echo !empty($data->profileimg)? 'data:image/jpeg;base64,' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
                             class="pro_logo"
                             id="profilePreview"
                             width="200"
@@ -126,7 +126,7 @@
     <div id="deleteconfirmation-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
-            <p>Do you want to Delete the Advertisements?</p>
+            <p>Do you want to Update the Profile?</p>
             <div class="updatemodal-buttons">
                 <button class="updateyes-btn" onclick="submitForm()">Yes</button>
                 <button class="updateno-btn" onclick="closeconfirmModal()">No</button>

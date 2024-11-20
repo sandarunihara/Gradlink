@@ -9,7 +9,20 @@ class company
 	protected $allowedColumns = [
 
 		'CompanyId',
-		'Password',
+		'Name',
+		'ContactPerson',
+		'ShortDesc',
+		'Email',
+		'ContactNum',
+		'Website',
+		'Linkedin',
+		'No',
+		'Lane',
+		'City',
+		'District',
+		'profileimg',
+		'coverimg',
+		'password'
 	];
 	
 	public function validate($data)
