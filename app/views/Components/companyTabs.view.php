@@ -1,7 +1,7 @@
 <!-- Tabs Section -->
 <div class="tabs">
-    <button class="tab-button <?= $activeTab == 'company-list' ? 'active' : '' ?>" onclick=" window.location.href='/Gradlink/public/dashboardCompany'" >Company List</button>
-    <button class="tab-button  <?= $activeTab == 'pending-companies' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/pendingCompanyList'" >Pending Companies</button>
+    <button class="tab-button <?= $activeTab == 'company-list' ? 'active' : '' ?>" onclick=" window.location.href='/Gradlink/public/PDC_coordinator/dashboardCompany'" >Company List</button>
+    <button class="tab-button  <?= $activeTab == 'pending-companies' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/pendingCompanyList'" >Pending Companies</button>
 </div>
 
 <!-- <script>

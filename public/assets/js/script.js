@@ -5,24 +5,24 @@ function navigateToViewCompany(company_id) {
 }
 
 function navigateToAddCompany() {
-    window.location.href = "/Gradlink/public/addCompany";
+    window.location.href = "/Gradlink/public/pdc_coordinator/addCompany";
 }
 
 function navigateToViewPendingCompany() {
-    window.location.href = "/Gradlink/public/viewPendingCompany";
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany";
 }
 
 function navigateToBlockList() {
-    window.location.href = "/Gradlink/public/blockedCompanies";
+    window.location.href = "/Gradlink/public/pdc_coordinator/blockedCompanies";
 }
 
 function navigateToDashboardCompany() {
     // alert("hey");
-    window.location.href = "/Gradlink/public/dashboardCompany";
+    window.location.href = "/Gradlink/public/pdc_coordinator/dashboardCompany";
 }
 
 function naviagteToViewPendingAdvertisement() {
-    window.location.href = "/Gradlink/public/viewPendingAdvertisement";
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingAdvertisement";
 
 }
 
