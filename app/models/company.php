@@ -111,5 +111,17 @@ class company
 		return $result;
 	}
 
+	public function findAllPending(): array|bool
+	{
+		try {
+			$query = "SELECT * FROM company WHERE Status = :status";
 	
+			$result = $this->query($query, ['status' => 'Pending']);
+	
+			return $result; 
+		} catch (Exception $e) {
+			error_log("Error fetching ongoing companies: " . $e->getMessage());
+			return false; 
+		}
+	}
 }
