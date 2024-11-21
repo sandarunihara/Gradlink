@@ -51,6 +51,9 @@
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
                             <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>" readonly>
+                            <?php if (isset($errors['company_name'])): ?>
+                                <div class="text-danger"><?= htmlspecialchars($errors['company_name']) ?></div>
+                            <?php endif; ?>
                         </div>
                         <div class="form-group">
                             <label for="email-address">Email Address</label>
@@ -92,7 +95,7 @@
                             <label for="linkedin">LinkedIn</label>
                             <input type="text" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly>
                         </div>
-                        <button class="btn update-btn" type="submit">Update</button>
+                        <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
                     </form>
                 <?php else: ?>
                     <p>No company data available.</p>
@@ -103,12 +106,7 @@
                         <button class="btn block-btn">Block</button>
                         <button class="btn delete-btn">Delete</button>
                         <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
-                        <button
-                            class="btn update-btn"
-                            style="display: none;"
-                            id="save-btn"
-                            onclick="saveForm();">
-                            Save</button>
+                        
                     </div>
                 </div>
             </section>
