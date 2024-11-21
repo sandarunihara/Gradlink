@@ -63,45 +63,53 @@ class company
 		return false;
 	}
 
-	public function findall(): array|bool
+	public function findAllOngoing(): array|bool
 	{
-		$query = "SELECT * FROM company";
-		$result = $this->query($query);
-		return $result;
+		try {
+			$query = "SELECT * FROM company WHERE Status = :status";
+
+			$result = $this->query($query, ['status' => 'Ongoing']);
+
+			return $result;
+		} catch (Exception $e) {
+			error_log("Error fetching ongoing companies: " . $e->getMessage());
+			return false;
+		}
 	}
 
 	public function findById($data)
-{
-    if (is_array($data)) {
-        // Build query dynamically for associative array
-        $keys = array_keys($data);
-        $query = "SELECT * FROM company WHERE ";
+	{
+		if (is_array($data)) {
+			// Build query dynamically for associative array
+			$keys = array_keys($data);
+			$query = "SELECT * FROM company WHERE ";
 
-        foreach ($keys as $key) {
-            $query .= $key . " = :" . $key . " AND ";
-        }
+			foreach ($keys as $key) {
+				$query .= $key . " = :" . $key . " AND ";
+			}
 
-        // Trim the trailing " AND"
-        $query = rtrim($query, " AND");
+			// Trim the trailing " AND"
+			$query = rtrim($query, " AND");
 
-        // Debug: Log the query and data
-        error_log("Generated Query: " . $query);
-        error_log("Data: " . print_r($data, true));
+			// Debug: Log the query and data
+			error_log("Generated Query: " . $query);
+			error_log("Data: " . print_r($data, true));
 
-        // Execute the query with the provided data
-        $result = $this->query($query, $data);
-    } else {
-        // Assume $data is a single value (like CompanyId)
-        $query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
+			// Execute the query with the provided data
+			$result = $this->query($query, $data);
+		} else {
+			// Assume $data is a single value (like CompanyId)
+			$query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
 
-        // Debug: Log the query and data
-        error_log("Generated Query: " . $query);
-        error_log("Data: " . print_r(['CompanyId' => $data], true));
+			// Debug: Log the query and data
+			error_log("Generated Query: " . $query);
+			error_log("Data: " . print_r(['CompanyId' => $data], true));
 
-        $result = $this->query($query, ['CompanyId' => $data]);
-    }
+			$result = $this->query($query, ['CompanyId' => $data]);
+		}
 
-    return $result;
-}
+		return $result;
+	}
 
+	
 }
