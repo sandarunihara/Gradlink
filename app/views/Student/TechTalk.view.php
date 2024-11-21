@@ -55,6 +55,7 @@
                                     </th>
                                     <th>
                                         <h5>Venue</h5>
+                                    </th>
                                 </thead>
                                 <tbody>
                                     <tr>

@@ -39,11 +39,47 @@
                 </div>
             </div>
 
-            <div class="main">
-                Date
-                Company Name
-                Position
-                Status
+            <div class="applied-company-main">
+                <a href="<?=ROOT?>/Student/Studentdash/dashboard" class="backreq">
+                    <i class="fas fa-chevron-left"></i>
+                    <h3>back</h3>
+                </a>
+                <div class="compliant-table-div">
+                    <div class="complaint-table-background">
+                        <!-- Table -->
+                        <div>
+                            <table class="complaint-table">
+                                <thead class="complaint-table-headings">
+                                    <th>
+                                        <h5>Date</h5>
+                                    </th>
+                                    <th>
+                                        <h5>Company Name</h5>
+                                    <th>
+                                        <h5>Position</h5>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2021-10-10</td>
+                                        <td>Google</td>
+                                        <td>Software Engineer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2021-10-10</td>
+                                        <td>Google</td>
+                                        <td>Software Engineer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2021-10-10</td>
+                                        <td>Google</td>
+                                        <td>Software Engineer</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
