@@ -7,7 +7,7 @@ class DashboardCompany
         // $this->view('Coordinator/Company/dashboardCompany');
 
         $model = new company;
-        $data = $model->findall();
+        $data = $model->findAllOngoing();
 
         if ($data == false || empty($data)) {
             $this->view('Coordinator/Company/dashboardCompany');
@@ -27,7 +27,8 @@ class DashboardCompany
                     'address_district' => $companydetail->District,
                     'description' => $companydetail->ShortDesc,
                     'website' => $companydetail->Website,
-                    'linkedin' => $companydetail->Linkedin
+                    'linkedin' => $companydetail->Linkedin,
+                    'status' => $companydetail->Status,
                 ];
             }
             $this->view('Coordinator/Company/dashboardCompany', ['companyData' => $companyData]);
