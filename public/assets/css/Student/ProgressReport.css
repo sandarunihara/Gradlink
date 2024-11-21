@@ -1,21 +1,43 @@
-.applied-company-main{
+.progress-main{
     background: #E9EDFF;
     padding: 30px;
     border-radius: 10px;
     margin-right: 50px;
     margin-top: 30px;
 }
-.backreq{
-    width: fit-content;
+.complaint-navbar{
     display: flex;
-    gap: 2px;
-    align-items: center;
-    text-decoration: none;
-    color: #000;
-    transition: 0.3s;
+    justify-content: space-between;
+    padding-top: 5px;
 }
-.backreq:hover{
-    color: #ff0000;
+.add-complaint{
+    border: none;
+    height: 40px;
+    width: 250px;
+    border-radius: 10px;
+}
+.add-complaint button{
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.add-complaint button:hover{
+    background-color: #0056b3;
+}
+.complaint-filter-container{
+    padding-left: 40px;
+    width: 200px;
+}
+.complaint-filter-container select{
+    border: none;
+    height: 40px;
+    width: 120px;
+    padding-left: 10px;
+    border-radius: 10px;
 }
 .compliant-table-div{
     display: flex;
@@ -55,3 +77,4 @@
     width: 100%;
     table-layout: fixed;
 }
+
