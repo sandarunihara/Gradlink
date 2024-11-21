@@ -8,8 +8,8 @@ function navigateToAddCompany() {
     window.location.href = "/Gradlink/public/pdc_coordinator/addCompany";
 }
 
-function navigateToViewPendingCompany() {
-    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany";
+function navigateToViewPendingCompany(company_id) {
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany?id=" +encodeURIComponent(company_id);
 }
 
 function navigateToBlockList() {
