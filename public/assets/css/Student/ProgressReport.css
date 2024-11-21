@@ -1,0 +1,80 @@
+.progress-main{
+    background: #E9EDFF;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.complaint-navbar{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+.add-complaint{
+    border: none;
+    height: 40px;
+    width: 250px;
+    border-radius: 10px;
+}
+.add-complaint button{
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.add-complaint button:hover{
+    background-color: #0056b3;
+}
+.complaint-filter-container{
+    padding-left: 40px;
+    width: 200px;
+}
+.complaint-filter-container select{
+    border: none;
+    height: 40px;
+    width: 120px;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+.compliant-table-div{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.complaint-table-background{
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
+    border-radius: 10px;
+}
+.complaint-table{
+    width: 100%;
+    border-spacing: 0 5px;
+}
+.complaint-table-headings{
+    width: 100%;
+}
+.complaint-table th, .complaint-table td {
+    text-align: center;
+}
+.complaint-table th {
+    margin: 0;
+    padding: 0;
+    background-color: #d7d7d7;
+    font-weight: 600;
+    color: #000000;
+}
+.complaint-table tbody {
+    display: block;
+    max-height: 340px; /* Adjust this value as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+.complaint-table thead, .complaint-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
