@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Student/Studentsidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Student/TechTalk.css">
 </head>
 <body>
     <?php
@@ -38,17 +38,56 @@
                 </div>
             </div>
 
-            <div class="main">
-
-                <div>
-                    <?php foreach($data['TechTalks'] as $TechTalk){?>
-                        <p><?php echo $TechTalk -> Date?></p>
-                        <p><?php echo $TechTalk -> Time?></p>
-                        <p><?php echo $TechTalk -> Venue?></p>
-                    <?php } ?>
+            <div class="techtalk-main">
+                <div class="compliant-table-div">
+                    <div class="complaint-table-background">
+                        <!-- Table -->
+                        <div>
+                            <table class="complaint-table">
+                                <thead class="complaint-table-headings">
+                                    <th>
+                                        <h5>Date</h5>
+                                    </th>
+                                    <th>
+                                        <h5>Time</h5>
+                                    <th>
+                                        <h5>Company</h5>
+                                    </th>
+                                    <th>
+                                        <h5>Venue</h5>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2021-10-10</td>
+                                        <td>10:00</td>
+                                        <td>Google</td>
+                                        <td>Online</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2021-10-10</td>
+                                        <td>10:00</td>
+                                        <td>Google</td>
+                                        <td>Online</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2021-10-10</td>
+                                        <td>10:00</td>
+                                        <td>Google</td>
+                                        <td>Online</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+<!-- <?php foreach($data['TechTalks'] as $TechTalk){?>
+                        <p><?php echo $TechTalk -> Date?></p>
+                        <p><?php echo $TechTalk -> Time?></p>
+                        <p><?php echo $TechTalk -> Venue?></p>
+                    <?php } ?> -->
