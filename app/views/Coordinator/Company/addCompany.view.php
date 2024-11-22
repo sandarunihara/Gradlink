@@ -36,32 +36,25 @@
             <?php $this->renderComponent("companyTabs") ?>
 
             <section class="company-info">
-                <form class="company-form">
+                <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_coordinator/AddCompany/create" >
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" placeholder="Company name" required>
+                        <input type="text" id="company-name" placeholder="Company name" name="company_name" required>
                     </div>
                     <div class="form-group">
                         <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" placeholder="Email" required>
+                        <input type="email" id="email-address" placeholder="Email" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" placeholder="John Doe" required>
+                        <input type="text" id="contact-person" placeholder="John Doe" name="contact_person" required>
                     </div>
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" placeholder="0771234567">
+                        <input type="text" id="contact-number" placeholder="0771234567" name="contact_number">
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <input type="text" id="password" required >
-                            <button class="btn">Generate</button>
-                        </div>
-                    </div>
-
+                <button class="btn email-btn" type="submit" ><b>Submit</b></button>
                     <!-- <div class="row" >
                         <input class="btn email-btn" type="submit" value="Send an Email">
                     </div> -->
