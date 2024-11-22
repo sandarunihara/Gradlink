@@ -14,6 +14,7 @@ class Studentdash{
         // $interviews = $interview_time_slot -> where($arr, [], '', 'do_not_order');
         // $data['numOfInterviews'] = count($interviews);
 
+
         // $student_advertisement = new student_advertisement;
         // $arr['JobStatus'] = 'Applied';
         // $companies = $student_advertisement -> where($arr, [], '', 'do_not_order');

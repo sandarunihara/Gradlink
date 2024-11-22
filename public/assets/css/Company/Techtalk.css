@@ -1,0 +1,138 @@
+.m_main {
+  background: #e9edff;
+  width: 1100px;
+  height: 570px;
+  padding: 30px;
+  border-radius: 10px;
+  margin-right: 50px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.m_header {
+  display: flex;
+  justify-content: space-between;
+}
+.sender {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sender img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.m_details {
+  display: flex;
+  flex-direction: column;
+}
+.m_name {
+  font-size: 20px;
+  font-weight: 700;
+}
+.m_detail {
+  font-size: 10px;
+}
+.m_timedate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+}
+.m_content {
+  background-color: white;
+  border-radius: 7px;
+  padding: 10px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+.topic {
+  display: flex;
+  justify-content: center;
+}
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.message {
+  margin-left: 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 10px;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+.slot {
+  cursor: pointer;
+}
+
+.slot:hover {
+  background: #79bcff;
+}
+
+.slot.selected {
+  background: #2bed59;
+}
+
+.slot.booked {
+  background: #f51c2e;
+  cursor: not-allowed;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #ddd;
+  cursor: not-allowed;
+}
+.backbtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: black;
+  transition: color 0.5s;
+}
+.backbtn i {
+  font-size: 30px;
+}
+.backbtn:hover {
+  color: red;
+}

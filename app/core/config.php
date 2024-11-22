@@ -2,6 +2,7 @@
 
     if($_SERVER['SERVER_NAME'] == 'localhost'){
         // database configuration
+
         define('DBNAME', 'gradlink_gradlink');   // database name
         define('DBHOST', 'mysql-gradlink.alwaysdata.net');  
         define('DBUSER', 'gradlink');
@@ -10,7 +11,6 @@
 
         define('ROOT', 'http://localhost/Gradlink/public');
     } else {
-        // database configuration
         define('DBNAME', 'gradlink');   // database name
         define('DBHOST', 'localhost');
         define('DBUSER', 'root');
