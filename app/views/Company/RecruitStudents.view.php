@@ -49,7 +49,6 @@
                             <!-- Table -->
                             <div>
 
-
                                 <table class="student-table">
                                     <thead class="sr_table_t">
                                         <th>
@@ -72,9 +71,9 @@
                                         <?php if (isset($data) && !empty($data)): ?>
                                             <?php foreach ($data as $student): ?>
                                                 <?php
-                                                $status = $student['Action'];
-                                                $statusClass = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Rejected' : 'Awaiting');
+                                                        $status = $student['Action'];
+                                                        $statusClass = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Reject' : 'Pending');
+                                                        $statusText = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Rejected' : 'Awaiting');
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
@@ -85,7 +84,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../ShortlistedStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -114,3 +113,16 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -15,12 +15,22 @@
                 <p>Students Requests</p>
             </div>
         </a>
-        <a class="option" href="/Gradlink/public/company/ShortlistedStudents/dashboard">
-            <i class="fas fa-user-check"></i>
-            <div class="text">
-                <p>Shortlisted Students</p>
-            </div>
-        </a>
+        <?php if (isset($componentProps['hasShortlisted'] ) && $componentProps['hasShortlisted'] ): ?>
+            <a class="option shortlisted" href="/Gradlink/public/company/ShortlistedStudents/dashboard">
+                <i class="fas fa-user-check"></i>
+                <div class="text">
+                    <p>Shortlisted Students</p>
+                </div>
+            </a>
+        <?php endif; ?>
+        <?php if (isset($componentProps['hasRecruited']) && $componentProps['hasRecruited']): ?>
+            <a class="option recruited" href="/Gradlink/public/company/RecruitStudents/dashboard">
+                <i class="fas fa-user-tie"></i>
+                <div class="text">
+                    <p>Recruited Students</p>
+                </div>
+            </a>
+        <?php endif; ?>
         <a class="option" href="/Gradlink/public/company/Advertisements/dashboard">
             <i class="fas fa-bullhorn"></i>
             <div class="text">
@@ -57,21 +67,19 @@
 </div>
 
 <script>
+    // Function to set the active class based on the current URL
+    document.addEventListener("DOMContentLoaded", function() {
+        var links = document.querySelectorAll(".option");
+        var fullPath = window.location.pathname; // e.g., "/Gradlink/public/company/Companydash/Dashboard"
 
-// Function to set the active class based on the current URL
-document.addEventListener("DOMContentLoaded", function () {
-    var links = document.querySelectorAll(".option");
-    var fullPath = window.location.pathname; // e.g., "/Gradlink/public/company/Companydash/Dashboard"
+        links.forEach(function(link) {
+            // Extract the relevant part of each link's href attribute
+            var linkPath = link.getAttribute("href");
 
-    links.forEach(function (link) {
-        // Extract the relevant part of each link's href attribute
-        var linkPath = link.getAttribute("href");
-
-        // Check if the link's path matches the current path
-        if (fullPath === linkPath) {
-            link.classList.add("active");
-        }
+            // Check if the link's path matches the current path
+            if (fullPath === linkPath) {
+                link.classList.add("active");
+            }
+        });
     });
-});
-
 </script>
