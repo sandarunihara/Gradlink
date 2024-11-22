@@ -13,6 +13,11 @@ class StudentAd{
         $this-> view('Student/Internship', $data);
     }
     public function advertisementView(){
-        $this-> view('Student/InternshipView');
+        $data =[];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $student = new student;
+        $data['Student'] = $student -> first($arr);
+
+        $this-> view('Student/InternshipView',$data);
     }
 }
