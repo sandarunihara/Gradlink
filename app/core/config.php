@@ -2,16 +2,16 @@
 
     if($_SERVER['SERVER_NAME'] == 'localhost'){
         // database configuration
-        define('DBNAME', 'test1');   // database name
-        define('DBHOST', 'localhost');  
-        define('DBUSER', 'root');
-        define('DBPASS', '');
-        define('DBDRIVER', '');
+
+        define('DBNAME', 'gradlink_gradlink');   // database name
+        define('DBHOST', 'mysql-gradlink.alwaysdata.net');  
+        define('DBUSER', 'gradlink');
+        define('DBPASS', 'Gradlink#12345');
+        define('DBDRIVER', 'mysql');
 
         define('ROOT', 'http://localhost/Gradlink/public');
     } else {
-        // database configuration
-        define('DBNAME', 'test1');   // database name
+        define('DBNAME', 'gradlink');   // database name
         define('DBHOST', 'localhost');
         define('DBUSER', 'root');
         define('DBPASS', '');
