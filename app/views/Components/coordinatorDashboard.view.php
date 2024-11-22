@@ -10,27 +10,27 @@
         </div>
         <div class="nav-item active">
             <i class="material-icons">business</i>
-            <a href="/GRadlink/public/dashboardCompany">Companies</a>
+            <a href="/GRadlink/public/PDC_coordinator/dashboardCompany">Companies</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">school</i>
-            <a href="/GRadlink/public/dashboardStudent">Students</a>
+            <a href="/GRadlink/public/PDC_coordinator/dashboardStudent">Students</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">tab</i>
-            <a href="/GRadlink/public/dashboardAdvertisement">Advertisements</a>
+            <a href="/GRadlink/public/PDC_coordinator/dashboardAdvertisement">Advertisements</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">article</i>
-            <a href="/GRadlink/public/dashboardApplication">Applications</a>
+            <a href="/GRadlink/public/PDC_coordinator/dashboardApplication">Applications</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">event</i>
-            <a href="/GRadlink/public/dashboardSession">Sessions</a>
+            <a href="/GRadlink/public/PDC_coordinator/dashboardSession">Sessions</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">help</i>
-            <a href="/GRadlink/public/dashboardCompanyComplain">Complains</a>
+            <a href="/GRadlink/public/PDC_coordinator/dashboardCompanyComplain">Complains</a>
         </div>
         <div class="nav-item">
             <i class="material-icons">account_circle</i>
