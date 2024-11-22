@@ -1,83 +1,123 @@
 .pro_main{
     width: 1100px;
-    height: 570px;
-    padding-left: 30px;
+    height: 630px;
+    max-height: 630px;
     border-radius: 10px;
     margin-right: 50px;
     margin-top: 30px;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+
 }
-.whitepart{
-    width: 500px;
-    padding-right: 10px;
+.coverphoto{
+    width: 1100px;
+    height: 200px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.coverphoto img{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+}
+.prophoto{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: -100px;
+}
+.pro_logo{
+    /* position: absolute;
+    top: 0; */
+    margin-right: auto;
+    margin-left: auto;
+    border: 3px solid white;
+    border-radius: 100%;
 }
 .pro_head{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
 }
-.pro_head p{
+.pro_head span{
+    font-weight: 500;
+
+}
+.pro_head .name{
     font-size: 30px;
     font-weight: 600;
 }
-.pro_head i{
-    font-size: 30px;
-    color: #005fc4;
-}
-.whitepart img{
-    width: 250px;
-    height: 250px;
-    border-radius: 100%;
-    margin-left: 50px;
-}
-.welcomemsg{
-    font-size: 25px;
-}
-.welcomemsg span{
-    color: rgb(252, 174, 73);
-    font-weight: 500;
-}
-.gmsg{
-    color: rgb(252, 174, 73);
-}
-.address{
+.formrow{
     display: flex;
-    gap: 20px;
     align-items: center;
+    gap: 20px;
+    margin-top: 20px;
 }
-.otherpart{
-    width: 600px;
-    background: linear-gradient(180deg, #FF5000,black);
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+.formdata{
+    width: 100%;
 }
-.top{
-    font-size:40px;
-    padding-left: 50px;
-    padding-right: 50px;
-    font-weight: bold;
-}
-.description{
-    padding-left: 50px;
-    padding-right: 50px;
-    color: white;
-}
-.visitsite{
+.firstset{
+    width: 100%;
     display: flex;
     justify-content: center;
-    text-decoration: none;
+    align-items: center;
+    gap: 180px;
 }
-.web{
-    width: fit-content;
-    text-decoration: none;
-    background-color: white;
-    padding: 15px 30px;
-    border-radius: 15px;
+.label{
+    font-weight: 500;
+}
+.formrow i{
+    font-size: 30px;
+    color: rgb(73, 130, 252);
     cursor: pointer;
-    transition: color 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.3s ease;
 }
-.web:hover{
-    color: white;
-    background-color: #FF5000;
+.formrow a{
+    text-decoration: none;
+    text-decoration: underline;
+    color:black;
+    font-weight: 500;
 }
+.formrow a:hover{
+    color: rgb(252, 73, 73);
+}
+.formrow i:hover{
+    transform: scale(1.1);
+}
+.Address{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button{
+    display: flex;
+    justify-content: end;
+    margin-top: -100px;
+    margin-bottom: 50px;
+    padding: 20px;
+    width: 100%;
+}
+button{
+    margin-right: 20px;
+    padding: 5px 15px ;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(252, 225, 73);
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+}
+button:hover{
+    transform: scale(1.1);
+}
+
+
+
+

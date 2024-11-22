@@ -27,43 +27,68 @@
                             <i class="fas fa-bell"></i>
                         </div>
                         <div>
-                        <a href='../Profile/dashboard'>
-                            <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
-                            <p><span>WSO2</span>Company</p>
-                        </a>
+                            <a href='../Profile/dashboard'>
+                                <img src="data:image/jpeg;base64,<?php echo $data->profileimg; ?>" class="logo" />
+                                <p><span>WSO2</span>Company</p>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="pro_main">
                     <!-- white part -->
-                    <div class="whitepart">
-                        <div class="pro_head">
-                            <p>WSO2</p>
-                            <i class="fab fa-linkedin"></i>
-                        </div>
-                        <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="pro_logo" />
-                        <p class="welcomemsg">Welcome to <span>WSO2</span></p>
-                        <p class="gmsg">Sparking innovation, one sprint at a time.</p>
-                        <span>Eshtablished Date: 2000-08-08</span>
-                        <div class="address">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>105, Bauddhaloka Mawatha, Colombo 4.</p>
-                        </div>
+                    <div class="coverphoto">
+                        <img src="data:image/jpeg;base64,<?php echo $data->coverimg; ?>" />
                     </div>
-                    <!-- blue part -->
-                    <div class="otherpart">
-                        <p class="top">Digital engineering is in our DNA. It's at the heart of
-                        <p class="description">Each day, we help clients engage with new technology paradigms, creatively building
-                        solutions that move them to the forefront of their industry.</p>
-                        <div class="visitsite">
-                            <a class="web">Visit Website</a>
+                    <div class="prophoto">
+                        <img src="data:image/jpeg;base64,<?php echo $data->profileimg; ?>" class="pro_logo" width="200" height="200" />
+                    </div>
+                    <div class="button">
+                    <button onclick="window.location.href='<?php echo ROOT; ?>/company/Profile/edit';">Edit profile</button>
+                    </div>
+                    <div class="pro_head">
+                        <span class="name"><?php echo $data->Name ?></span></br>
+                        <span><?php echo $data->ShortDesc ?></span>
+                    </div>
+                    <div class="formdata">
+                        <div class="firstset">
+                            <div class="formrow">
+                                <p class="label">Contact Email</p>
+                                <p><?php echo $data->Email ?></p>
+                            </div>
+                            <div class="formrow">
+                                <p class="label">Contact Person</p>
+                                <p><?php echo $data->ContactPerson ?></p>
+                            </div>
+                        </div>
+                        <div class="firstset">
+                            <div class="formrow">
+                            <p class="label">Contact Number</p>
+                            <p><?php echo $data->ContactNum ?></p>
+                            </div>
+                            <div class="formrow">
+                                <i onclick="linkedin()" class="fab fa-linkedin"></i>
+                                <a href="<?php echo $data->Website ?>" class="website">Visit Website</a>
+                            </div>
+                        </div>
+                        <div class="Address">
+                                <i class="fas fa-location-dot"></i>
+                                <p><?php echo $data->No ?>,<?php echo $data->Lane ?>,<?php echo $data->City ?>,<?php echo $data->District ?></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function linkedin() {
+            window.open(<?php echo $data->Linkedin ?>);
+        }
+        function goeditpro(){
+            window.location.href = "<?php echo ROOT ?>/Profile/edit";
+        }
+    </script>
+
 </body>
 
 </html>
-

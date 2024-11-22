@@ -6,19 +6,27 @@
 }
 
 body {
-
-    /* background-image: url('../img/signinbg.jpg'); */
+    background-image: url('../img/bglogin.jpg');
     background-repeat: no-repeat;
-    background-position: center;
-  background-color: #f0f4ff;
+    background-position: center center;
+    background-size: cover;  /* Ensures the image covers the entire screen */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;  /* Remove default margin */
 }
 
+.topic{
+    font-size: 40px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+}
 .login-container {
-    background-color: #fff;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Background blur */
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -33,7 +41,6 @@ body {
 }
 
 .logo-box {
-    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,27 +54,60 @@ body {
 
 h1 {
     font-size: 24px;
-    color: #333;
     margin-bottom: 40px;
 }
 
 .input-group {
+    position: relative;
     margin-bottom: 20px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #333;
 }
 
 .input-group input {
     width: 100%;
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #4a4a4a;
+    border-radius: 20px;
+    color: black;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #626262;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 0;
+}
+
+.input-box input:focus~label,
+.input-box input:valid~label {
+    top: 0;
+    left: 10px;
+    font-size: 12px;
+    background-color: #EAEEF2;
+    color: black;
+    padding: 0 4px;
+    z-index: 100;    
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: black;  /* Optional: Highlight the border when focused */
+}
+.logo-overlay {
+    position: absolute;
+    top: 200px; /* Adjust as needed to control the vertical position of the logo */
+    left: 50%;
+    transform: translateX(-50%); /* Ensures the logo is on top of the background image */
+    max-width: 400px; /* Adjust the size of the logo as needed */
+    height: auto;
 }
 
 .signin-btn {
@@ -138,7 +178,73 @@ h1 {
 }
 
 .register-link a:hover {
+    color: #f44336;
     text-decoration: underline;
 
 }
 
+
+/* Toast container */
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Individual toast message */
+.toast-message {
+    background-color: #f44336; /* Red background */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    animation: slideIn 0.5s forwards, fadeOut 4s forwards 3s;
+}
+.toast-message-success {
+    background-color: #22c55e;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    animation: slideIn 0.5s forwards, fadeOut 4s forwards 3s;
+}
+/* Slide in animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Fade out animation */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+/* Close button */
+.toast-close-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}

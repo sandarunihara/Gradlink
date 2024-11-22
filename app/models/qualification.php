@@ -1,17 +1,19 @@
 <?php
-    class Qualification  
+    class qualification
     {
         
         use Model;
 
-        protected $table = 'qualification ';
+        protected $table = 'qualification';
 
         protected $allowedColumns = [
 
-            'Dgree',
+            'QualificationId',
+            'Degree',
             'StartDate',
             'EndDate',
             'FieldOfStudy',
-            'ShortDesc'
+            'ShortDesc',
+            'StudentId',
         ];
     }

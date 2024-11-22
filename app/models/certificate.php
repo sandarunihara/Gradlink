@@ -1,5 +1,5 @@
 <?php
-    class Certificate  
+    class certificate
     {
         
         use Model;
@@ -8,10 +8,13 @@
 
         protected $allowedColumns = [
 
+            'CertificateId',
             'Name',
             'Organization',
             'IssueDate',
             'ExpirationDate',
-            'ShortDesc'
+            'ShortDesc',
+            'CredentialUrl',
+            'StudentId'
         ];
     }

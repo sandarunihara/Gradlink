@@ -7,31 +7,41 @@ class StudentProfile{
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
 
         $student = new student;
-        $interestedArea = new student_interest_area;
+        $skill = new student_skill;
+        $certificate = new certificate;
+        $experience = new experience;
+        $qualification = new qualification;
         $studentProfilePic = new student_profile_pic;
 
 
+
         $data['Student'] = $student -> first($arr);
-        $data['InterestedArea'] = $interestedArea -> first($arr);
+        $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
+        $data['Certificates'] = $certificate -> where($arr, [], '', 'do_not_order');
+        $data['Experiences'] = $experience -> where($arr, [], '', 'do_not_order');
+        $data['Qualifications'] = $qualification -> where($arr, [], '', 'do_not_order');
         $data['studentProfilePic'] = $studentProfilePic -> first($arr);
     
         $this-> view('Student/Profile',$data);
     }
     public function profileEdit(){        
         $data =[];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $student = new student;
+        $data['Student'] = $student -> first($arr);
+        
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
-            $arr['UserId'] = $_SESSION['USER'] -> StudentId;
-            //$contactNum = new StudentContactNum;
+            //show($_POST['Github']);
+            $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
             
+            if($data['Result']['status'] == 'success'){
+                //show($data['Result']);
+                    header('Location: '.ROOT.'/Student/StudentProfile/profile');
+                }
             
-            show($_POST);
-            $data['Result'] = $contactNum -> update($arr['StudentId'], $_POST, 'UserId');
-            //$this -> view('Student/ProfileEdit',$data);
-            show($data);
+        }else{
+            $this-> view('Student/ProfileEdit',$data);
         }
-
-        $this-> view('Student/ProfileEdit');
-
     }
 }

@@ -7,46 +7,54 @@
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/login.css">
     <title>Document</title>
 </head>
+
 <body>
+    <img src="<?= ROOT ?>/assets/img/ucsclogo-.png" alt="UCSC Logo" class="logo-overlay">
     <div class="login-container">
         <div class="login-box">
             <form method="post">
-
-                <?php if (!empty($errors)): ?>
-                <div>
-                    <?= implode("<br>", $errors) ?>
+                <h1 class="topic">Sign in</h1>
+                <div class="input-group input-box">
+                    <input name="userId" id="userId" type="text"  required>
+                    <label for="userId">Enter User Id</label>
                 </div>
-                <?php endif; ?>
-
-                <h1>Please sign in</h1>
-
-                <div class="input-group">
-                    <label for="id">Enter id</label>
-                    <input name="userId" type="text">
-                </div>
-
-                <div class="input-group">
+                <div class="input-group input-box">
+                    <input name="password" type="password" required>
                     <label for="password">Password</label>
-                    <input name="password" type="password" placeholder="Password">
                 </div>
 
                 <div class="checkbox-group">
-                    <input type="checkbox" id="remember">
+                    <input type="checkbox" id="remember_me" name="remember_me">
                     <span></span>
-                    <label for="remember">Remember me</label>
+                    <label for="remember_me">Remember me</label>
                     <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="signin-btn">Sign in</button>
             </form>
             <div class="register-link">
-                Not registered yet? <a href="#">Create a new account</a>
+                Not registered yet? <a href="<?php echo ROOT ?>/login/createpassword">Create a Password</a>
             </div>
         </div>
         <div class="logo-box">
             <img src="<?= ROOT ?>/assets/img/glogo.png" alt="Gradlink Logo">
-        </div>            
+        </div>
     </div>
 
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
+    <?php if (!empty($data['errors'])): ?>
+        <script>
+            errorToast("Wrong UserId or Password");
+        </script>
+    <?php endif; ?>
+    <?php if (!empty($data['success'])): ?>
+        <script>
+            successToast("ok");
+        </script>
+    <?php endif; ?>
 </body>
+
+
 </html>
