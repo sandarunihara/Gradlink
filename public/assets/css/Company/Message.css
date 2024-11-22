@@ -10,7 +10,10 @@
 .m_container{
     display: flex;
     justify-content: space-between;
+    gap: 10px;
     margin-bottom: 10px;
+    text-decoration: none;
+    color: black;
     height: 50px;
     width: 1000px;
     background-color: white;

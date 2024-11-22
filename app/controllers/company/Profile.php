@@ -11,7 +11,7 @@ class Profile
         }
         $model = new company;
         $data = $model->first(['CompanyId'=>$user->CompanyId]);
-        $this->view('Company/Profile', ['data' => $data]);
+        $this->view('Company/Profile', ['data' => $data, 'user' => $user]);
     }
 
     public function edit()
@@ -55,6 +55,7 @@ class Profile
             
             $result = $model->update($user->CompanyId, $updatedata, 'CompanyId');
             if ($result['status'] == 'success') {
+                $_SESSION['USER']=$model->first(['CompanyId'=>$user->CompanyId]);
                 header('Location: ../Profile/dashboard');
                 exit;
             } else {
@@ -63,6 +64,6 @@ class Profile
         }
 
 
-        $this->view('Company/EditProfile', ['data' => $data]);
+        $this->view('Company/EditProfile', ['data' => $data, 'user' => $user]);
     }
 }

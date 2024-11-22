@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar")  ?>
+            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -21,18 +21,7 @@
                     <div>
                         <h1>Profile</h1>
                     </div>
-                    <div class="d_pro">
-                        <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div>
-                            <a href='../Profile/dashboard'>
-                                <img src="data:image/jpeg;base64,<?php echo $data->profileimg; ?>" class="logo" />
-                                <p><span>WSO2</span>Company</p>
-                            </a>
-                        </div>
-                    </div>
+                    <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="pro_main">
                     <!-- white part -->
@@ -66,7 +55,7 @@
                             <p><?php echo $data->ContactNum ?></p>
                             </div>
                             <div class="formrow">
-                                <i onclick="linkedin()" class="fab fa-linkedin"></i>
+                                <a href="<?php echo $data->Linkedin ?>"><i onclick="linkedin()" class="fab fa-linkedin"></i></a>
                                 <a href="<?php echo $data->Website ?>" class="website">Visit Website</a>
                             </div>
                         </div>
