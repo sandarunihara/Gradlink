@@ -59,6 +59,32 @@ class company
 		if (empty($this->errors)) {
 			return true;
 		}
+		print_r($this->errors);
+
+		return false;
+	}
+
+	public function validatePendingCompany($data)
+	{
+		$this->errors = [];
+
+		if (empty($data['company_name'])) {
+			$this->errors['company_name'] = "Company name is required";
+		}
+		if (empty($data['email'])) {
+			$this->errors['email'] = "Email is required";
+		}
+		if (empty($data['contact_number'])) {
+			$this->errors['contact_number'] = "Contact number is required";
+		}
+		if (empty($data['contact_person'])) {
+			$this->errors['contact_person'] = "Contact person is required";
+		}
+		
+		if (empty($this->errors)) {
+			return true;
+		}
+		print_r($this->errors);
 
 		return false;
 	}
