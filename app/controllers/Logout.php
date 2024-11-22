@@ -1,15 +1,17 @@
-<?php 
+<?php
 class Logout
 {
 	use Controller;
 
 	public function index()
 	{
+		// Unset all session variables
+		session_unset();
 
-		if(!empty($_SESSION['USER']))
-			unset($_SESSION['USER']);
+		// Destroy the session
+		session_destroy();
 
+		// Redirect to the 'home' page
 		redirect('home');
 	}
-
 }

@@ -22,6 +22,8 @@ class ShortlistedStudents{
             $advertisementIds[] = $item->advertisementId;
         }
         $reqdata=[];
+        $hasShortlisted = false;
+        $hasRecruited = false;
         foreach($advertisementIds as $id){
             $data=$model->findreq($id);
             if (empty($data)) {
@@ -29,7 +31,13 @@ class ShortlistedStudents{
                 exit();
             }
             foreach ($data as $item) {
-                if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Recruit'){
+                if ($item->Jobstatus === 'Shortlist') {
+                    $hasShortlisted = true;
+                }
+                if ($item->Jobstatus === 'Recruit') {
+                    $hasRecruited = true;
+                }
+                if ($item->Jobstatus == 'Shortlist' ){
                     $reqdata[] = [
                         "StudentId"=>$item->StudentId,
                         'AdvertisementId' => $item->advertisementId,
@@ -42,6 +50,8 @@ class ShortlistedStudents{
             }
         }
         
+        $_SESSION['hasShortlisted'] = $hasShortlisted;
+        $_SESSION['hasRecruited'] = $hasRecruited;
         $this-> view('Company/ShortlistedStudents', ['data' => $reqdata]);
     }
 

@@ -17,7 +17,7 @@ class Studentdash{
         $student_advertisement = new student_advertisement;
         $arr['JobStatus'] = 'Applied';
         $companies = $student_advertisement -> where($arr, [], '', 'do_not_order');
-        $data['numOfCompanies'] = count($companies);
+        // $data['numOfCompanies'] = count($companies);
         
         $this-> view('Student/Dashboard',$data);
     }  

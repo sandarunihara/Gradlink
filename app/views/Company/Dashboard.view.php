@@ -14,7 +14,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar")  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -22,28 +22,8 @@
                     <div>
                         <h1>DashBoard</h1>
                     </div>
-                    <div class="d_pro">
-                        <div class="d_profile">
-                            <a href="../companydash/calendar">
-                                <i class="fas fa-calendar-alt"></i>
-                            </a>
-                            <div class="notification-wrapper">
-                                <div class="notification-icon" onclick="toggleDropdown()">
-                                    <i class="fas fa-bell"></i>
-                                </div>
-                                <div id="notificationDropdown" class="dropdown-content">
-                                    <i class="fas fa-close" onclick="toggleclose()"></i>
-                                    <p>No new notifications</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <a href='../Profile/dashboard'>
-                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
-                                <p><span>WSO2</span>Company</p>
-                            </a>
-                        </div>
-                    </div>
+                    
+                    <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="d_main">
                     <div class="d_allsummery">
@@ -68,15 +48,21 @@
                                     <?php
                                     if (empty($data)) {
                                         echo '<li>No requests found</li>';
-                                    }else{
+                                    } else {
                                         // Get the first 8 elements from $data
                                         $firstEight = array_slice($data, 0, 8);
-                                        
 
-                                        // Loop through the first 8 items and display them
+
                                         foreach ($firstEight as $item) {
-                                            $statusClass = ($item['Status'] === 'Pending') ? 'status pending' : (($item['Status'] === 'Shortlist') ? 'status shortlist' : 'status reject');
-                                            
+                                            $statusClass = ($item['Status'] === 'Pending')
+                                                ? 'status pending'
+                                                : (($item['Status'] === 'Shortlist')
+                                                    ? 'status shortlist'
+                                                    : (($item['Status'] === 'Recruit')
+                                                        ? 'status recruited'
+                                                        : 'status reject'));
+
+
                                             echo '<li>';
                                             echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
                                             echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
