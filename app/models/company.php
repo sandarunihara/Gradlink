@@ -19,6 +19,7 @@ class company
 		'ContactNum',
 		'Website',
 		'Linkedin',
+		'Status',
 		'AssistantId',
 	];
 
@@ -74,19 +75,26 @@ class company
 		if (empty($data['email'])) {
 			$this->errors['email'] = "Email is required";
 		}
-		if (empty($data['contact_number'])) {
-			$this->errors['contact_number'] = "Contact number is required";
-		}
+		// if (empty($data['contact_number'])) {
+		// 	$this->errors['contact_number'] = "Contact number is required";
+		// }
 		if (empty($data['contact_person'])) {
 			$this->errors['contact_person'] = "Contact person is required";
 		}
-		
+
 		if (empty($this->errors)) {
 			return true;
 		}
 		print_r($this->errors);
 
 		return false;
+	}
+
+	public function gethighestadid()
+	{
+		$query = "SELECT CompanyId FROM company ORDER BY CompanyId DESC LIMIT 1";
+		$result = $this->query($query);
+		return $result ? $result[0]->CompanyId : null;
 	}
 
 	public function findAllOngoing(): array|bool
@@ -141,13 +149,13 @@ class company
 	{
 		try {
 			$query = "SELECT * FROM company WHERE Status = :status";
-	
+
 			$result = $this->query($query, ['status' => 'Pending']);
-	
-			return $result; 
+
+			return $result;
 		} catch (Exception $e) {
 			error_log("Error fetching ongoing companies: " . $e->getMessage());
-			return false; 
+			return false;
 		}
 	}
 }
