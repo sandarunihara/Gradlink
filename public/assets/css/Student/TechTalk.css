@@ -1,45 +1,64 @@
-.techtalk-main{
-    background: #E9EDFF;
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 50px;
-    margin-top: 30px;
+/* Tech-Talk Post Styles */
+.tech-talk-post {
+    background: #ffffff;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 700px;
+    margin: 20px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.compliant-table-div{
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
+
+.tech-talk-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
 }
-.complaint-table-background{
-    background-color: white;
-    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
-    border-radius: 10px;
-}
-.complaint-table{
-    width: 100%;
-    border-spacing: 0 5px;
-}
-.complaint-table-headings{
-    width: 100%;
-}
-.complaint-table th, .complaint-table td {
+
+.tech-talk-header {
     text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
 }
-.complaint-table th {
-    margin: 0;
-    padding: 0;
-    background-color: #d7d7d7;
-    font-weight: 600;
-    color: #000000;
+
+.tech-talk-header h2 {
+    font-size: 28px;
+    color: black;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: capitalize;
 }
-.complaint-table tbody {
-    display: block;
-    max-height: 340px; /* Adjust this value as needed */
-    overflow-y: auto;
-    width: 100%;
+
+.tech-talk-header p {
+    margin: 5px 0;
+    font-size: 20px;
+    color: black;
 }
-.complaint-table thead, .complaint-table tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
+
+.tech-talk-header i {
+    margin-right: 8px;
+    color: #007bff;
 }
+
+.tech-talk-venue,
+.tech-talk-company {
+    font-size: 16px;
+    color: #007bff;
+    font-weight: 500;
+}
+.tech-talk-details {
+    margin-top: 15px;
+    line-height: 1.8;
+}
+
+.tech-talk-description {
+    font-size: 18px;
+    color: black;
+    text-align: center;
+    font-weight: 500;
+}
+
+.tech-talk-details p {
+    margin: 10px 0;
+}
+

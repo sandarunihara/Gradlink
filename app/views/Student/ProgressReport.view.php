@@ -3,91 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Fix.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Studentsidebar.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Progress Report</title>
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/progressReport.css"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/ProgressReport.css">
-
 </head>
 <body>
-    <?php
-        $Name = $data['Student'] -> Name;
-
-    ?>
     <div class="side">
-        <?php $this->renderComponent("studentsidebar")  ?>
+        <?php $this->renderComponent("studentSidebar")  ?>
     </div>
-    <div id="content">
-        <div class="main">
-            <div class="d">
-                <div >
-                    <h1>Progress Report</h1>
-                </div>
-                <div class="d_pro">
-                    <div class="d_profile">
-                        <i class="fas fa-calendar-alt"></i>
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <div>
-                        <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($Name)?>.jpg" height ="400px" weight="400px"class="logo" />
-                            <p><span><?php echo($Name)?></span>Student</p>
-                        </a>
-                    </div>
+    <div class="content">
+        <div class="header">
+            <?php $this->renderComponent("studentHeader")  ?>
+        </div>
+        <div class="page-header">
+            <h1>Progress Report</h1>
+        </div>
+        <div class="main-content">
+            <div class="progress-report-navbar">
+                <div class="add-progress-report">
+                    <a href="#"><button>+ Add New</button></a>
                 </div>
             </div>
 
-            <div class="progress-main">
-                <div class="complaint-navbar">
-                    <div class = "add-complaint">
-                        <a href="<?=ROOT?>/Student/StudentProgress/newReport"><button>+ Add New</button></a>
-                    </div>
-                    <div class="complaint-filter-container">
-                        <i class="fas fa-filter"></i>
-                        <select class="status-select">
-                            <option value="all">All</option>
-                            <option value="reviewed">Reviewed</option>
-                            <option value="notReviewed">Not Reviewed</option>
-                        </select> 
-                    </div>
-                </div>
-                <div class="compliant-table-div">
-                    <div class="complaint-table-background">
-                        <!-- Table -->
-                        <div>
-                            <table class="complaint-table">
-                                <thead class="complaint-table-headings">
+            <div class="progress-report-table-div">
+                <div class="progress-report-table-background">
+                    <!-- Table -->
+                    <div>
+                        <table class="progress-report-table">
+                            <thead class="progress-report-table-headings">
+                                <tr>
                                     <th>
                                         <h5>Date</h5>
                                     </th>
                                     <th>
                                         <h5>Topic</h5>
+                                    </th>
                                     <th>
                                         <h5>Status</h5>
                                     </th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2021-09-01</td>
-                                        <td>Doc1</td>
-                                        <td>Reviewed</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2021-09-01</td>
-                                        <td>Doc2</td>
-                                        <td>Reviewed</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2021-09-01</td>
-                                        <td>Doc2</td>
-                                        <td>Not Reviewed</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-11-23</td>
+                                    <td>23rd Progress Report</td>
+                                    <td>
+                                        <div class="reviewed">Reviewed</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2024-12-05</td>
+                                    <td>5th Progress Report</td>
+                                    <td>
+                                        <div class="not-reviewed">Not Reviewed</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2024-12-12</td>
+                                    <td>12th Progress Report</td>
+                                    <td>
+                                        <div class="reviewed">Reviewed</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -1,21 +1,9 @@
-.main-content {
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for a more elevated look */
-    border-radius: 8px;
-    margin-top: 30px;
-}
-
-.page-header h1 {
-    font-size: 36px;
-    color: #2C3E50;
-    margin-bottom: 20px;
-}
 
 .dashboard-cards {
     display: flex;
     justify-content: space-between;
     gap: 30px;
+    margin-top: 20px;
     margin-bottom: 30px;
 }
 
@@ -29,34 +17,18 @@
 }
 
 .card h3 {
-    font-size: 22px;
-    color: #34495E;
+    font-size: 20px;
+    color: black;
     margin-bottom: 10px;
 }
 .card p {
     font-size: 16px;
     margin-bottom: 20px;
+    color: red;
 }
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-button{
-    padding: 10px 20px;
-    background-color: #3498DB;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-button:hover{
-    background-color: #2980B9;
-}
-button a{
-    color: #fff;
-    text-decoration: none;
 }
 .recent-activity {
     background-color: #F9F9F9;
@@ -67,7 +39,7 @@ button a{
 }
 .recent-activity h3 {
     font-size: 24px;
-    color: #2C3E50;
+    color: black;
     margin-bottom: 15px;
 }
 .recent-activity ul {
@@ -91,4 +63,20 @@ ul {
     list-style-type: none;
 }
 
-
+button{
+    padding: 10px 20px;
+    background-color: #3498DB;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover{
+    background-color: #2980B9;
+}
+button a{
+    color: white;
+    text-decoration: none;
+}
