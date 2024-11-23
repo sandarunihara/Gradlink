@@ -27,9 +27,16 @@ function naviagteToViewPendingAdvertisement() {
 }
 
 function clickDeleteBtn(company_id) {
-    const userConfirmed = confirm("Are you sure you want to delete this session?");
+    const userConfirmed = confirm("Are you sure you want to delete this Company?");
     if (userConfirmed) {
         window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany/delete/" + company_id;
+    }
+}
+
+function clickDeleteBtninPending(company_id){
+    const userConfirmed = confirm("Are you sure you want to delete this Pending Company?");
+    if (userConfirmed) {
+        window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany/delete/" + company_id;
     }
 }
 
