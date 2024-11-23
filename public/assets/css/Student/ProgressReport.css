@@ -6,17 +6,18 @@
 }
 
 .add-progress-report button {
-    border: none;
-    height: 40px;
-    width: 120px;
-    border-radius: 10px;
-    background-color: #007bff;
+    padding: 10px 20px;
+    background-color: #3498DB;
     color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .add-progress-report button:hover {
-    background-color: #0056b3;
+    background-color: #2980B9;
 }
 
 .progress-report-table-div {

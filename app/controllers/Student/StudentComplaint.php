@@ -7,13 +7,11 @@ class StudentComplaint{
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         
         $complaint = new complaint;
-        $student = new student;
         
         $data['Complaints'] = $complaint -> where($arr,[], 'Date', 'do_not_order');
         //show($data['Complaints']);
         //show($data['Complaints'][0] -> Status);
 
-        $data['Student'] = $student -> first($arr);
         $this-> view('Student/Complaint', $data);
 
     }

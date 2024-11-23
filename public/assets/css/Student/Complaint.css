@@ -1,36 +1,12 @@
-.complaint-main{
-    background: #E9EDFF;
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 50px;
-    margin-top: 30px;
-}
-.complaint-navbar{
+.complaint-navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding-top: 5px;
-}
-.add-complaint{
-    border: none;
-    height: 40px;
-    width: 250px;
-    border-radius: 10px;
-}
-.add-complaint button{
-    border: none;
-    height: 40px;
-    width: 100px;
-    border-radius: 10px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-.add-complaint button:hover{
-    background-color: #0056b3;
+    padding-right: 20px;
+    margin-bottom: 20px;
 }
 .complaint-filter-container{
-    padding-left: 40px;
-    width: 200px;
+    margin-right: 910px;
 }
 .complaint-filter-container select{
     border: none;
@@ -39,71 +15,93 @@
     padding-left: 10px;
     border-radius: 10px;
 }
-.compliant-table-div{
+
+.add-complaint button {
+    padding: 10px 20px;
+    background-color: #3498DB;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-complaint button:hover {
+    background-color: #2980B9;
+}
+
+.complaint-table-div {
     display: flex;
     justify-content: center;
     padding-top: 20px;
 }
-.complaint-table-background{
+
+.complaint-table-background {
     background-color: white;
-    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+
 }
-.complaint-table{
+
+.complaint-table {
     width: 100%;
     border-spacing: 0 5px;
 }
-.complaint-table-headings{
-    width: 100%;
-}
-.complaint-table th, .complaint-table td {
+.complaint-table th{
     text-align: center;
+    padding: 10px 5px;
+}
+.complaint-table td{
+    text-align: center;
+    padding: 2px 5px;
+    
 }
 .complaint-table th {
-    margin: 0;
-    padding: 0;
     background-color: #d7d7d7;
-    font-weight: 600;
-    color: #000000;
+    font-weight: bold;
+    color: #000;
+    padding: 20px 5px;
 }
+complaint
 .complaint-table tbody {
     display: block;
-    max-height: 340px; /* Adjust this value as needed */
+    max-height: 340px;
     overflow-y: auto;
-    width: 100%;
 }
-.complaint-table thead, .complaint-table tbody tr {
+
+.complaint-table thead,
+.complaint-table tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
 }
-.reviewed {
-    width: 80%;
+
+.reviewed, .not-reviewed {
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     font-size: 14px;
     outline: none;
     border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.reviewed {
     color: green;
     border: 2px solid green;
 }
-.notReviewed {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 14px;
-    outline: none;
-    border-radius: 5px;
+.not-reviewed {
     color: orange;
     border: 2px solid orange;
 }
-.view-complaint-btn {
-    width: 80%;
-    padding: 8px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.reviewed:hover {
+    background-color: green;
+    color: white;
+}
+.not-reviewed:hover {
+    background-color: orange;
+    color: white;
 }
