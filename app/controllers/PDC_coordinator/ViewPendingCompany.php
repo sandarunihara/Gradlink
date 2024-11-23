@@ -47,7 +47,7 @@ class ViewPendingCompany
         $data = $model->findById($id);
 
         if (!$data) {
-            $this->view('Coordinator/Company/error', ['message' => 'Company not found.']);
+            $this->view('PDC_coordinator/Company/error', ['message' => 'Company not found.']);
             return;
         }
         $companyId = $id;
@@ -92,12 +92,29 @@ class ViewPendingCompany
                     // print_r($data['errors']);
                 }
             }
-            $this->view('Coordinator/Company/viewPendingCompany', [
+            $this->view('PDC_coordinator/Company/viewPendingCompany', [
                 'companyData' => $data,
                 'errors' => $data['errors'] ?? []
             ]);
         } else {
             echo "Company not found.";
+        }
+    }
+
+    public function delete($id)
+    {
+        $model = new company;
+        $data = $model->findById($id);
+        if (!empty($data)) {
+            $result = $model->delete($id, 'CompanyId');
+            if ($result) {
+                header("Location: "  . ROOT . "/PDC_coordinator/pendingCompanyList");
+
+            } else {
+                echo "Error: Could not delete the company";
+            }
+        } else {
+            echo "Not such company";
         }
     }
 }

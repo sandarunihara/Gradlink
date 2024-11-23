@@ -97,18 +97,19 @@
                         </div>
                         <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
                     </form>
-                <?php else: ?>
-                    <p>No company data available.</p>
-                <?php endif; ?>
-                <div class="button-line">
+                    <div class="button-line">
                     <button class="view-profile-btn">View Profile</button>
                     <div class="action-buttons">
                         <button class="btn block-btn">Block</button>
-                        <button class="btn delete-btn">Delete</button>
+                        <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtn('<?= $companyData[0]['company_id'] ?>');" >Delete</button>
                         <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
                         
                     </div>
                 </div>
+                <?php else: ?>
+                    <p>No company data available.</p>
+                <?php endif; ?>
+                
             </section>
         </main>
     </div>

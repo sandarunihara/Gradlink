@@ -1,6 +1,6 @@
 
 function navigateToViewCompany(company_id) {
-    window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany?id=" +encodeURIComponent(company_id);
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany?id=" + encodeURIComponent(company_id);
 
 }
 
@@ -9,7 +9,7 @@ function navigateToAddCompany() {
 }
 
 function navigateToViewPendingCompany(company_id) {
-    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany?id=" +encodeURIComponent(company_id);
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany?id=" + encodeURIComponent(company_id);
 }
 
 function navigateToBlockList() {
@@ -24,6 +24,20 @@ function navigateToDashboardCompany() {
 function naviagteToViewPendingAdvertisement() {
     window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingAdvertisement";
 
+}
+
+function clickDeleteBtn(company_id) {
+    const userConfirmed = confirm("Are you sure you want to delete this Company?");
+    if (userConfirmed) {
+        window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany/delete/" + company_id;
+    }
+}
+
+function clickDeleteBtninPending(company_id){
+    const userConfirmed = confirm("Are you sure you want to delete this Pending Company?");
+    if (userConfirmed) {
+        window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany/delete/" + company_id;
+    }
 }
 
 function enableEditing() {
@@ -57,7 +71,7 @@ function saveForm() {
 //Advertisement Dashboard Pending ad status
 
 
-document.getElementById("status").addEventListener("change", function() {
+document.getElementById("status").addEventListener("change", function () {
     var statusDropdown = this;
     var selectedValue = statusDropdown.value;
 

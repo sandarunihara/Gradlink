@@ -79,11 +79,13 @@ class AddCompany
             } else {
                 echo "Validation failed";
                 $errors = $model->errors;
-                $this->view('Coordinator/addCompany', ['errors' => $errors]);
+                $this->view('pdc_coordinator/addCompany', ['errors' => $errors]);
             }
         }
         else{
             echo "Error";
         }
     }
+
+    
 }

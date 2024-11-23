@@ -61,6 +61,7 @@ class ViewCompany
                 // print_r($_POST);
                 // echo '</pre>';
                 $updatedData = [
+                    'company_id' => $companyId,
                     'company_name' => $_POST['company_name'] ?? '',
                     'email' => $_POST['email'] ?? '',
                     'contact_number' => $_POST['contact_number'] ?? '',
@@ -74,6 +75,7 @@ class ViewCompany
                 ];
 
                 $dbColumns = [
+                    'company_id' => 'CompanyId',
                     'company_name'     => 'Name',
                     'email'            => 'Email',
                     'contact_number'   => 'ContactNum',
@@ -99,12 +101,11 @@ class ViewCompany
                     $result = $model->update($companyId, $mappedData, 'CompanyId');
                     print_r($result);
 
-                    if($result){
+                    if ($result) {
                         // Redirect to the same page after successful submission
                         header("Location: "  . ROOT . "/PDC_coordinator/viewCompany?id=$id");
                         exit;
-                    }
-                    else{
+                    } else {
                         echo "There was an issue saving company details.";
                     }
                 } else {
@@ -113,12 +114,28 @@ class ViewCompany
                 }
             }
 
-            $this->view('Coordinator/Company/viewCompany', [
+            $this->view('PDC_coordinator/Company/viewCompany', [
                 'companyData' => $data,
                 'errors' => $data['errors'] ?? []
             ]);
         } else {
             echo "Company not found.";
+        }
+    }
+    public function delete($id)
+    {
+        $model = new company;
+        $data = $model->findById($id);
+        if (!empty($data)) {
+            $result = $model->delete($id, 'CompanyId');
+            if ($result) {
+                header("Location: "  . ROOT . "/PDC_coordinator/dashboardCompany");
+
+            } else {
+                echo "Error: Could not delete the company";
+            }
+        } else {
+            echo "Not such company";
         }
     }
 }
