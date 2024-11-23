@@ -40,10 +40,6 @@
             </div>
 
             <div class="applied-company-main">
-                <a href="<?=ROOT?>/Student/Studentdash/dashboard" class="backreq">
-                    <i class="fas fa-chevron-left"></i>
-                    <h3>back</h3>
-                </a>
                 <div class="compliant-table-div">
                     <div class="complaint-table-background">
                         <!-- Table -->

@@ -1,80 +1,94 @@
-.dashboard-main{
-    background: #E9EDFF;
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 50px;
+.main-content {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for a more elevated look */
+    border-radius: 8px;
     margin-top: 30px;
 }
-.dashboard-main h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
+
+.page-header h1 {
+    font-size: 36px;
+    color: #2C3E50;
+    margin-bottom: 20px;
 }
 
-.dashboard-main #greeting {
-    font-size: 18px;
-    color: #007bff;
-    margin-right: 10px;
-    display: inline;
-}.dashboard-allsummery {
+.dashboard-cards {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
-.stats {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.stat-card {
-    flex: 1;
-    background: linear-gradient(135deg, #FFC371, #FF5F6D);
-    color: #fff;
-    border-radius: 10px;
+.card {
+    background-color: #ECF0F1;;
     padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);    
+    flex: 1;
+    transition: all 0.3s ease;
 }
 
-.stat-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+.card h3 {
+    font-size: 22px;
+    color: #34495E;
+    margin-bottom: 10px;
 }
-
-.stat-card a {
-    text-decoration: none;
+.card p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+button{
+    padding: 10px 20px;
+    background-color: #3498DB;
     color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover{
+    background-color: #2980B9;
+}
+button a{
+    color: #fff;
+    text-decoration: none;
+}
+.recent-activity {
+    background-color: #F9F9F9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 30px;
+    
+}
+.recent-activity h3 {
+    font-size: 24px;
+    color: #2C3E50;
+    margin-bottom: 15px;
+}
+.recent-activity ul {
+    list-style-type: none;
+    padding: 0;
+}
+.recent-activity ul li {
+    margin: 12px 0;
+    font-size: 16px;
+    color: #34495E;
+    display: flex;
+    align-items: center;
 }
 
-.stat-card h2 {
-    font-size: 18px;
-    margin: 0;
+h1, h3 {
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
 }
 
-.stat-card p {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-.profile-summery {
-    background-color: #E9EDFF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ul {
+    list-style-type: none;
 }
 
-.profile-summery h2 {
-    font-size: 18px;
-    color: #333;
-    margin: 5px 0;
-}
 
-.profile-summery h2 span {
-    font-weight: bold;
-    color: #007bff;
-}
