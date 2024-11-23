@@ -40,7 +40,6 @@
                             <div>
                                 <p>Position : <span>Software Engineering</span></p>
                                 <p>Date Period : <span>2024-09-12 to 2024-09-30</span></p>
-                                <p>Interview Duration: <span>30-minute time slots</span></p>
                                 <p>Interview Availability</p>
                                 <ul>
                                     <li>Monday: 9:00 AM to 12:00 PM</li>

@@ -27,7 +27,7 @@
                     <div class="overview">
                         <h2>Overview</h2>
                         <div class="stats">
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/StudentsRequests/dashboard'">
                                 <h2>Total Student Applied</h2>
                                 <p><?php echo $numOfapplyStudents ?></p>
                             </div>

@@ -60,10 +60,12 @@ class ShortlistedStudents{
         $model=new C_Student;
         $data=$model->findbyId($StudentId);
         // print_r($data);
+        $updatemodel = new C_Dashboard;
+        $studentad_data=$updatemodel->find(['StudentId'=>$StudentId,'advertisementId'=>$advertisementId],'studentadvertisement');
+        $studentJobstatus=$studentad_data[0]->Jobstatus;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
             // print_r($_POST['submit_action']);
-            $updatemodel = new C_Dashboard;
             $updatedata = [
                 'Jobstatus' => $_POST['submit_action']
             ];
@@ -76,16 +78,16 @@ class ShortlistedStudents{
                 // Redirect to the same page after successful submission
                 $success= "Student Job Status updated successfully.";
                 // $this-> view('Company/Studentpro' , ['data' => $data,'success'=>$success]);
-                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard' );
+                header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard' );
                 exit;
             } else {
                 $error= "There was an issue update the Student Job Status.";
-                $this-> view('Company/Studentpro' , ['data' => $data,'error'=>$error,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard']);
+                $this-> view('Company/Studentpro' , ['data' => $data,'error'=>$error,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard','studentJobstatus'=>$studentJobstatus]);
                 exit;
             }
         }
 
-        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard']);
+        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard','studentJobstatus'=>$studentJobstatus]);
 
     }
 }

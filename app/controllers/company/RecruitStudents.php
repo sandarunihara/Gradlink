@@ -62,9 +62,11 @@ class RecruitStudents
         $model=new C_Student;
         $data=$model->findbyId($StudentId);
         // print_r($data);
+        $updatemodel = new C_Dashboard;
+        $studentad_data=$updatemodel->find(['StudentId'=>$StudentId,'advertisementId'=>$advertisementId],'studentadvertisement');
+        $studentJobstatus=$studentad_data[0]->Jobstatus;
 
-
-        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard']);
+        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard','studentJobstatus'=>$studentJobstatus]);
 
     }
 }
