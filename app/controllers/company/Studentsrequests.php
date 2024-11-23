@@ -38,7 +38,7 @@ class StudentsRequests
                 } 
 
 
-                if ($item->Jobstatus !== 'Shortlist' && $item->Jobstatus !== 'Recruit') {
+                // if ($item->Jobstatus !== 'Shortlist' && $item->Jobstatus !== 'Recruit') {
                     $reqdata[] = [
                         "StudentId" => $item->StudentId,
                         'AdvertisementId' => $item->advertisementId,
@@ -47,11 +47,11 @@ class StudentsRequests
                         'Position' => $item->position,
                         'Action' => $item->Jobstatus
                     ];
-                }
+                // }
             }
         }
 
-        // // Store the flags in session
+        // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
         // Pass the session data to the sidebar component
@@ -70,27 +70,30 @@ class StudentsRequests
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
 
+        $updatemodel = new C_Dashboard;
+        $studentad_data=$updatemodel->find(['StudentId'=>$StudentId,'advertisementId'=>$advertisementId],'studentadvertisement');
+        $studentJobstatus=$studentad_data[0]->Jobstatus;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
             // print_r($_POST); // This should print the form POST data
-            $model = new C_Dashboard;
             $updatedata = [
                 'Jobstatus' => $_POST['submit_action']
             ];
-            $result = $model->update($StudentId, $advertisementId, $updatedata);
+            $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
                 // Redirect to the same page after successful submission
                 $success = "Student Job Status updated successfully.";
                 // $this-> view('Company/Studentpro' , ['data' => $data,'success'=>$success]);
-                header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
+                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
                 exit;
             } else {
                 $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
+                $this->view('Company/Studentpro', ['data' => $data,'studentJobstatus'=>$studentJobstatus , 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
                 exit;
             }
         }
 
 
-        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
+        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard','studentJobstatus'=>$studentJobstatus ]);
     }
 }

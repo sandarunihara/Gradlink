@@ -22,25 +22,27 @@
                     <div>
                         <h1>DashBoard</h1>
                     </div>
-                    
+
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="d_main">
                     <div class="d_allsummery">
                         <div class="stats">
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/StudentsRequests/dashboard'">
                                 <h2>Total Student Applied</h2>
                                 <p><?php echo $numOfStudents; ?></p>
                             </div>
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard'">
                                 <h2>Total Student Shortlisted</h2>
                                 <p><?php echo $numOfShortlistStudents ?></p>
                             </div>
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/Advertisements/dashboard'">
                                 <h2>Total Advertisements</h2>
                                 <p><?php echo $numOfAdvertisements ?></p>
                             </div>
                         </div>
+                    </div>
+                    <div class="bottomcontent">
                         <div class="d_request">
                             <h3>Student Requests</h3>
                             <div class="d_alllist">
@@ -62,11 +64,19 @@
                                                         ? 'status recruited'
                                                         : 'status reject'));
 
+                                                        $Statusname = match ($item['Status']) {
+                                                            'Shortlist' => 'Shortlisted',
+                                                            'Recruit' => 'Recruited',
+                                                            'Pending' => 'Pending',
+                                                            'Reject' => 'Rejected',
+                                                            default => $item['Status'],
+                                                        };
+
 
                                             echo '<li>';
                                             echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
                                             echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
-                                            echo '<span class="' . $statusClass . '">' . htmlspecialchars(ucfirst($item['Status'])) . '</span>';
+                                            echo '<span class="' . $statusClass . '">' . htmlspecialchars(ucfirst($Statusname)) . '</span>';
                                             echo '</li>';
                                         }
                                     }
@@ -80,18 +90,47 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="d_infor">
-                        <img src="<?php echo ROOT ?>/assets/img/company_dashboard.png" width="350" height="200" />
-                        <div class="d_intr">
-                            <div>
-                                <h4>Simplified Management</h4>
-                                <img src="<?php echo ROOT ?>/assets/img/company_dashboard2.png" width="300" height="170" />
-                                <p>Easily manage internships with our intuitive system. Post opportunities, review applications, and track progress—all in one place.
-                                    Our platform makes recruitment quick and efficient, helping you find the right talent effortlessly.</p>
+                        <div class="d_messaage">
+                            <h3>Messages</h3>
+                            <div class="d_msglist">
+                                <?php
+                                $details = [
+                                    "Tech Talk" => "../Messages/TechTalk",
+                                    "Intern Call" => "../Messages/pdc_message",
+                                ];
+
+                                $data = [
+                                    ["name" => "PDC", "detail" => "Tech Talk", "time" => "7:34 PM"],
+                                    ["name" => "PDC", "detail" => "Intern Call", "time" => "7:34 PM"],
+                                ];
+                                ?>
+
+                                <?php foreach ($data as $item): ?>
+                                    <?php
+                                    $detail = $item['detail'];
+                                    $link = isset($details[$detail]) ? $details[$detail] : "#";
+                                    ?>
+                                    <a href="<?php echo $link; ?>" class="m_container">
+                                        <div class="m_de">
+                                            <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40"/>
+                                            <div class="m_content">
+                                                <span class="m_name"><?php echo $item['name']; ?></span>
+                                                <span class="m_detail"><?php echo $detail; ?></span>
+                                                <span class="m_time"><?php echo $item['time']; ?></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="d_view_all">
+                                <a href="../Messages/dashboard">
+                                    View All
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

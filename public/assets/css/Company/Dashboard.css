@@ -2,7 +2,9 @@
 /* ********************DASHBOARD******************** */
 .d_main{
     display: flex;
+    flex-direction: column;
     gap: 20px;
+    width: 1200px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
@@ -12,6 +14,7 @@
     border-bottom-right-radius: 10px;
 }
 .d_allsummery{
+    width: 100%;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -32,12 +35,14 @@
 .stat-card {
     background: linear-gradient(135deg, #FFC371, #FF5F6D);
     color: white;
+    width: 100%;
     border-left: black solid 8px;
     border-radius: 10px;
     padding: 40px;
     color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease,border-left 0.3s ease;
+    cursor: pointer;
 }
 .stat-card:hover{
     transform: scale(1.05);
@@ -52,33 +57,34 @@
     font-weight: 600;
     margin: 10px 0 0;
 }
+.bottomcontent{
+    display: flex;
+    gap: 20px;
+}
 .d_request{
+    width: 100%;
+    height: 350px;
     background-color: #E9EDFF;
-    padding-top: 1px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
     border-radius: 10px;
     transition: transform 0.7s ease;
     cursor: default;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.d_request:hover{
-    transform: scale(1.02);
-    
-}
 .d_alllist{
     background-color: white;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    border-radius: 5px;
+
 }
 
 
 .d_alllist ul {
     list-style-type: none;
-    padding: 20px;
+    padding: 10px;
 }
 
 .d_alllist ul li {
@@ -123,29 +129,66 @@
 .d_view_all a:hover{
    color: #007bff;
 }
-.d_infor{
+.d_messaage{
+    width: 50%;
+    height: 400px;
     background-color: #E9EDFF;
-    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 10px;
     border-radius: 10px;
-    box-shadow: 0px 1px 1px rgba(36, 36, 36, 0.25);
+    transition: transform 0.7s ease;
+    cursor: default;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.d_infor img{
-    display: flex;
+.d_msglist{
+    background-color: white;
+    padding-top: 10px;
+    height: 300px;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    border-radius: 5px;
+
 }
-.d_intr{
-    width: 370px;
-    text-align: center;
+.m_container{
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    padding: 10px;
+    border-bottom:solid 1px rgba(0, 0, 0, 0.25);
+    /* box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25); */
+    cursor: pointer;
+    transition: all 0.7s ease;
+}
+.m_de{
+    display: flex;
+}
+.m_de img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: black solid 1px;
+}
+.m_container:hover{
+    background-color: rgba(0, 0, 0, 0.09);
+}
+.m_content{
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 10px;
+    margin-left: 10px;
 }
-.re{
-    position: relative;
-    
+.m_name{
+    font-size: 15px;
+    font-weight:500;
 }
-
+.m_detail{
+    font-size: 10px;
+}
+.m_time{
+    font-size: 10px;
+}
+.d_messaage:hover .d_view_all{
+    opacity: 1;
+}

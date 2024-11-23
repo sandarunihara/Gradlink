@@ -72,8 +72,19 @@
                                             <?php foreach ($data as $student): ?>
                                                 <?php
                                                 $status = $student['Action'];
-                                                $statusClass = ($status == 'Shortlist') ? 'Shortlist' : (($status == 'Reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'Shortlist') ? 'Shortlisted' : (($status == 'Reject') ? 'Rejected' : 'Pending');
+                                                $statusClass = match ($status) {
+                                                    'Shortlist' => 'Shortlist',
+                                                    'Reject' => 'Reject',
+                                                    'Recruit' => 'Recruit',
+                                                    default => 'Pending',
+                                                };
+                                                
+                                                $statusText = match ($status) {
+                                                    'Shortlist' => 'Shortlisted',
+                                                    'Reject' => 'Rejected',
+                                                    'Recruit' => 'Recruited',
+                                                    default => 'Pending',
+                                                };                                                
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>

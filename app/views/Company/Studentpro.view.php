@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    
+
                                 </div>
 
                             </form>
@@ -163,12 +163,11 @@
             <h2>Are you sure?</h2>
             <p>Do you want to Reject this Student?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="confirmAction('reject')">Yes</button>
+                <button class="updateyes-btn" onclick="confirmAction('Reject')">Yes</button>
                 <button class="updateno-btn" onclick="closeRejectModal()">No</button>
             </div>
         </div>
     </div>
-
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
@@ -250,27 +249,36 @@
     </script>
 
 
-    <script>
-        // Get the current URL
-        const currentUrl = window.location.href;
+<script>
+    const currentUrl = window.location.href;
 
-        // Check if the URL contains "ShortlistedStudents/studentprofile"
-        if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
-            // Show action section, hide nope section
-            document.getElementById("RecruitSection").style.display = "block";
-            document.getElementById("ShortlistSection").style.display = "none";
-        }
-        // Check if the URL contains "StudentsRequests/studentprofile"
-        else if (currentUrl.includes("StudentsRequests/studentprofile")) {
+    // Ensure PHP outputs a valid JSON value
+    const studentJobstatus = <?php echo json_encode($studentJobstatus, JSON_HEX_TAG); ?>;
+
+    // Check if the URL contains "ShortlistedStudents/studentprofile"
+    if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
+        // Show action section, hide nope section
+        document.getElementById("RecruitSection").style.display = "block";
+        document.getElementById("ShortlistSection").style.display = "none";
+    }
+    // Check if the URL contains "StudentsRequests/studentprofile"
+    else if (currentUrl.includes("StudentsRequests/studentprofile")) {
+        if (studentJobstatus === 'Pending') {
             // Show nope section, hide action section
             document.getElementById("RecruitSection").style.display = "none";
             document.getElementById("ShortlistSection").style.display = "block";
         } else {
-            // Default behavior: hide both sections (optional)
-            document.getElementById("ShortlistSection").style.display = "none";
+            // Show action section, hide nope section
             document.getElementById("RecruitSection").style.display = "none";
+            document.getElementById("ShortlistSection").style.display = "none";
         }
-    </script>
+    } else {
+        // Default behavior: hide both sections (optional)
+        document.getElementById("ShortlistSection").style.display = "none";
+        document.getElementById("RecruitSection").style.display = "none";
+    }
+</script>
+
 
 
 </body>
