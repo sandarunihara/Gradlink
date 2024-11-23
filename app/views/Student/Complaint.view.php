@@ -39,12 +39,12 @@
                     </div>
                 </div>
                 <!-- content of the page -->
-                <div class="c_main">
-                    <div class="c_search">
+                <div class="complaint-main">
+                    <div class="complaint-navbar">
                         <div class = "add-complaint">
                             <a href="<?=ROOT?>/Student/StudentComplaint/newComplaint"><button>+ Add New</button></a>
                         </div>
-                        <div class="c_filter-container">
+                        <div class="complaint-filter-container">
                             <i class="fas fa-filter"></i>
                             <select class="status-select">
                                 <option value="all">All</option>
@@ -53,12 +53,12 @@
                             </select> 
                         </div>
                     </div>
-                    <div class="c_t">
-                        <div class="c_table">
+                    <div class="compliant-table-div">
+                        <div class="complaint-table-background">
                             <!-- Table -->
                             <div>
                                 <table class="complaint-table">
-                                    <thead class="c_table_t">
+                                    <thead class="complaint-table-headings">
                                         <th>
                                             <h5>Date</h5>
                                         </th>
@@ -70,9 +70,6 @@
                                         <th>
                                             <h5>View</h5>
                                         </th>
-                                        <th>
-                                            <h5>Delete</h5>
-                                        </th>
                                     </thead>
                                     <tbody>
                                         <?php if (isset($data) && !empty($data)): ?>
@@ -82,7 +79,7 @@
                                                 $statusClass = ($status == 'reviewed') ? 'reviewed' : 'notReviewed';
                                                 $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
                                                 ?>
-                                                <tr class="c_row">
+                                                <tr class="complaint-row">
                                                     <td class="date"><?php echo htmlspecialchars($complaint -> Date); ?></td>
                                                     <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
                                                     <td>    
@@ -90,13 +87,12 @@
                                                             <span class="status"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href=""><button class="view-complaint-btn">View Complaint</button></a></td>
-                                                    <td><a href=""><button class="delete-complaint-btn">Delete Complaint</button></a></td>
+                                                    <td><a href="<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint->ComplaintId; ?>"><button class="view-complaint-btn">View Complaint</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="5">No Complaints found</td>
+                                                <td colspan="4">No Complaints found</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>
@@ -112,7 +108,7 @@
 
         function filterTable() {
             const selectedComplaints = document.querySelector('.status-select').value.toLowerCase().replace(/\s+/g, "");
-            const rows = document.querySelectorAll('.c_row');
+            const rows = document.querySelectorAll('.complaint-row');
 
             rows.forEach(row => {
                     const date = row.querySelector('.date').textContent;

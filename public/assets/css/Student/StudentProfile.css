@@ -1,0 +1,148 @@
+/* Profile Container */
+.pro_container {
+    height: 610px;
+    margin: 30px 50px 20px 0;
+    padding: 0 10px 20px;
+    border-radius: 10px;
+    background: #E9EDFF;
+    box-shadow: 0 0 5px #ccc;
+    overflow-y: auto;
+}
+
+.profile-edit {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 80%;
+}
+
+.profile-edit button {
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.profile-edit button:hover {
+    background-color: #0056b3;
+}
+
+.stu_details {
+    margin: 20px 0 0 30px;
+}
+
+.stu_pro {
+    display: flex;
+    gap: 80px;
+    margin-top: 10px;
+}
+
+.stu_pro img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #494949;
+}
+
+.stu_info {
+    margin-top: 10px;
+}
+
+.stu_info span {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.mail_no {
+    margin-top: -10px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.acc_link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.acc_link i {
+    font-size: 20px;
+}
+
+.acc_link a {
+    text-decoration: none;
+    color: #000;
+    transition: color 0.3s;
+}
+
+.acc_link a:hover {
+    color: #2f00ff;
+}
+
+.skills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.skills p {
+    margin: 0;
+    background-color: #FFFFFF;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid #D2D2D2;
+}
+
+.projects, .cetificates {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.projects p, .cetificates p {
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.cetificates a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
+.toggle-content {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s ease-out;
+}
+
+.show {
+    height: auto;
+}
+
+.topic1 {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.topic1 i {
+    transition: transform 0.3s;
+}
+
+.topic1 i.rotate {
+    transform: rotate(90deg);
+}

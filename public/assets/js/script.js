@@ -1,34 +1,77 @@
 
-function navigateToViewCompany() {
-    window.location.href = "/Gradlink/public/viewCompany";
+function navigateToViewCompany(company_id) {
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany?id=" + encodeURIComponent(company_id);
+
 }
 
 function navigateToAddCompany() {
-    window.location.href = "/Gradlink/public/addCompany";
+    window.location.href = "/Gradlink/public/pdc_coordinator/addCompany";
 }
 
-function navigateToViewPendingCompany() {
-    window.location.href = "/Gradlink/public/viewPendingCompany";
+function navigateToViewPendingCompany(company_id) {
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany?id=" + encodeURIComponent(company_id);
 }
 
 function navigateToBlockList() {
-    window.location.href = "/Gradlink/public/blockedCompanies";
+    window.location.href = "/Gradlink/public/pdc_coordinator/blockedCompanies";
 }
 
 function navigateToDashboardCompany() {
     // alert("hey");
-    window.location.href = "/Gradlink/public/dashboardCompany";
+    window.location.href = "/Gradlink/public/pdc_coordinator/dashboardCompany";
 }
 
 function naviagteToViewPendingAdvertisement() {
-    window.location.href = "/Gradlink/public/viewPendingAdvertisement";
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingAdvertisement";
 
 }
 
+function clickDeleteBtn(company_id) {
+    const userConfirmed = confirm("Are you sure you want to delete this Company?");
+    if (userConfirmed) {
+        window.location.href = "/Gradlink/public/pdc_coordinator/viewCompany/delete/" + company_id;
+    }
+}
 
+function clickDeleteBtninPending(company_id){
+    const userConfirmed = confirm("Are you sure you want to delete this Pending Company?");
+    if (userConfirmed) {
+        window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany/delete/" + company_id;
+    }
+}
+
+function enableEditing() {
+    // Hide Edit button and show Save button
+    document.getElementById('update-btn').style.display = 'none';
+    document.getElementById('save-btn').style.display = 'inline-block';
+
+    // Get all input and textarea elements
+    const inputs = document.querySelectorAll('input, textarea');
+
+    // Remove readonly attribute from all inputs and textareas
+    inputs.forEach(input => {
+        input.removeAttribute('readonly');
+    });
+}
+
+
+function saveForm() {
+    // Hide Save button and show Edit button
+    document.getElementById('save-btn').style.display = 'none';
+    document.getElementById('update-btn').style.display = 'inline-block';
+
+    // Get all input and textarea elements
+    const inputs = document.querySelectorAll('input, textarea');
+
+    // Add readonly attribute back to all inputs and textareas
+    inputs.forEach(input => {
+        input.setAttribute('readonly', true);
+    });
+}
 //Advertisement Dashboard Pending ad status
 
-document.getElementById("status").addEventListener("change", function() {
+
+document.getElementById("status").addEventListener("change", function () {
     var statusDropdown = this;
     var selectedValue = statusDropdown.value;
 

@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar")  ?>
+            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -21,18 +21,7 @@
                     <div>
                         <h1>Students Requests</h1>
                     </div>
-                    <div class="d_pro">
-                        <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div>
-                            <a href='../Profile/dashboard'>
-                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
-                                <p><span>WSO2</span>Company</p>
-                            </a>
-                        </div>
-                    </div>
+                    <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="sr_main">
                     <div class="sr_search">
@@ -95,7 +84,7 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -112,6 +101,11 @@
             </div>
         </div>
     </div>
+
+    
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
         document.getElementById('searchInput').addEventListener('input', filterTable);

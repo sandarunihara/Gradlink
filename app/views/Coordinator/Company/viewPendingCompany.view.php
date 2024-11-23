@@ -36,40 +36,47 @@
             <?php $this->renderComponent("companyTabs") ?>
 
             <section class="company-info">
-                <form class="company-form">
+            <?php if (!empty($companyData)): ?>
+                <form class="company-form" id="companyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewPendingCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" placeholder="Company name" readonly>
+                        <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>"  readonly>
                     </div>
                     <div class="form-group">
                         <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" placeholder="Email" readonly>
+                        <input type="email" id="email-address" name="email" value="<?= htmlspecialchars($companyData[0]['email'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" placeholder="John Doe" readonly>
+                        <input type="text" id="contact-person" name="contact_person" value="<?= htmlspecialchars($companyData[0]['contact_person'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" placeholder="0771234567" readonly>
+                        <input type="text" id="contact-number" name="contact_number" value="<?= htmlspecialchars($companyData[0]['contact_number'] ?? '') ?>" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <input type="text" id="password" required >
-                            <button class="btn">Generate</button>
-                        </div>
-                    </div>
+                        <label for="button">
+                    <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
+                    </label>    
+                </div>
+
                 </form>
+                <?php else: ?>
+                    <p>No company data available.</p>
+                <?php endif; ?>
+
                 <div class="row action-buttons" >
-                <button class="btn update-btn">Update</button>
-                <button class="btn delete-btn">Delete</button>
+                        <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
+                <!-- <button class="btn update-btn">Update</button> -->
+                <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtninPending('<?= $companyData[0]['company_id'] ?>');" >Delete</button>
                 <button class="btn email-btn"><b>Send An Email</b></button>
                 </div>
             </section>
         </main>
     </div>
+    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+
 </body>
 
 </html>

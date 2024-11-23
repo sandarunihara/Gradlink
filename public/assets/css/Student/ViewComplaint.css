@@ -1,0 +1,66 @@
+.view-complaint-main{
+    background: #E9EDFF;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.backreq{
+    width: fit-content;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    transition: 0.3s;
+}
+.backreq:hover{
+    color: #ff0000;
+}
+.complaint-container{
+    display: flex;
+    gap: 20px;
+}
+.complaint-card{
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+.complaint-card h2{
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+.complaint-card p{
+    font-size: 16px;
+    color: #000;
+}
+.complaint-card span{
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+}
+.complaint-card .complaint-status{
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.notReviewed{
+    background: #FF0000;
+}
+.reviewed{
+    background: #00FF00;
+}
+.delete-complaint-button{
+    background: #FF0000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}

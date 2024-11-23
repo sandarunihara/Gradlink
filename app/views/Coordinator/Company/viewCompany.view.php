@@ -14,12 +14,12 @@
 
 <body>
     <div class="container">
-    <?php $this->renderComponent("coordinatorDashboard")  ?>
-        
+        <?php $this->renderComponent("coordinatorDashboard")  ?>
+
         <main class="content">
             <header class="header">
-            <div class="company-title">
-                    <h1>CodeGen</h1>
+                <div class="company-title">
+                    <h1 name="company_name"><?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?></h1>
                     <button class="edit-btn">&#9998;</button>
                 </div>
 
@@ -37,49 +37,79 @@
             <?php $this->renderComponent("companyTabs") ?>
 
             <section class="company-info">
-                <form class="company-form">
-                    <div class="form-group">
-                        <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" placeholder="CodeGen" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" placeholder="info@codegen.com" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" placeholder="0771234567" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea id="address" placeholder="No, Lane, City, District" readonly></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" placeholder="Company Description" readonly></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" placeholder="John Doe" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="website">Website</label>
-                        <input type="text" id="website" placeholder="www.codegen.com" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="linkedin">LinkedIn</label>
-                        <input type="text" id="linkedin" placeholder="linkedin.com/company/codegen" readonly>
-                    </div>
-
-                </form>
-                <div class="button-line">
+                <?php if (!empty($companyData)): ?>
+                    <script>
+                        const companyData = <?= json_encode($companyData, JSON_PRETTY_PRINT | JSON_HEX_TAG); ?>;
+                        console.log(companyData);
+                    </script>
+                    <!-- <?php
+                            echo "<pre>";
+                            print_r($companyData);
+                            echo "</pre>";
+                            ?> -->
+                    <form class="company-form" id="companyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
+                        <div class="form-group">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>" readonly>
+                            <?php if (isset($errors['company_name'])): ?>
+                                <div class="text-danger"><?= htmlspecialchars($errors['company_name']) ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="email-address">Email Address</label>
+                            <input type="email" id="email-address" name="email" value="<?= htmlspecialchars($companyData[0]['email'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-number">Contact Number</label>
+                            <input type="text" id="contact-number" name="contact_number" value="<?= htmlspecialchars($companyData[0]['contact_number'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address No</label>
+                            <input type="text" id="address_no" name="address_no" value="<?= htmlspecialchars($companyData[0]['address_no'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address Lane</label>
+                            <input type="text" id="address_lane" name="address_lane" value="<?= htmlspecialchars($companyData[0]['address_lane'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address City</label>
+                            <input type="text" id="address_city" name="address_city" value="<?= htmlspecialchars($companyData[0]['address_city'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address District</label>
+                            <input type="text" id="address_district" name="address_district" value="<?= htmlspecialchars($companyData[0]['address_district'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" readonly><?= htmlspecialchars($companyData[0]['description']) ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-person">Contact Person</label>
+                            <input type="text" id="contact-person" name="contact_person" value="<?= htmlspecialchars($companyData[0]['contact_person']) ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" value="<?= htmlspecialchars($companyData[0]['website']) ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn</label>
+                            <input type="text" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly>
+                        </div>
+                        <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
+                    </form>
+                    <div class="button-line">
                     <button class="view-profile-btn">View Profile</button>
                     <div class="action-buttons">
                         <button class="btn block-btn">Block</button>
-                        <button class="btn delete-btn">Delete</button>
-                        <button class="btn update-btn">Update</button>
+                        <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtn('<?= $companyData[0]['company_id'] ?>');" >Delete</button>
+                        <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
+                        
                     </div>
                 </div>
+                <?php else: ?>
+                    <p>No company data available.</p>
+                <?php endif; ?>
+                
             </section>
         </main>
     </div>

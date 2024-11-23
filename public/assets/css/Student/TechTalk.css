@@ -1,0 +1,45 @@
+.techtalk-main{
+    background: #E9EDFF;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.compliant-table-div{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.complaint-table-background{
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
+    border-radius: 10px;
+}
+.complaint-table{
+    width: 100%;
+    border-spacing: 0 5px;
+}
+.complaint-table-headings{
+    width: 100%;
+}
+.complaint-table th, .complaint-table td {
+    text-align: center;
+}
+.complaint-table th {
+    margin: 0;
+    padding: 0;
+    background-color: #d7d7d7;
+    font-weight: 600;
+    color: #000000;
+}
+.complaint-table tbody {
+    display: block;
+    max-height: 340px; /* Adjust this value as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+.complaint-table thead, .complaint-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}

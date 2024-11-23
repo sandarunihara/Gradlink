@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar")  ?>
+            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -21,21 +21,10 @@
                     <div>
                         <h1>Students Profile</h1>
                     </div>
-                    <div class="d_pro">
-                        <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div>
-                            <a href='../Profile/dashboard'>
-                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="logo" />
-                                <p><span>WSO2</span>Company</p>
-                            </a>
-                        </div>
-                    </div>
+                    <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="pro_container">
-                    <a href="../dashboard" class="backreq">
+                    <a href="<?php echo $url ?>" class="backreq">
                         <i class="fas fa-chevron-left"></i>
                         <h3>back</h3>
                     </a>
@@ -131,6 +120,9 @@
                                         <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
                                     </div>
                                 </div>
+                                <div>
+                                    
+                                </div>
 
                             </form>
 
@@ -141,14 +133,13 @@
 
         </div>
     </div>
-
     <!-- Shortlist Confirmation Modal -->
     <div id="Shortlist-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
             <p>Do you want to Shortlist this Student?</p>
             <div class="updatemodal-buttons">
-                <button type="submit" name="shortlist" value="shortlist" class="updateyes-btn" onclick="confirmAction('shortlist')">Yes</button>
+                <button type="submit" name="shortlist" value="shortlist" class="updateyes-btn" onclick="confirmAction('Shortlist')">Yes</button>
                 <button class="updateno-btn" onclick="closeShortlistConfirmModal()">No</button>
             </div>
         </div>
@@ -160,7 +151,7 @@
             <h2>Are you sure?</h2>
             <p>Do you want to Recruit this Student?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="confirmAction('recruit')">Yes</button>
+                <button class="updateyes-btn" onclick="confirmAction('Recruit')">Yes</button>
                 <button class="updateno-btn" onclick="closeRecruitConfirmModal()">No</button>
             </div>
         </div>
@@ -178,9 +169,19 @@
         </div>
     </div>
 
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
 
 
     <script>
+        <?php if (!empty($error)) : ?>
+            errorToast("<?php echo addslashes($error); ?>");
+        <?php endif; ?>
+        <?php if (!empty($success)) : ?>
+            successToast("<?php echo addslashes($success); ?>");
+        <?php endif; ?>
+
         function toggleSection(sectionId, iconId) {
             const section = document.getElementById(sectionId);
             const icon = document.getElementById(iconId);

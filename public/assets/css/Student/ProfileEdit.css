@@ -1,0 +1,21 @@
+.p-main{
+    background: #E9EDFF;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+
+
+.backreq{
+    width: fit-content;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    transition: 0.3s;
+}
+.backreq:hover{
+    color: #ff0000;
+}
