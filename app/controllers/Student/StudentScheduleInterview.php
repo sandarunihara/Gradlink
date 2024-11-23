@@ -2,7 +2,7 @@
 
 class StudentScheduleInterview{
     use Controller;
-    public function dashboard(){
+    public function Interview(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
 

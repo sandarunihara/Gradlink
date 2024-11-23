@@ -3,89 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Fix.css"> 
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Studentsidebar.css"> 
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Dashboard.css"> 
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/dashboard.css"> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <body>
-    <?php
-        $StudentId = $data['Student'] -> StudentId;
-        $Name = $data['Student'] -> Name;
-        $Email = $data['Student'] -> Email;
-        $Status = $data['Student'] -> Status;
-        $numOfInterviews = $data['numOfInterviews'];
-        $numOfCompanies = $data['numOfCompanies'];
-    ?>
     <div class="side">
-            <?php $this->renderComponent("studentsidebar")  ?>
+        <?php $this->renderComponent("studentSidebar")  ?>
     </div>
-    <div id="content">
-            <div class="main">
-                <div class="d">
-                    <div >
-                        <h1>DashBoard</h1>
-                    </div>
-                    <div class="d_pro">
-                        <div class="d_profile">
-                            <i class="fas fa-calendar-alt"></i>
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div>
-                            <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($Name)?>.jpg" height ="400px" weight="400px"class="logo" />
-                            <p><span><?php echo($Name)?></span>Student</p>
-                            </a>
-                        </div>
-                    </div>
+    <div class="content">
+        <div class="header">
+            <?php $this->renderComponent("studentHeader")  ?>
+        </div>
+        <div class="page-header">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Welcome, <?php echo $_SESSION['USER']->Name?></h1>
+            </div>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Current Applications</h3>
+                    <p>You have 3 active applications.</p>
+                    <button><a href="<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies">View Applications</a></button>
                 </div>
-                <!-- content of the page -->
-                <div class="dashboard-main">
-                    <div>
-                        <h2><p id="greeting"></p><?php echo($Name)?></h2>
-                    </div>
-                    <div class="dashboard-allsummery">
-                        <div class="stats">
-                            <div class="stat-card">
-                                <a href="<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies">
-                                    <h2>Applied Comapanies</h2>
-                                    <p><?php echo $numOfCompanies?></p>
-                                </a>
-                            </div>
-                            <div class="stat-card">
-                                <a href="<?=ROOT?>/Student/StudentScheduleInterview/dashboard">
-                                    <h2>Schedule Interviews</h2>
-                                    <p><?php echo $numOfInterviews?></p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="profile-summery">
-                        <h2>Status: <?php echo($Status) ?></h2>
-                        <h2>Email: <?php echo($Email) ?></h2>
-                        <h2>Registration Number: <?php echo($StudentId) ?></h2>
-                        <h2>Round: 1 Round</h2>
-                    </div>
+                <div class="card">
+                    <h3>Upcoming Interviews</h3>
+                    <p>Your next interview is on 24th Nov.</p>
+                    <button><a href="<?=ROOT?>/Student/StudentScheduleInterview/Interview">View Interview</a></button>
                 </div>
             </div>
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <ul>
+                    <li>Applied for Software Developer at XYZ Corp</li>
+                    <li>Updated your Resume</li>
+                    <li>Scheduled an interview with ABC Ltd.</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
-<script>
-    function greeting(){
-        const currentHour = new Date().getHours();
-        let greetingMessage;
-        if (currentHour < 12){
-            greetingMessage = "Good Morning";
-        } else if (currentHour < 18){
-            greetingMessage = "Good Afternoon";
-        } else {
-            greetingMessage = "Good Evening";
-        }
-        return greetingMessage;
-    }
-    document.getElementById("greeting").textContent = greeting();
-</script>
