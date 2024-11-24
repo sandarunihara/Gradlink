@@ -66,7 +66,7 @@ class RecruitStudents
         $studentad_data=$updatemodel->find(['StudentId'=>$StudentId,'advertisementId'=>$advertisementId],'studentadvertisement');
         $studentJobstatus=$studentad_data[0]->Jobstatus;
 
-        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard','studentJobstatus'=>$studentJobstatus]);
+        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/RecruitStudents/dashboard','studentJobstatus'=>$studentJobstatus]);
 
     }
 }

@@ -70,4 +70,4 @@
             self::closeConnection();
         }
     }
-
+    

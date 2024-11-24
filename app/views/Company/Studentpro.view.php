@@ -12,9 +12,6 @@
 
 <body class="body">
     <div class="dashboard">
-        <div class="side">
-            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
-        </div>
         <div id="content">
             <div class="main">
                 <div class="d">

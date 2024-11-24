@@ -33,13 +33,13 @@
     margin-right: 20px;
 }
 .stat-card {
-    background: linear-gradient(135deg, #FFC371, #FF5F6D);
-    color: white;
+    background: linear-gradient(135deg, #bfdbfe, #4297ff);
+    /* background-color: #70affd; */
+    color: black;
     width: 100%;
     border-left: black solid 8px;
     border-radius: 10px;
     padding: 40px;
-    color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease,border-left 0.3s ease;
     cursor: pointer;
