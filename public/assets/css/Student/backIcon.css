@@ -1,0 +1,25 @@
+.backreq {
+    position: absolute; /* Position the "Back" icon relative to .main-content */
+    top: 10px; /* Space from the top of .main-content */
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-family: Arial, sans-serif;
+    transition: color 0.3s ease;
+    font-size: 16px;
+}
+.back-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.backreq:hover {
+    color: #ff6347; /* Tomato color for hover */
+}
+.backreq:hover .back-icon {
+    transform: translateX(-5px); /* Add a smooth slide animation */
+    color: #ff6347; /* Match the hover color */
+}

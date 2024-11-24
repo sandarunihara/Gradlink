@@ -1,3 +1,8 @@
+.main-content{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
 .student-profile {
     background-color: #fff;
     width: 80%;

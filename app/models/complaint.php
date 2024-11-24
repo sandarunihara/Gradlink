@@ -14,6 +14,9 @@
             'Description',
             'Status',
             'CompanyId',
-            'StudentId'
+            'StudentId',
+            'CreatedAt',
         ];
+
+
     }

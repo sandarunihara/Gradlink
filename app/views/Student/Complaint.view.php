@@ -19,9 +19,6 @@
         <div class="header">
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
-        <div class="page-header">
-            <h1>Complaint</h1>
-        </div>
         <div class="main-content">
             <div class="complaint-navbar">
                 <div class="complaint-filter-container">
@@ -62,10 +59,13 @@
                                         <tr class="complaint-row">
                                             <td class="date"><?php echo htmlspecialchars($complaint -> Date); ?></td>
                                             <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
-                                            <td>    
+                                            <td>
                                                 <div class="<?php echo $statusClass; ?>">
-                                                    <span class="status"><?php echo $statusText; ?></span>
+                                                    <a href="<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint -> ComplaintId?>">    
+                                                        <span class="status"><?php echo $statusText; ?></span>
+                                                    </a>
                                                 </div>
+                                                </button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
