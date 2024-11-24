@@ -22,8 +22,8 @@
     margin-right: 20px;
 }
 .stat-card {
-    background: linear-gradient(135deg, #FFC371, #fd808a);
-    color: white;
+    background: linear-gradient(135deg, #bfdbfe, #4297ff);
+    color: black;
     border-left: black solid 8px;
     border-radius: 10px;
     padding-top: 20px;
