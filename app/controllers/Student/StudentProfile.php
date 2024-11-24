@@ -9,15 +9,18 @@ class StudentProfile{
         $skill = new student_skill;
         $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+        
+        //show($data['Skills']);
         $this-> view('Student/Profile',$data);
     }
     public function profileEdit(){        
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-        $student = new student;
-        $data['Student'] = $student -> first($arr);
         
-
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST['Github']);
             $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');

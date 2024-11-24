@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/profile.css"> 
-    <link real="stylesheet" href="<?=ROOT?>/assets/css/Student/button.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -40,9 +39,9 @@
 
                     <!-- Student Info (Email, ID, Contact) -->
                     <div class="student-profile-info-2">
-                        <p>Registration Number: <span>2022/CS/179</span></p>
-                        <p>Email: <span>Sandeepakumar@gmial.com</span></p>
-                        <p>Contact: <span>0710102456</span></p>
+                        <p><span>2022/CS/179</span></p>
+                        <p><span>Sandeepakumar@gmial.com</span></p>
+                        <p><span>0710102456</span></p>
                     </div>
 
                     <!-- Links (LinkedIn, GitHub) -->
@@ -80,13 +79,12 @@
                         </a>
                     </div>
                     <div class="student-edit">
-                        <a href="<?=ROOT?>/Student/StudentProfile/profileEdit">
-                            <button>Update Profile</button>
-                        </a>
+                        <a href="<?=ROOT?>/Student/StudentProfile/ProfileEdit"><button>Update Profile</button></a>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>   
     </div>
 </body>
 </html>
+
