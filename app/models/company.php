@@ -145,6 +145,22 @@ class company
 		return $result;
 	}
 
+	public function findEmailById($companyId)
+	{
+		try {
+			$query = "SELECT Email FROM company WHERE CompanyId = :companyId";
+
+			$result = $this->query($query, ['companyId' => $companyId]);
+
+			return $result[0]->Email ?? null;
+		} catch (Exception $e) {
+			// Log the error for debugging purposes
+			error_log("Error fetching email by company ID: " . $e->getMessage());
+			return false;
+		}
+	}
+
+
 	public function findAllPending(): array|bool
 	{
 		try {

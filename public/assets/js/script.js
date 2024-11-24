@@ -40,6 +40,10 @@ function clickDeleteBtninPending(company_id){
     }
 }
 
+function SendAnEmail(company_id){
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingCompany/emailSend?id=" + encodeURIComponent(company_id);
+}
+
 function enableEditing() {
     // Hide Edit button and show Save button
     document.getElementById('update-btn').style.display = 'none';

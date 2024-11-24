@@ -70,7 +70,7 @@
                         <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
                 <!-- <button class="btn update-btn">Update</button> -->
                 <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtninPending('<?= $companyData[0]['company_id'] ?>');" >Delete</button>
-                <button class="btn email-btn"><b>Send An Email</b></button>
+                <button class="btn email-btn" onclick="SendAnEmail('<?= $companyData[0]['company_id'] ?>');"><b>Send An Email</b></button>
                 </div>
             </section>
         </main>
