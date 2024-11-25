@@ -40,7 +40,7 @@ class Companydash
                         $studentIds[] = $student->StudentId;
                     }
                 } else {
-                    $studentIds = [];
+                    $ss = [];
                 }
                 $shortliststudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Shortlist'], 'studentadvertisement');
                 if (!empty($shortliststudent)) {
@@ -48,7 +48,7 @@ class Companydash
                         $shortliststudentIds[] = $student->StudentId;
                     }
                 } else {
-                    $shortliststudentIds = [];
+                    $ss = [];
                 }
                 $data = $model->findreq($id);
                 if (!empty($data)) {
@@ -67,7 +67,7 @@ class Companydash
                         ];
                     }
                 } else {
-                    $reqdata = [];
+                    $ss = [];
                 }
             }
             $numOfapplyStudents = count($studentIds);

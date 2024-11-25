@@ -28,7 +28,9 @@ class RecruitStudents
         foreach ($advertisementIds as $id) {
             $data = $model->findreq($id);
             if (empty($data)) {
-                $this->view('Company/RecruitStudents', ['data' => []]);
+                $_SESSION['hasShortlisted'] = $hasShortlisted;
+                $_SESSION['hasRecruited'] = $hasRecruited;
+                $this->view('Company/RecruitStudents', ['data' => $reqdata]);
                 exit();
             }
             foreach ($data as $item) {
@@ -57,16 +59,16 @@ class RecruitStudents
         $this->view('Company/RecruitStudents', ['data' => $reqdata]);
     }
 
-    public function studentprofile($advertisementId,$StudentId){
+    public function studentprofile($advertisementId, $StudentId)
+    {
         // print_r($StudentId);
-        $model=new C_Student;
-        $data=$model->findbyId($StudentId);
+        $model = new C_Student;
+        $data = $model->findbyId($StudentId);
         // print_r($data);
         $updatemodel = new C_Dashboard;
-        $studentad_data=$updatemodel->find(['StudentId'=>$StudentId,'advertisementId'=>$advertisementId],'studentadvertisement');
-        $studentJobstatus=$studentad_data[0]->Jobstatus;
+        $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
+        $studentJobstatus = $studentad_data[0]->Jobstatus;
 
-        $this-> view('Company/Studentpro' , ['data' => $data,'url'=>'http://localhost/Gradlink/public/company/RecruitStudents/dashboard','studentJobstatus'=>$studentJobstatus]);
-
+        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/RecruitStudents/dashboard', 'studentJobstatus' => $studentJobstatus]);
     }
 }

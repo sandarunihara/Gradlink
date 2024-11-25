@@ -31,7 +31,7 @@ class C_Advertisement{
             return true;
         }
 
-        return false;
+        return $this->errors;
     }
 
     public function find($data) {
