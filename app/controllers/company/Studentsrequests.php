@@ -39,15 +39,16 @@ class StudentsRequests
                     $hasRecruited = true;
                 }
 
-
-                $reqdata[] = [
-                    "StudentId" => $item->StudentId,
-                    'AdvertisementId' => $item->advertisementId,
-                    'Student Name' => $item->Name,
-                    'Student Degree' => $item->DegreeName,
-                    'Position' => $item->position,
-                    'Action' => $item->Jobstatus
-                ];
+                if($item->Companyrowstatus != 0){
+                    $reqdata[] = [
+                        "StudentId" => $item->StudentId,
+                        'AdvertisementId' => $item->advertisementId,
+                        'Student Name' => $item->Name,
+                        'Student Degree' => $item->DegreeName,
+                        'Position' => $item->position,
+                        'Action' => $item->Jobstatus
+                    ];
+                }
             }
         }
         // Store the flags in session
@@ -56,6 +57,21 @@ class StudentsRequests
         $this->view('Company/StudentsRequests', ['data' => $reqdata, 'hasShortlisted' => $hasShortlisted, 'hasRecruited' => $hasRecruited]);
     }
 
+    // public function deletedatarow($advertisementId, $StudentId)
+    // {
+    //     $model = new C_Dashboard;
+    //     $result=$model->update($StudentId, $advertisementId, ['Companyrowstatus' => 0]);
+    //     if ($result['status']) {
+    //         // Redirect to the same page after successful submission
+    //         $success = "Student Request deleted successfully.";
+    //         header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
+    //         exit;
+    //     } else {
+    //         $error = "There was an issue deleting the Student Request.";
+    //         $this->view('Company/StudentsRequests', ['error' => $error,'data' => $result]);
+    //         exit;
+    //     }
+    // }
 
     public function studentprofile($advertisementId, $StudentId)
     {
