@@ -52,7 +52,6 @@ class StudentsRequests
                 // }
             }
         }
-
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
