@@ -40,7 +40,6 @@ class StudentsRequests
                 }
 
 
-                // if ($item->Jobstatus !== 'Shortlist' && $item->Jobstatus !== 'Recruit') {
                 $reqdata[] = [
                     "StudentId" => $item->StudentId,
                     'AdvertisementId' => $item->advertisementId,
@@ -49,25 +48,18 @@ class StudentsRequests
                     'Position' => $item->position,
                     'Action' => $item->Jobstatus
                 ];
-                // }
             }
         }
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
-        // Pass the session data to the sidebar component
-        // $this->renderComponent("companysidebar", [
-        //     'hasShortlisted' => $hasShortlisted,
-        //     'hasRecruited' => $hasRecruited
-        // ]);
-
         $this->view('Company/StudentsRequests', ['data' => $reqdata, 'hasShortlisted' => $hasShortlisted, 'hasRecruited' => $hasRecruited]);
     }
 
 
     public function studentprofile($advertisementId, $StudentId)
     {
-        // print_r($StudentId);
+        
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
 
@@ -76,7 +68,6 @@ class StudentsRequests
         $studentJobstatus = $studentad_data[0]->Jobstatus;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
-            // print_r($_POST); // This should print the form POST data
             $updatedata = [
                 'Jobstatus' => $_POST['submit_action']
             ];
@@ -84,8 +75,6 @@ class StudentsRequests
             if ($result['status']) {
                 // Redirect to the same page after successful submission
                 $success = "Student Job Status updated successfully.";
-                // $_SESSION['hasShortlisted']=true;
-                // $this-> view('Company/Studentpro' , ['data' => $data,'success'=>$success]);
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
                 exit;
             } else {
