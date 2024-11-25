@@ -178,25 +178,32 @@
             successToast("<?php echo addslashes($success); ?>");
         <?php endif; ?>
 
-        function toggleSection(sectionId, iconId) {
-            const section = document.getElementById(sectionId);
-            const icon = document.getElementById(iconId);
+        // function toggleSection(sectionId, iconId) {
+        //     const section = document.getElementById(sectionId);
+        //     const icon = document.getElementById(iconId);
 
-            if (section.classList.contains('show')) {
-                // If open, collapse it
-                section.style.height = `${section.scrollHeight}px`; // Set to full height initially
-                window.getComputedStyle(section).height; // Trigger a reflow, flushing the CSS changes
-                section.style.height = '0'; // Set back to 0 to animate closing
-                section.classList.remove('show');
-            } else {
-                // If closed, expand it
-                section.style.height = `${section.scrollHeight}px`; // Set to full height to expand
-                section.classList.add('show');
-            }
+        //     if (section.classList.contains('show')) {
+        //         // Collapse section
+        //         section.style.height = `${section.scrollHeight}px`; // Set to full height initially
+        //         window.getComputedStyle(section).height; // Trigger a reflow, flushing the CSS changes
+        //         section.style.height = '0'; // Set height to 0 to animate closing
+        //         section.classList.remove('show');
+        //     } else {
+        //         // Expand section
+        //         section.style.height = `${section.scrollHeight}px`; // Set to full height to expand
+        //         section.classList.add('show');
+        //         section.addEventListener('transitionend', () => {
+        //             // Remove inline height after animation completes
+        //             section.style.height = 'auto';
+        //         }, {
+        //             once: true
+        //         });
+        //     }
 
-            // Toggle icon rotation
-            icon.classList.toggle('rotate');
-        }
+        //     // Toggle icon rotation
+        //     icon.classList.toggle('rotate');
+        // }
+
 
         // To open and close the modals and confirm actions
         function openShortlistConfirmModal(event) {
@@ -246,35 +253,35 @@
     </script>
 
 
-<script>
-    const currentUrl = window.location.href;
+    <script>
+        const currentUrl = window.location.href;
 
-    // Ensure PHP outputs a valid JSON value
-    const studentJobstatus = <?php echo json_encode($studentJobstatus, JSON_HEX_TAG); ?>;
+        // Ensure PHP outputs a valid JSON value
+        const studentJobstatus = <?php echo json_encode($studentJobstatus, JSON_HEX_TAG); ?>;
 
-    // Check if the URL contains "ShortlistedStudents/studentprofile"
-    if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
-        // Show action section, hide nope section
-        document.getElementById("RecruitSection").style.display = "block";
-        document.getElementById("ShortlistSection").style.display = "none";
-    }
-    // Check if the URL contains "StudentsRequests/studentprofile"
-    else if (currentUrl.includes("StudentsRequests/studentprofile")) {
-        if (studentJobstatus === 'Pending') {
-            // Show nope section, hide action section
-            document.getElementById("RecruitSection").style.display = "none";
-            document.getElementById("ShortlistSection").style.display = "block";
-        } else {
+        // Check if the URL contains "ShortlistedStudents/studentprofile"
+        if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
             // Show action section, hide nope section
-            document.getElementById("RecruitSection").style.display = "none";
+            document.getElementById("RecruitSection").style.display = "block";
             document.getElementById("ShortlistSection").style.display = "none";
         }
-    } else {
-        // Default behavior: hide both sections (optional)
-        document.getElementById("ShortlistSection").style.display = "none";
-        document.getElementById("RecruitSection").style.display = "none";
-    }
-</script>
+        // Check if the URL contains "StudentsRequests/studentprofile"
+        else if (currentUrl.includes("StudentsRequests/studentprofile")) {
+            if (studentJobstatus === 'Pending') {
+                // Show nope section, hide action section
+                document.getElementById("RecruitSection").style.display = "none";
+                document.getElementById("ShortlistSection").style.display = "block";
+            } else {
+                // Show action section, hide nope section
+                document.getElementById("RecruitSection").style.display = "none";
+                document.getElementById("ShortlistSection").style.display = "none";
+            }
+        } else {
+            // Default behavior: hide both sections (optional)
+            document.getElementById("ShortlistSection").style.display = "none";
+            document.getElementById("RecruitSection").style.display = "none";
+        }
+    </script>
 
 
 
