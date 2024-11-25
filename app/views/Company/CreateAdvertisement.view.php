@@ -74,10 +74,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="addimg">
-                            <h4>Add Image:</h4>
-                            <input type="file" id="image" name="image" required />
-                        </div> -->
                         <div class="addimg">
                             <h4>Add Image:</h4>
                             <label for="image" class="custom-file-upload">
