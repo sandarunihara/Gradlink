@@ -61,16 +61,13 @@ class ShortlistedStudents
 
     public function studentprofile($advertisementId, $StudentId)
     {
-        // print_r($StudentId);
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
-        // print_r($data);
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         $studentJobstatus = $studentad_data[0]->Jobstatus;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
-            // print_r($_POST['submit_action']);
             $updatedata = [
                 'Jobstatus' => $_POST['submit_action']
             ];
@@ -82,7 +79,6 @@ class ShortlistedStudents
             if ($result['status']) {
                 // Redirect to the same page after successful submission
                 $success = "Student Job Status updated successfully.";
-                // $this-> view('Company/Studentpro' , ['data' => $data,'success'=>$success]);
                 header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
                 exit;
             } else {

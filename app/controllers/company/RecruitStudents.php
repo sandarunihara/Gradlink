@@ -40,7 +40,6 @@ class RecruitStudents
                 if ($item->Jobstatus === 'Recruit') {
                     $hasRecruited = true;
                 }
-                // || $item->Jobstatus == 'Recruit'
                 if ($item->Jobstatus == 'Recruit') {
                     $reqdata[] = [
                         "StudentId" => $item->StudentId,
@@ -61,10 +60,8 @@ class RecruitStudents
 
     public function studentprofile($advertisementId, $StudentId)
     {
-        // print_r($StudentId);
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
-        // print_r($data);
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         $studentJobstatus = $studentad_data[0]->Jobstatus;

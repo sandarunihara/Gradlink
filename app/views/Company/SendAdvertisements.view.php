@@ -252,7 +252,6 @@
             document.getElementById('deadline').value = deadline;
             document.getElementById('numOfInterns').value = numOfInterns;
             document.getElementById('workingMode').value = workingMode;
-            // document.getElementById('file-name').value = image;
 
             // Show the file name when a file is selected
             document.getElementById('image').addEventListener('change', function() {
