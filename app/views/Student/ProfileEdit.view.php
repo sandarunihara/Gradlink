@@ -19,9 +19,6 @@
         <div class="header">
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
-        <div class="page-header">
-            <h1>Profile Edit</h1>
-        </div>
         <div class="main-content">
             <!-- Student Profile Update Box -->
             <div class="update-box">

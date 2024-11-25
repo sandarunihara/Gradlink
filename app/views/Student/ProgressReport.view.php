@@ -19,13 +19,10 @@
         <div class="header">
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
-        <div class="page-header">
-            <h1>Progress Report</h1>
-        </div>
         <div class="main-content">
             <div class="progress-report-navbar">
                 <div class="add-progress-report">
-                    <a href="#"><button>+ Add New</button></a>
+                    <a href="<?=ROOT?>/Student/StudentProgress/newReport"><button>+ Add New</button></a>
                 </div>
             </div>
 

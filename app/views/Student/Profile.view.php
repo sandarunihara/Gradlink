@@ -19,9 +19,6 @@
         <div class="header">
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
-        <div class="page-header">
-            <h1>Profile</h1>
-        </div>
         <div class="main-content">
             <div class="student-profile">
                 <!-- Profile Header -->

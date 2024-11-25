@@ -66,6 +66,6 @@ class StudentComplaint{
     public function deleteComplaint($complaintId){
         $complaint = new complaint;
         $result = $complaint -> delete($complaintId, 'ComplaintId');
-        echo $result. 'but complaint is deleted';
+        echo $result;
     }
 }
