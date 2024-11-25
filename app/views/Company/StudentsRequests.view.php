@@ -106,7 +106,7 @@
                                                             <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
                                                                 <button class="view-profile-btn-with-remove">View Profile</button>
                                                             </a>
-                                                            <a class="removebtn" href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
+                                                            <a class="removebtn" href="../StudentsRequests/deletedatarow/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
                                                                 <button class="view-profile-btn-remove">Remove Data</button>
                                                             </a>
                                                             <!-- <i class="removebtn fas fa-trash-alt fa-trash-alty"></i> -->
