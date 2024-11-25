@@ -165,7 +165,7 @@
             document.getElementById('file-name').textContent = fileName;
         });
 
-        // Get the modal popup
+        // Get the modal 
 
         function validateAndShowModal(event) {
             event.preventDefault();
