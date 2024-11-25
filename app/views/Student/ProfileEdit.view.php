@@ -3,64 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?=ROOT ?>/assets/css/Student/Fix.css">
-    <link rel="stylesheet" href="<?=ROOT ?>/assets/css/Student/Studentsidebar.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Profile Edit</title>
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/profileEdit.css"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?=ROOT ?>/assets/css/Student/ProfileEdit.css">
-
 </head>
 <body>
-    <?php
-        $Name = $data['Student'] -> Name;
-        $Github = $data['Student'] -> Github;
-        $Linkedin = $data['Student'] -> Linkedin;
-        $ShortDesc = $data['Student'] -> ShortDesc;
-    ?>
     <div class="side">
-        <?php $this->renderComponent("studentsidebar")  ?>
+        <?php $this->renderComponent("studentSidebar")  ?>
     </div>
-    <div id="content">
-        <div class="main">
-            <div class="d">
-                <div >
-                    <h1>Profile</h1>
-                </div>
-                <div class="d_pro">
-                    <div class="d_profile">
-                        <i class="fas fa-calendar-alt"></i>
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <div>
-                        <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($Name)?>.jpg" height ="400px" weight="400px"class="logo" />
-                            <p><span><?php echo($Name)?></span>Student</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-main">
-                <a href="<?=ROOT?>/Student/StudentProfile/profile" class="backreq">
-                    <i class="fas fa-chevron-left"></i>
-                    <h3>back</h3>
-                </a>
-                <div>
-                    <form action="" method="post">
-                        <div>
-                            <label for="github">Github</label>
-                            <input name="Github" type="text" value="<?= htmlspecialchars($Github) ?>">
+    <div class="content">
+        <div class="header">
+            <?php $this->renderComponent("studentHeader")  ?>
+        </div>
+        <div class="page-header">
+            <h1>Profile Edit</h1>
+        </div>
+        <div class="main-content">
+            <!-- Student Profile Update Box -->
+            <div class="update-box">
+                <div class="update-box-content">
+                    <form>
+                        <div class="box1">
+                            <label for="github">GitHub</label>
+                            <input 
+                                type="url" 
+                                id="github" 
+                                name="github" 
+                                placeholder="Enter GitHub Profile URL" 
+                                value="<?= htmlspecialchars($data['Student'] -> Github) ?>"
+                                required
+                            >
+                            
+                            <label for="linkedin">LinkedIn</label>
+                            <input 
+                                type="url" 
+                                id="linkedin" 
+                                name="linkedin" 
+                                placeholder="Enter LinkedIn Profile URL" 
+                                value="<?= htmlspecialchars($data['Student'] -> Linkedin) ?>"
+                                required
+                            >
+                            <label for="skills">Skills</label>
+                            <input 
+                                type="text" 
+                                id="skills" 
+                                name="skills" 
+                                placeholder="Enter your skills separated by commas" 
+                                value="JavaScript, Node.js, Python"
+                                required
+                            >
                         </div>
-                        <div>
-                            <label for="linkedin">Linkedin</label>
-                            <input name="Linkedin" type="text" value="<?= htmlspecialchars($Linkedin) ?>">
+                        <div class="box2">
+                            <label for="description">Short Description</label>
+                            <textarea id="description" name="description" placeholder="Enter a brief description about yourself(max 50 words)" required>
+                                <?= htmlspecialchars($data['Student'] -> ShortDesc) ?>
+                            </textarea>
+                            <label for="cv">Curriculum Vitae</label>
+                            <input 
+                                type="file" 
+                                id="cv" 
+                                name="cv" 
+                                accept=".pdf"
+                                placeholder="Upload your CV"
+                                required
+                            >
                         </div>
-                        <div>
-                            <label for="shortDesc">Short Description</label>
-                            <textarea name="ShortDesc" id=""><?= htmlspecialchars($ShortDesc) ?></textarea>
-                        </div>
-                        <a href="<?=ROOT?>/Student/StudentProfile/profileEdit"><button type="submit">Save</button></a>
+                        <a href="<?=ROOT?>/Student/StudentProfile/profileEdit"><button type="submit" class="save-btn">Save</button></a>
                     </form>
                 </div>
             </div>
@@ -68,3 +80,4 @@
     </div>
 </body>
 </html>
+

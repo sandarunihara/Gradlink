@@ -1,21 +1,87 @@
-.p-main{
-    background: #E9EDFF;
-    padding: 30px;
+.update-box{
+    background-color: white;
+    width: 80%;
+    padding: 20px 30px;
+    margin: 0 auto;
     border-radius: 10px;
-    margin-right: 50px;
-    margin-top: 30px;
-}
-
-
-.backreq{
-    width: fit-content;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    gap: 2px;
-    align-items: center;
-    text-decoration: none;
-    color: #000;
-    transition: 0.3s;
+    flex-direction: column;
 }
-.backreq:hover{
-    color: #ff0000;
+/*
+.update-box-content{
+}*/
+
+.box1,
+.box2{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.box1 label{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.box1 input{
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.box2 label{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.box2 textarea{
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.box2 .file-upload{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.box2 .file-upload label{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.box2 .file-upload .file-name{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+/* Buttons in the third section */
+.save-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+.save-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+button a{
+    color: white;
+    text-decoration: none;
 }
