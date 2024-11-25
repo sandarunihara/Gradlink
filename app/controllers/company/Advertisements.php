@@ -14,10 +14,8 @@ class Advertisements
         $model = new C_Advertisement;
         $modelstudent = new C_Dashboard;
 
-        // $data = $model->findall();
 
         $data = $model->find($user->CompanyId);
-        // $data = $model->find($user->CompanyId)->fetchAll(PDO::FETCH_OBJ);
 
 
         // Get the current date
@@ -113,8 +111,7 @@ class Advertisements
                 }
 
                 $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
-                $imageBase64 = base64_encode($imageData); // Encode image content in base64
-                // print_r($imageBase64);
+                $imageBase64 = base64_encode($imageData); 
             }
 
             $Id = $this->getnextId();
@@ -145,8 +142,6 @@ class Advertisements
                 }
             } else {
                 $data['errors'] = $model->errors;
-                // Handle validation errors
-                // print_r($data['errors']);
             }
         }
 
@@ -167,7 +162,6 @@ class Advertisements
                 $model = new C_Advertisement;
                 
                 
-                // $maxFileSize = 5 * 1024 * 1024; // 5 MB
                 // // Handle the file upload and convert it to base64
                 $imageBase64 = '';
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
