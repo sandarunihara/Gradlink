@@ -20,9 +20,6 @@
         <div class="header">
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
-        <div class="page-header">
-            <h1>Dashboard</h1>
-        </div>
         <div class="main-content">
             <div class="header">
                 <h1>Welcome, <?php echo $_SESSION['USER']->Name?></h1>
