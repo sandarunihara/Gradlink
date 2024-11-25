@@ -134,6 +134,7 @@
                         <div class="number-input">
                             <button class="fbtn" type="button" onclick="decrement()">-</button>
                             <input
+                            
                                 type="text"
                                 id="numOfInterns"
                                 name="numOfInterns"
