@@ -162,7 +162,6 @@ class Advertisements
                 $model = new C_Advertisement;
                 
                 
-                // $maxFileSize = 5 * 1024 * 1024; // 5 MB
                 // // Handle the file upload and convert it to base64
                 $imageBase64 = '';
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
