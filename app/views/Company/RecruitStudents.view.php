@@ -64,7 +64,7 @@
                                             <h5>Action</h5>
                                         </th>
                                         <th>
-                                            <h5>Send Email</h5>
+                                            <h5>View</h5>
                                         </th>
                                     </thead>
                                     <tbody>
