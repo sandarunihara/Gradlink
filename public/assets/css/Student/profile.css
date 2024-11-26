@@ -1,0 +1,96 @@
+.main-content{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+.student-profile {
+    background-color: #fff;
+    width: 80%;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 18px;
+}
+.student-profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+}
+.student-profile-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.student-profile-info-1,
+.student-profile-info-2,
+.student-profile-info-3 {
+    margin-top: 20px;
+}
+.student-profile-info-3 {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+    font-size: 30px;
+}
+.student-skill{
+    margin-top: 50px;
+}
+.skills{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.skills p{
+    margin: 0;
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: #D2D2D2 1px solid;
+}
+.student-short-description{
+    margin-top: 50px;
+}
+.student-short-description p{
+    margin: 0;
+    scroll-padding-inline: 10px;
+}
+.student-profile-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.student-cv{
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+.student-cv a{
+    text-decoration: none;
+    color: #007bff;
+    font-size: 20px;
+}
+.student-edit{
+    margin-top: 50px;
+}
+.student-edit a{
+    text-decoration: none;
+    color: #007bff;
+    font-size: 20px;
+}
+.student-edit button{
+    padding: 10px 20px;
+    background-color: #3498DB;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.student-edit button:hover{
+    background-color: #2980B9;
+}

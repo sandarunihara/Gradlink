@@ -7,21 +7,13 @@ class StudentComplaint{
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         
         $complaint = new complaint;
-        $student = new student;
-        
-        $data['Complaints'] = $complaint -> where($arr,[], 'Date', 'do_not_order');
-        //show($data['Complaints']);
-        //show($data['Complaints'][0] -> Status);
+        $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
 
-        $data['Student'] = $student -> first($arr);
         $this-> view('Student/Complaint', $data);
 
     }
     public function newComplaint(){
         $data = [];
-        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-        $student = new student;
-        $data['Student'] = $student -> first($arr);
         $this-> view('Student/NewComplaint', $data);
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -38,27 +30,42 @@ class StudentComplaint{
     }
     public function viewComplaint($complaintId){
         $data = [];
-        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-        $student = new student;
-        $data['Student'] = $student -> first($arr);        
-        
-        $arr1['ComplaintId'] = $complaintId;
+        $arr['ComplaintId'] = $complaintId;
        
         $complaint = new complaint;
-        $data['Complaint'] = $complaint -> first($arr1);
-        
-        $pdc_coordinator_complaint = new pdc_coordinator_complaint;
-        $data['CoordinatorComplaint'] = $pdc_coordinator_complaint -> where($arr1, [], 'Date', 'do_not_order');
-        
-        $this-> view('Student/ViewComplaint', $data);
+        $data['Complaint'] = $complaint -> first($arr);
+
+        if($data['Complaint'] -> Status === "reviewed"){
+            $pdc_coordinator_complaint = new pdc_coordinator_complaint;
+            $data['CoordinatorComplaint'] = $pdc_coordinator_complaint -> first($arr);
+        }
+        //set up the delete button
+        $createdDate = (explode(' ', $data['Complaint'] -> CreatedAt))[0];
+        $createdTime = (explode(' ', $data['Complaint'] -> CreatedAt))[1];
+        $currentDate = date('Y-m-d');
+        $currentTime = date('H:i:s');
+        $createdDateTime = new DateTime($createdDate . ' ' . $createdTime);
+        $currentDateTime = new DateTime($currentDate . ' ' . $currentTime);
+
+        $interval = $createdDateTime -> diff($currentDateTime);
+        if($data['Complaint'] -> Status == "notReviewed" && $createdDate == $currentDate){
+            if(!($interval -> h >= 1)){
+                if($interval -> i <= 30){
+                    $data['Complaint'] -> Delete = 1;
+                }else{
+                    $data['Complaint'] -> Delete = 0;
+                }
+            }else{
+                $data['Complaint'] -> Delete = 0;
+            }
+        }else{
+            $data['Complaint'] -> Delete = 0;
+        }
+        $this-> view('Student/ComplaintView', $data);
     }
     public function deleteComplaint($complaintId){
         $complaint = new complaint;
-        $pdc_coordinator_complaint = new pdc_coordinator_complaint;
-
-        //has error when try to delete a with foreign key constraints
-        // $result = $complaint -> delete($complaintId, 'ComplaintId');
-        // echo $result;
-        echo "has error when try to delete a with foreign key constraints";
+        $result = $complaint -> delete($complaintId, 'ComplaintId');
+        echo $result;
     }
 }

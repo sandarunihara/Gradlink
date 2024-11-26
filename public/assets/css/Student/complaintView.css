@@ -1,0 +1,52 @@
+/* view complaint component Styles */
+.main-content{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    position: relative; /* Ensures the .backreq is positioned relative to this container */
+    padding: 20px; /* Add padding to avoid overlap with other content */
+    height: 100%;
+}
+#view-complaint-box {
+    background: #ffffff;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 10px;
+    max-width: 700px;
+    width: 90%;
+}
+#view-complaint-box h2 {
+    font-size: 28px;
+    color: black;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.complaint-description-box{
+    margin-top: 10px;
+    line-height: 1.8;
+}
+.complaint-description {
+    font-size: 15px;
+    color: black;
+    text-align: left;
+    font-weight: 500;
+}
+.complaint-description-box p {
+    font-size: 15px;
+    margin: 5px 0;
+}
+#complaintDleteBtn{
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: white;
+    background-color: #E74C3C;
+}
+#complaintDleteBtn:hover{
+    background-color: #C0392B;;
+    transform: scale(1.05);
+}

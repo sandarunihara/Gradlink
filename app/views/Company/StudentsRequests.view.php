@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -72,8 +72,19 @@
                                             <?php foreach ($data as $student): ?>
                                                 <?php
                                                 $status = $student['Action'];
-                                                $statusClass = ($status == 'Shortlist') ? 'Shortlist' : (($status == 'Reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'Shortlist') ? 'Shortlisted' : (($status == 'Reject') ? 'Rejected' : 'Pending');
+                                                $statusClass = match ($status) {
+                                                    'Shortlist' => 'Shortlist',
+                                                    'Reject' => 'Reject',
+                                                    'Recruit' => 'Recruit',
+                                                    default => 'Pending',
+                                                };
+
+                                                $statusText = match ($status) {
+                                                    'Shortlist' => 'Shortlisted',
+                                                    'Reject' => 'Rejected',
+                                                    'Recruit' => 'Recruited',
+                                                    default => 'Pending',
+                                                };
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
@@ -84,7 +95,23 @@
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <?php if ($statusText != 'Rejected'): ?>
+                                                        <td class="viewpro">
+                                                            <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
+                                                                <button class="view-profile-btn">View Profile</button>
+                                                            </a>
+                                                        </td>
+                                                    <?php elseif ($statusText == 'Rejected'): ?>
+                                                        <td class="viewprodel">
+                                                            <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
+                                                                <button class="view-profile-btn-with-remove">View Profile</button>
+                                                            </a>
+                                                            <a class="removebtn" href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
+                                                                <button class="view-profile-btn-remove">Remove Data</button>
+                                                            </a>
+                                                            <!-- <i class="removebtn fas fa-trash-alt fa-trash-alty"></i> -->
+                                                        </td>
+                                                    <?php endif ?>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -102,7 +129,7 @@
         </div>
     </div>
 
-    
+
 
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>

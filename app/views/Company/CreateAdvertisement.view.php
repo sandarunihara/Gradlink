@@ -12,9 +12,7 @@
 
 <body class="body">
     <div class="dashboard">
-        <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
-        </div>
+        
         <div id="content">
             <div class="main">
                 <div class="d">
@@ -78,17 +76,23 @@
                         </div>
                         <div class="addimg">
                             <h4>Add Image:</h4>
+                            <label for="image" class="custom-file-upload">
+                                <i class="fas fa-upload"></i> Choose an Image
+                            </label>
                             <input type="file" id="image" name="image" required />
-                            <!-- this is not in the script  -->
+                            <span id="file-name">No file chosen</span>
                         </div>
+
                         <button type="submit" class="sc_btn" onclick="validateAndShowModal(event)">
-                            Submit
+                            Create
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <!--    **************** MODAL *******************      -->
 
@@ -151,8 +155,13 @@
             }
         }
 
+        // Show the file name when a file is selected
+        document.getElementById('image').addEventListener('change', function() {
+            const fileName = this.files[0]?.name || "No file chosen";
+            document.getElementById('file-name').textContent = fileName;
+        });
 
-        // Get the modal popup
+        // Get the modal 
 
         function validateAndShowModal(event) {
             event.preventDefault();
@@ -174,6 +183,10 @@
 
             if (!position || !description || !qualifications || !deadline || !interns || !worktype) {
                 errorToast("Please fill in all required fields.");
+                return;
+            }
+            if(!image){
+                errorToast("Please upload an image.");
                 return;
             }
 
@@ -209,16 +222,12 @@
         function closeConfirmationModal() {
             document.getElementById('confirmation-modal').style.display = 'none';
 
-            // const modal = document.getElementById("confirmation-modal");
-            // modal.classList.add("fade-out");
-
-            // // Hide the modal after the animation ends
-            // modal.addEventListener("animationend", function () {
-            //     modal.style.display = "none";
-            //     modal.classList.remove("fade-out"); // Remove class after the animation
-            // });
-
         }
+        const errorMessage=<?php echo json_encode($data['error'] ?? '') ?>;
+        if(errorMessage){
+            errorToast(errorMessage);
+        }
+        
 
         function submitForm() {
             document.getElementById('ad-form').submit();

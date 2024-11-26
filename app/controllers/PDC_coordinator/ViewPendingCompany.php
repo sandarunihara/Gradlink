@@ -1,4 +1,7 @@
 <?php
+require "../app/libs/PHPMailer.php";
+require '../app/libs/sendEmail.php';
+
 class ViewPendingCompany
 {
     use Controller;
@@ -109,12 +112,39 @@ class ViewPendingCompany
             $result = $model->delete($id, 'CompanyId');
             if ($result) {
                 header("Location: "  . ROOT . "/PDC_coordinator/pendingCompanyList");
-
             } else {
                 echo "Error: Could not delete the company";
             }
         } else {
             echo "Not such company";
+        }
+    }
+
+    public function emailSend()
+    {
+        $id = $_GET['id'] ?? null; 
+        if ($id === null) {
+            echo "<script>alert('Invalid or missing company ID.');</script>";
+            return;
+        }
+
+        $model = new company;
+        $data = $model->findEmailById($id);
+
+        if ($data) {
+            $email = $data; 
+            $result = Email::sendEmail($email);
+
+            if ($result === "Success") {
+                echo "<script>
+                        alert('Email successfully sent to {$email}');
+                        window.location.href = '" . ROOT . "/PDC_coordinator/pendingCompanyList';
+                      </script>";
+            } else {
+                echo "<script>alert('Failed to send email to {$email}');</script>";
+            }
+        } else {
+            echo "<script>alert('No company found with the given ID.');</script>";
         }
     }
 }

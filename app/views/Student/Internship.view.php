@@ -1,75 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Fix.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Studentsidebar.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Job Opportunities</title>
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/internship.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/Internship.css">
- 
 </head>
+
 <body>
-    <?php
-        $Name = $data['Student'] -> Name;
-
-    ?>
     <div class="side">
-        <?php $this->renderComponent("studentsidebar")  ?>
+        <?php $this->renderComponent("studentSidebar")  ?>
     </div>
-    <div id="content">
-        <div class="main">
-            <div class="d">
-                <div >
-                    <h1>Advertisements</h1>
+    <div class="content">
+        <div class="header">
+            <?php $this->renderComponent("studentHeader")  ?>
+        </div>
+        <div class="main-content">
+            <div class="filter">
+                <div class="filter-by-company">
+                    <i class="fas fa-filter"></i>
+                    <select>
+                        <option value="all">All Companies</option>
+                        <option value="wso2">WSO2</option>
+                        <option value="sysco-labs">Sysco Labs</option>
+                        <option value="ifs">IFS</option>
+                    </select>
                 </div>
-                <div class="d_pro">
-                    <div class="d_profile">
-                        <i class="fas fa-calendar-alt"></i>
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <div>
-                        <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo($Name)?>.jpg" height ="400px" weight="400px"class="logo" />
-                            <p><span><?php echo($Name)?></span>Student</p>
-                        </a>
-                    </div>
+                <div class="filter-by-job">
+                    <i class="fas fa-filter"></i>
+                    <select>
+                        <option value="all">All Jobs</option>
+                        <option value="software-engineer">Software Engineer</option>
+                        <option value="qa">Quality Assuarance Engineer</option>
+                        <option value="dev-ops-engineer">Dev-Ops Engineer</option>
+                    </select>
                 </div>
             </div>
-
-            <div class="advertisement-main">
-                <div class="allpost">
-                    <div class="postcard" data-status="Active">
-                        <div class="image">
-                            <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
-                            <a href="<?=ROOT?>/Student/StudentAd/advertisementView" class="top-left-link">View</a>
+            <?php if (isset($data) && !empty($data)): ?>
+                <?php foreach($data['AdDetails'] as $AdDetail): ?>
+                    <div class="job-card">
+                        <div class="view-button">
+                            <button
+                                onclick="location.href='<?=ROOT?>/Student/StudentAd/viewAdvertisement/<?php echo $AdDetail->advertisementId; ?>';">
+                                View
+                            </button>
                         </div>
-                        <div class="postdetails">
-                            <p>Position:<span class="position">Software Engineer</span></p>
-                            <p>Working Mode:<span>Remote</span></p>
-                            <p>No of interns:<span>5</span></p>
-                            <p>Deadline:<span>2024-12-31</span></p>
+                        <div class="image">
+                            <?php if (!empty($AdDetail->image)): ?>
+                                <img 
+                                    src="data:image/jpeg;base64,<?php echo $AdDetail->image; ?>" 
+                                    alt="error loading image"
+                                    class="logo"
+                                >
+                            <!-- Optionally, you can set a default image here -->
+                            <?php else: ?>
+                                <img 
+                                    src="" 
+                                    class="logo" /> 
+                            <?php endif; ?>
+                        </div>
+                        <div class="job-details">
+                            <h3><?php echo $AdDetail->position; ?></h3>
+                            <p><?php echo $AdDetail->Name; ?></p>
+                        </div>
+                        <div class="apply-button">
+                            <button>Apply</button>
                         </div>
                     </div>
-                    <div class="postcard" data-status="Inactive">
-                        <div class="image">
-                            <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
-                            <a href="<?=ROOT?>/Student/StudentAd/advertisementView" class="top-left-link">View</a>
-                        </div>
-                        <div class="postdetails">
-                            <p>Position:<span class="position">Data Analyst</span></p>
-                            <p>Working Mode:<span>Hybrid</span></p>
-                            <p>No of interns:<span>3</span></p>
-                            <p>Deadline:<span>2024-11-30</span></p>
-                        </div>
-                    </div>
-                    <!-- Add more advertisements as needed -->
-                </div>
-
-            </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <h3>No advertisements found</h3>
+            <?php endif; ?>
         </div>
     </div>
 </body>
+
 </html>

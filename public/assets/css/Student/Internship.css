@@ -1,111 +1,133 @@
-.advertisement-main{
-    background: #E9EDFF;
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 50px;
-    margin-top: 30px;
-}
-/* Overview Section */
-.overview {
-    margin-top: 20px;
-    padding-left: 20px;
-    border-radius: 10px;
-    margin-right: 50px;
-    height: 620px;
-    overflow-y: auto;
-}
-
-/* Post Card Section */
-.allpost {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-@media (max-width: 1200px) {
-    .allpost {
-        grid-template-columns: repeat(3, 1fr); /* 3 postcards per row for smaller screens */
-    }
-}
-
-@media (max-width: 800px) {
-    .allpost {
-        grid-template-columns: repeat(2, 1fr); /* 2 postcards per row for tablets */
-    }
-}
-
-@media (max-width: 500px) {
-    .allpost {
-        grid-template-columns: 1fr; /* 1 postcard per row for mobile */
-    }
-}
-
-.postcard {
+/* Filter Section */
+.filter {
     display: flex;
-    text-decoration: none;
-    color: black;
-    flex-direction: column;
-    background-color: #E9EDFF;
-    width: 270px;
-    height: 420px;
-    padding-bottom: 5px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-right: 20px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff; /* White background */
+    padding: 15px 20px;
     border-radius: 10px;
-    transition: transform 0.7s ease;
-    cursor: default;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px;
+    gap: 20px;
 }
 
-.postcard:hover {
-    transform: scale(1.02);
+.filter div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.postcard img {
-    width: 100%;
-    height: 200px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.filter i {
+    font-size: 20px;
+    color: #007bff; /* Blue color for the filter icon */
 }
 
-.postdetails {
+.filter select {
     padding: 10px;
-}
-
-.postdetails p {
-    font-weight: bold;
-}
-
-.postdetails span {
-    font-weight: 400;
-}
-
-.image {
-    display: flex;
-    position: relative;
-}
-
-.image a {
-    text-decoration: none;
-    color: black;
-}
-
-.top-left-link {
-    position: absolute;
-    top: 10px; /* Adjust the top margin */
-    right: 10px; 
-    background-color: #007bff; /* Semi-transparent background */
-    color: white;
-    padding: 5px 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    text-decoration: none;
     font-size: 14px;
-    font-weight: 600;
-    opacity: 0;
-    transition: opacity 0.3s ease; 
-    cursor: pointer;
+    outline: none;
 }
 
-.postcard:hover .top-left-link {
-    opacity: 1; 
+/* Job Card Styling */
+.job-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fdfdfd; /* Light card background */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 270px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.job-card:hover {
+    transform: scale(1.03); /* Slight zoom on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* View Button */
+.view-button {
+    align-self: flex-end;
+    margin-bottom: 10px;
+}
+
+.view-button button {
+    background-color: #007bff; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-button button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.1); /* Slight zoom */
+}
+
+/* Image Section */
+.image img {
+    width: 100%;
+    height: 150px;
+    border-radius: 8px; /* Rounded image corners */
+    object-fit: cover; /* Ensures proper image fitting */
+}
+
+/* Job Details Section */
+.job-details {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.job-details h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+}
+
+.job-details p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* Apply Button */
+.apply-button {
+    margin-top: 10px;
+}
+
+.apply-button button {
+    background-color: #28a745; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.apply-button button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slight zoom */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .job-card {
+        width: 100%; /* Full width on smaller screens */
+    }
 }

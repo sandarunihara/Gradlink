@@ -6,31 +6,21 @@ class StudentProfile{
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
 
-        $student = new student;
         $skill = new student_skill;
-        $certificate = new certificate;
-        $experience = new experience;
-        $qualification = new qualification;
-        $studentProfilePic = new student_profile_pic;
-
-
-
-        $data['Student'] = $student -> first($arr);
         $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
-        $data['Certificates'] = $certificate -> where($arr, [], '', 'do_not_order');
-        $data['Experiences'] = $experience -> where($arr, [], '', 'do_not_order');
-        $data['Qualifications'] = $qualification -> where($arr, [], '', 'do_not_order');
-        $data['studentProfilePic'] = $studentProfilePic -> first($arr);
-    
+
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+        
+        //show($data['Skills']);
         $this-> view('Student/Profile',$data);
     }
     public function profileEdit(){        
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-        $student = new student;
-        $data['Student'] = $student -> first($arr);
         
-
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST['Github']);
             $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
