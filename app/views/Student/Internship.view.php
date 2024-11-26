@@ -42,41 +42,43 @@
                     </select>
                 </div>
             </div>
-            <?php if (isset($data) && !empty($data)): ?>
-                <?php foreach($data['AdDetails'] as $AdDetail): ?>
-                    <div class="job-card">
-                        <div class="view-button">
-                            <button
-                                onclick="location.href='<?=ROOT?>/Student/StudentAd/viewAdvertisement/<?php echo $AdDetail->advertisementId; ?>';">
-                                View
-                            </button>
+            <div class="job-container">
+                <?php if (isset($data) && !empty($data)): ?>
+                    <?php foreach($data['AdDetails'] as $AdDetail): ?>
+                        <div class="job-card">
+                            <div class="view-button">
+                                <button
+                                    onclick="location.href='<?=ROOT?>/Student/StudentAd/viewAdvertisement/<?php echo $AdDetail->advertisementId; ?>';">
+                                    View
+                                </button>
+                            </div>
+                            <div class="image">
+                                <?php if (!empty($AdDetail->image)): ?>
+                                    <img 
+                                        src="data:image/jpeg;base64,<?php echo $AdDetail->image; ?>" 
+                                        alt="error loading image"
+                                        class="logo"
+                                    >
+                                <!-- Optionally, you can set a default image here -->
+                                <?php else: ?>
+                                    <img 
+                                        src="" 
+                                        class="logo" /> 
+                                <?php endif; ?>
+                            </div>
+                            <div class="job-details">
+                                <h3><?php echo $AdDetail->position; ?></h3>
+                                <p><?php echo $AdDetail->Name; ?></p>
+                            </div>
+                            <div class="apply-button">
+                                <button>Apply</button>
+                            </div>
                         </div>
-                        <div class="image">
-                            <?php if (!empty($AdDetail->image)): ?>
-                                <img 
-                                    src="data:image/jpeg;base64,<?php echo $AdDetail->image; ?>" 
-                                    alt="error loading image"
-                                    class="logo"
-                                >
-                            <!-- Optionally, you can set a default image here -->
-                            <?php else: ?>
-                                <img 
-                                    src="" 
-                                    class="logo" /> 
-                            <?php endif; ?>
-                        </div>
-                        <div class="job-details">
-                            <h3><?php echo $AdDetail->position; ?></h3>
-                            <p><?php echo $AdDetail->Name; ?></p>
-                        </div>
-                        <div class="apply-button">
-                            <button>Apply</button>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <h3>No advertisements found</h3>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <h3>No advertisements found</h3>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </body>

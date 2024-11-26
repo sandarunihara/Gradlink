@@ -9,6 +9,10 @@ class Login
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
+			
+			$user = null;
+			$arr = [];
+			$path = '';
 
 			switch ($userNum) {
 				case 9:

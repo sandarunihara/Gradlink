@@ -1,7 +1,7 @@
 <?php
 
 class StudentComplaint{
-    use Controller;
+    use BaseController;
     public function complaint(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
@@ -14,7 +14,6 @@ class StudentComplaint{
     }
     public function newComplaint(){
         $data = [];
-        $this-> view('Student/NewComplaint', $data);
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             
@@ -26,7 +25,10 @@ class StudentComplaint{
             
             $complaint = new complaint;
             $result = $complaint -> insert($data);
+            show($result);
         }
+        $this-> view('Student/NewComplaint', $data);
+
     }
     public function viewComplaint($complaintId){
         $data = [];
