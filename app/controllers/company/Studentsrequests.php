@@ -39,7 +39,7 @@ class StudentsRequests
                     $hasRecruited = true;
                 }
 
-                if($item->Companyrowstatus != 0){
+                // if($item->Companyrowstatus != 0){
                     $reqdata[] = [
                         "StudentId" => $item->StudentId,
                         'AdvertisementId' => $item->advertisementId,
@@ -48,7 +48,7 @@ class StudentsRequests
                         'Position' => $item->position,
                         'Action' => $item->Jobstatus
                     ];
-                }
+                // }
             }
         }
         // Store the flags in session
