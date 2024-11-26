@@ -89,11 +89,6 @@ complaint
     justify-content: center;
     cursor: pointer;
 }
-.reviewed a, 
-.not-reviewed a {
-    text-decoration: none;
-    color: inherit;
-}
 .reviewed {
     color: green;
     border: 2px solid green;

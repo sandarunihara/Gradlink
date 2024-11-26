@@ -12,17 +12,16 @@ Trait BaseController{
             redirect("login", $data);
             exit;
         }
-
         // Role-based access control
-        //show($_SESSION['user']);
-        $currentRole = $_SESSION['user'];
-        $requestingUserArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'))  ;    
-        $requestingUser = strtolower($requestingUserArray[2]);
-        //show($requestingUser);
-        if ($currentRole !== $requestingUser) {
-            $data ['errorsInBase'] = "You do not have permission to access this page";
-            redirect("login", $data);
+        $path =$_SESSION['PATH'];
+        $currentRole = strtolower(explode('/', $path)[0]);
+        //show($currentRole);
+        $controller = strtolower(explode('/', $_SERVER['REQUEST_URI'])[3]);
+        //show($controller);
+        if ($controller !== $currentRole) {
+            redirect("login");
             exit;
         }
+        
     }
 }

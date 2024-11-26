@@ -1,87 +1,68 @@
-/* Form Container */
-form {
-    max-width: 500px;
-    margin: 10px auto;
-    padding: 15px;
-    background-color: #f9f9f9;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Fieldset and Legend */
-fieldset {
-    border: 1px solid #ddd;
-    padding: 10px;
-}
-
-legend h2 {
-    font-size: 1.2em;
-    font-weight: 600;
-    color: #333;
-}
-
-/* Labels */
+}  
 label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
     display: block;
-    margin-top: 8px;
-    font-weight: 500;
-    color: #333;
-}
-
-/* Input Fields */
-input[type="date"],
-input[type="text"],
-textarea {
+    color: black;
+  }
+  
+  input, textarea {
     width: 100%;
-    padding: 6px;
-    margin-top: 4px;
-    margin-bottom: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-    resize: vertical; /* Allow vertical resizing only for textarea */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  textarea {
+    height: 150px;
+    resize: none;
+  }
+  
+  
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+  
+  .valid-message {
+    color: green;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+.button-container{
+    display: flex;
+    justify-content: space-between;
 }
-
-/* Textarea Specific */
-textarea {
-    min-height: 80px;
-}
-
-/* Button */
-button{
-    padding: 10px 20px;
+button {
     background-color: #28a745;
     color: white;
-    font-size: 16px;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-button:hover{
-    background-color: #218838;
-    transform: scale(1.05);
-}
-button a{
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+  
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+#clearButton {
+    background-color: #6c757d;
     color: white;
-    text-decoration: none;
 }
-
-.error-message {
-    color: #ff0000;
-    font-size: 0.85em;
-    margin-top: 5px;
-    display: block;
-}
-@media (max-width: 600px) {
-    form {
-        padding: 10px;
-    }
-
-    legend h2 {
-        font-size: 1.3em;
-    }
+#clearButton:hover {
+    background-color: #5a6268;
 }
