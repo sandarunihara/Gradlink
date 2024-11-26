@@ -1,7 +1,7 @@
 <?php
 
 class StudentAppliedCompanies{
-    use Controller;
+    use BaseController;
     public function AppliedCompanies(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
