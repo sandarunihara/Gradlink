@@ -14,7 +14,7 @@
 
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -92,7 +92,7 @@
 
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
-            <form id="ad-form" class="supersub_container" method="POST" action="">
+            <form id="ad-form" class="supersub_container" method="POST" enctype="multipart/form-data" action="">
                 <div class="position">
                     <h4>Position:</h4>
                     <select id="position" name="position" required>
@@ -154,9 +154,11 @@
                     </div>
                 </div>
                 <div class="addimg">
-                    <h4>Add Image:</h4>
-                    <input type="file" id="image" name='image' required />
-                    <!-- this is not in the script  -->
+                    <label for="image" class="custom-file-upload">
+                        <i class="fas fa-upload"></i> Change an Image
+                    </label>
+                    <input type="file" id="image" name="image" required />
+                    <span id="file-name"></span>
                 </div>
                 <div class="sc_btn">
                     <button class="cancel_btn" onclick="closeConfirmationModal()">
@@ -196,8 +198,6 @@
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
-        
-
         // Increment and decrement the number of interns
         function increment() {
             let count = document.getElementById('numOfInterns').value;
@@ -242,6 +242,8 @@
             const numOfInterns = element.dataset.interns;
             const workingMode = element.dataset.workingmode;
             const image = element.dataset.image;
+            // console.log(image);
+
 
             // Now populate the modal fields
             document.getElementById('position').value = position;
@@ -250,7 +252,12 @@
             document.getElementById('deadline').value = deadline;
             document.getElementById('numOfInterns').value = numOfInterns;
             document.getElementById('workingMode').value = workingMode;
-            // document.getElementById('image').value = image;
+
+            // Show the file name when a file is selected
+            document.getElementById('image').addEventListener('change', function() {
+                const fileName = this.files[0]?.name || '';
+                document.getElementById('file-name').textContent = fileName;
+            });
 
 
             const modal = document.getElementById('confirmation-modal').style.display = 'block';

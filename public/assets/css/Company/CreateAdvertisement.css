@@ -1,13 +1,15 @@
 .main_container{
     background: #E9EDFF;
     padding: 20px;
-    width: 1100px;
+    width: 1400px;
+    /* width: 100%; */
     border-radius: 10px;
     margin-right: 50px;
     margin-top: 30px;
 }
 .sub_container{
-    width: 1000px;
+    /* width: 1000px; */
+    width: 93%;
     height: 500px;
     margin-left: 40px;
     background-color: white;
@@ -36,7 +38,8 @@
     gap: 20px;
 }
 .position select{
-    border-radius: 10px;
+    border-radius: 5px;
+    border: rgba(0, 0, 0, 0.167) solid 1px;
     padding: 10px;
     width: 250px;    
 }
@@ -45,11 +48,13 @@
     gap: 50px
 }
 .details textarea{
-    border-radius: 10px;
+    border-radius: 5px;
+    border: rgba(0, 0, 0, 0.167) solid 1px;    
     padding: 10px;
     width: 400px;
     height: 100px;
     resize: none;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .perioddeadline{
     display: flex;
@@ -62,7 +67,8 @@
     align-items: center;
 }
 .period input{
-    border-radius: 10px;
+    border-radius: 5px;
+    border: rgba(0, 0, 0, 0.167) solid 1px;
     padding: 10px;
     width: 150px;
 }
@@ -73,8 +79,8 @@
 }
 .number-input{
     display: flex;
-    border: black solid 1px;
-    border-radius: 10px;
+    border: rgba(0, 0, 0, 0.167) solid 1px;
+    border-radius: 5px;
 }
 .number-input input{
     padding: 10px;
@@ -85,25 +91,60 @@
 .fbtn{
     padding: 10px;
     border: none;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    cursor: pointer;
 }
 .sbtn{
     padding: 10px;
     border: none;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
 }
 .internt{
     display: flex;
     gap: 20px;
     align-items: center;
 }
-.addimg{
+.addimg {
     display: flex;
-    gap: 20px;
+    flex-direction: row;
+    gap: 10px;
     align-items: center;
 }
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-file-upload i {
+    margin-right: 8px;
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+#file-name {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+}
+
 .sc_btn{
     position: absolute;
     right: 200px;

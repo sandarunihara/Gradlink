@@ -256,3 +256,22 @@ body {
 .back-btn:hover{
     background-color: #16191c;
 }
+
+.error-message {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.error-message::before {
+    content: '⚠️';
+    font-size: 18px;
+}

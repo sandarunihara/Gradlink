@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/advertisement/overviewAdvertisements.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
     
 
 </head>
@@ -32,6 +33,9 @@
                     </div>
                 </div>
             </header>
+
+            <?php $activeTab = 'advertisement-list'; ?>
+            <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
 
             <section class="company-list">
                 <div class="list-header">
@@ -76,45 +80,6 @@
                 </table>
 
             </section>
-
-            <!-- Pending Advertisements -->
-            <section class="company-list">
-                <div class="list-header">
-                    <h2>Pending Advertisements</h2>
-
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Position</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Creative Pixels</td>
-                            <td>UI Designer</td>
-                            <td>10/10/2024</td>
-                            <td>20/10/2024</td>
-                            <td>
-                                <select class="status-btn" id="status" name="status">
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                </select>
-                            </td>
-                            <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-
-            </section>
-
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>

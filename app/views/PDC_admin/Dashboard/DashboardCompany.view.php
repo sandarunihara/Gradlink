@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>Blocked Companies</title>
+        <title>Registered Companies</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/dashboard/dashboardCompany.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -99,7 +99,7 @@
                 <div class="action-buttons">
                 <div class="button-line">
                     <div class="action-buttons">
-                        <button class="btn back-btn">Back</button>
+                        <button class="btn back-btn" onclick='history.back()'>Back</button>
                     </div>
                 </div>
                 </div>
