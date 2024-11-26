@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -71,11 +71,29 @@
                                     <tbody>
                                         <?php if (isset($data) && !empty($data)): ?>
                                             <?php foreach ($data as $student): ?>
+                                                
                                                 <?php
                                                 $status = $student['Action'];
-                                                $statusClass = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Rejected' : 'Awaiting');
+                                                switch ($status) {
+                                                    case 'Recruit':
+                                                        $statusText = 'Recruit';
+                                                        $statusClass = 'Recruit';
+                                                        break;
+                                                    case 'Reject':
+                                                        $statusText = 'Rejected';
+                                                        $statusClass = 'Reject';
+                                                        break;
+                                                    case 'Interview Scheduled':
+                                                        $statusText = 'Interview Scheduled';
+                                                        $statusClass = 'Sendemail';
+                                                        break;
+                                                    default:
+                                                        $statusText = 'Awaiting';
+                                                        $statusClass = 'Pending';
+                                                        break;
+                                                }
                                                 ?>
+
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
                                                     <td class="degree"><?php echo htmlspecialchars($student['Student Degree']); ?></td>
