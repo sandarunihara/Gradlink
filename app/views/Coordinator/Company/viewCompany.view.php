@@ -50,34 +50,34 @@
                     <form class="company-form" id="companyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
-                            <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>" readonly>
-                            <?php if (isset($errors['company_name'])): ?>
-                                <div class="text-danger"><?= htmlspecialchars($errors['company_name']) ?></div>
+                            <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>" readonly required>
+                            <?php if (!empty($errors['company_name'])): ?>
+                                <div style="color: red; font-size: 14px;"><?= htmlspecialchars($errors['company_name']) ?></div>
                             <?php endif; ?>
                         </div>
                         <div class="form-group">
                             <label for="email-address">Email Address</label>
-                            <input type="email" id="email-address" name="email" value="<?= htmlspecialchars($companyData[0]['email'] ?? '') ?>" readonly>
+                            <input type="email" id="email-address" name="email" value="<?= htmlspecialchars($companyData[0]['email'] ?? '') ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="contact-number">Contact Number</label>
-                            <input type="text" id="contact-number" name="contact_number" value="<?= htmlspecialchars($companyData[0]['contact_number'] ?? '') ?>" readonly>
+                            <input type="text" id="contact-number" name="contact_number" value="<?= htmlspecialchars($companyData[0]['contact_number'] ?? '') ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="address">Address No</label>
-                            <input type="text" id="address_no" name="address_no" value="<?= htmlspecialchars($companyData[0]['address_no'] ?? '') ?>" readonly>
+                            <input type="text" id="address_no" name="address_no" value="<?= htmlspecialchars($companyData[0]['address_no'] ?? '') ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="address">Address Lane</label>
-                            <input type="text" id="address_lane" name="address_lane" value="<?= htmlspecialchars($companyData[0]['address_lane'] ?? '') ?>" readonly>
+                            <input type="text" id="address_lane" name="address_lane" value="<?= htmlspecialchars($companyData[0]['address_lane'] ?? '') ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="address">Address City</label>
-                            <input type="text" id="address_city" name="address_city" value="<?= htmlspecialchars($companyData[0]['address_city'] ?? '') ?>" readonly>
+                            <input type="text" id="address_city" name="address_city" value="<?= htmlspecialchars($companyData[0]['address_city'] ?? '') ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="address">Address District</label>
-                            <input type="text" id="address_district" name="address_district" value="<?= htmlspecialchars($companyData[0]['address_district'] ?? '') ?>" readonly>
+                            <input type="text" id="address_district" name="address_district" value="<?= htmlspecialchars($companyData[0]['address_district'] ?? '') ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
@@ -85,31 +85,31 @@
                         </div>
                         <div class="form-group">
                             <label for="contact-person">Contact Person</label>
-                            <input type="text" id="contact-person" name="contact_person" value="<?= htmlspecialchars($companyData[0]['contact_person']) ?>" readonly>
+                            <input type="text" id="contact-person" name="contact_person" value="<?= htmlspecialchars($companyData[0]['contact_person']) ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="website">Website</label>
-                            <input type="text" id="website" name="website" value="<?= htmlspecialchars($companyData[0]['website']) ?>" readonly>
+                            <input type="text" id="website" name="website" value="<?= htmlspecialchars($companyData[0]['website']) ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="linkedin">LinkedIn</label>
-                            <input type="text" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly>
+                            <input type="text" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly required>
                         </div>
                         <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
                     </form>
                     <div class="button-line">
-                    <button class="view-profile-btn">View Profile</button>
-                    <div class="action-buttons">
-                        <button class="btn block-btn">Block</button>
-                        <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtn('<?= $companyData[0]['company_id'] ?>');" >Delete</button>
-                        <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
-                        
+                        <button class="view-profile-btn">View Profile</button>
+                        <div class="action-buttons">
+                            <button class="btn block-btn">Block</button>
+                            <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtn('<?= $companyData[0]['company_id'] ?>');">Delete</button>
+                            <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button>
+
+                        </div>
                     </div>
-                </div>
                 <?php else: ?>
                     <p>No company data available.</p>
                 <?php endif; ?>
-                
+
             </section>
         </main>
     </div>
