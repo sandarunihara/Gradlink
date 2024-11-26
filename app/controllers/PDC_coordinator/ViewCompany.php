@@ -98,26 +98,31 @@ class ViewCompany
                 // print_r($mappedData);
                 // echo '</pre>';
                 if ($model->validate($updatedData)) {
+                    // If validation passes, proceed to update the database
                     $result = $model->update($companyId, $mappedData, 'CompanyId');
-                    print_r($result);
-
+                
                     if ($result) {
-                        // Redirect to the same page after successful submission
+                        // Redirect to the same page after successful update
                         header("Location: "  . ROOT . "/PDC_coordinator/viewCompany?id=$id");
                         exit;
                     } else {
                         echo "There was an issue saving company details.";
                     }
                 } else {
-                    $data['errors'] = $model->errors;
-                    // print_r($data['errors']);
+                    // If validation fails, capture the errors and show them in the view
+                    $data['errors'] = $model->errors; // Get validation errors
+                    $data['companyData'] = $updatedData; // Preserve the submitted data
+                
+                    $this->view('PDC_coordinator/Company/viewCompany', [
+                        'companyData' => $updatedData,
+                        'errors' => $data['errors'],
+                        'id' => $id, // Pass the ID explicitly if needed
+                    ]);
                 }
+                
             }
 
-            $this->view('PDC_coordinator/Company/viewCompany', [
-                'companyData' => $data,
-                'errors' => $data['errors'] ?? []
-            ]);
+            
         } else {
             echo "Company not found.";
         }
@@ -130,7 +135,7 @@ class ViewCompany
             $result = $model->delete($id, 'CompanyId');
             if ($result) {
                 header("Location: "  . ROOT . "/PDC_coordinator/dashboardCompany");
-
+                // echo ($result);
             } else {
                 echo "Error: Could not delete the company";
             }

@@ -59,10 +59,10 @@
                         <input class="btn email-btn" type="submit" value="Send an Email">
                     </div> -->
                 </form>
-                <div class="row" >
+                <!-- <div class="row" >
                 <button class="btn email-btn"><b>Send An Email</b></button>
 
-                </div>
+                </div> -->
             </section>
         </main>
     </div>
