@@ -39,12 +39,12 @@ class ViewSession {
                 'email' => $_POST['email'],
                 'contact_person' => $_POST['contact_person'],
                 'contact_number' => $_POST['contact_number'],
-                'hall_number' => (int)$_POST['hall_number'],
+                'hall_number' => $_POST['hall_number'],
                 'session_date' => $_POST['session_date'],
                 'time_slot' => $_POST['time_slot']
             ];
 
-            var_dump(is_array($data));
+            //var_dump(is_array($data));
 
             $model = new PDC_Session;
             if($model->validate($data)){
@@ -59,7 +59,6 @@ class ViewSession {
                 else{
                     echo "Error: Could not update the session.";
                 }    
-                
             }
             else{
                 echo "Error: Validation failed.";
