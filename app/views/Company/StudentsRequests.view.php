@@ -72,19 +72,28 @@
                                             <?php foreach ($data as $student): ?>
                                                 <?php
                                                 $status = $student['Action'];
-                                                $statusClass = match ($status) {
-                                                    'Shortlist' => 'Shortlist',
-                                                    'Reject' => 'Reject',
-                                                    'Recruit' => 'Recruit',
-                                                    default => 'Pending',
-                                                };
+                                                
 
-                                                $statusText = match ($status) {
-                                                    'Shortlist' => 'Shortlisted',
-                                                    'Reject' => 'Rejected',
-                                                    'Recruit' => 'Recruited',
-                                                    default => 'Pending',
-                                                };
+                                                switch ($status) {
+                                                    case 'Recruit':
+                                                        $statusText = 'Recruit';
+                                                        $statusClass = 'Recruit';
+                                                        break;
+                                                    case 'Reject':
+                                                        $statusText = 'Rejected';
+                                                        $statusClass = 'Reject';
+                                                        break;
+                                                    case 'Interview Scheduled':
+                                                        $statusText = 'Interview Scheduled';
+                                                        $statusClass = 'Sendemail';
+                                                        break;
+                                                    default:
+                                                        $statusText = 'Awaiting';
+                                                        $statusClass = 'Pending';
+                                                        break;
+                                                }
+
+                                                
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>

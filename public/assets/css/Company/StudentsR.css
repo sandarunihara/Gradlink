@@ -165,6 +165,16 @@
     color: orange;
     border: 2px solid orange; /* or any color you prefer for pending */
 }
+.Sendemail{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    outline: none;
+    border-radius: 5px;
+    color: #00cea8;
+    border: 2px solid #00cea8;
+}
 .view-profile-btn-with-remove{
     width: 100%;
     padding: 8px;
