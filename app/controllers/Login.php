@@ -15,33 +15,21 @@ class Login
 					$user = new student;
 					$arr['StudentId'] = $_POST['userId'];
 					$path = 'Student/Studentdash/dashboard';
-					if(!isset($_SESSION['user'])){
-						$_SESSION['user'] = 'student';
-					}
 					break;
 				case 4:
 					$user = new company;
 					$arr['CompanyId'] = $_POST['userId'];
 					$path = 'company/Companydash/Dashboard';
-					if(!isset($_SESSION['user'])){
-						$_SESSION['user'] = 'company';
-					}
 					break;
 				case 5:
 					$user = new pdc_assistant;
 					$arr['AssistantId'] = $_POST['userId'];
 					$path = 'PDC_admin/AdminDashboardOverview/dashboard';
-					if(!isset($_SESSION['user'])){
-						$_SESSION['user'] = 'pdc_admin';
-					}
 					break;
 				case 12:
 					$user = new pdc_coordinator;
 					$arr['CoordinatorId'] = $_POST['userId'];
 					$path = 'PDC_coordinator/DashboardCompany';
-					if(!isset($_SESSION['user'])){
-						$_SESSION['user'] = 'pdc_coordinator';
-					}
 					break;
 				default:
 					$user = null;
@@ -51,7 +39,9 @@ class Login
 				$row = $user->first($arr);
 				if ($row && $row->Password === $_POST['password']) {
 					// Set session for the user
+					session_start();
 					$_SESSION['USER'] = $row;
+					$_SESSION['PATH'] = $path;
 
 					// print_r($_POST['remember_me']);
 					// Check if "Remember Me" is selected

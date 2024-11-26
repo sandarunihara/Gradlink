@@ -10,7 +10,6 @@
 
             'ComplaintId',
             'Topic',
-            'Date',
             'Description',
             'Status',
             'CompanyId',

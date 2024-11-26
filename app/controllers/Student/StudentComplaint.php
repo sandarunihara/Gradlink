@@ -16,8 +16,6 @@ class StudentComplaint{
         $data = [];
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            
-            $data['Date'] = $_POST['date'];
             $data['Topic'] = $_POST['topic'];
             $data['Description'] = $_POST['description'];
             $data['StudentId'] = $_SESSION['USER'] -> StudentId;
@@ -25,9 +23,13 @@ class StudentComplaint{
             
             $complaint = new complaint;
             $result = $complaint -> insert($data);
-            show($result);
+            if($result){
+                header('location: ' . ROOT . '/Student/StudentComplaint/complaint');
+            }
+        }else{
+            $this-> view('Student/NewComplaint', $data);
         }
-        $this-> view('Student/NewComplaint', $data);
+        
 
     }
     public function viewComplaint($complaintId){

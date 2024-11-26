@@ -20,58 +20,34 @@
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
         <div class="main-content">
-            <form action="" method="post" onsubmit="return validateForm()">
-                <fieldset>
-                    <legend><h2>New Complaint</h2></legend>
-                    <label for="date">Date</label>
-                    <input type="date" name="date" id="date">
-                    <span class="error-message" id="dateError"></span>
-
+            <div class="container">
+                <form id="descriptionForm" method="post">
+                    <!-- Topic Input -->
                     <label for="topic">Topic</label>
-                    <input type="text" name="topic" id="topic">
-                    <span class="error-message" id="topicError"></span>
-                    
-                    <label for="description">Description</label>
-                    <textarea name="description" id="description" cols="30"></textarea>                            
-                    <span class="error-message" id="descriptionError"></span>
+                    <input type="text" name="topic" id="topic" placeholder="Enter the topic" oninput="validateTopic()" required>
 
-                    <button type="submit">Submit</button>
-                </fieldset>
-            </form>
+                    <!-- Description Textarea -->
+                    <label for="description">Description (50-100 words)</label>
+                    <textarea name="description" id="description" cols="50" rows="5" oninput="validateDescription()"></textarea>
+                    
+                    <span class="error-message" id="descriptionError"></span>
+                    <span class="valid-message" id="descriptionValidMessage"></span>
+                    <span class="error-message" id="topicError"></span>
+                    <div class="button-container">
+                        <button 
+                            type="submit" 
+                            id="submitButton" 
+                            disabled 
+                            onclick="location.href='<?=ROOT?>/Student/StudentComplaint/newComplaint';"
+                        >                            
+                        Submit
+                        </button>
+                        <button type="button" id="clearButton" onclick="clearForm()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
 </html>
-
-
-<script>
-    function validateForm() {
-        let isValid = true;
-
-        // Clear previous error messages
-        document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
-
-        // Validate date
-        const date = document.getElementById('date').value;
-        if (!date) {
-            document.getElementById('dateError').textContent = "Please enter a date.";
-            isValid = false;
-        }
-
-        // Validate topic
-        const topic = document.getElementById('topic').value.trim();
-        if (!topic) {
-            document.getElementById('topicError').textContent = "Please enter a topic.";
-            isValid = false;
-        }
-
-        // Validate description
-        const description = document.getElementById('description').value.trim();
-        if (!description) {
-            document.getElementById('descriptionError').textContent = "Please enter a description.";
-            isValid = false;
-        }
-
-        return isValid;
-    }
-</script>
+<script src="<?=ROOT?>/assets/js/Student/newComplaint.js"></script>
