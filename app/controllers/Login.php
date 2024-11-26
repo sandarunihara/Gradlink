@@ -9,31 +9,39 @@ class Login
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
-			
-			$user = null;
-			$arr = [];
-			$path = '';
-
+		
 			switch ($userNum) {
 				case 9:
 					$user = new student;
 					$arr['StudentId'] = $_POST['userId'];
 					$path = 'Student/Studentdash/dashboard';
+					if(!isset($_SESSION['user'])){
+						$_SESSION['user'] = 'student';
+					}
 					break;
 				case 4:
 					$user = new company;
 					$arr['CompanyId'] = $_POST['userId'];
 					$path = 'company/Companydash/Dashboard';
+					if(!isset($_SESSION['user'])){
+						$_SESSION['user'] = 'company';
+					}
 					break;
 				case 5:
 					$user = new pdc_assistant;
 					$arr['AssistantId'] = $_POST['userId'];
 					$path = 'PDC_admin/AdminDashboardOverview/dashboard';
+					if(!isset($_SESSION['user'])){
+						$_SESSION['user'] = 'pdc_admin';
+					}
 					break;
 				case 12:
 					$user = new pdc_coordinator;
 					$arr['CoordinatorId'] = $_POST['userId'];
 					$path = 'PDC_coordinator/DashboardCompany';
+					if(!isset($_SESSION['user'])){
+						$_SESSION['user'] = 'pdc_coordinator';
+					}
 					break;
 				default:
 					$user = null;

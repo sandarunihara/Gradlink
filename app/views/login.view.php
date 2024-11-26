@@ -54,6 +54,13 @@
             successToast("ok");
         </script>
     <?php endif; ?>
+    
+    <!-- error should be displayed to user -->
+    <!-- <?php if(!empty($data['errorsInBase'])): ?>
+        <script>
+            errorToast("<?= $data['errorsInBase'] ?>");
+        </script>
+    <?php endif; ?> -->
 </body>
 
 
