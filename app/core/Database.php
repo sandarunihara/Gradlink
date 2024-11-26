@@ -38,8 +38,6 @@
                     return $result;
                 }  
             }
-            
-
             return false;
         }
         
@@ -54,18 +52,16 @@
                     return $result[0];
                 }  
             }
-
             $con = null;
             return false;
         }
-        // Close connection if needed
+
         public static function closeConnection() {
             if (self::$con) {
                 self::$con = null;
             }
         }
 
-        // Destructor to ensure the connection is closed
         public function __destruct() {
             self::closeConnection();
         }

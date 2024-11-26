@@ -22,4 +22,14 @@
                 echo "Component not found";
             }
         }
+
+        public function renderPDC_adminTabs($tabname, $tabprops = []){
+            $fileName = "../app/views/PDC_admin/Tabs/" . $tabname . ".view.php";
+            if (file_exists($fileName)) {
+                require $fileName;
+            } else {
+                echo "Tab not found";
+            }
+        }
+
     }

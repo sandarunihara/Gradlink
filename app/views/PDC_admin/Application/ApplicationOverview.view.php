@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/application/overviewApplication.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
 </head>
 
 <body>
@@ -30,6 +31,9 @@
                     </div>
                 </div>
             </header>
+
+            <?php $activeTab = 'applications'; ?>
+            <?php $this->renderPDC_adminTabs("applicationTabs") ?>
 
             <section class="company-list">
                 <div class="list-header">
@@ -76,49 +80,6 @@
                 </table>
 
             </section>
-
-            <!-- Working Students -->
-            <section class="company-list">
-                <div class="list-header">
-                    <h2>Working Students</h2>
-
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Registration No.</th>
-                            <th>Name</th>
-                            <th>Degree</th>
-                            <th>Company</th>
-                            <th>Position</th>
-                            <th>Email</th>
-                            <th>Duration</th>
-                            <th>Started Date</th>
-                            <th>Ending Date</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2022/CS/123</td>
-                            <td>T.Y. Silva</td>
-                            <td>CS</td>
-                            <td>WSO2</td>
-                            <td>Software Engineer</td>
-                            <td>thisal@gmail.com</td>
-                            <td>6 months</td>
-                            <td>2024/10/14</td>
-                            <td>2025/04/14</td>
-                            <td>working</td>
-                            <td><button class="view-btn">View Profile</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-
-            </section>
-
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
