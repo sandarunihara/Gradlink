@@ -109,12 +109,16 @@
                                         <button type="button" value="shortlist" onclick="openShortlistConfirmModal(event)" class="accept">Shortlist</button>
                                     </div>
                                 </div>
-
+                                
                                 <div class="acce_rej" id="RecruitSection">
                                     <h3>Action :</h3>
                                     <div class="btn">
                                         <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
+                                        <?php if($interviewschedule == 0): ?>
+                                        <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
+                                        <?php elseif($interviewschedule == 1): ?>
                                         <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div>
