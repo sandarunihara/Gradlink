@@ -2,7 +2,7 @@
 
 class Companydash
 {
-    use Controller;
+    use BaseController;
     public function dashboard()
     {
         $user = "";

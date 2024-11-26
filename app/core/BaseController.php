@@ -5,31 +5,23 @@ Trait BaseController{
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
+        
         // Ensure the user is logged in
         if (!isset($_SESSION['USER'])) {
-            redirect("login");
+            $data ['errorsInBase'] = "You must be logged in to access this page";
+            redirect("login", $data);
             exit;
         }
 
         // Role-based access control
-        $currentRoleDetails = $_SESSION['USER'];
-        if(isset($currentRoleDetails->StudentId)){
-            $currentRole = "Student";
-        }
-        if(isset($currentRoleDetails->CompanyId)){
-            $currentRole = "Company";
-        }
-        if(isset($currentRoleDetails->AssistantId)){
-            $currentRole = "Assistant";
-        }
-        if(isset($currentRoleDetails->CoordinatorId)){
-            $currentRole = "Coordinator";
-        }
+        //show($_SESSION['user']);
+        $currentRole = $_SESSION['user'];
         $requestingUserArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'))  ;    
-        $requestingUser = $requestingUserArray[2];
+        $requestingUser = strtolower($requestingUserArray[2]);
+        //show($requestingUser);
         if ($currentRole !== $requestingUser) {
-            redirect("login");
+            $data ['errorsInBase'] = "You do not have permission to access this page";
+            redirect("login", $data);
             exit;
         }
     }

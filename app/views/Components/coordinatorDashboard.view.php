@@ -39,6 +39,6 @@
     </nav>
     <div class="logout">
 
-        <a href="#">Logout</a>
+        <a href="<?=ROOT?>/logout">Logout</a>
     </div>
 </aside>

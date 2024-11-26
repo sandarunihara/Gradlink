@@ -6,10 +6,10 @@ class Logout
 	public function index()
 	{
 		// Unset all session variables
-		session_unset();
+		unset($_SESSION['USER']);
 
 		// Destroy the session
-		session_destroy();
+		//session_destroy();
 
 		// Redirect to the 'home' page
 		redirect('home');
