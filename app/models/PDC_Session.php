@@ -5,8 +5,7 @@ class PDC_Session {
 
     protected $table = 'session';
 
-    public function validate($data)
-{
+    public function validate($data) {
     $this->errors = [];
 
     //var_dump($data);
@@ -38,14 +37,13 @@ class PDC_Session {
         $this->errors['time_slot'] = "Time slot is required";
     }
 
-    //var_dump($this->errors);
+    var_dump($this->errors);
     return empty($this->errors);
-}
+    }
 
     public function findall()
     {
         $query = "SELECT * FROM $this->table";
-
         $result = $this->query($query);
         return $result;
     }
@@ -61,6 +59,13 @@ class PDC_Session {
         $query = "DELETE FROM $this->table WHERE session_id = :id";
         $params = [':id' => $id];
         return $this->query($query, $params);
+    }
+
+    public function findby($column,$data){
+        $query = "SELECT * FROM $this->table WHERE $column = :data LIMIT 1";
+        $params = [':data' => $data];
+        $result = $this->query($query, $params);
+        return $result ? $result[0] : false;
     }
 
 }

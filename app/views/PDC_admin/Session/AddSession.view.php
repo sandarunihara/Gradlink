@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Session</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/addSession.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/addSession.css?v=<?= time() ?>">
 
 </head>
 
@@ -31,6 +31,14 @@
             </header>
 
             <section class="company-info">
+
+                <?php if (isset($_SESSION['error'])): ?>
+                        <div class="error-message">
+                            <?= $_SESSION['error']; ?>
+                            <?php unset($_SESSION['error']); ?>
+                        </div>
+                <?php endif; ?>
+
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submit" id="session-form">
 
                     <div class="form-group">
@@ -51,7 +59,7 @@
                     </div>
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" name="contact_number" placeholder="0771234567">
+                        <input type="text" id="contact-number" name="contact_number" placeholder="0771234567" required>
                     </div>
                     <div class="form-group">
                         <label for="hall-number">Hall Number</label>
@@ -82,7 +90,7 @@
                     </div>
 
                     <div class="button-line">
-                    <button class="back-btn">Back</button>
+                    <button class="back-btn" onclick='navigateToViewSession()'>Back</button>
                     <div class="action-buttons">
                         <button type="submit" class="btn confirm-btn">Confirm</button>
                     </div>
@@ -93,7 +101,7 @@
             </section>
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
 </body>
 
 </html>

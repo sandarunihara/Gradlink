@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/overviewSession.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/overviewSession.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
 </head>
 
@@ -49,6 +49,7 @@
                             <th>Date</th>
                             <th>Time Slot</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,7 @@
                                     <td><?= htmlspecialchars(is_array($session) ? $session['session_date'] : $session->session_date) ?></td>
                                     <td><?= htmlspecialchars(is_array($session) ? $session['time_slot'] : $session->time_slot) ?></td>
                                     <td><button class="view-btn" onclick="navigateToShowSession(<?= is_array($session) ? $session['session_id'] : $session->session_id ?>)">View</button></td>
+                                    <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDelete(<?= $session->session_id ?>)">Delete</button></td>
                                     <td></td>
                                 </tr>
                             <?php endforeach; ?>

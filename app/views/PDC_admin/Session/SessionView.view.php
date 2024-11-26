@@ -95,15 +95,14 @@
                 <div class="button-line">
                     <div class="action-buttons">
                         <button type='button' class='btn update-btn' id='save-btn' style='display: none;'>Save</button>
-                        <button class="btn block-btn" id="delete-btn" onclick="navigateToDelete(<?= $session->session_id ?>)">Delete</button>
-                        <button class="btn update-btn" id="edit-btn">Update</button>
+                        <button class="btn update-btn" id="edit-btn" onclick="updateSession();">Update</button>
                         <button class="btn back-btn" id="back-btn" onclick="history.back()">Back</button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
 </body>
 
 </html>

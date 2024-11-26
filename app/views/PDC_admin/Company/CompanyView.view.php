@@ -68,7 +68,7 @@
                 <div class="button-line">
                     <button class="view-website-btn">View Website</button>
                     <div class="action-buttons">
-                        <button class="btn back-btn">Back</button>
+                        <button class="btn back-btn" onclick='history.back()'>Back</button>
                     </div>
                 </div>
             </section>

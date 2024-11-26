@@ -99,7 +99,7 @@
                 <div class="action-buttons">
                 <div class="button-line">
                     <div class="action-buttons">
-                        <button class="btn back-btn">Back</button>
+                        <button class="btn back-btn" onclick='history.back()'>Back</button>
                     </div>
                 </div>
                 </div>

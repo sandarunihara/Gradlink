@@ -183,6 +183,12 @@ table td {
     background-color: #e34646;
 } */
 
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 .delete-btn {
     background-color: #ff0000;

@@ -11,6 +11,7 @@ class student
 		'StudentId',
 		'Password',
 		'Name',
+		'NIC',
 		'DegreeName',
 		'Status',
 		'ShortDesc',
@@ -19,27 +20,46 @@ class student
 		'Github',
 		'Linkedin',
 	];
-	
-	public function validate($data)
-	{
+
+	public function validate($data) {
+		var_dump($data);
 		$this->errors = [];
-
-		if(empty($data['UserId']))
-		{
-			$this->errors['UserId'] = "id is required";
+		if (empty($data['StudentId'])) {
+			$this->errors['StudentId'] = "Student Id is required";
 		}
-		if(empty($data['password']))
-		{
-			$this->errors['password'] = "Password is required";
+		if (empty($data['NIC'])) {
+			$this->errors['NIC'] = "Student NIC is required";
+		}
+		if (empty($data['Name'])) {
+			$this->errors['Name'] = "Student Name is required";
+		}
+		if (empty($data['Email'])) {
+			$this->errors['Email'] = "Email is required";
+		}
+		if (empty($data['DegreeName'])) {
+			$this->errors['DegreeName'] = "Degree Name is required";
+		}
+		if (empty($data['Status'])) {
+			$this->errors['Status'] = "Status is required";
+		}
+
+		var_dump($this->errors);
+		return empty($this->errors);
 		}
 	
+	public function findall()
+    {
+        $query = "SELECT * FROM $this->table";
 
-		if(empty($this->errors))
-		{
-			return true;
-		}
+        $result = $this->query($query);
+        return $result;
+    }
 
-		return false;
-	}
+	public function find($id){
+        $query = "SELECT * FROM $this->table WHERE StudentId = :id";
+        $params = [':id' => $id];
+        $result = $this->query($query, $params);
+        return $result ? $result[0] : null;
+    }
 }
 

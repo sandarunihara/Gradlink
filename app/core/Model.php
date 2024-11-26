@@ -82,7 +82,6 @@
             return true;
         }
 
-
         public function update($id, $data, $id_column) {
 
             try {
@@ -137,13 +136,11 @@
             if (is_array($stmt)) {
                 $stmt = (object) $stmt;
             }
-        
-            // Check if the query was successful and if it returned a valid statement
+
             if ($stmt && $stmt->rowCount() > 0) {
                 return "Record deleted successfully.";
             } else {
                 return "Error: Record could not be deleted.";
             }
         }
-        
     }

@@ -5,36 +5,36 @@
     font-family: 'Arial', sans-serif;
 }
 body {
-    background-color: #f0f4ff;
-    display: flex;
-    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     display: flex;
-    width: 100%;
+    min-height: 100vh;
 }
 
 .main-content {
-    flex-grow: 1;
-    padding: 30px;
-    /* background-color: #f9fcff; */
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.header-left
-{
-    flex-direction: row;
-    display: flex;
-    gap: 10%;
-}
 .header-left h1 {
-    font-size: 26px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-left: 10px;
 }
 
 .header-right {
@@ -49,22 +49,103 @@ body {
     border-radius: 50%;
 }
 
-.user-info {
-    display: flex;
-    flex-direction: column;
-}
-
 .user-info span {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
-.user-info small {
-    font-size: 14px;
-    color: #777;
+.main-cards {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
 }
+
+.card {
+    background-color: #007bff;
+    color: #fff;
+    flex: 0.5;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-inner h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.analysis-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.recruitment-analysis,
+.company-performance {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.graphs {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#curve_chart {
+    margin-top: 20px;
+}
+
+.round-type{
+    font-size: 40px;
+    justify-content: center;
+    margin-left: 500px;
+    font-weight: bolder;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .main-cards {
+        flex-direction: column;
+    }
+
+    .analysis-container {
+        flex-direction: column;
+    }
+}
+
+
+
 /* Layout for the views section */
-.views {
+/* .views {
     display: flex;
     gap: 20px;
     margin-top: 50px;
@@ -76,7 +157,7 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    flex: 1;  /* Each view takes equal space, but they grow based on content */
+    flex: 1;  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,27 +173,27 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    margin-bottom: 20px; /* Space between button and content */
-    width: 80%; /* Button width adjustment */
+    margin-bottom: 20px; 
+    width: 80%; 
     text-align: center;
 }
 
 .company-view button:hover, .student-view button:hover {
-    background-color: #3b76c2; /* Darker shade on hover */
-    transform: translateY(-3px); /* Lift effect on hover */
+    background-color: #3b76c2; 
+    transform: translateY(-3px); 
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .company-view button:active, .student-view button:active {
-    transform: translateY(2px); /* Pressed effect */
+    transform: translateY(2px); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Grid container for logos and profile pictures */
+
 .logo-grid, .profile-pic-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Dynamic columns */
-    grid-auto-rows: 100px; /* Each row has a fixed height */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-auto-rows: 100px; 
     gap: 20px;
     width: 100%;
     margin-top: 20px;
@@ -130,4 +211,4 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-}
+} */
