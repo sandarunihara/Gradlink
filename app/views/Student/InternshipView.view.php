@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/internshipView.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -34,26 +36,8 @@
                     <div class="inform">
                         <div>
                             <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
-                            <!-- <h4>Internship Period:<span><?php echo $data[0]->period ?></span></h4> -->
-                            <h4>No of interns:<span><?php echo $data[0]->numOfInterns ?></span></h4>
                             <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
-                        </div>
-                        <div class="ed-del">
-                            <?php if ($data[0]->status === 'Active'): ?>
-                            <i class="fas fa-pen"
-                                data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
-                                data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
-                                data-qualification="<?php echo htmlspecialchars($data[0]->qualification, ENT_QUOTES) ?>"
-                                data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
-                                data-interns="<?php echo htmlspecialchars($data[0]->numOfInterns, ENT_QUOTES) ?>"
-                                data-workingmode="<?php echo htmlspecialchars($data[0]->workingMode, ENT_QUOTES) ?>"
-                                data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
-                                onclick="openConfirmationModal(this)">
-                            </i>
-                            <?php endif; ?>
-                            <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
-
                         </div>
                     </div>
                 </div>
@@ -73,6 +57,9 @@
                     </div>
                 </div>
                 <?php endif; ?>
+                <div class="apply-container">
+                    <button>Apply</button>
+                </div>
             </div>
         </div>
     </div>

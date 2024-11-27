@@ -41,7 +41,7 @@ class ShortlistedStudents
                 if ($item->Jobstatus === 'Recruit') {
                     $hasRecruited = true;
                 }
-                if ($item->Jobstatus == 'Shortlist') {
+                if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
                     $reqdata[] = [
                         "StudentId" => $item->StudentId,
                         'AdvertisementId' => $item->advertisementId,
@@ -67,6 +67,15 @@ class ShortlistedStudents
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         $studentJobstatus = $studentad_data[0]->Jobstatus;
 
+        $interviewschedule = 0;
+        $interviewmodel = new interview_time_slot;
+        $interviewdata = $interviewmodel->find(['StudentId' => $StudentId, 'CompanyId' => $_SESSION['USER']->CompanyId]);
+        if (!empty($interviewdata)) {
+            $interviewschedule = 1;
+        }else{
+            $interviewschedule = 0;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
             $updatedata = [
                 'Jobstatus' => $_POST['submit_action']
@@ -83,11 +92,51 @@ class ShortlistedStudents
                 exit;
             } else {
                 $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus]);
+                $this->view('Company/Studentpro', ['data' => $data,'adId'=>$advertisementId, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
                 exit;
             }
         }
 
-        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus]);
+        $this->view('Company/Studentpro', ['data' => $data,'adId'=>$advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+    }
+
+    public function interviewschedule($studentId, $advertisementId){
+
+        $studentmodel = new C_Student;
+        $data = $studentmodel->findbyId($studentId);
+        $advertisementmodel = new C_Advertisement;
+        $addata = $advertisementmodel->find(['advertisementId' => $advertisementId]);
+        $updatemodel = new C_Dashboard;
+
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $model = new interview_time_slot;
+            $data = [
+                'StudentId' => $studentId,
+                'CompanyId' => $_SESSION['USER']->CompanyId,
+                'Date' => $_POST['date'],
+                'StartTime' => $_POST['starttime'],
+                'EndTime' => $_POST['endtime']
+            ];
+
+            $updatedata = [
+                'Jobstatus' => 'Interview Scheduled'
+            ];
+
+            $updateresult = $updatemodel->update($studentId, $advertisementId, $updatedata);
+            $result=$model->insert($data);
+            if($result && $updateresult['status']){
+                $success = "Interview Schedule created successfully.";
+                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/'.$advertisementId.'/'.$studentId);
+                exit;
+            }else{
+                $error = "There was an issue creating the Interview Schedule.";
+                $this->view('Company/CreateSchedule', ['error' => $error]);
+                exit;
+            }
+        }
+
+        $this-> view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata]);
+
     }
 }

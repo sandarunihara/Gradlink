@@ -1,7 +1,7 @@
 <?php
 class DashboardCompany
 {
-    use Controller;
+    use BaseController;
     public function index()
     {
         // $this->view('Coordinator/Company/dashboardCompany');

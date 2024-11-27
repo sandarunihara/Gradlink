@@ -1,7 +1,7 @@
 <?php
 
 class StudentProfile{
-    use Controller;
+    use BaseController;
     public function profile(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;

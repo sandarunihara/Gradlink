@@ -1,13 +1,13 @@
 <?php
 class Logout
 {
-	use Controller;
+	use BaseController;
 
 	public function index()
 	{
 		// Unset all session variables
 		session_unset();
-
+		
 		// Destroy the session
 		session_destroy();
 

@@ -1,10 +1,9 @@
 <?php
 
 class Studentdash{
-    use Controller;
+    use BaseController;
     public function dashboard(){
         $data =[];
-        //show($_SESSION['USER']);
                 
         $this-> view('Student/Dashboard',$data);
     }  

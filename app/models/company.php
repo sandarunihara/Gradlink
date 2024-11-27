@@ -60,9 +60,9 @@ class company
 		if (empty($this->errors)) {
 			return true;
 		}
-		print_r($this->errors);
-
-		return false;
+		// print_r($this->errors);
+		return empty($this->errors);
+		// return $this->errors;
 	}
 
 	public function validatePendingCompany($data)

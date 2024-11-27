@@ -1,7 +1,7 @@
 <?php
 
 class StudentTT{
-    use Controller;
+    use BaseController;
     public function techtalk(){
         $data =[];
 

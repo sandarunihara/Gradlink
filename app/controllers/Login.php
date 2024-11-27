@@ -9,7 +9,7 @@ class Login
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
-
+		
 			switch ($userNum) {
 				case 9:
 					$user = new student;
@@ -39,7 +39,9 @@ class Login
 				$row = $user->first($arr);
 				if ($row && $row->Password === $_POST['password']) {
 					// Set session for the user
+					session_start();
 					$_SESSION['USER'] = $row;
+					$_SESSION['PATH'] = $path;
 
 					// print_r($_POST['remember_me']);
 					// Check if "Remember Me" is selected

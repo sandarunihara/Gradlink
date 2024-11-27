@@ -29,7 +29,11 @@
     font-size: 14px;
     outline: none;
 }
-
+.job-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 /* Job Card Styling */
 .job-card {
     display: flex;
