@@ -56,21 +56,31 @@
 
 
                                         foreach ($firstEight as $item) {
-                                            $statusClass = ($item['Status'] === 'Pending')
-                                                ? 'status pending'
-                                                : (($item['Status'] === 'Shortlist')
-                                                    ? 'status shortlist'
-                                                    : (($item['Status'] === 'Recruit')
-                                                        ? 'status recruited'
-                                                        : 'status reject'));
+                                            $status=$item['Status'];
+                                            switch ($status) {
+                                                case 'Recruit':
+                                                    $Statusname = 'Recruit';
+                                                    $statusClass = 'status Recruit';
+                                                    break;
+                                                case 'Reject':
+                                                    $Statusname = 'Rejected';
+                                                    $statusClass = 'status Reject';
+                                                    break;
+                                                case 'Interview Scheduled':
+                                                    $Statusname = 'Scheduled';
+                                                    $statusClass = 'status Sendemail';
+                                                    break;
+                                                case 'Shortlist':
+                                                    $Statusname = 'Shortlisted';
+                                                    $statusClass = 'status Shortlist';
+                                                    break;
+                                                default:
+                                                    $Statusname = 'Pending';
+                                                    $statusClass = 'status Pending';
+                                                    break;
+                                            }
 
-                                                        $Statusname = match ($item['Status']) {
-                                                            'Shortlist' => 'Shortlisted',
-                                                            'Recruit' => 'Recruited',
-                                                            'Pending' => 'Pending',
-                                                            'Reject' => 'Rejected',
-                                                            default => $item['Status'],
-                                                        };
+                                            
 
 
                                             echo '<li>';
