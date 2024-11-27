@@ -29,7 +29,7 @@ class Login
 				case 12:
 					$user = new pdc_coordinator;
 					$arr['CoordinatorId'] = $_POST['userId'];
-					$path = 'PDC_coordinator/DashboardCompany';
+					$path = 'PDC_coordinator/Dashboard';
 					break;
 				default:
 					$user = null;

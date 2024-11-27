@@ -13,6 +13,24 @@
     overflow-x: hidden;
 
 }
+.backreq{
+    position: absolute;
+    width: fit-content;
+    display: flex;
+    gap: 2px;
+    margin-left: 10px;
+    font-size: small;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    transition: 0.3s;
+}
+.backreq:hover{
+    color: #ff0000;
+}
+.backbuttoncom{
+    width: 100%;
+}
 .coverphoto{
     width: 1100px;
     height: 200px;

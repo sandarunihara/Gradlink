@@ -93,20 +93,23 @@
     gap: 100px;
     margin-bottom: 2px;
 }
-.status.shortlist {
+.status.Shortlist {
     color: #0056b3;
 }
 
-.status.reject {
+.status.Reject {
     color: #db4437;
 }
 
-.status.pending {
+.status.Pending {
     color: #f4b400;
 }
 
-.status.recruited {
+.status.Recruit {
     color: #0f9d58;
+}
+.status.Sendemail{
+    color: #00cea8;
 }
 
 .d_view_all{

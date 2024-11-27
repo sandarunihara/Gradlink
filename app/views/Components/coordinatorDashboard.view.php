@@ -1,44 +1,68 @@
-<aside class="sidebar">
-    <div class="logo">
-        <img src="<?= ROOT ?>/assets/images/logo.png" alt="GRadlink logo">
+<div id="sidebar" class="sidebar ">
+    <div class="logodiv">
+        <img src="<?php echo ROOT ?>/assets/img/grad.png" height="200" width="200" class="logo" />
     </div>
+    <div id="sidebaroption" class="sidebaroption ">
 
-    <nav class="nav-menu">
-        <div class="nav-item">
+        <a class="option dash" href="/GRadlink/public/PDC_coordinator/dashboard">
             <i class="material-icons">dashboard</i>
-            <a href="#" class="active">Dashboard</a>
-        </div>
-        <div class="nav-item active">
-            <i class="material-icons">business</i>
-            <a href="/GRadlink/public/PDC_coordinator/dashboardCompany">Companies</a>
-        </div>
-        <div class="nav-item">
-            <i class="material-icons">school</i>
-            <a href="/GRadlink/public/PDC_coordinator/dashboardStudent">Students</a>
-        </div>
-        <div class="nav-item">
-            <i class="material-icons">tab</i>
-            <a href="/GRadlink/public/PDC_coordinator/dashboardAdvertisement">Advertisements</a>
-        </div>
-        <div class="nav-item">
-            <i class="material-icons">article</i>
-            <a href="/GRadlink/public/PDC_coordinator/dashboardApplication">Applications</a>
-        </div>
-        <div class="nav-item">
-            <i class="material-icons">event</i>
-            <a href="/GRadlink/public/PDC_coordinator/dashboardSession">Sessions</a>
-        </div>
-        <div class="nav-item">
-            <i class="material-icons">help</i>
-            <a href="/GRadlink/public/PDC_coordinator/dashboardCompanyComplain">Complains</a>
-        </div>
-        <div class="nav-item">
-            <i class="material-icons">account_circle</i>
-            <a href="#">Profile</a>
-        </div>
-    </nav>
-    <div class="logout">
+            <div>
+                <p>Dashboard</p>
+            </div>
+        </a>
 
-        <a href="<?=ROOT?>/logout">Logout</a>
+        <a class="option" href="/GRadlink/public/PDC_coordinator/dashboardCompany">
+            <i class="material-icons">business</i>
+            <div>
+                <p>Companies</p>
+            </div>
+        </a>
+
+        <a class="option" href="/GRadlink/public/PDC_coordinator/dashboardStudent">
+            <i class="material-icons">school</i>
+
+            <div>
+                <p>Students</p>
+            </div>
+        </a>
+
+        <a class="option" href="/GRadlink/public/PDC_coordinator/dashboardAdvertisement">
+            <i class="material-icons">tab</i>
+
+            <div>
+                <p>Advertisements</p>
+            </div>
+        </a>
+
+        <a class="option" href="/GRadlink/public/PDC_coordinator/dashboardApplication">
+            <i class="material-icons">article</i>
+            <div>
+                <p>Applications</p>
+            </div>
+        </a>
+
+        <a class="option" href="/GRadlink/public/PDC_coordinator/dashboardSession">
+            <i class="material-icons">event</i>
+            <div>
+                <p>Sessions</p>
+            </div>
+        </a>
+
+        <a class="option" href="/GRadlink/public/PDC_coordinator/dashboardCompanyComplain">
+            <i class="material-icons">help</i>
+            <div>
+                <p>Complains</p>
+            </div>
+        </a>
+
+        <a class="option logout" href="<?= ROOT ?>/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <div>
+                <p>Log out</p>
+            </div>
+        </a>
+
+
     </div>
-</aside>
+</div>
+

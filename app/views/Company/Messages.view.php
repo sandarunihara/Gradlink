@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="time_div">
-                                <i class="fas fa-check"></i>
+                                <i class="fas fa-close"></i>
                             </div>
                         </a>
                     <?php endforeach; ?>
