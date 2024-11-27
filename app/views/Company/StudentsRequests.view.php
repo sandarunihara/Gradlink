@@ -87,8 +87,12 @@
                                                         $statusText = 'Interview Scheduled';
                                                         $statusClass = 'Sendemail';
                                                         break;
+                                                    case 'Shortlist':
+                                                        $statusText = 'Shortlisted';
+                                                        $statusClass = 'Shortlist';
+                                                        break;
                                                     default:
-                                                        $statusText = 'Awaiting';
+                                                        $statusText = 'Pending';
                                                         $statusClass = 'Pending';
                                                         break;
                                                 }
