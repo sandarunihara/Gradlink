@@ -4,7 +4,7 @@
     </div>
     <div id="sidebaroption" class="sidebaroption ">
 
-        <a class="option dash" href="../AdminDashboardOverview/dashboard">
+        <a class="option dash" href="/GRadlink/public/PDC_coordinator/dashboard">
             <i class="material-icons">dashboard</i>
             <div>
                 <p>Dashboard</p>
