@@ -31,56 +31,80 @@
             </header>
 
             <section class="company-info">
-
-                <?php if (isset($_SESSION['error'])): ?>
-                        <div class="error-message">
-                            <?= $_SESSION['error']; ?>
-                            <?php unset($_SESSION['error']); ?>
-                        </div>
-                <?php endif; ?>
-
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddStudent/submit" id="student-form">
 
                     <div class="form-group">
                         <label for="student-id">Student ID</label>
-                        <input type="text" id="student-id" name="StudentId" placeholder="Registration Number" required>
+                        <input type="text" id="student-id" name="StudentId" placeholder="2022cs021" 
+                            value="<?= htmlspecialchars($old_data['StudentId'] ?? '') ?>" required>
+                        <?php if (!empty($errors['StudentId'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['StudentId']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="student-nic">Student NIC</label>
-                        <input type="text" id="student-nic" name="NIC" placeholder="Student NIC" required>
+                        <input type="text" id="student-nic" name="NIC" placeholder="Student NIC"
+                            value="<?= htmlspecialchars($old_data['NIC'] ?? '') ?>" required>
+                        <?php if (!empty($errors['NIC'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['NIC']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="student-name">Student Name</label>
-                        <input type="text" id="student-name" name="Name" placeholder="Student Name" required>
+                        <input type="text" id="student-name" name="Name" placeholder="Student Name"
+                            value="<?= htmlspecialchars($old_data['Name'] ?? '') ?>" required>
+                        <?php if (!empty($errors['Name'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['Name']) ?></span>
+                        <?php endif; ?>
                     </div>
+                    
                     <div class="form-group">
                         <label for="student-email">Email</label>
-                        <input type="text" id="student-email" name="Email" placeholder="Student Email" required>
+                        <input type="email" id="student-email" name="Email" placeholder="Student Email"
+                            value="<?= htmlspecialchars($old_data['Email'] ?? '') ?>" required>
+                        <?php if (!empty($errors['Email'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['Email']) ?></span>
+                        <?php endif; ?>
                     </div>
+                    
                     <div class="form-group">
                         <label for="degree-name">Degree Name</label>
                         <select id="degree-name" name="DegreeName" required>
-                            <option value="" disabled selected>Select Degree</option>
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Information System">Information System</option>
+                            <option value="" disabled <?= empty($old_data['DegreeName']) ? 'selected' : '' ?>>Select Degree</option>
+                            <option value="Computer Science" <?= ($old_data['DegreeName'] ?? '') === 'Computer Science' ? 'selected' : '' ?>>Computer Science</option>
+                            <option value="Information System" <?= ($old_data['DegreeName'] ?? '') === 'Information System' ? 'selected' : '' ?>>Information System</option>
                         </select>
+                        <?php if (!empty($errors['DegreeName'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['DegreeName']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select id="status" name="Status" required>
-                            <option value="" disabled selected>Select Status</option>
-                            <option value="Not Applied">Not Applied</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Recruited">Recruited</option>
+                            <option value="" disabled <?= empty($old_data['Status']) ? 'selected' : '' ?>>Select Status</option>
+                            <option value="Not Applied" <?= ($old_data['Status'] ?? '') === 'Not Applied' ? 'selected' : '' ?>>Not Applied</option>
+                            <option value="Pending" <?= ($old_data['Status'] ?? '') === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                            <option value="Recruited" <?= ($old_data['Status'] ?? '') === 'Recruited' ? 'selected' : '' ?>>Recruited</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" name="ContactNum" placeholder="0771234567" required>
+                        <?php if (!empty($errors['Status'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['Status']) ?></span>
+                        <?php endif; ?>
                     </div>
 
+                    <div class="form-group">
+                        <label for="contact-number">Contact Number</label>
+                        <input type="text" id="contact-number" name="ContactNum" placeholder="0771234567"
+                            value="<?= htmlspecialchars($old_data['ContactNum'] ?? '') ?>" required>
+                        <?php if (!empty($errors['ContactNum'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['ContactNum']) ?></span>
+                        <?php endif; ?>
+                    </div>
+                    
                     <div class="button-line">
-                    <button class="back-btn" onclick='navigateToViewStudent()'>Back</button>
+                    <button class="back-btn" onclick='history.back()'>Back</button>
                     <div class="action-buttons">
                         <button type="submit" class="btn confirm-btn">Confirm</button>
                     </div>

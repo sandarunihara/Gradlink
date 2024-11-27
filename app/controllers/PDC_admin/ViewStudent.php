@@ -28,48 +28,44 @@
         public function edit($studentId)
         {
     
-            if($_SERVER['REQUEST_METHOD'] === 'POST'){
-                
-                //var_dump($_POST);
-    
+            $model = new student; // Initialize the student model
+            $errors = []; // Initialize errors array
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = [
                     'StudentId' => $_POST['StudentId'],
                     'NIC' => $_POST['NIC'],
                     'Name' => $_POST['Name'],
                     'Email' => $_POST['Email'],
+                    'ContactNum' => $_POST['ContactNum'],
                     'DegreeName' => $_POST['DegreeName'],
                     'Status' => $_POST['Status']
                 ];
-    
-                //var_dump(is_array($data));
-    
-                $model = new student;
-                if($model->validate($data)){
-                    $updatedStatus = $model->update($studentId,$data,'StudentId');
-                    //var_dump($updatedStatus);
-                    var_dump($updatedStatus['status']);
-    
-                    if($updatedStatus && $updatedStatus['status'] === 'success'){
+
+                // Validate and update student details
+                if ($model->validate($data)) {
+                    $updatedStatus = $model->update($studentId, $data, 'StudentId');
+
+                    if ($updatedStatus && $updatedStatus['status'] === 'success') {
                         redirect('PDC_admin/AdminStudentOverview/dashboard');
                         exit;
+                    } else {
+                        $errors['general'] = "Error: Could not update the student.";
                     }
-                    else{
-                        echo "Error: Could not update the student.";
-                    }
-                }
-                else{
-                    echo "Error: Could not validate the data.";
-                }
-            }
-            else{
-                $model = new student;
-                $data = $model->find($StudentId);
-                if ($data) {
-                    $this->view('PDC_admin/Student/StudentEdit', ['student' => $data]);
                 } else {
-                    echo "No data found";
+                    $errors = $model->errors; // Pass validation errors from the model
                 }
             }
+
+            // Fetch existing student data if it's a GET request or validation failed
+            $data = $model->find($studentId);
+            if (!$data) {
+                $errors['general'] = "No student data found for the given ID.";
+            }
+
+            // Pass the student data and errors to the view
+            $this->view('PDC_admin/Student/StudentView', ['student' => $data, 'errors' => $errors]);
+
         }
 
     }

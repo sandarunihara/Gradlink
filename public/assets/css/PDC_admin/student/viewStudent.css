@@ -186,3 +186,11 @@ body {
 .view-progress-btn:hover{
     background-color: #0872dc;
 }
+
+.error {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+    font-family: 'Arial', sans-serif;
+}

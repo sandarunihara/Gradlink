@@ -33,61 +33,77 @@
             </header>
             <section class="student-info">
                 <form class="student-form" id="session-form" method='POST' action="<?= ROOT ?>/PDC_admin/ViewSession/edit/<?= $session->session_id ?>">
+                    
                     <div class="form-group">
                         <label for="session-name">Session Name</label>
                         <input type="text" id="session-name" name="session_name" value="<?= htmlspecialchars($session->session_name) ?>" readonly>
+                        <?php if (!empty($errors['session_name'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['session_name']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
-                        <label for="student-name">Company Name</label>
-                        <input type="text" id="student-name" name="company_name" value="<?= htmlspecialchars($session->company_name) ?>" readonly>
+                        <label for="company-name">Company Name</label>
+                        <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($session->company_name) ?>" readonly>
+                        <?php if (!empty($errors['company_name'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['company_name']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="email-address">Email Address</label>
                         <input type="email" id="email-address" name="email" value="<?= htmlspecialchars($session->email) ?>" readonly>
+                        <?php if (!empty($errors['email'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['email']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="contact-person">Contact Person</label>
                         <input type="text" id="contact-person" name="contact_person" value="<?= htmlspecialchars($session->contact_person) ?>" readonly>
+                        <?php if (!empty($errors['contact_person'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['contact_person']) ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
                         <input type="text" id="contact-number" name="contact_number" value="<?= htmlspecialchars($session->contact_number) ?>" readonly>
+                        <?php if (!empty($errors['contact_number'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['contact_number']) ?></span>
+                        <?php endif; ?>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label for="hall-number">Hall Number</label>
-                        <input type="text" id="hall-number" value="<?= htmlspecialchars($session->hall_number) ?>" readonly>
-                    </div> -->
-
                     <div class="form-group">
-                        <label for="hall-number">Hall Number</label>
+                        <label for="hall-number">Hall Name</label>
                         <select id="hall-number" name="hall_number" disabled>
-                            <option value="1" <?= $session->hall_number == 1 ? 'selected' : '' ?>>Hall 1</option>
-                            <option value="2" <?= $session->hall_number == 2 ? 'selected' : '' ?>>Hall 2</option>
-                            <option value="3" <?= $session->hall_number == 3 ? 'selected' : '' ?>>Hall 3</option>
+                            <option value="W001" <?= $session->hall_number == 'W001' ? 'selected' : '' ?>>W001</option>
+                            <option value="S104" <?= $session->hall_number == 'S104' ? 'selected' : '' ?>>S104</option>
+                            <option value="S202" <?= $session->hall_number == 'S202' ? 'selected' : '' ?>>S202</option>
                         </select>
+                        <?php if (!empty($errors['hall_number'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['hall_number']) ?></span>
+                        <?php endif; ?>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="text" id="session-date" placeholder="" value="<?= htmlspecialchars($session->session_date) ?>" readonly>
-                    </div> -->
+
                     <div class="form-group">
-                        <label for="session-date">Date</label>
+                        <label for="session-date">Session Date</label>
                         <input type="date" id="session-date" name="session_date" value="<?= htmlspecialchars($session->session_date) ?>" readonly>
+                        <?php if (!empty($errors['session_date'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['session_date']) ?></span>
+                        <?php endif; ?>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="time-slot">Time Slot</label>
-                        <input type="text" id="time-slot" placeholder="" value="<?= htmlspecialchars($session->time_slot) ?>" readonly>
-                    </div> -->
+
                     <div class="form-group">
                         <label for="time-slot">Time Slot</label>
                         <select id="time-slot" name="time_slot" disabled>
-                            <option value="9:00 AM - 11:00 AM" <?= $session->time_slot == '9-11am' ? 'selected' : '' ?>>9:00 AM - 11:00 AM</option>
-                            <option value="11:00 AM - 1:00 PM" <?= $session->time_slot == '11-1pm' ? 'selected' : '' ?>>11:00 AM - 1:00 PM</option>
-                            <option value="2:00 AM - 4:00 AM" <?= $session->time_slot == '2-4pm' ? 'selected' : '' ?>>2:00 AM - 4:00 AM</option>
-                            <option value="4:00 AM - 6:00 AM" <?= $session->time_slot == '4-6pm' ? 'selected' : '' ?>>4:00 AM - 6:00 AM</option>
+                            <option value="9:00 AM - 11:00 AM" <?= $session->time_slot == '9:00 AM - 11:00 AM' ? 'selected' : '' ?>>9:00 AM - 11:00 AM</option>
+                            <option value="11:00 AM - 1:00 PM" <?= $session->time_slot == '11:00 AM - 1:00 PM' ? 'selected' : '' ?>>11:00 AM - 1:00 PM</option>
+                            <option value="2:00 AM - 4:00 AM" <?= $session->time_slot == '2:00 AM - 4:00 AM' ? 'selected' : '' ?>>2:00 AM - 4:00 AM</option>
                         </select>
+                        <?php if (!empty($errors['time_slot'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['time_slot']) ?></span>
+                        <?php endif; ?>
                     </div>
 
 

@@ -22,30 +22,34 @@ class student
 	];
 
 	public function validate($data) {
-		var_dump($data);
-		$this->errors = [];
-		if (empty($data['StudentId'])) {
-			$this->errors['StudentId'] = "Student Id is required";
+		$this->errors = []; // Clear errors each time validate is called
+	
+		if (empty($data['StudentId']) || !preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
+			$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
 		}
-		if (empty($data['NIC'])) {
-			$this->errors['NIC'] = "Student NIC is required";
+		if (empty($data['NIC']) || !preg_match('/^(\d{9}[vVxX]|\d{12})$/', $data['NIC'])) {
+			$this->errors['NIC'] = "NIC must be 9 digits followed by 'V' or 'X', or 12 digits.";
 		}
 		if (empty($data['Name'])) {
-			$this->errors['Name'] = "Student Name is required";
+			$this->errors['Name'] = "Student Name is required.";
 		}
-		if (empty($data['Email'])) {
-			$this->errors['Email'] = "Email is required";
+		if (empty($data['Email']) || !filter_var($data['Email'], FILTER_VALIDATE_EMAIL)) {
+			$this->errors['Email'] = "Valid Email is required.";
 		}
-		if (empty($data['DegreeName'])) {
-			$this->errors['DegreeName'] = "Degree Name is required";
+		if (empty($data['DegreeName']) || !in_array($data['DegreeName'], ['Computer Science', 'Information System'])) {
+			$this->errors['DegreeName'] = "Please select a valid Degree Name.";
 		}
-		if (empty($data['Status'])) {
-			$this->errors['Status'] = "Status is required";
+		if (empty($data['Status']) || !in_array($data['Status'], ['Not Applied', 'Pending', 'Recruited'])) {
+			$this->errors['Status'] = "Please select a valid Status.";
 		}
-
-		var_dump($this->errors);
-		return empty($this->errors);
+		if (empty($data['ContactNum']) || !preg_match('/^\+?\d{10,15}$/', $data['ContactNum'])) {
+			$this->errors['ContactNum'] = "Contact number must be 10-15 digits and may start with '+'.";
 		}
+	
+		return empty($this->errors); // Validation passes if no errors
+	}
+	
+	
 	
 	public function findall()
     {
@@ -61,5 +65,19 @@ class student
         $result = $this->query($query, $params);
         return $result ? $result[0] : null;
     }
+
+	public function count(){
+		$query = "SELECT COUNT(*) FROM $this->table";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function findby($column,$data){
+        $query = "SELECT * FROM $this->table WHERE $column = :data LIMIT 1";
+        $params = [':data' => $data];
+        $result = $this->query($query, $params);
+        return $result ? $result[0] : false;
+    }
+
 }
 

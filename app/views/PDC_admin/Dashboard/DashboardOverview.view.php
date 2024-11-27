@@ -48,12 +48,12 @@
                     <h1>35</h1>
                 </div>
 
-                <div class='card' onclick='navigateToStudentList();'>
+                <div class='card' onclick='navigateToStudentView();'>
                     <div class='card-inner'>
                         <i class="material-icons">school </i>
                         <h3>Student</h3>
                     </div>
-                    <h1>317</h1>
+                    <h1><?= htmlspecialchars($stdcount) ?></h1>
                 </div>
             </div>
             <div class="analysis-container">
@@ -120,15 +120,18 @@
 
                 // Curve Chart for Company Performance
                 var dataCurve = google.visualization.arrayToDataTable([
-                    ['Year', 'Sales', 'Expenses'],
-                    ['2004', 1000, 400],
-                    ['2005', 1170, 460],
-                    ['2006', 660, 1120],
-                    ['2007', 1030, 540]
+                    ['Year', 'CS', 'IS'],
+                    ['2016', 130, 80],
+                    ['2017', 117, 46],
+                    ['2018', 66, 112],
+                    ['2019', 103, 54],
+                    ['2020', 100, 84],
+                    ['2021', 150, 94],
+                    ['2022', 180, 34]
                 ]);
                 
                 var optionsCurve = {
-                    title: 'Company Performance',
+                    title: 'Intership',
                     curveType: 'function',
                     legend: { position: 'bottom' }
                 };
