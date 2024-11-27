@@ -32,6 +32,8 @@ class ViewSession {
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             
             //var_dump($_POST);
+            $model = new PDC_Session;
+            $errors = [];
 
             $data = [
                 'session_name' => $_POST['session_name'],
@@ -49,23 +51,24 @@ class ViewSession {
             $model = new PDC_Session;
             if($model->validate($data)){
                 $updatedStatus = $model->update($sessionId,$data,'session_id');
-                //var_dump($updatedStatus);
-                var_dump($updatedStatus['status']);
 
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
                     redirect('PDC_admin/AdminSessionOverview/dashboard');
                     exit;
                 }
                 else{
-                    echo "Error: Could not update the session.";
+                    $errors['general'] = "Error: Could not update the student.";
                 }    
             }
             else{
-                echo "Error: Validation failed.";
+                $errors = $model->errors;
             }
         }
-        else{
-            echo "Error: Invalid request method.";
-        }
+        $data = $model->find($sessionId);
+            if (!$data) {
+                $errors['general'] = "No student data found for the given ID.";
+            }
+            $this->view('PDC_admin/Session/SessionView', ['session' => $data, 'errors' => $errors]);
+        
         }
 }

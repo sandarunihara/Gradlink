@@ -73,20 +73,18 @@ body {
 
 .company-form {
     display: grid;
-    grid-template-columns: 1fr 7fr; /* Two columns: labels and inputs */
-    column-gap: 40px; /* Gap between label and input */
-    align-items: center;
+    grid-template-columns: 1fr 3fr; /* Adjust columns for wider inputs */
+    column-gap: 20px;
+    row-gap: 20px; /* Add vertical spacing */
+    align-items: start; /* Align labels and inputs */
+}
+.form-group label {
+    text-align: right; /* Align labels on the right side */
+    margin-right: 10px;
 }
 
 .form-group {
     display: contents; /* Allows form groups to follow grid structure */
-}
-
-.form-group label {
-    font-weight: bold;
-    margin-right: 2%;
-    justify-self: start;
-    white-space: nowrap; /* Ensures label stays on one line */
 }
 
 .form-group input,
@@ -187,10 +185,9 @@ body {
 
 
 .action-buttons {
-    margin-top: 20px;
-    justify-content: end;
     display: flex;
-    gap: 1%;
+    justify-content: space-between; /* Equal spacing for buttons */
+    align-items: center;
 }
 
 .btn {
@@ -200,7 +197,7 @@ body {
     cursor: pointer;
     padding: 10px;
     margin-top: 35px;
-    width: 14%;
+    /* width: 14%; */
     font-size: medium;
 }
 
@@ -275,4 +272,11 @@ body {
 .error-message::before {
     content: '⚠️';
     font-size: 18px;
+}
+
+.error {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
 }

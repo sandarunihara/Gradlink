@@ -14,7 +14,7 @@ class Login
 				case 9:
 					$user = new student;
 					$arr['StudentId'] = $_POST['userId'];
-					$path = 'Student/Studentdash/dashboard';
+					$path = 'Student/StudentDash/dashboard';
 					break;
 				case 4:
 					$user = new company;

@@ -2,8 +2,8 @@ function navigateToViewCompany() {
     window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/dashboard";
 }
 
-function naviagteToViewStudent() {
-    window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/dashboard";
+function navigateToViewStudent() {
+    window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/show";
 }
 
 function navigateToCompanyOverview() {
@@ -47,6 +47,10 @@ function navigateToDelete(sessionId) {
     }
 }
 
+function navigateToStudentView(){
+    window.location.href = "/Gradlink/public/PDC_admin/AdminStudentOverview/dashboard";
+}
+
 function navigateToShowStudent(studentId){
     console.log("navigate to,",studentId);
     window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/show/" + studentId;
@@ -55,6 +59,7 @@ function navigateToShowStudent(studentId){
 function navigateToAddStudent(){
     window.location.href = "/Gradlink/public/PDC_admin/AddStudent/showAddForm";
 }
+
 
 // function navigateToUpdate(session_id){
 //     window.location.href = "/Gradlink/public/PDC_admin/ViewSession/update/" + session_id;
@@ -135,9 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
-
-
 
 function navigateToUpdate(){
     const userConfirmed = confirm("Are you sure you want to update this session?");

@@ -31,62 +31,87 @@
             </header>
 
             <section class="company-info">
-
-                <?php if (isset($_SESSION['error'])): ?>
-                        <div class="error-message">
-                            <?= $_SESSION['error']; ?>
-                            <?php unset($_SESSION['error']); ?>
-                        </div>
-                <?php endif; ?>
-
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submit" id="session-form">
+
 
                     <div class="form-group">
                         <label for="session-name">Session Name</label>
-                        <input type="text" id="session-name" name="session_name" placeholder="Session name" required>
+                        <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
+                            value="<?= htmlspecialchars($old_data['session_name'] ?? '') ?>" required>
+                        <?php if (!empty($errors['session_name'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['session_name']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" name="company_name" placeholder="Company name" required>
+                        <input type="text" id="company-name" name="company_name" placeholder="Company Name" 
+                            value="<?= htmlspecialchars($old_data['company_name'] ?? '') ?>" required>
+                        <?php if (!empty($errors['company_name'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['company_name']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" name="email" placeholder="Email" required>
+                        <input type="email" id="email-address" name="email" placeholder="Company Email" 
+                            value="<?= htmlspecialchars($old_data['email'] ?? '') ?>" required>
+                        <?php if (!empty($errors['email'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['email']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" name="contact_person" placeholder="John Doe" required>
+                        <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person" 
+                            value="<?= htmlspecialchars($old_data['contact_person'] ?? '') ?>" required>
+                        <?php if (!empty($errors['contact_person'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['contact_person']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" name="contact_number" placeholder="0771234567" required>
+                        <input type="text" id="contact-number" name="contact_number" placeholder="Contact Number" 
+                            value="<?= htmlspecialchars($old_data['contact_number'] ?? '') ?>" required>
+                        <?php if (!empty($errors['contact_number'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['contact_number']) ?></span>
+                        <?php endif; ?>
                     </div>
+
                     <div class="form-group">
-                        <label for="hall-number">Hall Number</label>
+                        <label for="hall-number">Hall Name</label>
                         <select id="hall-number" name="hall_number" required>
-                            <option value="" disabled selected>Select hall number</option>
-                            <option value="1">Hall 1</option>
-                            <option value="2">Hall 2</option>
-                            <option value="3">Hall 3</option>
+                            <option value="" disabled <?= empty($old_data['hall_number']) ? 'selected' : '' ?>>Select Hall</option>
+                            <option value="W001" <?= ($old_data['hall_number'] ?? '') === 'W001' ? 'selected' : '' ?>>W001</option>
+                            <option value="S104" <?= ($old_data['hall_number'] ?? '') === 'S104' ? 'selected' : '' ?>>S104</option>
+                            <option value="S202" <?= ($old_data['hall_number'] ?? '') === 'S202' ? 'selected' : '' ?>>S202</option>
                         </select>
+                        <?php if (!empty($errors['hall_number'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['hall_number']) ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="session-date">Session Date</label>
-                        <input type="date" id="session-date" name="session_date" required>
+                        <label for="session-date">Contact Number</label>
+                        <input type="date" id="session-date" name="session_date" placeholder="Session Date" 
+                            value="<?= htmlspecialchars($old_data['session_date'] ?? '') ?>" required>
+                        <?php if (!empty($errors['session_date'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['session_date']) ?></span>
+                        <?php endif; ?>
                     </div>
-
 
                     <div class="form-group">
                         <label for="time-slot">Time Slot</label>
                         <select id="time-slot" name="time_slot" required>
-                            <option value="" disabled selected>Select time slot</option>
-                            <option value="9-11am">9:00 AM - 11:00 AM</option>
-                            <option value="11-1pm">11:00 AM - 1:00 PM</option>
-                            <option value="2-4pm">2:00 PM - 4:00 PM</option>
-                            <option value="4-6pm">4:00 PM - 6:00 PM</option>
-                            <!-- Add more time slots as needed -->
+                            <option value="" disabled <?= empty($old_data['time_slot']) ? 'selected' : '' ?>>Select Time Slot</option>
+                            <option value="9:00 AM - 11:00 AM" <?= ($old_data['time_slot'] ?? '') === '9:00 AM - 11:00 AM' ? 'selected' : '' ?>>9:00 AM - 11:00 AM</option>
+                            <option value="11:00 AM - 1:00 PM" <?= ($old_data['time_slot'] ?? '') === '11:00 AM - 1:00 PM' ? 'selected' : '' ?>>11:00 AM - 1:00 PM</option>
+                            <option value="2:00 PM - 4:00 PM" <?= ($old_data['time_slot'] ?? '') === '2:00 PM - 4:00 PM' ? 'selected' : '' ?>>2:00 PM - 4:00 PM</option>
                         </select>
+                        <?php if (!empty($errors['time_slot'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['time_slot']) ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <div class="button-line">

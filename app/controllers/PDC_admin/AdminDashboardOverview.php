@@ -3,6 +3,10 @@
 class AdminDashboardOverview{
     use BaseController;
     public function dashboard(){
-        $this-> view('PDC_admin/Dashboard/DashboardOverview');
+
+        $std = new student;
+        $stdcount = $std->count();
+
+        $this-> view('PDC_admin/Dashboard/DashboardOverview' , ['stdcount' => $stdcount]);
     } 
 }

@@ -188,3 +188,25 @@ table td {
     background-color: #0872dc;
 
 }
+
+.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    margin-top:-15px;
+}
+
+.error-message ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.error-message ul li {
+    margin: 5px 0;
+}
