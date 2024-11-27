@@ -89,10 +89,16 @@ class StudentsRequests
             ];
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
+                if($_POST['submit_action'] === 'Shortlist'){
+                    $success = "Student Job Status updated successfully.";
+                    header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
+                    exit;
+                }else{
+                    $success = "Student Job Status updated successfully.";
+                    header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
+                    exit;
+                }
                 // Redirect to the same page after successful submission
-                $success = "Student Job Status updated successfully.";
-                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
-                exit;
             } else {
                 $error = "There was an issue update the Student Job Status.";
                 $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
