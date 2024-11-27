@@ -47,7 +47,7 @@
                                     <td>WSO2</td>
                                     <td>Software Engineer</td>
                                     <td>
-                                        <button class="pending" onclick="location.href='your-link';">
+                                        <button class="pending" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies';">
                                             Pending
                                         </button>
                                     </td>
@@ -57,7 +57,7 @@
                                     <td>Sysco Labs</td>
                                     <td>DevOps Engineer</td>
                                     <td>
-                                        <button class="recruit" onclick="location.href='your-link';">
+                                        <button class="recruit" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies/;">
                                         Recruit
                                         </button>
                                     </td>
@@ -67,7 +67,7 @@
                                     <td>MillenniumIT</td>
                                     <td>Software Engineer</td>
                                     <td>
-                                        <button class="rejected" onclick="location.href='your-link';">
+                                        <button class="rejected" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies';">
                                             Rejected
                                         </button>
                                     </td>
