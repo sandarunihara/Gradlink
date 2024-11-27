@@ -1,7 +1,7 @@
 <?php
 
 class StudentAd{
-    use Controller;
+    use BaseController;
     public function advertisement(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;

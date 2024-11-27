@@ -1,7 +1,7 @@
 <?php
 
 class StudentScheduleInterview{
-    use Controller;
+    use BaseController;
     public function Interview(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;

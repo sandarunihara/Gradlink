@@ -1,7 +1,7 @@
 <?php
 
 class StudentComplaint{
-    use Controller;
+    use BaseController;
     public function complaint(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
@@ -14,11 +14,8 @@ class StudentComplaint{
     }
     public function newComplaint(){
         $data = [];
-        $this-> view('Student/NewComplaint', $data);
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            
-            $data['Date'] = $_POST['date'];
             $data['Topic'] = $_POST['topic'];
             $data['Description'] = $_POST['description'];
             $data['StudentId'] = $_SESSION['USER'] -> StudentId;
@@ -26,7 +23,14 @@ class StudentComplaint{
             
             $complaint = new complaint;
             $result = $complaint -> insert($data);
+            if($result){
+                header('location: ' . ROOT . '/Student/StudentComplaint/complaint');
+            }
+        }else{
+            $this-> view('Student/NewComplaint', $data);
         }
+        
+
     }
     public function viewComplaint($complaintId){
         $data = [];

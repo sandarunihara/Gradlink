@@ -1,7 +1,7 @@
 <?php
 
 class StudentProgress{
-    use Controller;
+    use BaseController;
     public function progressReport(){
         $data = [];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;

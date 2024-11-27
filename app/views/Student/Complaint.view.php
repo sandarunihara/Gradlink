@@ -49,7 +49,7 @@
                                 </th>
                             </thead>
                             <tbody>
-                                <?php if (isset($data) && !empty($data)): ?>
+                                <?php if (isset($data['Complaints']) && !empty($data['Complaints'])): ?>
                                     <?php foreach ($data['Complaints'] as $complaint): ?>
                                         <?php
                                         $status = $complaint -> Status;
@@ -57,14 +57,16 @@
                                         $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
                                         ?>
                                         <tr class="complaint-row">
-                                            <td class="date"><?php echo htmlspecialchars($complaint -> Date); ?></td>
+                                            <td class="date"><?php
+                                                $createdAt = $complaint -> CreatedAt;
+                                                $date = explode(' ', $createdAt)[0];
+                                                echo htmlspecialchars($date); 
+                                                ?>
+                                            </td>
                                             <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
                                             <td>
-                                                <div class="<?php echo $statusClass; ?>">
-                                                    <a href="<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint -> ComplaintId?>">    
-                                                        <span class="status"><?php echo $statusText; ?></span>
-                                                    </a>
-                                                </div>
+                                                <button class="<?php echo $statusClass; ?>" onclick="location.href='<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint -> ComplaintId?>';">
+                                                    <span class="status"><?php echo $statusText; ?></span>
                                                 </button>
                                             </td>
                                         </tr>
