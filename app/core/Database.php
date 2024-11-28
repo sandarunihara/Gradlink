@@ -37,7 +37,7 @@
                 if(is_array($result) && count($result)){
                     return $result;
                 }
-                return true;
+                return [];
             }
             return false;
         }
