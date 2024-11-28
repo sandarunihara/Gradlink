@@ -34,7 +34,7 @@ class RecruitStudents
                 exit();
             }
             foreach ($data as $item) {
-                if ($item->Jobstatus === 'Shortlist') {
+                if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
                     $hasShortlisted = true;
                 }
                 if ($item->Jobstatus === 'Recruit') {

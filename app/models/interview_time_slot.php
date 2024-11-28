@@ -24,7 +24,6 @@ class interview_time_slot
         }
 
         $query = trim($query, "AND "); // Trim the trailing "AND"
-
         $result = $this->query($query, $data);
         return $result;
     }
