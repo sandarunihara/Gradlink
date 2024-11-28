@@ -47,7 +47,7 @@
                             print_r($companyData);
                             echo "</pre>";
                             ?> -->
-                    <form class="company-form" id="companyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
+                    <form class="company-form" id="companyForm" onsubmit="return validateContactNumber()" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
                             <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>" readonly required>

@@ -63,6 +63,7 @@ class AddCompany
                 $arr['Email'] = $mappedData['Email'];
 
                 $result1 = $model->where($arr, [], '', 'do_not_order');
+                // echo $result1;
                 if (empty($result1)) {
                     //no same company
                     $result = $model->insert($mappedData);

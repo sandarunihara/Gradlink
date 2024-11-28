@@ -40,7 +40,7 @@
                     class="company-form"
                     method="POST"
                     action="<?= ROOT ?>/PDC_coordinator/AddCompany/create"
-                    >
+                    onsubmit="return validateContactNumber()">
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
                         <input
@@ -78,11 +78,29 @@
                     </div>
 
                     <button class="btn email-btn"  type="submit"><b>Submit</b></button>
-                    
+                    <div>
+                        <small id="contact-error" class="error-message" style="color: red; display: none; ">
+                            Please enter a valid contact number (10 digits, starting with 07).
+                        </small>
+                    </div>
                 </form>
             </section>
 
-            
+            <script>
+                function validateContactNumber() {
+                    const contactNumber = document.getElementById('contact-number').value;
+                    const contactNumberPattern = /^07\d{8}$/; // Validates Sri Lankan mobile numbers
+                    const errorElement = document.getElementById('contact-error');
+
+                    if (!contactNumberPattern.test(contactNumber)) {
+                        errorElement.style.display = 'block'; // Show error message
+                        return false; // Prevent form submission
+                    }
+
+                    errorElement.style.display = 'none'; // Hide error message if valid
+                    return true;
+                }
+            </script>
 
 
         </main>
