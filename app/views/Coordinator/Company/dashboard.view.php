@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/dashboard/overviewDashboard.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/dashboard.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,7 +20,7 @@
 <body>
 
     <div class="container">
-    <?php $this->renderComponent("coordinatorDashboard")  ?>
+        <?php $this->renderComponent("coordinatorDashboard")  ?>
 
 
         <main class="main-content">
@@ -29,7 +29,7 @@
                     <i class="material-icons">menu</i>
                     <h1>Dashboard</h1>
                 </div>
-   
+
                 <div class="header-right">
                     <i class="material-icons">notifications</i>
                     <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
@@ -41,51 +41,54 @@
                 </div>
             </header>
 
-            <div class='round-type'>1st Round</div>
+            <div class='round-type '>1st Round</div>
 
 
-            <div class="main-cards">
-                <div class='card' onclick='navigateToCompanyList();'>
-                    <div class='card-inner'>
-                        <i class="material-icons">business</i>
-                        <h3>Company</h3>
+            <div class="main-body">
+                <div class="main-cards">
+                    <div class='card' onclick='navigateToCompanyList();'>
+                        <div class='card-inner'>
+                            <i class="material-icons">business</i>
+                            <h3>Company</h3>
+                        </div>
+                        <h1>35</h1>
                     </div>
-                    <h1>35</h1>
-                </div>
 
-                <div class='card' onclick='navigateToStudentList();'>
-                    <div class='card-inner'>
-                        <i class="material-icons">school </i>
-                        <h3>Student</h3>
+                    <div class='card' onclick='navigateToStudentList();'>
+                        <div class='card-inner'>
+                            <i class="material-icons">school </i>
+                            <h3>Student</h3>
+                        </div>
+                        <h1>317</h1>
                     </div>
-                    <h1>317</h1>
                 </div>
+                <div class="analysis-container">
+                    <div class="recruitment-analysis">
+                        <div class="title">
+                            <p>Recruitment Analysis</p>
+                        </div>
+                        <div class="graphs">
+                            <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
+                            <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="company-performance">
+                        <div class="title">
+                            <p>Company Performance Analysis</p>
+                        </div>
+                        <div id="curve_chart" style="width: 90%; height: 300px;"></div>
+                    </div>
+                </div>
+
             </div>
-            <div class="analysis-container">
-            <div class="recruitment-analysis">
-                <div class="title">
-                    <p>Recruitment Analysis</p>
-                </div>
-                <div class="graphs">
-                    <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
-                    <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
-                </div>
-            </div>
 
-    <div class="company-performance">
-        <div class="title">
-            <p>Company Performance Analysis</p>
-        </div>
-        <div id="curve_chart" style="width: 90%; height: 300px;"></div>
-    </div>
-</div>
-
-            
-
-        </main> 
+        </main>
 
         <script type="text/javascript">
-            google.charts.load("current", { packages: ["corechart"] });
+            google.charts.load("current", {
+                packages: ["corechart"]
+            });
             google.charts.setOnLoadCallback(drawAllCharts);
 
             function drawAllCharts() {
@@ -131,18 +134,20 @@
                     ['2006', 660, 1120],
                     ['2007', 1030, 540]
                 ]);
-                
+
                 var optionsCurve = {
                     title: 'Company Performance',
                     curveType: 'function',
-                    legend: { position: 'bottom' }
+                    legend: {
+                        position: 'bottom'
+                    }
                 };
 
                 var curveChart = new google.visualization.LineChart(document.getElementById('curve_chart'));
                 curveChart.draw(dataCurve, optionsCurve);
             }
         </script>
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+        <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>
 
 </html>
