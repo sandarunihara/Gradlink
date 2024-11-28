@@ -47,7 +47,7 @@
                             print_r($companyData);
                             echo "</pre>";
                             ?> -->
-                    <form class="company-form" id="companyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
+                    <form class="company-form" id="companyForm" onsubmit="return validateContactNumber()" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
                             <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData[0]['company_name'] ?? '') ?>" readonly required>
@@ -96,6 +96,11 @@
                             <input type="text" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly required>
                         </div>
                         <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
+                        <div>
+                        <small id="contact-error" class="error-message" style="color: red; display: none; ">
+                            Please enter a valid contact number (10 digits, starting with 07).
+                        </small>
+                    </div>
                     </form>
                     <div class="button-line">
                         <button class="view-profile-btn">View Profile</button>
@@ -111,6 +116,21 @@
                 <?php endif; ?>
 
             </section>
+            <script>
+                function validateContactNumber() {
+                    const contactNumber = document.getElementById('contact-number').value;
+                    const contactNumberPattern = /^07\d{8}$/; // Validates Sri Lankan mobile numbers
+                    const errorElement = document.getElementById('contact-error');
+
+                    if (!contactNumberPattern.test(contactNumber)) {
+                        errorElement.style.display = 'block'; // Show error message
+                        return false; // Prevent form submission
+                    }
+
+                    errorElement.style.display = 'none'; // Hide error message if valid
+                    return true;
+                }
+            </script>
         </main>
     </div>
 

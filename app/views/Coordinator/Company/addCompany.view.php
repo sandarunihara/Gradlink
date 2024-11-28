@@ -14,7 +14,7 @@
 
 <body>
     <div class="container">
-    <?php $this->renderComponent("coordinatorDashboard")  ?>
+        <?php $this->renderComponent("coordinatorDashboard")  ?>
         <main class="content">
             <header class="header">
                 <div class="header-left">
@@ -32,38 +32,77 @@
                     </div>
                 </div>
             </header>
-            
+
             <?php $this->renderComponent("companyTabs") ?>
 
             <section class="company-info">
-                <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_coordinator/AddCompany/create" >
+                <form
+                    class="company-form"
+                    method="POST"
+                    action="<?= ROOT ?>/PDC_coordinator/AddCompany/create"
+                    onsubmit="return validateContactNumber()">
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" placeholder="Company name" name="company_name" required>
+                        <input
+                            type="text"
+                            id="company-name"
+                            placeholder="Company name"
+                            name="company_name"
+                            required />
                     </div>
                     <div class="form-group">
                         <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" placeholder="Email" name="email" required>
+                        <input
+                            type="email"
+                            id="email-address"
+                            placeholder="Email"
+                            name="email"
+                            required />
                     </div>
                     <div class="form-group">
                         <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" placeholder="John Doe" name="contact_person" required>
+                        <input
+                            type="text"
+                            id="contact-person"
+                            placeholder="Name"
+                            name="contact_person"
+                            required />
                     </div>
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" placeholder="0771234567" name="contact_number">
+                        <input
+                            type="text"
+                            id="contact-number"
+                            placeholder="Mobile"
+                            name="contact_number" />
                     </div>
 
-                <button class="btn email-btn" type="submit" ><b>Submit</b></button>
-                    <!-- <div class="row" >
-                        <input class="btn email-btn" type="submit" value="Send an Email">
-                    </div> -->
+                    <button class="btn email-btn"  type="submit"><b>Submit</b></button>
+                    <div>
+                        <small id="contact-error" class="error-message" style="color: red; display: none; ">
+                            Please enter a valid contact number (10 digits, starting with 07).
+                        </small>
+                    </div>
                 </form>
-                <!-- <div class="row" >
-                <button class="btn email-btn"><b>Send An Email</b></button>
-
-                </div> -->
             </section>
+
+            <script>
+                function validateContactNumber() {
+                    const contactNumber = document.getElementById('contact-number').value;
+                    const contactNumberPattern = /^07\d{8}$/; // Validates Sri Lankan mobile numbers
+                    const errorElement = document.getElementById('contact-error');
+
+                    if (!contactNumberPattern.test(contactNumber)) {
+                        errorElement.style.display = 'block'; // Show error message
+                        return false; // Prevent form submission
+                    }
+
+                    errorElement.style.display = 'none'; // Hide error message if valid
+                    return true;
+                }
+            </script>
+
+
         </main>
     </div>
 </body>
