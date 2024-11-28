@@ -23,14 +23,9 @@
         </div>
         <div class="main-content">
             <div class="filter">
-                <div class="filter-by-company">
-                    <i class="fas fa-filter"></i>
-                    <select>
-                        <option value="all">All Companies</option>
-                        <option value="wso2">WSO2</option>
-                        <option value="sysco-labs">Sysco Labs</option>
-                        <option value="ifs">IFS</option>
-                    </select>
+                <div class="search-container">
+                    <input id="searchInput" type="text" placeholder="Search Company">
+                    <i class="fas fa-search"></i>
                 </div>
                 <div class="filter-by-job">
                     <i class="fas fa-filter"></i>
@@ -70,7 +65,7 @@
                                 <h3><?php echo $AdDetail->position; ?></h3>
                                 <p><?php echo $AdDetail->Name; ?></p>
                             </div>
-                            <div class="apply-button">
+                            <div class="apply-button" id="applyBtn">
                                 <button>Apply</button>
                             </div>
                         </div>
@@ -81,6 +76,44 @@
             </div>
         </div>
     </div>
-</body>
+  <!-- Popup Box -->
+  <div id="popupBox" class="popup hidden">
+    <div class="popup-content">
+      <h2>Upload Your CV</h2>
+      <input type="file" id="cvUpload" accept=".pdf,.doc,.docx">
+      <br><br>
+      <button id="okBtn" class="btn-ok">OK</button>
+    </div>
+  </div>
+  <script>
+        // Get references to elements
+        const applyBtn = document.getElementById('applyBtn');
+        const popupBox = document.getElementById('popupBox');
+        const popupContent = document.querySelector('.popup-content');
+        const okBtn = document.getElementById('okBtn');
 
+        // Show popup when "Apply" button is clicked
+        applyBtn.addEventListener('click', () => {
+        popupBox.classList.remove('hidden');
+        });
+
+        // Hide popup when "OK" button is clicked
+        okBtn.addEventListener('click', () => {
+        const cvFile = document.getElementById('cvUpload').files[0];
+        if (cvFile) {
+            alert(`CV Uploaded: ${cvFile.name}`);
+            popupBox.classList.add('hidden');
+        } else {
+            alert('Please upload your CV!');
+        }
+        });
+
+        // Hide popup when clicking outside the content box
+        popupBox.addEventListener('click', (event) => {
+        if (!popupContent.contains(event.target)) {
+            popupBox.classList.add('hidden');
+        }
+        });
+  </script>
+</body>
 </html>

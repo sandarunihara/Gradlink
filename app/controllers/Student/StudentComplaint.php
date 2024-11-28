@@ -82,6 +82,7 @@ class StudentComplaint{
         $complaint = new complaint;
         $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
 
+  
         $this-> view('Student/Complaint',$data);
     }
 }
