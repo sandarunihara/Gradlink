@@ -159,27 +159,6 @@ class Advertisements
         $data = $model->find(['advertisementId' => $id]);
         $advertisementId = $id;
 
-        // // Decode the base64 string
-        // $imageData = base64_decode($data[0]->image);
-
-        // // Create a temporary file
-        // $tempFilePath = tempnam(sys_get_temp_dir(), 'image');
-        // file_put_contents($tempFilePath, $imageData);
-
-        // // Mimic $_FILES structure
-        // $_FILES['image'] = [
-        //     'name' => 'uploaded_image.jpg', // Set a default name or get it from another source
-        //     'type' => mime_content_type($tempFilePath),
-        //     'tmp_name' => $tempFilePath,
-        //     'error' => 0,
-        //     'size' => filesize($tempFilePath),
-        // ];
-
-        // Debugging (Optional)
-        // print_r($_FILES['image']);
-
-        // $data[0]->image= $_FILES['image'];
-
         if ($data) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $model = new C_Advertisement;
@@ -192,7 +171,7 @@ class Advertisements
                     $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
                     $imageBase64 = base64_encode($imageData); // Encode image content in base64
                 }
-                if (empty($$imageBase64)) {
+                if (empty($imageBase64)) {
                     $imageBase64 = $data[0]->image;
                 }
 

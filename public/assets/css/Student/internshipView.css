@@ -1,3 +1,8 @@
+.main-content{
+    position: relative;
+    padding: 20px;
+    height: 100%;
+}
 /* General container styling */
 .sub_container {
     width: 80%;

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/profileEdit.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css"> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -20,61 +21,86 @@
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
         <div class="main-content">
+            <a href="<?=ROOT?>/Student/StudentProfile/profile" class="backreq">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+                <h3>Back</h3>
+            </a>
             <!-- Student Profile Update Box -->
             <div class="update-box">
-                <div class="update-box-content">
-                    <form>
-                        <div class="box1">
-                            <label for="github">GitHub</label>
-                            <input 
-                                type="url" 
-                                id="github" 
-                                name="github" 
-                                placeholder="Enter GitHub Profile URL" 
-                                value="<?= htmlspecialchars($data['Student'] -> Github) ?>"
-                                required
-                            >
-                            
-                            <label for="linkedin">LinkedIn</label>
-                            <input 
-                                type="url" 
-                                id="linkedin" 
-                                name="linkedin" 
-                                placeholder="Enter LinkedIn Profile URL" 
-                                value="<?= htmlspecialchars($data['Student'] -> Linkedin) ?>"
-                                required
-                            >
-                            <label for="skills">Skills</label>
-                            <input 
-                                type="text" 
-                                id="skills" 
-                                name="skills" 
-                                placeholder="Enter your skills separated by commas" 
-                                value="JavaScript, Node.js, Python"
-                                required
-                            >
-                        </div>
-                        <div class="box2">
-                            <label for="description">Short Description</label>
-                            <textarea id="description" name="description" placeholder="Enter a brief description about yourself(max 50 words)" required>
-                                <?= htmlspecialchars($data['Student'] -> ShortDesc) ?>
-                            </textarea>
-                            <label for="cv">Curriculum Vitae</label>
-                            <input 
-                                type="file" 
-                                id="cv" 
-                                name="cv" 
-                                accept=".pdf"
-                                placeholder="Upload your CV"
-                                required
-                            >
-                        </div>
-                        <a href="<?=ROOT?>/Student/StudentProfile/profileEdit"><button type="submit" class="save-btn">Save</button></a>
-                    </form>
-                </div>
+                <form id="updateForm" method="post">
+                    <div class="box1">
+                        <!-- GitHub URL Input -->
+                        <label for="github">GitHub</label>
+                        <input 
+                            type="url" 
+                            id="github" 
+                            name="github" 
+                            placeholder="Enter GitHub Profile URL" 
+                            value="<?= htmlspecialchars($data['Student'] -> Github) ?>"
+                            required
+                            oninput="validateForm()"
+                        >
+                        
+                        <!-- LinkedIn URL Input -->
+                        <label for="linkedin">LinkedIn</label>
+                        <input 
+                            type="url" 
+                            id="linkedin" 
+                            name="linkedin" 
+                            placeholder="Enter LinkedIn Profile URL" 
+                            value="<?= htmlspecialchars($data['Student'] -> Linkedin) ?>"
+                            required
+                            oninput="validateForm()"
+                        >
+                    </div>
+                    <div class="box2">
+                        <p>Skills</p>
+                        <br>
+                        <!-- Skills Input -->
+                        <label for="js">
+                        <input type="checkbox" id="js" name="js" value="JS">
+                            JS
+                        </label>
+
+                        <label for="python">
+                            <input type="checkbox" id="python" name="python" value="Python">
+                            Python
+                        </label>
+
+                        <label for="react">
+                            <input type="checkbox" id="react" name="react" value="React">
+                            React
+                        </label><br>
+                    </div>
+
+                    <div class="box3">
+                        <!-- Short Description Textarea -->
+                        <label for="description">Short Description</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            placeholder="Enter a brief description about yourself (50-100 words)" 
+                            cols="50" 
+                            rows="5"
+                            required
+                            oninput="validateForm()"
+                        ><?= htmlspecialchars($data['Student'] -> ShortDesc) ?></textarea>
+                    </div>
+
+                    <!-- Error Message -->
+                    <span class="error-message" id="formError"></span>
+
+                    <div class="button-container">
+                        <!-- Submit Button -->
+                        <button type="submit" disabled>Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    <script src="<?=ROOT?>/assets/js/Student/updateProfile.js"></script>
 </body>
 </html>
 

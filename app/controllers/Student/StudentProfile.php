@@ -9,10 +9,12 @@ class StudentProfile{
         $skill = new student_skill;
         $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
+        $certificate = new certificate;
+        $data['Certificates'] = $certificate -> where($arr, [], '', 'do_not_order');
+
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         
-        //show($data['Skills']);
         $this-> view('Student/Profile',$data);
     }
     public function profileEdit(){        

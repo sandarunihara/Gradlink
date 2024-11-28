@@ -1,87 +1,165 @@
-.update-box{
-    background-color: white;
-    width: 80%;
-    padding: 20px 30px;
-    margin: 0 auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.main-content{
+    position: relative;
+    padding: 20px;
+    height: 100%;
     display: flex;
     flex-direction: column;
-}
-/*
-.update-box-content{
-}*/
-
-.box1,
-.box2{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-.box1 label{
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-.box1 input{
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    width: 100%;
-}
-.box2 label{
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-.box2 textarea{
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.box2 .file-upload{
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
+}
+
+/* Container for the form */
+.update-box {
     width: 100%;
+    max-width: 900px;
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin-top: 40px;
 }
-.box2 .file-upload label{
-    font-size: 16px;
+
+/* Form Header */
+.update-box h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Label styling */
+label {
+    font-size: 1rem;
     font-weight: 500;
-    margin-bottom: 0;
+    margin-bottom: 8px;
+    display: block;
+    color: #555;
 }
-.box2 .file-upload .file-name{
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 0;
+
+/* Box for GitHub and LinkedIn Inputs */
+.box1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
-/* Buttons in the third section */
-.save-btn {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+input[type="url"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    transition: all 0.2s ease;
+}
+
+input[type="url"]:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Box for Skill checkboxes */
+.box2 {
+    margin-top: 30px;
+}
+
+.box2 p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    accent-color: #007bff;
+}
+
+input[type="checkbox"]:focus {
+    transform: scale(1.3);
+}
+
+/* Box for Short Description Textarea */
+.box3 {
+    margin-top: 30px;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    resize: none;
+    min-height: 120px;
+    transition: all 0.2s ease;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Error and Success Messages */
+.error-message, .valid-message {
+    font-size: 0.9rem;
     margin-top: 10px;
+    text-align: center;
 }
-.save-btn:hover {
+
+.error-message {
+    color: #e74c3c;
+}
+
+.valid-message {
+    color: #2ecc71;
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Button Hover effect */
+button:hover {
     background-color: #218838;
-    transform: scale(1.05);
 }
-button a{
-    color: white;
-    text-decoration: none;
+
+/* Form Container Responsiveness */
+@media (max-width: 768px) {
+    .update-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    input[type="url"],
+    textarea,
+    button {
+        font-size: 1rem;
+    }
 }

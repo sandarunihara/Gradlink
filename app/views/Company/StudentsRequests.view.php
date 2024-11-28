@@ -31,9 +31,39 @@
                         </div>
                         <select class="role-select">
                             <option value="all">All</option>
+                            <option value="Quality Assurance">Quality Assurance</option>
                             <option value="Software Engineer">Software Engineer</option>
-                            <option value="qa">QA</option>
-                            <option value="Web Development">Web Development</option>
+                            <option value="Web Developer">Web Developer</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                            <option value="Full Stack Developer">Full Stack Developer</option>
+                            <option value="Backend Developer">Backend Developer</option>
+                            <option value="Frontend Developer">Frontend Developer</option>
+                            <option value="DevOps Engineer">DevOps Engineer</option>
+                            <option value="Cloud Architect">Cloud Architect</option>
+                            <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                            <option value="AI Engineer">AI Engineer</option>
+                            <option value="Mobile App Developer">Mobile App Developer</option>
+                            <option value="Blockchain Developer">Blockchain Developer</option>
+                            <option value="Game Developer">Game Developer</option>
+                            <option value="UI/UX Designer">UI/UX Designer</option>
+                            <option value="Product Manager">Product Manager</option>
+                            <option value="System Administrator">System Administrator</option>
+                            <option value="Network Engineer">Network Engineer</option>
+                            <option value="Technical Support Engineer">Technical Support Engineer</option>
+                            <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
+                            <option value="Cloud Engineer">Cloud Engineer</option>
+                            <option value="Software Architect">Software Architect</option>
+                            <option value="Solutions Architect">Solutions Architect</option>
+                            <option value="IT Consultant">IT Consultant</option>
+                            <option value="Quality Engineer">Quality Engineer</option>
+                            <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
+                            <option value="RPA Developer">RPA Developer</option>
+                            <option value="ERP Consultant">ERP Consultant</option>
+                            <option value="Salesforce Developer">Salesforce Developer</option>
+                            <option value="SAP Consultant">SAP Consultant</option>
+
                         </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>
@@ -72,7 +102,7 @@
                                             <?php foreach ($data as $student): ?>
                                                 <?php
                                                 $status = $student['Action'];
-                                                
+
 
                                                 switch ($status) {
                                                     case 'Recruit':
@@ -97,7 +127,7 @@
                                                         break;
                                                 }
 
-                                                
+
                                                 ?>
                                                 <tr class="sr_row">
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>

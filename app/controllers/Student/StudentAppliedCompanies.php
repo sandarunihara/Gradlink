@@ -15,7 +15,16 @@ class StudentAppliedCompanies{
 
         $this-> view('Student/AppliedCompanies',$data);
     }  
-
+    public function ViewAppliedCompanies($id){
+        $data =[];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        
+        $model = new C_Advertisement;
+        // Find the advertisement by ID
+        $data = $model->find(['advertisementId' => $id]);
+        $advertisementId = $id;
+        $this-> view('Student/ViewAppliedAd',$data);
+    }
 
 }
 
