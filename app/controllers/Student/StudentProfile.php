@@ -23,8 +23,12 @@ class StudentProfile{
         
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+
+        $skill = new student_skill;
+        $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
+
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
-            //show($_POST['Github']);
+            //show($_POST);
             $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
             
             if($data['Result']['status'] == 'success'){

@@ -45,7 +45,8 @@ label {
     gap: 20px;
 }
 
-input[type="url"] {
+input[type="url"],
+input {
     width: 100%;
     padding: 12px;
     font-size: 1rem;
@@ -55,7 +56,8 @@ input[type="url"] {
     transition: all 0.2s ease;
 }
 
-input[type="url"]:focus {
+input[type="url"]:focus,
+input:focus {
     border-color: #007bff;
     background-color: #fff;
     outline: none;
@@ -64,27 +66,6 @@ input[type="url"]:focus {
 /* Box for Skill checkboxes */
 .box2 {
     margin-top: 30px;
-}
-
-.box2 p {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.2);
-    transition: transform 0.2s ease;
-}
-
-input[type="checkbox"]:checked {
-    accent-color: #007bff;
-}
-
-input[type="checkbox"]:focus {
-    transform: scale(1.3);
 }
 
 /* Box for Short Description Textarea */

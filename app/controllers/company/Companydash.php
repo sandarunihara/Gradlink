@@ -36,35 +36,41 @@ class Companydash
             foreach ($advertisementIds as $id) {
                 $applystudent = $model->find(['advertisementId' => $id], 'studentadvertisement');
                 if (!empty($applystudent)) {
-                    foreach ($applystudent as $student) {
-                        $studentIds[] = $student->StudentId;
+                    if (is_array($applystudent) || is_object($applystudent)) {
+                        foreach ($applystudent as $student) {
+                            $studentIds[] = $student->StudentId;
+                        }
                     }
                 } else {
                     $ss = [];
                 }
                 $shortliststudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Shortlist'], 'studentadvertisement');
                 if (!empty($shortliststudent)) {
-                    foreach ($shortliststudent as $student) {
-                        $shortliststudentIds[] = $student->StudentId;
+                    if (is_array($shortliststudent) || is_object($shortliststudent)) {
+                        foreach ($shortliststudent as $student) {
+                            $shortliststudentIds[] = $student->StudentId;
+                        }
                     }
                 } else {
                     $ss = [];
                 }
                 $data = $model->findreq($id);
                 if (!empty($data)) {
-                    foreach ($data as $item) {
-                        if ($item->Jobstatus === 'Shortlist') {
-                            $hasShortlisted = true;
-                        }
+                    if (is_array($data) || is_object($data)) {
+                        foreach ($data as $item) {
+                            if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                                $hasShortlisted = true;
+                            }
 
-                        if ($item->Jobstatus === 'Recruit') {
-                            $hasRecruited = true;
+                            if ($item->Jobstatus === 'Recruit') {
+                                $hasRecruited = true;
+                            }
+                            $reqdata[] = [
+                                'Name' => $item->Name,
+                                'Position' => $item->position,
+                                'Status' => $item->Jobstatus
+                            ];
                         }
-                        $reqdata[] = [
-                            'Name' => $item->Name,
-                            'Position' => $item->position,
-                            'Status' => $item->Jobstatus
-                        ];
                     }
                 } else {
                     $ss = [];

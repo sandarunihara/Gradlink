@@ -29,17 +29,18 @@ class StudentsRequests
                 $this->view('Company/StudentsRequests', ['data' => $reqdata]);
                 exit();
             }
-            foreach ($data as $item) {
+            if (is_array($data) || is_object($data)) {
+                foreach ($data as $item) {
 
-                if ($item->Jobstatus === 'Shortlist') {
-                    $hasShortlisted = true;
-                }
+                    if ($item->Jobstatus === 'Shortlist'|| $item->Jobstatus === 'Interview Scheduled') {
+                        $hasShortlisted = true;
+                    }
 
-                if ($item->Jobstatus === 'Recruit') {
-                    $hasRecruited = true;
-                }
+                    if ($item->Jobstatus === 'Recruit') {
+                        $hasRecruited = true;
+                    }
 
-                // if($item->Companyrowstatus != 0){
+                    // if($item->Companyrowstatus != 0){
                     $reqdata[] = [
                         "StudentId" => $item->StudentId,
                         'AdvertisementId' => $item->advertisementId,
@@ -48,7 +49,8 @@ class StudentsRequests
                         'Position' => $item->position,
                         'Action' => $item->Jobstatus
                     ];
-                // }
+                    // }
+                }
             }
         }
         // Store the flags in session
@@ -75,7 +77,7 @@ class StudentsRequests
 
     public function studentprofile($advertisementId, $StudentId)
     {
-        
+
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
 
@@ -89,11 +91,11 @@ class StudentsRequests
             ];
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
-                if($_POST['submit_action'] === 'Shortlist'){
+                if ($_POST['submit_action'] === 'Shortlist') {
                     $success = "Student Job Status updated successfully.";
                     header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
                     exit;
-                }else{
+                } else {
                     $success = "Student Job Status updated successfully.";
                     header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
                     exit;
