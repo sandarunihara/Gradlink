@@ -1,0 +1,182 @@
+.m_main {
+    background: #e9edff;
+    width: 1100px;
+    /* width: 90%; */
+    height: 570px;
+    padding: 30px;
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .backbtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: black;
+    transition: color 0.5s;
+  }
+  .headcontainer{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+  }
+  .backbtn i {
+    font-size: 30px;
+  }
+  .complaint-navbar {
+    display: flex;
+    /* justify-content: flex-end; */
+    padding-top: 5px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+  }
+  .complaint-filter-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    margin-right: 810px;
+  }
+  .complaint-filter-container select {
+    border: none;
+    height: 40px;
+    width: 120px;
+    padding-left: 10px;
+    border-radius: 10px;
+  }
+  
+  .add-complaint button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-complaint button:hover {
+    background-color: #2980b9;
+  }
+  
+  .complaint-table-div {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+  }
+  
+  .complaint-table-background {
+    background-color: white;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .complaint-table {
+    width: 100%;
+    border-spacing: 0 5px;
+  }
+  .complaint-table th {
+    text-align: center;
+    padding: 10px 5px;
+  }
+  .complaint-table td {
+    text-align: center;
+    padding: 2px 5px;
+  }
+  .complaint-table th {
+    background-color: #d7d7d7;
+    font-weight: bold;
+    color: #000;
+  }
+  .complaint-table tbody {
+    display: block;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+  .complaint-table thead,
+  .complaint-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .reviewed,
+  .not-reviewed {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    outline: none;
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .reviewed {
+    color: green;
+    border: 2px solid green;
+  }
+  .not-reviewed {
+    color: orange;
+    border: 2px solid orange;
+  }
+  .reviewed:hover {
+    background-color: green;
+    color: white;
+  }
+  .not-reviewed:hover {
+    background-color: orange;
+    color: white;
+  }
+  
+  
+  /* *********** ADD COMPLAINTS ************ */
+  
+  #view-complaint-box {
+      background: #ffffff;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 10px;
+  }
+  #view-complaint-box h2 {
+      font-size: 28px;
+      color: black;
+      font-weight: bold;
+      margin-bottom: 5px;
+  }
+  .complaint-description-box{
+      margin-top: 10px;
+      line-height: 1.8;
+  }
+  .complaint-description {
+      font-size: 15px;
+      color: black;
+      text-align: left;
+      font-weight: 500;
+  }
+  .complaint-description-box p {
+      font-size: 15px;
+      margin: 5px 0;
+  }
+  #complaintDleteBtn{
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      color: white;
+      background-color: #E74C3C;
+  }
+  #complaintDleteBtn:hover{
+      background-color: #C0392B;;
+      transform: scale(1.05);
+  }
+  

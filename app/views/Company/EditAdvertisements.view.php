@@ -81,7 +81,7 @@
                         </div>
                         <div class="addimg">
                             <h4>Add Image:</h4>
-                            <input type="file" id="image" />
+                            <input type="file" id="image" accept="image/*" />
                         </div>
                         <a href="../Advertisements/send">
                             <button type="submit" class="sc_btn">
@@ -94,6 +94,17 @@
         </div>
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dateInput = document.getElementById('period');
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            const dd = String(today.getDate()+1).padStart(2, '0');
+
+            const minDate = `${yyyy}-${mm}-${dd}`;
+            dateInput.setAttribute('min', minDate);
+        });
+
         function increment() {
             let count = document.getElementById('interns-count').value;
             count = parseInt(count) + 1;
