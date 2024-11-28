@@ -40,4 +40,22 @@ class student_advertisement
 
 		return $result;
 	}
+
+	public function delete1($id, $id_column) {
+		$data[$id_column] = $id;
+		$query = "DELETE FROM $this->table WHERE $id_column = :$id_column";
+		
+		// Execute the query
+		$stmt = $this->query($query, $data);
+		//show($stmt);
+		if (is_array($stmt)) {
+			$stmt = (object) $stmt;
+		}
+
+		if ($stmt & $stmt->rowCount() > 0) {
+			return "Record deleted successfully.";
+		} else {
+			return "Error: Record could not be deleted.";
+		}
+	}
 }
