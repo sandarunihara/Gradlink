@@ -1,5 +1,5 @@
-/* Filter Section */
-.filter {
+  /* Filter section */
+  .filter {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,33 +9,70 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     margin-bottom: 20px;
     gap: 20px;
-}
-
-.filter div {
+  }
+  
+  .filter div {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.filter i {
+  }
+  
+  .filter i {
     font-size: 20px;
-    color: #007bff; /* Blue color for the filter icon */
-}
-
-.filter select {
+    color: #007bff; /* Blue color for the icon */
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-container input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
     outline: none;
-}
-.job-container{
+    width: 200px; /* Adjust input width */
+    background-color: #ffffff; /* White background */
+
+  }
+  
+  .search-container i {
+    margin-left: -30px; /* Position the search icon inside the input */
+    color: #007bff;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .filter-by-job {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .filter select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .filter-by-job i {
+    font-size: 20px;
+    color: #007bff; /* Blue color for the filter icon */
+  }
+  
+  /* Job container */
+  .job-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
-/* Job Card Styling */
-.job-card {
+  }
+  
+  /* Job Card Styling */
+  .job-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,20 +84,20 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     margin-bottom: 20px;
-}
-
-.job-card:hover {
+  }
+  
+  .job-card:hover {
     transform: scale(1.03); /* Slight zoom on hover */
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
-}
-
-/* View Button */
-.view-button {
+  }
+  
+  /* View Button */
+  .view-button {
     align-self: flex-end;
     margin-bottom: 10px;
-}
-
-.view-button button {
+  }
+  
+  .view-button button {
     background-color: #007bff; /* Blue button */
     color: white;
     border: none;
@@ -69,46 +106,46 @@
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.view-button button:hover {
+  }
+  
+  .view-button button:hover {
     background-color: #0056b3; /* Darker blue on hover */
     transform: scale(1.1); /* Slight zoom */
-}
-
-/* Image Section */
-.image img {
+  }
+  
+  /* Image Section */
+  .image img {
     width: 100%;
     height: 150px;
     border-radius: 8px; /* Rounded image corners */
     object-fit: cover; /* Ensures proper image fitting */
-}
-
-/* Job Details Section */
-.job-details {
+  }
+  
+  /* Job Details Section */
+  .job-details {
     text-align: center;
     margin: 10px 0;
-}
-
-.job-details h3 {
+  }
+  
+  .job-details h3 {
     font-size: 18px;
     font-weight: bold;
     color: #333;
     margin: 5px 0;
-}
-
-.job-details p {
+  }
+  
+  .job-details p {
     font-size: 14px;
     color: #666;
     margin: 0;
-}
-
-/* Apply Button */
-.apply-button {
+  }
+  
+  /* Apply Button */
+  .apply-button {
     margin-top: 10px;
-}
-
-.apply-button button {
+  }
+  
+  .apply-button button {
     background-color: #28a745; /* Green button */
     color: white;
     border: none;
@@ -117,21 +154,71 @@
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.apply-button button:hover {
+  }
+  
+  .apply-button button:hover {
     background-color: #218838; /* Darker green on hover */
     transform: scale(1.05); /* Slight zoom */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+  }
+  
+  /* Popup Box  */
+  /* Popup styles */
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup.hidden {
+    display: none;
+  }
+  
+  .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  input[type="file"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  /* OK button styling (ID or class specific) */
+  #okBtn {
+    margin-top: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  #okBtn:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .filter {
-        flex-direction: column;
-        gap: 15px;
+      flex-direction: column;
+      gap: 15px;
     }
-
+  
     .job-card {
-        width: 100%; /* Full width on smaller screens */
+      width: 100%; /* Full width on smaller screens */
     }
-}
+  }
+  

@@ -22,7 +22,7 @@
         <div class="main-content">
             <div class="progress-report-navbar">
                 <div class="add-progress-report">
-                    <a href="<?=ROOT?>/Student/StudentProgress/newReport"><button>+ Add New</button></a>
+                    <button id="addNewBtn">+ Add New</button>
                 </div>
             </div>
 
@@ -73,5 +73,45 @@
             </div>
         </div>
     </div>
+    <div id="progressReportBox" class="progress-report-box hidden">
+        <div class="box-content">
+            <h2>Add New Progress Report</h2>
+            <form id="progressForm">
+                <label for="reportTitle">Report Title:</label>
+                <input type="text" id="reportTitle" name="reportTitle" placeholder="Enter report title" required>
+                
+                <label for="reportFile">Upload Report (PDF only):</label>
+                <input type="file" id="reportFile" name="reportFile" accept=".pdf" required>
+                
+                <div class="buttons">
+                    <button type="submit">Save</button>
+                    <button type="button" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+    // Get elements
+    const addNewBtn = document.getElementById("addNewBtn");
+    const progressReportBox = document.getElementById("progressReportBox");
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    // Show the progress report adding box
+    addNewBtn.addEventListener("click", () => {
+        progressReportBox.classList.remove("hidden");
+    });
+
+    // Hide the progress report adding box
+    cancelBtn.addEventListener("click", () => {
+        progressReportBox.classList.add("hidden");
+    });
+
+    // Form submission logic (optional)
+    document.getElementById("progressForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent default form submission
+        alert("Progress report saved successfully!");
+        progressReportBox.classList.add("hidden"); // Close the box after saving
+    });
+    </script>
 </body>
 </html>

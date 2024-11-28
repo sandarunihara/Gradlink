@@ -36,7 +36,7 @@
                         <input 
                             type="url" 
                             id="github" 
-                            name="github" 
+                            name="Github" 
                             placeholder="Enter GitHub Profile URL" 
                             value="<?= htmlspecialchars($data['Student'] -> Github) ?>"
                             required
@@ -48,7 +48,7 @@
                         <input 
                             type="url" 
                             id="linkedin" 
-                            name="linkedin" 
+                            name="Linkedin" 
                             placeholder="Enter LinkedIn Profile URL" 
                             value="<?= htmlspecialchars($data['Student'] -> Linkedin) ?>"
                             required
@@ -56,23 +56,19 @@
                         >
                     </div>
                     <div class="box2">
-                        <p>Skills</p>
-                        <br>
+                        <label for="skill">Skills</label>
                         <!-- Skills Input -->
-                        <label for="js">
-                        <input type="checkbox" id="js" name="js" value="JS">
-                            JS
-                        </label>
-
-                        <label for="python">
-                            <input type="checkbox" id="python" name="python" value="Python">
-                            Python
-                        </label>
-
-                        <label for="react">
-                            <input type="checkbox" id="react" name="react" value="React">
-                            React
-                        </label><br>
+                        <input 
+                            type="text"
+                            id="skill"
+                            name="Skill"
+                            placeholder="Enter skill"
+                            value = "<?php 
+                                        foreach($data['Skills'] as $skill) {
+                                            echo htmlspecialchars($skill -> Skill) . ","; 
+                                        } 
+                                    ?>"
+                        >
                     </div>
 
                     <div class="box3">
@@ -80,7 +76,7 @@
                         <label for="description">Short Description</label>
                         <textarea 
                             id="description" 
-                            name="description" 
+                            name="ShortDesc" 
                             placeholder="Enter a brief description about yourself (50-100 words)" 
                             cols="50" 
                             rows="5"
@@ -94,7 +90,14 @@
 
                     <div class="button-container">
                         <!-- Submit Button -->
-                        <button type="submit" disabled>Save</button>
+                        <button 
+                            type="submit" 
+                            disabled 
+                            onclick="location.href='<?=ROOT?>/Student/StudentProfile/profileEdit';"       
+                        >                     
+                            Save
+
+                        </button>
                     </div>
                 </form>
             </div>

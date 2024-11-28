@@ -10,10 +10,4 @@ class StudentProgress{
         $data['Student'] = $student -> first($arr);
         $this-> view('Student/ProgressReport', $data);
     }
-    public function newReport(){
-        $data = [];
-        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-
-        $this-> view('Student/NewProgressReport', $data);
-    }
 }

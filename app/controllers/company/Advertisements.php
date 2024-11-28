@@ -184,7 +184,7 @@ class Advertisements
                     'numOfInterns' => $_POST['numOfInterns'] ?? '',
                     'workingMode' => $_POST['workingMode'] ?? '',
                     'deadline' => $_POST['deadline'] ?? '',
-                    'image' => $imageBase64 ,
+                    'image' => $imageBase64,
                 ];
 
                 if ($model->validate($_POST)) {
@@ -214,15 +214,25 @@ class Advertisements
     public function delete($id)
     {
         $model = new C_Advertisement;
-        $result = $model->delete($id, 'advertisementId');
+        $result = $model->delete1($id, 'advertisementId');
         $modelstudent = new student_advertisement;
-        $resultstudent = $modelstudent->delete($id, 'advertisementId');
-        // Try to delete the advertisement by ID
-        if ($result && $resultstudent) {
-            header('Location: ../dashboard');
-            exit;
-        } else {
-            echo "Error: Could not delete the advertisement.";
+        print_r($result);
+        $finddata = $modelstudent->first(['AdvertisementId' => $id]);
+        if (!empty($finddata)) {
+            $resultstudent = $modelstudent->delete1($id, 'AdvertisementId');
+            if ($result && $resultstudent) {
+                header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+                exit;
+            } else {
+                echo "Error: Could not delete the advertisement.";
+            }
+        }else{
+            if ($result) {
+                header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+                exit;
+            } else {
+                echo "Error: Could not delete the advertisement.";
+            }
         }
     }
 }

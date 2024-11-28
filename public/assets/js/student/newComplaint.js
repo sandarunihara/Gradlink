@@ -24,12 +24,6 @@ function validateDescription() {
         descriptionError.style.display = 'block';
         descriptionError.style.color = 'red';
         isValid = false;
-    } else if (wordCount > 100) {
-        descriptionError.textContent = `Description is too long. Maximum 100 words allowed.`;
-        descriptionValidMessage.textContent = '';
-        descriptionError.style.display = 'block';
-        descriptionError.style.color = 'red';
-        isValid = false;
     } else {
         descriptionError.textContent = '';
         descriptionValidMessage.textContent = `Description is valid.`;
