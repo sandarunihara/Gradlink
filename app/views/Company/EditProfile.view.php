@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -24,29 +24,34 @@
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <form method="post" id="pro-form" class=" pro_main" enctype="multipart/form-data">
-                    
+                    <div class="backbuttoncom">
+                        <a href="<?php echo ROOT ?>/company/Profile/dashboard/company/Profile/dashboard" class="backreq">
+                            <i class="fas fa-chevron-left"></i>
+                            <h3>back</h3>
+                        </a>
+                    </div>
                     <!-- Cover photo -->
                     <div class="coverphoto">
                         <label for="coverphoto">
                             <img
-                            src="<?php echo !empty($data->coverimg)? 'data:image/jpeg;base64,' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>" 
-                            id="coverPreview"
-                            alt="Cover Preview" />
+                                src="<?php echo !empty($data->coverimg) ? 'data:image/jpeg;base64,' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
+                                id="coverPreview"
+                                alt="Cover Preview" />
                         </label>
                         <input type="file" name="coverphoto" id="coverphoto" accept="image/*" required style="display: none;" onchange="previewImage(event, 'coverPreview')">
                     </div>
 
-                    
+
                     <!-- Profile photo -->
                     <div class="prophoto">
                         <label for="profilephoto">
                             <img
-                            src="<?php echo !empty($data->profileimg)? 'data:image/jpeg;base64,' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
-                            class="pro_logo"
-                            id="profilePreview"
-                            width="200"
-                            height="200"
-                            alt="Profile Preview" />
+                                src="<?php echo !empty($data->profileimg) ? 'data:image/jpeg;base64,' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
+                                class="pro_logo"
+                                id="profilePreview"
+                                width="200"
+                                height="200"
+                                alt="Profile Preview" />
                         </label>
                         <input type="file" name="profilephoto" id="profilephoto" accept="image/*" required style="display: none;" onchange="previewImage(event, 'profilePreview')">
                     </div>
@@ -103,7 +108,7 @@
                         <!-- <input type="file" id="image" name="image" required style="display: block; width: 100%; height: auto;"/> -->
                         <div class="button">
                             <button type="button" onclick="openconfirmeModal()">Save</button>
-                            <button class="discard">Discard</button>
+                            <button class="discard" onclick="goback()">Discard</button>
                         </div>
                     </div>
                 </form>
@@ -127,6 +132,11 @@
 
 
     <script>
+
+        function goback() {
+            window.location.href = "<?php echo ROOT ?>/company/Profile/dashboard";
+        }
+
         function previewImage(event, previewId) {
             const file = event.target.files[0];
             const preview = document.getElementById(previewId);

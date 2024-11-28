@@ -157,7 +157,7 @@
                     <label for="image" class="custom-file-upload">
                         <i class="fas fa-upload"></i> Change an Image
                     </label>
-                    <input type="file" id="image" name="image" required />
+                    <input type="file" id="image" name="image"  required />
                     <span id="file-name"></span>
                 </div>
                 <div class="sc_btn">
@@ -242,7 +242,7 @@
             const numOfInterns = element.dataset.interns;
             const workingMode = element.dataset.workingmode;
             const image = element.dataset.image;
-            // console.log(image);
+            console.log(image);
 
 
             // Now populate the modal fields
@@ -252,6 +252,7 @@
             document.getElementById('deadline').value = deadline;
             document.getElementById('numOfInterns').value = numOfInterns;
             document.getElementById('workingMode').value = workingMode;
+            // document.getElementById('image').value = image;
 
             // Show the file name when a file is selected
             document.getElementById('image').addEventListener('change', function() {

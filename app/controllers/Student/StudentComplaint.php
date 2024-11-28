@@ -68,8 +68,20 @@ class StudentComplaint{
         $this-> view('Student/ComplaintView', $data);
     }
     public function deleteComplaint($complaintId){
+        $data = [];
         $complaint = new complaint;
         $result = $complaint -> delete($complaintId, 'ComplaintId');
-        echo $result;
+        if($result === "Record deleted successfully."){
+            $data['isSuccess'] =1;
+        }else{
+            $data['isSuccess']= 0;
+        }
+
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        
+        $complaint = new complaint;
+        $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
+
+        $this-> view('Student/Complaint',$data);
     }
 }

@@ -91,7 +91,8 @@ class Advertisements
     }
 
     public function create()
-    {   $data=[];
+    {
+        $data = [];
         $user = "";
         if (isset($_SESSION['USER'])) {
             $user = $_SESSION['USER'];
@@ -111,7 +112,7 @@ class Advertisements
                 }
 
                 $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
-                $imageBase64 = base64_encode($imageData); 
+                $imageBase64 = base64_encode($imageData);
             }
 
             $Id = $this->getnextId();
@@ -157,48 +158,52 @@ class Advertisements
         // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $id]);
         $advertisementId = $id;
+
         if ($data) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $model = new C_Advertisement;
-                
-                
+
+
                 // // Handle the file upload and convert it to base64
                 $imageBase64 = '';
+                // print_r($_FILES['image']);
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                        $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
-                        $imageBase64 = base64_encode($imageData); // Encode image content in base64
-                    }
-                    
-                    
-                    
-                    $updatedata = [
-                        'position' => $_POST['position'] ?? '',
-                        'description' => $_POST['description'] ?? '',
-                        'qualification' => $_POST['qualification'] ?? '',
-                        'numOfInterns' => $_POST['numOfInterns'] ?? '',
-                        'workingMode' => $_POST['workingMode'] ?? '',
-                        'deadline' => $_POST['deadline'] ?? '',
-                        'image' => $imageBase64
-                    ];
-                    
-                    if ($model->validate($_POST)) {
-                        $result = $model->update($advertisementId, $updatedata, 'advertisementId');
-                        if ($result) {
-                            // Redirect to the same page after successful submission
-                            header("Location: " . $_SERVER['REQUEST_URI']);
-                            exit;
-                        } else {
-                            echo "There was an issue saving the advertisement.";
-                        }
-                    } else {
-                        $data['errors'] = $model->errors;
-                        // Handle validation errors
-                        print_r($data['errors']);
-                    }
+                    $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
+                    $imageBase64 = base64_encode($imageData); // Encode image content in base64
                 }
-                // Pass the data data to the view
-                $this->view('Company/SendAdvertisements', ['data' => $data]);
-            
+                if (empty($imageBase64)) {
+                    $imageBase64 = $data[0]->image;
+                }
+
+
+
+                $updatedata = [
+                    'position' => $_POST['position'] ?? '',
+                    'description' => $_POST['description'] ?? '',
+                    'qualification' => $_POST['qualification'] ?? '',
+                    'numOfInterns' => $_POST['numOfInterns'] ?? '',
+                    'workingMode' => $_POST['workingMode'] ?? '',
+                    'deadline' => $_POST['deadline'] ?? '',
+                    'image' => $imageBase64 ,
+                ];
+
+                if ($model->validate($_POST)) {
+                    $result = $model->update($advertisementId, $updatedata, 'advertisementId');
+                    if ($result) {
+                        // Redirect to the same page after successful submission
+                        header("Location: " . $_SERVER['REQUEST_URI']);
+                        exit;
+                    } else {
+                        echo "There was an issue saving the advertisement.";
+                    }
+                } else {
+                    $data['errors'] = $model->errors;
+                    // Handle validation errors
+                    print_r($data['errors']);
+                }
+            }
+            // Pass the data data to the view
+            $this->view('Company/SendAdvertisements', ['data' => $data]);
         } else {
             echo "Advertisement not found.";
         }

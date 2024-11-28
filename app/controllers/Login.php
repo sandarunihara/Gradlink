@@ -14,7 +14,7 @@ class Login
 				case 9:
 					$user = new student;
 					$arr['StudentId'] = $_POST['userId'];
-					$path = 'Student/Studentdash/dashboard';
+					$path = 'Student/StudentDash/dashboard';
 					break;
 				case 4:
 					$user = new company;
@@ -37,7 +37,7 @@ class Login
 
 			if ($user) {
 				$row = $user->first($arr);
-				if ($row && $row->Password === $_POST['password']) {
+				if ($row && password_verify($_POST['password'], $row->Password)) {
 					// Set session for the user
 					session_start();
 					$_SESSION['USER'] = $row;
@@ -59,7 +59,6 @@ class Login
 							setcookie('USER_LOGIN', '', time() - 3600, "/"); // Expire the cookie
 						}
 					}
-
 					redirect($path);
 				} else {
 					if (empty($data['errors'])) { // Ensure it's set only once
@@ -71,9 +70,6 @@ class Login
 					$data['errors'] = "Wrong UserId or Password";
 				}
 			}
-
-			// // $user->errors['UserId'] = "Wrong UserId or passwords";
-			// $data['errors'] = "Wrong UserId or passwords";
 		} else {
 			// Check if the "USER_LOGIN" cookie is set
 			if (isset($_COOKIE['USER_LOGIN'])) {
@@ -129,12 +125,16 @@ class Login
 				// Fetch user data if valid
 				if ($user && empty($data['errors'])) {
 					$row = $user->first($searchKey);
-					if ($row && $row->Password === null) {
-						$data['rowdata'] = $row;
-						$_SESSION['USER_ID'] = $userId;
-						// $_SESSION['rowdata'] = $row;
+					if ($row ) {
+						if($row->Password === null){
+							$data['rowdata'] = $row;
+							$_SESSION['USER_ID'] = $userId;
+							// $_SESSION['rowdata'] = $row;
+						}else{
+							$data['errors'] = "User already has a password";
+						}
 					} else {
-						$data['errors'] = "User already has a password";
+						$data['errors'] = "Invalid User ID";
 						// redirect('login');
 					}
 				}
@@ -172,20 +172,18 @@ class Login
 								break;
 						}
 
-						// $results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
-						$results = $user->update($id, ['Password' => $password], $id_column);
+						$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
+						// $results = $user->update($id, ['Password' => $password], $id_column);
 						
 						session_unset();
 						session_destroy();
 						if ($results['status'] === 'success') {
 							$data['success'] = "Password created successfully. Please login.";
 							redirect('login');
-							// $this->view('login', $data);
 							exit;
 						} else {
 							$data['errors'] = "Failed to create password. Please try again.";
 						}
-						// Redirect to the login page
 					} else {
 						$data['errors'] = "User session data is missing. Please try again.";
 					}

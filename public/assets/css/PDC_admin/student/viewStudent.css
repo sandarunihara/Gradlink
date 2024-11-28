@@ -1,8 +1,9 @@
+/* Reset and global styles */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -40,7 +41,7 @@ body {
 
 .edit-btn {
     background: none;
-    border-radius: 120%;
+    border-radius: 50%;
     border: 2px solid #4b0082;
     margin-left: 15px;
     cursor: pointer;
@@ -48,11 +49,14 @@ body {
     color: #4b0082;
     padding: 3px;
     width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.edit-btn:hover{
-    background-color: #4c008212;
-    
+.edit-btn:hover {
+    background-color: rgba(75, 0, 130, 0.1);
 }
 
 .header-right {
@@ -81,6 +85,7 @@ body {
     font-size: 14px;
     color: #777;
 }
+
 .student-info {
     background-color: #fff;
     padding: 20px;
@@ -91,32 +96,33 @@ body {
 
 .student-form {
     display: grid;
-    grid-template-columns: 1fr 7fr; /* Two columns: labels and inputs */
-    column-gap: 40px; /* Gap between label and input */
+    grid-template-columns: 1fr 3fr; /* Two columns: labels and inputs */
+    column-gap: 30px; /* Gap between label and input */
+    row-gap: 20px; /* Gap between rows */
     align-items: center;
 }
 
 .form-group {
-    display: contents; /* Allows form groups to follow grid structure */
+    display: contents; /* Allow labels and inputs to align properly in grid */
+    position: relative; /* Necessary for absolute positioning of error messages */
 }
 
 .form-group label {
     font-weight: bold;
-    margin-right: 2%;
     justify-self: start;
-    white-space: nowrap; /* Ensures label stays on one line */
+    white-space: nowrap; /* Keep labels on one line */
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 10px;
-    cursor: auto;
+    cursor: pointer; /* Inputs are readonly */
 }
 
 .form-group textarea {
@@ -124,16 +130,24 @@ body {
     height: 100px;
 }
 
-.button-line{
+.form-group .error {
+    color: #d9534f; /* Bootstrap-inspired red color */
+    font-size: 14px; /* Smaller font for errors */
+    margin-top: 5px; /* Spacing below the input */
+    grid-column: 2 / 3; /* Aligns error under the input in the second column */
+    font-family: 'Arial', sans-serif;
+}
+
+.button-line {
     display: flex;
     justify-content: space-between;
 }
 
 .action-buttons {
     margin-top: 20px;
-    justify-content: end;
     display: flex;
     gap: 4%;
+    justify-content: flex-end;
 }
 
 .btn {
@@ -148,7 +162,7 @@ body {
     color: #ffffff;
 }
 
-.update-btn:hover{
+.update-btn:hover {
     background-color: #0872dc;
 }
 
@@ -157,7 +171,7 @@ body {
     color: #fff;
 }
 
-.block-btn:hover{
+.block-btn:hover {
     background-color: #f20303;
 }
 
@@ -165,24 +179,8 @@ body {
     background-color: #000000;
     color: #ffffff;
     margin-left: auto;
-
 }
 
-.back-btn:hover{
+.back-btn:hover {
     background-color: #26282b;
-}
-
-.view-progress-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-start;
-}
-
-.view-progress-btn:hover{
-    background-color: #0872dc;
 }

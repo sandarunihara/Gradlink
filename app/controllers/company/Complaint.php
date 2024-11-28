@@ -7,4 +7,12 @@ class Complaint
     {
         $this->view('Company/Complaint');
     }
+    public function viewComplaint()
+    {
+        $this->view('Company/ViewComplaint');
+    }
+    public function addComplaint()
+    {
+        $this->view('Company/AddComplaint');
+    }
 }

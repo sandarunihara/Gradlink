@@ -30,21 +30,38 @@
                     
                     <!-- Profile Info (Name & Major) -->
                     <div class="student-profile-info-1">
-                        <h2>Sandeepa Kumar</h2>
-                        <p class="student-major">Computer Science</p>
+                        <h2><?php echo $data['Student'] -> Name?></h2>
+                        <p class="student-major"><?php echo htmlspecialchars($data['Student'] -> DegreeName)?></p>
                     </div>
 
                     <!-- Student Info (Email, ID, Contact) -->
                     <div class="student-profile-info-2">
-                        <p><span>2022/CS/179</span></p>
-                        <p><span>Sandeepakumar@gmial.com</span></p>
-                        <p><span>0710102456</span></p>
+                        <p><span><?php
+                            $studentId = $data['Student'] -> StudentId;
+                            $part1 = substr($studentId, 0, 4);                            
+                            $part2 = strtoupper(substr($studentId, 4, 2));                           
+                            $part3 = substr($studentId, 6);                            
+                            $studentId = "$part1/$part2/$part3";
+                            echo htmlspecialchars($studentId);
+                        ?></span></p>
+                        <p><span><?php echo htmlspecialchars($data['Student'] -> Email)?></span></p>
+                        <p><span><?php echo htmlspecialchars($data['Student'] -> ContactNum)?></span></p>
                     </div>
 
                     <!-- Links (LinkedIn, GitHub) -->
+                    <?php
+                        $linkedinURL = $data['Student'] -> Linkedin;
+                        $githubURL = $data['Student'] -> Github;
+                        if (!preg_match('/^https?:\/\//', $linkedinURL) ) {
+                            $linkedinURL = 'https://' . $linkedinURL;
+                        }
+                        if (!preg_match('/^https?:\/\//', $githubURL) ) {
+                            $githubURL = 'https://' . $githubURL;
+                        }
+                    ?>
                     <div class="student-profile-info-3">
-                        <p><a href=""><i class="fab fa-linkedin"></i></a></p>
-                        <p><a href=""><i class="fab fa-github"></i></a></p>
+                        <p><a href="<?php echo htmlspecialchars($linkedinURL); ?>" target="_blank"><i class="fab fa-linkedin"></i></a></p>
+                        <p><a href="<?php echo htmlspecialchars($githubURL); ?>" target="_blank"><i class="fab fa-github"></i></a></p>
                     </div>
                 </div>
 
@@ -53,28 +70,41 @@
                     <!-- Skills Section -->
                     <div class="student-skill">
                         <div class="skills">
-                            <p>JavaScript</p>
-                            <p>Node.js</p>
-                            <p>Python</p>
+                            <?php
+                                for ($i = 0; $i < count($data['Skills']); $i++) {
+                                    echo "<p>" . htmlspecialchars($data['Skills'][$i] -> Skill) . "</p>";
+                                }
+                            ?>
                         </div>
                     </div>
 
                     <!-- Short Description Section -->
                     <div class="student-short-description">
                         <p>
-                            I am a highly motivated and self-driven individual passionate about software development. A quick learner and a team player, always ready to take on new challenges. I am proficient in JavaScript, Node.js, and Python.
+                            <?php echo htmlspecialchars($data['Student'] -> ShortDesc)?>
                         </p>
                     </div>
                 </div>
-
+                <!--Certificates Section-->
+                <div class="student-certificate">
+                    <div class="topic1">
+                        <p class="certificate-header">Cetificates</p>
+                    </div>
+                    <div class="cetificatesContent">
+                        <div class="cetificates">
+                            <?php for ($i = 0; $i < count($data['Certificates']); $i++) { ?>
+                                <a href="<?php echo htmlspecialchars($data['Certificates'][$i] ->CredentialUrl)?>" target="_blank"><p>
+                                    <?php echo htmlspecialchars($data['Certificates'][$i] -> Name)?>
+                                    form
+                                    <?php echo htmlspecialchars($data['Certificates'][$i] -> Organization)?>
+                                    <br>
+                                </p></a>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
                 <!-- Footer Section -->
                 <div class="student-profile-footer">
-                    <!-- CV Section -->
-                    <div class="student-cv">
-                        <a href="<?=ROOT?>/assets/cvs/Sandeepa_CV.pdf" class="cv-link" target="_blank">View CV
-                            <i class="fas fa-file-pdf"></i>
-                        </a>
-                    </div>
                     <div class="student-edit">
                         <a href="<?=ROOT?>/Student/StudentProfile/ProfileEdit"><button>Update Profile</button></a>
                     </div>

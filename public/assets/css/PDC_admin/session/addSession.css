@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -73,32 +73,32 @@ body {
 
 .company-form {
     display: grid;
-    grid-template-columns: 1fr 7fr; /* Two columns: labels and inputs */
-    column-gap: 40px; /* Gap between label and input */
-    align-items: center;
+    grid-template-columns: 1fr 3fr; /* Two columns: labels and inputs */
+    column-gap: 30px; /* Gap between label and input */
+    row-gap: 20px; /* Gap between rows */
+    align-items: center; /* Align labels and inputs */
 }
-
 .form-group {
-    display: contents; /* Allows form groups to follow grid structure */
+    display: contents; /* Allow labels and inputs to align properly in grid */
+    position: relative; /* Necessary for absolute positioning of error messages */
 }
 
 .form-group label {
     font-weight: bold;
-    margin-right: 2%;
     justify-self: start;
-    white-space: nowrap; /* Ensures label stays on one line */
+    white-space: nowrap; /* Keep labels on one line */
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 10px;
-    cursor: auto;
+    cursor: pointer; /* Inputs are readonly */
 }
 
 .form-group textarea {
@@ -106,16 +106,12 @@ body {
     height: 100px;
 }
 
-.input-group {
-    display: flex; 
-    align-items: center; 
-    gap: 10px;
-    align-items: baseline;
-}
-
-.input-group input {
-    width: auto; 
-    flex-grow: 1; 
+.form-group .error {
+    color: #d9534f; /* Bootstrap-inspired red color */
+    font-size: 14px; /* Smaller font for errors */
+    margin-top: 5px; /* Spacing below the input */
+    grid-column: 2 / 3; /* Aligns error under the input in the second column */
+    font-family: 'Arial', sans-serif;
 }
 
 .input-group button {
@@ -169,6 +165,8 @@ body {
     cursor: pointer;
     font-size: 16px;
     color: #333;
+    display: flex;
+    flex-direction: column;
     
 }
 
@@ -187,10 +185,9 @@ body {
 
 
 .action-buttons {
-    margin-top: 20px;
-    justify-content: end;
     display: flex;
-    gap: 1%;
+    justify-content: space-between; /* Equal spacing for buttons */
+    align-items: center;
 }
 
 .btn {
@@ -200,7 +197,7 @@ body {
     cursor: pointer;
     padding: 10px;
     margin-top: 35px;
-    width: 14%;
+    /* width: 14%; */
     font-size: medium;
 }
 
@@ -222,6 +219,7 @@ body {
 .confirm-btn {
     background-color: #007bff;
     color: #ffffff;
+
     
 }
 
@@ -274,4 +272,11 @@ body {
 .error-message::before {
     content: '⚠️';
     font-size: 18px;
+}
+
+.error {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
 }

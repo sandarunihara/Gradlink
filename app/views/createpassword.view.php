@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <a class="backbtn" href="<?php echo ROOT ?>/login">
+        <i class="fas fa-chevron-left"></i>
+    </a>
     <img src="<?= ROOT ?>/assets/img/glogo.png" alt="Gradlink Logo" class="logo-overlay">
     <div class="maincontainer">
         <form class="useridcontainer" method="post">
@@ -33,12 +36,19 @@
             <form class="passwordcontainer" method="post" onsubmit="return validatePasswords()">
                 <div>
                     <label for="password">Create New Password</label>
-                    <input type="text" name="password" id="password" required placeholder="password">
+                    <input type="text" name="password" id="password" placeholder="password">
                 </div>
                 <div>
                     <label for="confirmpassword">Confirm Password</label>
-                    <input type="text" name="confirmpassword" id="confirmpassword" required placeholder="confirm password">
+                    <input type="text" name="confirmpassword" id="confirmpassword" placeholder="confirm password">
                 </div>
+                <p id="passwordRequirements" class="details" >
+                    Password must be at least 8 characters long and include:
+                    <br>- At least one uppercase letter
+                    <br>- At least one lowercase letter
+                    <br>- At least one number
+                    <br>- At least one special character (!@#$%^&*)
+                </p>
                 <button type="submit">Save Password</button>
             </form>
         <?php endif; ?>
@@ -65,6 +75,30 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmpassword').value;
 
+            if (!password || !confirmPassword) {
+                errorToast("Please fill in all fields.");
+                return false; // Prevent form submission
+            }
+            if (password.length < 8) {
+                errorToast("Password must be at least 8 characters long.");
+                return false; // Prevent form submission
+            }
+            if (!/[A-Z]/.test(password)) {
+                errorToast("Password must contain at least one uppercase letter.");
+                return false; // Prevent form submission
+            }
+            if (!/[a-z]/.test(password)) {
+                errorToast("Password must contain at least one lowercase letter.");
+                return false; // Prevent form submission
+            }
+            if (!/[0-9]/.test(password)) {
+                errorToast("Password must contain at least one number.");
+                return false; // Prevent form submission
+            }
+            if (!/[!@#$%^&*]/.test(password)) {
+                errorToast("Password must contain at least one special character.");
+                return false; // Prevent form submission
+            }
             if (password !== confirmPassword) {
                 errorToast("Passwords do not match. Please try again.");
                 return false; // Prevent form submission

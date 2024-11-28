@@ -62,7 +62,7 @@
                                     <td><?= htmlspecialchars(is_array($session) ? $session['session_date'] : $session->session_date) ?></td>
                                     <td><?= htmlspecialchars(is_array($session) ? $session['time_slot'] : $session->time_slot) ?></td>
                                     <td><button class="view-btn" onclick="navigateToShowSession(<?= is_array($session) ? $session['session_id'] : $session->session_id ?>)">View</button></td>
-                                    <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDelete(<?= $session->session_id ?>)">Delete</button></td>
+                                    <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDelete(<?= is_array($session) ? $session['session_id'] : $session->session_id ?>)">Delete</button></td>
                                     <td></td>
                                 </tr>
                             <?php endforeach; ?>
