@@ -40,7 +40,7 @@
                 <h3>Recent Activity</h3>
                 <ul>
                     <li>Applied for Software Developer at XYZ Corp</li>
-                    <li>Updated your Resume</li>
+                    <li>Updated your Profile</li>
                     <li>Scheduled an interview with ABC Ltd.</li>
                 </ul>
             </div>

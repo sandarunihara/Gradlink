@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/complaintView.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css">  
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -56,16 +58,66 @@
                 <?php
                     if($delete == 1){
                 ?>
-                    <a href="<?=ROOT?>/Student/StudentComplaint/deleteComplaint/<?php echo $complaintId?>">
-                        <button id="complaintDleteBtn">Delete Complaint</button>
-                    </a>
+                <button id="complaintDeleteBtn">Delete Complaint</button>
                 <?php
                     }
                 ?>
             </div>
         </div>
     </div>
+    <!-- Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to delete the complaint?</p>
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="confirmDelete()">Yes</button>
+                <button class="updateno-btn" onclick="closeConfirmDeleteModal()">No</button>
+            </div>
+        </div>
+    </div>
+    <!-- Toast -->
+    <?php if(array_key_exists('isSuccess', $data)): ?>
+        <div id="toast-container" class="toast-container"></div>
+
+        <?php if ($data['isSuccess'] == 0): ?>
+            <script>
+                errorToast("Failed to delete complaint");
+            </script>
+        <?php endif; ?>
+        <?php if ($data['isSuccess'] == 1): ?>
+            <script>
+                successToast("Complaint Deleted Successfully");
+            </script>
+        <?php endif; ?>
+    <?php endif; ?>
+<script>
+    // Get references to modal and buttons
+    const complaintDeleteBtn = document.getElementById('complaintDeleteBtn');
+    const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
+    const yesButton = document.querySelector('.updateyes-btn');
+    const noButton = document.querySelector('.updateno-btn');
+
+    // Show confirmation modal when "Delete Complaint" is clicked
+    complaintDeleteBtn.addEventListener('click', () => {
+        deleteConfirmationModal.style.display = 'flex'; // Show modal
+    });
+
+    // Close confirmation modal when "No" button is clicked
+    function closeConfirmDeleteModal() {
+        deleteConfirmationModal.style.display = 'none'; // Hide modal
+    }
+
+    // Handle the "Yes" button click (confirm delete)
+    function confirmDelete() {
+        const complaintId = <?php echo $complaintId; ?>; // Pass complaint ID from PHP to JavaScript
+
+        // Redirect to the delete route for the complaint
+        window.location.href = `<?=ROOT?>/Student/StudentComplaint/deleteComplaint/${complaintId}`;
+    }
+</script>
 </body>
 </html>
+
 
 
