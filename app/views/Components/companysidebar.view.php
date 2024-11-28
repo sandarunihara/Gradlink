@@ -55,7 +55,7 @@
                 <p>Profile</p>
             </div>
         </a>
-        <a class="option logout" href="/Gradlink/public/Logout">
+        <a class="option logout" href="<?=ROOT?>/logout">
             <i class="fas fa-sign-out-alt"></i>
             <div class="text">
                 <p>Log out</p>

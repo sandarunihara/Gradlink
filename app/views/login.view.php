@@ -15,11 +15,11 @@
             <form method="post">
                 <h1 class="topic">Sign in</h1>
                 <div class="input-group input-box">
-                    <input name="userId" id="userId" type="text"  required>
+                    <input name="userId" id="userId" required type="text"  >
                     <label for="userId">Enter User Id</label>
                 </div>
                 <div class="input-group input-box">
-                    <input name="password" type="password" required>
+                    <input name="password" type="password" required id="password" >
                     <label for="password">Password</label>
                 </div>
 
@@ -61,6 +61,13 @@
             errorToast("<?= $data['errorsInBase'] ?>");
         </script>
     <?php endif; ?> -->
+    <script>
+        const userId = document.getElementById('userId').value;
+        const password = document.getElementById('password').value;
+        // if(!userId || !password){
+        //     errorToast("Please enter User Id and Password");
+        // }
+    </script>
 </body>
 
 

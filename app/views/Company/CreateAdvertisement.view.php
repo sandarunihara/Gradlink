@@ -12,7 +12,7 @@
 
 <body class="body">
     <div class="dashboard">
-        
+
         <div id="content">
             <div class="main">
                 <div class="d">
@@ -33,9 +33,40 @@
                         <div class="position">
                             <h4>Position:</h4>
                             <select id="position" name="position" required>
+                                <option value="" disabled selected>Select a position</option>
                                 <option value="Quality Assurance">Quality Assurance</option>
                                 <option value="Software Engineer">Software Engineer</option>
-                                <option value="Wed Developer">Wed Developer</option>
+                                <option value="Web Developer">Web Developer</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="Machine Learning">Machine Learning</option>
+                                <option value="Data Analyst">Data Analyst</option>
+                                <option value="Full Stack Developer">Full Stack Developer</option>
+                                <option value="Backend Developer">Backend Developer</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="Cloud Architect">Cloud Architect</option>
+                                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                                <option value="AI Engineer">AI Engineer</option>
+                                <option value="Mobile App Developer">Mobile App Developer</option>
+                                <option value="Blockchain Developer">Blockchain Developer</option>
+                                <option value="Game Developer">Game Developer</option>
+                                <option value="UI/UX Designer">UI/UX Designer</option>
+                                <option value="Product Manager">Product Manager</option>
+                                <option value="System Administrator">System Administrator</option>
+                                <option value="Network Engineer">Network Engineer</option>
+                                <option value="Technical Support Engineer">Technical Support Engineer</option>
+                                <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
+                                <option value="Cloud Engineer">Cloud Engineer</option>
+                                <option value="Software Architect">Software Architect</option>
+                                <option value="Solutions Architect">Solutions Architect</option>
+                                <option value="IT Consultant">IT Consultant</option>
+                                <option value="Quality Engineer">Quality Engineer</option>
+                                <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
+                                <option value="RPA Developer">RPA Developer</option>
+                                <option value="ERP Consultant">ERP Consultant</option>
+                                <option value="Salesforce Developer">Salesforce Developer</option>
+                                <option value="SAP Consultant">SAP Consultant</option>
+
                             </select>
                         </div>
                         <div class="details">
@@ -67,6 +98,7 @@
                             <div class="position">
                                 <h4>Work type:</h4>
                                 <select id="worktype" name="worktype" required>
+                                    <option value="" disabled selected>Select a worktype</option>
                                     <option value="Remote">Remote</option>
                                     <option value="Onsite">Onsite</option>
                                     <option value="Hybrid">Hybrid</option>
@@ -79,7 +111,7 @@
                             <label for="image" class="custom-file-upload">
                                 <i class="fas fa-upload"></i> Choose an Image
                             </label>
-                            <input type="file" id="image" name="image" required />
+                            <input type="file" accept="image/png, image/jpeg, image/jpg" id="image" name="image" required />
                             <span id="file-name">No file chosen</span>
                         </div>
 
@@ -141,6 +173,17 @@
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dateInput = document.getElementById('deadline');
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate() + 1).padStart(2, '0');
+
+            const minDate = `${yyyy}-${mm}-${dd}`;
+            dateInput.setAttribute('min', minDate);
+        });
+
         function increment() {
             let count = document.getElementById('interns').value;
             count = parseInt(count) + 1;
@@ -181,12 +224,37 @@
                 return; // Prevent further form submission
             }
 
-            if (!position || !description || !qualifications || !deadline || !interns || !worktype) {
-                errorToast("Please fill in all required fields.");
+            if (!position) {
+                errorToast("Please select a position from the dropdown.");
                 return;
             }
-            if(!image){
+            if (!description) {
+                errorToast("Description is required. Please provide the necessary details.");
+                return;
+            }
+            if (!qualifications) {
+                errorToast("Qualifications is required. Please provide the necessary details.");
+                return;
+            }
+            if (!deadline) {
+                errorToast("Deadline is required. Please specify a valid date.");
+                return;
+            }
+            if (!interns) {
+                errorToast("Please enter a valid number of interns required.");
+                return;
+            }
+            if (!worktype) {
+                errorToast("Please select a worktype from the dropdown.");
+                return;
+            }
+            if (!image) {
                 errorToast("Please upload an image.");
+                return;
+            }
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+            if (!allowedTypes.includes(image.type)) {
+                errorToast("Invalid file type. Please upload a PNG, JPEG, or JPG image.");
                 return;
             }
 
@@ -223,11 +291,11 @@
             document.getElementById('confirmation-modal').style.display = 'none';
 
         }
-        const errorMessage=<?php echo json_encode($data['error'] ?? '') ?>;
-        if(errorMessage){
+        const errorMessage = <?php echo json_encode($data['error'] ?? '') ?>;
+        if (errorMessage) {
             errorToast(errorMessage);
         }
-        
+
 
         function submitForm() {
             document.getElementById('ad-form').submit();
