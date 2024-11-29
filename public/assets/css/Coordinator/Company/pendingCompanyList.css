@@ -8,7 +8,7 @@
 body {
     background-color: #f0f4ff;
     display: flex;
-    height: 100vh;
+    height: 100%;
 }
 
 .container {
@@ -66,7 +66,7 @@ body {
 }
 
 .company-list {
-    margin-top: 30px;
+    margin-top: 10px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -115,12 +115,19 @@ table {
 
 table thead {
     background-color: #f1f5ff;
+    position: sticky;
 }
 
 table th, table td {
     padding: 1.2%;
     text-align: left;
     border-bottom: 1px solid #ccc;
+}
+
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 table th {
@@ -131,6 +138,12 @@ table th {
 table td {
     font-size: 14px;
     color: #555;
+}
+
+tbody {
+    display: block;
+    max-height: 400px; /* Adjust this value as needed */
+    overflow-y: auto;
 }
 
 .view-btn {
