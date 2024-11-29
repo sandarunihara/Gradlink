@@ -33,10 +33,14 @@
             <section class="company-list">
                 <div class="list-header">
                     <h2>Scheduled Sessions</h2>
-                    <div class="search-box">
+
+                    <div class="search-box">    
                         <input type="text" placeholder="Search Students" />
                         <button> Search
                         </button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="add-btn" onclick="navigateToAddSession();" >+ Add</button>
                     </div>
                 </div>
                 <table>
@@ -73,9 +77,7 @@
                         
                     </tbody>
                 </table>
-                <div class="action-buttons">
-                    <button class="add-btn" onclick="navigateToAddSession();" >+ Add</button>
-                </div>
+                
 
             </section>
 
