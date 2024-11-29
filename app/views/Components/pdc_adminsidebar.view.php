@@ -46,12 +46,12 @@
             </div>
         </a>
 
-        <a class="option" href="../AdminProfileOverview/dashboard">
+        <!-- <a class="option" href="../AdminProfileOverview/dashboard">
             <i class="material-icons">account_circle</i>
             <div>
                 <p>Profile</p>
             </div>
-        </a>
+        </a> -->
         
         <a class="option logout" href="<?=ROOT?>/logout">
             <i class="material-icons">logout</i>
