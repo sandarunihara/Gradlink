@@ -5,56 +5,56 @@
     <div id="sidebaroption" class="sidebaroption ">
         
         <a class="option dash" href="../AdminDashboardOverview/dashboard" >
-            <i class="fas option-i fa-home"></i>
+            <i class="material-icons">dashboard</i>
             <div>
                 <p>Dashboard</p>
             </div>
         </a>
         
         <a class="option" href="../AdminCompanyOverview/dashboard">
-            <i class="fas fa-user"></i>
+            <i class="material-icons">business</i>
             <div>
                 <p>Company</p>
             </div>
         </a>
         
         <a class="option" href="../AdminStudentOverview/dashboard">
-            <i class="fas fa-bullhorn"></i>
+            <i class="material-icons">school</i>
             <div>
                 <p>Student</p>
             </div>
         </a>
         
         <a class="option" href="../AdminAdvertisementOverview/dashboard">
-            <i class="fas fa-exclamation-circle"></i>
+            <i class="material-icons">campaign</i>
             <div>
                 <p>Advertisement</p>
             </div>
         </a>
         
         <a class="option" href="../AdminApplicationOverview/dashboard">
-            <i class="fas fa-chart-line"></i>
+            <i class="material-icons">description</i>
             <div>
                 <p>Application</p>
             </div>
         </a>
         
         <a class="option" href="../AdminSessionOverview/dashboard">
-            <i class="fas fa-comments"></i>
+            <i class="material-icons">event</i>
             <div>
                 <p>Session</p>
             </div>
         </a>
 
-        <a class="option" href="../AdminProfileOverview/dashboard">
-            <i class="fas fa-comments"></i>
+        <!-- <a class="option" href="../AdminProfileOverview/dashboard">
+            <i class="material-icons">account_circle</i>
             <div>
                 <p>Profile</p>
             </div>
-        </a>
+        </a> -->
         
         <a class="option logout" href="<?=ROOT?>/logout">
-            <i class="fas fa-sign-out-alt"></i>
+            <i class="material-icons">logout</i>
             <div>
                 <p>Log out</p>
             </div>

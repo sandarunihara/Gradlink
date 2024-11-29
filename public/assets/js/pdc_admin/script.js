@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const inputs = form.querySelectorAll("input");
         const selectors = form.querySelectorAll("select");
 
-        editButton?.addEventListener("click", () => {
+        editButton.addEventListener("click", () => {
             console.log("DOM fully loaded");
             inputs.forEach(input => {
                 input.removeAttribute("readonly");
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         
-        saveButton?.addEventListener("click", () => {
+        saveButton.addEventListener("click", () => {
             inputs.forEach(input => input.removeAttribute("readonly"));
             selectors.forEach(select => select.removeAttribute("disabled"));
             navigateToUpdate();
@@ -124,10 +124,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const studentForm = document.getElementById("student-form");
     const studentInputs = studentForm.querySelectorAll("input");
     const studentSelectors = studentForm.querySelectorAll("select");
+    const regId = document.getElementById("student-id");
 
     if (studentForm) {
         studentEditButton.addEventListener("click", () => {
-            studentInputs.forEach(input => input.removeAttribute("readonly"));
+            studentInputs.forEach(input => {
+                if (input !== regId) {
+                    input.removeAttribute("readonly");
+                }
+            });
             studentSelectors.forEach(select => select.disabled = false);
             studentSaveButton.style.display = "inline-block";
             studentEditButton.style.display = "none";

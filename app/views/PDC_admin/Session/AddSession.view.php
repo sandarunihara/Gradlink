@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="session-date">Contact Number</label>
+                        <label for="session-date">Session Date</label>
                         <input type="date" id="session-date" name="session_date" placeholder="Session Date" 
                             value="<?= htmlspecialchars($old_data['session_date'] ?? '') ?>" required>
                         <?php if (!empty($errors['session_date'])): ?>
