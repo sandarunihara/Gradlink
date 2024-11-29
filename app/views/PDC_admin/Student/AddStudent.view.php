@@ -15,7 +15,7 @@
         <main class="content">
             <header class="header">
                 <div class="header-left">
-                    <i class="material-icons">menu</i>
+                    <i class="material-icons">school</i>
                     <h1>Student</h1>
                 </div>
 
@@ -24,7 +24,7 @@
                     <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
 
                     <div class="user-info">
-                        <span>Jonitha Cathrine</span>
+                        <span>John</span>
                         <small>Admin</small>
                     </div>
                 </div>
@@ -105,9 +105,7 @@
                     
                     <div class="button-line">
                     <button class="back-btn" onclick='history.back()'>Back</button>
-                    <div class="action-buttons">
-                        <button type="submit" class="btn confirm-btn">Confirm</button>
-                    </div>
+                    <button type="submit" class="btn confirm-btn">Confirm</button>
                 </div>
                 </form>
                 

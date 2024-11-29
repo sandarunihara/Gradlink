@@ -16,7 +16,6 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <i class="material-icons">menu</i>
                     <h1>Students</h1>
                 </div>
 
@@ -32,9 +31,6 @@
             </header>
 
             <section class="company-list">
-                <div class="action-buttons">
-                    <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button>
-                </div>
                 <div class="list-header">
                     <h2>Registered Students</h2>
                     <div class="search-box">
@@ -42,6 +38,9 @@
                         <button> Search
                         </button>
                     </div>
+                    <div class="action-buttons">
+                    <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button>
+                </div>
                 </div>
                 <table>
                     <thead>

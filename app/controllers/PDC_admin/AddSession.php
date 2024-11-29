@@ -46,18 +46,6 @@
                 'time_slot' => $_POST['time_slot']
             ];
 
-            // $existingSession = $model->findBy('session_name', $data['session_name']);
-            // if ($existingSession) {
-            //     $_SESSION['error'] = "The session name already exists. Please choose a different one.";
-            //     header("Location: " . ROOT . "/PDC_admin/AddSession/showAddForm");
-            //     exit;
-            // }
-
-            // if (!preg_match('/^\+?[0-9]{10,15}$/', $data['contact_number'])) {
-            //     $_SESSION['error'] = "Invalid phone number. It must be 10-15 digits long and can start with a '+'.";
-            //     header("Location: " . ROOT . "/PDC_admin/AddSession/showAddForm");
-            //     exit;
-            // }
 
             $query = "SELECT * FROM session WHERE session_date = :session_date AND time_slot = :time_slot AND hall_number = :hall_number";
             $params = [

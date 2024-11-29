@@ -98,7 +98,7 @@
                     <?php endif; ?>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="github">Github</label>
                     <input type="text" id="github" name="Github" value="<?= htmlspecialchars($student->Github) ?>" readonly>
                     <?php if (!empty($errors['Github'])): ?>
@@ -112,7 +112,7 @@
                     <?php if (!empty($errors['Linkedin'])): ?>
                     <span class="error"><?= htmlspecialchars($errors['Linkedin']) ?></span>
                     <?php endif; ?>
-                </div>
+                </div> -->
 
                 </form>
                 <div class="button-line">

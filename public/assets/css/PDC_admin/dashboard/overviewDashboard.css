@@ -14,14 +14,20 @@ body {
 .container {
     display: flex;
     min-height: 100vh;
+    width: 100%; /* Use full width of the parent */
+    max-width:100%; /* Optional, limit max width */
+    margin: 0 auto; /* Center the container if max-width is applied */
 }
 
+
 .main-content {
-    flex: 1;
+    width: 83%;
+    margin-left: 17%;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .header {
     display: flex;
@@ -49,15 +55,26 @@ body {
     border-radius: 50%;
 }
 
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .user-info span {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-info small {
+    font-size: 14px;
+    color: #777;
 }
 
 .main-cards {
     display: flex;
     gap: 20px;
     margin: 20px 0;
+    margin-left:20px;
 }
 
 .card {
@@ -74,7 +91,7 @@ body {
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(0.95);
 }
 
 .card-inner {

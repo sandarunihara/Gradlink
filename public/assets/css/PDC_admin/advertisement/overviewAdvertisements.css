@@ -4,38 +4,41 @@
     padding: 0;
     font-family: 'Arial', sans-serif;
 }
-
 body {
-    background-color: #f0f4ff;
-    display: flex;
-    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     display: flex;
-    width: 100%;
+    min-height: 100vh;
+    width: 100%; /* Use full width of the parent */
+    max-width:100%; /* Optional, limit max width */
+    margin: 0 auto; /* Center the container if max-width is applied */
 }
 
 .main-content {
-    flex-grow: 1;
-    padding: 30px;
-    /* background-color: #f9fcff; */
+    width: 83%;
+    margin-left: 17%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.header-left
-{
-    flex-direction: row;
-    display: flex;
-    gap: 10%;
-}
 .header-left h1 {
-    font-size: 26px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-left: 10px;
 }
 
 .header-right {
@@ -71,6 +74,10 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    margin-left: 2.5%;  
+    height: calc(100vh - 150px); /* Adjust height considering the header and margins */
+    overflow-y: auto; 
 }
 
 .list-header {
@@ -115,6 +122,9 @@ table {
 
 table thead {
     background-color: #f1f5ff;
+    position: sticky; /* Keeps the table header visible during scrolling */
+    top: 0;
+    z-index: 10;
 }
 
 table th, table td {
