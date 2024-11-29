@@ -138,7 +138,7 @@
                 $stmt = (object) $stmt;
             }
 
-            if ($stmt || $stmt->rowCount() > 0) {
+            if ($stmt && $stmt->rowCount() > 0) {
                 return "Record deleted successfully.";
             } else {
                 return "Error: Record could not be deleted.";
