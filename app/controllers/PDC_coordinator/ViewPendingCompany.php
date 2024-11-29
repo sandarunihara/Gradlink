@@ -82,11 +82,14 @@ class ViewPendingCompany
 
                 if ($model->validatePendingCompany($updatedData)) {
                     $result = $model->update($companyId, $mappedData, 'CompanyId');
-                    print_r($result);
+                    // print_r($result);
 
                     if ($result) {
-                        header("Location: "  . ROOT . "/PDC_coordinator/viewPendingCompany?id=$id");
-                        exit;
+                        echo "<script>
+                                alert('Company updated successfully.');
+                                window.location.href = '" . ROOT . "/PDC_coordinator/viewPendingCompany?id=$id';
+                              </script>";
+                        exit; // Ensure the script stops after JavaScript redirect.
                     } else {
                         echo "There was an issue saving company details.";
                     }
@@ -122,7 +125,7 @@ class ViewPendingCompany
 
     public function emailSend()
     {
-        $id = $_GET['id'] ?? null; 
+        $id = $_GET['id'] ?? null;
         if ($id === null) {
             echo "<script>alert('Invalid or missing company ID.');</script>";
             return;
@@ -132,7 +135,7 @@ class ViewPendingCompany
         $data = $model->findEmailById($id);
 
         if ($data) {
-            $email = $data; 
+            $email = $data;
             $result = Email::sendEmail($email);
 
             if ($result === "Success") {
