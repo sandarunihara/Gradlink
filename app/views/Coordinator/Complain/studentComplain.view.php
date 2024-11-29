@@ -63,7 +63,7 @@
                                     <td>11.00pm</td>
                                     <td>T.Y. Silva</td>
                                     <td>2022/CS/034</td>
-                                    <td>aaaaaaaaaaaaaa</td>
+                                    <td>Delay in Response from Assigned Company</td>
                                     <!-- <td><button class="view-btn">View Profile</button></td> -->
                                 </tr>
                                 <!-- Add more rows as needed -->

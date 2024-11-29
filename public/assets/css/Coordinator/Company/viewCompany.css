@@ -131,9 +131,11 @@ body {
 
 .action-buttons {
     margin-top: 20px;
-    justify-content: end;
+    /* justify-content: end; */
     display: flex;
     gap: 4%;
+    justify-content: flex-end;
+    margin-left: 960px;
 }
 
 .btn {
@@ -141,6 +143,9 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+.hidden {
+    display: none;
 }
 
 .update-btn {
