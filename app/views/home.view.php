@@ -19,7 +19,6 @@
                 <p class="wel-p">Connecting talents with opportunities and bridging the gap </br> between academic and industry.</p>
                 <div class="btns">
                     <a href="<?php echo ROOT ?>/login" class="login">Login</a>
-                    <a href="<?php echo ROOT ?>/Home/userrole" class="register">Register</a>
                 </div>
             </div>
             <div class="r-container">
