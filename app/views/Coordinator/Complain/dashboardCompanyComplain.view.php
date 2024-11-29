@@ -66,7 +66,7 @@
                                     <td>9.00am</td>
                                     <td>WSO2</td>
                                     <td>M.A. Perera</td>
-                                    <td>aaaaaaaaaaaaaa</td>
+                                    <td>Unprofessional Behavior of Intern</td>
                                     
                                     <!-- <td><button class="view-btn">View Profile</button></td> -->
                                     <!-- View -> Go to the student profile -->
