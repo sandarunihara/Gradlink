@@ -1,31 +1,17 @@
 <?php
     Trait Database{
 
-        private static $con = null;
+        private $con;
 
         private function connect(){
-            if(self::$con === null){
-                try{
-                    $string = DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME;
-                    self::$con = new PDO($string, DBUSER, DBPASS);
-                    self::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                }catch(PDOException $e){
-                    if(DEBUG){
-                        die("Database connection failed: " . $e->getMessage());
-                    }else{
-                        die("Database connection failed.");
-                    }
-                }
+            $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
+            try {
+                $con = new PDO($string, DBUSER, DBPASS);
+                $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                return $con;
+            } catch (PDOException $e) {
+                die("Database connection failed: " . $e->getMessage());
             }
-            return self::$con;
-            // $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
-            // try {
-            //     $con = new PDO($string, DBUSER, DBPASS);
-            //     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //     return $con;
-            // } catch (PDOException $e) {
-            //     die("Database connection failed: " . $e->getMessage());
-            // }
         }
         public function query($query, $data = []){
             $con = $this->connect();
@@ -36,12 +22,13 @@
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 if(is_array($result) && count($result)){
                     return $result;
-                }
-                return [];
+                }  
             }
+            
+
             return false;
         }
-        
+      
         public function get_row($query, $data = []){
             $con = $this->connect();
             $stmt = $con->prepare($query);
@@ -53,18 +40,9 @@
                     return $result[0];
                 }  
             }
+
             $con = null;
             return false;
-        }
-
-        public static function closeConnection() {
-            if (self::$con) {
-                self::$con = null;
-            }
-        }
-
-        public function __destruct() {
-            self::closeConnection();
         }
     }
   

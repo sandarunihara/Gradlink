@@ -214,7 +214,7 @@ class Advertisements
     public function delete($id)
     {
         $model = new C_Advertisement;
-        $result = $model->delete1($id, 'advertisementId');
+        $result = $model->delete($id, 'advertisementId');
         $modelstudent = new student_advertisement;
         print_r($result);
         $finddata = $modelstudent->first(['AdvertisementId' => $id]);

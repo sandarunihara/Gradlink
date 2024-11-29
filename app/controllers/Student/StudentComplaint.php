@@ -53,12 +53,8 @@ class StudentComplaint{
 
         $interval = $createdDateTime -> diff($currentDateTime);
         if($data['Complaint'] -> Status == "notReviewed" && $createdDate == $currentDate){
-            if(!($interval -> h >= 1)){
-                if($interval -> i <= 30){
-                    $data['Complaint'] -> Delete = 1;
-                }else{
-                    $data['Complaint'] -> Delete = 0;
-                }
+            if($interval -> i <= 30){
+                $data['Complaint'] -> Delete = 1;
             }else{
                 $data['Complaint'] -> Delete = 0;
             }
