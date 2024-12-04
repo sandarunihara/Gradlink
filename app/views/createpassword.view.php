@@ -19,9 +19,34 @@
             <input type="text" name="userId" id="userId" required placeholder="userId" value="<?= htmlspecialchars($_POST['userId'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             <button type="submit"><i class="fa fa-arrow-right"></i></button>
         </form>
-        <?php
-        if (isset($data['rowdata'])) :
-        ?>
+        <?php if (isset($data['rowdata']) && !isset($data['otp'])): ?>
+            <form method="post" onsubmit="return validotp()">
+                <div class="otp-input-container">
+                    <label for="otp">Verification Code</label>
+                    <p id="otpInstructions" class="otpdetails">
+                        Please enter the 6-digit OTP sent to your
+                        <?php
+                        if (!empty($data['rowdata']->Email)) {
+                            $email = htmlspecialchars($data['rowdata']->Email, ENT_QUOTES, 'UTF-8');
+                            $maskedEmail = preg_replace('/(?<=.).(?=.*@)/', '*', $email);
+                            echo "$maskedEmail";
+                        }
+                        ?>
+                        email address.
+                    </p>
+                    <div class="otp-inputs" id="otpInputs">
+                        <input type="text" name="otp[]" maxlength="1" class="otp-box" id="otp1">
+                        <input type="text" name="otp[]" maxlength="1" class="otp-box" id="otp2">
+                        <input type="text" name="otp[]" maxlength="1" class="otp-box" id="otp3">
+                        <input type="text" name="otp[]" maxlength="1" class="otp-box" id="otp4">
+                        <input type="text" name="otp[]" maxlength="1" class="otp-box" id="otp5">
+                        <input type="text" name="otp[]" maxlength="1" class="otp-box" id="otp6">
+                    </div>
+                    <p id="otpError" class="error-message"></p>
+                    <button type="submit" name="verifyOtp">Verify OTP</button>
+                </div>
+            </form>
+        <?php elseif (isset($data['otp'])): ?>
             <p>Register Name:
                 <?php
                 echo htmlspecialchars($data['rowdata']->Name ?? '', ENT_QUOTES, 'UTF-8');
@@ -42,7 +67,7 @@
                     <label for="confirmpassword">Confirm Password</label>
                     <input type="text" name="confirmpassword" id="confirmpassword" placeholder="confirm password">
                 </div>
-                <p id="passwordRequirements" class="details" >
+                <p id="passwordRequirements" class="details">
                     Password must be at least 8 characters long and include:
                     <br>- At least one uppercase letter
                     <br>- At least one lowercase letter
@@ -71,6 +96,45 @@
 
 
     <script>
+        document.querySelectorAll('.otp-box').forEach((input, index, inputs) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus(); // Move to the next box
+                }
+                if (e.target.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus(); // Move to the previous box
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === "Backspace" && input.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus(); // Go back to the previous box
+                }
+            });
+        });
+
+        function validotp() {
+            var otp1 = document.getElementById('otp1').value;
+            var otp2 = document.getElementById('otp2').value;
+            var otp3 = document.getElementById('otp3').value;
+            var otp4 = document.getElementById('otp4').value;
+            var otp5 = document.getElementById('otp5').value;
+            var otp6 = document.getElementById('otp6').value;
+            var otpError = document.getElementById('otpError');
+
+            if (otp1 === "" || otp2 === "" || otp3 === "" || otp4 === "" || otp5 === "" || otp6 === "") {
+                otpError.textContent = "OTP must be 6 digits.";
+                otpError.style.color = "red";
+                return false;
+            }
+
+            // Clear error if validation passes
+            otpError.textContent = "";
+            return true;
+        }
+
+
+
         function validatePasswords() {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmpassword').value;

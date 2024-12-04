@@ -9,7 +9,7 @@ class Login
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
-		
+
 			switch ($userNum) {
 				case 9:
 					$user = new student;
@@ -88,14 +88,11 @@ class Login
 		$data = [];
 		$user = null;
 
-		// Handle POST requests
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			// Check if user ID is provided
 			if (isset($_POST['userId'])) {
 				$userId = $_POST['userId'];
 				$userNum = strlen($userId);
 
-				// Determine user type and dashboard path based on user ID length
 				switch ($userNum) {
 					case 9:
 						$user = new student;
@@ -122,15 +119,13 @@ class Login
 						break;
 				}
 
-				// Fetch user data if valid
 				if ($user && empty($data['errors'])) {
 					$row = $user->first($searchKey);
-					if ($row ) {
-						if($row->Password === null){
+					if ($row) {
+						if ($row->Password === null) {
 							$data['rowdata'] = $row;
 							$_SESSION['USER_ID'] = $userId;
-							// $_SESSION['rowdata'] = $row;
-						}else{
+						} else {
 							$data['errors'] = "User already has a password";
 						}
 					} else {
@@ -138,9 +133,25 @@ class Login
 						// redirect('login');
 					}
 				}
-			}
-			// Check if password and confirm password are provided
-			elseif (isset($_POST['password'], $_POST['confirmpassword'])) {
+			} elseif (isset($_POST['verifyOtp'])) {
+				show($data);
+				// show('dsadasd');
+				if (!empty($_POST['otp'])  && is_array($_POST['otp'])) {
+					// Combine OTP digits
+					$otp = implode('', $_POST['otp']);
+					if(!empty($otp)){
+						$data['otp'] = true;
+					}
+					// // Validate OTP (Example: Check against a session-stored value)
+					// if (isset($_SESSION['OTP']) && $otp === $_SESSION['OTP']) {
+					// 	$data['success'] = "OTP verified successfully. Proceed to create a password.";
+					// } else {
+					// 	$data['errors'] = "Invalid OTP. Please try again.";
+					// }
+				} else {
+					$data['errors'] = "OTP is required.";
+				}
+			} elseif (isset($_POST['password'], $_POST['confirmpassword'])) {
 				$password = $_POST['password'];
 				$confirmpassword = $_POST['confirmpassword'];
 				if ($password === $confirmpassword) {
@@ -173,11 +184,10 @@ class Login
 						}
 
 						$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
-						// $results = $user->update($id, ['Password' => $password], $id_column);
-						
-						session_unset();
-						session_destroy();
+						// Unset and destroy the session
 						if ($results['status'] === 'success') {
+							session_unset();
+							session_destroy();
 							$data['success'] = "Password created successfully. Please login.";
 							redirect('login');
 							exit;
