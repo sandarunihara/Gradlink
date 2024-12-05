@@ -52,8 +52,6 @@ class Login
 					$_SESSION['USER'] = $row;
 					$_SESSION['PATH'] = $path;
 
-					// print_r($_POST['remember_me']);
-					// Check if "Remember Me" is selected
 					if (!empty($_POST['remember_me'])) {
 						$cookieValue = base64_encode(json_encode([
 							'userId' => $_POST['userId'],
