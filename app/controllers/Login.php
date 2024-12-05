@@ -129,50 +129,44 @@ class Login
 				if ($user && empty($data['errors'])) {
 					$row = $user->first($searchKey);
 					if ($row) {
-							$data['rowdata'] = $row;
-							$_SESSION['USER_ID'] = $userId;
+						$data['rowdata'] = $row;
+						$_SESSION['USER_ID'] = $userId;
 
-							// Generate OTP
-							$otp = random_int(100000, 999999);
-							// $_SESSION['OTP'] = $otp;
+						$otp = random_int(100000, 999999);
 
-							// Send Email
-							if (!empty($row->Email)) {
-								$email = $row->Email;
-								try {
-									$mail = new PHPMailer(true);
-									$mail->isSMTP();
-									$mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
-									$mail->SMTPAuth = true;
-									$mail->Username = 'sandarunihara15@gmail.com'; // Your email
-									$mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
-									$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
-									$mail->Port = 587;
-									$mail->setFrom('sandarunihara15@gmail.com', 'Your App Name');
-									$mail->addAddress($email);
-									$mail->isHTML(true);
-									$mail->Subject = 'Your OTP for Password Creation';
-									$mail->Body = "Dear {$row->Name},<br>Your OTP is: <strong>{$otp}</strong>. Please use this to verify your email.";
-			
-									$mail->send();
-									$data['success'] = "OTP sent to your email. Please check your inbox.";
-									$_SESSION['OTP'] = $otp; 
-								} catch (Exception $e) {
-									$data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
-								}
-							} else {
-								$data['errors'] = "User email not found.";
+						if (!empty($row->Email)) {
+							$email = $row->Email;
+							try {
+								$mail = new PHPMailer(true);
+								$mail->isSMTP();
+								$mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+								$mail->SMTPAuth = true;
+								$mail->Username = 'sandarunihara15@gmail.com'; // Your email
+								$mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
+								$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+								$mail->Port = 587;
+								$mail->setFrom('sandarunihara15@gmail.com', 'UCSC Gradlink');
+								$mail->addAddress($email);
+								$mail->isHTML(true);
+								$mail->Subject = 'Your OTP for Password Creation';
+								$mail->Body = "Dear {$row->Name},<br>Your OTP is: <strong>{$otp}</strong>. Please use this to verify your email.";
+
+								$mail->send();
+								$_SESSION['OTP'] = $otp;
+								$data['success'] = "OTP sent to your email. Please check your inbox.";
+							} catch (Exception $e) {
+								$data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
 							}
-						
+						} else {
+							$data['errors'] = "User email not found.";
+						}
 					} else {
 						$data['errors'] = "Invalid User ID";
 						// redirect('login');
 					}
 				}
 			} elseif (isset($_POST['verifyOtp'])) {
-				// show($data);
 				if (!empty($_POST['otp'])  && is_array($_POST['otp'])) {
-					// Combine OTP digits
 					$userId = $_SESSION['USER_ID'];
 					$userNum = strlen($userId);
 
@@ -210,10 +204,10 @@ class Login
 
 					$otp = implode('', $_POST['otp']);
 					if (!empty($otp)) {
-						if($otp == $_SESSION['OTP']){
+						if ($otp == $_SESSION['OTP']) {
 							$data['success'] = "OTP verified successfully. Proceed to create a password.";
 							$data['rowdata']->otp = true;
-						}else{
+						} else {
 							$data['errors'] = "Invalid OTP. Please try again.";
 						}
 					} else {
@@ -254,6 +248,12 @@ class Login
 								break;
 						}
 
+
+
+						// $imagedata = file_get_contents(ROOT . '/assets/img/defaultpro.png');
+						// $imageBase64 = base64_encode($imagedata);
+						// $imgresult= $user->update($id, ['profileimg' => $imageBase64], $id_column);
+						// show($imageBase64);
 						$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
 						// Unset and destroy the session
 						if ($results['status'] === 'success') {

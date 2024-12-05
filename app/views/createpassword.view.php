@@ -59,7 +59,7 @@
                 ?>
             </p>
 
-            <form class="passwordcontainer" method="post" onsubmit="return validatePasswords()">
+            <form class="passwordcontainer" method="post" enctype="multipart/form-data" onsubmit="return validatePasswords()">
                 <div>
                     <label for="password">Create New Password</label>
                     <input type="text" name="password" id="password" placeholder="password">
@@ -75,6 +75,7 @@
                     <br>- At least one number
                     <br>- At least one special character (!@#$%^&*)
                 </p>
+                <input type="file" name="prophoto" id="prophoto" value="<?= ROOT ?>/assets/img/defaultpro.png" accept="image/*" style="display: none;">
                 <button type="submit">Save Password</button>
             </form>
         <?php endif; ?>
