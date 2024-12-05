@@ -89,11 +89,11 @@
                         </div>
                         <div class="form-group">
                             <label for="website">Website</label>
-                            <input type="text" id="website" name="website" value="<?= htmlspecialchars($companyData[0]['website']) ?>" readonly required>
+                            <input type="url" id="website" name="website" value="<?= htmlspecialchars($companyData[0]['website']) ?>" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="linkedin">LinkedIn</label>
-                            <input type="text" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly required>
+                            <input type="url" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData[0]['linkedin']) ?>" readonly required>
                         </div>
                         <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
                         <div>
