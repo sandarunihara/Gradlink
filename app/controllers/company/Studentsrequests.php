@@ -15,6 +15,10 @@ class StudentsRequests
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 
         $advertisementIds = [];
+        if(empty($data)){
+            $this->view('Company/StudentsRequests', ['data' => []]);
+            exit();
+        }
         foreach ($data as $item) {
             $advertisementIds[] = $item->advertisementId;
         }
