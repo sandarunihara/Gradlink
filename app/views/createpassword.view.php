@@ -15,11 +15,12 @@
     </a>
     <img src="<?= ROOT ?>/assets/img/glogo.png" alt="Gradlink Logo" class="logo-overlay">
     <div class="maincontainer">
+    <?php if (!isset($data['rowdata']) && !isset($data['rowdata']->otp)): ?>
         <form class="useridcontainer" method="post">
             <input type="text" name="userId" id="userId" required placeholder="userId" value="<?= htmlspecialchars($_POST['userId'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             <button type="submit"><i class="fa fa-arrow-right"></i></button>
         </form>
-        <?php if (isset($data['rowdata']) && !isset($data['otp'])): ?>
+        <?php elseif (isset($data['rowdata']) && !isset($data['rowdata']->otp)): ?>
             <form method="post" onsubmit="return validotp()">
                 <div class="otp-input-container">
                     <label for="otp">Verification Code</label>
@@ -46,8 +47,8 @@
                     <button type="submit" name="verifyOtp">Verify OTP</button>
                 </div>
             </form>
-        <?php elseif (isset($data['otp'])): ?>
-            <p>Register Name:
+        <?php elseif (isset($data['rowdata']->otp)): ?>
+            <p class="regname">Register Name:
                 <?php
                 echo htmlspecialchars($data['rowdata']->Name ?? '', ENT_QUOTES, 'UTF-8');
                 ?>
@@ -85,7 +86,7 @@
     <?php if (!empty($data['success'])): ?>
         <script>
             const success = "<?php echo addslashes($data['success']); ?>";
-            successToast("success");
+            successToast(success);
         </script>
     <?php endif; ?>
     <?php if (!empty($data['errors'])): ?>

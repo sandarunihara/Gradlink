@@ -1,4 +1,13 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require "../app/libs/SMTP.php";
+require "../app/libs/PHPMailer.php";
+require "../app/libs/Exception.php";
+
+
 class Login
 {
 	use Controller;
@@ -122,32 +131,96 @@ class Login
 				if ($user && empty($data['errors'])) {
 					$row = $user->first($searchKey);
 					if ($row) {
-						if ($row->Password === null) {
 							$data['rowdata'] = $row;
 							$_SESSION['USER_ID'] = $userId;
-						} else {
-							$data['errors'] = "User already has a password";
-						}
+
+							// Generate OTP
+							$otp = random_int(100000, 999999);
+							// $_SESSION['OTP'] = $otp;
+
+							// Send Email
+							if (!empty($row->Email)) {
+								$email = $row->Email;
+								try {
+									$mail = new PHPMailer(true);
+									$mail->isSMTP();
+									$mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+									$mail->SMTPAuth = true;
+									$mail->Username = 'sandarunihara15@gmail.com'; // Your email
+									$mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
+									$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+									$mail->Port = 587;
+									$mail->setFrom('sandarunihara15@gmail.com', 'Your App Name');
+									$mail->addAddress($email);
+									$mail->isHTML(true);
+									$mail->Subject = 'Your OTP for Password Creation';
+									$mail->Body = "Dear {$row->Name},<br>Your OTP is: <strong>{$otp}</strong>. Please use this to verify your email.";
+			
+									$mail->send();
+									$data['success'] = "OTP sent to your email. Please check your inbox.";
+									$_SESSION['OTP'] = $otp; 
+								} catch (Exception $e) {
+									$data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+								}
+							} else {
+								$data['errors'] = "User email not found.";
+							}
+						
 					} else {
 						$data['errors'] = "Invalid User ID";
 						// redirect('login');
 					}
 				}
 			} elseif (isset($_POST['verifyOtp'])) {
-				show($data);
-				// show('dsadasd');
+				// show($data);
 				if (!empty($_POST['otp'])  && is_array($_POST['otp'])) {
 					// Combine OTP digits
-					$otp = implode('', $_POST['otp']);
-					if(!empty($otp)){
-						$data['otp'] = true;
+					$userId = $_SESSION['USER_ID'];
+					$userNum = strlen($userId);
+
+					switch ($userNum) {
+						case 9:
+							$user = new student;
+							$searchKey = ['StudentId' => $userId];
+							$id_column = 'StudentId';
+							break;
+						case 4:
+							$user = new company;
+							$searchKey = ['CompanyId' => $userId];
+							$id_column = 'CompanyId';
+							break;
+						case 5:
+							$user = new pdc_assistant;
+							$searchKey = ['AssistantId' => $userId];
+							$id_column = 'AssistantId';
+							break;
+						case 12:
+							$user = new pdc_coordinator;
+							$searchKey = ['CoordinatorId' => $userId];
+							$id_column = 'CoordinatorId';
+							break;
+						default:
+							$data['errors'] = "Invalid User ID";
+							break;
 					}
-					// // Validate OTP (Example: Check against a session-stored value)
-					// if (isset($_SESSION['OTP']) && $otp === $_SESSION['OTP']) {
-					// 	$data['success'] = "OTP verified successfully. Proceed to create a password.";
-					// } else {
-					// 	$data['errors'] = "Invalid OTP. Please try again.";
-					// }
+
+					if ($user && empty($data['errors'])) {
+						$row = $user->first($searchKey);
+					}
+
+					$data['rowdata'] = $row;
+
+					$otp = implode('', $_POST['otp']);
+					if (!empty($otp)) {
+						if($otp == $_SESSION['OTP']){
+							$data['success'] = "OTP verified successfully. Proceed to create a password.";
+							$data['rowdata']->otp = true;
+						}else{
+							$data['errors'] = "Invalid OTP. Please try again.";
+						}
+					} else {
+						$data['errors'] = "OTP is required.";
+					}
 				} else {
 					$data['errors'] = "OTP is required.";
 				}
