@@ -14,7 +14,10 @@ class Companydash
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 
         if (empty($data)) {
-
+            $hasShortlisted = false;
+            $hasRecruited = false;
+            $_SESSION['hasShortlisted'] = $hasShortlisted;
+            $_SESSION['hasRecruited'] = $hasRecruited;
             $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0]);
         } else {
             // $ad_model = new C_Advertisement;
