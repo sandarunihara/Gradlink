@@ -34,12 +34,6 @@ label {
     font-size: 0.9rem;
     margin-top: 10px;
   }
-  
-  .valid-message {
-    color: green;
-    font-size: 0.9rem;
-    margin-top: 10px;
-  }
 .button-container{
     display: flex;
     justify-content: space-between;
@@ -55,10 +49,6 @@ button {
     margin-top: 20px;
   }
   
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
 #clearButton {
     background-color: #6c757d;
     color: white;
