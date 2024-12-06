@@ -18,8 +18,7 @@ class ShortlistedStudents
             exit();
         }
 
-        $advertisementIds = []; // Array to store all advertisement IDs
-        // Loop through the result set and collect advertisement IDs
+        $advertisementIds = []; 
         foreach ($data as $item) {
             $advertisementIds[] = $item->advertisementId;
         }
@@ -130,6 +129,7 @@ class ShortlistedStudents
             $result = $model->insert($data);
             if ($result && $updateresult['status']) {
                 $success = "Interview Schedule created successfully.";
+                
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/' . $advertisementId . '/' . $studentId);
                 exit;
             } else {
