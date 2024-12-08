@@ -134,7 +134,7 @@ class ShortlistedStudents
                                                         overflow: hidden;
                                                     }
                                                     .header {
-                                                        background-color: #007bff;
+                                                        background-color: #03B754;
                                                         color: #ffffff;
                                                         padding: 20px;
                                                         text-align: center;
@@ -207,7 +207,11 @@ class ShortlistedStudents
         $advertisementmodel = new C_Advertisement;
         $addata = $advertisementmodel->find(['advertisementId' => $advertisementId]);
         $updatemodel = new C_Dashboard;
-
+        $company = new company;
+        $companydata = $company->findById($_SESSION['USER']->CompanyId);
+        // show($companydata[0]->Email);
+        $studentdata = $data[0];
+        // show($studentdata);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new interview_time_slot;
@@ -227,11 +231,105 @@ class ShortlistedStudents
             $result = $model->insert($data);
             if ($result && $updateresult['status']) {
                 $success = "Interview Schedule created successfully.";
+                if (!empty($studentdata->Email) && !empty($companydata[0]->Email)) {
+                    $studentemail = $studentdata->Email;
+                    // $studentname = $data[0]->Name;
+                    try {
+                        $mail = new PHPMailer(true);
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'sandarunihara15@gmail.com'; // Your email
+                        $mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+                        $mail->Port = 587;
+                        $mail->setFrom($companydata[0]->Email, $companydata[0]->Name);
+                        $mail->addAddress($studentemail);
+                        $mail->isHTML(true);
+                        $mail->Subject = "Details of Your Scheduled Interview with {$companydata[0]->Name}";
+                        $mail->Body = "
+                                        <html>
+                                            <head>
+                                                <style>
+                                                    body {
+                                                        font-family: Arial, sans-serif;
+                                                        line-height: 1.6;
+                                                        color: #333;
+                                                        background-color: #f9f9f9;
+                                                        padding: 0;
+                                                        margin: 0;
+                                                    }
+                                                    .email-container {
+                                                        max-width: 600px;
+                                                        margin: 20px auto;
+                                                        background: #ffffff;
+                                                        border: 1px solid #ddd;
+                                                        border-radius: 8px;
+                                                        overflow: hidden;
+                                                    }
+                                                    .header {
+                                                        background-color: #007bff;
+                                                        color: #ffffff;
+                                                        padding: 20px;
+                                                        text-align: center;
+                                                    }
+                                                    .header h1 {
+                                                        margin: 0;
+                                                        font-size: 24px;
+                                                    }
+                                                    .content {
+                                                        padding: 20px;
+                                                    }
+                                                    .content p {
+                                                        margin: 10px 0;
+                                                    }
+                                                    .footer {
+                                                        background-color: #f4f4f4;
+                                                        text-align: center;
+                                                        padding: 10px;
+                                                        font-size: 12px;
+                                                        color: #666;
+                                                        border-top: 1px solid #ddd;
+                                                    }
+                                                </style>
+                                            </head>
+                                            <body>
+                                                <div class='email-container'>
+                                                    <div class='header'>
+                                                        <h1>Interview Details</h1>
+                                                    </div>
+                                                    <div class='content'>
+                                                        <p>Dear {$studentdata->Name},</p>
+                                                        <p>This is to inform you about the details of your scheduled interview for a potential internship at <strong>{$companydata[0]->Name}</strong>.</p>
+                                                        <p><strong>Interview Details:</strong></p>
+                                                        <ul>
+                                                            <li><strong>Date:</strong> {$data['Date']}</li>
+                                                            <li><strong>Start Time:</strong> {$data['StartTime']}</li>
+                                                            <li><strong>End Time:</strong> {$data['EndTime']}</li>
+                                                        </ul>
+                                                        <p>If you have any questions or need to reschedule, please contact us at <strong>{$companydata[0]->ContactNum}</strong>.</p>
+                                                        <p>We look forward to your participation in the interview.</p>
+                                                        <p>Best regards,</p>
+                                                        <p><strong>{$companydata[0]->Name}</strong></p>
+                                                    </div>
+                                                    <div class='footer'>
+                                                        <p>&copy; {$companydata[0]->Name}. All rights reserved.</p>
+                                                    </div>
+                                                </div>
+                                            </body>
+                                        </html>";
 
+                        $mail->send();
+                        $data['success'] = "OTP sent to your email. Please check your inbox.";
+                    } catch (Exception $e) {
+                        $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+                    }
+                }
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/' . $advertisementId . '/' . $studentId);
                 exit;
             } else {
                 $error = "There was an issue creating the Interview Schedule.";
+                // show($error);
                 $this->view('Company/CreateSchedule', ['error' => $error]);
                 exit;
             }
