@@ -1,5 +1,12 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require "../app/libs/SMTP.php";
+require "../app/libs/PHPMailer.php";
+require "../app/libs/Exception.php";
+
 class ShortlistedStudents
 {
     use Controller;
@@ -18,7 +25,7 @@ class ShortlistedStudents
             exit();
         }
 
-        $advertisementIds = []; 
+        $advertisementIds = [];
         foreach ($data as $item) {
             $advertisementIds[] = $item->advertisementId;
         }
@@ -34,23 +41,23 @@ class ShortlistedStudents
                 exit();
             }
             // if (is_array($data) || is_object($data)) {
-                foreach ($data as $item) {
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
-                        $hasShortlisted = true;
-                    }
-                    if ($item->Jobstatus === 'Recruit') {
-                        $hasRecruited = true;
-                    }
-                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
-                        $reqdata[] = [
-                            "StudentId" => $item->StudentId,
-                            'AdvertisementId' => $item->advertisementId,
-                            'Student Name' => $item->Name,
-                            'Student Degree' => $item->DegreeName,
-                            'Position' => $item->position,
-                            'Action' => $item->Jobstatus
-                        ];
-                    }
+            foreach ($data as $item) {
+                if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                    $hasShortlisted = true;
+                }
+                if ($item->Jobstatus === 'Recruit') {
+                    $hasRecruited = true;
+                }
+                if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
+                    $reqdata[] = [
+                        "StudentId" => $item->StudentId,
+                        'AdvertisementId' => $item->advertisementId,
+                        'Student Name' => $item->Name,
+                        'Student Degree' => $item->DegreeName,
+                        'Position' => $item->position,
+                        'Action' => $item->Jobstatus
+                    ];
+                }
                 // }
             }
         }
@@ -67,7 +74,8 @@ class ShortlistedStudents
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         $studentJobstatus = $studentad_data[0]->Jobstatus;
-
+        $company = new company;
+        $companydata = $company->findById($_SESSION['USER']->CompanyId);
         $interviewschedule = 0;
         $interviewmodel = new interview_time_slot;
         $interviewdata = $interviewmodel->find(['StudentId' => $StudentId, 'CompanyId' => $_SESSION['USER']->CompanyId]);
@@ -89,6 +97,96 @@ class ShortlistedStudents
             if ($result['status']) {
                 // Redirect to the same page after successful submission
                 $success = "Student Job Status updated successfully.";
+                if (!empty($data[0]->Email) && !empty($companydata[0]->Email)) {
+                    $studentemail = $data[0]->Email;
+                    $studentname = $data[0]->Name;
+                    try {
+                        $mail = new PHPMailer(true);
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'sandarunihara15@gmail.com'; // Your email
+                        $mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+                        $mail->Port = 587;
+                        $mail->setFrom($companydata[0]->Email, $companydata[0]->Name);
+                        $mail->addAddress($studentemail);
+                        $mail->isHTML(true);
+                        $mail->Subject = 'Congratulations on Your Internship Selection!';
+                        $mail->Body = "
+                                        <html>
+                                            <head>
+                                                <style>
+                                                    body {
+                                                        font-family: Arial, sans-serif;
+                                                        line-height: 1.6;
+                                                        color: #333;
+                                                        background-color: #f9f9f9;
+                                                        padding: 0;
+                                                        margin: 0;
+                                                    }
+                                                    .email-container {
+                                                        max-width: 600px;
+                                                        margin: 20px auto;
+                                                        background: #ffffff;
+                                                        border: 1px solid #ddd;
+                                                        border-radius: 8px;
+                                                        overflow: hidden;
+                                                    }
+                                                    .header {
+                                                        background-color: #007bff;
+                                                        color: #ffffff;
+                                                        padding: 20px;
+                                                        text-align: center;
+                                                    }
+                                                    .header h1 {
+                                                        margin: 0;
+                                                        font-size: 24px;
+                                                    }
+                                                    .content {
+                                                        padding: 20px;
+                                                    }
+                                                    .content p {
+                                                        margin: 10px 0;
+                                                    }
+                                                    .footer {
+                                                        background-color: #f4f4f4;
+                                                        text-align: center;
+                                                        padding: 10px;
+                                                        font-size: 12px;
+                                                        color: #666;
+                                                        border-top: 1px solid #ddd;
+                                                    }
+                                                </style>
+                                            </head>
+                                            <body>
+                                                <div class='email-container'>
+                                                    <div class='header'>
+                                                        <h1>Welcome to {$companydata[0]->Name}!</h1>
+                                                    </div>
+                                                    <div class='content'>
+                                                        <p>Dear {$data[0]->Name},</p>
+                                                        <p>We are thrilled to inform you that you have been selected for an internship at <strong>{$companydata[0]->Name}</strong>. This role offers you a unique opportunity to learn, grow, and contribute to our team.</p>
+                                                        <p>Details regarding your onboarding process and responsibilities will be shared soon. If you have any immediate questions, please don't hesitate to contact us at <strong>{$companydata[0]->ContactNum}</strong>.</p>
+                                                        <p>We are excited to welcome you aboard and look forward to a fruitful collaboration.</p>
+                                                        <p>Warm regards,</p>
+                                                        <p><strong>{$companydata[0]->Name}</strong></p>
+                                                    </div>
+                                                    <div class='footer'>
+                                                        <p>&copy; {$companydata[0]->Name} | All rights reserved.</p>
+                                                    </div>
+                                                </div>
+                                            </body>
+                                        </html>";
+
+                        $mail->send();
+                        $data['success'] = "OTP sent to your email. Please check your inbox.";
+                    } catch (Exception $e) {
+                        $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+                    }
+                } else {
+                    $error = "Email not found";
+                }
                 header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
                 exit;
             } else {
@@ -129,7 +227,7 @@ class ShortlistedStudents
             $result = $model->insert($data);
             if ($result && $updateresult['status']) {
                 $success = "Interview Schedule created successfully.";
-                
+
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/' . $advertisementId . '/' . $studentId);
                 exit;
             } else {
@@ -138,7 +236,6 @@ class ShortlistedStudents
                 exit;
             }
         }
-
         $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata]);
     }
 }
