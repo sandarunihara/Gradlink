@@ -231,7 +231,6 @@ class ShortlistedStudents
                 $success = "Interview Schedule created successfully.";
                 if (!empty($studentdata->Email) && !empty($companydata[0]->Email)) {
                     $studentemail = $studentdata->Email;
-                    // $studentname = $data[0]->Name;
                     try {
                         $mail = new PHPMailer(true);
                         $mail->isSMTP();
@@ -327,7 +326,6 @@ class ShortlistedStudents
                 exit;
             } else {
                 $error = "There was an issue creating the Interview Schedule.";
-                // show($error);
                 $this->view('Company/CreateSchedule', ['error' => $error]);
                 exit;
             }
