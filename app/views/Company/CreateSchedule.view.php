@@ -25,9 +25,11 @@
                 </div>
                 <div class="sc_main">
                     <div class="sc">
-                        <a href="../Schedule/Dashboard" class="sc_container">
+                        <a href="http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/<?php echo $addata[0]->advertisementId  ?>/<?php echo $data[0]->StudentId  ?>" class="sc_container">
                             <i class="fas fa-chevron-left"></i>
                             <h3>Create Interview Schedule</h3>
+                            
+                            
                         </a>
                     </div>
                     <form id="schedule-form" class="sc_background" method="post">
@@ -109,21 +111,19 @@
                 return;
             }
 
-            document.getElementById('date').addEventListener('change', function() {
-                const selectedDate = new Date(this.value);
-                const today = new Date();
-                today.setDate(today.getDate() + 1); // Set to tomorrow
-
-                if (selectedDate > today) {
-                    errorToast('The selected date cannot be before tomorrow.');
-                    return; // Clear the invalid value
-                }
-            });
-
-
             // Show confirmation modal if form is valid
             openConfirmationModal();
         }
+        document.addEventListener("DOMContentLoaded", () => {
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate() + 1).padStart(2, '0');
+
+        const minDate = `${yyyy}-${mm}-${dd}`;
+        dateInput.setAttribute('min', minDate);
+        });
 
         function openConfirmationModal() {
             document.getElementById('confirmation-modal').style.display = 'block';
