@@ -209,9 +209,7 @@ class ShortlistedStudents
         $updatemodel = new C_Dashboard;
         $company = new company;
         $companydata = $company->findById($_SESSION['USER']->CompanyId);
-        // show($companydata[0]->Email);
         $studentdata = $data[0];
-        // show($studentdata);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new interview_time_slot;
