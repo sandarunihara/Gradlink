@@ -76,7 +76,3 @@ button{
 button:hover{
     background-color: #2980B9;
 }
-button a{
-    color: white;
-    text-decoration: none;
-}

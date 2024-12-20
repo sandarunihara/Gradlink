@@ -32,7 +32,7 @@
                     </select> 
                 </div>
                 <div class = "add-complaint">
-                    <a href="<?=ROOT?>/Student/StudentComplaint/newComplaint"><button>+ Add New</button></a>
+                    <button onclick="location.href='<?=ROOT?>/Student/StudentComplaint/newComplaint';">+ Add New</button>
                 </div>
             </div>
             <div class="compliant-table-div">

@@ -106,7 +106,7 @@
                 <!-- Footer Section -->
                 <div class="student-profile-footer">
                     <div class="student-edit">
-                        <a href="<?=ROOT?>/Student/StudentProfile/ProfileEdit"><button>Update Profile</button></a>
+                        <button onclick="location.href='<?=ROOT?>/Student/StudentProfile/ProfileEdit';">Update Profile</button>
                     </div>
                 </div>
             </div>
