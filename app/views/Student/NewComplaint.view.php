@@ -21,7 +21,7 @@
         </div>
         <div class="main-content">
             <div class="container">
-                <form id="form" method="post" action="<?=ROOT?>/Student/StudentComplaint/newComplaint">
+                <form id="form" action="<?=ROOT?>/Student/StudentComplaint/newComplaint" method="post"  enctype="multipart/form-data">
                     <!-- Topic Input -->
                     <label for="topic">Topic</label>
                     <input type="text" name="topic" id="topic" placeholder="Enter the topic">

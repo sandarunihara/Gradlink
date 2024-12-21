@@ -29,13 +29,9 @@ class StudentProfile{
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST);
-            $data['Result'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
-            
-            if($data['Result']['status'] == 'success'){
-                //show($data['Result']);
-                    header('Location: '.ROOT.'/Student/StudentProfile/profile');
-                }
-            
+            $_SESSION['isUpdate'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
+            //show($_SESSION);
+            header('Location: '.ROOT.'/Student/StudentProfile/profile');
         }else{
             $this-> view('Student/ProfileEdit',$data);
         }
