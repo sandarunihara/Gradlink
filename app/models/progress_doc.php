@@ -9,8 +9,9 @@
         protected $allowedColumns = [
 
             'DocumentId',
-            'Title',
             'SubmissionDate',
+            'Status',
             'StudentId',
+            'Name',
         ];
     }
