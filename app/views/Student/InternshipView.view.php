@@ -64,11 +64,66 @@
                 </div>
                 <?php endif; ?>
                 <div class="apply-container">
-                    <button>Apply</button>
+                    <button
+                        id="applyBtn"
+                        data-advertisement-id="<?= htmlspecialchars($data[0]->advertisementId); ?>"
+                    >
+                    Apply
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+<!-- Popup Box -->
+<div id="popupBox" class="popup hidden">
+    <div class="popup-content">
+        <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
+            <h2>Upload Your CV</h2>
+            <input type="file" id="cvUpload" accept=".pdf" name="file" required>
+            <br><br>
+            <button 
+                type="submit"
+                id="okBtn" 
+                name="submit"
+            >
+            OK
+            </button>
+        </form>
+    </div>
+</div>
+<!-- script for popup box -->
+<script>
+    // Get references to elements
+    const applyBtn = document.getElementById('applyBtn');
+    const popupBox = document.getElementById('popupBox');
+    const popupContent = document.querySelector('.popup-content');
+    const okBtn = document.getElementById('okBtn');
+    const form = document.querySelector('form');
+
+
+    // Show popup when any "Apply" button is clicked
+    applyBtn.addEventListener('click', () => {
+        popupBox.classList.remove('hidden');
+        const advertisementId = applyBtn.getAttribute('data-advertisement-id');
+        form.action = form.action + '?advertisementId=' + encodeURIComponent(advertisementId);
+
+    });
+
+    // Hide popup and handle file upload when "OK" button is clicked
+    okBtn.addEventListener('click', () => {
+        const cvFile = document.getElementById('cvUpload').files;
+        if(cvFile.length !== 0) {
+            form.submit();
+        }
+    });
+
+    // Hide popup when clicking outside the content box
+    popupBox.addEventListener('click', (event) => {
+        if (!popupContent.contains(event.target)) {
+            popupBox.classList.add('hidden');
+        }
+    });
+</script>
 </body>
 
 </html>

@@ -39,18 +39,20 @@ class StudentProgress{
                     if($fileSize < 1000000){
                         $base = preg_replace("/[^\w-]/", "_", $fileActualName);
                         $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
-                        $fileDestination = __DIR__ .'/a/'. $fileNameNew;
+                        $fileDestination = __DIR__ . '/../../../public/assets/uploads/progress_docs/'. $fileNameNew;
                         // echo $fileNameNew . "\n";
                         // echo $fileDestination . "\n";
                         if(move_uploaded_file($fileTempName, $fileDestination)){
                             $isInsert1 = 1;
+                            $data['Name'] = $fileNameNew;
+                            $data['StudentId'] = $_SESSION['USER'] -> StudentId;
+                            $data['Status'] = "notReviewed";
+                            $progress_doc = new progress_doc;
+                            $isInsert2 = $progress_doc -> insert($data);
+                        }else{
+                            $isInsert1 = 0;
                         }
-                        $data['Name'] = $fileNameNew;
-                        $data['StudentId'] = $_SESSION['USER'] -> StudentId;
-                        $data['Status'] = "notReviewed";
-                        $progress_doc = new progress_doc;
-                        $isInsert2 = $progress_doc -> insert($data);
-
+                        
                         if($isInsert1 && $isInsert2){
                             $_SESSION['isInsert'] = 1;
                         }else{                         

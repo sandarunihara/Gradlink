@@ -8,17 +8,121 @@ class StudentAd{
 
         $model = new Student_AD;
         $data['AdDetails'] = $model -> getAdDetails();
-        $this-> view('Student/Internship', $data);
+
+        if(isset($_POST['submit'])){
+            $advertisementId = $_GET['advertisementId'];
+
+            $file = $_FILES['file'];
+            $fileName = $_FILES['file']['name'];
+            $fileTempName = $_FILES['file']['tmp_name'];
+            $fileSize = $_FILES['file']['size'];
+            $fileError = $_FILES['file']['error'];
+            $fileType = $_FILES['file']['type'];
+        
+            $fileExt = explode('.', $fileName);
+            $fileActualName = strtolower(current($fileExt));
+            $fileActualExt = strtolower(end($fileExt));
+            $allowed = array('pdf');
+        
+            if(in_array($fileActualExt, $allowed)){
+                if($fileError === 0){
+                    if($fileSize < 1000000){
+                        $base = preg_replace("/[^\w-]/", "_", $fileActualName);
+                        $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
+                        $fileDestination = __DIR__ . '/../../../public/assets/uploads/cv/'. $fileNameNew;
+                        if(move_uploaded_file($fileTempName, $fileDestination)){
+                            $isInsert1 = 1;
+                            $data['StudentId'] = $_SESSION['USER'] -> StudentId;
+                            $data['AdvertisementId'] = $advertisementId;
+                            $data['JobStatus'] = "Pending";
+                            $data['CV'] = $fileNameNew;
+                            $student_advertisement = new student_advertisement;
+                            $isInsert2 = $student_advertisement -> insert($data);
+                        }else{
+                            $isInsert1 = 0;
+                        }
+                        
+                        if($isInsert1 && $isInsert2){
+                            $_SESSION['isInsert'] = 1;
+                        }else{                         
+                            $_SESSION['isInsert'] = 0;
+                        }
+                    }else{
+                        $_SESSION['isBig'] = 1;
+                    }
+                }else{
+                    $_SESSION['isInsert'] = 0;
+                }
+            }else{
+                $_SESSION['isTypeError'] = 1;
+            }
+            //show($data);
+            header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+        }else{
+            //show($data);
+            $this-> view('Student/Internship', $data);        }
     }
-    public function viewAdvertisement($id){
+    public function viewAdvertisement(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-        
+
+        $advertisementId = $_GET['advertisementId'];
         $model = new C_Advertisement;
         // Find the advertisement by ID
-        $data = $model->find(['advertisementId' => $id]);
-        $advertisementId = $id;
+        $data = $model->find(['advertisementId' => $advertisementId]);
 
+        //show($data);
         $this-> view('Student/InternshipView', $data);
+    }
+    public function applyAdvertisement(){
+        if(isset($_POST['submit'])){
+            $file = $_FILES['file'];
+            $fileName = $_FILES['file']['name'];
+            $fileTempName = $_FILES['file']['tmp_name'];
+            $fileSize = $_FILES['file']['size'];
+            $fileError = $_FILES['file']['error'];
+            $fileType = $_FILES['file']['type'];
+        
+            $fileExt = explode('.', $fileName);
+            $fileActualName = strtolower(current($fileExt));
+            $fileActualExt = strtolower(end($fileExt));
+            $allowed = array('pdf');
+        
+            if(in_array($fileActualExt, $allowed)){
+                if($fileError === 0){
+                    if($fileSize < 1000000){
+                        $base = preg_replace("/[^\w-]/", "_", $fileActualName);
+                        $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
+                        $fileDestination = __DIR__ . '/../../../public/assets/uploads/cv/'. $fileNameNew;
+                        if(move_uploaded_file($fileTempName, $fileDestination)){
+                            $isInsert1 = 1;
+                            $data['StudentId'] = $_SESSION['USER'] -> StudentId;
+                            $data['AdvertisementId'] =$advertisementId =  $_GET['advertisementId'];
+                            $data['JobStatus'] = "Pending";
+                            $data['CV'] = $fileNameNew;
+                            //show($data);
+                            $student_advertisement = new student_advertisement;
+                            $isInsert2 = $student_advertisement -> insert($data);
+                        }else{
+                            $isInsert1 = 0;
+                        }
+                        
+                        if($isInsert1 && $isInsert2){
+                            $_SESSION['isInsert'] = 1;
+                        }else{                         
+                            $_SESSION['isInsert'] = 0;
+                        }
+                    }else{
+                        $_SESSION['isBig'] = 1;
+                    }
+                }else{
+                    $_SESSION['isInsert'] = 0;
+                }
+            }else{
+                $_SESSION['isTypeError'] = 1;
+            }
+            header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+        }
+
     }
 }

@@ -47,7 +47,7 @@
                                         foreach($data['student_applied_companies'] as $company){
                                     ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($company->CreatedAt)?></td>
+                                        <td><?php echo htmlspecialchars($company->date)?></td>
                                         <td><?php echo htmlspecialchars($company->Name)?></td>
                                         <td><?php echo htmlspecialchars($company->position)?></td>
                                         <td>

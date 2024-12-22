@@ -12,6 +12,7 @@ class student_advertisement
 		'StudentId',
 		'AdvertisementId',
 		'JobStatus',
+		'CV',
 	];
 
 	function findstudentad($companyId, $studentId)

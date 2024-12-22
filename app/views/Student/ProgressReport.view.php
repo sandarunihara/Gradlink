@@ -91,7 +91,7 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentProgress/addProgressReport" method="post" enctype="multipart/form-data">
             <h2>Add New Progress Report</h2>
-            <input type="file" id="fileUpload" accept=".pdf" name="file">
+            <input type="file" id="fileUpload" accept=".pdf" name="file" required>
             <br><br>
             <button 
                 type="submit" 
@@ -136,7 +136,8 @@
         <?php unset($_SESSION['isTypeError']);?>
         <?php }?>
     <?php }?>
-
+    
+<!-- script for popup box -->
 <script>
     // Get references to elements
     const addNewBtn = document.getElementById('addNewBtn');
@@ -144,10 +145,17 @@
     const popupContent = document.querySelector('.popup-content');
     const saveBtn = document.getElementById('saveBtn');
     const form = document.querySelector('form');
+    
     addNewBtn.addEventListener('click', () => {
         popupBox.classList.remove('hidden');
     });
 
+    saveBtn.addEventListener('click', () => {
+        const fileUpload = document.getElementById('fileUpload').files;
+        if (fileUpload.length !== 0) {
+            form.submit();
+        }
+    });
     // Hide popup when clicking outside the content box
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
