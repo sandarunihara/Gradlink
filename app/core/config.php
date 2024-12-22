@@ -1,11 +1,15 @@
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 if($_SERVER['SERVER_NAME'] == 'localhost'){
     // database configuration
-    define('DBNAME', 'gradlink1');   // database name
-    define('DBHOST', 'localhost');  
-    define('DBUSER', 'root');
-    define('DBPASS', '');
+    define('DBNAME', $_ENV["DBNAME"]);   // database name
+    define('DBHOST', $_ENV["DBHOST"]);  
+    define('DBUSER', $_ENV["DBUSER"]);
+    define('DBPASS', $_ENV["DBPASS"]);
     define('DBDRIVER', '');
 
     define('ROOT', 'http://localhost/Gradlink/public');
