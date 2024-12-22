@@ -31,8 +31,8 @@
                         <p>You have no active applications.</p>
                     <?php else: ?>
                         <p>You have <?php echo htmlspecialchars($data['numOfAppliedCompanies'])?> active applications.</p>
-                        <button onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies';">View Applications</button>
                     <?php endif; ?>
+                    <button onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies';">View Applications</button>
                 </div>
                 <div class="card">
                     <h3>Upcoming Interviews</h3>
@@ -45,8 +45,8 @@
                                 echo (htmlspecialchars($data['monthName']) .".");
                             ?>
                         </p>
-                        <button onclick="location.href='<?=ROOT?>/Student/StudentScheduleInterview/Interview';">View Interview</button>
                     <?php endif; ?>
+                    <button onclick="location.href='<?=ROOT?>/Student/StudentScheduleInterview/Interview';">View Interview</button>
                 </div>
             </div>
             <div class="recent-activity">

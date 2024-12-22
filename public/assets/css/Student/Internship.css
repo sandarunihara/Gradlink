@@ -160,65 +160,62 @@
     background-color: #218838; /* Darker green on hover */
     transform: scale(1.05); /* Slight zoom */
   }
-  
-  /* Popup Box  */
-  /* Popup styles */
-  .popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/*pop up box */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input[type="file"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* OK button styling (ID or class specific) */
+#okBtn {
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#okBtn:hover {
+  background-color: #218838;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filter {
+    flex-direction: column;
+    gap: 15px;
   }
-  
-  .popup.hidden {
-    display: none;
+
+  .job-card {
+    width: 100%; /* Full width on smaller screens */
   }
-  
-  .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  input[type="file"] {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-  }
-  
-  /* OK button styling (ID or class specific) */
-  #okBtn {
-    margin-top: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  #okBtn:hover {
-    background-color: #218838;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .filter {
-      flex-direction: column;
-      gap: 15px;
-    }
-  
-    .job-card {
-      width: 100%; /* Full width on smaller screens */
-    }
-  }
+}
   
