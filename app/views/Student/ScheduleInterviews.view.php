@@ -49,24 +49,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2024-11-23</td>
-                                    <td>10.00 AM</td>
-                                    <td>Software Engineer</td>
-                                    <td>WSO2</td>
-                                </tr>
-                                <tr>
-                                    <td>2024-11-25</td>
-                                    <td>03.00 PM</td>
-                                    <td>Software Engineer</td>
-                                    <td>IFS</td>
-                                </tr>
-                                <tr>
-                                    <td>2024-11-28</td>
-                                    <td>10.00 AM</td>
-                                    <td>DevOps engineer</td>
-                                    <td>Sysco Labs</td>
-                                </tr>
+                                <?php if (isset($data['interview_time_slot']) && !empty($data['interview_time_slot'])): ?>
+                                    <?php
+                                        foreach($data['interview_time_slot'] as $interview){
+                                    ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($interview->InterviewDate)?></td>
+                                        <td><?php echo htmlspecialchars($interview->StartTime)?></td>
+                                        <td><?php echo htmlspecialchars($interview->Position)?></td>
+                                        <td><?php echo htmlspecialchars($interview->CompanyName)?></td>
+                                    </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="4">No interviews scheduled.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

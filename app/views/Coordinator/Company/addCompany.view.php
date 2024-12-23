@@ -36,6 +36,12 @@
             <?php $this->renderComponent("companyTabs") ?>
 
             <section class="company-info">
+            <!-- <div class="sc">
+                        <a href="../Advertisements/send" class="sc_container">
+                            <i class="fas fa-chevron-left"></i>
+                            <h3>Back</h3>
+                        </a>
+                    </div> -->
                 <form
                     class="company-form"
                     method="POST"

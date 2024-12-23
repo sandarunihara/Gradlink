@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/complaintView.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
-    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script> 
 </head>
 <body>
     <?php
@@ -29,7 +29,7 @@
             <?php $this->renderComponent("studentHeader")  ?>
         </div>
         <div class="main-content">
-            <a href="<?=ROOT?>/Student/StudentComplaint/complaint" class="backreq">
+            <a href="<?=ROOT?>/Student/StudentComplaint/complaint/0" class="backreq">
                 <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 18l-6-6 6-6"></path>
                 </svg>
@@ -76,21 +76,6 @@
             </div>
         </div>
     </div>
-    <!-- Toast -->
-    <?php if(array_key_exists('isSuccess', $data)): ?>
-        <div id="toast-container" class="toast-container"></div>
-
-        <?php if ($data['isSuccess'] == 0): ?>
-            <script>
-                errorToast("Failed to delete complaint");
-            </script>
-        <?php endif; ?>
-        <?php if ($data['isSuccess'] == 1): ?>
-            <script>
-                successToast("Complaint Deleted Successfully");
-            </script>
-        <?php endif; ?>
-    <?php endif; ?>
 <script>
     // Get references to modal and buttons
     const complaintDeleteBtn = document.getElementById('complaintDeleteBtn');

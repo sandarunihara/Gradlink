@@ -9,10 +9,17 @@ class StudentAppliedCompanies{
         $student = new student;
         $data['Student'] = $student -> first($arr);
         
-        $company = new company;
         $student_advertisement = new student_advertisement;
-        $advertisement = new advertisement;
+        $data['student_applied_companies'] = $student_advertisement->findAppliedCompanies($arr['StudentId']);
 
+        if(!empty($data['student_applied_companies'])){
+            for($i = 0; $i < count($data['student_applied_companies']); $i++){
+                $createdAt = $data['student_applied_companies'][$i]->CreatedAt;
+                $date = explode(" ", $createdAt);
+                $data['student_applied_companies'][$i]->date = $date[0];
+            }
+        }
+        //show($data);
         $this-> view('Student/AppliedCompanies',$data);
     }  
     public function ViewAppliedCompanies($id){
@@ -23,7 +30,8 @@ class StudentAppliedCompanies{
         // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $id]);
         $advertisementId = $id;
-        $this-> view('Student/ViewAppliedAd',$data);
+        //show($data);
+        $this-> view('Student/ViewAppliedAdDash',$data);
     }
 
 }

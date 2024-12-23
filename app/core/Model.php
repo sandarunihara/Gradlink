@@ -132,16 +132,8 @@
             $query = "DELETE FROM $this->table WHERE $id_column = :$id_column";
             
             // Execute the query
-            $stmt = $this->query($query, $data);
-            //show($stmt);
-            if (is_array($stmt)) {
-                $stmt = (object) $stmt;
-            }
+            $this->query($query, $data);
 
-            if ($stmt || $stmt->rowCount() > 0) {
-                return "Record deleted successfully.";
-            } else {
-                return "Error: Record could not be deleted.";
-            }
+            return 1;
         }
     }

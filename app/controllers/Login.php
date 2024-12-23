@@ -1,4 +1,13 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require "../app/libs/SMTP.php";
+require "../app/libs/PHPMailer.php";
+require "../app/libs/Exception.php";
+
+
 class Login
 {
 	use Controller;
@@ -9,7 +18,7 @@ class Login
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
-		
+
 			switch ($userNum) {
 				case 9:
 					$user = new student;
@@ -43,8 +52,6 @@ class Login
 					$_SESSION['USER'] = $row;
 					$_SESSION['PATH'] = $path;
 
-					// print_r($_POST['remember_me']);
-					// Check if "Remember Me" is selected
 					if (!empty($_POST['remember_me'])) {
 						$cookieValue = base64_encode(json_encode([
 							'userId' => $_POST['userId'],
@@ -88,14 +95,11 @@ class Login
 		$data = [];
 		$user = null;
 
-		// Handle POST requests
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			// Check if user ID is provided
 			if (isset($_POST['userId'])) {
 				$userId = $_POST['userId'];
 				$userNum = strlen($userId);
 
-				// Determine user type and dashboard path based on user ID length
 				switch ($userNum) {
 					case 9:
 						$user = new student;
@@ -122,25 +126,97 @@ class Login
 						break;
 				}
 
-				// Fetch user data if valid
 				if ($user && empty($data['errors'])) {
 					$row = $user->first($searchKey);
-					if ($row ) {
-						if($row->Password === null){
-							$data['rowdata'] = $row;
-							$_SESSION['USER_ID'] = $userId;
-							// $_SESSION['rowdata'] = $row;
-						}else{
-							$data['errors'] = "User already has a password";
+					if ($row) {
+						$data['rowdata'] = $row;
+						$_SESSION['USER_ID'] = $userId;
+
+						$otp = random_int(100000, 999999);
+
+						if (!empty($row->Email)) {
+							$email = $row->Email;
+							try {
+								$mail = new PHPMailer(true);
+								$mail->isSMTP();
+								$mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+								$mail->SMTPAuth = true;
+								$mail->Username = 'sandarunihara15@gmail.com'; // Your email
+								$mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
+								$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+								$mail->Port = 587;
+								$mail->setFrom('sandarunihara15@gmail.com', 'UCSC Gradlink');
+								$mail->addAddress($email);
+								$mail->isHTML(true);
+								$mail->Subject = 'Your OTP for Password Creation';
+								$mail->Body = "Dear {$row->Name},<br>Your OTP is: <strong>{$otp}</strong>. Please use this to verify your email.";
+
+								$mail->send();
+								$_SESSION['OTP'] = $otp;
+								$data['success'] = "OTP sent to your email. Please check your inbox.";
+							} catch (Exception $e) {
+								$data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+							}
+						} else {
+							$data['errors'] = "User email not found.";
 						}
 					} else {
 						$data['errors'] = "Invalid User ID";
 						// redirect('login');
 					}
 				}
-			}
-			// Check if password and confirm password are provided
-			elseif (isset($_POST['password'], $_POST['confirmpassword'])) {
+			} elseif (isset($_POST['verifyOtp'])) {
+				if (!empty($_POST['otp'])  && is_array($_POST['otp'])) {
+					$userId = $_SESSION['USER_ID'];
+					$userNum = strlen($userId);
+
+					switch ($userNum) {
+						case 9:
+							$user = new student;
+							$searchKey = ['StudentId' => $userId];
+							$id_column = 'StudentId';
+							break;
+						case 4:
+							$user = new company;
+							$searchKey = ['CompanyId' => $userId];
+							$id_column = 'CompanyId';
+							break;
+						case 5:
+							$user = new pdc_assistant;
+							$searchKey = ['AssistantId' => $userId];
+							$id_column = 'AssistantId';
+							break;
+						case 12:
+							$user = new pdc_coordinator;
+							$searchKey = ['CoordinatorId' => $userId];
+							$id_column = 'CoordinatorId';
+							break;
+						default:
+							$data['errors'] = "Invalid User ID";
+							break;
+					}
+
+					if ($user && empty($data['errors'])) {
+						$row = $user->first($searchKey);
+					}
+
+					$data['rowdata'] = $row;
+
+					$otp = implode('', $_POST['otp']);
+					if (!empty($otp)) {
+						if ($otp == $_SESSION['OTP']) {
+							$data['success'] = "OTP verified successfully. Proceed to create a password.";
+							$data['rowdata']->otp = true;
+						} else {
+							$data['errors'] = "Invalid OTP. Please try again.";
+						}
+					} else {
+						$data['errors'] = "OTP is required.";
+					}
+				} else {
+					$data['errors'] = "OTP is required.";
+				}
+			} elseif (isset($_POST['password'], $_POST['confirmpassword'])) {
 				$password = $_POST['password'];
 				$confirmpassword = $_POST['confirmpassword'];
 				if ($password === $confirmpassword) {
@@ -172,12 +248,17 @@ class Login
 								break;
 						}
 
+
+
+						// $imagedata = file_get_contents(ROOT . '/assets/img/defaultpro.png');
+						// $imageBase64 = base64_encode($imagedata);
+						// $imgresult= $user->update($id, ['profileimg' => $imageBase64], $id_column);
+						// show($imageBase64);
 						$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
-						// $results = $user->update($id, ['Password' => $password], $id_column);
-						
-						session_unset();
-						session_destroy();
+						// Unset and destroy the session
 						if ($results['status'] === 'success') {
+							session_unset();
+							session_destroy();
 							$data['success'] = "Password created successfully. Please login.";
 							redirect('login');
 							exit;

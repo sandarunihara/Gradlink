@@ -20,6 +20,8 @@ class company
 		'Website',
 		'Linkedin',
 		'Status',
+		'profileimg',
+		'coverimg',
 		'AssistantId',
 	];
 

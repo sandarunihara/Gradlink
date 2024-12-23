@@ -3,12 +3,12 @@
 class StudentComplaint{
     use BaseController;
     public function complaint(){
-        $data =[];
+        $data = [];
+
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         
         $complaint = new complaint;
         $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
-
         $this-> view('Student/Complaint', $data);
 
     }
@@ -22,15 +22,11 @@ class StudentComplaint{
             $data['Status'] = "notReviewed";
             
             $complaint = new complaint;
-            $result = $complaint -> insert($data);
-            if($result){
-                header('location: ' . ROOT . '/Student/StudentComplaint/complaint');
-            }
+            $_SESSION['isInsert'] = $complaint -> insert($data);
+            header('location: ' . ROOT . '/Student/StudentComplaint/complaint/');
         }else{
             $this-> view('Student/NewComplaint', $data);
         }
-        
-
     }
     public function viewComplaint($complaintId){
         $data = [];
@@ -53,12 +49,8 @@ class StudentComplaint{
 
         $interval = $createdDateTime -> diff($currentDateTime);
         if($data['Complaint'] -> Status == "notReviewed" && $createdDate == $currentDate){
-            if(!($interval -> h >= 1)){
-                if($interval -> i <= 30){
-                    $data['Complaint'] -> Delete = 1;
-                }else{
-                    $data['Complaint'] -> Delete = 0;
-                }
+            if($interval -> i <= 30){
+                $data['Complaint'] -> Delete = 1;
             }else{
                 $data['Complaint'] -> Delete = 0;
             }
@@ -70,19 +62,7 @@ class StudentComplaint{
     public function deleteComplaint($complaintId){
         $data = [];
         $complaint = new complaint;
-        $result = $complaint -> delete($complaintId, 'ComplaintId');
-        if($result === "Record deleted successfully."){
-            $data['isSuccess'] =1;
-        }else{
-            $data['isSuccess']= 0;
-        }
-
-        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
-        
-        $complaint = new complaint;
-        $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
-
-  
-        $this-> view('Student/Complaint',$data);
+        $_SESSION['isDelete'] = $complaint -> delete($complaintId, 'ComplaintId');
+        header('location: ' . ROOT . '/Student/StudentComplaint/complaint/');
     }
 }

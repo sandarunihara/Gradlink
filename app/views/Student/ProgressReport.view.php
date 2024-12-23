@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/progressReport.css"> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
+    <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 <body>
     <div class="side">
@@ -45,27 +47,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2024-11-23</td>
-                                    <td>23rd Progress Report</td>
-                                    <td>
-                                        <div class="reviewed">Reviewed</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-12-05</td>
-                                    <td>5th Progress Report</td>
-                                    <td>
-                                        <div class="not-reviewed">Not Reviewed</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-12-12</td>
-                                    <td>12th Progress Report</td>
-                                    <td>
-                                        <div class="reviewed">Reviewed</div>
-                                    </td>
-                                </tr>
+                                <?php if (isset($data['ProgressDocs']) && !empty($data['ProgressDocs'])): ?>
+                                    <?php foreach ($data['ProgressDocs'] as $ProgressDoc): ?>
+                                        <?php
+                                        $status = $ProgressDoc -> Status;
+                                        $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
+                                        $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
+                                        ?>
+                                        <tr>
+                                            <td><?php
+                                                $SubmissionDate = $ProgressDoc -> SubmissionDate;
+                                                $dateString = explode(' ', $SubmissionDate)[0];
+                                                echo htmlspecialchars($dateString); 
+                                                ?>
+                                            </td>
+                                            <td><?php
+                                                $date = DateTime::createFromFormat('Y-m-d', $dateString);
+                                                $day = $date->format('jS');
+                                                echo htmlspecialchars($day). " Progress Report";
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <div class="<?php echo $statusClass; ?>">
+                                                    <?php echo $statusText; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="3">No progress reports found.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -73,45 +86,82 @@
             </div>
         </div>
     </div>
-    <div id="progressReportBox" class="progress-report-box hidden">
-        <div class="box-content">
+<!-- Popup Box -->
+<div id="popupBox" class="popup hidden">
+    <div class="popup-content">
+        <form action="<?= ROOT ?>/Student/StudentProgress/addProgressReport" method="post" enctype="multipart/form-data">
             <h2>Add New Progress Report</h2>
-            <form id="progressForm">
-                <label for="reportTitle">Report Title:</label>
-                <input type="text" id="reportTitle" name="reportTitle" placeholder="Enter report title" required>
-                
-                <label for="reportFile">Upload Report (PDF only):</label>
-                <input type="file" id="reportFile" name="reportFile" accept=".pdf" required>
-                
-                <div class="buttons">
-                    <button type="submit">Save</button>
-                    <button type="button" id="cancelBtn">Cancel</button>
-                </div>
-            </form>
-        </div>
+            <input type="file" id="fileUpload" accept=".pdf" name="file" required>
+            <br><br>
+            <button 
+                type="submit" 
+                id="saveBtn"
+                name="submit"
+            >
+            SAVE
+            </button>
+        </form>
     </div>
-    <script>
-    // Get elements
-    const addNewBtn = document.getElementById("addNewBtn");
-    const progressReportBox = document.getElementById("progressReportBox");
-    const cancelBtn = document.getElementById("cancelBtn");
+</div>
+<!-- Toast -->
+    <div id="toast-container" class="toast-container"></div>
 
-    // Show the progress report adding box
-    addNewBtn.addEventListener("click", () => {
-        progressReportBox.classList.remove("hidden");
+    <?php if(array_key_exists('isInsert', $_SESSION)){ ?>
+        <?php if($_SESSION['isInsert']){?>
+            <script>
+                successToast("Progress report added successfully");
+            </script>
+        <?php }else{ ?>
+            <script>
+                errorToast("Failed to add progress report");
+            </script>
+        <?php } ?>
+        <?php unset($_SESSION['isInsert']);?>
+    <?php }?>
+
+    <?php if(array_key_exists('isBig', $_SESSION)){ ?>
+        <?php if($_SESSION['isBig']){?>
+            <script>
+                errorToast("Your file is too big!");
+            </script>
+        <?php unset($_SESSION['isBig']);?>
+        <?php }?>
+    <?php }?>
+
+    <?php if(array_key_exists('isTypeError', $_SESSION)){ ?>
+        <?php if($_SESSION['isTypeError']){?>
+            <script>
+                errorToast("You cannot upload files of this type!");
+            </script>
+        <?php unset($_SESSION['isTypeError']);?>
+        <?php }?>
+    <?php }?>
+    
+<!-- script for popup box -->
+<script>
+    // Get references to elements
+    const addNewBtn = document.getElementById('addNewBtn');
+    const popupBox = document.getElementById('popupBox');
+    const popupContent = document.querySelector('.popup-content');
+    const saveBtn = document.getElementById('saveBtn');
+    const form = document.querySelector('form');
+    
+    addNewBtn.addEventListener('click', () => {
+        popupBox.classList.remove('hidden');
     });
 
-    // Hide the progress report adding box
-    cancelBtn.addEventListener("click", () => {
-        progressReportBox.classList.add("hidden");
+    saveBtn.addEventListener('click', () => {
+        const fileUpload = document.getElementById('fileUpload').files;
+        if (fileUpload.length !== 0) {
+            form.submit();
+        }
     });
-
-    // Form submission logic (optional)
-    document.getElementById("progressForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent default form submission
-        alert("Progress report saved successfully!");
-        progressReportBox.classList.add("hidden"); // Close the box after saving
+    // Hide popup when clicking outside the content box
+    popupBox.addEventListener('click', (event) => {
+        if (!popupContent.contains(event.target)) {
+            popupBox.classList.add('hidden');
+        }
     });
-    </script>
+</script>
 </body>
 </html>

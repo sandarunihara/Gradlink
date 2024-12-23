@@ -29,7 +29,7 @@
             </a>
             <!-- Student Profile Update Box -->
             <div class="update-box">
-                <form id="updateForm" method="post">
+                <form id="updateForm" action= "<?=ROOT?>/Student/StudentProfile/profileEdit" method="post" enctype="multipart/form-data">
                     <div class="box1">
                         <!-- GitHub URL Input -->
                         <label for="github">GitHub</label>
@@ -92,8 +92,8 @@
                         <!-- Submit Button -->
                         <button 
                             type="submit" 
-                            disabled 
-                            onclick="location.href='<?=ROOT?>/Student/StudentProfile/profileEdit';"       
+                            disabled
+                            name="submit" 
                         >                     
                             Save
 

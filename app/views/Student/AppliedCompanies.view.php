@@ -42,36 +42,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2024-11-23</td>
-                                    <td>WSO2</td>
-                                    <td>Software Engineer</td>
-                                    <td>
-                                        <button class="pending" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies';">
-                                            Pending
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-11-20</td>
-                                    <td>Sysco Labs</td>
-                                    <td>DevOps Engineer</td>
-                                    <td>
-                                        <button class="recruit" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies/;">
-                                        Recruit
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-11-15</td>
-                                    <td>MillenniumIT</td>
-                                    <td>Software Engineer</td>
-                                    <td>
-                                        <button class="rejected" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies';">
-                                            Rejected
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php if (isset($data['student_applied_companies']) && !empty($data['student_applied_companies'])): ?>
+                                    <?php
+                                        foreach($data['student_applied_companies'] as $company){
+                                    ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($company->date)?></td>
+                                        <td><?php echo htmlspecialchars($company->Name)?></td>
+                                        <td><?php echo htmlspecialchars($company->position)?></td>
+                                        <td>
+                                            <button class="<?php echo htmlspecialchars(strtolower($company->Jobstatus)); ?>" onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/ViewAppliedCompanies/<?php echo htmlspecialchars($company->advertisementId)?>';">
+                                                <?php echo htmlspecialchars($company -> Jobstatus) ?>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="4">No applied companies found.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

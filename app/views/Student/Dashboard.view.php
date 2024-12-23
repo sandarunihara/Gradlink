@@ -27,13 +27,26 @@
             <div class="dashboard-cards">
                 <div class="card">
                     <h3>Current Applications</h3>
-                    <p>You have 3 active applications.</p>
-                    <button><a href="<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies">View Applications</a></button>
+                    <?php if ($data['numOfAppliedCompanies'] == 0): ?>
+                        <p>You have no active applications.</p>
+                    <?php else: ?>
+                        <p>You have <?php echo htmlspecialchars($data['numOfAppliedCompanies'])?> active applications.</p>
+                    <?php endif; ?>
+                    <button onclick="location.href='<?=ROOT?>/Student/StudentAppliedCompanies/AppliedCompanies';">View Applications</button>
                 </div>
                 <div class="card">
                     <h3>Upcoming Interviews</h3>
-                    <p>Your next interview is on 24th Nov.</p>
-                    <button><a href="<?=ROOT?>/Student/StudentScheduleInterview/Interview">View Interview</a></button>
+                    <?php if (empty($data['interview_time_slot'])): ?>
+                        <p>You have no upcoming interviews.</p>
+                    <?php else: ?>
+                        <p>Your next interview is on 
+                            <?php 
+                                echo (htmlspecialchars($data['day']) . " ");
+                                echo (htmlspecialchars($data['monthName']) .".");
+                            ?>
+                        </p>
+                    <?php endif; ?>
+                    <button onclick="location.href='<?=ROOT?>/Student/StudentScheduleInterview/Interview';">View Interview</button>
                 </div>
             </div>
             <div class="recent-activity">

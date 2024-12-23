@@ -4,22 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/login.css">
     <title>Document</title>
 </head>
 
 <body>
+    <a class="backbtn" href="<?php echo ROOT ?>">
+        <i class="fas fa-chevron-left"></i>
+    </a>
     <img src="<?= ROOT ?>/assets/img/ucsclogo-.png" alt="UCSC Logo" class="logo-overlay">
     <div class="login-container">
         <div class="login-box">
             <form method="post">
                 <h1 class="topic">Sign in</h1>
                 <div class="input-group input-box">
-                    <input name="userId" id="userId" required type="text"  >
+                    <input name="userId" id="userId" required type="text">
                     <label for="userId">Enter User Id</label>
                 </div>
                 <div class="input-group input-box">
-                    <input name="password" type="password" required id="password" >
+                    <input name="password" type="password" required id="password">
                     <label for="password">Password</label>
                 </div>
 
@@ -54,9 +58,9 @@
             successToast("ok");
         </script>
     <?php endif; ?>
-    
+
     <!-- error should be displayed to user -->
-    <!-- <?php if(!empty($data['errorsInBase'])): ?>
+    <!-- <?php if (!empty($data['errorsInBase'])): ?>
         <script>
             errorToast("<?= $data['errorsInBase'] ?>");
         </script>

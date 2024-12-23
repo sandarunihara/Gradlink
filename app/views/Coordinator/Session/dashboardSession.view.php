@@ -57,7 +57,7 @@
                             <td>2024/10/05</td>
                             <td>11.00am</td>
                             <td>IFS</td>
-                            <td>Aaaaaaaaa</td>
+                            <td>entrepreneurship</td>
                             
                             <!-- <td><button class="view-btn">View</button></td> -->
                             <!-- View -> Go to the student profile -->

@@ -130,7 +130,7 @@
                 ]);
                 
                 var optionsCurve = {
-                    title: 'Intership',
+                    title: 'Internship',
                     curveType: 'function',
                     legend: { position: 'bottom' }
                 };

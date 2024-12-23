@@ -12,6 +12,7 @@ class student_advertisement
 		'StudentId',
 		'AdvertisementId',
 		'JobStatus',
+		'CV',
 	];
 
 	function findstudentad($companyId, $studentId)
@@ -57,5 +58,27 @@ class student_advertisement
 		} else {
 			return "Error: Record could not be deleted.";
 		}
+	}
+	function findAppliedCompanies($studentId){
+		$query = "SELECT 
+					studentadvertisement.Jobstatus, 
+					studentadvertisement.CreatedAt,
+					advertisement.position, 
+					advertisement.advertisementId,
+					company.Name
+              FROM 
+                    studentadvertisement
+              JOIN 
+                    advertisement ON studentadvertisement.advertisementId = advertisement.advertisementId
+              JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+              WHERE 
+                    studentadvertisement.StudentId = :StudentId";
+		$params = [
+			':StudentId' => $studentId
+		];
+		$result = $this->query($query, $params);
+
+		return $result;
 	}
 }
