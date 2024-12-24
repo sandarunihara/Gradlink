@@ -1,4 +1,0 @@
-DBHOST = db_host
-DBUSER = db_user
-DBPASS = db_pass
-DBNAME = db_name
