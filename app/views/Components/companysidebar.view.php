@@ -59,8 +59,12 @@
                 </div>
             </a>
             <ul class="dropdown-menu">
-                <a href="/Gradlink/public/company/Profile/dashboard"><li>Profile</li></a>
-                <a href="<?= ROOT ?>/logout"><li>SignOut</li></a>
+                <a href="/Gradlink/public/company/Profile/dashboard">
+                    <li>Profile</li>
+                </a>
+                <a href="<?= ROOT ?>/logout">
+                    <li>SignOut</li>
+                </a>
             </ul>
             <div class="profile_option ">
                 <div>
@@ -76,36 +80,27 @@
 </div>
 
 <script>
-  const menu = document.querySelector('.profile_option');
-  const dropdownMenu = document.querySelector('.dropdown-menu');
+    const menu = document.querySelector('.profile_option');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
 
-  menu.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('show'); // Toggle the "show" class
-  });
+    menu.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show'); 
+    });
 
-  // Close the dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!dropdownMenu.contains(e.target) && !menu.contains(e.target)) {
-      dropdownMenu.classList.remove('show'); // Remove "show" class if clicked outside
-    }
-  });
-</script>
+    document.addEventListener('click', (e) => {
+        if (!dropdownMenu.contains(e.target) && !menu.contains(e.target)) {
+            dropdownMenu.classList.remove('show'); 
+        }
+    });
 
 
-
-
-
-<script>
-    // Function to set the active class based on the current URL
     document.addEventListener("DOMContentLoaded", function() {
         var links = document.querySelectorAll(".option");
         var fullPath = window.location.pathname; // e.g., "/Gradlink/public/company/Companydash/Dashboard"
 
         links.forEach(function(link) {
-            // Extract the relevant part of each link's href attribute
             var linkPath = link.getAttribute("href");
 
-            // Check if the link's path matches the current path
             if (fullPath === linkPath) {
                 link.classList.add("active");
             }
