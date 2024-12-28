@@ -1,6 +1,9 @@
 <div class="sidebar" id="sidebar">
-    <div class="innersidebar">
-        <div class="sidebarlogo">
+<button id="toggleSidebar" class="toggle-btn">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="innersidebar" id="innersidebar">
+        <div class="sidebarlogo" id="sidebarlogo">
             <div class="logodiv">
                 <img src="<?php echo ROOT ?>/assets/img/grad.png" height="200" width="200" class="logoside" />
             </div>
@@ -106,4 +109,16 @@
             }
         });
     });
+
+    const sidebar = document.getElementById('sidebar');
+    const innersidebar = document.getElementById('innersidebar');
+    const toggleButton = document.getElementById('toggleSidebar');
+    const sidebarLogo = document.getElementById('sidebarlogo');
+
+    toggleButton.addEventListener('click', () => {
+        innersidebar.classList.toggle('collapsed');
+        sidebar.classList.toggle('collapsed');
+        sidebarLogo.classList.toggle('hidden');
+    });
+
 </script>

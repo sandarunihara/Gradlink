@@ -3,7 +3,9 @@
   width: 235px;
   transition: width 0.3s ease;
   position: relative;
-  /* background-color: aqua; */
+}
+.sidebar.collapsed {
+  width: 80px;
 }
 .innersidebar {
   height: 100vh;
@@ -13,9 +15,32 @@
   z-index: 1;
   padding-top: 5px;
   padding-right: 5px;
+  transition: width 0.3s ease;
+}
+.innersidebar.collapsed {
+  width: 80px;
 }
 .sidebarlogo {
   padding-left: 5px;
+}
+.sidebarlogo.hidden {
+  display: none;
+}
+
+.sidebar.collapsed .option p {
+  display: none;
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
 }
 .logodiv {
   display: flex;
@@ -25,7 +50,6 @@
   background-color: white;
 }
 .logoside {
-  /* background-color: white; */
   margin-right: auto;
   margin-left: auto;
   padding-left: 10px;
@@ -50,7 +74,6 @@
   cursor: pointer;
   text-decoration: none;
   border-left: transparent 5px solid;
-  /* padding: 10px; */
 }
 .option i {
   font-size: 15px;
@@ -89,7 +112,7 @@
   padding-right: 10px;
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.049);
-  backdrop-filter: blur(10px); 
+  backdrop-filter: blur(10px);
   border: rgba(255, 255, 255, 0.575) 1px solid;
   margin-left: 5px;
   margin-right: 5px;
@@ -160,9 +183,9 @@
   max-height: 200px;
   padding: 10px 0;
 }
-.dropdown-menu a{
-    color: white;
-    text-decoration: none;
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
 }
 .dropdown-menu li {
   padding: 10px 20px;
@@ -174,6 +197,5 @@
   background-color: #f0f0f0;
 }
 .dropdown-menu li:hover a {
-    color: black;
+  color: black;
 }
-
