@@ -76,6 +76,7 @@ class StudentAd{
     }
     public function applyAdvertisement(){
         if(isset($_POST['submit'])){
+            //show($_POST);
             $file = $_FILES['file'];
             $fileName = $_FILES['file']['name'];
             $fileTempName = $_FILES['file']['tmp_name'];
@@ -100,14 +101,23 @@ class StudentAd{
                             $data['AdvertisementId'] =$advertisementId =  $_GET['advertisementId'];
                             $data['JobStatus'] = "Pending";
                             $data['CV'] = $fileNameNew;
+                            $studentAd['Status'] = "Pending";
                             //show($data);
                             $student_advertisement = new student_advertisement;
                             $isInsert2 = $student_advertisement -> insert($data);
+                            $student = new student;
+                            $result = $student -> update($data['StudentId'], $studentAd, 'StudentId');
+                            //show($result);
+                            if($result['status'] === 'success'){
+                                $isInsert3 = 1;
+                            }else{
+                                $isInsert3 = 0;
+                            }
                         }else{
                             $isInsert1 = 0;
                         }
                         
-                        if($isInsert1 && $isInsert2){
+                        if($isInsert1 && $isInsert2 && $isInsert3){                            
                             $_SESSION['isInsert'] = 1;
                         }else{                         
                             $_SESSION['isInsert'] = 0;
