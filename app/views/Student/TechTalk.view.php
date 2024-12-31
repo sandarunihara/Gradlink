@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-Talk</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/allPages.css"> 
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/techTalk.css"> 

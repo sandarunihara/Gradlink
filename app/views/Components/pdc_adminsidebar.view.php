@@ -1,49 +1,37 @@
-<div id="sidebar" class="sidebar ">
-    <div class="logodiv">
+<div class="sidebar ">
+    <div class="logo-container">
         <img src="<?php echo ROOT ?>/assets/img/grad.png" height="200" width="200" class="logo" />
     </div>
-    <div id="sidebaroption" class="sidebaroption ">
+    <div class="sidebar-menu">
         
-        <a class="option dash" href="../AdminDashboardOverview/dashboard" >
-            <i class="material-icons">dashboard</i>
-            <div>
-                <p>Dashboard</p>
-            </div>
+        <a class="menu-item" href="../AdminDashboardOverview/dashboard" >
+            <i class="fas fa-home"></i>
+            <p>Dashboard</p>
         </a>
         
-        <a class="option" href="../AdminCompanyOverview/dashboard">
-            <i class="material-icons">business</i>
-            <div>
-                <p>Company</p>
-            </div>
+        <a class="menu-item" href="../AdminCompanyOverview/dashboard">
+            <i class="fas fa-building"></i>
+            <p>Company</p>
         </a>
         
-        <a class="option" href="../AdminStudentOverview/dashboard">
-            <i class="material-icons">school</i>
-            <div>
-                <p>Student</p>
-            </div>
+        <a class="menu-item" href="../AdminStudentOverview/dashboard">
+            <i class="fas fa-user-graduate"></i>
+            <p>Student</p>
         </a>
         
-        <a class="option" href="../AdminAdvertisementOverview/dashboard">
-            <i class="material-icons">campaign</i>
-            <div>
-                <p>Advertisement</p>
-            </div>
+        <a class="menu-item" href="../AdminAdvertisementOverview/dashboard">
+            <i class="fas fa-ad"></i>
+            <p>Advertisement</p>
         </a>
         
-        <a class="option" href="../AdminApplicationOverview/dashboard">
-            <i class="material-icons">description</i>
-            <div>
-                <p>Application</p>
-            </div>
+        <a class="menu-item" href="../AdminApplicationOverview/dashboard">
+            <i class="fas fa-file-alt"></i>
+            <p>Application</p>
         </a>
         
-        <a class="option" href="../AdminSessionOverview/dashboard">
-            <i class="material-icons">event</i>
-            <div>
-                <p>Session</p>
-            </div>
+        <a class="menu-item" href="../AdminSessionOverview/dashboard">
+            <i class="fas fa-calendar-alt"></i>
+            <p>Session</p>
         </a>
 
         <!-- <a class="option" href="../AdminProfileOverview/dashboard">
@@ -53,11 +41,9 @@
             </div>
         </a> -->
         
-        <a class="option logout" href="<?=ROOT?>/logout">
-            <i class="material-icons">logout</i>
-            <div>
-                <p>Log out</p>
-            </div>
+        <a class="menu-item logout" href="<?=ROOT?>/logout">
+            <i class="as fa-sign-out-alt"></i>
+            <p>Log out</p>
         </a>
     
     </div>
