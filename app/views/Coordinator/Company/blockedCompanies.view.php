@@ -53,10 +53,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>WSO2</td>
+                            <!-- <td>WSO2</td>
                             <td>Tharindu Perera</td>
                             <td>tharindu@gmail.com</td>
-                            <td>071 273 4321</td>
+                            <td>071 273 4321</td> -->
                             <td><button class="remove-btn">Remove</button></td>
                         </tr>
                         <!-- Add more rows as needed -->
