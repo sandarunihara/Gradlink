@@ -92,6 +92,8 @@ table {
 
 table thead {
     background-color: #fbe8e8b6;
+    position: sticky;
+
 }
 
 table th, table td {
@@ -109,6 +111,12 @@ table td {
     font-size: 14px;
     color: #555;
 }
+
+/* tbody {
+    display: block;
+    max-height: 350px; 
+    overflow-y: auto;
+} */
 
 .remove-btn {
     background-color: #ef4f4f;
