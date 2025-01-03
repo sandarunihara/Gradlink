@@ -44,11 +44,9 @@
                     <thead>
                         <tr>
                             <th>Registration No.</th>
-                            <th>Index No.</th>
                             <th>Name</th>
                             <th>NIC</th>
                             <th>Degree</th>
-                            <th>Year</th>
                             <th>email</th>
                             <th>Contact No</th>
                             <th></th>
@@ -57,28 +55,15 @@
                     <tbody>
                         <tr>
                             <td>2022/CS/123</td>
-                            <td>22001235</td>
                             <td>D.M. Perera</td>
                             <td>200223900437</td>
                             <td>CS</td>
-                            <td>2</td>
                             <td>dinuth@gmail.com</td>
                             <td>0771345678</td>
                             <td><button class="view-btn">View</button></td>
                             <!-- View -> Go to the student profile -->
                         </tr>
-                        <tr>
-                            <td>2022/CS/123</td>
-                            <td>22001235</td>
-                            <td>D.M. Perera</td>
-                            <td>200223900437</td>
-                            <td>CS</td>
-                            <td>2</td>
-                            <td>dinuth@gmail.com</td>
-                            <td>0771345678</td>
-                            <td><button class="view-btn">View</button></td>
-                            <!-- View -> Go to the student profile -->
-                        </tr>
+                        
                     </tbody>
                 </table>
 
