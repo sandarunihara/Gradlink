@@ -91,7 +91,7 @@ table {
 }
 
 table thead {
-    background-color: #f1f5ff;
+    background-color: #fbe8e8b6;
 }
 
 table th, table td {
@@ -124,5 +124,20 @@ table td {
 
 .remove-btn:hover {
     background-color: #f17e7e;
+    color: #fff;
+}
+
+.view-btn {
+    background-color: #fff;
+    border: 1px solid #4a8af4;
+    color: #4a8af4;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-btn:hover {
+    background-color: #4a8af4;
     color: #fff;
 }
