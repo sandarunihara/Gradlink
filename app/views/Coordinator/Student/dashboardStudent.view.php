@@ -44,47 +44,40 @@
                     <thead>
                         <tr>
                             <th>Registration No.</th>
-                            <th>Index No.</th>
                             <th>Name</th>
                             <th>NIC</th>
                             <th>Degree</th>
-                            <th>Year</th>
                             <th>email</th>
                             <th>Contact No</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2022/CS/123</td>
-                            <td>22001235</td>
-                            <td>D.M. Perera</td>
-                            <td>200223900437</td>
-                            <td>CS</td>
-                            <td>2</td>
-                            <td>dinuth@gmail.com</td>
-                            <td>0771345678</td>
-                            <td><button class="view-btn">View</button></td>
-                            <!-- View -> Go to the student profile -->
-                        </tr>
-                        <tr>
-                            <td>2022/CS/123</td>
-                            <td>22001235</td>
-                            <td>D.M. Perera</td>
-                            <td>200223900437</td>
-                            <td>CS</td>
-                            <td>2</td>
-                            <td>dinuth@gmail.com</td>
-                            <td>0771345678</td>
-                            <td><button class="view-btn">View</button></td>
-                            <!-- View -> Go to the student profile -->
-                        </tr>
+                        <?php if (!empty($studentData)): ?>
+                            <?php foreach ($studentData as $student): ?>
+                                <tr>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_id'] : $student->student_id) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_name'] : $student->student_name) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['nic'] : $student->nic) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['degree'] : $student->degree) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_email'] : $student->student_email) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['contact_no'] : $student->contact_no) ?></td>
+                                    <td><button class="view-btn">View</button></td>
+                                    <!-- View -> Go to the student profile -->
+                                </tr>
+                            <?php endforeach ?>
+
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="9">No Registered Companies</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 
             </section>
 
-            
+
 
         </main>
     </div>

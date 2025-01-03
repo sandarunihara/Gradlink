@@ -77,10 +77,10 @@
                                 <?php endif; ?>
                             </tbody>
                         </table>
-                        <div class="action-buttons">
+                        <!-- <div class="action-buttons">
                             <button class="add-btn" onclick="navigateToAddCompany();">+ Add</button>
                             <button class="blocked-btn" onclick="navigateToBlockList();">Blocked List</button>
-                        </div>
+                        </div> -->
                     </section>
                 </div>
 
