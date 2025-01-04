@@ -117,3 +117,63 @@ body {
     width: auto; 
     flex-grow: 1; 
 }
+
+.action-buttons {
+    margin-top: 20px;
+    justify-content: end;
+    display: flex;
+    gap: 1%;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 35px;
+    /* width: 14%; */
+    font-size: medium;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%; 
+}
+
+.view-btn {
+    background-color: #fff;
+    border: 1px solid #4a8af4;
+    color: #4a8af4;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-btn:hover {
+    background-color: #4a8af4;
+    color: #fff;
+}
+.update-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    
+}
+
+.update-btn:hover{
+    background-color: #0872dc;
+}
+
+.delete-btn {
+    background-color: #ffffff;
+    color: #ed0f0f;
+    border: 1px solid #ed0f0f;
+    
+}
+
+.delete-btn:hover{
+    background-color: #ed0f0f;
+    color: #ffffff;
+}
