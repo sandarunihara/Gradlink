@@ -66,7 +66,7 @@
                                             <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['mode'] : $advertisement->mode) ?></td>
                                             <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['start_date'] : $advertisement->start_date) ?></td>
                                             <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['end_date'] : $advertisement->end_date) ?></td>
-                                            <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
+                                            <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement('<?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['advertisement_id'] : $advertisement->advertisement_id) ?>');">View</button></td>
 
                                             <!-- View -> Go to the advertisement -->
                                         </tr>
