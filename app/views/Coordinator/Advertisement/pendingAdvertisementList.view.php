@@ -49,27 +49,35 @@
                                 <tr>
                                     <th>Company Name</th>
                                     <th>Position</th>
+                                    <th>No of Interns</th>
+                                    <th>Working Mode</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Creative Pixels</td>
-                                    <td>UI Designer</td>
-                                    <td>10/10/2024</td>
-                                    <td>20/10/2024</td>
-                                    <td>
-                                        <select class="status-btn" id="status" name="status">
-                                            <option value="pending">Pending</option>
-                                            <option value="approved">Approved</option>
-                                            <option value="rejected">Rejected</option>
-                                        </select>
-                                    </td>
-                                    <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
-                                </tr>
+                                <?php if (!empty($advertisementData)): ?>
+                                    <?php foreach ($advertisementData as $advertisement): ?>
+                                        <tr>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['company_name'] : $advertisement->company_name) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['position'] : $advertisement->position) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['interns'] : $advertisement->interns) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['mode'] : $advertisement->mode) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['start_date'] : $advertisement->start_date) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['end_date'] : $advertisement->end_date) ?></td>
+                                            <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
+
+                                            <!-- View -> Go to the advertisement -->
+                                        </tr>
+
+                                    <?php endforeach ?>
+
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Registered Companies</td>
+                                    </tr>
+                                <?php endif; ?>
                                 <!-- Add more rows as needed -->
                             </tbody>
                         </table>
