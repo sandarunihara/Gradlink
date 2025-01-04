@@ -33,7 +33,9 @@
                 </div>
             </header>
 
+            <?php $activeTab = 'pending-companies'; ?>
             <?php $this->renderComponent("companyTabs") ?>
+
 
             <!-- Pending Companies -->
             <section class="company-list">
@@ -57,7 +59,7 @@
                             <td>Tharindu Perera</td>
                             <td>tharindu@gmail.com</td>
                             <td>071 273 4321</td>
-                            <td><button class="remove-btn">Remove</button></td>
+                            <td><button class="view-btn">View</button></td>
                         </tr>
                         <!-- Add more rows as needed -->
                     </tbody>

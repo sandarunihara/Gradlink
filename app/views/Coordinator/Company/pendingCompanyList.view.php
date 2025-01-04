@@ -31,8 +31,8 @@
                 </div>
             </header>
 
-            <?php $activeTab = 'pending-companies'; ?>
-            <?php $this->renderComponent("companyTabs") ?>
+            <!-- <?php $activeTab = 'pending-companies'; ?>
+            <?php $this->renderComponent("companyTabs") ?> -->
 
             <div class="tab-content">
                 

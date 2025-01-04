@@ -91,7 +91,9 @@ table {
 }
 
 table thead {
-    background-color: #f1f5ff;
+    background-color: #fbe8e8b6;
+    position: sticky;
+
 }
 
 table th, table td {
@@ -110,6 +112,12 @@ table td {
     color: #555;
 }
 
+/* tbody {
+    display: block;
+    max-height: 350px; 
+    overflow-y: auto;
+} */
+
 .remove-btn {
     background-color: #ef4f4f;
     border: 2px solid #f93434;
@@ -124,5 +132,20 @@ table td {
 
 .remove-btn:hover {
     background-color: #f17e7e;
+    color: #fff;
+}
+
+.view-btn {
+    background-color: #fff;
+    border: 1px solid #4a8af4;
+    color: #4a8af4;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-btn:hover {
+    background-color: #4a8af4;
     color: #fff;
 }
