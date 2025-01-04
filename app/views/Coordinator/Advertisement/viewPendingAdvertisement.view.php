@@ -78,6 +78,12 @@ Understanding of user-centered design principles is a plus" readonly></textarea>
                     </div>
                     
                 </form>
+
+                <div class="row action-buttons" >
+                <!-- <button class="btn update-btn">Update</button> -->
+                <button class="btn delete-btn" >Reject</button>
+                <button class="btn view-btn"><b>Approve</b></button>
+                </div>
             </section>
         </main>
     </div>
