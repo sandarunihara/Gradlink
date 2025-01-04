@@ -36,48 +36,45 @@
             <?php $this->renderComponent("advertisementTabs") ?>
 
             <section class="company-info">
+                <?php if (!empty($advertisementData)): ?>
                 <form class="company-form">
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" placeholder="Creative Pixels" readonly>
+                        <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($advertisementData[0]['company_name'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="position">Position</label>
-                        <input type="text" id="position" placeholder="UI Designer Intern" readonly>
+                        <input type="text" id="position" name="position" value="<?= htmlspecialchars($advertisementData[0]['position'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="interns">Number of Interns</label>
-                        <input type="number" id="interns" placeholder="3" readonly>
+                        <input type="number" id="interns" name="interns" value="<?= htmlspecialchars($advertisementData[0]['interns'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="start-date">Start Date</label>
-                        <input type="date" id="start-date" placeholder="10/10/2024" readonly>
+                        <input type="date" id="start-date" name="start_date" value="<?= htmlspecialchars($advertisementData[0]['start_date'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="end-date">End Date</label>
-                        <input type="date" id="end-date" placeholder="20/10/2024" readonly>
+                        <input type="date" id="end-date" name="end_date" value="<?= htmlspecialchars($advertisementData[0]['end_date'] ?? '') ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="working-mode">Working Mode</label>
-                        <input type="text" id="working-mode" placeholder="Hybrid (3 days in-office, 2 days remote)" readonly>
+                        <input type="text" id="working-mode" name="mode" value="<?= htmlspecialchars($advertisementData[0]['mode'] ?? '') ?>"readonly>
                     </div>
                     <div class="form-group">
-                        <label for="requirements">Requirements</label>
-                        <textarea id="requirements" placeholder="Familiarity with design tools such as Figma, Sketch, or Adobe XD
-Basic understanding of responsive design principles
-A creative portfolio demonstrating design work (coursework, personal projects, etc.)
-Good communication and teamwork skills
-Ability to work in a fast-paced environment and adapt to feedback" readonly></textarea>
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" readonly><?= htmlspecialchars($advertisementData[0]['description'] ?? '') ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="qualifications">Qualifications</label>
-                        <textarea id="qualifications" placeholder="Currently pursuing a degree or diploma in UI/UX Design, Graphic Design, or a related field
-Strong attention to detail and problem-solving skills
-Knowledge of color theory, typography, and layout design
-Understanding of user-centered design principles is a plus" readonly></textarea>
+                        <textarea id="qualifications" name="qualification" readonly><?= htmlspecialchars($advertisementData[0]['qualification'] ?? '') ?></textarea>
                     </div>
                     
                 </form>
+                <?php else: ?>
+                    <p>No company data available.</p>
+                <?php endif; ?>
 
                 <div class="row action-buttons" >
                 <!-- <button class="btn update-btn">Update</button> -->
