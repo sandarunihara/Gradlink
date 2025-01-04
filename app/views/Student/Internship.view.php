@@ -70,14 +70,30 @@
                                 <h3><?= htmlspecialchars($AdDetail->position); ?></h3>
                                 <p><?= htmlspecialchars($AdDetail->Name); ?></p>
                             </div>
-                            <div class="apply-button">
-                                <button 
-                                    class="applyBtn" 
-                                    data-advertisement-id="<?= htmlspecialchars($AdDetail->advertisementId); ?>"
-                                >
-                                Apply
-                                </button>
-                            </div>
+                            <?php
+                            $hasApplied = false;
+                            if (isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])):
+                                foreach ($data['AppliedCompanies'] as $appliedCompany) {
+                                    if ($appliedCompany->AdvertisementId == $AdDetail->advertisementId) {
+                                        $hasApplied = true;
+                                        break;
+                                    }
+                                }
+                            endif;
+                            if ($hasApplied): ?>
+                                <div class="applied-container">
+                                    <p>Applied</p>
+                                </div>
+                            <?php else: ?>
+                                <div class="apply-button">
+                                    <button 
+                                        class="applyBtn" 
+                                        data-advertisement-id="<?= htmlspecialchars($AdDetail->advertisementId); ?>"
+                                    >
+                                    Apply
+                                    </button>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

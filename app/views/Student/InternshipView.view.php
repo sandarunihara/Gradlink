@@ -63,14 +63,30 @@
                     </div>
                 </div>
                 <?php endif; ?>
-                <div class="apply-container">
-                    <button
-                        id="applyBtn"
-                        data-advertisement-id="<?= htmlspecialchars($data[0]->advertisementId); ?>"
-                    >
-                    Apply
-                    </button>
-                </div>
+                <?php 
+                $hasApplied = false;
+                if (isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])):
+                    foreach ($data['AppliedCompanies'] as $appliedCompany) {
+                        if ($appliedCompany->AdvertisementId == $data[0]->advertisementId) {
+                            $hasApplied = true;
+                            break;
+                        }
+                    }
+                endif;
+                if ($hasApplied): ?>
+                    <div class="applied-container">
+                        <p>Applied</p>
+                    </div>
+                <?php else: ?>
+                    <div class="apply-container">
+                        <button
+                            id="applyBtn"
+                            data-advertisement-id="<?= htmlspecialchars($data[0]->advertisementId); ?>"
+                        >
+                        Apply
+                        </button>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

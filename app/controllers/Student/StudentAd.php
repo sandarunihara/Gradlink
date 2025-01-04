@@ -9,6 +9,9 @@ class StudentAd{
         $model = new Student_AD;
         $data['AdDetails'] = $model -> getAdDetails();
 
+        $student_advertisement = new student_advertisement;
+        $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
+
         if(isset($_POST['submit'])){
             $advertisementId = $_GET['advertisementId'];
 
@@ -60,7 +63,8 @@ class StudentAd{
             header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
         }else{
             //show($data);
-            $this-> view('Student/Internship', $data);        }
+            $this-> view('Student/Internship', $data);        
+        }
     }
     public function viewAdvertisement(){
         $data =[];
@@ -70,6 +74,8 @@ class StudentAd{
         $model = new C_Advertisement;
         // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $advertisementId]);
+        $student_advertisement = new student_advertisement;
+        $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
 
         //show($data);
         $this-> view('Student/InternshipView', $data);
