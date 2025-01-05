@@ -79,7 +79,7 @@
                 <div class="row action-buttons" >
                 <!-- <button class="btn update-btn">Update</button> -->
                 <button class="btn delete-btn" onclick="rejectAdvertisement();">Reject</button>
-                <button class="btn view-btn"><b>Approve</b></button>
+                <button class="btn view-btn" onclick="approveAdvertisement();"><b>Approve</b></button>
                 </div>
             </section>
         </main>
@@ -91,6 +91,13 @@
                 window.location.href = "<?= ROOT ?>/pdc_coordinator/viewPendingAdvertisement/reject?id=<?= $advertisementData[0]['advertisement_id'] ?>";
             }
         }
+
+        function approveAdvertisement() {
+            if (confirm("Are you sure you want to approve this advertisement?")) {
+                window.location.href = "<?= ROOT ?>/pdc_coordinator/viewPendingAdvertisement/approve?id=<?= $advertisementData[0]['advertisement_id'] ?>";
+            }
+        }
+
     </script>
 </body>
 

@@ -72,4 +72,30 @@ class ViewPendingAdvertisement
             $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to reject advertisement.']);
         }
     }
+
+    public function approve()
+    {
+        $id = $_GET['id'] ?? null;
+        if($id === null)
+        {
+            echo "Invalid or missing advertisement ID.";
+            return;
+        }
+        $model = new C_Advertisement;
+        $result = $model->update($id, ['status' => 'Active'], 'advertisementId');
+
+        if($result)
+        {
+            echo "<script>
+                                alert('Advertisement approved successfully.');
+                                window.location.href = '" . ROOT . "/PDC_coordinator/dashboardAdvertisement';
+                            </script>";
+                        exit;
+            // $this->view('Coordinator/pendingAdvertisementList', ['message' => 'Advertisement approved successfully.']);
+        }
+        else
+        {
+            $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to approve advertisement.']);
+        }
+    }
 }
