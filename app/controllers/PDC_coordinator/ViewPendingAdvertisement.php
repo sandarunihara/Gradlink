@@ -46,4 +46,30 @@ class ViewPendingAdvertisement
 
         }
     }
+
+    public function reject()
+    {
+        $id = $_GET['id'] ?? null;
+        if($id === null)
+        {
+            echo "Invalid or missing advertisement ID.";
+            return;
+        }
+        $model = new C_Advertisement;
+        $result = $model->update($id, ['status' => 'Rejected'], 'advertisementId');
+
+        if($result)
+        {
+            echo "<script>
+                                alert('Advertisement rejected successfully.');
+                                window.location.href = '" . ROOT . "/PDC_coordinator/pendingAdvertisementList';
+                            </script>";
+                        exit;
+            // $this->view('Coordinator/pendingAdvertisementList', ['message' => 'Advertisement rejected successfully.']);
+        }
+        else
+        {
+            $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to reject advertisement.']);
+        }
+    }
 }
