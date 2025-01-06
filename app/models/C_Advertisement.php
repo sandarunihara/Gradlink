@@ -49,8 +49,8 @@ class C_Advertisement{
             $result = $this->query($query, $data);
         } else {
             // Assume $data is a single ID (like CompanyId)
-            $query = "SELECT * FROM advertisement WHERE CompanyId = :CompanyId";
-            $result = $this->query($query, ['CompanyId' => $data]);
+            $query = "SELECT * FROM advertisement WHERE advertisementId = :advertisementId";
+            $result = $this->query($query, ['advertisementId' => $data]);
         }
     
         return $result;
