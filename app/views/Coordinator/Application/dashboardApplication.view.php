@@ -60,21 +60,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($applicationData)): ?>
-                                <?php foreach($applicationData as $application): ?>
-                                <tr>
-                                    
-                                    <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['student_id'] : $application->student_id) ?></td>
-                                    <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['student_name'] : $application->student_name) ?></td>
-                                    <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['degree_name'] : $application->degree_name) ?></td>
-                                    <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['company_name'] : $application->company_name) ?></td>
-                                    <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['position'] : $application->position) ?></td>
-                                    <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['advertisement_id'] : $application->advertisement_id) ?></td>
-                                    
-                                    <td><button class="view-btn">View Profile</button></td>
-                                    <!-- View -> Go to the student profile -->
-                                </tr>
-                                <?php endforeach ?>
+                                <?php if (!empty($applicationData)): ?>
+                                    <?php foreach ($applicationData as $application): ?>
+                                        <tr>
+
+                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['student_id'] : $application->student_id) ?></td>
+                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['student_name'] : $application->student_name) ?></td>
+                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['degree_name'] : $application->degree_name) ?></td>
+                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['company_name'] : $application->company_name) ?></td>
+                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['position'] : $application->position) ?></td>
+                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['advertisement_id'] : $application->advertisement_id) ?></td>
+
+                                            <td><button class="view-btn">View Profile</button></td>
+                                            <!-- View -> Go to the student profile -->
+                                        </tr>
+                                    <?php endforeach ?>
 
                                 <?php else: ?>
                                     <tr>
@@ -87,7 +87,7 @@
 
                     </section>
 
-                    
+
                 </div>
             </div>
 
