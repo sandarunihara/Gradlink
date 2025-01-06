@@ -33,10 +33,8 @@ class DashboardAdvertisement
                     'end_date' => $addetail->deadline,
                     'company_name' => $companyName
                 ];
-
             }
             $this->view('Coordinator/Advertisement/dashboardAdvertisement', ['advertisementData' => $advertisementData]);
-
         }
     }
 }
