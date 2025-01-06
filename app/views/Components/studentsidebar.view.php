@@ -1,6 +1,6 @@
 <div class="sidebar">
-    <div class="logo-container">
-        <img src="<?php echo ROOT ?>/assets/img/grad.png" class="logo" alt="Logo" />
+    <div class="toggle-container">
+        <i class="fas fa-bars" id="toggleBtn"></i>
     </div>
     <div class="sidebar-menu">
         <a href="<?=ROOT?>/Student/StudentDash/dashboard" class="menu-item">
@@ -33,3 +33,19 @@
         </a>
     </div>
 </div>
+<script>
+    const sidebar = document.querySelector('.sidebar');
+    const page = window.location.href.split('/').pop();
+    const menuItems = document.querySelectorAll('.menu-item');
+    const toggleBtn = document.getElementById('toggleBtn');
+
+    // toggleId.addEventListener('click', () => {
+    //     sidebar.classList.toggle('active');
+    // });
+
+    menuItems.forEach(item => {
+        if (item.href.includes(page)) {
+            item.classList.add('active');
+        }
+    });
+</script>
