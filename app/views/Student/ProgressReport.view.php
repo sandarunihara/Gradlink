@@ -14,74 +14,68 @@
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 <body>
-    <div class="side">
-        <?php $this->renderComponent("studentSidebar")  ?>
-    </div>
-    <div class="content">
-        <div class="header">
-            <?php $this->renderComponent("studentHeader")  ?>
-        </div>
-        <div class="main-content">
-            <div class="progress-report-navbar">
-                <div class="add-progress-report">
-                    <button id="addNewBtn">+ Add New</button>
-                </div>
+    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentSidebar")  ?>
+    <div class="main-content">
+        <div class="progress-report-navbar">
+            <div class="add-progress-report">
+                <button id="addNewBtn">+ Add New</button>
             </div>
+        </div>
 
-            <div class="progress-report-table-div">
-                <div class="progress-report-table-background">
-                    <!-- Table -->
-                    <div>
-                        <table class="progress-report-table">
-                            <thead class="progress-report-table-headings">
-                                <tr>
-                                    <th>
-                                        <h5>Date</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Topic</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Status</h5>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (isset($data['ProgressDocs']) && !empty($data['ProgressDocs'])): ?>
-                                    <?php foreach ($data['ProgressDocs'] as $ProgressDoc): ?>
-                                        <?php
-                                        $status = $ProgressDoc -> Status;
-                                        $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
-                                        $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
-                                        ?>
-                                        <tr>
-                                            <td><?php
-                                                $SubmissionDate = $ProgressDoc -> SubmissionDate;
-                                                $dateString = explode(' ', $SubmissionDate)[0];
-                                                echo htmlspecialchars($dateString); 
-                                                ?>
-                                            </td>
-                                            <td><?php
-                                                $date = DateTime::createFromFormat('Y-m-d', $dateString);
-                                                $day = $date->format('jS');
-                                                echo htmlspecialchars($day). " Progress Report";
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <div class="<?php echo $statusClass; ?>">
-                                                    <?php echo $statusText; ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
+        <div class="progress-report-table-div">
+            <div class="progress-report-table-background">
+                <!-- Table -->
+                <div>
+                    <table class="progress-report-table">
+                        <thead class="progress-report-table-headings">
+                            <tr>
+                                <th>
+                                    <h5>Date</h5>
+                                </th>
+                                <th>
+                                    <h5>Topic</h5>
+                                </th>
+                                <th>
+                                    <h5>Status</h5>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (isset($data['ProgressDocs']) && !empty($data['ProgressDocs'])): ?>
+                                <?php foreach ($data['ProgressDocs'] as $ProgressDoc): ?>
+                                    <?php
+                                    $status = $ProgressDoc -> Status;
+                                    $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
+                                    $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
+                                    ?>
                                     <tr>
-                                        <td colspan="3">No progress reports found.</td>
+                                        <td><?php
+                                            $SubmissionDate = $ProgressDoc -> SubmissionDate;
+                                            $dateString = explode(' ', $SubmissionDate)[0];
+                                            echo htmlspecialchars($dateString); 
+                                            ?>
+                                        </td>
+                                        <td><?php
+                                            $date = DateTime::createFromFormat('Y-m-d', $dateString);
+                                            $day = $date->format('jS');
+                                            echo htmlspecialchars($day). " Progress Report";
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <div class="<?php echo $statusClass; ?>">
+                                                <?php echo $statusText; ?>
+                                            </div>
+                                        </td>
                                     </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="3">No progress reports found.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

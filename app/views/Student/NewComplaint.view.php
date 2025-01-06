@@ -12,36 +12,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="side">
-        <?php $this->renderComponent("studentSidebar")  ?>
-    </div>
-    <div class="content">
-        <div class="header">
-            <?php $this->renderComponent("studentHeader")  ?>
-        </div>
-        <div class="main-content">
-            <div class="container">
-                <form id="form" action="<?=ROOT?>/Student/StudentComplaint/newComplaint" method="post"  enctype="multipart/form-data">
-                    <!-- Topic Input -->
-                    <label for="topic">Topic</label>
-                    <input type="text" name="topic" id="topic" placeholder="Enter the topic">
+    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentSidebar")  ?>
+    <div class="main-content">
+        <div class="container">
+            <form id="form" action="<?=ROOT?>/Student/StudentComplaint/newComplaint" method="post"  enctype="multipart/form-data">
+                <!-- Topic Input -->
+                <label for="topic">Topic</label>
+                <input type="text" name="topic" id="topic" placeholder="Enter the topic">
 
-                    <!-- Description Textarea -->
-                    <label for="description">Description</label>
-                    <textarea name="description" id="description" cols="50" rows="5"></textarea>
-                    
-                    <span class="error-message" id="errorMessage"></span>
-                    <div class="button-container">
-                        <button 
-                            type="submit" 
-                            id="submitButton" 
-                        >                            
-                        Submit
-                        </button>
-                        <button type="button" id="clearButton" onclick="clearForm()">Clear Form</button>
-                    </div>
-                </form>
-            </div>
+                <!-- Description Textarea -->
+                <label for="description">Description</label>
+                <textarea name="description" id="description" cols="50" rows="5"></textarea>
+                
+                <span class="error-message" id="errorMessage"></span>
+                <div class="button-container">
+                    <button 
+                        type="submit" 
+                        id="submitButton" 
+                    >                            
+                    Submit
+                    </button>
+                    <button type="button" id="clearButton" onclick="clearForm()">Clear Form</button>
+                </div>
+            </form>
         </div>
     </div>
     <script src="<?=ROOT?>/assets/js/Student/newComplaint.js"></script>

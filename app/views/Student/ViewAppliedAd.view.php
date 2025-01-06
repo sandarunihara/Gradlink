@@ -14,51 +14,45 @@
 </head>
 
 <body>
-    <div class="side">
-        <?php $this->renderComponent("studentSidebar")  ?>
-    </div>
-    <div class="content">
-        <div class="header">
-            <?php $this->renderComponent("studentHeader")  ?>
-        </div>
-        <div class="main-content">
-            <div class="sub_container">
-                <?php if (isset($data) && !empty($data)): ?>
-                <div class="display-details">
-                    <div class="image">
-                        <?php if (!empty($data[0]->image)): ?>
-                        <img src="data:image/jpeg;base64,<?php echo $data[0]->image; ?>" class="logo" />
-                        <?php else: ?>
-                        <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
-                        <?php endif; ?>
-                    </div>
-                    <div class="inform">
-                        <div>
-                            <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
-                            <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
-                            <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
-                        </div>
+    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentSidebar")  ?>
+    <div class="main-content">
+        <div class="sub_container">
+            <?php if (isset($data) && !empty($data)): ?>
+            <div class="display-details">
+                <div class="image">
+                    <?php if (!empty($data[0]->image)): ?>
+                    <img src="data:image/jpeg;base64,<?php echo $data[0]->image; ?>" class="logo" />
+                    <?php else: ?>
+                    <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
+                    <?php endif; ?>
+                </div>
+                <div class="inform">
+                    <div>
+                        <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
+                        <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
+                        <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
                     </div>
                 </div>
-                <div class="Qua-des">
-                    <div class="Qualifications">
-                        <h4>Qualification:</h4>
-                        <div class="q-details">
-                            <p><?php echo $data[0]->qualification ?></p>
-                        </div>
+            </div>
+            <div class="Qua-des">
+                <div class="Qualifications">
+                    <h4>Qualification:</h4>
+                    <div class="q-details">
+                        <p><?php echo $data[0]->qualification ?></p>
                     </div>
+                </div>
 
-                    <div class="Description">
-                        <h4>Description:</h4>
-                        <div class="d-details">
-                            <p><?php echo $data[0]->description ?></p>
-                        </div>
+                <div class="Description">
+                    <h4>Description:</h4>
+                    <div class="d-details">
+                        <p><?php echo $data[0]->description ?></p>
                     </div>
                 </div>
-                <?php endif; ?>
-                <div class="apply-container">
-                    <button>Apply</button>
-                </div>
+            </div>
+            <?php endif; ?>
+            <div class="apply-container">
+                <button>Apply</button>
             </div>
         </div>
     </div>

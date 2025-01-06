@@ -14,73 +14,67 @@
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 <body>
-    <div class="side">
-        <?php $this->renderComponent("studentSidebar")  ?>
-    </div>
-    <div class="content">
-        <div class="header">
-            <?php $this->renderComponent("studentHeader")  ?>
-        </div>
-        <div class="main-content">
-            <div class="complaint-navbar">
-                <div class="complaint-filter-container">
-                    <i class="fas fa-filter"></i>
-                    <select class="status-select">
-                        <option value="all">All</option>
-                        <option value="reviewed">Reviewed</option>
-                        <option value="notReviewed">Not Reviewed</option>
-                    </select> 
-                </div>
-                <div class = "add-complaint">
-                    <button onclick="location.href='<?=ROOT?>/Student/StudentComplaint/newComplaint';">+ Add New</button>
-                </div>
+    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentSidebar")  ?>
+    <div class="main-content">
+        <div class="complaint-navbar">
+            <div class="complaint-filter-container">
+                <i class="fas fa-filter"></i>
+                <select class="status-select">
+                    <option value="all">All</option>
+                    <option value="reviewed">Reviewed</option>
+                    <option value="notReviewed">Not Reviewed</option>
+                </select> 
             </div>
-            <div class="compliant-table-div">
-                <div class="complaint-table-background">
-                    <!-- Table -->
-                    <div>
-                        <table class="complaint-table">
-                            <thead class="complaint-table-headings">
-                                <th>
-                                    <h5>Date</h5>
-                                </th>
-                                <th>
-                                    <h5>Topic</h5>
-                                <th>
-                                    <h5>Status</h5>
-                                </th>
-                            </thead>
-                            <tbody>
-                                <?php if (isset($data['Complaints']) && !empty($data['Complaints'])): ?>
-                                    <?php foreach ($data['Complaints'] as $complaint): ?>
-                                        <?php
-                                        $status = $complaint -> Status;
-                                        $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
-                                        $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
-                                        ?>
-                                        <tr class="complaint-row">
-                                            <td class="date"><?php
-                                                $createdAt = $complaint -> CreatedAt;
-                                                $date = explode(' ', $createdAt)[0];
-                                                echo htmlspecialchars($date); 
-                                                ?>
-                                            </td>
-                                            <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
-                                            <td>
-                                                <button class="<?php echo $statusClass; ?>" onclick="location.href='<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint -> ComplaintId?>';">
-                                                    <span class="status"><?php echo $statusText; ?></span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="3">No Complaints found</td>
+            <div class = "add-complaint">
+                <button onclick="location.href='<?=ROOT?>/Student/StudentComplaint/newComplaint';">+ Add New</button>
+            </div>
+        </div>
+        <div class="compliant-table-div">
+            <div class="complaint-table-background">
+                <!-- Table -->
+                <div>
+                    <table class="complaint-table">
+                        <thead class="complaint-table-headings">
+                            <th>
+                                <h5>Date</h5>
+                            </th>
+                            <th>
+                                <h5>Topic</h5>
+                            <th>
+                                <h5>Status</h5>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <?php if (isset($data['Complaints']) && !empty($data['Complaints'])): ?>
+                                <?php foreach ($data['Complaints'] as $complaint): ?>
+                                    <?php
+                                    $status = $complaint -> Status;
+                                    $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
+                                    $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
+                                    ?>
+                                    <tr class="complaint-row">
+                                        <td class="date"><?php
+                                            $createdAt = $complaint -> CreatedAt;
+                                            $date = explode(' ', $createdAt)[0];
+                                            echo htmlspecialchars($date); 
+                                            ?>
+                                        </td>
+                                        <td class="topic"><?php echo htmlspecialchars($complaint -> Topic); ?></td>
+                                        <td>
+                                            <button class="<?php echo $statusClass; ?>" onclick="location.href='<?=ROOT?>/Student/StudentComplaint/viewComplaint/<?php echo $complaint -> ComplaintId?>';">
+                                                <span class="status"><?php echo $statusText; ?></span>
+                                            </button>
+                                        </td>
                                     </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="3">No Complaints found</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
