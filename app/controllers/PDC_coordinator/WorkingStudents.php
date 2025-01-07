@@ -9,8 +9,9 @@ class WorkingStudents
         $studentModel = new student;
         $advertisementModel = new C_Advertisement;
         $companyModel = new company;
+        $recrutedStudentsModel = new student_company;
 
-        $data = $studentadvertisementModel->find(['JobStatus' => "Pending"]);
+        $data = $studentadvertisementModel->find(['JobStatus' => "Confirmed"]);
 
         if ($data == false || empty($data)) {
             $this->view('Coordinator/Application/workingStudents');
@@ -29,6 +30,10 @@ class WorkingStudents
                 $company = $companyModel->findById($companyID);
                 $companyName = (!empty($company) && isset($company[0]->Name)) ? $company[0]->Name : 'Unknown Company';
 
+                $recrutedStudent = $recrutedStudentsModel->findByStudentId(['StudentId' => $appdetail->StudentId]);
+                $startDate = (!empty($recrutedStudent) && isset($recrutedStudent[0]->StartDate)) ? $recrutedStudent[0]->StartDate : 'Unknown Start Date';
+                $endDate = (!empty($recrutedStudent) && isset($recrutedStudent[0]->EndDate)) ? $recrutedStudent[0]->EndDate : 'Unknown End Date';
+
                 $applicationData[] = [
                     'student_id' => $appdetail->StudentId,
                     'student_name' => $studentName,
@@ -36,6 +41,8 @@ class WorkingStudents
                     'position' => $advertisementPosition,
                     'company_name' => $companyName,
                     'advertisement_id' => $appdetail->AdvertisementId,
+                    'start_date' => $startDate,
+                    'end_date' => $endDate
                 ];
             }
             $this->view('Coordinator/Application/workingStudents', ['applicationData' => $applicationData]);
