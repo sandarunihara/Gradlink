@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Advertisement/viewPendingAdvertisement.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
-    </head>
+</head>
 
 <body>
     <div class="container">
-    <?php $this->renderComponent("coordinatorDashboard")  ?>
+        <?php $this->renderComponent("coordinatorDashboard")  ?>
 
         <main class="content">
             <header class="header">
@@ -37,67 +37,97 @@
 
             <section class="company-info">
                 <?php if (!empty($advertisementData)): ?>
-                <form class="company-form">
-                    <div class="form-group">
-                        <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($advertisementData[0]['company_name'] ?? '') ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="position">Position</label>
-                        <input type="text" id="position" name="position" value="<?= htmlspecialchars($advertisementData[0]['position'] ?? '') ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="interns">Number of Interns</label>
-                        <input type="number" id="interns" name="interns" value="<?= htmlspecialchars($advertisementData[0]['interns'] ?? '') ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="start-date">Start Date</label>
-                        <input type="date" id="start-date" name="start_date" value="<?= htmlspecialchars($advertisementData[0]['start_date'] ?? '') ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="end-date">End Date</label>
-                        <input type="date" id="end-date" name="end_date" value="<?= htmlspecialchars($advertisementData[0]['end_date'] ?? '') ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="working-mode">Working Mode</label>
-                        <input type="text" id="working-mode" name="mode" value="<?= htmlspecialchars($advertisementData[0]['mode'] ?? '') ?>"readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" readonly><?= htmlspecialchars($advertisementData[0]['description'] ?? '') ?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="qualifications">Qualifications</label>
-                        <textarea id="qualifications" name="qualification" readonly><?= htmlspecialchars($advertisementData[0]['qualification'] ?? '') ?></textarea>
-                    </div>
-                    
-                </form>
+                    <form class="company-form">
+                        <div class="form-group">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($advertisementData[0]['company_name'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <input type="text" id="position" name="position" value="<?= htmlspecialchars($advertisementData[0]['position'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="interns">Number of Interns</label>
+                            <input type="number" id="interns" name="interns" value="<?= htmlspecialchars($advertisementData[0]['interns'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="start-date">Start Date</label>
+                            <input type="date" id="start-date" name="start_date" value="<?= htmlspecialchars($advertisementData[0]['start_date'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">End Date</label>
+                            <input type="date" id="end-date" name="end_date" value="<?= htmlspecialchars($advertisementData[0]['end_date'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="working-mode">Working Mode</label>
+                            <input type="text" id="working-mode" name="mode" value="<?= htmlspecialchars($advertisementData[0]['mode'] ?? '') ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" readonly><?= htmlspecialchars($advertisementData[0]['description'] ?? '') ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="qualifications">Qualifications</label>
+                            <textarea id="qualifications" name="qualification" readonly><?= htmlspecialchars($advertisementData[0]['qualification'] ?? '') ?></textarea>
+                        </div>
+
+                    </form>
                 <?php else: ?>
                     <p>No company data available.</p>
                 <?php endif; ?>
 
-                <div class="row action-buttons" >
-                <!-- <button class="btn update-btn">Update</button> -->
-                <button class="btn delete-btn" onclick="rejectAdvertisement();">Reject</button>
-                <button class="btn view-btn" onclick="approveAdvertisement();"><b>Approve</b></button>
+                <div class="row action-buttons">
+                    <!-- <button class="btn update-btn">Update</button> -->
+                    <button class="btn delete-btn" onclick="rejectAdvertisement();">Reject</button>
+                    <button class="btn view-btn" onclick="approveAdvertisement();"><b>Approve</b></button>
                 </div>
             </section>
         </main>
     </div>
 
+    <div id="popup" class="popup-container">
+        <div class="popup-content">
+            <h3>Reject Advertisement</h3>
+            <p>Please provide a reason for rejection:</p>
+            <textarea id="rejectionReason" rows="4" placeholder="Enter your reason here"></textarea>
+            <div class="popup-buttons">
+                <button id="confirmReject" class="btn1 confirm-btn1">Confirm</button>
+                <button id="cancelReject" class="btn1 cancel-btn1">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         function rejectAdvertisement() {
-            if (confirm("Are you sure you want to reject this advertisement?")) {
-                window.location.href = "<?= ROOT ?>/pdc_coordinator/viewPendingAdvertisement/reject?id=<?= $advertisementData[0]['advertisement_id'] ?>";
-            }
+            document.getElementById('popup').style.display = 'flex';
         }
+
+        document.getElementById('confirmReject').addEventListener('click', function() {
+            const reason = document.getElementById('rejectionReason').value.trim();
+
+            if (!reason) {
+                alert('Please provide a reason for rejection.');
+                return;
+            }
+
+            // Redirect with reason
+            const advertisementId = <?= json_encode($advertisementData[0]['advertisement_id'] ?? null) ?>;
+            if (advertisementId) {
+                window.location.href = `<?= ROOT ?>/pdc_coordinator/viewPendingAdvertisement/reject?id=${advertisementId}&reason=${encodeURIComponent(reason)}`;
+            }
+        });
+
+        // Handle cancel button click
+        document.getElementById('cancelReject').addEventListener('click', function() {
+            document.getElementById('popup').style.display = 'none';
+        });
 
         function approveAdvertisement() {
             if (confirm("Are you sure you want to approve this advertisement?")) {
                 window.location.href = "<?= ROOT ?>/pdc_coordinator/viewPendingAdvertisement/approve?id=<?= $advertisementData[0]['advertisement_id'] ?>";
             }
         }
-
     </script>
 </body>
 
