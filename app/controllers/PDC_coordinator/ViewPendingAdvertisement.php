@@ -5,8 +5,7 @@ class ViewPendingAdvertisement
     public function index()
     {
         $id = $_GET['id'] ?? null;
-        if($id === null)
-        {
+        if ($id === null) {
             echo "Invalid or missing advertisement ID.";
             return;
         }
@@ -18,12 +17,10 @@ class ViewPendingAdvertisement
 
         if ($data == false || empty($data)) {
             $this->view('Coordinator/Advertisement/viewPendingAdvertisement');
-        }
-        else {
+        } else {
             $advertisementData = [];
 
-            foreach($data as $addetail)
-            {
+            foreach ($data as $addetail) {
                 $company = $companyModel->findById($addetail->CompanyId);
                 $companyName = (!empty($company) && isset($company[0]->Name)) ? $company[0]->Name : 'Unknown Company';
                 // $companyName = $company[0]->Name;
@@ -40,35 +37,36 @@ class ViewPendingAdvertisement
                     'company_name' => $companyName,
                     'company_id' => $addetail->CompanyId,
                 ];
-
             }
             $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['advertisementData' => $advertisementData]);
-
         }
     }
 
     public function reject()
     {
         $id = $_GET['id'] ?? null;
-        if($id === null)
-        {
+        $reason = $_GET['reason'] ?? null;
+        if ($id === null) {
             echo "Invalid or missing advertisement ID.";
             return;
         }
-        $model = new C_Advertisement;
-        $result = $model->update($id, ['status' => 'Rejected'], 'advertisementId');
 
-        if($result)
-        {
+        if ($reason === null || trim($reason) === '') {
+            echo "Reason for rejection is required.";
+            return;
+        }
+
+        $model = new C_Advertisement;
+        $result = $model->update($id, ['status' => 'Rejected', 'commentReject' => $reason], 'advertisementId');
+
+        if ($result) {
             echo "<script>
                                 alert('Advertisement rejected successfully.');
                                 window.location.href = '" . ROOT . "/PDC_coordinator/pendingAdvertisementList';
                             </script>";
-                        exit;
+            exit;
             // $this->view('Coordinator/pendingAdvertisementList', ['message' => 'Advertisement rejected successfully.']);
-        }
-        else
-        {
+        } else {
             $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to reject advertisement.']);
         }
     }
@@ -76,25 +74,21 @@ class ViewPendingAdvertisement
     public function approve()
     {
         $id = $_GET['id'] ?? null;
-        if($id === null)
-        {
+        if ($id === null) {
             echo "Invalid or missing advertisement ID.";
             return;
         }
         $model = new C_Advertisement;
         $result = $model->update($id, ['status' => 'Active'], 'advertisementId');
 
-        if($result)
-        {
+        if ($result) {
             echo "<script>
                                 alert('Advertisement approved successfully.');
                                 window.location.href = '" . ROOT . "/PDC_coordinator/dashboardAdvertisement';
                             </script>";
-                        exit;
+            exit;
             // $this->view('Coordinator/pendingAdvertisementList', ['message' => 'Advertisement approved successfully.']);
-        }
-        else
-        {
+        } else {
             $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to approve advertisement.']);
         }
     }
