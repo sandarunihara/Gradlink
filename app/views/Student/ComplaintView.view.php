@@ -65,7 +65,7 @@
             <h2>Are you sure?</h2>
             <p>Do you want to delete the complaint?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="confirmDelete()">Yes</button>
+                <button class="updateyes-btn" onclick="location.href='<?=ROOT?>/Student/StudentComplaint/deleteComplaint?complaintId=<?= $complaintId; ?>'">Yes</button>
                 <button class="updateno-btn" onclick="closeConfirmDeleteModal()">No</button>
             </div>
         </div>
@@ -85,14 +85,6 @@
     // Close confirmation modal when "No" button is clicked
     function closeConfirmDeleteModal() {
         deleteConfirmationModal.style.display = 'none'; // Hide modal
-    }
-
-    // Handle the "Yes" button click (confirm delete)
-    function confirmDelete() {
-        const complaintId = <?php echo $complaintId; ?>; // Pass complaint ID from PHP to JavaScript
-
-        // Redirect to the delete route for the complaint
-        window.location.href = `<?=ROOT?>/Student/StudentComplaint/deleteComplaint/${complaintId}`;
     }
 </script>
 </body>

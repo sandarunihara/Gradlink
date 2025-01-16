@@ -33,19 +33,3 @@
         </a>
     </div>
 </div>
-<script>
-    const sidebar = document.querySelector('.sidebar');
-    const page = window.location.href.split('/').pop();
-    const menuItems = document.querySelectorAll('.menu-item');
-    const toggleBtn = document.getElementById('toggleBtn');
-
-    // toggleId.addEventListener('click', () => {
-    //     sidebar.classList.toggle('active');
-    // });
-
-    menuItems.forEach(item => {
-        if (item.href.includes(page)) {
-            item.classList.add('active');
-        }
-    });
-</script>
