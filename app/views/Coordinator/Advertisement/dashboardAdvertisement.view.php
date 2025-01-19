@@ -52,29 +52,33 @@
                                     <th>Company Name</th>
                                     <th>Position</th>
                                     <th>No of Interns</th>
+                                    <th>Working Mode</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>WSO2</td>
-                                    <td>Software Engineer</td>
-                                    <td>2</td>
-                                    <td>10/10/2024</td>
-                                    <td>30/10/2024</td>
-                                    <td><button class="view-btn">View</button></td>
-                                    <!-- View -> Go to the advertisement -->
-                                </tr>
-                                <tr>
-                                    <td>WSO2</td>
-                                    <td>QA</td>
-                                    <td>5</td>
-                                    <td>10/10/2024</td>
-                                    <td>30/10/2024</td>
-                                    <td><button class="view-btn">View</button></td>
-                                </tr>
+                                <?php if (!empty($advertisementData)): ?>
+                                    <?php foreach ($advertisementData as $advertisement): ?>
+                                        <tr>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['company_name'] : $advertisement->company_name) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['position'] : $advertisement->position) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['interns'] : $advertisement->interns) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['mode'] : $advertisement->mode) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['start_date'] : $advertisement->start_date) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $advertisement) ? $advertisement['end_date'] : $advertisement->end_date) ?></td>
+                                            <td><button class="view-btn">View</button></td>
+                                            <!-- View -> Go to the advertisement -->
+                                        </tr>
+
+                                    <?php endforeach ?>
+
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Registered Companies</td>
+                                    </tr>
+                                <?php endif; ?>
                                 <!-- Add more rows as needed -->
                             </tbody>
                         </table>

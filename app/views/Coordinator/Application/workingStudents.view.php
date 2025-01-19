@@ -41,7 +41,7 @@
                     <!-- Working Students -->
                     <section class="company-list">
                         <div class="list-header">
-                            <h2>Working Students</h2>
+                            <h2>Recruited Students</h2>
 
                         </div>
                         <table>
@@ -49,14 +49,10 @@
                                 <tr>
                                     <th>Registration No.</th>
                                     <th>Name</th>
-                                    <th>Degree</th>
                                     <th>Company</th>
                                     <th>Position</th>
-                                    <th>Email</th>
-                                    <th>Duration</th>
                                     <th>Started Date</th>
                                     <th>Ending Date</th>
-                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -64,14 +60,10 @@
                                 <tr>
                                     <td>2022/CS/123</td>
                                     <td>T.Y. Silva</td>
-                                    <td>CS</td>
                                     <td>WSO2</td>
                                     <td>Software Engineer</td>
-                                    <td>thisal@gmail.com</td>
-                                    <td>6 months</td>
                                     <td>2024/10/14</td>
                                     <td>2025/04/14</td>
-                                    <td>working</td>
                                     <td><button class="view-btn">View Profile</button></td>
                                 </tr>
                                 <!-- Add more rows as needed -->

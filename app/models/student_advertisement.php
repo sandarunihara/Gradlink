@@ -96,4 +96,26 @@ class student_advertisement
 		$result = $this->query($query, $params);
 		return $result[0] -> CompanyId;
 	}
+
+	public function find($data) {
+        // Check if $data is an associative array or a single value
+        if (is_array($data)) {
+            $keys = array_keys($data);
+            $query = "SELECT * FROM studentadvertisement WHERE ";
+        
+            foreach ($keys as $key) {
+                $query .= $key . " = :" . $key . " AND ";
+            }
+        
+            $query = trim($query, "AND "); // Trim the trailing "AND"
+            
+            $result = $this->query($query, $data);
+        } else {
+            // Assume $data is a single ID (like CompanyId)
+            $query = "SELECT * FROM studentadvertisement WHERE StudentId = :StudentId";
+            $result = $this->query($query, ['StudentId' => $data]);
+        }
+    
+        return $result;
+    }
 }
