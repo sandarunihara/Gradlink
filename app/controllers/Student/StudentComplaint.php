@@ -15,14 +15,36 @@ class StudentComplaint{
     public function newComplaint(){
         $data = [];
 
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+
         if($_SERVER['REQUEST_METHOD'] == "POST"){
+            $data['ComplaintId'] = "complaint_" . rand();
             $data['Topic'] = $_POST['topic'];
             $data['Description'] = $_POST['description'];
             $data['StudentId'] = $_SESSION['USER'] -> StudentId;
             $data['Status'] = "notReviewed";
+
+            $student_advertisement = new student_advertisement;
+            $data['CompanyId'] = $student_advertisement -> findRecruitCompany($arr['StudentId']);
             
             $complaint = new complaint;
-            $_SESSION['isInsert'] = $complaint -> insert($data);
+            $_SESSION['isInsert1'] = $complaint -> insert($data);
+
+
+            
+            $pdc_coordinator = new pdc_coordinator;
+            $active['active'] = 1;
+            $data['CoordinatorId'] = $pdc_coordinator -> where($active, [], '', 'do_not_order')[0] -> CoordinatorId;
+            
+            $pdc_coordinator_complaint = new pdc_coordinator_complaint;
+            $_SESSION['isInsert2'] = $pdc_coordinator_complaint -> insert($data);
+
+            if($_SESSION['isInsert1'] && $_SESSION['isInsert2']){
+                $_SESSION['isInsert'] = 1;
+            }else{
+                $_SESSION['isInsert'] = 0;
+            }
+            //show($data);
             header('location: ' . ROOT . '/Student/StudentComplaint/complaint/');
         }else{
             $this-> view('Student/NewComplaint', $data);
@@ -57,9 +79,11 @@ class StudentComplaint{
         }else{
             $data['Complaint'] -> Delete = 0;
         }
+        //show($data);
         $this-> view('Student/ComplaintView', $data);
     }
-    public function deleteComplaint($complaintId){
+    public function deleteComplaint(){
+        $complaintId = $_GET['complaintId'];
         $data = [];
         $complaint = new complaint;
         $_SESSION['isDelete'] = $complaint -> delete($complaintId, 'ComplaintId');

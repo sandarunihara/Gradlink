@@ -81,6 +81,21 @@ class student_advertisement
 
 		return $result;
 	}
+	function findRecruitCompany($studentId){
+		$query ="SELECT
+					advertisement.CompanyId
+				FROM
+					advertisement
+				JOIN
+					studentadvertisement ON advertisement.advertisementId = studentadvertisement.advertisementId
+				WHERE
+					studentadvertisement.StudentId = :StudentId AND studentadvertisement.JobStatus = 'Recruit'";
+		$params = [
+			':StudentId' => $studentId
+		];
+		$result = $this->query($query, $params);
+		return $result[0] -> CompanyId;
+	}
 
 	public function find($data) {
         // Check if $data is an associative array or a single value

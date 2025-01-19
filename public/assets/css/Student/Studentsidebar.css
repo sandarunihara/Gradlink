@@ -2,7 +2,7 @@
 .sidebar {
     background-color: #E9EDFF;
     position: fixed;
-    top: 100px;
+    top: 70px;
     left: 0;
     width: 250px;
     height: calc(100vh - 100px); /* Full height minus the navbar height */
@@ -41,16 +41,6 @@
 
 .menu-item i:hover {
     color: #007bff; /* Blue icon on hover */
-}
-
-/* Active Menu Item */
-.menu-item.active {
-    background-color: #007bff;
-    color: #E9EDFF;
-}
-
-.menu-item.active i {
-    color: #E9EDFF;
 }
 
 /* Logout Button */
