@@ -27,9 +27,8 @@
 
         public function edit($studentId)
         {
-    
-            $model = new student; // Initialize the student model
-            $errors = []; // Initialize errors array
+            $model = new student;
+            $errors = [];
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = [
@@ -42,7 +41,7 @@
                     'Status' => $_POST['Status']
                 ];
 
-                // Validate and update student details
+
                 if ($model->validate($data)) {
                     $updatedStatus = $model->update($studentId, $data, 'StudentId');
 
@@ -53,17 +52,15 @@
                         $errors['general'] = "Error: Could not update the student.";
                     }
                 } else {
-                    $errors = $model->errors; // Pass validation errors from the model
+                    $errors = $model->errors;
                 }
             }
 
-            // Fetch existing student data if it's a GET request or validation failed
             $data = $model->find($studentId);
             if (!$data) {
                 $errors['general'] = "No student data found for the given ID.";
             }
 
-            // Pass the student data and errors to the view
             $this->view('PDC_admin/Student/StudentView', ['student' => $data, 'errors' => $errors]);
 
         }

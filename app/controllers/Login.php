@@ -255,11 +255,13 @@ class Login
 						// $imgresult= $user->update($id, ['profileimg' => $imageBase64], $id_column);
 						// show($imageBase64);
 						$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
+
 						// Unset and destroy the session
 						if ($results['status'] === 'success') {
 							session_unset();
 							session_destroy();
 							$data['success'] = "Password created successfully. Please login.";
+							$user->update($id, ['Status' => 'Ongoing'], $id_column);
 							redirect('login');
 							exit;
 						} else {

@@ -10,10 +10,7 @@
 </head>
 
 <body>
-    <a class="backbtn" href="<?php echo ROOT ?>">
-        <i class="fas fa-chevron-left"></i>
-    </a>
-    <img src="<?= ROOT ?>/assets/img/ucsclogo-.png" alt="UCSC Logo" class="logo-overlay">
+    <!-- <img src="<?= ROOT ?>/assets/img/ucsclogo-.png" alt="UCSC Logo" class="logo-overlay"> -->
     <div class="login-container">
         <div class="login-box">
             <form method="post">
@@ -58,13 +55,6 @@
             successToast("ok");
         </script>
     <?php endif; ?>
-
-    <!-- error should be displayed to user -->
-    <!-- <?php if (!empty($data['errorsInBase'])): ?>
-        <script>
-            errorToast("<?= $data['errorsInBase'] ?>");
-        </script>
-    <?php endif; ?> -->
     <script>
         const userId = document.getElementById('userId').value;
         const password = document.getElementById('password').value;
@@ -73,6 +63,4 @@
         // }
     </script>
 </body>
-
-
 </html>

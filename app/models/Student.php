@@ -57,6 +57,7 @@ class student
 
         $result = $this->query($query);
         return $result;
+		
     }
 
 	public function find($id){
