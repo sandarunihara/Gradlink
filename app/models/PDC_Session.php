@@ -55,4 +55,10 @@ class PDC_Session {
         return $result ? $result[0] : false;
     }
 
+    public function findSessions($date){
+        $query = "SELECT * FROM $this->table WHERE session_date > :date OR session_date = :date";
+        $params = [':date' => $date];
+        $result = $this->query($query, $params);
+        return $result ? $result : false;
+    }
 }

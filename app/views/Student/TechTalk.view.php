@@ -17,18 +17,27 @@
     <div class="main-content">
         <article class="tech-talk-post">
             <header class="tech-talk-header">
-                <h2>Future of AI</h2>
+                <h2><?php echo htmlspecialchars($data['session'][0]->session_name)?></h2>
                 <p class="tech-talk-company">
-                    WSO2
+                    <?php echo htmlspecialchars($data['session'][0]->company_name)?>
                 </p>
                 <p class="tech-talk-date">
-                    <i class="fas fa-calendar-alt" aria-hidden="true"></i> December 5, 2024
+                    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                    <?php 
+                        list($year, $dayOfYear) = explode("-", htmlspecialchars($data['session'][0]->session_date));
+                        $date = DateTime::createFromFormat('Y-m-d', "$year-01-01");
+                        $date->add(new DateInterval("P" . ($dayOfYear - 1) . "D"));
+                        $formattedDate = $date->format('F j, Y');
+                        echo $formattedDate;
+                    ?>
+
                 </p>
                 <p class="tech-talk-time">
-                    <i class="fas fa-clock" aria-hidden="true"></i> 10:00 AM - 12:00 PM
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <?php echo htmlspecialchars($data['session'][0]->time_slot)?>
                 </p>
                 <p class="tech-talk-venue">
-                    S104 at UCSC
+                <?php echo htmlspecialchars($data['session'][0]->hall_number)?>
                 </p>
             </header>
             <section class="tech-talk-details">

@@ -22,7 +22,7 @@
         <div class="filter">
             <div class="search-container">
                 <input id="searchInput" type="text" placeholder="Search Company">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search" id="searchIcon"></i>
             </div>
             <div class="filter-by-job">
                 <i class="fas fa-filter"></i>
@@ -186,6 +186,29 @@
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
             popupBox.classList.add('hidden');
+        }
+    });
+    document.getElementById("searchIcon").addEventListener("click", function () {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        const jobCards = document.querySelectorAll(".job-card");
+        
+        let companyNames = [];
+        jobCards.forEach(card => {
+            const companyName = card.querySelector(".job-details p").textContent.trim();
+            companyNames.push(companyName.toLowerCase());
+        });
+        //console.log(companyNames);
+        if(!companyNames.includes(searchTerm)){
+            errorToast("Company not found");
+        }else{
+            jobCards.forEach(card => {
+                const companyName = card.querySelector(".job-details p").textContent.trim();
+                if(companyName.toLowerCase() === searchTerm){
+                    card.style.display = "block";
+                }else{
+                    card.style.display = "none";
+                }
+            });
         }
     });
 </script>

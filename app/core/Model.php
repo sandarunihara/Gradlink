@@ -10,12 +10,17 @@
         protected $offset = 0;
         //$order_type = asc or desc or do_not_order
 
-        public function findAll($order_column, $order_type){
+        public function findAll($order_column, $order_type, $customLimit){
 
             if($order_type != 'do_not_order'){
-                $query = "SELECT * FROM $this->table ORDER BY $order_column $order_type LIMIT $this->limit OFFSET $this->offset";
+                $query = "SELECT * FROM $this->table ORDER BY $order_column $order_type";
             }else{
-                $query = "SELECT * FROM $this->table LIMIT $this->limit OFFSET $this->offset";
+                $query = "SELECT * FROM $this->table";
+            }
+            if($customLimit != 'do_not_limit'){
+                $query .= " LIMIT $customLimit OFFSET $this->offset";
+            }else{
+                $query .= " LIMIT $this->limit OFFSET $this->offset";
             }
             return $this->query($query);
         }

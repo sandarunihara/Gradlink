@@ -9,6 +9,10 @@ class Studentdash{
         $student_advertisement = new student_advertisement;
         $data['student_applied_companies'] = $student_advertisement->findAppliedCompanies($arr['StudentId']);
         
+        // $student_activity = new student_activity;
+        // $data['student_activities'] = $student_activity->findAll();
+        //student activity tika penn oni db eken aran
+
         $data['numOfAppliedCompanies'] = 0;
         if(empty($data['student_applied_companies'])){
             $data['numOfAppliedCompanies'] = 0;

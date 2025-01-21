@@ -11,6 +11,7 @@ class StudentAd{
 
         $student_advertisement = new student_advertisement;
         $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
+        //show($data);
 
         if(isset($_POST['submit'])){
             $advertisementId = $_GET['advertisementId'];
@@ -44,9 +45,20 @@ class StudentAd{
                         }else{
                             $isInsert1 = 0;
                         }
-                        
                         if($isInsert1 && $isInsert2){
-                            $_SESSION['isInsert'] = 1;
+                            foreach($data['AdDetails'] as $ad){
+                                if($ad -> advertisementId == $advertisementId){
+                                    $position = $ad -> position;
+                                    $Name = $ad -> Name;
+                                    break;
+                                }
+                            }
+                            $data['ActivityDescription'] = "Applied for " .$position . " at " . $Name;
+                            $student_activity = new student_activity;
+                            $isInsert4 = $student_activity -> insert($data);
+                            if($isInsert4){
+                                $_SESSION['isInsert'] = 1;
+                            }
                         }else{                         
                             $_SESSION['isInsert'] = 0;
                         }
@@ -81,6 +93,12 @@ class StudentAd{
         $this-> view('Student/InternshipView', $data);
     }
     public function applyAdvertisement(){
+        $advertisementId = $_GET['advertisementId'];
+        $advertisement = new C_Advertisement;
+        $data['AdDetails'] = $advertisement -> find(['AdvertisementId' => $advertisementId]);
+        $company = new company;
+        $data['companyDetails'] = $company -> findById($data['AdDetails'][0] -> CompanyId);
+        // show($data);
         if(isset($_POST['submit'])){
             //show($_POST);
             $file = $_FILES['file'];
@@ -104,7 +122,7 @@ class StudentAd{
                         if(move_uploaded_file($fileTempName, $fileDestination)){
                             $isInsert1 = 1;
                             $data['StudentId'] = $_SESSION['USER'] -> StudentId;
-                            $data['AdvertisementId'] =$advertisementId =  $_GET['advertisementId'];
+                            $data['AdvertisementId'] =  $advertisementId;
                             $data['JobStatus'] = "Pending";
                             $data['CV'] = $fileNameNew;
                             $studentAd['Status'] = "Pending";
@@ -123,8 +141,13 @@ class StudentAd{
                             $isInsert1 = 0;
                         }
                         
-                        if($isInsert1 && $isInsert2 && $isInsert3){                            
-                            $_SESSION['isInsert'] = 1;
+                        if($isInsert1 && $isInsert2 && $isInsert3){      
+                            $data['ActivityDescription'] = "Applied for " .$data['AdDetails'][0] -> position . " at " . $data['companyDetails'][0] -> Name;
+                            $student_activity = new student_activity;
+                            $isInsert4 = $student_activity -> insert($data);
+                            if($isInsert4){
+                                $_SESSION['isInsert'] = 1;
+                            }
                         }else{                         
                             $_SESSION['isInsert'] = 0;
                         }
