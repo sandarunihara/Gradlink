@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Opportunities</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/allPages.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/allPages.css"> 
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/internship.css">
@@ -16,60 +16,70 @@
 </head>
 
 <body>
-    <div class="side">
-        <?php $this->renderComponent("studentSidebar")  ?>
-    </div>
-    <div class="content">
-        <div class="header">
-            <?php $this->renderComponent("studentHeader")  ?>
-        </div>
-        <div class="main-content">
-            <div class="filter">
-                <div class="search-container">
-                    <input id="searchInput" type="text" placeholder="Search Company">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="filter-by-job">
-                    <i class="fas fa-filter"></i>
-                    <select>
-                        <option value="all">All Jobs</option>
-                        <option value="software-engineer">Software Engineer</option>
-                        <option value="qa">Quality Assuarance Engineer</option>
-                        <option value="dev-ops-engineer">Dev-Ops Engineer</option>
-                    </select>
-                </div>
+    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentSidebar")  ?>
+    <div class="main-content">
+        <div class="filter">
+            <div class="search-container">
+                <input id="searchInput" type="text" placeholder="Search Company">
+                <i class="fas fa-search"></i>
             </div>
-            <div class="job-container">
-                <?php if (isset($data) && !empty($data)): ?>
-                    <?php foreach ($data['AdDetails'] as $AdDetail): ?>
-                        <div class="job-card">
-                            <div class="view-button">
-                                <button
-                                    class = "viewBtn"
-                                    data-advertisement-id="<?= htmlspecialchars($AdDetail->advertisementId); ?>"
+            <div class="filter-by-job">
+                <i class="fas fa-filter"></i>
+                <select>
+                    <option value="all">All Jobs</option>
+                    <option value="software-engineer">Software Engineer</option>
+                    <option value="qa">Quality Assuarance Engineer</option>
+                    <option value="dev-ops-engineer">Dev-Ops Engineer</option>
+                </select>
+            </div>
+        </div>
+        <div class="job-container">
+            <?php if (isset($data) && !empty($data)): ?>
+                <?php foreach ($data['AdDetails'] as $AdDetail): ?>
+                    <div class="job-card">
+                        <div class="view-button">
+                            <button
+                                class = "viewBtn"
+                                data-advertisement-id="<?= htmlspecialchars($AdDetail->advertisementId); ?>"
+                            >
+                                View
+                            </button>
+                        </div>
+                        <div class="image">
+                            <?php if (!empty($AdDetail->image)): ?>
+                                <img 
+                                    src="data:image/jpeg;base64,<?= $AdDetail->image; ?>" 
+                                    alt="Advertisement Image"
+                                    class="logo"
                                 >
-                                    View
-                                </button>
+                            <?php else: ?>
+                                <img 
+                                    src="default-placeholder.jpg" 
+                                    alt="Default Placeholder"
+                                    class="logo" 
+                                />
+                            <?php endif; ?>
+                        </div>
+                        <div class="job-details">
+                            <h3><?= htmlspecialchars($AdDetail->position); ?></h3>
+                            <p><?= htmlspecialchars($AdDetail->Name); ?></p>
+                        </div>
+                        <?php
+                        $hasApplied = false;
+                        if (isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])):
+                            foreach ($data['AppliedCompanies'] as $appliedCompany) {
+                                if ($appliedCompany->AdvertisementId == $AdDetail->advertisementId) {
+                                    $hasApplied = true;
+                                    break;
+                                }
+                            }
+                        endif;
+                        if ($hasApplied): ?>
+                            <div class="applied-container">
+                                <p>Applied</p>
                             </div>
-                            <div class="image">
-                                <?php if (!empty($AdDetail->image)): ?>
-                                    <img 
-                                        src="data:image/jpeg;base64,<?= $AdDetail->image; ?>" 
-                                        alt="Advertisement Image"
-                                        class="logo"
-                                    >
-                                <?php else: ?>
-                                    <img 
-                                        src="default-placeholder.jpg" 
-                                        alt="Default Placeholder"
-                                        class="logo" 
-                                    />
-                                <?php endif; ?>
-                            </div>
-                            <div class="job-details">
-                                <h3><?= htmlspecialchars($AdDetail->position); ?></h3>
-                                <p><?= htmlspecialchars($AdDetail->Name); ?></p>
-                            </div>
+                        <?php else: ?>
                             <div class="apply-button">
                                 <button 
                                     class="applyBtn" 
@@ -78,13 +88,14 @@
                                 Apply
                                 </button>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <h3>No advertisements found</h3>
-                <?php endif; ?>
-            </div>
-
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <h3>No advertisements found</h3>
+            <?php endif; ?>
+        </div>
+    </div>
 <!-- Popup Box -->
 <div id="popupBox" class="popup hidden">
     <div class="popup-content">

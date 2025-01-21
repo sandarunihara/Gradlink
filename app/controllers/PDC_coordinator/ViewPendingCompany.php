@@ -88,7 +88,7 @@ class ViewPendingCompany
                         echo "<script>
                                 alert('Company updated successfully.');
                                 window.location.href = '" . ROOT . "/PDC_coordinator/viewPendingCompany?id=$id';
-                              </script>";
+                            </script>";
                         exit; // Ensure the script stops after JavaScript redirect.
                     } else {
                         echo "There was an issue saving company details.";

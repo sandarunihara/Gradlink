@@ -1,6 +1,6 @@
 <div class="sidebar">
-    <div class="logo-container">
-        <img src="<?php echo ROOT ?>/assets/img/grad.png" class="logo" alt="Logo" />
+    <div class="toggle-container">
+        <i class="fas fa-bars" id="toggleBtn"></i>
     </div>
     <div class="sidebar-menu">
         <a href="<?=ROOT?>/Student/StudentDash/dashboard" class="menu-item">

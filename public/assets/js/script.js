@@ -21,8 +21,8 @@ function navigateToDashboardCompany() {
     window.location.href = "/Gradlink/public/pdc_coordinator/dashboardCompany";
 }
 
-function naviagteToViewPendingAdvertisement() {
-    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingAdvertisement";
+function naviagteToViewPendingAdvertisement(advertisement_id) {
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewPendingAdvertisement?id=" + encodeURIComponent(advertisement_id);
 
 }
 

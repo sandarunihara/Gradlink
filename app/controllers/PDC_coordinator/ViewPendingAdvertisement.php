@@ -4,7 +4,92 @@ class ViewPendingAdvertisement
     use Controller;
     public function index()
     {
-        // redirect("company-dashboard");
-        $this->view('Coordinator/Advertisement/viewPendingAdvertisement');
+        $id = $_GET['id'] ?? null;
+        if ($id === null) {
+            echo "Invalid or missing advertisement ID.";
+            return;
+        }
+
+        $model = new C_Advertisement;
+        $companyModel = new company;
+
+        $data = $model->find(['advertisementId' => $id]);
+
+        if ($data == false || empty($data)) {
+            $this->view('Coordinator/Advertisement/viewPendingAdvertisement');
+        } else {
+            $advertisementData = [];
+
+            foreach ($data as $addetail) {
+                $company = $companyModel->findById($addetail->CompanyId);
+                $companyName = (!empty($company) && isset($company[0]->Name)) ? $company[0]->Name : 'Unknown Company';
+                // $companyName = $company[0]->Name;
+
+                $advertisementData[] = [
+                    'advertisement_id' => $addetail->advertisementId,
+                    'position' => $addetail->position,
+                    'description' => $addetail->description,
+                    'interns' => $addetail->numOfInterns,
+                    'mode' => $addetail->workingMode,
+                    'start_date' => $addetail->startdate,
+                    'end_date' => $addetail->deadline,
+                    'qualification' => $addetail->qualification,
+                    'company_name' => $companyName,
+                    'company_id' => $addetail->CompanyId,
+                ];
+            }
+            $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['advertisementData' => $advertisementData]);
+        }
+    }
+
+    public function reject()
+    {
+        $id = $_GET['id'] ?? null;
+        $reason = $_GET['reason'] ?? null;
+        if ($id === null) {
+            echo "Invalid or missing advertisement ID.";
+            return;
+        }
+
+        if ($reason === null || trim($reason) === '') {
+            echo "Reason for rejection is required.";
+            return;
+        }
+
+        $model = new C_Advertisement;
+        $result = $model->update($id, ['status' => 'Rejected', 'commentReject' => $reason], 'advertisementId');
+
+        if ($result) {
+            echo "<script>
+                                alert('Advertisement rejected successfully.');
+                                window.location.href = '" . ROOT . "/PDC_coordinator/pendingAdvertisementList';
+                            </script>";
+            exit;
+            // $this->view('Coordinator/pendingAdvertisementList', ['message' => 'Advertisement rejected successfully.']);
+        } else {
+            $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to reject advertisement.']);
+        }
+    }
+
+    public function approve()
+    {
+        $id = $_GET['id'] ?? null;
+        if ($id === null) {
+            echo "Invalid or missing advertisement ID.";
+            return;
+        }
+        $model = new C_Advertisement;
+        $result = $model->update($id, ['status' => 'Active'], 'advertisementId');
+
+        if ($result) {
+            echo "<script>
+                                alert('Advertisement approved successfully.');
+                                window.location.href = '" . ROOT . "/PDC_coordinator/dashboardAdvertisement';
+                            </script>";
+            exit;
+            // $this->view('Coordinator/pendingAdvertisementList', ['message' => 'Advertisement approved successfully.']);
+        } else {
+            $this->view('Coordinator/Advertisement/viewPendingAdvertisement', ['message' => 'Failed to approve advertisement.']);
+        }
     }
 }
