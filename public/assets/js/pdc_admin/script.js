@@ -56,8 +56,50 @@ function navigateToShowStudent(studentId){
     window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/show/" + studentId;
 }
 
+function navigateToShowCompany(companyId){
+    window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/show/" + companyId;
+}
+
+function unblockCompany(companyId){
+    const userConfirmed = confirm("Are you sure you want to unblock this company?");
+    if (userConfirmed) {
+        window.location.href = "/Gradlink/public/PDC_admin/BlockCompany/unblock/" + companyId;
+    }
+}
+
+
+function blockCompany(companyId) {
+    document.getElementById('block-reason').dataset.companyId = companyId;
+
+    document.getElementById('block-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('block-modal').style.display = 'none';
+}
+
+function submitBlockReason(companyId) {
+    const reason = document.getElementById('block-reason').value;
+
+    if (!reason.trim()) {
+        alert("Please provide a reason for blocking the company.");
+        return;
+    }
+
+    const userConfirmed = confirm("Are you sure you want to block this company?");
+    if (userConfirmed) {
+        const encodedReason = encodeURIComponent(reason);
+        window.location.href = `/Gradlink/public/PDC_admin/ViewCompany/block/${companyId}?reason=${encodedReason}`;
+    }
+}
+
+
 function navigateToAddStudent(){
     window.location.href = "/Gradlink/public/PDC_admin/AddStudent/showAddForm";
+}
+
+function navigateToAddCompany(){
+    window.location.href = "/Gradlink/public/PDC_admin/AddCompany/dashboard";
 }
 
 
@@ -172,3 +214,29 @@ function navigateToDeleteStudent(studentId){
         window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/remove/" + studentId;
     }
 }
+
+
+function searchCompany() {
+    const query = document.getElementById('search-query').value.toLowerCase();
+    const tableBody = document.getElementById('company-table-body');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].innerText.toLowerCase().includes(query)) {
+                match = true;
+                break;
+            }
+        }
+
+        if (match) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
