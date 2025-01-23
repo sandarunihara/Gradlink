@@ -19,30 +19,25 @@
                 <div class="header-left">
                     <h1>Companies</h1>
                 </div>
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
             </header>
 
-            <?php $activeTab = 'company-list'; ?>
-            <?php $this->renderPDC_adminTabs("companyTabs") ?>
+            <div class='tabs'>
+                <?php $activeTab = 'company-list'; ?>
+                <?php $this->renderPDC_adminTabs("companyTabs") ?>
+            </div>
+            
 
             <div class="tab-content">
                 <div id="company-list" class="tab-pane active ">
                     <section class="company-list">
-                        <div class="list-header">
-                            <h2>Company List</h2>
+                    <div class="list-header">
                             <div class="search-box">
-                                <input type="text" id='search-query' placeholder="Search Company" />
+                                <input type="text" id="search-query" placeholder="Search Company" />
                                 <button onclick="searchCompany()">Search</button>
-                                <button onclick="navigateToAddCompany()" >Add</button>
+                                <button onclick="navigateToAddCompany()" class="add-btn">Add</button>
                             </div>
-                        </div>
+                    </div>
+
                         <table>
                             <thead>
                                 <tr>
