@@ -20,26 +20,20 @@
                 <div class="header-left">
                     <h1>Pending Companies</h1>
                 </div>
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
-                    <div class="user-info">
-                        <span>Jonitha Cathrine</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
             </header>
 
-            <?php $activeTab = 'pending-companies'; ?>
-            <?php $this->renderPDC_adminTabs("companyTabs") ?>
+            <div class="tabs">
+                <?php $activeTab = 'pending-companies'; ?>
+                <?php $this->renderPDC_adminTabs("companyTabs") ?>
 
+            </div>
+            
             <div class="tab-content">
                 
                 <!-- Pending Companies Tab -->
                 <div id="pending-companies" class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
-                            <h2>Pending Companies</h2>
                             <div class="search-box">
                                 <input type="text" id='search-query' placeholder="Search Company" />
                                 <button onclick="searchCompany()">Search</button>

@@ -21,17 +21,6 @@
             <header class="header">
             <div class="student-title">
                     <h1><?= htmlspecialchars($companyData->Name) ?></h1>
-                    <button class="edit-btn">&#9998;</button>
-                </div>
-
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small> 
-                    </div>
                 </div>
             </header>
             <section class="company-info">
@@ -141,13 +130,10 @@
                 </div>
 
                 </form>
-                <div class="button-line">
-                    <div class="action-buttons">
-                        <!-- <button type='button' class='btn update-btn' id='save-btn-student' style='display: none;'>Save</button>
-                        <button class="btn update-btn" id="edit-btn-student">Update</button>
-                        <button class="btn back-btn" id="back-btn-student" onclick="history.back()">Back</button> -->
+                        
                         <div class="button-line">
                             <div class="action-buttons">
+                                <button class="btn back-btn" id="back-btn-student" onclick="history.back()">Back</button>
                                 <?php if ($companyData->Status === 'Blocked'): ?>
                                     <button class="btn unblock-btn" onclick="unblockCompany('<?= htmlspecialchars($companyData->CompanyId) ?>')">Unblock</button>
                                 <?php else: ?>
@@ -155,8 +141,8 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    
+                
             </section>
         </main>
     </div>
