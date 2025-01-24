@@ -1,210 +1,144 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-}
-
-body {
-    background-color: #f0f4ff;
-    display: flex;
-    height: 100vh;
-}
-
-.container {
-    display: flex;
-    width: 100%;
-}
-
 .main-content {
-    flex-grow: 1;
-    padding: 30px;
-    /* background-color: #f9fcff; */
+    width: 95%;
+    margin-left: auto; /* Ensures alignment accounting for sidebar */
+    padding: 20px; /* Add padding for better spacing */
+    box-sizing: border-box;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-left
-{
-    flex-direction: row;
-    display: flex;
-    gap: 10%;
-}
 .header-left h1 {
-    font-size: 26px;
-    color: #ed0f0f;
+    font-size: 2rem; /* Slightly larger font for better hierarchy */
+    font-weight: 600;
+    margin-left: 20px;
+    color: #2b237c;
 }
 
 .header-right {
     display: flex;
     align-items: center;
     gap: 15px;
+    margin-right: 20px; /* Space from the edge */
 }
 
 .header-right img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.user-info span {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.user-info small {
-    font-size: 14px;
-    color: #777;
-}
-
-.company-list {
-    margin-top: 30px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ddd;
 }
 
 .list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .list-header h2 {
-    font-size: 22px;
-    color: #ed0f0f;
+    font-size: 24px;
+    color: #2b237c;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .search-box {
     display: flex;
     align-items: center;
-    gap: 4%;
+    gap: 10px;
 }
 
 .search-box input {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    width: 250px;
+    width: 280px; /* Slightly wider for better usability */
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
 .search-box button {
-    padding: 10px 20px;
+    padding: 10px 20px; /* More balanced size */
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
     cursor: pointer;
-    background-color: #ed0f0f;
+    background-color: #0056b3;
     color: #fff;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table thead {
-    background-color: #e37575;
-}
-
-table th, table td {
-    padding: 1.2%;
-    text-align: left;
-    border-bottom: 1px solid #e09191;
-}
-
-table th {
-    font-size: 16px;
-    color: #333;
-}
-
-table td {
-    font-size: 14px;
-    color: #555;
-}
-
-.view-btn {
-    background-color: #fff;
-    border: 1px solid #ed0f0f;
-    color: #ed0f0f;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.view-btn:hover {
-    background-color: #ed0f0f;
-    color: #fff;
+.search-box button:hover {
+    background-color: #3b74d1;
 }
 
-.action-buttons {
-    display: flex;
-    justify-content: flex-start;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.add-btn, .blocked-btn {
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.add-btn {
-    background-color: #007bff;
-    color: #ffffff;
-}
-
-.add-btn:hover {
-    background-color: #0872dc;
-
-}
-
-.blocked-btn {
-    background-color: #ffffff;
-    color: #ed0f0f;
-    border: 1px solid #ed0f0f;
-}
-
-.blocked-btn:hover {
-    background-color: #ed0f0f;
-    color: #ffffff;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.back-btn {
-    background-color: #000000;
-    color: #ffffff;
+.tabs {
     margin-left: auto;
-
-}
-
-.back-btn:hover{
-    background-color: #26282b;
-}
-
-.button-line{
+    margin-right: auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+
+.company-list {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80%;
+    height: calc(100vh - 150px);
+    padding: 20px;
+    background-color: #f9f9f9; /* Subtle background */
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Professional shadow */
+    height: max-content;
+}
+
+/* Table styling */
+
+/* Table styling */
+
+
+table {
     width: 100%;
+    border-collapse: collapse; /* Remove double borders */
+    background-color: #fff;
+}
+
+table th, table td {
+    text-align: left; 
+    padding: 10px; 
+    border-bottom: 1px solid #ddd; 
+    font-size: 14px; 
+    color: #333;
+    padding-bottom: 20px;
+}
+
+table th {
+    background-color: #f4f4f4; /* Light gray header background */
+    font-weight: bold; /* Emphasize header */
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; 
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1; 
+}
+
+.view-btn {
+    background-color: #0056b3; /* Simple blue button */
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.view-btn:hover {
+    background-color: #3b74d1; /* Darker blue on hover */
 }

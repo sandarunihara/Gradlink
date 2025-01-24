@@ -7,7 +7,6 @@
         protected $table = 'complaint';
 
         protected $allowedColumns = [
-
             'ComplaintId',
             'Topic',
             'Description',

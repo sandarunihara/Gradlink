@@ -3,6 +3,8 @@
     class PendingCompany{
         use Controller;
         public function dashboard(){
-            $this-> view('PDC_admin/Company/CompanyPending');
+            $model = new company;
+            $companyData = $model->findAllPending();
+            $this-> view('PDC_admin/Company/CompanyPending' , ['companyData' => $companyData]);
         } 
     }

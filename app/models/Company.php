@@ -102,10 +102,8 @@ class company
 	public function findAllOngoing(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status";
-
+			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NOT NULL";
 			$result = $this->query($query, ['status' => 'Ongoing']);
-
 			return $result;
 		} catch (Exception $e) {
 			error_log("Error fetching ongoing companies: " . $e->getMessage());
@@ -144,7 +142,7 @@ class company
 			$result = $this->query($query, ['CompanyId' => $data]);
 		}
 
-		return $result;
+		return $result ? $result[0] : null;
 	}
 
 	public function findEmailById($companyId)
@@ -166,13 +164,24 @@ class company
 	public function findAllPending(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status";
+			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NULL";
 
 			$result = $this->query($query, ['status' => 'Pending']);
 
 			return $result;
 		} catch (Exception $e) {
 			error_log("Error fetching ongoing companies: " . $e->getMessage());
+			return false;
+		}
+	}
+
+	public function findAllBlocked(): array|bool{
+		try{
+			$query = "SELECT * FROM company WHERE Status = :status";
+			$result = $this->query($query, ['status' => 'Blocked']);
+			return $result;
+		} catch (Exception $e) {
+			error_log("Error fetching blocked companies: " . $e->getMessage());
 			return false;
 		}
 	}

@@ -3,6 +3,9 @@
 class AdminCompanyOverview{
     use Controller;
     public function dashboard(){
-        $this-> view('PDC_admin/Company/CompanyOverview');
+        $model = new company;
+        $companyData = $model->findAllOngoing();
+
+        $this-> view('PDC_admin/Company/CompanyOverview', ['companyData' => $companyData]);
     }
 }

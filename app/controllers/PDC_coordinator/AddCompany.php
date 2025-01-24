@@ -23,7 +23,7 @@ class AddCompany
             // Format the new advertisementId (e.g., 'a001', 'a1000', etc.)
             return 'C' . str_pad($nextId, $paddingLength, '0', STR_PAD_LEFT);
         } else {
-            // Start from 'a001' if there are no existing entries
+
             return 'c001';
         }
     }
@@ -73,7 +73,7 @@ class AddCompany
                                 alert('Company added successfully.');
                                 window.location.href = '" . ROOT . "/pdc_coordinator/pendingCompanyList';
                               </script>";
-                              
+
                     } else {
                         echo "<script>alert('Problem in inserting.');
                                 window.location.href = 'pdc_coordinator/pendingCompanyList';
