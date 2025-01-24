@@ -30,8 +30,6 @@ class StudentProgress{
             $fileExt = explode('.', $fileName);
             $fileActualName = strtolower(current($fileExt));
             $fileActualExt = strtolower(end($fileExt));
-            //echo $fileActualExt;
-            //echo $fileActualName;
             $allowed = array('pdf');
         
             if(in_array($fileActualExt, $allowed)){
@@ -40,8 +38,7 @@ class StudentProgress{
                         $base = preg_replace("/[^\w-]/", "_", $fileActualName);
                         $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
                         $fileDestination = __DIR__ . '/../../../public/assets/uploads/progress_docs/'. $fileNameNew;
-                        // echo $fileNameNew . "\n";
-                        // echo $fileDestination . "\n";
+
                         if(move_uploaded_file($fileTempName, $fileDestination)){
                             $isInsert1 = 1;
                             $data['Name'] = $fileNameNew;
@@ -53,7 +50,12 @@ class StudentProgress{
                             $isInsert1 = 0;
                         }
                         
-                        if($isInsert1 && $isInsert2){
+                        //show($data);
+                        $data['ActivityDescription'] = "Uploaded a Progress Report";
+                        $student_activity = new student_activity;
+                        $isInsert3 = $student_activity -> insert($data);
+                        
+                        if($isInsert1 && $isInsert2 && $isInsert3){
                             $_SESSION['isInsert'] = 1;
                         }else{                         
                             $_SESSION['isInsert'] = 0;

@@ -112,7 +112,7 @@
     <div id="toast-container" class="toast-container"></div>
 
     <?php if(array_key_exists('isUpdate', $_SESSION)){ ?>
-        <?php if($_SESSION['isUpdate']['status'] === 'success'){?>
+        <?php if($_SESSION['isUpdate'] === 1){?>
             <script>
                 successToast("Profile updated successfully");
             </script>

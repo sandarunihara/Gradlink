@@ -98,7 +98,7 @@ class StudentAd{
         $data['AdDetails'] = $advertisement -> find(['AdvertisementId' => $advertisementId]);
         $company = new company;
         $data['companyDetails'] = $company -> findById($data['AdDetails'][0] -> CompanyId);
-        // show($data);
+        //show($data);
         if(isset($_POST['submit'])){
             //show($_POST);
             $file = $_FILES['file'];
@@ -142,7 +142,8 @@ class StudentAd{
                         }
                         
                         if($isInsert1 && $isInsert2 && $isInsert3){      
-                            $data['ActivityDescription'] = "Applied for " .$data['AdDetails'][0] -> position . " at " . $data['companyDetails'][0] -> Name;
+                            $data['ActivityDescription'] = "Applied for " .$data['AdDetails'][0] -> position . " at " . $data['companyDetails'] -> Name;
+                            //show($data);
                             $student_activity = new student_activity;
                             $isInsert4 = $student_activity -> insert($data);
                             if($isInsert4){
