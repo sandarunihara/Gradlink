@@ -1,12 +1,12 @@
 .main-content {
     width: 95%;
-    margin-left: auto; /* Ensures alignment accounting for sidebar */
-    padding: 20px; /* Add padding for better spacing */
+    margin-left: auto;
+    padding: 20px;
     box-sizing: border-box;
 }
 
 .header-left h1 {
-    font-size: 2rem; /* Slightly larger font for better hierarchy */
+    font-size: 2rem;
     font-weight: 600;
     margin-left: 20px;
     color: #2b237c;
@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-right: 20px; /* Space from the edge */
+    margin-right: 20px;
 }
 
 .header-right img {
