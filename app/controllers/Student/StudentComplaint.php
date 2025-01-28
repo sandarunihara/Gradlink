@@ -28,7 +28,7 @@ class StudentComplaint{
             $data['CompanyId'] = $student_advertisement -> findRecruitCompany($arr['StudentId']);
             
             $complaint = new complaint;
-            $_SESSION['isInsert1'] = $complaint -> insert($data);
+            $isInsert1 = $complaint -> insert($data);
 
 
             
@@ -37,9 +37,13 @@ class StudentComplaint{
             $data['CoordinatorId'] = $pdc_coordinator -> where($active, [], '', 'do_not_order')[0] -> CoordinatorId;
             
             $pdc_coordinator_complaint = new pdc_coordinator_complaint;
-            $_SESSION['isInsert2'] = $pdc_coordinator_complaint -> insert($data);
-
-            if($_SESSION['isInsert1'] && $_SESSION['isInsert2']){
+            $isInsert2 = $pdc_coordinator_complaint -> insert($data);
+            
+            $data['ActivityDescription'] = "Added a new complaint";
+            $student_activity = new student_activity;
+            $isInsert3 = $student_activity -> insert($data);
+            
+            if($isInsert1 && $isInsert2 && $isInsert3){
                 $_SESSION['isInsert'] = 1;
             }else{
                 $_SESSION['isInsert'] = 0;

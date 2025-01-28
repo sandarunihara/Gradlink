@@ -9,6 +9,9 @@ class Studentdash{
         $student_advertisement = new student_advertisement;
         $data['student_applied_companies'] = $student_advertisement->findAppliedCompanies($arr['StudentId']);
         
+        $student_activity = new student_activity;
+        $data['student_activities'] = $student_activity->findLeatest($arr['StudentId']);
+
         $data['numOfAppliedCompanies'] = 0;
         if(empty($data['student_applied_companies'])){
             $data['numOfAppliedCompanies'] = 0;
