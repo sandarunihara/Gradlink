@@ -17,11 +17,11 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Students</h1>
+                    <h1>Blocked Students</h1>
                 </div>
             </header>
 
-            <?php $activeTab = 'Not-Applied'; ?>
+            <?php $activeTab = 'Blocked-Students'; ?>
             <?php $this->renderPDC_adminTabs("studentTabs") ?>
 
             <section class="company-list">
@@ -32,7 +32,7 @@
                         </button>
                     </div>
                     <div class="action-buttons">
-                    <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button>
+                    <!-- <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button> -->
                 </div>
                 </div>
                 <table>
