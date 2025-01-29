@@ -20,6 +20,7 @@ class StudentProfile{
     public function profileEdit(){        
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $data['StudentId'] = $_SESSION['USER'] -> StudentId;
         
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
@@ -29,7 +30,23 @@ class StudentProfile{
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST);
-            $_SESSION['isUpdate'] = $student -> update($arr['StudentId'], $_POST, 'StudentId');
+            $isUpdate = $student -> update($arr['StudentId'], $_POST, 'StudentId');
+            
+            if ($isUpdate['status'] === "success"){
+                $isUpdate1 = 1;
+            }else{
+                $isUpdate1 = 0;
+            }
+
+            $data['ActivityDescription'] = "Updated your Profile";
+            $student_activity = new student_activity;
+            $isUpdate2 = $student_activity -> insert($data);
+
+            if($isUpdate1 && $isUpdate2){
+                $_SESSION['isUpdate'] = 1;
+            }else{
+                $_SESSION['isUpdate'] = 0;
+            }
             //show($_SESSION);
             header('Location: '.ROOT.'/Student/StudentProfile/profile');
         }else{

@@ -18,31 +18,25 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Companies</h1>
-                </div>
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
-                    <div class="user-info">
-                        <span>Jonitha Cathrine</span>
-                        <small>Admin</small>
-                    </div>
+                    <h1>Pending Companies</h1>
                 </div>
             </header>
 
-            <?php $activeTab = 'pending-companies'; ?>
-            <?php $this->renderPDC_adminTabs("companyTabs") ?>
+            <div class="tabs">
+                <?php $activeTab = 'pending-companies'; ?>
+                <?php $this->renderPDC_adminTabs("companyTabs") ?>
 
+            </div>
+            
             <div class="tab-content">
                 
                 <!-- Pending Companies Tab -->
                 <div id="pending-companies" class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
-                            <h2>Pending Companies</h2>
                             <div class="search-box">
-                                <input type="text" placeholder="Search Company" />
-                                <button>Search</button>
+                                <input type="text" id='search-query' placeholder="Search Company" />
+                                <button onclick="searchCompany()">Search</button>
                             </div>
                         </div>
                         <table>
@@ -55,15 +49,25 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>WSO2</td>
-                                    <td>Tharindu Perera</td>
-                                    <td>tharindu@gmail.com</td>
-                                    <td>071 273 4321</td>
-                                    <td><button class="view-btn" onclick="navigateToViewPendingCompany();">View</button></td>
-                                </tr>
-                                <!-- Add more rows as needed -->
+                            <tbody id='company-table-body'>
+                                <?php if(!empty($companyData)): ?>
+                                    <?php foreach($companyData as $company): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['Name'] : $company->Name) ?></td>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['ContactPerson'] : $company->ContactPerson) ?></td>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['Email'] : $company->Email) ?></td>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['ContactNum'] : $company->ContactNum) ?></td>
+                                            <td><button class="view-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $com['CompanyId'] : $company->CompanyId) ?>')">View</button></td>
+
+                                            <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
+                                            <td></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Companies found.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </section>

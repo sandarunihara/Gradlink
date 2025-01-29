@@ -5,13 +5,43 @@
 
         public function show($studentId) {
             $model = new student;
-            $data = $model->find($studentId);
-    
-            if ($data) {
-                $this->view('PDC_admin/Student/StudentView', ['student' => $data]);
+            $applyDetails = new student_advertisement;
+            $company = new company;
+            $studentData = $model->find($studentId);
+            //$id = $studentData[0] -> StudentId;
+            $studentapply = $applyDetails->findAppliedCompanies($studentId);
+            //var_dump($studentapply);
+
+            $data = [
+                'StudentId'=> $studentData -> StudentId,
+                'Name'=> $studentData -> Name,
+                'NIC'=> $studentData -> NIC,
+                'DegreeName'=> $studentData -> DegreeName,
+                'Status'=> $studentData -> Status,
+                'Email'=> $studentData -> Email,
+                'ContactNum'=> $studentData -> ContactNum,
+                'Github'=> $studentData -> Github,
+                'Linkedin'=> $studentData -> Linkedin,
+                'applications'=> []
+                
+            ];
+
+            
+            if (is_array($studentapply) || is_object($studentapply)) {
+                foreach ($studentapply as $apply) {
+                    $data['applications'][] = [
+                        'Jobstatus' => $apply->Jobstatus,
+                        'CreatedAt' => $apply->CreatedAt,
+                        'position' => $apply->position,
+                        'ComName' => $apply->Name,
+                        'CompanyLogo' => $apply->CompanyLogo
+                    ];
+                }
             } else {
-                echo "No data found";
+                $studentapply = [];
             }
+            
+            $this-> view('PDC_admin/Student/StudentView' , $data);
         }
 
         // public function remove($studentId){
@@ -27,9 +57,8 @@
 
         public function edit($studentId)
         {
-    
-            $model = new student; // Initialize the student model
-            $errors = []; // Initialize errors array
+            $model = new student;
+            $errors = [];
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = [
@@ -42,7 +71,7 @@
                     'Status' => $_POST['Status']
                 ];
 
-                // Validate and update student details
+
                 if ($model->validate($data)) {
                     $updatedStatus = $model->update($studentId, $data, 'StudentId');
 
@@ -53,19 +82,53 @@
                         $errors['general'] = "Error: Could not update the student.";
                     }
                 } else {
-                    $errors = $model->errors; // Pass validation errors from the model
+                    $errors = $model->errors;
                 }
             }
 
-            // Fetch existing student data if it's a GET request or validation failed
             $data = $model->find($studentId);
             if (!$data) {
                 $errors['general'] = "No student data found for the given ID.";
             }
 
-            // Pass the student data and errors to the view
             $this->view('PDC_admin/Student/StudentView', ['student' => $data, 'errors' => $errors]);
 
+        }
+
+        public function block($studentId){
+            $model = new student;
+            $studentData = $model->find($studentId);
+            if($studentData->Status != 'Blocked'){
+                $data = [
+                    'Status' => 'Blocked'
+                ];
+                $updatedStatus = $model->update($studentId, $data, 'StudentId');
+                if($updatedStatus && $updatedStatus['status'] === 'success'){
+                    redirect('PDC_admin/BlockStudent/dashboard');
+                    exit;
+                }
+                else{
+                    echo "Error: Could not block the student.Already Blocked";
+                }
+            }
+        }
+
+        public function unblock($studentId){
+            $model = new student;
+            $studentData = $model->find($studentId);
+            if($studentData->Status == 'Blocked'){
+                $data = [
+                    'Status' => 'Not Applied'
+                ];
+                $updatedStatus = $model->update($studentId, $data, 'StudentId');
+                if($updatedStatus && $updatedStatus['status'] === 'success'){
+                    redirect('PDC_admin/AdminStudentOverview/dashboard');
+                    exit;
+                }
+                else{
+                    echo "Error: Could not unblock the student.";
+                }
+            }
         }
 
     }

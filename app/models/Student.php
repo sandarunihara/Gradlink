@@ -57,7 +57,43 @@ class student
 
         $result = $this->query($query);
         return $result;
+		
     }
+
+	public function findnotapplied(){
+		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function findAllBlocked(){
+		$query = "SELECT * FROM $this->table WHERE Status = 'Blocked'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
+
+	public function findAllPending(){
+		$query = "SELECT * FROM $this->table WHERE Status = 'Pending'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
 
 	public function find($id){
         $query = "SELECT * FROM $this->table WHERE StudentId = :id";

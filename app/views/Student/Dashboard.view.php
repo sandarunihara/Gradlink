@@ -45,11 +45,15 @@
         </div>
         <div class="recent-activity">
             <h3>Recent Activity</h3>
-            <ul>
-                <li>Applied for Software Developer at XYZ Corp</li>
-                <li>Updated your Profile</li>
-                <li>Scheduled an interview with ABC Ltd.</li>
-            </ul>
+            <?php if (empty($data['student_activities'])): ?>
+                <p>You have no recent activity.</p>
+            <?php else: ?>
+                <ul>
+                    <?php foreach ($data['student_activities'] as $activity): ?>
+                        <li><?php echo htmlspecialchars($activity -> ActivityDescription)?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </div>
     </div>
 </body>
