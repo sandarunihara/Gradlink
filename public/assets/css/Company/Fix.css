@@ -9,13 +9,13 @@ h1{
     border-bottom: 3px solid black;
     font-weight: bolder;
 }
+.dashboard{
+    display: flex;
+}
 .side{
     display: flex;
     flex-direction: column;
     width: fit-content;
-}
-.dashboard{
-    display: flex;
 }
 .main{
     margin-left: 30px;
