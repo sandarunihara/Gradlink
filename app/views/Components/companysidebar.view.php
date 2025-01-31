@@ -1,7 +1,9 @@
 <div class="page">
     <div class="sidebar">
         <div class="profile">
-            <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
+            <a href="/Gradlink/public/company/Profile/dashboard">
+                <img src="data:image/jpeg;base64,<?php echo $_SESSION['USER']->profileimg; ?>" alt="">
+            </a>
         </div>
         
         <ul>

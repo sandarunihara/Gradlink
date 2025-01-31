@@ -18,9 +18,5 @@
         </div>
     </div>
     <div>
-    <a href='../Profile/dashboard'>
-            <img src="data:image/jpeg;base64,<?php echo $_SESSION['USER']->profileimg; ?>" class="logo" />
-            <!-- <p><span><?php echo $_SESSION['USER']->Name; ?></span>Company</p> -->
-        </a>
     </div>
 </div>
