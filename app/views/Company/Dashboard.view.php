@@ -16,13 +16,12 @@
         <div class="side">
             <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
-        <div id="content">
+        <div id="content" class="content">
             <div class="main">
                 <div class="d">
                     <div>
                         <h1>DashBoard</h1>
                     </div>
-
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="d_main">
@@ -54,9 +53,8 @@
                                         // Get the first 8 elements from $data
                                         $firstEight = array_slice($data, 0, 8);
 
-
                                         foreach ($firstEight as $item) {
-                                            $status=$item['Status'];
+                                            $status = $item['Status'];
                                             switch ($status) {
                                                 case 'Recruit':
                                                     $Statusname = 'Recruit';
@@ -79,9 +77,6 @@
                                                     $statusClass = 'status Pending';
                                                     break;
                                             }
-
-                                            
-
 
                                             echo '<li>';
                                             echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
@@ -122,7 +117,7 @@
                                     ?>
                                     <a href="<?php echo $link; ?>" class="m_container">
                                         <div class="m_de">
-                                            <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40"/>
+                                            <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40" />
                                             <div class="m_content">
                                                 <span class="m_name"><?php echo $item['name']; ?></span>
                                                 <span class="m_detail"><?php echo $detail; ?></span>
