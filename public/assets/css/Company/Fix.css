@@ -32,7 +32,6 @@ h1 {
   width: fit-content;
   height: 100%;
 }
-<<<<<<< HEAD
 .main {
   width: 100%;
   height: 100%;
@@ -43,10 +42,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-=======
-.main{
-    margin-left: 30px;
->>>>>>> 30b0e62bbe0b1f3184cab5df235b97b6ebfdaa0e
+
 }
 .d_pro {
   display: flex;
