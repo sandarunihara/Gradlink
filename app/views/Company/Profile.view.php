@@ -23,6 +23,8 @@
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
+
+                <div class="prof">
                 <div class="pro_main">
                     <!-- white part -->
                     <div class="coverphoto">
@@ -65,6 +67,8 @@
                         </div>
                     </div>
                 </div>
+                </div>
+                <!-- sa -->
             </div>
         </div>
     </div>

@@ -43,7 +43,7 @@
                         ?>
                         <a href="<?php echo $link; ?>" class="m_container">
                             <div class="m_de">
-                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" />
+                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="image"/>
                                 <div class="m_content">
                                     <span class="m_name"><?php echo $item['name']; ?></span>
                                     <span class="m_detail"><?php echo $detail; ?></span>
