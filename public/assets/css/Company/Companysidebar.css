@@ -1,237 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  background-color: #f0f0f5;
+}
+
+.page {
+  width: 5%;
+  position: fixed;
+}
+
 .sidebar {
   height: 100vh;
-  width: 235px;
-  transition: width 0.3s ease;
-  position: relative;
-}
-.sidebar.collapsed {
-  width: 80px;
-}
-.innersidebar {
-  height: 100vh;
-  width: 235px;
-  position: fixed;
-  background: linear-gradient(135deg, #364cc6, #00032e);
-  z-index: 1;
-  padding-top: 5px;
-  padding-right: 5px;
-  transition: width 0.3s ease;
-}
-.innersidebar.collapsed {
-  width: 80px;
-}
-.sidebarlogo {
-  padding-left: 5px;
-}
-.sidebarlogo.hidden {
-  display: none;
-}
-.sidebar.collapsed .option p {
-  display: none;
-}
-.sidebar.collapsed .option i {
-  font-size: 20px;
-}
-.toggle-btn {
-  position: absolute;
-  top: 10px;
-  right: 5px;
-  background: none;
-  border: none;
-  color: black;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s ease;
-}
-.toggle-btn::after {
-    content: 'Close Sidebar'; 
-    position: absolute;
-    opacity: 0;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    transition: opacity 0.3s ease;
-}
-.toggle-btn:hover::after {
-    opacity: 1; 
-}
-.sidebar.collapsed .toggle-btn::after {
-    content: 'Open Sidebar'; 
-}
-.sidebar.collapsed .toggle-btn {
-  color: white;
-  left: 0;
-  width: 100%;
-}
-.logodiv {
-  display: flex;
-  justify-items: center;
-  /* margin-top: 40px; */
-  border-radius: 5px;
-  background-color: white;
-}
-.logoside {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-radius: 5px;
-  height: 90px;
-  width: 130px;
-}
-.sidebaroption {
-  margin-top: 50px;
-}
-.option {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-top: 10px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  transition: background-color 0.1s, color 0.1s;
-  cursor: pointer;
-  text-decoration: none;
-  border-left: transparent 5px solid;
-}
-.sidebar.collapsed .option {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.option i {
-  font-size: 15px;
-  margin-left: 25px;
-  color: white;
-}
-.option p {
-  font-weight: bold;
-  text-align: center;
-  font-size: 14px;
-  color: white;
-  width: fit-content;
-}
-.option:hover {
-  background-color: rgba(255, 255, 255, 0.327);
-}
-.option:hover i,
-.option:hover p {
-  color: black;
-}
-.option div {
-  width: 100%;
-}
-.option.active {
-  background-color: white;
-  /* border-left: black 5px solid; */
-}
-.option.active i,
-.option.active p {
-  color: black;
-}
-.profile_option {
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
-  cursor: pointer;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 50px;
-  background: rgba(255, 255, 255, 0.049);
-  backdrop-filter: blur(10px);
-  border: rgba(255, 255, 255, 0.575) 1px solid;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.sidebar.collapsed .profile_option {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-.profile_option div {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.profile_option div i {
-  color: white;
-}
-.sidebar.collapsed .profile_option div i{
-    display: none;
-}
-.profile_option img {
-  width: 50px;
-  height: 50px;
-  object-fit: fill;
-  border-radius: 50%;
-}
-.profile_option p {
-  font-size: 10px;
-  color: white;
-  margin-left: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  justify-content:flex-start;
+  padding: 20px 15px;
+  background-color: rgb(10, 10, 30);
+  position: fixed;
 }
-.profile_option p span {
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
+
+.profile {
+  margin-bottom: 0;
 }
-.sidebar.collapsed .profile_option p {
-  display: none;
+
+.profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.dropdown-menu {
-  position: absolute;
-  right: 25px;
-  left: 25px;
-  bottom: 80px;
-  color: white;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.049);
-  backdrop-filter: blur(10px);
-  border: rgba(255, 255, 255, 0.575) 1px solid;
-  border-radius: 5px;
-  padding: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  gap: 12px; /* Space between each list item */
+  text-align: center;
+  margin-top: 50px; /* Adjust this value to control the distance from the profile picture */
 }
-.dropdown-menu.show {
-  opacity: 1;
-  max-height: 200px;
+
+
+
+ul li {
+  position: relative;
   padding: 10px 0;
 }
-.dropdown-menu a {
+
+ul li:hover i {
   color: white;
+  transform: scale(1.4);
+}
+
+ul li.active i {
+  color: rgb(187, 189, 215);
+  transform: scale(1.4);
+}
+
+ul li i {
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+ul li::after {
+  content: attr(data-title);
+  position: absolute;
+  top: 50%;
+  left: 120%; /* Adjust tooltip positioning */
+  transform: translateY(-50%);
+  background-color: white; /* White background for tooltip */
+  color: black; /* Black text for contrast */
+  padding: 8px 12px; /* Padding for a clean look */
+  border-radius: 20px; 
+  white-space: nowrap;
+  font-size: 14px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  opacity: 0; 
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1;
+  margin-left: 10px;
+}
+
+
+/* Show tooltip and arrow on hover */
+ul li:hover::after,
+ul li:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0); /* Smooth appearance */
+}
+
+.logout {
+  position: relative; /* Required for ::after to position correctly */
+  margin-top: 80px;
+  display: flex; /* To align icon properly */
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
 }
-.dropdown-menu li {
-  padding: 10px 20px;
-  cursor: pointer;
-  list-style: none;
+
+.logout i {
+  color: white;
+  transition: all 0.3s ease-in-out; /* Smooth hover effects */
 }
-.dropdown-menu li:hover {
-  color: black;
-  background-color: #f0f0f0;
+
+.logout:hover i {
+  transform: scale(1.4);
 }
-.dropdown-menu li:hover a {
+
+.logout::after {
+  content: attr(data-title);
+  position: absolute;
+  top: 50%;
+  left: 120%; /* Adjust tooltip positioning */
+  transform: translateY(-50%);
+  background-color: white;
   color: black;
+  padding: 8px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1;
+  margin-left: 10px;
+}
+
+.logout:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+ul li.active i {
+  color: #bbbddd;
+  transform: scale(1.4);
+  transition: all 0.3s ease-in-out;
 }
