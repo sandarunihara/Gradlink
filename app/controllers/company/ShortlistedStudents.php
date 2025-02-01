@@ -78,13 +78,13 @@ class ShortlistedStudents
         $companydata = $company->findById($_SESSION['USER']->CompanyId);
         $interviewschedule = 0;
         $interviewmodel = new interview_time_slot;
-        $interviewdata = $interviewmodel->find(['StudentId' => $StudentId, 'CompanyId' => $_SESSION['USER']->CompanyId]);
+        $interviewdata = $interviewmodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId]);
         if (!empty($interviewdata)) {
             $interviewschedule = 1;
         } else {
             $interviewschedule = 0;
         }
-
+        // show($interviewdata);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
             $updatedata = [
                 'Jobstatus' => $_POST['submit_action']
@@ -95,9 +95,8 @@ class ShortlistedStudents
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
             if ($result['status']) {
-                // Redirect to the same page after successful submission
                 $success = "Student Job Status updated successfully.";
-                if (!empty($data[0]->Email) && !empty($companydata[0]->Email)) {
+                if (!empty($data[0]->Email) && !empty($companydata->Email)) {
                     $studentemail = $data[0]->Email;
                     $studentname = $data[0]->Name;
                     try {
@@ -109,7 +108,7 @@ class ShortlistedStudents
                         $mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
                         $mail->Port = 587;
-                        $mail->setFrom($companydata[0]->Email, $companydata[0]->Name);
+                        $mail->setFrom($companydata->Email, $companydata->Name);
                         $mail->addAddress($studentemail);
                         $mail->isHTML(true);
                         $mail->Subject = 'Congratulations on Your Internship Selection!';
@@ -162,18 +161,18 @@ class ShortlistedStudents
                                             <body>
                                                 <div class='email-container'>
                                                     <div class='header'>
-                                                        <h1>Welcome to {$companydata[0]->Name}!</h1>
+                                                        <h1>Welcome to {$companydata->Name}!</h1>
                                                     </div>
                                                     <div class='content'>
                                                         <p>Dear {$data[0]->Name},</p>
-                                                        <p>We are thrilled to inform you that you have been selected for an internship at <strong>{$companydata[0]->Name}</strong>. This role offers you a unique opportunity to learn, grow, and contribute to our team.</p>
-                                                        <p>Details regarding your onboarding process and responsibilities will be shared soon. If you have any immediate questions, please don't hesitate to contact us at <strong>{$companydata[0]->ContactNum}</strong>.</p>
+                                                        <p>We are thrilled to inform you that you have been selected for an internship at <strong>{$companydata->Name}</strong>. This role offers you a unique opportunity to learn, grow, and contribute to our team.</p>
+                                                        <p>Details regarding your onboarding process and responsibilities will be shared soon. If you have any immediate questions, please don't hesitate to contact us at <strong>{$companydata->ContactNum}</strong>.</p>
                                                         <p>We are excited to welcome you aboard and look forward to a fruitful collaboration.</p>
                                                         <p>Warm regards,</p>
-                                                        <p><strong>{$companydata[0]->Name}</strong></p>
+                                                        <p><strong>{$companydata->Name}</strong></p>
                                                     </div>
                                                     <div class='footer'>
-                                                        <p>&copy; {$companydata[0]->Name} | All rights reserved.</p>
+                                                        <p>&copy; {$companydata->Name} | All rights reserved.</p>
                                                     </div>
                                                 </div>
                                             </body>
@@ -215,7 +214,7 @@ class ShortlistedStudents
             $model = new interview_time_slot;
             $data = [
                 'StudentId' => $studentId,
-                'CompanyId' => $_SESSION['USER']->CompanyId,
+                'advertisementId' => $advertisementId,
                 'Date' => $_POST['date'],
                 'StartTime' => $_POST['starttime'],
                 'EndTime' => $_POST['endtime']
@@ -229,7 +228,7 @@ class ShortlistedStudents
             $result = $model->insert($data);
             if ($result && $updateresult['status']) {
                 $success = "Interview Schedule created successfully.";
-                if (!empty($studentdata->Email) && !empty($companydata[0]->Email)) {
+                if (!empty($studentdata->Email) && !empty($companydata->Email)) {
                     $studentemail = $studentdata->Email;
                     try {
                         $mail = new PHPMailer(true);
@@ -240,10 +239,10 @@ class ShortlistedStudents
                         $mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
                         $mail->Port = 587;
-                        $mail->setFrom($companydata[0]->Email, $companydata[0]->Name);
+                        $mail->setFrom($companydata->Email, $companydata->Name);
                         $mail->addAddress($studentemail);
                         $mail->isHTML(true);
-                        $mail->Subject = "Details of Your Scheduled Interview with {$companydata[0]->Name}";
+                        $mail->Subject = "Details of Your Scheduled Interview with {$companydata->Name}";
                         $mail->Body = "
                                         <html>
                                             <head>
@@ -297,20 +296,20 @@ class ShortlistedStudents
                                                     </div>
                                                     <div class='content'>
                                                         <p>Dear {$studentdata->Name},</p>
-                                                        <p>This is to inform you about the details of your scheduled interview for a potential internship at <strong>{$companydata[0]->Name}</strong>.</p>
+                                                        <p>This is to inform you about the details of your scheduled interview for a potential internship at <strong>{$companydata->Name}</strong>.</p>
                                                         <p><strong>Interview Details:</strong></p>
                                                         <ul>
                                                             <li><strong>Date:</strong> {$data['Date']}</li>
                                                             <li><strong>Start Time:</strong> {$data['StartTime']}</li>
                                                             <li><strong>End Time:</strong> {$data['EndTime']}</li>
                                                         </ul>
-                                                        <p>If you have any questions or need to reschedule, please contact us at <strong>{$companydata[0]->ContactNum}</strong>.</p>
+                                                        <p>If you have any questions or need to reschedule, please contact us at <strong>{$companydata->ContactNum}</strong>.</p>
                                                         <p>We look forward to your participation in the interview.</p>
                                                         <p>Best regards,</p>
-                                                        <p><strong>{$companydata[0]->Name}</strong></p>
+                                                        <p><strong>{$companydata->Name}</strong></p>
                                                     </div>
                                                     <div class='footer'>
-                                                        <p>&copy; {$companydata[0]->Name}. All rights reserved.</p>
+                                                        <p>&copy; {$companydata->Name}. All rights reserved.</p>
                                                     </div>
                                                 </div>
                                             </body>

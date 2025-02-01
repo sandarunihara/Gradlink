@@ -9,6 +9,7 @@ class interview_time_slot
     protected $allowedColumns = [
         'StudentId',
         'CompanyId',
+        'advertisementId',
         'Date',
         'StartTime',
         'EndTime'
