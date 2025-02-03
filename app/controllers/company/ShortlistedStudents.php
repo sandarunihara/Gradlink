@@ -219,6 +219,9 @@ class ShortlistedStudents
                 'StartTime' => $_POST['starttime'],
                 'EndTime' => $_POST['endtime']
             ];
+            if (!empty($_POST['message'])) {
+                $extraMessage = $_POST['message'];
+            }
 
             $updatedata = [
                 'Jobstatus' => 'Interview Scheduled'
@@ -243,8 +246,7 @@ class ShortlistedStudents
                         $mail->addAddress($studentemail);
                         $mail->isHTML(true);
                         $mail->Subject = "Details of Your Scheduled Interview with {$companydata->Name}";
-                        $mail->Body = "
-                                        <html>
+                        $mail->Body = "<html>
                                             <head>
                                                 <style>
                                                     body {
@@ -287,6 +289,12 @@ class ShortlistedStudents
                                                         color: #666;
                                                         border-top: 1px solid #ddd;
                                                     }
+                                                    .messagebox {
+                                                        margin-top: 20px;
+                                                        padding: 15px;
+                                                        background-color: #f4f4f4;
+                                                        border-left: 4px solid #007bff;
+                                                    }
                                                 </style>
                                             </head>
                                             <body>
@@ -303,6 +311,15 @@ class ShortlistedStudents
                                                             <li><strong>Start Time:</strong> {$data['StartTime']}</li>
                                                             <li><strong>End Time:</strong> {$data['EndTime']}</li>
                                                         </ul>
+                                                        
+                                                        <!-- Display the extra message if it's entered -->
+                                                        <?php if (!empty($extraMessage)) { ?>
+                                                            <div class='messagebox'>
+                                                                <p><strong>Additional Message:</strong></p>
+                                                                <p>{$extraMessage}</p>
+                                                            </div>
+                                                        <?php } ?>
+
                                                         <p>If you have any questions or need to reschedule, please contact us at <strong>{$companydata->ContactNum}</strong>.</p>
                                                         <p>We look forward to your participation in the interview.</p>
                                                         <p>Best regards,</p>
@@ -313,7 +330,7 @@ class ShortlistedStudents
                                                     </div>
                                                 </div>
                                             </body>
-                                        </html>";
+                                            </html>";
 
                         $mail->send();
                         $data['success'] = "OTP sent to your email. Please check your inbox.";

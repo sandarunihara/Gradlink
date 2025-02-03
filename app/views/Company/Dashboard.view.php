@@ -182,10 +182,10 @@
         const myChart = new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: ['JAN', 'FEB', 'MAR', 'APR'],
+                labels: ['JAN', 'FEB', 'MAR', 'APR','dsa'],
                 datasets: [{
                     label: 'Student Course Engagement',
-                    data: [0, 1, 10, 6, ],
+                    data: [0, 1, 10, 6,1 ],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.8)', // Teal
                         'rgba(255, 159, 64, 0.8)', // Orange
