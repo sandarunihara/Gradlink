@@ -19,7 +19,7 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Students Requests</h1>
+                        <h1>Students Profile/Interview Schedule</h1>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
@@ -27,9 +27,7 @@
                     <div class="sc">
                         <a href="http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/<?php echo $addata[0]->advertisementId  ?>/<?php echo $data[0]->StudentId  ?>" class="sc_container">
                             <i class="fas fa-chevron-left"></i>
-                            <h3>Create Interview Schedule</h3>
-                            
-                            
+                            <h3>BACK</h3>
                         </a>
                     </div>
                     <form id="schedule-form" class="sc_background" method="post">
@@ -54,12 +52,12 @@
                             </div>
                             <div class="sc_time">
                                 <h4>Select Time Period</h4>
-                            </div>
-                            <div id="time-slots-container" class="sc_time-slots">
-                                <div class="time-slot">
-                                    <input type="time" id="starttime" name="starttime" required>
-                                    <p>-</p>
-                                    <input type="time" id="endtime" name="endtime" required>
+                                <div id="time-slots-container" class="sc_time-slots">
+                                    <div class="time-slot">
+                                        <input type="time" id="starttime" name="starttime" required>
+                                        <p>-</p>
+                                        <input type="time" id="endtime" name="endtime" required>
+                                    </div>
                                 </div>
                             </div>
                             <div class="sc_btn">
