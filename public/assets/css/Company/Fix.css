@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'poppins';
 }
 
 body {
@@ -9,7 +10,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: white;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
 }
 h1 {
   width: fit-content;

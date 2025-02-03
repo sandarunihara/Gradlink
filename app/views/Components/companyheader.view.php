@@ -1,8 +1,5 @@
 <div class="d_pro">
     <div class="d_profile">
-        <a href="../Complaint/dashboard">
-            <i class="fas fa-exclamation-triangle"></i>
-        </a>
 
         <a href="../companydash/calendar" title="Complaint">
             <i class="fas fa-calendar-alt"></i>

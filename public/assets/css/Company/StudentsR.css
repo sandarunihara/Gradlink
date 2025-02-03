@@ -1,5 +1,5 @@
 .sr_main{
-    height: 550px;
+    height: 100%;
     padding: 30px;
     margin-right: 50px;
     margin-top: 30px;
@@ -47,8 +47,9 @@
 }
 .sr_table{
     background-color: white;
-    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
-    padding: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+    padding-bottom: 10px;
     border: 1px solid rgba(165, 165, 165, 0.664);
     border-radius: 10px;
 }
@@ -69,6 +70,9 @@
 
 .student-table th, .student-table td {
     text-align: center;
+}
+.student-table td{
+    padding-right: 10px;
 }
 
 .student-table th {

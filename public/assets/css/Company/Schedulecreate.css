@@ -1,34 +1,31 @@
 .sc_main{
-    background: #E9EDFF;
-    padding: 20px;
-    width: 1100px;
-    border-radius: 10px;
-    margin-right: 50px;
+    width: 100%;
+    padding: 40px;
     margin-top: 30px;
+    background-color: #006cdf;
 }
 .sc_container{
     text-decoration: none;
-    color: black;
+    color: #474748;
     display: flex;
     align-items: center;
     width: fit-content;
     gap: 5px;
-    padding-left: 40px;
     transition:color 0.5s ease;
     cursor: pointer;
 }
 .sc_container:hover{
     color: #006cdf;
 }
-
 .sc_iner{
-    width: 1000px;
-    height: 500px;
-    margin-left: 40px;
+    /* height: 500px; */
     background-color: white;
     border-radius: 10px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     overflow-y: auto;
 }
 .sc_pos{
@@ -75,8 +72,8 @@
 }
 .sc_time{
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
 }
 .sc_tbtn{
     display: flex;
@@ -104,6 +101,7 @@
 .time-slot{
     display: flex;
     gap: 10px;
+    align-items: center;
     margin-bottom: 20px;
     transition: opacity 1s ease, height 1s ease;
 }
