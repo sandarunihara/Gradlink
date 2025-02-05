@@ -24,10 +24,8 @@
                 <p class="tech-talk-date">
                     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                     <?php 
-                        list($year, $dayOfYear) = explode("-", htmlspecialchars($data['session'][0]->session_date));
-                        $date = DateTime::createFromFormat('Y-m-d', "$year-01-01");
-                        $date->add(new DateInterval("P" . ($dayOfYear - 1) . "D"));
-                        $formattedDate = $date->format('F j, Y');
+                        $date = htmlspecialchars($data['session'][0]->session_date);
+                        $formattedDate = DateTime::createFromFormat('Y-m-d', $date)->format('F j, Y');
                         echo $formattedDate;
                     ?>
 
@@ -42,8 +40,7 @@
             </header>
             <section class="tech-talk-details">
                 <p class="tech-talk-description">
-                    Join us for an exciting tech-talk exploring the latest advancements in artificial intelligence,
-                    featuring insights from industry experts and practical applications for students.
+                    <?php echo htmlspecialchars($data['session'][0]->description)?>
                 </p>
             </section>
         </article>
