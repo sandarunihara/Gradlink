@@ -11,9 +11,21 @@ class StudentAd{
 
         $student_advertisement = new student_advertisement;
         $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
-        //show($data);
 
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+        $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
+        
         if(isset($_POST['submit'])){
+            $round = new round;
+            $currentRound = $round -> getRound();
+            if ($currentRound == 1 && $noOfAppliedAds >= 5){
+                $_SESSION['isLimit'] = 1;
+                header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+                exit;
+            }else{
+                $_SESSION['isLimit'] = 0;
+            }
             $advertisementId = $_GET['advertisementId'];
 
             $file = $_FILES['file'];
@@ -42,10 +54,19 @@ class StudentAd{
                             $data['CV'] = $fileNameNew;
                             $student_advertisement = new student_advertisement;
                             $isInsert2 = $student_advertisement -> insert($data);
+
+                            $data1['noOfAppliedAds'] = $noOfAppliedAds + 1;
+                            $isUpdate = $student -> update($arr['StudentId'], $data1, 'StudentId');
+            
+                            if ($isUpdate['status'] === "success"){
+                                $isUpdate = 1;
+                            }else{
+                                $isUpdate = 0;
+                            }
                         }else{
                             $isInsert1 = 0;
                         }
-                        if($isInsert1 && $isInsert2){
+                        if($isInsert1 && $isInsert2 && $isUpdate){
                             foreach($data['AdDetails'] as $ad){
                                 if($ad -> advertisementId == $advertisementId){
                                     $position = $ad -> position;
@@ -93,11 +114,27 @@ class StudentAd{
         $this-> view('Student/InternshipView', $data);
     }
     public function applyAdvertisement(){
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+
         $advertisementId = $_GET['advertisementId'];
         $advertisement = new C_Advertisement;
         $data['AdDetails'] = $advertisement -> find(['AdvertisementId' => $advertisementId]);
         $company = new company;
         $data['companyDetails'] = $company -> findById($data['AdDetails'][0] -> CompanyId);
+
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+        $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
+
+        $round = new round;
+        $currentRound = $round -> getRound();
+        if ($currentRound == 1 && $noOfAppliedAds >= 5){
+            $_SESSION['isLimit'] = 1;
+            header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+            exit;
+        }else{
+            $_SESSION['isLimit'] = 0;
+        }
         //show($data);
         if(isset($_POST['submit'])){
             //show($_POST);
@@ -129,19 +166,26 @@ class StudentAd{
                             //show($data);
                             $student_advertisement = new student_advertisement;
                             $isInsert2 = $student_advertisement -> insert($data);
-                            $student = new student;
+
                             $result = $student -> update($data['StudentId'], $studentAd, 'StudentId');
-                            //show($result);
                             if($result['status'] === 'success'){
                                 $isInsert3 = 1;
                             }else{
                                 $isInsert3 = 0;
                             }
+                            $data1['noOfAppliedAds'] = $noOfAppliedAds + 1;
+                            $isUpdate = $student -> update($arr['StudentId'], $data1, 'StudentId');
+            
+                            if ($isUpdate['status'] === "success"){
+                                $isUpdate = 1;
+                            }else{
+                                $isUpdate = 0;
+                            }
                         }else{
                             $isInsert1 = 0;
                         }
                         
-                        if($isInsert1 && $isInsert2 && $isInsert3){      
+                        if($isInsert1 && $isInsert2 && $isInsert3 && $isUpdate){      
                             $data['ActivityDescription'] = "Applied for " .$data['AdDetails'][0] -> position . " at " . $data['companyDetails'] -> Name;
                             //show($data);
                             $student_activity = new student_activity;
