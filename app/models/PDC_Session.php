@@ -56,7 +56,7 @@ class PDC_Session {
     }
 
     public function findSessions($date){
-        $query = "SELECT * FROM $this->table WHERE session_date > :date OR session_date = :date";
+        $query = "SELECT * FROM session WHERE session_date = :date OR session_date > :date";
         $params = [':date' => $date];
         $result = $this->query($query, $params);
         return $result ? $result : false;
