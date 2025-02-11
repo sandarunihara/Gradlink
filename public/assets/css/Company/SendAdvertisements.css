@@ -1,19 +1,19 @@
 .full-s{
-    position: fixed;
+    /* position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000;
-    
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; */
+    padding: 20px;
+  width: 100%;
+  margin-top: 30px;
 }
 .main_container{
     background: #E9EDFF;
     padding: 5px;
-    height: 85vh;
-    width: 75%;
-    margin: 6% 19%;
+    width: 95%;
     border-radius: 10px;
 }
 .sc_container{
@@ -33,8 +33,8 @@
 }
 .sub_container{
     background-color: white;
-    margin:2% auto;
-    padding: 5px;
+
+    /* padding: 5px; */
     border-radius: 8px;
 }
 .display-details{
@@ -50,7 +50,7 @@
     width: 100%;
     height: 100%;
     border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-bottom-left-radius: 10px; */
 }
 
 .inform {
@@ -58,8 +58,8 @@
     justify-content: space-between;
     padding-left: 15px;
     width: 50%;
-    box-shadow: 1px -1px 1px rgba(28, 28, 28, 0.25); /* Horizontal and vertical offset to right and bottom */
-    border-top-right-radius: 10px;
+    /* box-shadow: 1px -1px 1px rgba(28, 28, 28, 0.25); 
+    border-top-right-radius: 10px; */
 }
 .inform span{
     margin-left: 5px;
@@ -71,6 +71,12 @@
     cursor: pointer;
     padding: 5px;
     border-radius: 100%;
+}
+.info{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 .fa-pen:hover{
     background-color: #cfaf12;
@@ -90,9 +96,9 @@
 .Qua-des{
     display: flex;
     gap: 30px;
-    box-shadow: 1px 1px 1px 0px rgba(28, 28, 28, 0.25);
+    /* box-shadow: 1px 1px 1px 0px rgba(28, 28, 28, 0.25);
     border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px; */
 }
 .Qualifications{
     width: 50%;
