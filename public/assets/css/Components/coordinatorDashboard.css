@@ -1,4 +1,154 @@
-.sidebar{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background-color: #f0f0f5;
+}
+
+.page {
+    width: 5%;
+    position: fixed;
+}
+
+.sidebar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-start;
+    padding: 20px 15px;
+    background-color: rgb(10, 10, 30);
+    position: fixed;
+}
+
+.profile {
+    margin-bottom: 0;
+}
+
+.profile img {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    gap: 12px; /* Space between each list item */
+    text-align: center;
+    margin-top: 50px; /* Adjust this value to control the distance from the profile picture */
+}
+
+
+
+ul li {
+    position: relative;
+    padding: 10px 0;
+}
+
+ul li:hover i {
+    color: white;
+    transform: scale(1.4);
+}
+
+ul li.active i {
+    color: rgb(187, 189, 215);
+    transform: scale(1.4);
+}
+
+ul li i {
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+ul li::after {
+    content: attr(data-title);
+    position: absolute;
+    top: 50%;
+    left: 120%; /* Adjust tooltip positioning */
+    transform: translateY(-50%);
+    background-color: white; /* White background for tooltip */
+    color: black; /* Black text for contrast */
+    padding: 8px 12px; /* Padding for a clean look */
+    border-radius: 20px; 
+    white-space: nowrap;
+    font-size: 14px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    opacity: 0; 
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1;
+    margin-left: 10px;
+}
+
+
+/* Show tooltip and arrow on hover */
+ul li:hover::after,
+ul li:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0); /* Smooth appearance */
+}
+
+.logout {
+    position: relative; /* Required for ::after to position correctly */
+    margin-top: 80px;
+    display: flex; /* To align icon properly */
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logout i {
+    color: white;
+    transition: all 0.3s ease-in-out; /* Smooth hover effects */
+}
+
+.logout:hover i {
+    transform: scale(1.4);
+}
+
+.logout::after {
+    content: attr(data-title);
+    position: absolute;
+    top: 50%;
+    left: 120%; /* Adjust tooltip positioning */
+    transform: translateY(-50%);
+    background-color: white;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1;
+    margin-left: 10px;
+}
+
+.logout:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+ul li.active i {
+    color: #bbbddd;
+    transform: scale(1.4);
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* .sidebar{
     height: 90vh;
     width: 235px;
     padding-left: 10px;
@@ -29,7 +179,6 @@
     padding-left: 5px;
     padding-right: 5px;
     z-index: 10;
-    /* margin-top: 50px; */
 }
 .option{
     display: flex;
@@ -71,10 +220,10 @@
 
 
 .option.active {
-    background-color: white; /* Change the background color of the active item */
+    background-color: white;
 }
 
 .option.active i,
 .option.active p {
-    color: black; /* Change the text and icon color for the active item */
-}
+    color: black; 
+} */
