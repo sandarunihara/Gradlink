@@ -22,7 +22,7 @@ class ViewPendingAdvertisement
 
             foreach ($data as $addetail) {
                 $company = $companyModel->findById($addetail->CompanyId);
-                $companyName = (!empty($company) && isset($company[0]->Name)) ? $company[0]->Name : 'Unknown Company';
+                $companyName = (!empty($company) && isset($company->Name)) ? $company->Name : 'Unknown Company';
                 // $companyName = $company[0]->Name;
 
                 $advertisementData[] = [
