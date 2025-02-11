@@ -18,7 +18,7 @@
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard")  ?>
 
-        <main class="content">
+        <main class="main-content">
             <header class="header">
                 <div class="company-title">
                     <h1 name="company_name"><?= htmlspecialchars($companyData['company_name'] ?? '') ?></h1>

@@ -17,7 +17,7 @@
 <body>
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard")  ?>
-        <main class="content">
+        <main class="main-content">
             <header class="header">
                 <div class="header-left">
                     <i class="material-icons">menu</i>
