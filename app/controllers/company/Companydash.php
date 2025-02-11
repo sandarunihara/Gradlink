@@ -6,6 +6,7 @@ class Companydash
     public function dashboard()
     {
         $user = "";
+        $barchartdata=[];
         if (isset($_SESSION['USER'])) {
             $user = $_SESSION['USER'];
         }
@@ -18,17 +19,19 @@ class Companydash
             $hasRecruited = false;
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0]);
+            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'barchartdata'=>[]]);
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
             $numOfAdvertisements = count($data);
 
             $advertisementIds = []; // Array to store all advertisement IDs
-            // // Loop through the result set and collect advertisement IDs
             foreach ($data as $item) {
                 $advertisementIds[] = $item->advertisementId;
             }
+            // show($barchartlabel);
+            // show($advertisementIds);
+
 
             $studentIds = [];
             $shortliststudentIds = [];
@@ -38,6 +41,18 @@ class Companydash
             $hasRecruited = false;
             foreach ($advertisementIds as $id) {
                 $applystudent = $model->find(['advertisementId' => $id], 'studentadvertisement');
+                // show($applystudent);
+                // show($id);
+                if(!empty($applystudent)){
+                    $co=count($applystudent);
+                }else{
+                    $co=0;
+                }
+                $chart=[
+                    'label'=>$id,
+                    'count'=>$co
+                ];
+                $barchartdata[]=$chart;
                 if (!empty($applystudent)) {
                     if (is_array($applystudent) || is_object($applystudent)) {
                         foreach ($applystudent as $student) {
@@ -64,7 +79,7 @@ class Companydash
                             if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
                                 $hasShortlisted = true;
                             }
-
+                            
                             if ($item->Jobstatus === 'Recruit') {
                                 $hasRecruited = true;
                             }
@@ -81,11 +96,11 @@ class Companydash
             }
             $numOfapplyStudents = count($studentIds);
             $numOfshortlistStudents = count($shortliststudentIds);
-
+            
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements]);
+            
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements ,'barchartdata'=>$barchartdata]);
         }
     }
 

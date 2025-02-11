@@ -179,13 +179,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx1 = document.getElementById('myChart').getContext('2d');
+        const AdStats = <?php echo json_encode($barchartdata); ?>;
+        console.log(AdStats);
+        const labels = AdStats.map(label => label.label);
+        const data = AdStats.map(data => data.count);
         const myChart = new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: ['JAN', 'FEB', 'MAR', 'APR'],
+                labels: labels,
                 datasets: [{
                     label: 'Student Course Engagement',
-                    data: [0, 1, 10, 6, ],
+                    data:data,
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.8)', // Teal
                         'rgba(255, 159, 64, 0.8)', // Orange
@@ -216,7 +220,7 @@
 
         const ctx2 = document.getElementById('totalViewersChart').getContext('2d');
         const totalViewersChart = new Chart(ctx2, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: ['Shortlist', 'Reject', 'Pending', 'Recruit'],
                 datasets: [{
@@ -240,7 +244,7 @@
 
         const ctx3 = document.getElementById('totalViewersChart2').getContext('2d');
         const totalViewersChart2 = new Chart(ctx3, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: ['Active', 'Deactive', 'Pending'],
                 datasets: [{
