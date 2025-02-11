@@ -17,11 +17,14 @@ body {
 }
 
 .main-content {
-    flex-grow: 1;
+    flex: 1;
     padding: 30px;
-    /* background-color: #f9fcff; */
+    /* background-color: #fff; */
+    margin-left: 150px;
+    margin-right: 50px;
+    margin-top: 20px;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 }
-
 .header {
     display: flex;
     justify-content: space-between;
