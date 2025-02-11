@@ -57,119 +57,16 @@
                     </div>
                     <div class="bottomcontent">
                         <div class="d_chart">
-                            <h3>Student Applications</h3>
+                            <h3>Applications by Job Position</h3>
                             <canvas id="myChart"></canvas>
                         </div>
-
-                        <div class="d_request">
-                            <h3>Student Requests</h3>
-                            <div class="d_alllist">
-                                <ul>
-                                    <?php
-                                    if (empty($data)) {
-                                        echo '<li>No requests found</li>';
-                                    } else {
-                                        // Get the first 8 elements from $data
-                                        $firstEight = array_slice($data, 0, 6);
-
-                                        foreach ($firstEight as $item) {
-                                            $status = $item['Status'];
-                                            switch ($status) {
-                                                case 'Recruit':
-                                                    $Statusname = 'Recruit';
-                                                    $statusClass = 'status Recruit';
-                                                    break;
-                                                case 'Reject':
-                                                    $Statusname = 'Rejected';
-                                                    $statusClass = 'status Reject';
-                                                    break;
-                                                case 'Interview Scheduled':
-                                                    $Statusname = 'Scheduled';
-                                                    $statusClass = 'status Sendemail';
-                                                    break;
-                                                case 'Shortlist':
-                                                    $Statusname = 'Shortlisted';
-                                                    $statusClass = 'status Shortlist';
-                                                    break;
-                                                default:
-                                                    $Statusname = 'Pending';
-                                                    $statusClass = 'status Pending';
-                                                    break;
-                                            }
-
-                                            echo '<li>';
-                                            echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
-                                            echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
-                                            echo '<span class="' . $statusClass . '">' . htmlspecialchars(ucfirst($Statusname)) . '</span>';
-                                            echo '</li>';
-                                        }
-                                    }
-                                    ?>
-                                </ul>
-                            </div>
-                            <div class="d_view_all">
-                                <a href="../StudentsRequests/dashboard">
-                                    View All
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
+                        <div class="d_chart">
+                            <h3>Monthly application trends</h3>
+                            <canvas id="myChartfortrends"></canvas>
                         </div>
-                        <div class="d_2com">
-                            <div class="d_btn">
-                                <button class="btn">
-                                    <a href="../Advertisements/create">
-                                        <i class="fas fa-bullhorn"></i>
-                                        Create New Advertisement
-                                    </a>
-                                </button>
-                                <button class="btn">
-                                    <a href="../Advertisements/create">
-                                        <i class="fas fa-bullhorn"></i>
-                                        View Interview Schedule
-                                    </a>
-                                </button>
-                            </div>
 
-                            <div class="d_messaage">
-                                <h3>Messages</h3>
-                                <div class="d_msglist">
-                                    <?php
-                                    $details = [
-                                        "Tech Talk" => "../Messages/TechTalk",
-                                        "Intern Call" => "../Messages/pdc_message",
-                                    ];
-
-                                    $data = [
-                                        ["name" => "PDC", "detail" => "Tech Talk", "time" => "7:34 PM"],
-                                        ["name" => "PDC", "detail" => "Intern Call", "time" => "7:34 PM"],
-                                    ];
-                                    ?>
-
-                                    <?php foreach ($data as $item): ?>
-                                        <?php
-                                        $detail = $item['detail'];
-                                        $link = isset($details[$detail]) ? $details[$detail] : "#";
-                                        ?>
-                                        <a href="<?php echo $link; ?>" class="m_container">
-                                            <div class="m_de">
-                                                <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40" />
-                                                <div class="m_content">
-                                                    <span class="m_name"><?php echo $item['name']; ?></span>
-                                                    <span class="m_detail"><?php echo $detail; ?></span>
-                                                    <span class="m_time"><?php echo $item['time']; ?></span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    <?php endforeach; ?>
-                                </div>
-                                <div class="d_view_all">
-                                    <a href="../Messages/dashboard">
-                                        View All
-                                        <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        
                     </div>
 
                 </div>
@@ -188,21 +85,21 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Student Course Engagement',
+                    label: 'Applications per position',
                     data:data,
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.8)', // Teal
                         'rgba(255, 159, 64, 0.8)', // Orange
                         'rgba(255, 99, 132, 0.8)', // Red
+                        'rgba(54, 162, 235, 0.8)', // Blue
                         'rgba(153, 102, 255, 0.8)', // Purple
-                        'rgba(54, 162, 235, 0.8)' // Blue
                     ],
                     borderColor: [
                         'rgba(75, 192, 192, 1)',
                         'rgba(255, 159, 64, 1)',
                         'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
                         'rgba(153, 102, 255, 1)',
-                        'rgba(54, 162, 235, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -214,6 +111,26 @@
                         beginAtZero: true
                     }
                 }
+            }
+        });
+
+        const ctx4 = document.getElementById('myChartfortrends').getContext('2d');
+        const myChartfortrends = new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                datasets: [{
+                    label: 'Student Course Engagement',
+                    data: [0, 1, 3, 2, 5, 4, 6, 5, 4, 3, 5, 6],
+                    backgroundColor: 'rgba(58, 106, 255, 0.2)',
+                    borderColor: 'rgba(58, 106, 255, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
             }
         });
 
