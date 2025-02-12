@@ -147,6 +147,14 @@
     <?php }?>
 <?php }?>
 
+<?php if(array_key_exists('isLimit', $_SESSION)){ ?>
+    <?php if($_SESSION['isLimit']){?>
+        <script>
+            errorToast("You have reached the limit of 5 applications for this round");
+        </script>
+    <?php } ?>
+    <?php unset($_SESSION['isLimit']);?>
+<?php }?>
 <!-- script for popup box -->
 <script>
     // Get references to elements
