@@ -12,111 +12,125 @@
 
 <body class="body">
     <div class="dashboard">
-
+        <div class="side">
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
+        </div>
         <div id="content">
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Advertisements</h1>
+                        <h1>Create Advertisement</h1>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="main_container">
-                    <div class="sc">
-                        <a href="../Advertisements/dashboard" class="sc_container">
-                            <i class="fas fa-chevron-left"></i>
-                            <h3>Create Interview Schedule</h3>
-                        </a>
-                    </div>
                     <!-- Form data -->
                     <form id="ad-form" class="sub_container" method="POST" action="" enctype="multipart/form-data">
-                        <div class="position">
-                            <h4>Position:</h4>
-                            <select id="position" name="position" required>
-                                <option value="" disabled selected>Select a position</option>
-                                <option value="Quality Assurance">Quality Assurance</option>
-                                <option value="Software Engineer">Software Engineer</option>
-                                <option value="Web Developer">Web Developer</option>
-                                <option value="Data Science">Data Science</option>
-                                <option value="Machine Learning">Machine Learning</option>
-                                <option value="Data Analyst">Data Analyst</option>
-                                <option value="Full Stack Developer">Full Stack Developer</option>
-                                <option value="Backend Developer">Backend Developer</option>
-                                <option value="Frontend Developer">Frontend Developer</option>
-                                <option value="DevOps Engineer">DevOps Engineer</option>
-                                <option value="Cloud Architect">Cloud Architect</option>
-                                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
-                                <option value="AI Engineer">AI Engineer</option>
-                                <option value="Mobile App Developer">Mobile App Developer</option>
-                                <option value="Blockchain Developer">Blockchain Developer</option>
-                                <option value="Game Developer">Game Developer</option>
-                                <option value="UI/UX Designer">UI/UX Designer</option>
-                                <option value="Product Manager">Product Manager</option>
-                                <option value="System Administrator">System Administrator</option>
-                                <option value="Network Engineer">Network Engineer</option>
-                                <option value="Technical Support Engineer">Technical Support Engineer</option>
-                                <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
-                                <option value="Cloud Engineer">Cloud Engineer</option>
-                                <option value="Software Architect">Software Architect</option>
-                                <option value="Solutions Architect">Solutions Architect</option>
-                                <option value="IT Consultant">IT Consultant</option>
-                                <option value="Quality Engineer">Quality Engineer</option>
-                                <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
-                                <option value="RPA Developer">RPA Developer</option>
-                                <option value="ERP Consultant">ERP Consultant</option>
-                                <option value="Salesforce Developer">Salesforce Developer</option>
-                                <option value="SAP Consultant">SAP Consultant</option>
+                        <a href="../Advertisements/dashboard" class="sc_container">
+                            <i class="fas fa-chevron-left"></i>
+                            <h3>BACK</h3>
+                        </a>
+                        <div class="addcon">
 
-                            </select>
+                            <!-- <?php echo ROOT ?>/assets/img/Company/ad.jpg -->
+                            <!-- <div class="addimg">
+                                <h4>Add Image:</h4>
+                                <label for="image" class="custom-file-upload">
+                                    <i class="fas fa-upload"></i> Choose an Image
+                                </label>
+                                <input type="file" accept="image/png, image/jpeg, image/jpg" id="image" name="image" required />
+                                <span id="file-name">No file chosen</span>
+                            </div> -->
+                            <div class="small_container">
+                                <div class="position">
+                                    <h4>Position:</h4>
+                                    <select id="position" name="position" required>
+                                        <option value="" disabled selected>Select a position</option>
+                                        <option value="Quality Assurance">Quality Assurance</option>
+                                        <option value="Software Engineer">Software Engineer</option>
+                                        <option value="Web Developer">Web Developer</option>
+                                        <option value="Data Science">Data Science</option>
+                                        <option value="Machine Learning">Machine Learning</option>
+                                        <option value="Data Analyst">Data Analyst</option>
+                                        <option value="Full Stack Developer">Full Stack Developer</option>
+                                        <option value="Backend Developer">Backend Developer</option>
+                                        <option value="Frontend Developer">Frontend Developer</option>
+                                        <option value="DevOps Engineer">DevOps Engineer</option>
+                                        <option value="Cloud Architect">Cloud Architect</option>
+                                        <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                                        <option value="AI Engineer">AI Engineer</option>
+                                        <option value="Mobile App Developer">Mobile App Developer</option>
+                                        <option value="Blockchain Developer">Blockchain Developer</option>
+                                        <option value="Game Developer">Game Developer</option>
+                                        <option value="UI/UX Designer">UI/UX Designer</option>
+                                        <option value="Product Manager">Product Manager</option>
+                                        <option value="System Administrator">System Administrator</option>
+                                        <option value="Network Engineer">Network Engineer</option>
+                                        <option value="Technical Support Engineer">Technical Support Engineer</option>
+                                        <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
+                                        <option value="Cloud Engineer">Cloud Engineer</option>
+                                        <option value="Software Architect">Software Architect</option>
+                                        <option value="Solutions Architect">Solutions Architect</option>
+                                        <option value="IT Consultant">IT Consultant</option>
+                                        <option value="Quality Engineer">Quality Engineer</option>
+                                        <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
+                                        <option value="RPA Developer">RPA Developer</option>
+                                        <option value="ERP Consultant">ERP Consultant</option>
+                                        <option value="Salesforce Developer">Salesforce Developer</option>
+                                        <option value="SAP Consultant">SAP Consultant</option>
+
+                                    </select>
+                                </div>
+                                <div class="perioddeadline">
+                                    <div class="period">
+                                        <h4>Application deadline:</h4>
+                                        <input type="date" id="deadline" name="deadline" required />
+                                    </div>
+                                </div>
+
+                                <div class="interns">
+                                    <h4>No of interns:</h4>
+                                    <div class="number-input">
+                                        <button class="fbtn" type="button" onclick="decrement()">-</button>
+                                        <input type="text" id="interns" name="interns" value="5" readonly required>
+                                        <button class="sbtn" type="button" onclick="increment()">+</button>
+                                    </div>
+                                </div>
+                                <div class="position">
+                                    <h4>Work type:</h4>
+                                    <select id="worktype" name="worktype" required>
+                                        <option value="" disabled selected>Select a worktype</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="Onsite">Onsite</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                        <option value="Flexible">Flexible</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="addimg">
+                                <label for="image" class="file-upload">
+                                    <img
+                                        src="<?php echo ROOT ?>/assets/img/Company/ad.png"
+                                        id="Preview"
+                                        alt="Preview" />
+                                    <p id="chooseText">Choose an Image</p>
+                                </label>
+                                <input type="file" name="image" id="image" accept="image/*" required style="display: none;" onchange="previewImage(event, 'Preview')">
+                            </div>
                         </div>
+
                         <div class="details">
                             <div>
                                 <h4>Description:</h4>
-                                <textarea name="description" id="description" cols="50" rows="10" required></textarea>
+                                <textarea name="description" id="description" cols="100" rows="10" required></textarea>
                             </div>
                             <div>
                                 <h4>Qualifications:</h4>
-                                <textarea name="qualifications" id="qualifications" cols="50" rows="10" required></textarea>
+                                <textarea name="qualifications" id="qualifications" cols="100" rows="10" required></textarea>
                             </div>
                         </div>
-                        <div class="perioddeadline">
-                            <div class="period">
-                                <h4>Application deadline:</h4>
-                                <input type="date" id="deadline" name="deadline" required />
-                            </div>
-                        </div>
-
-                        <div class="internt">
-                            <div class="interns">
-                                <h4>No of interns:</h4>
-                                <div class="number-input">
-                                    <button class="fbtn" type="button" onclick="decrement()">-</button>
-                                    <input type="text" id="interns" name="interns" value="5" readonly required>
-                                    <button class="sbtn" type="button" onclick="increment()">+</button>
-                                </div>
-                            </div>
-                            <div class="position">
-                                <h4>Work type:</h4>
-                                <select id="worktype" name="worktype" required>
-                                    <option value="" disabled selected>Select a worktype</option>
-                                    <option value="Remote">Remote</option>
-                                    <option value="Onsite">Onsite</option>
-                                    <option value="Hybrid">Hybrid</option>
-                                    <option value="Flexible">Flexible</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="addimg">
-                            <h4>Add Image:</h4>
-                            <label for="image" class="custom-file-upload">
-                                <i class="fas fa-upload"></i> Choose an Image
-                            </label>
-                            <input type="file" accept="image/png, image/jpeg, image/jpg" id="image" name="image" required />
-                            <span id="file-name">No file chosen</span>
-                        </div>
-
                         <button type="submit" class="sc_btn" onclick="validateAndShowModal(event)">
-                            Create
+                            Post
                         </button>
                     </form>
                 </div>
@@ -148,7 +162,6 @@
                         <p></p>
                     </div>
                 </div>
-
                 <div class="Description">
                     <h4>Description:</h4>
                     <div class="d-details">
@@ -165,7 +178,6 @@
                     <button class="yes-btn" onclick="submitForm()">Post</button>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -300,6 +312,26 @@
         function submitForm() {
             document.getElementById('ad-form').submit();
             successToast("Advertisement created successfully");
+        }
+
+        function previewImage(event, previewId) {
+            const file = event.target.files[0];
+            const preview = document.getElementById(previewId);
+            const chooseText = document.getElementById("chooseText");
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.add("preview-active"); // Expand to 100% when an image is uploaded
+                    chooseText.classList.add("hidden"); // Hide the "Choose an Image" text
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "<?php echo ROOT ?>/assets/img/Company/ad.png";
+                preview.classList.remove("preview-active"); // Reset to 20% when no image is selected
+                chooseText.classList.remove("hidden"); // Show the "Choose an Image" text again
+            }
         }
     </script>
 </body>

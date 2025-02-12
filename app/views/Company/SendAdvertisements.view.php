@@ -41,9 +41,8 @@
                                         <?php endif; ?>
                                     </div>
                                     <div class="inform">
-                                        <div>
+                                        <div class="info">
                                             <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
-                                            <!-- <h4>Internship Period:<span><?php echo $data[0]->period ?></span></h4> -->
                                             <h4>No of interns:<span><?php echo $data[0]->numOfInterns ?></span></h4>
                                             <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
