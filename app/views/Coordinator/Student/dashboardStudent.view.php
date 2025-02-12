@@ -64,7 +64,7 @@
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['degree'] : $student->degree) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_email'] : $student->student_email) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['contact_no'] : $student->contact_no) ?></td>
-                                    <td><button class="view-btn">View</button></td>
+                                    <td><button class="view-btn" onclick="navigateToStudentProfile('<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>');">View</button></td>
                                     <!-- View -> Go to the student profile -->
                                 </tr>
                             <?php endforeach ?>
