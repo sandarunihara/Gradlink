@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Schedule Interviews"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <a href="<?=ROOT?>/Student/StudentDash/dashboard" class="backreq">

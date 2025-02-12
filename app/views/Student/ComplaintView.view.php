@@ -21,7 +21,7 @@
         $status = $data['Complaint'] -> Status;
         $delete = $data['Complaint'] -> Delete;
     ?>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader" , ["title" => "Complaint"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <a href="<?=ROOT?>/Student/StudentComplaint/complaint/0" class="backreq">
