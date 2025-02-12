@@ -35,6 +35,9 @@ class Companydash
 
             $studentIds = [];
             $shortliststudentIds = [];
+            $pendingstudentIds = [];
+            $recruitstudentIds = [];
+            $rejectstudentIds = [];
             $reqdata = [];
             $shortliststudent = [];
             $hasShortlisted = false;
@@ -63,10 +66,40 @@ class Companydash
                     $ss = [];
                 }
                 $shortliststudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Shortlist'], 'studentadvertisement');
+                $pendingstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Pending'], 'studentadvertisement');
+                $recruitstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Recruit'], 'studentadvertisement');
+                $rejectstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Reject'], 'studentadvertisement');
                 if (!empty($shortliststudent)) {
                     if (is_array($shortliststudent) || is_object($shortliststudent)) {
                         foreach ($shortliststudent as $student) {
                             $shortliststudentIds[] = $student->StudentId;
+                        }
+                    }
+                } else {
+                    $ss = [];
+                }
+                if (!empty($pendingstudent)) {
+                    if (is_array($pendingstudent) || is_object($pendingstudent)) {
+                        foreach ($pendingstudent as $student) {
+                            $pendingstudentIds[] = $student->StudentId;
+                        }
+                    }
+                } else {
+                    $ss = [];
+                }
+                if (!empty($recruitstudent)) {
+                    if (is_array($recruitstudent) || is_object($recruitstudent)) {
+                        foreach ($recruitstudent as $student) {
+                            $recruitstudentIds[] = $student->StudentId;
+                        }
+                    }
+                } else {
+                    $ss = [];
+                }
+                if (!empty($rejectstudent)) {
+                    if (is_array($rejectstudent) || is_object($rejectstudent)) {
+                        foreach ($rejectstudent as $student) {
+                            $rejectstudentIds[] = $student->StudentId;
                         }
                     }
                 } else {
@@ -96,11 +129,22 @@ class Companydash
             }
             $numOfapplyStudents = count($studentIds);
             $numOfshortlistStudents = count($shortliststudentIds);
+            $numOfpendingStudents = count($pendingstudentIds);
+            $numOfrecruitStudents = count($recruitstudentIds);
+            $numOfrejectStudents = count($rejectstudentIds);
+
+            $studentstatuschart=[
+                ['label'=>'Shortlist','count'=>$numOfshortlistStudents],
+                ['label'=>'Pending','count'=>$numOfpendingStudents],
+                ['label'=>'Recruit','count'=>$numOfrecruitStudents],
+                ['label'=>'Reject','count'=>$numOfrejectStudents]
+            ];
+
             
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
             
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements ,'barchartdata'=>$barchartdata]);
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements ,'barchartdata'=>$barchartdata,'numOfpendingStudents'=>$numOfpendingStudents,'numOfrecruitStudents'=>$numOfrecruitStudents,'numOfrejectStudents'=>$numOfrejectStudents,'studentstatuschart'=>$studentstatuschart]);
         }
     }
 
