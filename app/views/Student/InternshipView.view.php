@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Internships"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <a href="<?=ROOT?>/Student/StudentAd/advertisement" class="backreq">

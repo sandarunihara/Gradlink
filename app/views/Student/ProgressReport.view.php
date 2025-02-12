@@ -14,7 +14,7 @@
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Progress Report"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="progress-report-navbar">

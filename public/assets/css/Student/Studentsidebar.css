@@ -1,71 +1,131 @@
-/* Sidebar Styling */
-.sidebar {
-    background-color: #E9EDFF;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 250px;
-    height: calc(100vh - 100px); /* Full height minus the navbar height */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px 10px;
-    overflow-y: auto; /* Add scrolling for longer sidebars */
-    z-index: 1000;
-}
 
-/* Sidebar Menu Items */
-.sidebar-menu {
+.sidebar {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Space between menu items */
-}
-
-.menu-item {
-    display: flex;
     align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: black;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.menu-item i {
-    font-size: 18px;
-    color: black; /* Icon color */
-}
-
-.menu-item:hover {
-    background-color:#007bff;
-}
-
-.menu-item i:hover {
-    color: #007bff; /* Blue icon on hover */
-}
-
-/* Logout Button */
-.menu-item.logout {
-    margin-top: auto; /* Push logout button to the bottom */
-    color: #dc3545; /* Red text */
-}
-
-.menu-item.logout:hover {
-    background-color: #f8d7da; /* Light red background on hover */
-    color: #c82333; /* Darker red text on hover */
-}
-
-/* Toggle Icon */
-.toggle-container {
+    justify-content:flex-start;
+    position: fixed;
+    padding: 20px 15px;
+    background-color: rgb(10, 10, 30);
+  }
+  
+  .profile {
+    margin-bottom: 0;
+  }
+  
+  .profile img {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .menu ul {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px 15px;
-}
-
-.toggle-container i {
-    font-size: 20px;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    gap: 12px; /* Space between each list item */
+    text-align: center;
+    margin-top: 50px; /* Adjust this value to control the distance from the profile picture */
+  }
+  
+.menu  ul li {
+    position: relative;
+    padding: 10px 0;
+  }
+  
+  .menu  ul li:hover i {
+    color: white;
+    transform: scale(1.4);
+  }
+  
+  .menu  ul li.active i {
+    color: rgb(187, 189, 215);
+    transform: scale(1.4);
+  }
+  
+  .menu  ul li i {
+    color: white;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .menu  ul li::after {
+    content: attr(data-title);
+    position: absolute;
+    top: 50%;
+    left: 120%; /* Adjust tooltip positioning */
+    transform: translateY(-50%);
+    background-color: white; /* White background for tooltip */
+    color: black; /* Black text for contrast */
+    padding: 8px 12px; /* Padding for a clean look */
+    border-radius: 20px; 
+    white-space: nowrap;
+    font-size: 14px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    opacity: 0; 
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1;
+    margin-left: 10px;
+  }
+  
+  
+  /* Show tooltip and arrow on hover */
+  .menu  ul li:hover::after,
+  .menu  ul li:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0); /* Smooth appearance */
+  }
+  
+  .logout {
+    position: relative; /* Required for ::after to position correctly */
+    margin-top: 80px;
+    display: flex; /* To align icon properly */
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .logout i {
+    color: white;
+    transition: all 0.3s ease-in-out; /* Smooth hover effects */
+  }
+  
+  .logout:hover i {
+    transform: scale(1.4);
+  }
+  
+  .logout::after {
+    content: attr(data-title);
+    position: absolute;
+    top: 50%;
+    left: 120%; /* Adjust tooltip positioning */
+    transform: translateY(-50%);
+    background-color: white;
     color: black;
-}
-.toggle-container i:hover {
-    cursor: pointer;
-    color: #007bff; /* Blue icon on hover */
-}
+    padding: 8px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1;
+    margin-left: 10px;
+  }
+  
+  .logout:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  .menu  ul li.active i {
+    color: #bbbddd;
+    transform: scale(1.4);
+    transition: all 0.3s ease-in-out;
+  }
+  
