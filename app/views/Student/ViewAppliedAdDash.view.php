@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Internship"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="sub_container">

@@ -17,6 +17,7 @@
         public function renderComponent($componentName, $componentProps = []){
             $fileName = "../app/views/Components/" . $componentName . ".view.php";
             if (file_exists($fileName)) {
+                extract($componentProps);
                 require $fileName;
             } else {
                 echo "Component not found";
