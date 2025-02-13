@@ -11,4 +11,26 @@
             'StudentId',
             'Skill',
         ];
+
+        public function insertSkill($studentId , $skills){
+            try{
+                $values = [];
+                foreach ($skills as $skill) {
+                    $values[] = "('$studentId', '" . htmlspecialchars($skill, ENT_QUOTES, 'UTF-8') . "')";
+                }
+            
+                // Convert the array into a string of comma-separated values
+                $query = "
+                    INSERT INTO student_skill (StudentId, Skill) 
+                    VALUES " . implode(',', $values) . ";";
+                
+                // Execute the query
+                $result = $this->query($query);
+                return 1;
+            }catch(Exception $e){
+                //show($e -> getMessage());
+                return 0;
+            }
+
+        }
     }
