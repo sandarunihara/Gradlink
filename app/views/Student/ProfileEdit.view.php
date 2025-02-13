@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Profile Edit"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <a href="<?=ROOT?>/Student/StudentProfile/profile" class="backreq">
@@ -53,7 +53,7 @@
                 <div class="box2">
                     <label for="skill">Skills</label>
                     <!-- Skills Input -->
-                    <input 
+                    <!-- <input 
                         type="text"
                         id="skill"
                         name="Skill"
@@ -63,7 +63,13 @@
                                         echo htmlspecialchars($skill -> Skill) . ","; 
                                     } 
                                 ?>"
-                    >
+                    > -->
+                    <input type="checkbox" id="skill1" name="skill1" value="JavaScript">
+                    <label for="skill1">JavaScript (JS)</label><br>
+                    <input type="checkbox" id="skill2" name="skill2" value="Python">
+                    <label for="skill2">Python</label><br>
+                    <input type="checkbox" id="skill3" name="skill3" value="Java">
+                    <label for="skill3">Java</label><br>
                 </div>
 
                 <div class="box3">

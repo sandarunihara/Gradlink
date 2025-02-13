@@ -36,7 +36,7 @@
 .addcon {
   display: flex;
   align-items: center;
-    gap: 70px;
+  gap: 70px;
   /* justify-content: space-evenly; */
 }
 .addimg {
@@ -109,8 +109,8 @@
   /* justify-content: space-evenly; */
   /* width: 100%; */
 }
-.details div{
-    width: 50%;
+.details div {
+  width: 50%;
 }
 .details textarea {
   border-radius: 5px;
@@ -205,9 +205,9 @@ input[type="file"] {
 }
 
 .sc_btn {
-    width: fit-content;
-    padding: 10px 50px;
-    margin-left: 20px;
+  width: fit-content;
+  padding: 10px 50px;
+  margin-left: 20px;
   border-radius: 8px;
   border: none;
   background-color: #007bff;
@@ -221,7 +221,6 @@ input[type="file"] {
 }
 
 /* Modal */
-
 .modal {
   display: none;
   position: fixed;
@@ -231,7 +230,7 @@ input[type="file"] {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -318,9 +317,9 @@ input[type="file"] {
 }
 
 .inform {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding-left: 15px;
   width: 50%;
   box-shadow: 1px -1px 1px rgba(28, 28, 28, 0.25); /* Horizontal and vertical offset to right and bottom */
