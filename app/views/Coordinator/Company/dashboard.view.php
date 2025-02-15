@@ -30,28 +30,24 @@
                     <h1>Dashboard</h1>
                 </div>
 
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
+                
             </header>
 
             <div class='round-type '>1st Round</div>
 
 
             <div class="main-body">
+                <?php 
+                    if(!empty($dashboardDetails)):
+                ?>
                 <div class="main-cards">
                     <div class='card' onclick='navigateToCompanyList();'>
                         <div class='card-inner'>
                             <i class="material-icons">business</i>
                             <h3>Company</h3>
                         </div>
-                        <h1>35</h1>
+                        <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
+                        
                     </div>
 
                     <div class='card' onclick='navigateToStudentList();'>
@@ -80,6 +76,10 @@
                         <div id="curve_chart" style="width: 90%; height: 300px;"></div>
                     </div>
                 </div>
+
+                <?php else: ?>
+                    <p>Empty Data</p>
+                <?php endif; ?>
 
             </div>
 
