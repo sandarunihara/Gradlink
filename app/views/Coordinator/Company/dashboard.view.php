@@ -55,7 +55,7 @@
                             <i class="material-icons">school </i>
                             <h3>Student</h3>
                         </div>
-                        <h1>317</h1>
+                        <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
                     </div>
                 </div>
                 <div class="analysis-container">

@@ -5,7 +5,11 @@ class Dashboard
     public function index()
     {
         $companyModel = new company;
+        $studentModel = new Student;
+
         $totalCompanies = $companyModel->getTotalCount();
+        $totalStudents = $studentModel->count();
+
         if (empty($totalCompanies)) {
             $this->view('Coordinator/Company/dashboard');
         }else{
@@ -13,6 +17,7 @@ class Dashboard
 
             $dashboardData = [
                 'companyCount' => $totalCompanies ?? 0,
+                'studentCount'=> $totalStudents ??0,
             ];
 
 
