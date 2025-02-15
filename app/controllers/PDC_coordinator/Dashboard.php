@@ -6,9 +6,11 @@ class Dashboard
     {
         $companyModel = new company;
         $studentModel = new Student;
+        $advertisementModel = new C_Advertisement;
 
         $totalCompanies = $companyModel->getTotalCount();
         $totalStudents = $studentModel->count();
+        $totalAdvertisements = $advertisementModel->OngoingAdvertisementCount();
 
         if (empty($totalCompanies)) {
             $this->view('Coordinator/Company/dashboard');
@@ -18,6 +20,7 @@ class Dashboard
             $dashboardData = [
                 'companyCount' => $totalCompanies ?? 0,
                 'studentCount'=> $totalStudents ??0,
+                'ongoingAdvertisementCount'=> $totalAdvertisements ??0,
             ];
 
 

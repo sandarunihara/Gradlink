@@ -57,6 +57,14 @@
                         </div>
                         <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
                     </div>
+                    <div class='card' onclick='navigateToDashboardCompany();'>
+                        <div class='card-inner'>
+                            <i class="material-icons">featured_video</i>
+                            <h3>Ongoing Advertisements</h3>
+                        </div>
+                        <h1><?php echo $dashboardDetails['ongoingAdvertisementCount'] ?? 0; ?></h1>
+                        
+                    </div>
                 </div>
                 <div class="analysis-container">
                     <div class="recruitment-analysis">
