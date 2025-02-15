@@ -4,6 +4,29 @@ class Dashboard
     use Controller;
     public function index()
     {
-        $this->view('Coordinator/Company/dashboard');
+        $companyModel = new company;
+        $studentModel = new Student;
+        $advertisementModel = new C_Advertisement;
+
+        $totalCompanies = $companyModel->getTotalCount();
+        $totalStudents = $studentModel->count();
+        $totalAdvertisements = $advertisementModel->OngoingAdvertisementCount();
+
+        if (empty($totalCompanies)) {
+            $this->view('Coordinator/Company/dashboard');
+        }else{
+            $dashboardData = [];
+
+            $dashboardData = [
+                'companyCount' => $totalCompanies ?? 0,
+                'studentCount'=> $totalStudents ??0,
+                'ongoingAdvertisementCount'=> $totalAdvertisements ??0,
+            ];
+
+
+            $this->view('Coordinator/Company/dashboard', ['dashboardDetails'=> $dashboardData]);
+        }
+
+        
     }
 }
