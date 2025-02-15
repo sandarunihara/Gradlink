@@ -41,7 +41,7 @@
                     if(!empty($dashboardDetails)):
                 ?>
                 <div class="main-cards">
-                    <div class='card' onclick='navigateToCompanyList();'>
+                    <div class='card' onclick='navigateToDashboardCompany();'>
                         <div class='card-inner'>
                             <i class="material-icons">business</i>
                             <h3>Company</h3>
@@ -50,7 +50,7 @@
                         
                     </div>
 
-                    <div class='card' onclick='navigateToStudentList();'>
+                    <div class='card' onclick='navigateToDashboardStudent();'>
                         <div class='card-inner'>
                             <i class="material-icons">school </i>
                             <h3>Student</h3>
@@ -150,6 +150,7 @@
                 curveChart.draw(dataCurve, optionsCurve);
             }
         </script>
+        
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>
 
