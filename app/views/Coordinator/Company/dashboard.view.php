@@ -75,13 +75,13 @@
 
                             <div class="graphs">
                                 <div id="recruitment_CS" style="height: 370px; width: 100%;"></div>
-                                <div id="recruitment_IS" style="height: 370px; width: 100%;"></div>
+                                <div id="recruitment_IS" style="height: 370px; width: 100%; margin-top: 20px;"></div>
                             </div>
                         </div>
 
                         <div class="company-performance">
                             <div class="title">
-                                <p>Company Performance Analysis</p>
+                                <p>Internships Offered by Companies</p>
                             </div>
                             <div id="curve_chart" style="width: 90%; height: 300px;"></div>
                         </div>
@@ -95,7 +95,7 @@
 
         </main>
 
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             google.charts.load("current", {
                 packages: ["corechart"]
             });
@@ -159,7 +159,7 @@
                 var curveChart = new google.visualization.LineChart(document.getElementById('curve_chart'));
                 curveChart.draw(dataCurve, optionsCurve);
             }
-        </script>
+        </script> -->
 
         <script>
 
@@ -182,6 +182,7 @@
                 window.onload = function () {
 
                     var chart1 = new CanvasJS.Chart("recruitment_CS", {
+                        backgroundColor: "#EEF3F3",
                         theme: "light2",
                         animationEnabled: true,
                         subtitles: [
@@ -203,7 +204,8 @@
                     });
 
                     var chart2 = new CanvasJS.Chart("recruitment_IS", {
-                        theme: "light1",
+                        backgroundColor: "#EEF3F3",
+                        theme: "light2",
                         animationEnabled: true,
                         subtitles: [
                             {

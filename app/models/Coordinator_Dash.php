@@ -132,6 +132,17 @@ class Coordinator_Dash
         }
     }
 
+    public function jobRoles(): mixed
+    {
+        try {
+            $query = "SELECT position, COUNT(*) as count FROM advertisement GROUP BY position";
 
+            $result = $this->query($query);
+            return $result;
+        }catch (Exception $e) {
+            error_log("Error fetching job roles: " . $e->getMessage());
+            return false;
+        }
+    }
 
 }

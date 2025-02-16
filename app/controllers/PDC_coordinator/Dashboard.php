@@ -23,6 +23,8 @@ class Dashboard
         $recruitedISCount = $coordinatorModel->recruitedISCount();
         $ISCount = $coordinatorModel->totalISCount();
 
+        $jobRolesData = $coordinatorModel->jobRoles();
+
 
         if ($totalCompanies === null || $totalStudents === null || $totalAdvertisements === null) {
             $this->view('Coordinator/Company/dashboard');
@@ -62,10 +64,10 @@ class Dashboard
             ];
 
             // echo '<pre>';
-            // print_r($applicationGraph);
+            // print_r($jobRolesData);
             // echo '</pre>';
 
-            $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'applicationAnalysis' => $applicationGraph]);
+            $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'applicationAnalysis' => $applicationGraph, 'InternPositions'=> $jobRolesData]);
         }
 
 
