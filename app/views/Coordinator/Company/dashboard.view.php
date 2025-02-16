@@ -173,13 +173,18 @@
                     array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
                 );
 
-                    ?>
+                ?>
                 window.onload = function () {
 
                     var chart = new CanvasJS.Chart("chartContainer", {
                         theme: "light2",
                         animationEnabled: true,
-                        
+                        subtitles: [
+                            {
+                                text: "Computer Science Degree",
+                                fontSize: 20,
+                            }
+                        ],
                         data: [{
                             type: "doughnut",
                             radius: "90%",
@@ -197,7 +202,7 @@
 
             <?php else: ?>
                 console.warn("No application analysis data available.");
-                    <?php endif; ?>
+            <?php endif; ?>
 
         </script>
 
