@@ -168,7 +168,7 @@
             if (!empty($applicationAnalysis)):
                 $applicationGraphPoints = array(
                     array("label" => "Pending", "symbol" => "P", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
-                )
+                );
 
                     ?>
                 window.onload = function () {
@@ -195,8 +195,7 @@
                 }
 
             <?php else: ?>
-                    <p> Empty Data </p>
-                    
+                console.warn("No application analysis data available.");
                     <?php endif; ?>
 
         </script>
