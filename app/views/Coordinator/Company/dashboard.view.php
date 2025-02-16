@@ -83,7 +83,7 @@
                             <div class="title">
                                 <p>Internships Offered by Companies</p>
                             </div>
-                            <div id="curve_chart" style="width: 90%; height: 300px;"></div>
+                            <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div>
                         </div>
                     </div>
 
@@ -179,6 +179,13 @@
                     array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedISCount'] ?? '')),
                 );
                 ?>
+
+                var jobRolesData = <?php echo json_encode($InternPositions, JSON_NUMERIC_CHECK); ?>;
+                var formattedJobRoles = jobRolesData.map(role => ({
+                    y: role.count,
+                    label: role.position
+                }));
+
                 window.onload = function () {
 
                     var chart1 = new CanvasJS.Chart("recruitment_CS", {
@@ -224,8 +231,30 @@
                             dataPoints: <?php echo json_encode($applicationISGraphPoints, JSON_NUMERIC_CHECK); ?>
                         }]
                     });
+
+                    var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
+                        backgroundColor: "#EEF3F3",
+                        animationEnabled: true,
+                        // title: {
+                        //     text: "Job Roles Offered by Companies"
+                        // },
+                        axisY: {
+                            title: "Number of Job Openings",
+                            includeZero: true
+                        },
+                        data: [{
+                            type: "bar",
+                            indexLabel: "{y}",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontWeight: "bolder",
+                            indexLabelFontColor: "white",
+                            dataPoints: formattedJobRoles
+                        }]
+                    });
+
                     chart1.render();
                     chart2.render();
+                    chart3.render();
 
                 }
 
