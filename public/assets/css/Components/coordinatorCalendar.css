@@ -1,0 +1,84 @@
+/* General Calendar Styles */
+.calendar-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+#calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+    font-size: 1em;
+    width: 100%;
+}
+
+.calendar-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    position: relative;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+.session-label {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+/* Modal Styles */
+.schedule-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.schedule-modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    max-width: 400px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
