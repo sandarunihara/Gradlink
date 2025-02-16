@@ -74,7 +74,8 @@
                             </div>
 
                             <div class="graphs">
-                                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                <div id="recruitment_CS" style="height: 370px; width: 100%;"></div>
+                                <div id="recruitment_IS" style="height: 370px; width: 100%;"></div>
                                 <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
                                 <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
                             </div>
@@ -166,17 +167,23 @@
 
             <?php
             if (!empty($applicationAnalysis)):
-                $applicationGraphPoints = array(
+                $applicationCSGraphPoints = array(
                     array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
                     array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
                     array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
                     array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
                 );
 
+                $applicationISGraphPoints = array(
+                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
+                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
+                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
+                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
+                );
                 ?>
                 window.onload = function () {
 
-                    var chart = new CanvasJS.Chart("chartContainer", {
+                    var chart1 = new CanvasJS.Chart("recruitment_CS", {
                         theme: "light2",
                         animationEnabled: true,
                         subtitles: [
@@ -193,10 +200,32 @@
                             yValueFormatString: "#,##0.0\"%\"",
                             showInLegend: true,
                             legendText: "{label} : {y}",
-                            dataPoints: <?php echo json_encode($applicationGraphPoints, JSON_NUMERIC_CHECK); ?>
+                            dataPoints: <?php echo json_encode($applicationCSGraphPoints, JSON_NUMERIC_CHECK); ?>
                         }]
                     });
-                    chart.render();
+
+                    var chart2 = new CanvasJS.Chart("recruitment_IS", {
+                        theme: "light2",
+                        animationEnabled: true,
+                        subtitles: [
+                            {
+                                text: "Information Systems Degree",
+                                fontSize: 20,
+                            }
+                        ],
+                        data: [{
+                            type: "doughnut",
+                            radius: "90%",
+                            innerRadius: "50%",
+                            indexLabel: "{symbol} - {y}",
+                            yValueFormatString: "#,##0.0\"%\"",
+                            showInLegend: true,
+                            legendText: "{label} : {y}",
+                            dataPoints: <?php echo json_encode($applicationISGraphPoints, JSON_NUMERIC_CHECK); ?>
+                        }]
+                    });
+                    chart1.render();
+                    chart2.render();
 
                 }
 
