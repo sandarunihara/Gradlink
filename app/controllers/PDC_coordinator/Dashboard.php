@@ -15,13 +15,14 @@ class Dashboard
 
         $pendingCSCount = $coordinatorModel->pendingCSCount();
         $rejectedCSCount = $coordinatorModel->rejectedCSCount();
+        $recruitedCSCount = $coordinatorModel->recruitedCSCount();
 
         if ($totalCompanies === null || $totalStudents === null || $totalAdvertisements === null) {
             $this->view('Coordinator/Company/dashboard');
             return;
         }
 
-        if ($pendingCSCount === null || $rejectedCSCount === null) {
+        if ($pendingCSCount === null || $rejectedCSCount === null || $recruitedCSCount === null) {
             $this->view('Coordinator/Company/dashboard');
             return;
         }
@@ -38,6 +39,8 @@ class Dashboard
             $applicationGraph = [
                 'pendingCSCount' => $pendingCSCount ?? 0,
                 'rejectedCSCount' => $rejectedCSCount ?? 0,
+                'recruitedCSCount'=> $recruitedCSCount ?? 0,
+                
             ];
 
             // echo '<pre>';

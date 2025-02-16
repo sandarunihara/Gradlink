@@ -167,8 +167,9 @@
             <?php
             if (!empty($applicationAnalysis)):
                 $applicationGraphPoints = array(
-                    array("label" => "Pending", "symbol" => "P", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
-                    array("label" => "Rejected", "symbol" => "R", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
+                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
+                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
+                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
                 );
 
                     ?>
