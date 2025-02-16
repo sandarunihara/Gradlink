@@ -14,13 +14,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 </head>
 
 <body>
 
     <div class="container">
-        <?php $this->renderComponent("coordinatorDashboard")  ?>
+        <?php $this->renderComponent("coordinatorDashboard") ?>
 
 
         <main class="main-content">
@@ -30,60 +31,62 @@
                     <h1>Dashboard</h1>
                 </div>
 
-                
+
             </header>
 
             <div class='round-type '>1st Round</div>
 
 
             <div class="main-body">
-                <?php 
-                    if(!empty($dashboardDetails)):
-                ?>
-                <div class="main-cards">
-                    <div class='card' onclick='navigateToDashboardCompany();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">business</i>
-                            <h3>Company</h3>
-                        </div>
-                        <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
-                        
-                    </div>
+                <?php
+                if (!empty($dashboardDetails)):
+                    ?>
+                    <div class="main-cards">
+                        <div class='card' onclick='navigateToDashboardCompany();'>
+                            <div class='card-inner'>
+                                <i class="material-icons">business</i>
+                                <h3>Company</h3>
+                            </div>
+                            <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
 
-                    <div class='card' onclick='navigateToDashboardStudent();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">school </i>
-                            <h3>Student</h3>
                         </div>
-                        <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
-                    </div>
-                    <div class='card' onclick='navigateToDashboardCompany();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">featured_video</i>
-                            <h3>Ongoing Advertisements</h3>
-                        </div>
-                        <h1><?php echo $dashboardDetails['ongoingAdvertisementCount'] ?? 0; ?></h1>
-                        
-                    </div>
-                </div>
-                <div class="analysis-container">
-                    <div class="recruitment-analysis">
-                        <div class="title">
-                            <p>Recruitment Analysis</p>
-                        </div>
-                        <div class="graphs">
-                            <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
-                            <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
-                        </div>
-                    </div>
 
-                    <div class="company-performance">
-                        <div class="title">
-                            <p>Company Performance Analysis</p>
+                        <div class='card' onclick='navigateToDashboardStudent();'>
+                            <div class='card-inner'>
+                                <i class="material-icons">school </i>
+                                <h3>Student</h3>
+                            </div>
+                            <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
                         </div>
-                        <div id="curve_chart" style="width: 90%; height: 300px;"></div>
+                        <div class='card' onclick='navigateToDashboardCompany();'>
+                            <div class='card-inner'>
+                                <i class="material-icons">featured_video</i>
+                                <h3>Ongoing Advertisements</h3>
+                            </div>
+                            <h1><?php echo $dashboardDetails['ongoingAdvertisementCount'] ?? 0; ?></h1>
+
+                        </div>
                     </div>
-                </div>
+                    <div class="analysis-container">
+                        <div class="recruitment-analysis">
+                            <div class="title">
+                                <p>Recruitment Analysis</p>
+                            </div>
+
+                            <div class="graphs">
+                                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
+                                <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="company-performance">
+                            <div class="title">
+                                <p>Company Performance Analysis</p>
+                            </div>
+                            <div id="curve_chart" style="width: 90%; height: 300px;"></div>
+                        </div>
+                    </div>
 
                 <?php else: ?>
                     <p>Empty Data</p>
@@ -158,7 +161,45 @@
                 curveChart.draw(dataCurve, optionsCurve);
             }
         </script>
-        
+
+        <script>
+            <?php
+
+            $dataPoints = array(
+                array("label" => "Oxygen", "symbol" => "O", "y" => 46.6),
+                array("label" => "Silicon", "symbol" => "Si", "y" => 27.7),
+                array("label" => "Aluminium", "symbol" => "Al", "y" => 13.9),
+                array("label" => "Iron", "symbol" => "Fe", "y" => 5),
+                array("label" => "Calcium", "symbol" => "Ca", "y" => 3.6),
+                array("label" => "Sodium", "symbol" => "Na", "y" => 2.6),
+                array("label" => "Magnesium", "symbol" => "Mg", "y" => 2.1),
+                array("label" => "Others", "symbol" => "Others", "y" => 1.5),
+
+            )
+
+                ?>
+            window.onload = function () {
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    theme: "light2",
+                    animationEnabled: true,
+                    title: {
+                        text: "Average Composition of Magma"
+                    },
+                    data: [{
+                        type: "doughnut",
+                        indexLabel: "{symbol} - {y}",
+                        yValueFormatString: "#,##0.0\"%\"",
+                        showInLegend: true,
+                        legendText: "{label} : {y}",
+                        dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                    }]
+                });
+                chart.render();
+
+            }
+        </script>
+
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>
 
