@@ -168,6 +168,7 @@
             if (!empty($applicationAnalysis)):
                 $applicationGraphPoints = array(
                     array("label" => "Pending", "symbol" => "P", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
+                    array("label" => "Rejected", "symbol" => "R", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
                 );
 
                     ?>

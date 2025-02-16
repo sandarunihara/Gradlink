@@ -14,12 +14,18 @@ class Dashboard
         $totalAdvertisements = $advertisementModel->OngoingAdvertisementCount();
 
         $pendingCSCount = $coordinatorModel->pendingCSCount();
+        $rejectedCSCount = $coordinatorModel->rejectedCSCount();
 
-        if (empty($totalCompanies) || empty($totalStudents) || empty($totalAdvertisements)) {
+        if ($totalCompanies === null || $totalStudents === null || $totalAdvertisements === null) {
             $this->view('Coordinator/Company/dashboard');
-        } elseif (empty($pendingCSCount)) {
+            return;
+        }
+
+        if ($pendingCSCount === null || $rejectedCSCount === null) {
             $this->view('Coordinator/Company/dashboard');
-        } else {
+            return;
+        }
+         
             $dashboardData = [];
             $applicationGraph = [];
 
@@ -31,6 +37,7 @@ class Dashboard
 
             $applicationGraph = [
                 'pendingCSCount' => $pendingCSCount ?? 0,
+                'rejectedCSCount' => $rejectedCSCount ?? 0,
             ];
 
             // echo '<pre>';
@@ -41,5 +48,5 @@ class Dashboard
         }
 
 
-    }
+    
 }

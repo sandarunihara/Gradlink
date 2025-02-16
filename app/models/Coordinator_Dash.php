@@ -10,7 +10,7 @@ class Coordinator_Dash
             $query = "SELECT COUNT(*) AS pendingTotal
                         FROM student
                         JOIN studentadvertisement ON studentadvertisement.StudentId = student.StudentId
-                        WHERE studentadvertisement.jobstatus = 'Pending' AND student.DegreeName = 'Computer Science'";
+                        WHERE studentadvertisement.jobstatus IN ('Pending', 'Shortlist') AND student.DegreeName = 'Computer Science'";
 
             $result = $this->query($query);
             return $result[0]->{'pendingTotal'};
@@ -19,5 +19,23 @@ class Coordinator_Dash
             return false;
         }
     }
+
+    public function rejectedCSCount(): mixed
+    {
+        try {
+            $query = "SELECT COUNT(*) AS rejectedTotal
+                        FROM student
+                        JOIN studentadvertisement ON studentadvertisement.StudentId = student.StudentId
+                        WHERE studentadvertisement.jobstatus = 'Reject' AND student.DegreeName = 'Computer Science'";
+
+            $result = $this->query($query);
+            return $result[0]->{'rejectedTotal'};
+        }catch (Exception $e) {
+            error_log("Error fetching total number of rejected CS students: " . $e->getMessage());
+            return false;
+        }
+        
+    }
+
 
 }
