@@ -7,26 +7,39 @@ class Dashboard
         $companyModel = new company;
         $studentModel = new Student;
         $advertisementModel = new C_Advertisement;
+        $coordinatorModel = new Coordinator_Dash;
 
         $totalCompanies = $companyModel->getTotalCount();
         $totalStudents = $studentModel->count();
         $totalAdvertisements = $advertisementModel->OngoingAdvertisementCount();
 
-        if (empty($totalCompanies)) {
+        $pendingCSCount = $coordinatorModel->pendingCSCount();
+
+        if (empty($totalCompanies) || empty($totalStudents) || empty($totalAdvertisements)) {
             $this->view('Coordinator/Company/dashboard');
-        }else{
+        } elseif (empty($pendingCSCount)) {
+            $this->view('Coordinator/Company/dashboard');
+        } else {
             $dashboardData = [];
+            $applicationGraph = [];
 
             $dashboardData = [
                 'companyCount' => $totalCompanies ?? 0,
-                'studentCount'=> $totalStudents ??0,
-                'ongoingAdvertisementCount'=> $totalAdvertisements ??0,
+                'studentCount' => $totalStudents ?? 0,
+                'ongoingAdvertisementCount' => $totalAdvertisements ?? 0,
             ];
 
+            $applicationGraph = [
+                'pendingCSCount' => $pendingCSCount ?? 0,
+            ];
 
-            $this->view('Coordinator/Company/dashboard', ['dashboardDetails'=> $dashboardData]);
+            // echo '<pre>';
+            // print_r($applicationGraph);
+            // echo '</pre>';
+
+            $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'applicationAnalysis' => $applicationGraph]);
         }
 
-        
+
     }
 }
