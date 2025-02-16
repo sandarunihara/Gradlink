@@ -53,5 +53,19 @@ class Coordinator_Dash
         }
     }
 
+    public function totalCSCount(): mixed
+    {
+        try {
+            $query = "SELECT COUNT(*) AS CSTotal
+                        FROM student
+                        WHERE student.DegreeName = 'Computer Science'";
+
+            $result = $this->query($query);
+            return $result[0]->{'CSTotal'};
+        }catch (Exception $e) {
+            error_log("Error fetching total number of recruited CS students: " . $e->getMessage());
+            return false;
+        }
+    }
 
 }

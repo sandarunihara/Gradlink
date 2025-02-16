@@ -170,6 +170,7 @@
                     array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
                     array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
                     array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
+                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
                 );
 
                     ?>
@@ -178,9 +179,7 @@
                     var chart = new CanvasJS.Chart("chartContainer", {
                         theme: "light2",
                         animationEnabled: true,
-                        title: {
-                            text: "Average Composition of Magma"
-                        },
+                        
                         data: [{
                             type: "doughnut",
                             radius: "90%",

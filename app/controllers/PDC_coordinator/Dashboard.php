@@ -16,13 +16,14 @@ class Dashboard
         $pendingCSCount = $coordinatorModel->pendingCSCount();
         $rejectedCSCount = $coordinatorModel->rejectedCSCount();
         $recruitedCSCount = $coordinatorModel->recruitedCSCount();
+        $CSCount = $coordinatorModel->totalCSCount();
 
         if ($totalCompanies === null || $totalStudents === null || $totalAdvertisements === null) {
             $this->view('Coordinator/Company/dashboard');
             return;
         }
 
-        if ($pendingCSCount === null || $rejectedCSCount === null || $recruitedCSCount === null) {
+        if ($pendingCSCount === null || $rejectedCSCount === null || $recruitedCSCount === null || $CSCount === null) {
             $this->view('Coordinator/Company/dashboard');
             return;
         }
@@ -36,11 +37,12 @@ class Dashboard
                 'ongoingAdvertisementCount' => $totalAdvertisements ?? 0,
             ];
 
+            $notAppliedCSCount = $CSCount - ($pendingCSCount+$rejectedCSCount+$recruitedCSCount);
             $applicationGraph = [
-                'pendingCSCount' => $pendingCSCount ?? 0,
-                'rejectedCSCount' => $rejectedCSCount ?? 0,
-                'recruitedCSCount'=> $recruitedCSCount ?? 0,
-                
+                'pendingCSCount' => (($pendingCSCount * 100)/$CSCount) ?? 0,
+                'rejectedCSCount' => (($rejectedCSCount * 100)/$CSCount) ?? 0,
+                'recruitedCSCount'=> (($recruitedCSCount * 100)/$CSCount) ?? 0,
+                'notAppliedCSCount' => (($notAppliedCSCount * 100)/$CSCount),
             ];
 
             // echo '<pre>';
