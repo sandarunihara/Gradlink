@@ -76,8 +76,6 @@
                             <div class="graphs">
                                 <div id="recruitment_CS" style="height: 370px; width: 100%;"></div>
                                 <div id="recruitment_IS" style="height: 370px; width: 100%;"></div>
-                                <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
-                                <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
                             </div>
                         </div>
 
@@ -175,10 +173,10 @@
                 );
 
                 $applicationISGraphPoints = array(
-                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
-                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
-                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
-                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
+                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingISCount'] ?? '')),
+                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedISCount'] ?? '')),
+                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedISCount'] ?? '')),
+                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedISCount'] ?? '')),
                 );
                 ?>
                 window.onload = function () {
@@ -205,7 +203,7 @@
                     });
 
                     var chart2 = new CanvasJS.Chart("recruitment_IS", {
-                        theme: "light2",
+                        theme: "light1",
                         animationEnabled: true,
                         subtitles: [
                             {
