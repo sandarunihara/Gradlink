@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/dashboard.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorCalendar.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -84,8 +85,40 @@
                                 <p>Internships Offered by Companies</p>
                             </div>
                             <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div>
+
+
+                            <div class="company-performance" style="margin-top: 30px;">
+                                <div class="title"style="margin-top: 20px;">
+                                    <p>Scheduled Tech Talk Sessions</p>
+                                </div>
+
+
+                                <div class="calendar-container">
+                                    <div id="calendar">
+                                        <div class="calendar-header">
+                                            <button class="prev" onclick="changeMonth(-1)">&#10094;</button>
+                                            <div id="calendar-month"></div>
+                                            <button class="next" onclick="changeMonth(1)">&#10095;</button>
+                                        </div>
+                                        <div class="calendar-days" id="calendar-days"></div>
+                                    </div>
+                                </div>
+
+                                <div id="schedule-modal" class="schedule-modal">
+                                    <div class="schedule-modal-content">
+                                        <span class="close" onclick="closeModal()">&times;</span>
+                                        <h3 id="session-title"></h3>
+                                        <ul id="session-details"></ul>
+                                    </div>
+                                </div>
+
+                                <!-- <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div> -->
+                            </div>
                         </div>
+
+
                     </div>
+
 
                 <?php else: ?>
                     <p>Empty Data</p>
@@ -265,6 +298,91 @@
         </script>
 
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
+
+        <script>
+
+            let currentMonth = new Date();
+            const sessionData = <?php echo json_encode($sessions); ?>
+
+            function renderCalendar(month) {
+                const firstDayOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
+                const lastDayOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+
+                const monthName = month.toLocaleString('default', { month: 'long' }) + ' ' + month.getFullYear();
+                document.getElementById('calendar-month').innerText = monthName;
+
+                const daysContainer = document.getElementById('calendar-days');
+                daysContainer.innerHTML = '';
+
+                const numberOfDays = lastDayOfMonth.getDate();
+                const firstDayIndex = firstDayOfMonth.getDay();
+
+                // Blank days for the start of the month
+                for (let i = 0; i < firstDayIndex; i++) {
+                    const blankCell = document.createElement('div');
+                    blankCell.classList.add('calendar-day');
+                    daysContainer.appendChild(blankCell);
+                }
+
+                // Fill in the days of the month
+                for (let day = 1; day <= numberOfDays; day++) {
+                    const currentDay = new Date(month.getFullYear(), month.getMonth(), day, 12);
+                    const dayString = currentDay.toISOString().split('T')[0]; // format: YYYY-MM-DD
+                    const dayCell = document.createElement('div');
+                    dayCell.classList.add('calendar-day');
+                    dayCell.innerText = day;
+                    dayCell.setAttribute('data-date', dayString);
+
+                    // Add session labels if there are sessions on that day
+                    if (sessionData[dayString]) {
+                        sessionData[dayString].forEach(session => {
+                            const sessionLabel = document.createElement('div');
+                            sessionLabel.classList.add('session-label');
+                            sessionLabel.innerText = session;
+                            dayCell.appendChild(sessionLabel);
+                        });
+
+                        dayCell.onclick = function () {
+                            showSessionDetails(dayString);
+                        };
+                    }
+
+                    daysContainer.appendChild(dayCell);
+                }
+            }
+
+            function showSessionDetails(date) {
+                const modal = document.getElementById('schedule-modal');
+                const title = document.getElementById('session-title');
+                const detailsList = document.getElementById('session-details');
+
+                title.innerText = `Sessions on ${date}`;
+                detailsList.innerHTML = '';
+
+                sessionData[date].forEach(session => {
+                    const listItem = document.createElement('li');
+                    listItem.innerText = session;
+                    detailsList.appendChild(listItem);
+                });
+
+                modal.style.display = 'block';
+            }
+
+            function closeModal() {
+                const modal = document.getElementById('schedule-modal');
+                modal.style.display = 'none';
+            }
+
+            function changeMonth(offset) {
+                currentMonth.setMonth(currentMonth.getMonth() + offset);
+                renderCalendar(currentMonth);
+            }
+
+            // Initial render
+            renderCalendar(currentMonth);
+
+
+        </script>
 </body>
 
 </html>

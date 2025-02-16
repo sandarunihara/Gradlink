@@ -30,11 +30,11 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result[0]->{'rejectedTotal'};
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching total number of rejected CS students: " . $e->getMessage());
             return false;
         }
-        
+
     }
 
     public function recruitedCSCount(): mixed
@@ -47,7 +47,7 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result[0]->{'recruitedTotal'};
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching total number of recruited CS students: " . $e->getMessage());
             return false;
         }
@@ -62,7 +62,7 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result[0]->{'CSTotal'};
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching total number CS students: " . $e->getMessage());
             return false;
         }
@@ -94,11 +94,11 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result[0]->{'rejectedTotal'};
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching total number of rejected IS students: " . $e->getMessage());
             return false;
         }
-        
+
     }
 
     public function recruitedISCount(): mixed
@@ -111,7 +111,7 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result[0]->{'recruitedTotal'};
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching total number of recruited IS students: " . $e->getMessage());
             return false;
         }
@@ -126,7 +126,7 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result[0]->{'ISTotal'};
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching total number of IS students: " . $e->getMessage());
             return false;
         }
@@ -139,9 +139,26 @@ class Coordinator_Dash
 
             $result = $this->query($query);
             return $result;
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error fetching job roles: " . $e->getMessage());
             return false;
+        }
+    }
+
+    public function getScheduledSessions()
+    {
+        try {
+            $query = "SELECT session_name, session_date, time_slot FROM session WHERE session_date >= CURDATE()";
+            $result = $this->query($query);
+    
+            if ($result === false) {
+                throw new Exception("Database query failed");
+            }
+    
+            return $result ?: []; // Ensure an empty array is returned if no results
+        } catch (Exception $e) {
+            error_log("Error fetching SESSIONS: " . $e->getMessage());
+            return []; // Return an empty array instead of false to prevent errors in views
         }
     }
 
