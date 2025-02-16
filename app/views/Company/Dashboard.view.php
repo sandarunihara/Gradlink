@@ -213,13 +213,17 @@
         });
 
         const ctx4 = document.getElementById('myChartfortrends').getContext('2d');
+        const monthlyapply= <?php echo json_encode($monthlyCounts); ?>;
+        const monthlyapplyKeys = Object.keys(monthlyapply); 
+        const monthlyapplyValues = Object.values(monthlyapply); 
+        
         const myChartfortrends = new Chart(ctx4, {
             type: 'line',
             data: {
-                labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                labels: monthlyapplyKeys,
                 datasets: [{
                     label: 'Monthly Internship Applications',
-                    data: [0, 1, 3, 2, 5, 4, 6, 5, 4, 3, 5, 6],
+                    data: monthlyapplyValues,
                     backgroundColor: 'rgba(58, 106, 255, 0.2)',
                     borderColor: 'rgba(58, 106, 255, 1)',
                     borderWidth: 2,
@@ -240,7 +244,6 @@
 
         const ctx5 = document.getElementById('studentstatus').getContext('2d');
         const studentstatuschart = <?php echo json_encode($studentstatuschart); ?>;
-        console.log(studentstatuschart);
         const statuslabels = studentstatuschart.map(label => label.label);
         const statusdata = studentstatuschart.map(data => data.count);
         
@@ -268,13 +271,17 @@
         });
 
         const ctx3 = document.getElementById('totalViewersChart2').getContext('2d');
+        const adstatus= <?php echo json_encode($countedadstatus); ?>;
+        // console.log(adstatus);
+        const statusKeys = Object.keys(adstatus); 
+        const statusValues = Object.values(adstatus); 
         const totalViewersChart2 = new Chart(ctx3, {
             type: 'pie',
             data: {
-                labels: ['Active', 'Deactive', 'Pending'],
+                labels: statusKeys,
                 datasets: [{
-                    data: [5, 4, 6],
-                    backgroundColor: ['#0f9d58', '#db4437', '#f4b400'],
+                    data: statusValues,
+                    backgroundColor: [ '#db4437','#0f9d58', '#f4b400','#0056b3'],
                     borderWidth: 0.5
                 }]
             },

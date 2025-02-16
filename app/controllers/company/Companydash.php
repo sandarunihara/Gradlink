@@ -6,7 +6,7 @@ class Companydash
     public function dashboard()
     {
         $user = "";
-        $barchartdata=[];
+        $barchartdata = [];
         if (isset($_SESSION['USER'])) {
             $user = $_SESSION['USER'];
         }
@@ -19,18 +19,26 @@ class Companydash
             $hasRecruited = false;
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'barchartdata'=>[]]);
+            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => []]);
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
             $numOfAdvertisements = count($data);
 
-            $advertisementIds = []; // Array to store all advertisement IDs
+            $allStatuses = ["Active", "Deactive", "Pending", "Rejected"];
+            $advertisementIds = [];
             foreach ($data as $item) {
                 $advertisementIds[] = $item->advertisementId;
+                $adstatus[] = $item->status;
             }
-            // show($barchartlabel);
-            // show($advertisementIds);
+
+            $countedadstatus = array_count_values($adstatus);
+            foreach ($allStatuses as $status) {
+                if (!isset($countedadstatus[$status])) {
+                    $countedadstatus[$status] = 0;
+                }
+            }
+
 
 
             $studentIds = [];
@@ -44,18 +52,19 @@ class Companydash
             $hasRecruited = false;
             foreach ($advertisementIds as $id) {
                 $applystudent = $model->find(['advertisementId' => $id], 'studentadvertisement');
-                // show($applystudent);
-                // show($id);
-                if(!empty($applystudent)){
-                    $co=count($applystudent);
-                }else{
-                    $co=0;
+                $addata2 = $model->find(['advertisementId' => $id], "advertisement");
+
+                $applystudent2[] = $model->find(['advertisementId' => $id], 'studentadvertisement');
+                if (!empty($applystudent)) {
+                    $co = count($applystudent);
+                } else {
+                    $co = 0;
                 }
-                $chart=[
-                    'label'=>$id,
-                    'count'=>$co
+                $chart = [
+                    'label' => $addata2[0]->position,
+                    'count' => $co
                 ];
-                $barchartdata[]=$chart;
+                $barchartdata[] = $chart;
                 if (!empty($applystudent)) {
                     if (is_array($applystudent) || is_object($applystudent)) {
                         foreach ($applystudent as $student) {
@@ -112,7 +121,7 @@ class Companydash
                             if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
                                 $hasShortlisted = true;
                             }
-                            
+
                             if ($item->Jobstatus === 'Recruit') {
                                 $hasRecruited = true;
                             }
@@ -127,24 +136,87 @@ class Companydash
                     $ss = [];
                 }
             }
+            // show($applystudent2);
+            $monthlyCounts = [];
+            $dates = [];
+
+            // Extract all available dates
+            foreach ($applystudent2 as $applications) {
+                if (is_array($applications)) {
+                    foreach ($applications as $student) {
+                        $dates[] = strtotime($student->CreatedAt); // Convert dates to timestamps
+                    }
+                }
+            }
+
+            // If there are no dates, return an empty array
+            if (empty($dates)) {
+                $dates = [];
+            }
+
+            sort($dates); // Sort the dates in ascending order
+            $earliestDate = $dates[0]; // Earliest date
+            $today = time();
+            $latestDate = $today; // Latest date
+
+
+            // Calculate the number of unique months in the dataset
+            $currentDate = $earliestDate;
+            $uniqueMonths = [];
+            while ($currentDate < $latestDate) {
+                $key = date("Y M", $currentDate); // Get year and month as a key
+                $uniqueMonths[$key] = true;
+                $currentDate = strtotime("+1 month", $currentDate); // Move to the next month
+            }
+            $latestMonthKey = date("Y M", $latestDate);
+            $uniqueMonths[$latestMonthKey] = true;
+            // show($uniqueMonths);
+            // If less than 12 unique months, extend backward
+            while (count($uniqueMonths) < 12) {
+                $earliestDate = strtotime("-1 month", $earliestDate);
+                $key = date("Y M", $earliestDate);
+                $uniqueMonths[$key] = true;
+            }
+
+            // Generate a full 12-month period
+            $uniqueMonths = array_reverse($uniqueMonths); // Reverse to add months from earliest to latest
+            $monthlyCounts = array_fill_keys(array_keys($uniqueMonths), 0);
+            // show($monthlyCounts);
+
+            foreach ($applystudent2 as $applications) { 
+                if (is_array($applications)) {
+                    foreach ($applications as $student) {
+                        $yearMonthKey = date("Y M", strtotime($student->CreatedAt));
+        
+                        if (isset($monthlyCounts[$yearMonthKey])) {
+                            $monthlyCounts[$yearMonthKey]++;
+                        }
+                    }
+                }
+            }
+            uksort($monthlyCounts, function($a, $b) {
+                return strtotime($a) - strtotime($b);
+            });
+
+
             $numOfapplyStudents = count($studentIds);
             $numOfshortlistStudents = count($shortliststudentIds);
             $numOfpendingStudents = count($pendingstudentIds);
             $numOfrecruitStudents = count($recruitstudentIds);
             $numOfrejectStudents = count($rejectstudentIds);
 
-            $studentstatuschart=[
-                ['label'=>'Shortlist','count'=>$numOfshortlistStudents],
-                ['label'=>'Pending','count'=>$numOfpendingStudents],
-                ['label'=>'Recruit','count'=>$numOfrecruitStudents],
-                ['label'=>'Reject','count'=>$numOfrejectStudents]
+            $studentstatuschart = [
+                ['label' => 'Shortlist', 'count' => $numOfshortlistStudents],
+                ['label' => 'Pending', 'count' => $numOfpendingStudents],
+                ['label' => 'Recruit', 'count' => $numOfrecruitStudents],
+                ['label' => 'Reject', 'count' => $numOfrejectStudents]
             ];
 
-            
+
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements ,'barchartdata'=>$barchartdata,'numOfpendingStudents'=>$numOfpendingStudents,'numOfrecruitStudents'=>$numOfrecruitStudents,'numOfrejectStudents'=>$numOfrejectStudents,'studentstatuschart'=>$studentstatuschart]);
+
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts]);
         }
     }
 

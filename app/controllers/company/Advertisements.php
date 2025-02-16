@@ -121,7 +121,7 @@ class Advertisements
             $data = [
                 'advertisementId' => $Id,
                 'position' => $_POST['position'] ?? '',
-                'status' => 'Active',
+                'status' => 'Pending',
                 'description' => $_POST['description'] ?? '',
                 'numOfInterns' => $_POST['interns'] ?? '',
                 'workingMode' => $_POST['worktype'] ?? '',
