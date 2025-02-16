@@ -92,4 +92,16 @@ class C_Advertisement
             return 'false';
         }
     }
+
+    public function OngoingAdvertisementCount() {
+        try{
+            $query = "SELECT COUNT(*) AS total FROM advertisement WHERE status = 'active'";
+
+            $result = $this->query($query);
+			return $result[0]->{'total'};
+        }catch (Exception $e) {
+			error_log("Error fetching total number of advertisements: " . $e->getMessage());
+			return false;
+		}
+    }
 }

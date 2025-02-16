@@ -30,36 +30,40 @@
                     <h1>Dashboard</h1>
                 </div>
 
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
+                
             </header>
 
             <div class='round-type '>1st Round</div>
 
 
             <div class="main-body">
+                <?php 
+                    if(!empty($dashboardDetails)):
+                ?>
                 <div class="main-cards">
-                    <div class='card' onclick='navigateToCompanyList();'>
+                    <div class='card' onclick='navigateToDashboardCompany();'>
                         <div class='card-inner'>
                             <i class="material-icons">business</i>
                             <h3>Company</h3>
                         </div>
-                        <h1>35</h1>
+                        <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
+                        
                     </div>
 
-                    <div class='card' onclick='navigateToStudentList();'>
+                    <div class='card' onclick='navigateToDashboardStudent();'>
                         <div class='card-inner'>
                             <i class="material-icons">school </i>
                             <h3>Student</h3>
                         </div>
-                        <h1>317</h1>
+                        <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
+                    </div>
+                    <div class='card' onclick='navigateToDashboardCompany();'>
+                        <div class='card-inner'>
+                            <i class="material-icons">featured_video</i>
+                            <h3>Ongoing Advertisements</h3>
+                        </div>
+                        <h1><?php echo $dashboardDetails['ongoingAdvertisementCount'] ?? 0; ?></h1>
+                        
                     </div>
                 </div>
                 <div class="analysis-container">
@@ -80,6 +84,10 @@
                         <div id="curve_chart" style="width: 90%; height: 300px;"></div>
                     </div>
                 </div>
+
+                <?php else: ?>
+                    <p>Empty Data</p>
+                <?php endif; ?>
 
             </div>
 
@@ -150,6 +158,7 @@
                 curveChart.draw(dataCurve, optionsCurve);
             }
         </script>
+        
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>
 
