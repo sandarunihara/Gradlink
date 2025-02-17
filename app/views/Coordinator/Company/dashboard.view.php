@@ -88,7 +88,7 @@
 
 
                             <div class="company-performance" style="margin-top: 30px;">
-                                <div class="title"style="margin-top: 20px;">
+                                <div class="title" style="margin-top: 20px;">
                                     <p>Scheduled Tech Talk Sessions</p>
                                 </div>
 
@@ -104,13 +104,14 @@
                                     </div>
                                 </div>
 
-                                <div id="schedule-modal" class="schedule-modal">
-                                    <div class="schedule-modal-content">
+                                <div id="schedule-modal" class="modal">
+                                    <div class="modal-content">
                                         <span class="close" onclick="closeModal()">&times;</span>
-                                        <h3 id="session-title"></h3>
+                                        <h2 id="session-title"></h2>
                                         <ul id="session-details"></ul>
                                     </div>
                                 </div>
+
 
                                 <!-- <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div> -->
                             </div>
@@ -128,7 +129,7 @@
 
         </main>
 
-   
+
         <script>
 
             <?php
@@ -273,7 +274,7 @@
                         sessionData[dayString].forEach(session => {
                             const sessionLabel = document.createElement('div');
                             sessionLabel.classList.add('session-label');
-                            sessionLabel.innerText = session;
+                            sessionLabel.innerText = session.session_name;
                             dayCell.appendChild(sessionLabel);
                         });
 
@@ -286,6 +287,7 @@
                 }
             }
 
+
             function showSessionDetails(date) {
                 const modal = document.getElementById('schedule-modal');
                 const title = document.getElementById('session-title');
@@ -296,17 +298,30 @@
 
                 sessionData[date].forEach(session => {
                     const listItem = document.createElement('li');
-                    listItem.innerText = session;
+                    listItem.innerHTML = `
+            <strong>${session.session_name}</strong> (${session.time})<br>
+            <em>${session.Company}</em> - Hall: ${session.hall}<br>
+            ${session.description}
+        `;
                     detailsList.appendChild(listItem);
                 });
 
                 modal.style.display = 'block';
             }
 
+
             function closeModal() {
                 const modal = document.getElementById('schedule-modal');
                 modal.style.display = 'none';
             }
+
+            // Close modal when clicking outside of it
+            window.onclick = function (event) {
+                const modal = document.getElementById('schedule-modal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
 
             function changeMonth(offset) {
                 currentMonth.setMonth(currentMonth.getMonth() + offset);
