@@ -128,72 +128,7 @@
 
         </main>
 
-        <!-- <script type="text/javascript">
-            google.charts.load("current", {
-                packages: ["corechart"]
-            });
-            google.charts.setOnLoadCallback(drawAllCharts);
-
-            function drawAllCharts() {
-                // Computer Science Degree Pie Chart
-                var dataCs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 80],
-                    ['Rejected', 20],
-                    ['Pending', 70],
-                    ['Not Applied', 12]
-                ]);
-
-                var optionsCs = {
-                    title: 'Computer Science Degree',
-                    pieHole: 0.4,
-                };
-
-                var chartCs = new google.visualization.PieChart(document.getElementById('donutchart-cs'));
-                chartCs.draw(dataCs, optionsCs);
-
-                // Information System Degree Pie Chart
-                var dataIs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 60],
-                    ['Rejected', 10],
-                    ['Pending', 10],
-                    ['Not Applied', 20]
-                ]);
-
-                var optionsIs = {
-                    title: 'Information System Degree',
-                    pieHole: 0.4,
-                };
-
-                var chartIs = new google.visualization.PieChart(document.getElementById('donutchart-is'));
-                chartIs.draw(dataIs, optionsIs);
-
-                // Curve Chart for Company Performance
-                var dataCurve = google.visualization.arrayToDataTable([
-                    ['Year', 'CS', 'IS'],
-                    ['2016', 130, 80],
-                    ['2017', 117, 46],
-                    ['2018', 66, 112],
-                    ['2019', 103, 54],
-                    ['2020', 100, 84],
-                    ['2021', 150, 94],
-                    ['2022', 180, 34]
-                ]);
-
-                var optionsCurve = {
-                    title: 'Internship',
-                    curveType: 'function',
-                    legend: {
-                        position: 'bottom'
-                    }
-                };
-
-                var curveChart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-                curveChart.draw(dataCurve, optionsCurve);
-            }
-        </script> -->
-
+   
         <script>
 
             <?php
