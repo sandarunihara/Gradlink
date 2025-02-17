@@ -8,6 +8,7 @@ class Dashboard
         $studentModel = new Student;
         $advertisementModel = new C_Advertisement;
         $coordinatorModel = new Coordinator_Dash;
+        $companyModel = new company;
 
         $totalCompanies = $companyModel->getTotalCount();
         $totalStudents = $studentModel->count();
@@ -69,7 +70,20 @@ class Dashboard
             foreach ($sessions as $session) {
                 $sessionDate = new DateTime($session->session_date); // Use object property
                 $formattedDate = $sessionDate->format('Y-m-d');
-                $sessionData[$formattedDate][] = $session->session_name; // Use object property
+
+                $company = $companyModel->findById($session->CompanyId);
+                $companyName = (!empty($company) && isset($company->Name)) ? $company->Name : 'Unknown Company';
+
+                $sessionData[$formattedDate][] = [
+                    'session_id' => $session->session_id,
+                    'session_name' => $session->session_name,
+                    'hall' => $session->hall_number,
+                    'time' => $session->time_slot,
+                    'description' => $session->description,
+                    'Company' => $companyName
+                ];
+
+                // $sessionData[$formattedDate][] = $session->session_name; // Use object property
             }
         }
 

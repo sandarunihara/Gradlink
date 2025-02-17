@@ -148,7 +148,7 @@ class Coordinator_Dash
     public function getScheduledSessions()
     {
         try {
-            $query = "SELECT session_name, session_date, time_slot, CompanyId FROM session WHERE session_date >= CURDATE()";
+            $query = "SELECT * FROM session WHERE session_date >= CURDATE()";
             $result = $this->query($query);
     
             if ($result === false) {
