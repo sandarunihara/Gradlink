@@ -88,7 +88,7 @@
 
 
                             <div class="company-performance" style="margin-top: 30px;">
-                                <div class="title"style="margin-top: 20px;">
+                                <div class="title" style="margin-top: 20px;">
                                     <p>Scheduled Tech Talk Sessions</p>
                                 </div>
 
@@ -104,13 +104,14 @@
                                     </div>
                                 </div>
 
-                                <div id="schedule-modal" class="schedule-modal">
-                                    <div class="schedule-modal-content">
+                                <div id="schedule-modal" class="modal">
+                                    <div class="modal-content">
                                         <span class="close" onclick="closeModal()">&times;</span>
-                                        <h3 id="session-title"></h3>
+                                        <h2 id="session-title"></h2>
                                         <ul id="session-details"></ul>
                                     </div>
                                 </div>
+
 
                                 <!-- <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div> -->
                             </div>
@@ -128,71 +129,6 @@
 
         </main>
 
-        <!-- <script type="text/javascript">
-            google.charts.load("current", {
-                packages: ["corechart"]
-            });
-            google.charts.setOnLoadCallback(drawAllCharts);
-
-            function drawAllCharts() {
-                // Computer Science Degree Pie Chart
-                var dataCs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 80],
-                    ['Rejected', 20],
-                    ['Pending', 70],
-                    ['Not Applied', 12]
-                ]);
-
-                var optionsCs = {
-                    title: 'Computer Science Degree',
-                    pieHole: 0.4,
-                };
-
-                var chartCs = new google.visualization.PieChart(document.getElementById('donutchart-cs'));
-                chartCs.draw(dataCs, optionsCs);
-
-                // Information System Degree Pie Chart
-                var dataIs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 60],
-                    ['Rejected', 10],
-                    ['Pending', 10],
-                    ['Not Applied', 20]
-                ]);
-
-                var optionsIs = {
-                    title: 'Information System Degree',
-                    pieHole: 0.4,
-                };
-
-                var chartIs = new google.visualization.PieChart(document.getElementById('donutchart-is'));
-                chartIs.draw(dataIs, optionsIs);
-
-                // Curve Chart for Company Performance
-                var dataCurve = google.visualization.arrayToDataTable([
-                    ['Year', 'CS', 'IS'],
-                    ['2016', 130, 80],
-                    ['2017', 117, 46],
-                    ['2018', 66, 112],
-                    ['2019', 103, 54],
-                    ['2020', 100, 84],
-                    ['2021', 150, 94],
-                    ['2022', 180, 34]
-                ]);
-
-                var optionsCurve = {
-                    title: 'Internship',
-                    curveType: 'function',
-                    legend: {
-                        position: 'bottom'
-                    }
-                };
-
-                var curveChart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-                curveChart.draw(dataCurve, optionsCurve);
-            }
-        </script> -->
 
         <script>
 
@@ -335,13 +271,10 @@
 
                     // Add session labels if there are sessions on that day
                     if (sessionData[dayString]) {
-                        sessionData[dayString].forEach(session => {
-                            const sessionLabel = document.createElement('div');
-                            sessionLabel.classList.add('session-label');
-                            sessionLabel.innerText = session;
-                            dayCell.appendChild(sessionLabel);
-                        });
+                        // Add a class to highlight the day if there are sessions
+                        dayCell.classList.add('session-day');
 
+                        // Add an onclick event to show session details
                         dayCell.onclick = function () {
                             showSessionDetails(dayString);
                         };
@@ -350,6 +283,7 @@
                     daysContainer.appendChild(dayCell);
                 }
             }
+
 
             function showSessionDetails(date) {
                 const modal = document.getElementById('schedule-modal');
@@ -361,17 +295,33 @@
 
                 sessionData[date].forEach(session => {
                     const listItem = document.createElement('li');
-                    listItem.innerText = session;
+                    listItem.innerHTML = `
+            <div class="session-box">
+                <strong>${session.session_name}</strong> (${session.time})<br>
+                <em>${session.Company}</em> <br> Hall: ${session.hall}<br><br>
+                <p>${session.description}</p>
+            </div>
+        `;
                     detailsList.appendChild(listItem);
                 });
 
                 modal.style.display = 'block';
             }
 
+
+
             function closeModal() {
                 const modal = document.getElementById('schedule-modal');
                 modal.style.display = 'none';
             }
+
+            // Close modal when clicking outside of it
+            window.onclick = function (event) {
+                const modal = document.getElementById('schedule-modal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
 
             function changeMonth(offset) {
                 currentMonth.setMonth(currentMonth.getMonth() + offset);

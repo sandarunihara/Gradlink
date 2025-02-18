@@ -82,3 +82,54 @@
     font-size: 1.5em;
     cursor: pointer;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    margin: 15% auto;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+.session-day {
+    background-color: #99fb76; /* Highlight color */
+    color: white; /* Text color */
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.session-day:hover {
+    background-color: #3efa0f; /* Darker shade when hovered */
+}
+
+.session-box {
+    border: 3px solid rgb(76, 156, 248); /* Red border */
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f8f8f8; /* Light background */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.session-box p{
+    text-align: justify;
+    padding: 5px;
+}
+
