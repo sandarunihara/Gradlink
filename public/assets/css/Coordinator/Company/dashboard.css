@@ -96,20 +96,26 @@ body {
 }
 
 .card {
-    background-color: #007bff;
-    color: #fff;
+  background: linear-gradient(135deg, #bfdbfe, #4297ff);
+    /* background-color: #007bff; */
+  width: 100%;
+  color: #1e1e1e;
+  border-left: black solid 8px;
+  /* color: #fff; */
     flex: 0.5;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+  transition: transform 0.3s ease, border-left 0.3s ease;
+  /* transition: transform 0.2s ease-in-out; */
 
 }
 
 .card:hover {
     transform: scale(1.05);
+  border-left: black solid 15px;
 }
 
 .card-inner {
