@@ -271,13 +271,10 @@
 
                     // Add session labels if there are sessions on that day
                     if (sessionData[dayString]) {
-                        sessionData[dayString].forEach(session => {
-                            const sessionLabel = document.createElement('div');
-                            sessionLabel.classList.add('session-label');
-                            sessionLabel.innerText = session.session_name;
-                            dayCell.appendChild(sessionLabel);
-                        });
+                        // Add a class to highlight the day if there are sessions
+                        dayCell.classList.add('session-day');
 
+                        // Add an onclick event to show session details
                         dayCell.onclick = function () {
                             showSessionDetails(dayString);
                         };
@@ -299,15 +296,18 @@
                 sessionData[date].forEach(session => {
                     const listItem = document.createElement('li');
                     listItem.innerHTML = `
-            <strong>${session.session_name}</strong> (${session.time})<br>
-            <em>${session.Company}</em> - Hall: ${session.hall}<br>
-            ${session.description}
+            <div class="session-box">
+                <strong>${session.session_name}</strong> (${session.time})<br>
+                <em>${session.Company}</em> <br> Hall: ${session.hall}<br><br>
+                <p>${session.description}</p>
+            </div>
         `;
                     detailsList.appendChild(listItem);
                 });
 
                 modal.style.display = 'block';
             }
+
 
 
             function closeModal() {
