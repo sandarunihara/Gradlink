@@ -68,8 +68,12 @@
                 <div class="student-skill">
                     <div class="skills">
                         <?php
-                            for ($i = 0; $i < count($data['Skills']); $i++) {
-                                echo "<p>" . htmlspecialchars($data['Skills'][$i] -> Skill) . "</p>";
+                            if($data['Skills'] == 0){
+                                echo "<p>No skills added</p>";
+                            }else{
+                                for ($i = 0; $i < count($data['Skills']); $i++) {
+                                    echo "<p>" . htmlspecialchars($data['Skills'][$i] -> Skill) . "</p>";
+                                }
                             }
                         ?>
                     </div>
