@@ -25,15 +25,7 @@
                     <button class="edit-btn">&#9998;</button>
                 </div>
 
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>Jonitha Cathrine</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
+                
             </header>
 
             <?php $this->renderComponent("companyTabs") ?>

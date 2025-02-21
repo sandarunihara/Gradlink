@@ -31,14 +31,23 @@
                     <i class="material-icons">menu</i>
                     <h1>Dashboard</h1>
                 </div>
-
+                <div class="header-right">
+                    <i class="material-icons notification-icon">notifications</i>
+                    <div class="notification-dropdown">
+                        <ul>
+                            <li>No new notifications</li>
+                            <!-- Add more notifications here -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="overlay"></div>
 
             </header>
 
             <div class='round-type '>1st Round</div>
 
 
-            <div class="main-body">
+            <!-- <div class="main-body"> -->
                 <?php
                 if (!empty($dashboardDetails)):
                     ?>
@@ -46,7 +55,7 @@
                         <div class='card' onclick='navigateToDashboardCompany();'>
                             <div class='card-inner'>
                                 <i class="material-icons">business</i>
-                                <h3>Company</h3>
+                                <h3>Companies</h3>
                             </div>
                             <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
 
@@ -55,7 +64,7 @@
                         <div class='card' onclick='navigateToDashboardStudent();'>
                             <div class='card-inner'>
                                 <i class="material-icons">school </i>
-                                <h3>Student</h3>
+                                <h3>Students</h3>
                             </div>
                             <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
                         </div>
@@ -125,7 +134,7 @@
                     <p>Empty Data</p>
                 <?php endif; ?>
 
-            </div>
+            <!-- </div> -->
 
         </main>
 
@@ -332,7 +341,28 @@
             renderCalendar(currentMonth);
 
 
+            // Notifications
+            const notificationIcon = document.querySelector(".notification-icon");
+            const notificationDropdown = document.querySelector(".notification-dropdown");
+            const overlay = document.querySelector(".overlay");
+
+            notificationIcon.addEventListener("click", function () {
+                notificationDropdown.classList.toggle("active");
+                overlay.classList.toggle("active"); // Show/hide overlay
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!notificationIcon.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                    notificationDropdown.classList.remove("active");
+                    overlay.classList.remove("active"); // Hide overlay
+                }
+            });
+
         </script>
+
+
+
 </body>
 
 </html>
