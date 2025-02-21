@@ -31,7 +31,16 @@
                     <i class="material-icons">menu</i>
                     <h1>Dashboard</h1>
                 </div>
-
+                <div class="header-right">
+                    <i class="material-icons notification-icon">notifications</i>
+                    <div class="notification-dropdown">
+                        <ul>
+                            <li>No new notifications</li>
+                            <!-- Add more notifications here -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="overlay"></div>
 
             </header>
 
@@ -332,7 +341,28 @@
             renderCalendar(currentMonth);
 
 
+            // Notifications
+            const notificationIcon = document.querySelector(".notification-icon");
+            const notificationDropdown = document.querySelector(".notification-dropdown");
+            const overlay = document.querySelector(".overlay");
+
+            notificationIcon.addEventListener("click", function () {
+                notificationDropdown.classList.toggle("active");
+                overlay.classList.toggle("active"); // Show/hide overlay
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!notificationIcon.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                    notificationDropdown.classList.remove("active");
+                    overlay.classList.remove("active"); // Hide overlay
+                }
+            });
+
         </script>
+
+
+
 </body>
 
 </html>
