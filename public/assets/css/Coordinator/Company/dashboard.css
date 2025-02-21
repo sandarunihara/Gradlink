@@ -240,7 +240,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #f0f4ff;
+    background-color: transparent;
     gap: 20px;
     margin-top: 20px;
 }
