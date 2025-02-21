@@ -47,7 +47,7 @@
             <div class='round-type '>1st Round</div>
 
 
-            <div class="main-body">
+            <!-- <div class="main-body"> -->
                 <?php
                 if (!empty($dashboardDetails)):
                     ?>
@@ -134,7 +134,7 @@
                     <p>Empty Data</p>
                 <?php endif; ?>
 
-            </div>
+            <!-- </div> -->
 
         </main>
 
