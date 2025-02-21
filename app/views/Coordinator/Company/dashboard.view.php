@@ -55,7 +55,7 @@
                         <div class='card' onclick='navigateToDashboardCompany();'>
                             <div class='card-inner'>
                                 <i class="material-icons">business</i>
-                                <h3>Company</h3>
+                                <h3>Companies</h3>
                             </div>
                             <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
 
@@ -64,7 +64,7 @@
                         <div class='card' onclick='navigateToDashboardStudent();'>
                             <div class='card-inner'>
                                 <i class="material-icons">school </i>
-                                <h3>Student</h3>
+                                <h3>Students</h3>
                             </div>
                             <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
                         </div>
