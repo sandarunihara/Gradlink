@@ -5,10 +5,15 @@
 
         public function index()
         {
-            $this->view('roleSelection');
+            $this->view('createpassword');
+            //$this->view('roleSelection');
         }
         public function student()
         {
-            $this->view('studentSignup');
+            if($_SERVER['REQUEST_METHOD'] == "POST"){
+                show($_POST);
+            }else{
+                $this->view('studentSignup');
+            }
         }
     }
