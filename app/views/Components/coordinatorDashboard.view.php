@@ -79,7 +79,7 @@
                 <li data-title="Dashboard"><i class="fas fa-tachometer-alt fa-lg"></i></li>
             </a>
 
-            <a href="/Gradlink/public/PDC_coordinator/dashboardCompany">
+            <a href="/Gradlink/public/PDC_coordinator/companyStatistics">
                 <li data-title="Company"><i class="fas fa-building fa-lg"></i></li>
             </a>
 
