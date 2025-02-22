@@ -115,4 +115,13 @@ class StudentsRequests
 
         $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard', 'studentJobstatus' => $studentJobstatus]);
     }
+
+
+    public function filterstudents(){
+        $this->view('Company/FilterStudents');
+    }
+
+
 }
+
+

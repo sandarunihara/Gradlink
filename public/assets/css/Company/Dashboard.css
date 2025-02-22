@@ -102,22 +102,30 @@
 }
 .d_alllist {
   background-color: #f1f7ff;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   color: #1e1e1e;
 }
 .d_alllist ul {
   height: 100%;
   list-style-type: none;
-  padding-left: 10px;
-  padding-right: 10px;
   margin-top: 0px;
 }
 .d_alllist ul li {
   width: 100%;
   height: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   justify-content: space-between;
   gap: 40px;
+}
+/* li:nth-child(even) {
+  background-color: gray;
+} */
+
+/* Apply white background to odd list items */
+.d_alllist ul li:nth-child(odd) {
+  background-color: rgba(239, 239, 239, 0.874);
 }
 .role {
   width: 100px;

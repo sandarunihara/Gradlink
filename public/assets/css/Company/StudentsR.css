@@ -4,32 +4,41 @@
     margin-right: 50px;
     margin-top: 30px;
 }
+.filterbar{
+    display: flex;
+    gap: 10px;
+}
 .sr_search{
     display: flex;
     justify-content: space-between;
     padding-top: 5px;
 }
 .sr_search-container{
-    padding-left: 40px;
-    width: 200px;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    width: fit-content;
+    border: 1px solid rgba(165, 165, 165, 0.664);
+    border-radius: 10px;
 }
 .sr_search-container input{
     border: none;
-    border: 1px solid rgba(165, 165, 165, 0.664);
     padding-left: 10px;
     height: 40px;
-    width: 250px;
+    width: 200px;
     border-radius: 10px;
 }
+.sr_search-container input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
 .sr_search-container i{
-    position: absolute;
-    margin-top: -28px;
-    margin-left: 220px;
-    cursor: pointer;
+    padding-left: 10px;
 }
 .sr_filter-container{
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 5px;
+    padding-right: 10px;
     border: 1px solid rgba(165, 165, 165, 0.664);
     border-radius: 10px;
 }
@@ -40,6 +49,11 @@
     border-radius: 10px;
     
 }
+.sr_filter-container select:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
 .sr_t{
     display: flex;
     justify-content: center;
@@ -48,24 +62,36 @@
 .sr_table{
     background-color: white;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    padding-top: 10px;
+    /* padding-top: 10px; */
     padding-bottom: 10px;
     border: 1px solid rgba(165, 165, 165, 0.664);
     border-radius: 10px;
 }
 .role-select{
     height: 40px;
-    width: 250px;
-    border: 1px solid rgb(164, 164, 164);
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid rgba(165, 165, 165, 0.664);
     border-radius: 10px;
+}
+.role-select:focus {
+    outline: none;
+    border: 1px solid rgba(165, 165, 165, 0.664);
+    box-shadow: none;
 }
 .sr_table_t{
     width: 100%;
+    background-color: #b7d8ff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
 }
 
 .student-table {
     width: 100%;
-    border-spacing: 0 5px;
+    border-spacing: 0 0px;
+    /* background-color: #00cea8; */
 }
 
 .student-table th, .student-table td {
@@ -78,20 +104,22 @@
 .student-table th {
     height: fit-content;
     margin: 0;
-    padding: 15px;
-    background-color: #b7d8ff;
+    padding: 18px;
     font-weight: 600;
     font-size: large;
     color: #000000;
 }
 .student-table tbody {
+    border-spacing: 0 5px;
     display: block;
-    max-height: 400px; /* Adjust this value as needed */
+    max-height: 450px;
     overflow-y: auto;
     overflow-x: hidden;
     width: 100%;
 }
-
+.sr_row:nth-child(even) {
+  background-color: rgba(243, 243, 243, 0.675);
+}
 .student-table thead,
 .student-table tbody tr {
     display: table;
