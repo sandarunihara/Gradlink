@@ -53,23 +53,17 @@
                 <div class="box2">
                     <label for="skill">Skills</label>
                     <!-- Skills Input -->
-                    <!-- <input 
+                    <input 
                         type="text"
                         id="skill"
                         name="Skill"
-                        placeholder="Enter skill"
+                        placeholder="Enter skill (e.g. Java, Python, etc.)"
                         value = "<?php 
-                                    foreach($data['Skills'] as $skill) {
-                                        echo htmlspecialchars($skill -> Skill) . ","; 
-                                    } 
+                                    if (!empty($data['Skills'])) {
+                                        echo htmlspecialchars(implode(',', array_map(fn($skill) => $skill->Skill, $data['Skills'])));
+                                    }
                                 ?>"
-                    > -->
-                    <input type="checkbox" id="skill1" name="skill1" value="JavaScript">
-                    <label for="skill1">JavaScript (JS)</label><br>
-                    <input type="checkbox" id="skill2" name="skill2" value="Python">
-                    <label for="skill2">Python</label><br>
-                    <input type="checkbox" id="skill3" name="skill3" value="Java">
-                    <label for="skill3">Java</label><br>
+                    >
                 </div>
 
                 <div class="box3">
@@ -78,7 +72,7 @@
                     <textarea 
                         id="description" 
                         name="ShortDesc" 
-                        placeholder="Enter a brief description about yourself (50-100 words)" 
+                        placeholder="Enter a brief description about yourself (50 words)" 
                         cols="50" 
                         rows="5"
                         required

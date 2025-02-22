@@ -34,7 +34,7 @@
                 <button type="submit" class="signin-btn">Sign in</button>
             </form>
             <div class="register-link">
-                Not registered yet? <a href="<?php echo ROOT ?>/login/createpassword">Create a Password</a>
+                Not registered yet? <a href="<?php echo ROOT ?>/signup">Create a account</a>
             </div>
         </div>
         <div class="logo-box">
