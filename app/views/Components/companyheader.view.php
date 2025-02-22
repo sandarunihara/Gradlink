@@ -1,8 +1,5 @@
 <div class="d_pro">
     <div class="d_profile">
-        <a href="../Complaint/dashboard">
-            <i class="fas fa-exclamation-triangle"></i>
-        </a>
 
         <a href="../companydash/calendar" title="Complaint">
             <i class="fas fa-calendar-alt"></i>
@@ -18,9 +15,5 @@
         </div>
     </div>
     <div>
-    <a href='../Profile/dashboard'>
-            <img src="data:image/jpeg;base64,<?php echo $_SESSION['USER']->profileimg; ?>" class="logo" />
-            <!-- <p><span><?php echo $_SESSION['USER']->Name; ?></span>Company</p> -->
-        </a>
     </div>
 </div>

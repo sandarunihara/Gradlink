@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Opportunities</title>
+    <title>Internships</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/allPages.css"> 
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Internships"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="filter">
@@ -147,6 +147,14 @@
     <?php }?>
 <?php }?>
 
+<?php if(array_key_exists('isLimit', $_SESSION)){ ?>
+    <?php if($_SESSION['isLimit']){?>
+        <script>
+            errorToast("You have reached the limit of 5 applications for this round");
+        </script>
+    <?php } ?>
+    <?php unset($_SESSION['isLimit']);?>
+<?php }?>
 <!-- script for popup box -->
 <script>
     // Get references to elements

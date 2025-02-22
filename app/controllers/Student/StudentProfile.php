@@ -15,6 +15,7 @@ class StudentProfile{
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         
+        //show($data);
         $this-> view('Student/Profile',$data);
     }
     public function profileEdit(){        
@@ -30,9 +31,15 @@ class StudentProfile{
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST);
-            $isUpdate = $student -> update($arr['StudentId'], $_POST, 'StudentId');
+            $result1 = $student -> update($arr['StudentId'], $_POST, 'StudentId');
             
-            if ($isUpdate['status'] === "success"){
+            $studentSkills = trim($_POST['Skill'], ",");
+            $studentSkillsArray = explode(",", $studentSkills);
+
+            $isDelete = $skill -> delete($arr['StudentId'], 'StudentId');
+            $isUpdate2 = $skill -> insertSkill($data['StudentId'] ,$studentSkillsArray);
+            
+            if ($result1['status'] === "success") {
                 $isUpdate1 = 1;
             }else{
                 $isUpdate1 = 0;
@@ -40,10 +47,14 @@ class StudentProfile{
 
             $data['ActivityDescription'] = "Updated your Profile";
             $student_activity = new student_activity;
-            $isUpdate2 = $student_activity -> insert($data);
-
+            $isUpdate3 = $student_activity -> insert($data);
+            
             if($isUpdate1 && $isUpdate2){
-                $_SESSION['isUpdate'] = 1;
+                if($isUpdate3){
+                    $_SESSION['isUpdate'] = 1;
+                }else{
+                    $_SESSION['isUpdate'] = 0;
+                }
             }else{
                 $_SESSION['isUpdate'] = 0;
             }

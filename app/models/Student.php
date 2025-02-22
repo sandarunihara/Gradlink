@@ -19,6 +19,7 @@ class student
 		'ContactNum',
 		'Github',
 		'Linkedin',
+		'noOfAppliedAds',
 	];
 
 	public function validate($data) {

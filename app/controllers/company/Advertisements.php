@@ -14,9 +14,11 @@ class Advertisements
         $model = new C_Advertisement;
         $modelstudent = new C_Dashboard;
 
+        $companyId=[
+            'CompanyId'=>$user->CompanyId
+        ];
 
-        $data = $model->find($user->CompanyId);
-
+        $data = $model->find($companyId);
 
         // Get the current date
         $currentDate = date('Y-m-d');

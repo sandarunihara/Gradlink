@@ -69,14 +69,14 @@
                                             <?php else: ?>
                                                 <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
                                             <?php endif; ?>
-                                            <a href="../Advertisements/send/<?php echo $advertisement->advertisementId; ?>" class="top-left-link">View</a>
+                                            <a href="../Advertisements/send/<?php echo $advertisement->advertisementId; ?>" class="top-left-link">Show Info</a>
                                         </div>
                                         <div class="postdetails">
-                                            <p>Position:<span class="position"><?php echo $advertisement->position; ?></span></p>
-                                            <p>Type:<span><?php echo $advertisement->workingMode; ?></span></p>
-                                            <p>No of interns:<span><?php echo $advertisement->numOfInterns; ?></span></p>
-                                            <p>status:<span style="color: <?php echo ($advertisement->status === 'Active') ? 'green' : 'red'; ?>"><?php echo $advertisement->status; ?></span></p>
-                                            <p>Deadline:<span><?php echo $advertisement->deadline; ?></span></p>
+                                            <p class="position"><?php echo $advertisement->position; ?></p>
+                                            <p>Type :<span><?php echo $advertisement->workingMode; ?></span></p>
+                                            <p>No of interns :<span><?php echo $advertisement->numOfInterns; ?></span></p>
+                                            <p>Status :<span style="color: <?php echo ($advertisement->status === 'Active') ? 'green' : 'red'; ?>"><?php echo $advertisement->status; ?></span></p>
+                                            <p>Deadline :<span><?php echo $advertisement->deadline; ?></span></p>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>

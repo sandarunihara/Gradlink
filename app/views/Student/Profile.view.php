@@ -14,7 +14,7 @@
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Profile"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="student-profile">
@@ -68,8 +68,12 @@
                 <div class="student-skill">
                     <div class="skills">
                         <?php
-                            for ($i = 0; $i < count($data['Skills']); $i++) {
-                                echo "<p>" . htmlspecialchars($data['Skills'][$i] -> Skill) . "</p>";
+                            if($data['Skills'] == 0){
+                                echo "<p>No skills added</p>";
+                            }else{
+                                for ($i = 0; $i < count($data['Skills']); $i++) {
+                                    echo "<p>" . htmlspecialchars($data['Skills'][$i] -> Skill) . "</p>";
+                                }
                             }
                         ?>
                     </div>

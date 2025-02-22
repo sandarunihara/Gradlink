@@ -11,7 +11,7 @@
 </head>
 
 <body class="body">
-
+    
     <div class="dashboard">
         <div class="side">
             <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
@@ -20,7 +20,32 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Advertisements</h1>
+                        <?php if (isset($data) && !empty($data)): ?>
+                        <?php
+                        $status = $data[0]->status;
+                        switch ($status) {
+                            case 'Active':
+                                $statusClass = 'Active';
+                                break;
+                            case 'Deactive':
+                                $statusClass = 'Deactive';
+                                break;
+                            case 'Pending':
+                                $statusClass = 'Pending';
+                                break;
+                            case 'Shortlist':
+                                $statusText = 'Shortlisted';
+                                $statusClass = 'Shortlist';
+                                break;
+                            default:
+                                $statusClass = 'Pendiiing';
+                                break;
+                        }
+                        ?>
+                        <h1>Advertisement Post
+                                <span class="statu <?php echo $statusClass; ?>"><?php echo $data[0]->status ?></span>
+                            </h1>
+                            <?php endif; ?>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
@@ -41,9 +66,8 @@
                                         <?php endif; ?>
                                     </div>
                                     <div class="inform">
-                                        <div>
-                                            <h4>Position:<span><?php echo $data[0]->position ?></span></h4>
-                                            <!-- <h4>Internship Period:<span><?php echo $data[0]->period ?></span></h4> -->
+                                        <div class="info">
+                                            <h3 class="pos"><?php echo $data[0]->position ?></h3>
                                             <h4>No of interns:<span><?php echo $data[0]->numOfInterns ?></span></h4>
                                             <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
@@ -96,38 +120,38 @@
                 <div class="position">
                     <h4>Position:</h4>
                     <select id="position" name="position" required>
-                    <option value="Quality Assurance">Quality Assurance</option>
-                                <option value="Software Engineer">Software Engineer</option>
-                                <option value="Web Developer">Web Developer</option>
-                                <option value="Data Science">Data Science</option>
-                                <option value="Machine Learning">Machine Learning</option>
-                                <option value="Data Analyst">Data Analyst</option>
-                                <option value="Full Stack Developer">Full Stack Developer</option>
-                                <option value="Backend Developer">Backend Developer</option>
-                                <option value="Frontend Developer">Frontend Developer</option>
-                                <option value="DevOps Engineer">DevOps Engineer</option>
-                                <option value="Cloud Architect">Cloud Architect</option>
-                                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
-                                <option value="AI Engineer">AI Engineer</option>
-                                <option value="Mobile App Developer">Mobile App Developer</option>
-                                <option value="Blockchain Developer">Blockchain Developer</option>
-                                <option value="Game Developer">Game Developer</option>
-                                <option value="UI/UX Designer">UI/UX Designer</option>
-                                <option value="Product Manager">Product Manager</option>
-                                <option value="System Administrator">System Administrator</option>
-                                <option value="Network Engineer">Network Engineer</option>
-                                <option value="Technical Support Engineer">Technical Support Engineer</option>
-                                <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
-                                <option value="Cloud Engineer">Cloud Engineer</option>
-                                <option value="Software Architect">Software Architect</option>
-                                <option value="Solutions Architect">Solutions Architect</option>
-                                <option value="IT Consultant">IT Consultant</option>
-                                <option value="Quality Engineer">Quality Engineer</option>
-                                <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
-                                <option value="RPA Developer">RPA Developer</option>
-                                <option value="ERP Consultant">ERP Consultant</option>
-                                <option value="Salesforce Developer">Salesforce Developer</option>
-                                <option value="SAP Consultant">SAP Consultant</option>
+                        <option value="Quality Assurance">Quality Assurance</option>
+                        <option value="Software Engineer">Software Engineer</option>
+                        <option value="Web Developer">Web Developer</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Data Analyst">Data Analyst</option>
+                        <option value="Full Stack Developer">Full Stack Developer</option>
+                        <option value="Backend Developer">Backend Developer</option>
+                        <option value="Frontend Developer">Frontend Developer</option>
+                        <option value="DevOps Engineer">DevOps Engineer</option>
+                        <option value="Cloud Architect">Cloud Architect</option>
+                        <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                        <option value="AI Engineer">AI Engineer</option>
+                        <option value="Mobile App Developer">Mobile App Developer</option>
+                        <option value="Blockchain Developer">Blockchain Developer</option>
+                        <option value="Game Developer">Game Developer</option>
+                        <option value="UI/UX Designer">UI/UX Designer</option>
+                        <option value="Product Manager">Product Manager</option>
+                        <option value="System Administrator">System Administrator</option>
+                        <option value="Network Engineer">Network Engineer</option>
+                        <option value="Technical Support Engineer">Technical Support Engineer</option>
+                        <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
+                        <option value="Cloud Engineer">Cloud Engineer</option>
+                        <option value="Software Architect">Software Architect</option>
+                        <option value="Solutions Architect">Solutions Architect</option>
+                        <option value="IT Consultant">IT Consultant</option>
+                        <option value="Quality Engineer">Quality Engineer</option>
+                        <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
+                        <option value="RPA Developer">RPA Developer</option>
+                        <option value="ERP Consultant">ERP Consultant</option>
+                        <option value="Salesforce Developer">Salesforce Developer</option>
+                        <option value="SAP Consultant">SAP Consultant</option>
                     </select>
                 </div>
                 <div class="details">
@@ -182,20 +206,22 @@
                         </select>
                     </div>
                 </div>
-                <div class="addimg">
-                    <label for="image" class="custom-file-upload">
-                        <i class="fas fa-upload"></i> Change an Image
-                    </label>
-                    <input type="file" id="image" name="image"  required />
-                    <span id="file-name"></span>
-                </div>
-                <div class="sc_btn">
-                    <button class="cancel_btn" onclick="closeConfirmationModal()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="sub_btn" onclick="validateAndShowModal(event)">
-                        Submit
-                    </button>
+                <div class="imgbtn">
+                    <div class="addimg">
+                        <label for="image" class="custom-file-upload">
+                            <i class="fas fa-upload"></i> Change an Image
+                        </label>
+                        <input type="file" id="image" name="image" required />
+                        <span id="file-name"></span>
+                    </div>
+                    <div class="sc_btn">
+                        <button class="cancel_btn" onclick="closeConfirmationModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="sub_btn" onclick="validateAndShowModal(event)">
+                            Submit
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

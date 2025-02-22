@@ -185,4 +185,15 @@ class company
 			return false;
 		}
 	}
+
+	public function getTotalCount(): mixed{
+		try{
+			$query = "SELECT COUNT(CompanyId) AS total FROM company";
+			$result = $this->query($query);
+			return $result[0]->{'total'};
+		}catch (Exception $e) {
+			error_log("Error fetching total number of companies: " . $e->getMessage());
+			return false;
+		}
+	}
 }

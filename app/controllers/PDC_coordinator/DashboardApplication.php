@@ -27,7 +27,7 @@ class DashboardApplication
                 $companyID = (!empty($advertisement) && isset($advertisement[0]->CompanyId)) ? $advertisement[0]->CompanyId : 'Unknown Company';
 
                 $company = $companyModel->findById($companyID);
-                $companyName = (!empty($company) && isset($company[0]->Name)) ? $company[0]->Name : 'Unknown Company';
+                $companyName = (!empty($company) && isset($company->Name)) ? $company->Name : 'Unknown Company';
 
                 $applicationData[] = [
                     'student_id' => $appdetail->StudentId,

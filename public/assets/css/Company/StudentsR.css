@@ -1,8 +1,6 @@
 .sr_main{
-    background: #E9EDFF;
-    height: 550px;
+    height: 100%;
     padding: 30px;
-    border-radius: 10px;
     margin-right: 50px;
     margin-top: 30px;
 }
@@ -17,6 +15,8 @@
 }
 .sr_search-container input{
     border: none;
+    border: 1px solid rgba(165, 165, 165, 0.664);
+    padding-left: 10px;
     height: 40px;
     width: 250px;
     border-radius: 10px;
@@ -28,15 +28,17 @@
     cursor: pointer;
 }
 .sr_filter-container{
-    padding-left: 40px;
-    width: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid rgba(165, 165, 165, 0.664);
+    border-radius: 10px;
 }
 .sr_filter-container select{
     border: none;
     height: 40px;
-    width: 120px;
     padding-left: 10px;
     border-radius: 10px;
+    
 }
 .sr_t{
     display: flex;
@@ -45,17 +47,11 @@
 }
 .sr_table{
     background-color: white;
-    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
-    /* width: 1000px;
-    height: 520px; */
-    border-radius: 10px;
-}
-.sr_sr{
-    display: flex;
-    gap: 30px;
-    align-items: center;
-    padding-left: 50px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid rgba(165, 165, 165, 0.664);
+    border-radius: 10px;
 }
 .role-select{
     height: 40px;
@@ -75,12 +71,17 @@
 .student-table th, .student-table td {
     text-align: center;
 }
+.student-table td{
+    padding-right: 10px;
+}
 
 .student-table th {
+    height: fit-content;
     margin: 0;
-    padding: 0;
-    background-color: #d7d7d7;
+    padding: 15px;
+    background-color: #b7d8ff;
     font-weight: 600;
+    font-size: large;
     color: #000000;
 }
 .student-table tbody {
@@ -97,17 +98,6 @@
     width: 100%;
     table-layout: fixed;
 }
-.action-select {
-    width: 80%;
-    padding: 5px;
-    font-size: 14px;
-    outline: none;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    background-color: #ffffff;
-    color: #495057;
-}
-
 .view-profile-btn {
     width: 100%;
     padding: 8px;
@@ -118,11 +108,9 @@
     border-radius: 5px;
     cursor: pointer;
 }
-
 .view-profile-btn:hover {
     background-color: #0056b3;
 }
-
 .Recruit {
     width: 80%;
     margin-left: auto;
@@ -154,7 +142,6 @@
     color: red;
     border: 2px solid red;
 }
-
 .Pending {
     width: 80%;
     margin-left: auto;

@@ -3,6 +3,7 @@
         echo "<pre>";
         print_r($stuff);
         echo "</pre>";
+        die;
     }
 
     function esc($str){

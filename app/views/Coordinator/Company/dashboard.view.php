@@ -10,17 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/dashboard.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorCalendar.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 </head>
 
 <body>
 
     <div class="container">
-        <?php $this->renderComponent("coordinatorDashboard")  ?>
+        <?php $this->renderComponent("coordinatorDashboard") ?>
 
 
         <main class="main-content">
@@ -29,128 +31,338 @@
                     <i class="material-icons">menu</i>
                     <h1>Dashboard</h1>
                 </div>
-
                 <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
+                    <i class="material-icons notification-icon">notifications</i>
+                    <div class="notification-dropdown">
+                        <ul>
+                            <li>No new notifications</li>
+                            <!-- Add more notifications here -->
+                        </ul>
                     </div>
                 </div>
+                <div class="overlay"></div>
+
             </header>
 
             <div class='round-type '>1st Round</div>
 
 
-            <div class="main-body">
-                <div class="main-cards">
-                    <div class='card' onclick='navigateToCompanyList();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">business</i>
-                            <h3>Company</h3>
+            <!-- <div class="main-body"> -->
+                <?php
+                if (!empty($dashboardDetails)):
+                    ?>
+                    <div class="main-cards">
+                        <div class='card' onclick='navigateToDashboardCompany();'>
+                            <div class='card-inner'>
+                                <i class="material-icons">business</i>
+                                <h3>Companies</h3>
+                            </div>
+                            <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
+
                         </div>
-                        <h1>35</h1>
+
+                        <div class='card' onclick='navigateToDashboardStudent();'>
+                            <div class='card-inner'>
+                                <i class="material-icons">school </i>
+                                <h3>Students</h3>
+                            </div>
+                            <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
+                        </div>
+                        <div class='card' onclick='navigateToDashboardCompany();'>
+                            <div class='card-inner'>
+                                <i class="material-icons">featured_video</i>
+                                <h3>Ongoing Advertisements</h3>
+                            </div>
+                            <h1><?php echo $dashboardDetails['ongoingAdvertisementCount'] ?? 0; ?></h1>
+
+                        </div>
+                    </div>
+                    <div class="analysis-container">
+                        <div class="recruitment-analysis">
+                            <div class="title">
+                                <p>Recruitment Analysis</p>
+                            </div>
+
+                            <div class="graphs">
+                                <div id="recruitment_CS" style="height: 370px; width: 100%;"></div>
+                                <div id="recruitment_IS" style="height: 370px; width: 100%; margin-top: 20px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="company-performance">
+                            <div class="title">
+                                <p>Internships Offered by Companies</p>
+                            </div>
+                            <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div>
+
+
+                            <div class="company-performance" style="margin-top: 30px;">
+                                <div class="title" style="margin-top: 20px;">
+                                    <p>Scheduled Tech Talk Sessions</p>
+                                </div>
+
+
+                                <div class="calendar-container">
+                                    <div id="calendar">
+                                        <div class="calendar-header">
+                                            <button class="prev" onclick="changeMonth(-1)">&#10094;</button>
+                                            <div id="calendar-month"></div>
+                                            <button class="next" onclick="changeMonth(1)">&#10095;</button>
+                                        </div>
+                                        <div class="calendar-days" id="calendar-days"></div>
+                                    </div>
+                                </div>
+
+                                <div id="schedule-modal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close" onclick="closeModal()">&times;</span>
+                                        <h2 id="session-title"></h2>
+                                        <ul id="session-details"></ul>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div> -->
+                            </div>
+                        </div>
+
+
                     </div>
 
-                    <div class='card' onclick='navigateToStudentList();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">school </i>
-                            <h3>Student</h3>
-                        </div>
-                        <h1>317</h1>
-                    </div>
-                </div>
-                <div class="analysis-container">
-                    <div class="recruitment-analysis">
-                        <div class="title">
-                            <p>Recruitment Analysis</p>
-                        </div>
-                        <div class="graphs">
-                            <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
-                            <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
-                        </div>
-                    </div>
 
-                    <div class="company-performance">
-                        <div class="title">
-                            <p>Company Performance Analysis</p>
-                        </div>
-                        <div id="curve_chart" style="width: 90%; height: 300px;"></div>
-                    </div>
-                </div>
+                <?php else: ?>
+                    <p>Empty Data</p>
+                <?php endif; ?>
 
-            </div>
+            <!-- </div> -->
 
         </main>
 
-        <script type="text/javascript">
-            google.charts.load("current", {
-                packages: ["corechart"]
-            });
-            google.charts.setOnLoadCallback(drawAllCharts);
 
-            function drawAllCharts() {
-                // Computer Science Degree Pie Chart
-                var dataCs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 80],
-                    ['Rejected', 20],
-                    ['Pending', 70],
-                    ['Not Applied', 12]
-                ]);
+        <script>
 
-                var optionsCs = {
-                    title: 'Computer Science Degree',
-                    pieHole: 0.4,
-                };
+            <?php
+            if (!empty($applicationAnalysis)):
+                $applicationCSGraphPoints = array(
+                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
+                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
+                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
+                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
+                );
 
-                var chartCs = new google.visualization.PieChart(document.getElementById('donutchart-cs'));
-                chartCs.draw(dataCs, optionsCs);
+                $applicationISGraphPoints = array(
+                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingISCount'] ?? '')),
+                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedISCount'] ?? '')),
+                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedISCount'] ?? '')),
+                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedISCount'] ?? '')),
+                );
+                ?>
 
-                // Information System Degree Pie Chart
-                var dataIs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 60],
-                    ['Rejected', 10],
-                    ['Pending', 10],
-                    ['Not Applied', 20]
-                ]);
+                var jobRolesData = <?php echo json_encode($InternPositions, JSON_NUMERIC_CHECK); ?>;
+                var formattedJobRoles = jobRolesData.map(role => ({
+                    y: role.count,
+                    label: role.position
+                }));
 
-                var optionsIs = {
-                    title: 'Information System Degree',
-                    pieHole: 0.4,
-                };
+                window.onload = function () {
 
-                var chartIs = new google.visualization.PieChart(document.getElementById('donutchart-is'));
-                chartIs.draw(dataIs, optionsIs);
+                    var chart1 = new CanvasJS.Chart("recruitment_CS", {
+                        backgroundColor: "#EEF3F3",
+                        theme: "light2",
+                        animationEnabled: true,
+                        subtitles: [
+                            {
+                                text: "Computer Science Degree",
+                                fontSize: 20,
+                            }
+                        ],
+                        data: [{
+                            type: "doughnut",
+                            radius: "90%",
+                            innerRadius: "50%",
+                            indexLabel: "{symbol} - {y}",
+                            yValueFormatString: "#,##0.0\"%\"",
+                            showInLegend: true,
+                            legendText: "{label} : {y}",
+                            dataPoints: <?php echo json_encode($applicationCSGraphPoints, JSON_NUMERIC_CHECK); ?>
+                        }]
+                    });
 
-                // Curve Chart for Company Performance
-                var dataCurve = google.visualization.arrayToDataTable([
-                    ['Year', 'CS', 'IS'],
-                    ['2016', 130, 80],
-                    ['2017', 117, 46],
-                    ['2018', 66, 112],
-                    ['2019', 103, 54],
-                    ['2020', 100, 84],
-                    ['2021', 150, 94],
-                    ['2022', 180, 34]
-                ]);
+                    var chart2 = new CanvasJS.Chart("recruitment_IS", {
+                        backgroundColor: "#EEF3F3",
+                        theme: "light2",
+                        animationEnabled: true,
+                        subtitles: [
+                            {
+                                text: "Information Systems Degree",
+                                fontSize: 20,
+                            }
+                        ],
+                        data: [{
+                            type: "doughnut",
+                            radius: "90%",
+                            innerRadius: "50%",
+                            indexLabel: "{symbol} - {y}",
+                            yValueFormatString: "#,##0.0\"%\"",
+                            showInLegend: true,
+                            legendText: "{label} : {y}",
+                            dataPoints: <?php echo json_encode($applicationISGraphPoints, JSON_NUMERIC_CHECK); ?>
+                        }]
+                    });
 
-                var optionsCurve = {
-                    title: 'Internship',
-                    curveType: 'function',
-                    legend: {
-                        position: 'bottom'
-                    }
-                };
+                    var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
+                        backgroundColor: "#EEF3F3",
+                        animationEnabled: true,
+                        // title: {
+                        //     text: "Job Roles Offered by Companies"
+                        // },
+                        axisY: {
+                            title: "Number of Job Openings",
+                            includeZero: true
+                        },
+                        data: [{
+                            type: "bar",
+                            indexLabel: "{y}",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontWeight: "bolder",
+                            indexLabelFontColor: "white",
+                            dataPoints: formattedJobRoles
+                        }]
+                    });
 
-                var curveChart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-                curveChart.draw(dataCurve, optionsCurve);
-            }
+                    chart1.render();
+                    chart2.render();
+                    chart3.render();
+
+                }
+
+            <?php else: ?>
+                console.warn("No application analysis data available.");
+            <?php endif; ?>
+
         </script>
+
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
+
+        <script>
+
+            let currentMonth = new Date();
+            const sessionData = <?php echo json_encode($sessions); ?>
+
+            function renderCalendar(month) {
+                const firstDayOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
+                const lastDayOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+
+                const monthName = month.toLocaleString('default', { month: 'long' }) + ' ' + month.getFullYear();
+                document.getElementById('calendar-month').innerText = monthName;
+
+                const daysContainer = document.getElementById('calendar-days');
+                daysContainer.innerHTML = '';
+
+                const numberOfDays = lastDayOfMonth.getDate();
+                const firstDayIndex = firstDayOfMonth.getDay();
+
+                // Blank days for the start of the month
+                for (let i = 0; i < firstDayIndex; i++) {
+                    const blankCell = document.createElement('div');
+                    blankCell.classList.add('calendar-day');
+                    daysContainer.appendChild(blankCell);
+                }
+
+                // Fill in the days of the month
+                for (let day = 1; day <= numberOfDays; day++) {
+                    const currentDay = new Date(month.getFullYear(), month.getMonth(), day, 12);
+                    const dayString = currentDay.toISOString().split('T')[0]; // format: YYYY-MM-DD
+                    const dayCell = document.createElement('div');
+                    dayCell.classList.add('calendar-day');
+                    dayCell.innerText = day;
+                    dayCell.setAttribute('data-date', dayString);
+
+                    // Add session labels if there are sessions on that day
+                    if (sessionData[dayString]) {
+                        // Add a class to highlight the day if there are sessions
+                        dayCell.classList.add('session-day');
+
+                        // Add an onclick event to show session details
+                        dayCell.onclick = function () {
+                            showSessionDetails(dayString);
+                        };
+                    }
+
+                    daysContainer.appendChild(dayCell);
+                }
+            }
+
+
+            function showSessionDetails(date) {
+                const modal = document.getElementById('schedule-modal');
+                const title = document.getElementById('session-title');
+                const detailsList = document.getElementById('session-details');
+
+                title.innerText = `Sessions on ${date}`;
+                detailsList.innerHTML = '';
+
+                sessionData[date].forEach(session => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+            <div class="session-box">
+                <strong>${session.session_name}</strong> (${session.time})<br>
+                <em>${session.Company}</em> <br> Hall: ${session.hall}<br><br>
+                <p>${session.description}</p>
+            </div>
+        `;
+                    detailsList.appendChild(listItem);
+                });
+
+                modal.style.display = 'block';
+            }
+
+
+
+            function closeModal() {
+                const modal = document.getElementById('schedule-modal');
+                modal.style.display = 'none';
+            }
+
+            // Close modal when clicking outside of it
+            window.onclick = function (event) {
+                const modal = document.getElementById('schedule-modal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+
+            function changeMonth(offset) {
+                currentMonth.setMonth(currentMonth.getMonth() + offset);
+                renderCalendar(currentMonth);
+            }
+
+            // Initial render
+            renderCalendar(currentMonth);
+
+
+            // Notifications
+            const notificationIcon = document.querySelector(".notification-icon");
+            const notificationDropdown = document.querySelector(".notification-dropdown");
+            const overlay = document.querySelector(".overlay");
+
+            notificationIcon.addEventListener("click", function () {
+                notificationDropdown.classList.toggle("active");
+                overlay.classList.toggle("active"); // Show/hide overlay
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!notificationIcon.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                    notificationDropdown.classList.remove("active");
+                    overlay.classList.remove("active"); // Hide overlay
+                }
+            });
+
+        </script>
+
+
+
 </body>
 
 </html>

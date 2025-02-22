@@ -11,16 +11,19 @@ class DashboardAdvertisement
 
         $data = $model->find(['status' => "Active"]);
 
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
+
         if ($data == false || empty($data)) {
             $this->view('Coordinator/Advertisement/dashboardAdvertisement');
-        }
-        else {
+        } else {
             $advertisementData = [];
 
-            foreach($data as $addetail)
-            {
+            foreach ($data as $addetail) {
+
                 $company = $companyModel->findById($addetail->CompanyId);
-                $companyName = (!empty($company) && isset($company[0]->Name)) ? $company[0]->Name : 'Unknown Company';
+                $companyName = (!empty($company) && isset($company->Name)) ? $company->Name : 'Unknown Company';
                 // $companyName = $company[0]->Name;
 
                 $advertisementData[] = [
@@ -34,6 +37,7 @@ class DashboardAdvertisement
                     'company_name' => $companyName
                 ];
             }
+
             $this->view('Coordinator/Advertisement/dashboardAdvertisement', ['advertisementData' => $advertisementData]);
         }
     }

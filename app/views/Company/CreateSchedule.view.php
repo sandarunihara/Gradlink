@@ -19,59 +19,64 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Students Requests</h1>
+                        <h1>Students Profile/Interview Schedule</h1>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="sc_main">
                     <div class="sc">
-                        <a href="http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/<?php echo $addata[0]->advertisementId  ?>/<?php echo $data[0]->StudentId  ?>" class="sc_container">
-                            <i class="fas fa-chevron-left"></i>
-                            <h3>Create Interview Schedule</h3>
-                            
-                            
-                        </a>
                     </div>
                     <form id="schedule-form" class="sc_background" method="post">
                         <div class="sc_iner">
-                            <div class="sc_pos">
-                                <h4>Position:</h4>
-                                <select id="position" name="position" required>
-                                    <option value="<?php echo $addata[0]->position ?>"><?php echo $addata[0]->position ?></option>
-                                </select>
-                            </div>
-                            <div class="sc_dateNdur">
-                                <div class="sc_date">
-                                    <h4>Student Name :</h4>
-                                    <input type="text" id="name" name="name" value="<?php echo $data[0]->Name ?>" required />
+                            <a href="http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/<?php echo $addata[0]->advertisementId  ?>/<?php echo $data[0]->StudentId  ?>" class="sc_container">
+                                <i class="fas fa-chevron-left"></i>
+                                <h3>BACK</h3>
+                            </a>
+                            <div class="sc_con">
+                                <div class="is_con1">
+                                    <div class="sc_pos">
+                                        <h4><span class="starmark">*</span>Position:</h4>
+                                        <input type="text" id="position" name="position" value="<?php echo $addata[0]->position ?>" readonly />
+                                    </div>
+                                    <div class="sc_dateNdur">
+                                        <div class="sc_date">
+                                            <h4><span class="starmark">*</span>Student Name :</h4>
+                                            <input type="text" id="name" name="name" value="<?php echo $data[0]->Name ?>" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="sc_dateNdur">
+                                        <div class="sc_date">
+                                            <h4><span class="starmark">*</span>Date :</h4>
+                                            <input type="date" id="date" name="date" required />
+                                        </div>
+                                    </div>
+                                    <div class="sc_time">
+                                        <h4><span class="starmark">*</span>Select Time Period</h4>
+                                        <div id="time-slots-container" class="sc_time-slots">
+                                            <div class="time-slot">
+                                                <input type="time" id="starttime" name="starttime" required>
+                                                <p>-</p>
+                                                <input type="time" id="endtime" name="endtime" required>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="sc_dateNdur">
-                                <div class="sc_date">
-                                    <h4>Date :</h4>
-                                    <input type="date" id="date" name="date" required />
+                                <div class="is_con2">
+                                    <div class="sc_dateNdur2">
+                                        <div class="additional_info">
+                                            <h4>Additional Information </h4>
+                                            <textarea id="message" name="message" cols="70" rows="8" placeholder="Enter your message..."></textarea>
+                                        </div>
+                                        <div class="sc_btn">
+                                            <button type="submit" class="sc_btn" onclick="validateAndShowModal(event)">
+                                                Schedule Interview
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="sc_time">
-                                <h4>Select Time Period</h4>
-                            </div>
-                            <div id="time-slots-container" class="sc_time-slots">
-                                <div class="time-slot">
-                                    <input type="time" id="starttime" name="starttime" required>
-                                    <p>-</p>
-                                    <input type="time" id="endtime" name="endtime" required>
-                                </div>
-                            </div>
-                            <div class="sc_btn">
-                                <button type="submit" class="sc_btn" onclick="validateAndShowModal(event)">
-                                    Submit
-                                </button>
                             </div>
                         </div>
                     </form>
-
-
-
                 </div>
             </div>
         </div>
@@ -87,6 +92,7 @@
             </div>
         </div>
     </div>
+
 
 
     <div id="toast-container" class="toast-container"></div>
@@ -115,14 +121,14 @@
             openConfirmationModal();
         }
         document.addEventListener("DOMContentLoaded", () => {
-        const dateInput = document.getElementById('date');
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate() + 1).padStart(2, '0');
+            const dateInput = document.getElementById('date');
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate() + 1).padStart(2, '0');
 
-        const minDate = `${yyyy}-${mm}-${dd}`;
-        dateInput.setAttribute('min', minDate);
+            const minDate = `${yyyy}-${mm}-${dd}`;
+            dateInput.setAttribute('min', minDate);
         });
 
         function openConfirmationModal() {

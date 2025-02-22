@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <?php $this->renderComponent("studentHeader")  ?>
+    <?php $this->renderComponent("studentHeader", ["title" => "Profile Edit"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <a href="<?=ROOT?>/Student/StudentProfile/profile" class="backreq">
@@ -57,11 +57,11 @@
                         type="text"
                         id="skill"
                         name="Skill"
-                        placeholder="Enter skill"
+                        placeholder="Enter skill (e.g. Java, Python, etc.)"
                         value = "<?php 
-                                    foreach($data['Skills'] as $skill) {
-                                        echo htmlspecialchars($skill -> Skill) . ","; 
-                                    } 
+                                    if (!empty($data['Skills'])) {
+                                        echo htmlspecialchars(implode(',', array_map(fn($skill) => $skill->Skill, $data['Skills'])));
+                                    }
                                 ?>"
                     >
                 </div>
@@ -72,7 +72,7 @@
                     <textarea 
                         id="description" 
                         name="ShortDesc" 
-                        placeholder="Enter a brief description about yourself (50-100 words)" 
+                        placeholder="Enter a brief description about yourself (50 words)" 
                         cols="50" 
                         rows="5"
                         required

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Company/blockedCompanies.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -22,15 +24,7 @@
                     <h1>Companies</h1>
                 </div>
 
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>Jonitha Cathrine</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
+                
             </header>
 
             <?php $activeTab = 'pending-companies'; ?>

@@ -63,7 +63,6 @@
                             <option value="ERP Consultant">ERP Consultant</option>
                             <option value="Salesforce Developer">Salesforce Developer</option>
                             <option value="SAP Consultant">SAP Consultant</option>
-
                         </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>

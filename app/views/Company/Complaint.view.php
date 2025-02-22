@@ -23,70 +23,72 @@
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
-                <div class="m_main">
-                    <div class="complaint-navbar">
-                        <div class="headcontainer">
-                            <div class="m_content">
-                                <a href="http://localhost/Gradlink/public/company/Companydash/dashboard" class="backbtn">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
+                <div class="main-container">
+                    <div class="m_main">
+                        <div class="complaint-navbar">
+                            <div class="headcontainer">
+                                <div class="m_content">
+                                    <a href="http://localhost/Gradlink/public/company/Companydash/dashboard" class="backbtn">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </div>
+                                <div class="complaint-filter-container">
+                                    <i class="fas fa-filter"></i>
+                                    <select class="status-select">
+                                        <option value="all">All</option>
+                                        <option value="reviewed">Reviewed</option>
+                                        <option value="notReviewed">Not Reviewed</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="complaint-filter-container">
-                                <i class="fas fa-filter"></i>
-                                <select class="status-select">
-                                    <option value="all">All</option>
-                                    <option value="reviewed">Reviewed</option>
-                                    <option value="notReviewed">Not Reviewed</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="add-complaint">
-                            <a href="<?= ROOT ?>/company/Complaint/addComplaint"><button>+ Add New</button></a>
-                        </div>
-                    </div>
-                    <div class="compliant-table-div">
-                        <div class="complaint-table-background">
-                            <!-- Table -->
-                            <div>
-                                <table class="complaint-table">
-                                    <thead class="complaint-table-headings">
-                                        <th>
-                                            <h5>Date</h5>
-                                        </th>
-                                        <th>
-                                            <h5>Topic</h5>
-                                        <th>
-                                            <h5>Status</h5>
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="complaint-row">
-                                            <td class="date">2024-01-10</td>
-                                            <td class="topic">Lack of Guidance</td>
-                                            <td>
-                                                <!-- status -->
-                                                <button class="reviewed" onclick="location.href='<?= ROOT ?>/company/Complaint/viewComplaint'">
-                                                    <span class="status">Reviewed</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="complaint-row">
-                                            <td class="date">2024-01-10</td>
-                                            <td class="topic">Lack of Guidance</td>
-                                            <td>
-                                                <!-- status -->
-                                                <button class="not-reviewed" onclick="location.href=''">
-                                                    <span class="status">Not Reviewed</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="add-complaint">
+                                <a href="<?= ROOT ?>/company/Complaint/addComplaint"><button>+ Add New</button></a>
                             </div>
                         </div>
-                    </div>
+                        <div class="compliant-table-div">
+                            <div class="complaint-table-background">
+                                <!-- Table -->
+                                <div>
+                                    <table class="complaint-table">
+                                        <thead class="complaint-table-headings">
+                                            <th>
+                                                <h5>Date</h5>
+                                            </th>
+                                            <th>
+                                                <h5>Topic</h5>
+                                            <th>
+                                                <h5>Status</h5>
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="complaint-row">
+                                                <td class="date">2024-01-10</td>
+                                                <td class="topic">Lack of Guidance</td>
+                                                <td>
+                                                    <!-- status -->
+                                                    <button class="reviewed" onclick="location.href='<?= ROOT ?>/company/Complaint/viewComplaint'">
+                                                        <span class="status">Reviewed</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr class="complaint-row">
+                                                <td class="date">2024-01-10</td>
+                                                <td class="topic">Lack of Guidance</td>
+                                                <td>
+                                                    <!-- status -->
+                                                    <button class="not-reviewed" onclick="location.href=''">
+                                                        <span class="status">Not Reviewed</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
 
+                    </div>
                 </div>
             </div>
         </div>

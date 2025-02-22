@@ -16,33 +16,56 @@
         <div class="side">
             <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
-        <div id="content">
+        <div id="content" class="content">
             <div class="main">
                 <div class="d">
                     <div>
                         <h1>DashBoard</h1>
                     </div>
-
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="d_main">
                     <div class="d_allsummery">
                         <div class="stats">
+                            <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/Advertisements/dashboard'">
+                                <div>
+                                    <h2>Total Advertisements</h2>
+                                    <p><?php echo $numOfAdvertisements ?></p>
+                                </div>
+                                <div class="chart1">
+                                    <canvas id="totalViewersChart2"></canvas>
+                                </div>
+                            </div>
                             <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/StudentsRequests/dashboard'">
-                                <h2>Total Student Applied</h2>
-                                <p><?php echo $numOfStudents; ?></p>
+                                <div>
+                                    <h2>Total Student Applied</h2>
+                                    <p><?php echo $numOfStudents; ?></p>
+                                </div>
+                                <div class="chart1">
+                                    <canvas id="totalViewersChart"></canvas>
+                                </div>
                             </div>
                             <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard'">
-                                <h2>Total Student Shortlisted</h2>
-                                <p><?php echo $numOfShortlistStudents ?></p>
-                            </div>
-                            <div class="stat-card" onclick="window.location.href='http://localhost/Gradlink/public/company/Advertisements/dashboard'">
-                                <h2>Total Advertisements</h2>
-                                <p><?php echo $numOfAdvertisements ?></p>
+                                <div>
+                                    <h2>Total Student Shortlisted</h2>
+                                    <p><?php echo $numOfShortlistStudents ?></p>
+                                </div>
+                                <div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="bottomcontent">
+                        <div class="d_chart">
+                            <h3>Applications by Job Position</h3>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="d_chart">
+                            <h3>Monthly application trends</h3>
+                            <canvas id="myChartfortrends"></canvas>
+                        </div>
+                    </div>
+                    <div class="bottomcontent2">
                         <div class="d_request">
                             <h3>Student Requests</h3>
                             <div class="d_alllist">
@@ -52,11 +75,10 @@
                                         echo '<li>No requests found</li>';
                                     } else {
                                         // Get the first 8 elements from $data
-                                        $firstEight = array_slice($data, 0, 8);
-
+                                        $firstEight = array_slice($data, 0, 6);
 
                                         foreach ($firstEight as $item) {
-                                            $status=$item['Status'];
+                                            $status = $item['Status'];
                                             switch ($status) {
                                                 case 'Recruit':
                                                     $Statusname = 'Recruit';
@@ -80,9 +102,6 @@
                                                     break;
                                             }
 
-                                            
-
-
                                             echo '<li>';
                                             echo '<span class="role">' . htmlspecialchars($item['Name']) . '</span>';
                                             echo '<span class="role position">' . htmlspecialchars($item['Position']) . '</span>';
@@ -100,51 +119,178 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="d_messaage">
-                            <h3>Messages</h3>
-                            <div class="d_msglist">
-                                <?php
-                                $details = [
-                                    "Tech Talk" => "../Messages/TechTalk",
-                                    "Intern Call" => "../Messages/pdc_message",
-                                ];
 
-                                $data = [
-                                    ["name" => "PDC", "detail" => "Tech Talk", "time" => "7:34 PM"],
-                                    ["name" => "PDC", "detail" => "Intern Call", "time" => "7:34 PM"],
-                                ];
-                                ?>
-
-                                <?php foreach ($data as $item): ?>
-                                    <?php
-                                    $detail = $item['detail'];
-                                    $link = isset($details[$detail]) ? $details[$detail] : "#";
-                                    ?>
-                                    <a href="<?php echo $link; ?>" class="m_container">
-                                        <div class="m_de">
-                                            <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40"/>
-                                            <div class="m_content">
-                                                <span class="m_name"><?php echo $item['name']; ?></span>
-                                                <span class="m_detail"><?php echo $detail; ?></span>
-                                                <span class="m_time"><?php echo $item['time']; ?></span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                            <div class="d_view_all">
-                                <a href="../Messages/dashboard">
-                                    View All
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
+                        <div class="d_chart">
+                            <h3>Students Status</h3>
+                            <canvas id="studentstatus"></canvas>
                         </div>
+
+                        <!-- <div class="d_2com">
+                            <div class="d_messaage"> -->
+                                <div class="d_msglist">
+                                    <h3>Messages</h3>
+                                    <?php
+                                    $details = [
+                                        "Tech Talk" => "../Messages/TechTalk",
+                                        "Intern Call" => "../Messages/pdc_message",
+                                    ];
+
+                                    $data = [
+                                        ["name" => "PDC", "detail" => "Tech Talk", "time" => "7:34 PM"],
+                                        ["name" => "PDC", "detail" => "Intern Call", "time" => "7:34 PM"],
+                                    ];
+                                    ?>
+
+                                    <?php foreach ($data as $item): ?>
+                                        <?php
+                                        $detail = $item['detail'];
+                                        $link = isset($details[$detail]) ? $details[$detail] : "#";
+                                        ?>
+                                        <a href="<?php echo $link; ?>" class="m_container">
+                                            <div class="m_de">
+                                                <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40" />
+                                                <div class="m_content">
+                                                    <span class="m_name"><?php echo $item['name']; ?></span>
+                                                    <span class="m_detail"><?php echo $detail; ?></span>
+                                                    <span class="m_time"><?php echo $item['time']; ?></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    <?php endforeach; ?>
+                                </div>
+                                <!-- <div class="d_view_all">
+                                    <a href="../Messages/dashboard">
+                                        View All
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx1 = document.getElementById('myChart').getContext('2d');
+        const AdStats = <?php echo json_encode($barchartdata); ?>;
+        const labels = AdStats.map(label => label.label);
+        const data = AdStats.map(data => data.count);
+        const myChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Applications per position',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.8)', // Teal
+                        'rgba(255, 159, 64, 0.8)', // Orange
+                        'rgba(255, 99, 132, 0.8)', // Red
+                        'rgba(54, 162, 235, 0.8)', // Blue
+                        'rgba(153, 102, 255, 0.8)', // Purple
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx4 = document.getElementById('myChartfortrends').getContext('2d');
+        const myChartfortrends = new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                datasets: [{
+                    label: 'Monthly Internship Applications',
+                    data: [0, 1, 3, 2, 5, 4, 6, 5, 4, 3, 5, 6],
+                    backgroundColor: 'rgba(58, 106, 255, 0.2)',
+                    borderColor: 'rgba(58, 106, 255, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+        const ctx5 = document.getElementById('studentstatus').getContext('2d');
+        const studentstatuschart = <?php echo json_encode($studentstatuschart); ?>;
+        console.log(studentstatuschart);
+        const statuslabels = studentstatuschart.map(label => label.label);
+        const statusdata = studentstatuschart.map(data => data.count);
+        
+        const studentstatus = new Chart(ctx5, {
+            type: 'pie',
+            data: {
+                labels: statuslabels,
+                datasets: [{
+                    data: statusdata,
+                    backgroundColor: ['#0056b3','#f4b400','#0f9d58','#db4437',],
+                    borderWidth: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        // display: false // Hide the legend
+                    },
+                    tooltip: {
+                        // enabled: true // Hide tooltips on hover
+                    }
+                }
+            }
+        });
+
+        const ctx3 = document.getElementById('totalViewersChart2').getContext('2d');
+        const totalViewersChart2 = new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                labels: ['Active', 'Deactive', 'Pending'],
+                datasets: [{
+                    data: [5, 4, 6],
+                    backgroundColor: ['#0f9d58', '#db4437', '#f4b400'],
+                    borderWidth: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend
+                    },
+                    tooltip: {
+                        enabled: true // Hide tooltips on hover
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

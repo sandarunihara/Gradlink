@@ -15,7 +15,7 @@ class student_advertisement
 		'CV',
 	];
 
-	function findstudentad($companyId, $studentId)
+	function findstudentad($advertisementId, $studentId)
 	{
 		// Prepare the SQL query with placeholders for parameters
 		$query = "SELECT 
@@ -27,12 +27,12 @@ class student_advertisement
               JOIN 
                     advertisement ON studentadvertisement.AdvertisementId = advertisement.AdvertisementId
               WHERE 
-                    advertisement.CompanyId = :CompanyId 
+                    advertisement.advertisementId = :advertisementId 
                     AND student.StudentId = :StudentId";
 
 		// Bind the parameters and execute the query
 		$params = [
-			':CompanyId' => $companyId,
+			':advertisementId' => $advertisementId,
 			':StudentId' => $studentId
 		];
 
