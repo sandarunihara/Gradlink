@@ -68,6 +68,10 @@
     gap: 10px;
     flex-wrap: wrap;
 }
+.cetificatesContent a{
+    text-decoration: none;
+    color: #007bff;
+}
 .student-short-description{
     margin-top: 50px;
 }

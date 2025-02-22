@@ -145,7 +145,7 @@ table td {
 
 tbody {
     display: block;
-    max-height: 350px; /* Adjust this value as needed */
+    max-height: 380px; /* Adjust this value as needed */
     overflow-y: auto;
 }
 
