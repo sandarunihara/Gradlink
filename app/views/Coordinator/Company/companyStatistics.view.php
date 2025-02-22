@@ -63,19 +63,9 @@
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
-        <?php
-
-        $dataPoints = array(
-            array("label" => "Pending", "y" => 12),
-            array("label" => "Rejected", "y" => 6),
-            array("label" => "Registered", "y" => 26),
-        );
-
-
-        ?>
 
         <?php
-        if (!empty($companyLocations)):
+        if (!empty($companyLocations) || !empty($dataPoints)):
             ?>
 
             var companyLocations = <?php echo json_encode($companyLocations, JSON_NUMERIC_CHECK); ?>;
@@ -84,22 +74,22 @@
                 label: Location.District
             }));
 
-
+            var companyStatus = <?php echo json_encode($companyStatus, JSON_NUMERIC_CHECK); ?>;
+            var formattedStatus = companyStatus.map(Status => ({
+                y: Status.count,
+                label: Status.Status
+            }));
 
             window.onload = function () {
-
 
                 var chart1 = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
                     backgroundColor: "#fffafa",
-
-
-
                     data: [{
                         type: "pie",
-                        yValueFormatString: "#,##0.00\"%\"",
+                        yValueFormatString: "#,##0", // Removes decimal points
                         indexLabel: "{label} ({y})",
-                        dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                        dataPoints: formattedStatus
                     }]
                 });
 
@@ -109,7 +99,7 @@
 
                     axisY: {
                         title: "Number of Companies",
-                        valueFormatString: "0", 
+                        valueFormatString: "0",
                         interval: 1
                     },
                     axisX: {
@@ -124,7 +114,7 @@
                         yValueFormatString: "#,##0",
                         dataPoints: formattedLocations
                     }]
-                    
+
                 });
                 chart1.render();
 
