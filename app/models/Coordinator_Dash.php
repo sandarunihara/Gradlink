@@ -162,4 +162,31 @@ class Coordinator_Dash
         }
     }
 
+    public function companyLocations(): mixed
+    {
+        try {
+            $query = "SELECT District, COUNT(*) as count FROM company GROUP BY District";
+            $result = $this->query($query);
+            return $result;
+        }
+        catch (Exception $e) {
+            error_log("Error fetching job roles: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function countByCompanyStatus(): mixed
+    {
+        try {
+            $query = "SELECT Status, COUNT(*) as count FROM company GROUP BY Status";
+            $result = $this->query($query);
+            return $result;
+        }
+        catch (Exception $e) {
+            error_log("Error fetching company status: " . $e->getMessage());
+            return false;
+        }
+
+    }
+
 }

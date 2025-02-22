@@ -167,7 +167,7 @@
                 window.onload = function () {
 
                     var chart1 = new CanvasJS.Chart("recruitment_CS", {
-                        backgroundColor: "#EEF3F3",
+                        backgroundColor: "#fffafa",
                         theme: "light2",
                         animationEnabled: true,
                         subtitles: [
@@ -189,7 +189,7 @@
                     });
 
                     var chart2 = new CanvasJS.Chart("recruitment_IS", {
-                        backgroundColor: "#EEF3F3",
+                        backgroundColor: "#fffafa",
                         theme: "light2",
                         animationEnabled: true,
                         subtitles: [
@@ -211,7 +211,7 @@
                     });
 
                     var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
-                        backgroundColor: "#EEF3F3",
+                        backgroundColor: "#fffafa",
                         animationEnabled: true,
                         // title: {
                         //     text: "Job Roles Offered by Companies"

@@ -4,42 +4,26 @@
     <button class="tab-button  <?= $activeTab == 'student-complaint-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/studentComplain'" >Students</button>
 </div>
 
-<!-- <script>
-    function addclasses(tabButton) {
-    // Remove 'active' class from all tab buttons
-    const tabButtons = document.querySelectorAll(".tab-button");
-    tabButtons.forEach(button => button.classList.remove("active"));
+<script>
 
-    // Add 'active' class to the clicked button
-    tabButton.classList.add("active");
-    }
-</script> -->
+document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-pane");
 
-<!-- <script>
-    // JavaScript for Tabs
-    function openTab(event, tabId) {
-        const tabButtons = document.querySelectorAll(".tab-button");
-        const tabPanes = document.querySelectorAll(".tab-pane");
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+            // Remove active class from all buttons
+            tabs.forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
 
-        // Remove 'active' class from all tabs and tab content
-        tabButtons.forEach(button => button.classList.remove("active"));
-        tabPanes.forEach(pane => pane.classList.remove("active"));
+            // Hide all tab contents
+            tabContents.forEach(content => content.classList.remove("active"));
 
-        // Add 'active' class to clicked tab and corresponding content
-        event.currentTarget.classList.add("active");
-        document.getElementById(tabId).classList.add("active");
-    }
+            // Show the clicked tab's content
+            const target = this.getAttribute("data-target");
+            document.getElementById(target).classList.add("active");
+        });
+    });
+});
 
-//     function loadContent(url, tabId) {
-//     const tabButtons = document.querySelectorAll(".tab-button");
-//     tabButtons.forEach(button => button.classList.remove("active"));
-//     document.querySelector(`[onclick="loadContent('${url}', '${tabId}')"]`).classList.add("active");
-
-//     fetch(url)
-//         .then(response => response.text())
-//         .then(html => {
-//             document.getElementById("tab-content").innerHTML = html;
-//         })
-//         .catch(error => console.error('Error loading content:', error));
-// }
-</script> -->
+</script>
