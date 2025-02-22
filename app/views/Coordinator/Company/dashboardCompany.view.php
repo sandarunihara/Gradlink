@@ -32,7 +32,7 @@
             <div class="tab-content">
                 <!-- Company List Tab -->
                 <div id="company-list" class="tab-pane active ">
-                    <section class="company-list">
+                    <!-- <section class="company-list"> -->
                         <div class="list-header">
                             <h2>Company List</h2>
                             <div class="search-box">
@@ -76,7 +76,7 @@
                             <button class="add-btn" onclick="navigateToAddCompany();">+ Add</button>
                             <button class="blocked-btn" onclick="navigateToBlockList();">Blocked List</button>
                         </div> -->
-                    </section>
+                    <!-- </section> -->
                 </div>
 
 
