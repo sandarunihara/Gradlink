@@ -71,55 +71,69 @@
             array("label" => "Registered", "y" => 26),
         );
 
-        $dataPoints2 = array(
-            array("y" => 3373.64, "label" => "Germany"),
-            array("y" => 2435.94, "label" => "France"),
-            array("y" => 1842.55, "label" => "China"),
-            array("y" => 1828.55, "label" => "Russia"),
-            array("y" => 1039.99, "label" => "Switzerland"),
-            array("y" => 765.215, "label" => "Japan"),
-            array("y" => 612.453, "label" => "Netherlands")
-        );
 
         ?>
 
+        <?php
+        if (!empty($companyLocations)):
+            ?>
+
+            var companyLocations = <?php echo json_encode($companyLocations, JSON_NUMERIC_CHECK); ?>;
+            var formattedLocations = companyLocations.map(Location => ({
+                y: Location.count,
+                label: Location.District
+            }));
 
 
-        window.onload = function () {
+
+            window.onload = function () {
 
 
-            var chart1 = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                backgroundColor: "#fffafa",
+                var chart1 = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    backgroundColor: "#fffafa",
 
 
 
-                data: [{
-                    type: "pie",
-                    yValueFormatString: "#,##0.00\"%\"",
-                    indexLabel: "{label} ({y})",
-                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
+                    data: [{
+                        type: "pie",
+                        yValueFormatString: "#,##0.00\"%\"",
+                        indexLabel: "{label} ({y})",
+                        dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                    }]
+                });
 
-            var chart2 = new CanvasJS.Chart("jobRolesChartContainer", {
-                animationEnabled: true,
-                theme: "light2",
-                
-                axisY: {
-                    title: "Gold Reserves (in tonnes)"
-                },
-                data: [{
-                    type: "column",
-                    yValueFormatString: "#,##0.## tonnes",
-                    dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
-            chart1.render();
+                var chart2 = new CanvasJS.Chart("jobRolesChartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
 
-            chart2.render();
+                    axisY: {
+                        title: "Number of Companies",
+                        valueFormatString: "0", 
+                        interval: 1
+                    },
+                    axisX: {
+                        interval: 1, // Force every label to appear
+                        labelAngle: -45, // Rotate labels to avoid overlap
+                    },
+                    data: [{
+                        type: "column",
+                        indexLabel: "{y}",
+                        indexLabelPlacement: "outside",
 
-        }
+                        yValueFormatString: "#,##0",
+                        dataPoints: formattedLocations
+                    }]
+                    
+                });
+                chart1.render();
+
+                chart2.render();
+
+            }
+        <?php else: ?>
+            console.warn("Data not available.");
+        <?php endif; ?>
     </script>
 </body>
 
