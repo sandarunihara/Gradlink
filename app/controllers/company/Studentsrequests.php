@@ -126,7 +126,6 @@ class StudentsRequests
             }
         }
 
-
         $this->view('Company/Studentpro', ['data' => $data, 'url' => $backUrl, 'studentJobstatus' => $studentJobstatus]);
     }
 
