@@ -24,7 +24,7 @@
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="pro_container">
-                    <a href="<?php echo $url ?>" class="backreq">
+                    <a href="<?php echo htmlspecialchars($url) ?>" class="backreq">
                         <i class="fas fa-chevron-left"></i>
                         <h3>back</h3>
                     </a>
@@ -34,7 +34,7 @@
                             <div class="stu_info">
                                 <span><?php echo $data[0]->Name ?></span>
                                 <p class="mail_no"><?php echo $data[0]->Email ?><br>
-                                    0<?php echo $data[0]->ContactNum ?></p>
+                                    <?php echo $data[0]->ContactNum ?></p>
                                 <div class="links">
                                     <div class="acc_link">
                                         <i class="fab fa-linkedin"></i>
@@ -51,6 +51,12 @@
                         <div class="stu_pro_skill">
                             <h2>Skills</h2>
                             <div class="skills">
+                                <!-- <?php
+                                                        $skills = explode(', ', $student['Skills']); // Convert comma-separated string to array
+                                                        foreach ($skills as $skill) {
+                                                            echo "<div>" . htmlspecialchars($skill) . "</div>";
+                                                        }
+                                                        ?> -->
                                 <p>Java</p>
                                 <p>C++</p>
                                 <p>C</p>
@@ -68,6 +74,17 @@
                         </div>
                         <div class="stu_pro_exp">
                             <div class="topic1" onclick="toggleSection('experienceContent', 'experienceIcon')">
+                                <h2>Description</h2>
+                                <i id="experienceIcon" class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="experienceContent" class="toggle-content">
+                                <div class="projects">
+                                    <p><?php echo $data[0]->ShortDesc ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="stu_pro_exp">
+                            <div class="topic1" onclick="toggleSection('experienceContent', 'experienceIcon')">
                                 <h2>Experience</h2>
                                 <i id="experienceIcon" class="fas fa-chevron-right"></i>
                             </div>
@@ -80,8 +97,8 @@
                                     <p>5.Success Stories: Feature testimonials or stories from alumni to show potential career paths and achievements</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="stu_pro_cetificates">
+                        </div> -->
+                        <!-- <div class="stu_pro_cetificates">
                             <div class="topic1" onclick="toggleSection('cetificatesContent', 'cetificatesIcon')">
                                 <h2>Cetificates</h2>
                                 <i id="cetificatesIcon" class="fas fa-chevron-right"></i>
@@ -94,7 +111,7 @@
                                     <p>Awards and Recognition"Learn about the awards and honors received by our outstanding students."<br><a href="#">https://asdasfas.com/c/6724d8f4-0ee0-8001-ae1f-e5c4c7096a6d#</a></p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="stu_pro_cv">
                             <h2>Curriculum Vitae(CV)</h2>
                             <div class="cv">
