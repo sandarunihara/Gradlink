@@ -2,6 +2,6 @@
     class _404{
         use Controller;
         public function index(){
-            echo "404 error controller";
+            $this->view('404');
         }
     }
