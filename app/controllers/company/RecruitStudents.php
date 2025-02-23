@@ -66,6 +66,33 @@ class RecruitStudents
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         $studentJobstatus = $studentad_data[0]->Jobstatus;
 
-        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/RecruitStudents/dashboard', 'studentJobstatus' => $studentJobstatus]);
+        $notReviewed=[];
+        $Reviewed=[];
+        $report_modal=new progress_doc;
+        $result=$report_modal->find($StudentId);
+        if(!empty($result)){
+            foreach($result as $report){
+                if($report->Status=='notReviewed'){
+                    $notReviewed[]=$report;
+                }else{
+                    $Reviewed[]=$report;
+                }
+            }
+        }
+        // show($Reviewed);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['report_submit_action'])) {
+            // show($_POST);
+            $status=[
+                'Status'=>$_POST['report_submit_action']
+            ];
+            $update_report=$report_modal->update($_POST['DocumentId'],$status,'DocumentId');
+            // show($update_report);
+            if($update_report['status']=='success'){
+                header("Location: http://localhost/Gradlink/public/company/RecruitStudents/studentprofile/$advertisementId/$StudentId");
+            }
+        }
+
+        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/RecruitStudents/dashboard', 'studentJobstatus' => $studentJobstatus,'notReviewed'=>$notReviewed,'Reviewed'=>$Reviewed]);
     }
 }
