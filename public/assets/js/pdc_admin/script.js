@@ -60,6 +60,11 @@ function navigateToShowCompany(companyId){
     window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/show/" + companyId;
 }
 
+function navigateToAdvertisementView(advertisementId){
+    //console.log("navigate to,",advertisementId);
+    window.location.href = "/Gradlink/public/PDC_admin/viewAdvertisement/show/" + advertisementId;
+};
+
 function unblockCompany(companyId){
     const userConfirmed = confirm("Are you sure you want to unblock this company?");
     if (userConfirmed) {
@@ -101,8 +106,6 @@ function navigateToAddStudent(){
 function navigateToAddCompany(){
     window.location.href = "/Gradlink/public/PDC_admin/AddCompany/dashboard";
 }
-
-
 // function navigateToUpdate(session_id){
 //     window.location.href = "/Gradlink/public/PDC_admin/ViewSession/update/" + session_id;
 // }
@@ -250,4 +253,40 @@ function unblockStudent(studentId){
     if(confirm("Are you sure you want to unblock this student?")){
         window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/unblock/" + studentId;
     }
+}
+
+function navigateToDeactivateAdd(advertisementId){
+    window.location.href = '/Gradlink/public/PDC_admin/ViewAdvertisement/deactivate/' + advertisementId;
+}
+
+function navigateToActivateAdd(advertisementId){
+    window.location.href = '/Gradlink/public/PDC_admin/ViewAdvertisement/activate/' + advertisementId;
+}
+
+function navigateToRejectAdd(advertisementId){
+    window.location.href = '/Gradlink/public/PDC_admin/ViewAdvertisement/reject/' + advertisementId;
+}
+
+function openModal(adid, action, email) {
+    let modal = document.getElementById("actionModal");
+    let reasonContainer = document.getElementById("reasonContainer");
+    let confirmationMessage = document.getElementById("confirmationMessage");
+
+    document.getElementById("hiddenAdId").value = adid;
+    document.getElementById("hiddenAction").value = action;
+    document.getElementById("hiddenEmail").value = email;
+
+    if (action === "activate") {
+        confirmationMessage.innerHTML = "<p>Are you sure you want to activate this advertisement?</p>";
+        reasonContainer.style.display = "none";
+    } else {
+        confirmationMessage.innerHTML = "";
+        reasonContainer.style.display = "block";
+    }
+
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("actionModal").style.display = "none";
 }
