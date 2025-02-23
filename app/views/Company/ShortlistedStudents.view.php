@@ -26,17 +26,47 @@
                 <div class="sr_main">
                     <div class="sr_search">
                         <div class="sr_search-container">
-                            <input type="text" placeholder="Search Student">
+                            <input id="searchInput" type="text" placeholder="Search Student">
                             <i class="fas fa-search"></i>
                         </div>
                         <select class="role-select">
-                            <option value="software-engineer">Software Engineer</option>
-                            <option value="qa">QA</option>
-                            <option value="web-development">Web Development</option>
+                            <option value="all">All</option>
+                            <option value="Quality Assurance">Quality Assurance</option>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="Web Developer">Web Developer</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                            <option value="Full Stack Developer">Full Stack Developer</option>
+                            <option value="Backend Developer">Backend Developer</option>
+                            <option value="Frontend Developer">Frontend Developer</option>
+                            <option value="DevOps Engineer">DevOps Engineer</option>
+                            <option value="Cloud Architect">Cloud Architect</option>
+                            <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                            <option value="AI Engineer">AI Engineer</option>
+                            <option value="Mobile App Developer">Mobile App Developer</option>
+                            <option value="Blockchain Developer">Blockchain Developer</option>
+                            <option value="Game Developer">Game Developer</option>
+                            <option value="UI/UX Designer">UI/UX Designer</option>
+                            <option value="Product Manager">Product Manager</option>
+                            <option value="System Administrator">System Administrator</option>
+                            <option value="Network Engineer">Network Engineer</option>
+                            <option value="Technical Support Engineer">Technical Support Engineer</option>
+                            <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
+                            <option value="Cloud Engineer">Cloud Engineer</option>
+                            <option value="Software Architect">Software Architect</option>
+                            <option value="Solutions Architect">Solutions Architect</option>
+                            <option value="IT Consultant">IT Consultant</option>
+                            <option value="Quality Engineer">Quality Engineer</option>
+                            <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
+                            <option value="RPA Developer">RPA Developer</option>
+                            <option value="ERP Consultant">ERP Consultant</option>
+                            <option value="Salesforce Developer">Salesforce Developer</option>
+                            <option value="SAP Consultant">SAP Consultant</option>
                         </select>
                         <div class="sr_filter-container">
                             <i class="fas fa-filter"></i>
-                            <select>
+                            <select class="status-select">
                                 <option value="all">All</option>
                                 <option value="Recruit">Recruit</option>
                                 <option value="rejected">Rejected</option>
@@ -71,7 +101,7 @@
                                     <tbody>
                                         <?php if (isset($data) && !empty($data)): ?>
                                             <?php foreach ($data as $student): ?>
-                                                
+
                                                 <?php
                                                 $status = $student['Action'];
                                                 switch ($status) {
@@ -129,6 +159,37 @@
     </div>
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', filterTable);
+        document.querySelector('.role-select').addEventListener('change', filterTable);
+        document.querySelector('.status-select').addEventListener('change', filterTable);
+
+        function filterTable() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const selectedRole = document.querySelector('.role-select').value.toLowerCase();
+            const selectedStatus = document.querySelector('.status-select').value.toLowerCase();
+            const rows = document.querySelectorAll('.sr_row');
+
+            rows.forEach(row => {
+                const studentName = row.querySelector('.name').textContent.toLowerCase();
+                const studentPosition = row.querySelector('.position').textContent.toLowerCase(); // Position
+                const studentStatus = row.querySelector('.action').textContent.toLowerCase(); // Adjusted to get text directly from the div
+
+                const matchesSearch = studentName.includes(searchValue);
+                const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
+                const matchesStatus = (selectedStatus === "all" || studentStatus === selectedStatus.toLowerCase());
+
+                // Show row if it matches search, role filter, and status filter
+                if (matchesSearch && matchesRole && matchesStatus) {
+                    row.style.display = ''; // Show the row
+                } else {
+                    row.style.display = 'none'; // Hide the row
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>
