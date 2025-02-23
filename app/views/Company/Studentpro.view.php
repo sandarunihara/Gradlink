@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div>
-        <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -51,25 +51,12 @@
                         <div class="stu_pro_skill">
                             <h2>Skills</h2>
                             <div class="skills">
-                                <!-- <?php
-                                                        $skills = explode(', ', $student['Skills']); // Convert comma-separated string to array
-                                                        foreach ($skills as $skill) {
-                                                            echo "<div>" . htmlspecialchars($skill) . "</div>";
-                                                        }
-                                                        ?> -->
-                                <p>Java</p>
-                                <p>C++</p>
-                                <p>C</p>
-                                <p>Python</p>
-                                <p>JavaScript</p>
-                                <p>React</p>
-                                <p>Angular</p>
-                                <p>Node.js</p>
-                                <p>Ruby</p>
-                                <p>Kotlin</p>
-                                <p>Express.js</p>
-                                <p>HTML</p>
-                                <p>CSS</p>
+                                <?php
+                                $skills = explode(', ', $data[0]->Skills); // Convert comma-separated string to array
+                                foreach ($skills as $skill) {
+                                    echo "<p>" . htmlspecialchars($skill) . "</p>";
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="stu_pro_exp">
@@ -129,15 +116,15 @@
                                         <button type="button" value="shortlist" onclick="openShortlistConfirmModal(event)" class="accept">Shortlist</button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="acce_rej" id="RecruitSection">
                                     <h3>Action :</h3>
                                     <div class="btn">
                                         <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
-                                        <?php if($interviewschedule == 0): ?>
-                                        <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
-                                        <?php elseif($interviewschedule == 1): ?>
-                                        <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
+                                        <?php if ($interviewschedule == 0): ?>
+                                            <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
+                                        <?php elseif ($interviewschedule == 1): ?>
+                                            <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
