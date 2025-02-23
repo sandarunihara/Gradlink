@@ -65,15 +65,23 @@ class C_Dashboard
     {
     // Prepare the SQL query with placeholders for parameters
     $query = "SELECT 
-                        *
-                    FROM 
-                        studentadvertisement
-                    JOIN 
-                        student ON studentadvertisement.StudentId = student.StudentId
-                    JOIN 
-                        advertisement ON studentadvertisement.AdvertisementId = advertisement.advertisementId
-                    WHERE 
-                        advertisement.advertisementId = :advertisementId";
+            studentadvertisement.*,
+            student.*,
+            advertisement.*,
+            GROUP_CONCAT(student_skill.Skill SEPARATOR ', ') AS Skills
+          FROM 
+            studentadvertisement
+          JOIN 
+            student ON studentadvertisement.StudentId = student.StudentId
+          JOIN 
+            advertisement ON studentadvertisement.AdvertisementId = advertisement.advertisementId
+          LEFT JOIN 
+            student_skill ON student.StudentId = student_skill.StudentId
+          WHERE 
+            advertisement.advertisementId = :advertisementId
+          GROUP BY 
+            student.StudentId";
+
 
     // Bind the parameters and execute the query
     $params = [
