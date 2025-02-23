@@ -15,7 +15,7 @@ class StudentsRequests
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 
         $advertisementIds = [];
-        if(empty($data)){
+        if (empty($data)) {
             $this->view('Company/StudentsRequests', ['data' => []]);
             exit();
         }
@@ -36,7 +36,7 @@ class StudentsRequests
             if (is_array($data) || is_object($data)) {
                 foreach ($data as $item) {
 
-                    if ($item->Jobstatus === 'Shortlist'|| $item->Jobstatus === 'Interview Scheduled') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
                         $hasShortlisted = true;
                     }
 
@@ -51,11 +51,13 @@ class StudentsRequests
                         'Student Name' => $item->Name,
                         'Student Degree' => $item->DegreeName,
                         'Position' => $item->position,
-                        'Action' => $item->Jobstatus
+                        'Action' => $item->Jobstatus,
+                        'Skills' =>$item->Skills
                     ];
                     // }
                 }
             }
+            // show($reqdata);
         }
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
@@ -81,6 +83,18 @@ class StudentsRequests
 
     public function studentprofile($advertisementId, $StudentId)
     {
+        // Get filter parameters from URL
+        $position = $_GET['position'] ?? 'all';
+        $status = $_GET['status'] ?? 'all';
+        $skill=$_GET['skill'] ?? '';
+
+        // Create back URL with filters
+        $backUrl = ROOT . "/Company/StudentsRequests/dashboard?" . http_build_query([
+            'position' => $position,
+            'status' => $status,
+            'skill'=>$skill
+        ]);
+        // show($backUrl);
 
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
@@ -97,31 +111,27 @@ class StudentsRequests
             if ($result['status']) {
                 if ($_POST['submit_action'] === 'Shortlist') {
                     $success = "Student Job Status updated successfully.";
-                    header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
+                    header("Location: $backUrl");
                     exit;
                 } else {
                     $success = "Student Job Status updated successfully.";
-                    header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
+                    header("Location: $backUrl");
                     exit;
                 }
                 // Redirect to the same page after successful submission
             } else {
                 $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard']);
+                $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'error' => $error, 'url' => $backUrl]);
                 exit;
             }
         }
 
-
-        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/StudentsRequests/dashboard', 'studentJobstatus' => $studentJobstatus]);
+        $this->view('Company/Studentpro', ['data' => $data, 'url' => $backUrl, 'studentJobstatus' => $studentJobstatus]);
     }
 
 
-    public function filterstudents(){
+    public function filterstudents()
+    {
         $this->view('Company/FilterStudents');
     }
-
-
 }
-
-
