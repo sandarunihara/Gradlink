@@ -106,6 +106,9 @@
                                 <a href="pdf-link.pdf" target="_blank">Download here</a>
                             </div>
                         </div>
+                        <div class="progress-report-container">
+                            jhbj
+                        </div>
                         <div class="all_ar">
                             <form id="actionForm" method="post" action="">
                                 <input type="hidden" name="submit_action" id="actionInput" value="">
@@ -189,31 +192,7 @@
             successToast("<?php echo addslashes($success); ?>");
         <?php endif; ?>
 
-        // function toggleSection(sectionId, iconId) {
-        //     const section = document.getElementById(sectionId);
-        //     const icon = document.getElementById(iconId);
-
-        //     if (section.classList.contains('show')) {
-        //         // Collapse section
-        //         section.style.height = `${section.scrollHeight}px`; // Set to full height initially
-        //         window.getComputedStyle(section).height; // Trigger a reflow, flushing the CSS changes
-        //         section.style.height = '0'; // Set height to 0 to animate closing
-        //         section.classList.remove('show');
-        //     } else {
-        //         // Expand section
-        //         section.style.height = `${section.scrollHeight}px`; // Set to full height to expand
-        //         section.classList.add('show');
-        //         section.addEventListener('transitionend', () => {
-        //             // Remove inline height after animation completes
-        //             section.style.height = 'auto';
-        //         }, {
-        //             once: true
-        //         });
-        //     }
-
-        //     // Toggle icon rotation
-        //     icon.classList.toggle('rotate');
-        // }
+        
 
 
         // To open and close the modals and confirm actions
@@ -299,3 +278,31 @@
 </body>
 
 </html>
+
+
+
+<!-- // function toggleSection(sectionId, iconId) {
+        //     const section = document.getElementById(sectionId);
+        //     const icon = document.getElementById(iconId);
+
+        //     if (section.classList.contains('show')) {
+        //         // Collapse section
+        //         section.style.height = `${section.scrollHeight}px`; // Set to full height initially
+        //         window.getComputedStyle(section).height; // Trigger a reflow, flushing the CSS changes
+        //         section.style.height = '0'; // Set height to 0 to animate closing
+        //         section.classList.remove('show');
+        //     } else {
+        //         // Expand section
+        //         section.style.height = `${section.scrollHeight}px`; // Set to full height to expand
+        //         section.classList.add('show');
+        //         section.addEventListener('transitionend', () => {
+        //             // Remove inline height after animation completes
+        //             section.style.height = 'auto';
+        //         }, {
+        //             once: true
+        //         });
+        //     }
+
+        //     // Toggle icon rotation
+        //     icon.classList.toggle('rotate');
+        // } -->

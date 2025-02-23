@@ -32,57 +32,63 @@
                             </div>
                             <select class="role-select">
                                 <option value="all">All</option>
-                                <option value="Quality Assurance">Quality Assurance</option>
-                                <option value="Software Engineer">Software Engineer</option>
-                                <option value="Web Developer">Web Developer</option>
-                                <option value="Data Science">Data Science</option>
-                                <option value="Machine Learning">Machine Learning</option>
-                                <option value="Data Analyst">Data Analyst</option>
-                                <option value="Full Stack Developer">Full Stack Developer</option>
-                                <option value="Backend Developer">Backend Developer</option>
-                                <option value="Frontend Developer">Frontend Developer</option>
-                                <option value="DevOps Engineer">DevOps Engineer</option>
-                                <option value="Cloud Architect">Cloud Architect</option>
-                                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
-                                <option value="AI Engineer">AI Engineer</option>
-                                <option value="Mobile App Developer">Mobile App Developer</option>
-                                <option value="Blockchain Developer">Blockchain Developer</option>
-                                <option value="Game Developer">Game Developer</option>
-                                <option value="UI/UX Designer">UI/UX Designer</option>
-                                <option value="Product Manager">Product Manager</option>
-                                <option value="System Administrator">System Administrator</option>
-                                <option value="Network Engineer">Network Engineer</option>
-                                <option value="Technical Support Engineer">Technical Support Engineer</option>
-                                <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
-                                <option value="Cloud Engineer">Cloud Engineer</option>
-                                <option value="Software Architect">Software Architect</option>
-                                <option value="Solutions Architect">Solutions Architect</option>
-                                <option value="IT Consultant">IT Consultant</option>
-                                <option value="Quality Engineer">Quality Engineer</option>
-                                <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
-                                <option value="RPA Developer">RPA Developer</option>
-                                <option value="ERP Consultant">ERP Consultant</option>
-                                <option value="Salesforce Developer">Salesforce Developer</option>
-                                <option value="SAP Consultant">SAP Consultant</option>
+                                <option value="Intern Quality Assurance">Quality Assurance</option>
+                                <option value="Intern Software Engineer">Software Engineer</option>
+                                <option value="Intern Web Developer">Web Developer</option>
+                                <option value="Intern Data Science">Data Science</option>
+                                <option value="Intern Machine Learning">Machine Learning</option>
+                                <option value="Intern Data Analyst">Data Analyst</option>
+                                <option value="Intern Full Stack Developer">Full Stack Developer</option>
+                                <option value="Intern Backend Developer">Backend Developer</option>
+                                <option value="Intern Frontend Developer">Frontend Developer</option>
+                                <option value="Intern DevOps Engineer">DevOps Engineer</option>
+                                <option value="Intern Cloud Architect">Cloud Architect</option>
+                                <option value="Intern Cybersecurity Analyst">Cybersecurity Analyst</option>
+                                <option value="Intern AI Engineer">AI Engineer</option>
+                                <option value="Intern Mobile App Developer">Mobile App Developer</option>
+                                <option value="Intern Blockchain Developer">Blockchain Developer</option>
+                                <option value="Intern Game Developer">Game Developer</option>
+                                <option value="Intern UI/UX Designer">UI/UX Designer</option>
+                                <option value="Intern Product Manager">Product Manager</option>
+                                <option value="Intern System Administrator">System Administrator</option>
+                                <option value="Intern Network Engineer">Network Engineer</option>
+                                <option value="Intern Technical Support Engineer">Technical Support Engineer</option>
+                                <option value="Intern Embedded Systems Engineer">Embedded Systems Engineer</option>
+                                <option value="Intern Cloud Engineer">Cloud Engineer</option>
+                                <option value="Intern Software Architect">Software Architect</option>
+                                <option value="Intern Solutions Architect">Solutions Architect</option>
+                                <option value="Intern IT Consultant">IT Consultant</option>
+                                <option value="Intern Quality Engineer">Quality Engineer</option>
+                                <option value="Intern Business Intelligence Analyst">Business Intelligence Analyst</option>
+                                <option value="Intern RPA Developer">RPA Developer</option>
+                                <option value="Intern ERP Consultant">ERP Consultant</option>
+                                <option value="Intern Salesforce Developer">Salesforce Developer</option>
+                                <option value="Intern SAP Consultant">SAP Consultant</option>
                             </select>
                         </div>
                     </div>
                     <div class="recruit-student-list">
-                        <div class="stu-profile">
-                            <div class="profile-photo">
-                                <img src="<?=ROOT?>/assets/img/Student/Sandeepa.jpg" />
-                            </div>
-                            <div class="student-details">
-                                <div class="name-container">
-                                    <p class="name-detail">Sandaru Nihara</p>
-                                    <p class="position-detail">Intern Software Engineer</p>
-                                </div>
-                                <div class="report-one">
-                                    <div class="green-dot"></div>            
-                                    <p class="report-message">New unread Report Available</p>    
-                                </div>
-                            </div>
-                        </div>
+                        <?php if (isset($data) && !empty($data)): ?>
+                            <?php foreach ($data as $student): ?>
+                                <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"  class="stu-profile">
+                                    <div class="profile-photo">
+                                        <img src="<?= ROOT ?>/assets/img/Student/Sandeepa.jpg" />
+                                    </div>
+                                    <div class="student-details">
+                                        <div class="name-container">
+                                            <p class="name-detail"><?php echo htmlspecialchars($student['Student Name']); ?></p>
+                                            <p class="position-detail">Intern <?php echo htmlspecialchars($student['Position']); ?></p>
+                                        </div>
+                                        <div class="report-one">
+                                            <div class="green-dot"></div>
+                                            <p class="report-message">New unread Report Available</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No students Recruit yet</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -99,11 +105,11 @@
         function filterTable() {
             const searchValue = document.getElementById('searchInput').value.toLowerCase();
             const selectedRole = document.querySelector('.role-select').value.toLowerCase();
-            const rows = document.querySelectorAll('.sr_row');
+            const rows = document.querySelectorAll('.stu-profile');
 
             rows.forEach(row => {
-                const studentName = row.querySelector('.name').textContent.toLowerCase();
-                const studentPosition = row.querySelector('.position').textContent.toLowerCase(); // Position
+                const studentName = row.querySelector('.name-detail').textContent.toLowerCase();
+                const studentPosition = row.querySelector('.position-detail').textContent.toLowerCase(); // Position
 
                 const matchesSearch = studentName.includes(searchValue);
                 const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
