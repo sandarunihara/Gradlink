@@ -100,6 +100,9 @@ document.getElementById("status").addEventListener("change", function () {
     }
 });
 
+
+
+
 // Trigger the change event on page load to apply the correct initial color
 document.getElementById("status").dispatchEvent(new Event("change"));
 

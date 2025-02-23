@@ -196,4 +196,12 @@ class company
 			return false;
 		}
 	}
+
+	// public function findallwithCompany(){
+	// 	try {
+	// 		$query = "SELECT "
+	// 	} catch (\Throwable $th) {
+	// 		//throw $th;
+	// 	}
+	// }
 }

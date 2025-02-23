@@ -1,29 +1,40 @@
-.main-content {
-    width: 95%;
-    margin-left: auto;
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+main.main-content {
+    flex-grow: 1;
     padding: 20px;
-    box-sizing: border-box;
+    background-color: #f8f9fc;
+    overflow-x: auto;
+    width: 95%;
+    margin-left: 5%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
 }
 
 .header-left h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-left: 20px;
-    color: #2b237c;
+    margin: 0;
+    font-size: 24px;
+    color: #0056b3;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-right: 20px;
-}
-
-.header-right img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid #ddd;
+.company-list {
+    margin-top: 20px;
 }
 
 .list-header {
@@ -33,108 +44,137 @@
     margin-bottom: 20px;
 }
 
-.list-header h2 {
-    font-size: 24px;
-    color: #2b237c;
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
-}
-
 .search-box {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .search-box input {
+    flex-grow: 1;
     padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 280px; /* Slightly wider for better usability */
     font-size: 14px;
-    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.2);
 }
 
 .search-box button {
-    padding: 10px 20px; /* More balanced size */
-    border-radius: 5px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
+    padding: 10px 20px;
     background-color: #0056b3;
     color: #fff;
-    transition: background-color 0.3s;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .search-box button:hover {
     background-color: #3b74d1;
 }
 
-.tabs {
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: center;
+.add-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-
-.company-list {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 80%;
-    height: calc(100vh - 150px);
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Professional shadow */
-    height: max-content;
+.add-btn:hover {
+    background-color: #45c168;
 }
-
 
 table {
     width: 100%;
-    border-collapse: collapse; /* Remove double borders */
+    border-collapse: collapse;
+    margin-top: 20px;
     background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-table th, table td {
-    text-align: left; 
-    padding: 10px; 
-    border-bottom: 1px solid #ddd; 
-    font-size: 14px; 
-    color: #333;
-    padding-bottom: 20px;
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
 
-table th {
-    background-color: #f4f4f4; /* Light gray header background */
-    font-weight: bold; /* Emphasize header */
+th {
+    background-color: #0056b3;
+    color: #fff;
 }
 
-table tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; 
-}
-
-table tbody tr:hover {
-    background-color: #f1f1f1; 
+tr:hover {
+    background-color: #f1f1f1;
 }
 
 .view-btn {
-    background-color: #0056b3; /* Simple blue button */
+    padding: 8px 15px;
+    background-color: #0056b3;
     color: #fff;
-    padding: 5px 10px;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 12px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .view-btn:hover {
-    background-color: #3b74d1; /* Darker blue on hover */
+    background-color: #3b74d1;
+}
+
+.tab-container {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f8f9fc;
+    border-bottom: 2px solid #ddd;
+    padding: 10px 0;
+}
+
+.tab-container .tab {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    color: #666;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-container .tab:hover {
+    background-color: #eaeaea;
+    color: #0056b3;
+}
+
+.tab-container .tab.active {
+    background-color: #0056b3;
+    color: #fff;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }

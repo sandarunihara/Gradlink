@@ -22,60 +22,65 @@
                     <h1>Advertisements</h1>
                 </div>
 
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
             </header>
 
-            <?php $activeTab = 'pending-advertisements'; ?>
-            <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
+            <div class="tab">
+                <?php $activeTab = 'pending-advertisements'; ?>
+                <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
+            </div>
 
-            <section class="company-list">
-                <div class="list-header">
-                    <h2>Pending Advertisements</h2>
+            
+            <div class="tab-content">
+                <div class="tab-pane active" id="pending-advertisements">
+                <section class="company-list">
+                    <div class="list-header">
+                        <div class="search-box">
+                            <input type="text" placeholder="Search Company" />
+                            <button> Search
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Position</th>
+                                <th>No of Interns</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Action</th> <!-- Added a column header for the button -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if($data == null) : ?>
+                                <tr>
+                                    <td colspan="6">No advertisements found</td>
+                                </tr>
+                            <?php else : ?>
 
+                                <?php foreach ($data as $row) : ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row->Name) ?></td>
+                                        <td><?= htmlspecialchars($row->position) ?></td>
+                                        <td><?= htmlspecialchars($row->numOfInterns) ?></td>
+                                        <td><?= htmlspecialchars($row->startdate) ?></td>
+                                        <td><?= htmlspecialchars($row->deadline) ?></td>
+                                        <td><button onclick="navigateToAdvertisementView('<?= htmlspecialchars($row->advertisementId)?>')" class="view-btn">View</button></td> <!-- Correctly aligned in a separate column -->
+                                    </tr>
+                                <?php endforeach; ?>
+                                
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+
+                </section>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Position</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Creative Pixels</td>
-                            <td>UI Designer</td>
-                            <td>10/10/2024</td>
-                            <td>20/10/2024</td>
-                            <td>
-                                <select class="status-btn" id="status" name="status">
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                </select>
-                            </td>
-                            <td><button class="view-btn" onclick="naviagteToViewPendingAdvertisement();">View</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
+            </div>
 
-            </section>
-
+            
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
 
 </body>
 

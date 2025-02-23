@@ -37,7 +37,7 @@ class C_Advertisement
 
     public function find($data)
     {
-        // Check if $data is an associative array or a single value
+        
         if (is_array($data)) {
             $keys = array_keys($data);
             $query = "SELECT * FROM advertisement WHERE ";
@@ -58,6 +58,32 @@ class C_Advertisement
         return $result;
     }
 
+    public function findwithcompany($data){
+        $query = "SELECT 
+                    advertisement.advertisementId,
+                    advertisement.position,
+                    advertisement.description,
+                    advertisement.qualification,
+                    advertisement.numOfInterns,
+                    advertisement.workingMode,
+                    advertisement.deadline,
+                    advertisement.CompanyId,
+                    advertisement.startdate,
+                    advertisement.image,
+                    advertisement.status,
+                    company.Name,
+                    company.profileimg,
+                    company.Email
+                FROM 
+                    advertisement
+                JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+                WHERE
+                    advertisementId = :advertisementId";
+
+        $result = $this->query($query, ['advertisementId' => $data]);
+        return $result ? $result[0] : null;
+    }
 
     function findall()
     {
@@ -93,6 +119,108 @@ class C_Advertisement
         }
     }
 
+    public function findallActivewithCompany(){
+        $query = "SELECT 
+                    advertisement.advertisementId,
+                    advertisement.position,
+                    advertisement.description,
+                    advertisement.qualification,
+                    advertisement.numOfInterns,
+                    advertisement.workingMode,
+                    advertisement.deadline,
+                    advertisement.CompanyId,
+                    advertisement.startdate,
+                    advertisement.image,
+                    company.Name,
+                    company.profileimg
+                FROM 
+                    advertisement
+                JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+                WHERE
+                    advertisement.status = 'Active'";
+
+
+        $result = $this->query($query);
+        return $result;
+    }
+
+    public function findAllPending(){
+        $query = "SELECT 
+                    advertisement.advertisementId,
+                    advertisement.position,
+                    advertisement.description,
+                    advertisement.qualification,
+                    advertisement.numOfInterns,
+                    advertisement.workingMode,
+                    advertisement.deadline,
+                    advertisement.CompanyId,
+                    advertisement.startdate,
+                    advertisement.image,
+                    company.Name,
+                    company.profileimg
+                FROM 
+                    advertisement
+                JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+                WHERE
+                    advertisement.status = 'Pending'";
+
+
+        $result = $this->query($query);
+        return $result;
+    }
+
+    public function findallDeactivewithCompany(){
+        $query = "SELECT 
+                    advertisement.advertisementId,
+                    advertisement.position,
+                    advertisement.description,
+                    advertisement.qualification,
+                    advertisement.numOfInterns,
+                    advertisement.workingMode,
+                    advertisement.deadline,
+                    advertisement.CompanyId,
+                    advertisement.startdate,
+                    advertisement.image,
+                    company.Name,
+                    company.profileimg
+                FROM 
+                    advertisement
+                JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+                WHERE
+                    advertisement.status = 'Deactive'";
+
+        $result = $this->query($query);
+        return $result;
+    }
+
+    public function findallRejectedwithCompany(){
+        $query = "SELECT 
+                    advertisement.advertisementId,
+                    advertisement.position,
+                    advertisement.description,
+                    advertisement.qualification,
+                    advertisement.numOfInterns,
+                    advertisement.workingMode,
+                    advertisement.deadline,
+                    advertisement.CompanyId,
+                    advertisement.startdate,
+                    advertisement.image,
+                    company.Name,
+                    company.profileimg
+                FROM 
+                    advertisement
+                JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+                WHERE
+                    advertisement.status = 'Rejected'";
+
+        $result = $this->query($query);
+        return $result;
+    }
+
     public function OngoingAdvertisementCount() {
         try{
             $query = "SELECT COUNT(*) AS total FROM advertisement WHERE status = 'active'";
@@ -103,5 +231,12 @@ class C_Advertisement
 			error_log("Error fetching total number of advertisements: " . $e->getMessage());
 			return false;
 		}
+    }
+
+    public function deactivate($id){
+        $query = "UPDATE $this->table SET status = 'Deactive' WHERE advertisementId = :advertisementId";
+        $result = $this->query($query, ['advertisementId' => $id]);
+        var_dump($result);
+        //return $result;
     }
 }

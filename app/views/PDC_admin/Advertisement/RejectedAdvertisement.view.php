@@ -24,13 +24,13 @@
             </header>
 
             <div class="tab">
-                <?php $activeTab = 'advertisement-list'; ?>
+                <?php $activeTab = 'rejected-list'; ?>
                 <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
             </div>
 
             
             <div class="tab-content">
-                <div class="tab-pane active" id="advertisement-list">
+                <div class="tab-pane active" id="rejected-list">
                 <section class="company-list">
                     <div class="list-header">
                         <div class="search-box">
@@ -75,11 +75,10 @@
                 </section>
                 </div>
             </div>
-            
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
-
+    
 </body>
 
 </html>
