@@ -70,7 +70,7 @@
                     <div class="recruit-student-list">
                         <?php if (isset($data) && !empty($data)): ?>
                             <?php foreach ($data as $student): ?>
-                                <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"  class="stu-profile">
+                                <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="stu-profile">
                                     <div class="profile-photo">
                                         <img src="<?= ROOT ?>/assets/img/Student/Sandeepa.jpg" />
                                     </div>
@@ -80,8 +80,10 @@
                                             <p class="position-detail">Intern <?php echo htmlspecialchars($student['Position']); ?></p>
                                         </div>
                                         <div class="report-one">
-                                            <div class="green-dot"></div>
-                                            <p class="report-message">New unread Report Available</p>
+                                            <?php if ($student["NotReviewedstatus"] == true): ?>
+                                                <div class="green-dot"></div>
+                                                <p class="report-message">New unread Report Available</p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </a>
