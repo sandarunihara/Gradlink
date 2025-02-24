@@ -98,6 +98,8 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 
     <script>
@@ -121,14 +123,13 @@
             openConfirmationModal();
         }
         document.addEventListener("DOMContentLoaded", () => {
-            const dateInput = document.getElementById('date');
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate() + 1).padStart(2, '0');
+            const unavailableDates = <?php echo json_encode($unavailable_date); ?>;
 
-            const minDate = `${yyyy}-${mm}-${dd}`;
-            dateInput.setAttribute('min', minDate);
+            flatpickr("#date", {
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                disable: unavailableDates.map(date => new Date(date))
+            });
         });
 
         function openConfirmationModal() {
