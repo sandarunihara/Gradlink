@@ -24,13 +24,13 @@
             </header>
 
             <div class="tab">
-                <?php $activeTab = 'advertisement-list'; ?>
+                <?php $activeTab = 'deactive-list'; ?>
                 <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
             </div>
 
             
             <div class="tab-content">
-                <div class="tab-pane active" id="advertisement-list">
+                <div class="tab-pane active" id="deactive-list">
                 <section class="company-list">
                     <div class="list-header">
                         <div class="search-box">
@@ -75,6 +75,8 @@
                 </section>
                 </div>
             </div>
+            
+
             
         </main>
     </div>

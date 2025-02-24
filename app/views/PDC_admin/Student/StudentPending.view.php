@@ -21,58 +21,62 @@
                 </div>
             </header>
 
-            <?php $activeTab = 'pending-Students'; ?>
-            <?php $this->renderPDC_adminTabs("studentTabs") ?>
+            <div class="tab">
+                <?php $activeTab = 'pending-Students'; ?>
+                <?php $this->renderPDC_adminTabs("studentTabs") ?>
+            </div>
 
-            <section class="company-list">
-                <div class="list-header">
-                    <div class="search-box">
-                        <input type="text" placeholder="Search Students" />
-                        <button> Search
-                        </button>
-                    </div>
-                    <div class="action-buttons">
-                    <!-- <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button> -->
-                </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Registration No.</th>
-                            <th>Name</th>
-                            <th>Degree</th>
-                            <th>email</th>
-                            <th>Status</th>
-                            <th></th>
-                            <th></th>
-                            <!-- <th></th> -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if(!empty($studentData)): ?>
-                            <?php foreach($studentData as $student): ?>
+            <div class="tab-content">
+                <div id="pending-Students" class="tab-pane active">
+                    <section class="company-list">
+                        <div class="list-header">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search Students" />
+                                <button> Search
+                                </button>
+                            </div>
+                            <div class="action-buttons">
+                            <!-- <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button> -->
+                        </div>
+                        </div>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?></td>
-                                    <td><?= htmlspecialchars(is_array($student) ? $student['Name'] : $student->Name) ?></td>
-                                    <td><?= htmlspecialchars(is_array($student) ? $student['DegreeName'] : $student->DegreeName) ?></td>
-                                    <td><?= htmlspecialchars(is_array($student) ? $student['Email'] : $student->Email) ?></td>
-                                    <td><?= htmlspecialchars(is_array($student) ? $student['Status'] : $student->Status) ?></td>
-                                    <td><button class="view-btn" onclick="navigateToShowStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">View</button></td>
-
-                                    <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
-                                    <td></td>
+                                    <th>Registration No.</th>
+                                    <th>Name</th>
+                                    <th>Degree</th>
+                                    <th>email</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                    <!-- <th></th> -->
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="9">No Students found.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </section>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($studentData)): ?>
+                                    <?php foreach($studentData as $student): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?></td>
+                                            <td><?= htmlspecialchars(is_array($student) ? $student['Name'] : $student->Name) ?></td>
+                                            <td><?= htmlspecialchars(is_array($student) ? $student['DegreeName'] : $student->DegreeName) ?></td>
+                                            <td><?= htmlspecialchars(is_array($student) ? $student['Email'] : $student->Email) ?></td>
+                                            <td><?= htmlspecialchars(is_array($student) ? $student['Status'] : $student->Status) ?></td>
+                                            <td><button class="view-btn" onclick="navigateToShowStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">View</button></td>
 
-            
+                                            <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
+                                            <td></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Students found.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
 
         </main>
     </div>

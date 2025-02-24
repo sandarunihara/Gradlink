@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div>
-        <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -24,7 +24,7 @@
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="pro_container">
-                    <a href="<?php echo $url ?>" class="backreq">
+                    <a href="<?php echo htmlspecialchars($url) ?>" class="backreq">
                         <i class="fas fa-chevron-left"></i>
                         <h3>back</h3>
                     </a>
@@ -34,7 +34,7 @@
                             <div class="stu_info">
                                 <span><?php echo $data[0]->Name ?></span>
                                 <p class="mail_no"><?php echo $data[0]->Email ?><br>
-                                    0<?php echo $data[0]->ContactNum ?></p>
+                                    <?php echo $data[0]->ContactNum ?></p>
                                 <div class="links">
                                     <div class="acc_link">
                                         <i class="fab fa-linkedin"></i>
@@ -51,22 +51,26 @@
                         <div class="stu_pro_skill">
                             <h2>Skills</h2>
                             <div class="skills">
-                                <p>Java</p>
-                                <p>C++</p>
-                                <p>C</p>
-                                <p>Python</p>
-                                <p>JavaScript</p>
-                                <p>React</p>
-                                <p>Angular</p>
-                                <p>Node.js</p>
-                                <p>Ruby</p>
-                                <p>Kotlin</p>
-                                <p>Express.js</p>
-                                <p>HTML</p>
-                                <p>CSS</p>
+                                <?php
+                                $skills = explode(', ', $data[0]->Skills); // Convert comma-separated string to array
+                                foreach ($skills as $skill) {
+                                    echo "<p>" . htmlspecialchars($skill) . "</p>";
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="stu_pro_exp">
+                            <div class="topic1" onclick="toggleSection('experienceContent', 'experienceIcon')">
+                                <h2>Description</h2>
+                                <i id="experienceIcon" class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="experienceContent" class="toggle-content">
+                                <div class="projects">
+                                    <p><?php echo $data[0]->ShortDesc ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="stu_pro_exp">
                             <div class="topic1" onclick="toggleSection('experienceContent', 'experienceIcon')">
                                 <h2>Experience</h2>
                                 <i id="experienceIcon" class="fas fa-chevron-right"></i>
@@ -80,8 +84,8 @@
                                     <p>5.Success Stories: Feature testimonials or stories from alumni to show potential career paths and achievements</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="stu_pro_cetificates">
+                        </div> -->
+                        <!-- <div class="stu_pro_cetificates">
                             <div class="topic1" onclick="toggleSection('cetificatesContent', 'cetificatesIcon')">
                                 <h2>Cetificates</h2>
                                 <i id="cetificatesIcon" class="fas fa-chevron-right"></i>
@@ -94,13 +98,16 @@
                                     <p>Awards and Recognition"Learn about the awards and honors received by our outstanding students."<br><a href="#">https://asdasfas.com/c/6724d8f4-0ee0-8001-ae1f-e5c4c7096a6d#</a></p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="stu_pro_cv">
                             <h2>Curriculum Vitae(CV)</h2>
                             <div class="cv">
                                 <i class="fas fa-file-pdf"></i>
                                 <a href="pdf-link.pdf" target="_blank">Download here</a>
                             </div>
+                        </div>
+                        <div class="progress-report-container">
+                            jhbj
                         </div>
                         <div class="all_ar">
                             <form id="actionForm" method="post" action="">
@@ -112,15 +119,15 @@
                                         <button type="button" value="shortlist" onclick="openShortlistConfirmModal(event)" class="accept">Shortlist</button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="acce_rej" id="RecruitSection">
                                     <h3>Action :</h3>
                                     <div class="btn">
                                         <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
-                                        <?php if($interviewschedule == 0): ?>
-                                        <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
-                                        <?php elseif($interviewschedule == 1): ?>
-                                        <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
+                                        <?php if ($interviewschedule == 0): ?>
+                                            <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
+                                        <?php elseif ($interviewschedule == 1): ?>
+                                            <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -185,31 +192,7 @@
             successToast("<?php echo addslashes($success); ?>");
         <?php endif; ?>
 
-        // function toggleSection(sectionId, iconId) {
-        //     const section = document.getElementById(sectionId);
-        //     const icon = document.getElementById(iconId);
-
-        //     if (section.classList.contains('show')) {
-        //         // Collapse section
-        //         section.style.height = `${section.scrollHeight}px`; // Set to full height initially
-        //         window.getComputedStyle(section).height; // Trigger a reflow, flushing the CSS changes
-        //         section.style.height = '0'; // Set height to 0 to animate closing
-        //         section.classList.remove('show');
-        //     } else {
-        //         // Expand section
-        //         section.style.height = `${section.scrollHeight}px`; // Set to full height to expand
-        //         section.classList.add('show');
-        //         section.addEventListener('transitionend', () => {
-        //             // Remove inline height after animation completes
-        //             section.style.height = 'auto';
-        //         }, {
-        //             once: true
-        //         });
-        //     }
-
-        //     // Toggle icon rotation
-        //     icon.classList.toggle('rotate');
-        // }
+        
 
 
         // To open and close the modals and confirm actions
@@ -295,3 +278,31 @@
 </body>
 
 </html>
+
+
+
+<!-- // function toggleSection(sectionId, iconId) {
+        //     const section = document.getElementById(sectionId);
+        //     const icon = document.getElementById(iconId);
+
+        //     if (section.classList.contains('show')) {
+        //         // Collapse section
+        //         section.style.height = `${section.scrollHeight}px`; // Set to full height initially
+        //         window.getComputedStyle(section).height; // Trigger a reflow, flushing the CSS changes
+        //         section.style.height = '0'; // Set height to 0 to animate closing
+        //         section.classList.remove('show');
+        //     } else {
+        //         // Expand section
+        //         section.style.height = `${section.scrollHeight}px`; // Set to full height to expand
+        //         section.classList.add('show');
+        //         section.addEventListener('transitionend', () => {
+        //             // Remove inline height after animation completes
+        //             section.style.height = 'auto';
+        //         }, {
+        //             once: true
+        //         });
+        //     }
+
+        //     // Toggle icon rotation
+        //     icon.classList.toggle('rotate');
+        // } -->
