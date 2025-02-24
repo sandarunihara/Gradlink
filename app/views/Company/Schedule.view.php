@@ -32,7 +32,7 @@
                         <?php if (!empty($data)) : ?>
                             <?php foreach ($data as $slot) : ?>
                                 <div class="s_table">
-                                    <div>
+                                    <div class="de_list">
                                         <p>Position : <span><?php echo $slot['Position']; ?></span></p>
                                         <p>Student Name :<span> <?php echo $slot['StudentName']; ?></span></p>
                                         <p>Date : <span><?php echo $slot['Date']; ?></span></p>
@@ -40,7 +40,6 @@
                                     </div>
                                     <div class="s_delnedit">
                                         <i class="fas fa-pencil-alt"></i>
-                                        <i class="fas fa-trash-alt fa-trash-alty"></i>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

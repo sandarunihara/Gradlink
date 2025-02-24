@@ -32,38 +32,8 @@
                             </div>
                             <select class="role-select">
                                 <option value="all">All</option>
-                                <option value="Intern Quality Assurance">Quality Assurance</option>
-                                <option value="Intern Software Engineer">Software Engineer</option>
-                                <option value="Intern Web Developer">Web Developer</option>
-                                <option value="Intern Data Science">Data Science</option>
-                                <option value="Intern Machine Learning">Machine Learning</option>
-                                <option value="Intern Data Analyst">Data Analyst</option>
-                                <option value="Intern Full Stack Developer">Full Stack Developer</option>
-                                <option value="Intern Backend Developer">Backend Developer</option>
-                                <option value="Intern Frontend Developer">Frontend Developer</option>
-                                <option value="Intern DevOps Engineer">DevOps Engineer</option>
-                                <option value="Intern Cloud Architect">Cloud Architect</option>
-                                <option value="Intern Cybersecurity Analyst">Cybersecurity Analyst</option>
-                                <option value="Intern AI Engineer">AI Engineer</option>
-                                <option value="Intern Mobile App Developer">Mobile App Developer</option>
-                                <option value="Intern Blockchain Developer">Blockchain Developer</option>
-                                <option value="Intern Game Developer">Game Developer</option>
-                                <option value="Intern UI/UX Designer">UI/UX Designer</option>
-                                <option value="Intern Product Manager">Product Manager</option>
-                                <option value="Intern System Administrator">System Administrator</option>
-                                <option value="Intern Network Engineer">Network Engineer</option>
-                                <option value="Intern Technical Support Engineer">Technical Support Engineer</option>
-                                <option value="Intern Embedded Systems Engineer">Embedded Systems Engineer</option>
-                                <option value="Intern Cloud Engineer">Cloud Engineer</option>
-                                <option value="Intern Software Architect">Software Architect</option>
-                                <option value="Intern Solutions Architect">Solutions Architect</option>
-                                <option value="Intern IT Consultant">IT Consultant</option>
-                                <option value="Intern Quality Engineer">Quality Engineer</option>
-                                <option value="Intern Business Intelligence Analyst">Business Intelligence Analyst</option>
-                                <option value="Intern RPA Developer">RPA Developer</option>
-                                <option value="Intern ERP Consultant">ERP Consultant</option>
-                                <option value="Intern Salesforce Developer">Salesforce Developer</option>
-                                <option value="Intern SAP Consultant">SAP Consultant</option>
+                                <option value="1">Not Review</option>
+                                <option value="">Reviewed</option>
                             </select>
                         </div>
                     </div>
@@ -80,6 +50,7 @@
                                             <p class="position-detail">Intern <?php echo htmlspecialchars($student['Position']); ?></p>
                                         </div>
                                         <div class="report-one">
+                                            <p class="notreeviewedstatus" style="display: none;"><?php echo htmlspecialchars($student["NotReviewedstatus"]); ?></p>
                                             <?php if ($student["NotReviewedstatus"] == true): ?>
                                                 <div class="green-dot"></div>
                                                 <p class="report-message">New unread Report Available</p>
@@ -111,7 +82,7 @@
 
             rows.forEach(row => {
                 const studentName = row.querySelector('.name-detail').textContent.toLowerCase();
-                const studentPosition = row.querySelector('.position-detail').textContent.toLowerCase(); // Position
+                const studentPosition = row.querySelector('.notreeviewedstatus').textContent.toLowerCase(); // Position
 
                 const matchesSearch = studentName.includes(searchValue);
                 const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
