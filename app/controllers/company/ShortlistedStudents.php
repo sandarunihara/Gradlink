@@ -211,17 +211,17 @@ class ShortlistedStudents
         $studentdata = $data[0];
         $model = new interview_time_slot;
         $interview_para = [
-                'StudentId' => $studentId
-            ];
-            $student_before_shedule=$model->find($interview_para);
-            $unavailable_date=[];
-            if(!empty($student_before_shedule)){
-                foreach($student_before_shedule as $interviewdate){
-                    $unavailable_date[]=$interviewdate->Date;
-                }
+            'StudentId' => $studentId
+        ];
+        $student_before_shedule = $model->find($interview_para);
+        $unavailable_date = [];
+        if (!empty($student_before_shedule)) {
+            foreach ($student_before_shedule as $interviewdate) {
+                $unavailable_date[] = $interviewdate->Date;
             }
-            
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'StudentId' => $studentId,
                 'advertisementId' => $advertisementId,
@@ -356,6 +356,6 @@ class ShortlistedStudents
                 exit;
             }
         }
-        $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata,'unavailable_date'=>$unavailable_date]);
+        $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date]);
     }
 }
