@@ -1,21 +1,20 @@
 <?php
-    class progress_doc
-    {
-        
-        use Model;
+class progress_doc_reply
+{
 
-        protected $table = 'progress_doc';
+    use Model;
 
-        protected $allowedColumns = [
+    protected $table = 'progress_doc_reply';
 
-            'DocumentId',
-            'SubmissionDate',
-            'Status',
-            'StudentId',
-            'Name',
-        ];
+    protected $allowedColumns = [
 
-        public function find($data)
+        'DocumentId',
+        'Reply',
+        'ReplyDate',
+        'CompanyId'
+    ];
+
+    public function find($data)
     {
         
         if (is_array($data)) {
@@ -37,4 +36,4 @@
 
         return $result;
     }
-    }
+}

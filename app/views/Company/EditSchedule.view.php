@@ -5,7 +5,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">
-    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Schedulecreate.css">
+    <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/EditSchedule.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -19,16 +19,17 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Students Profile/Interview Schedule</h1>
+                        <h1>Edit Interview Schedule</h1>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
-                <div class="sc_main">
+                <div class="sr_main">
                     <div class="sc">
+                        <h3></h3>
                     </div>
                     <form id="schedule-form" class="sc_background" method="post">
                         <div class="sc_iner">
-                            <a href="http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/<?php echo $addata[0]->advertisementId  ?>/<?php echo $data[0]->StudentId  ?>" class="sc_container">
+                            <a href="http://localhost/Gradlink/public/company/Schedule/dashboard" class="sc_container">
                                 <i class="fas fa-chevron-left"></i>
                                 <h3>BACK</h3>
                             </a>
@@ -36,27 +37,27 @@
                                 <div class="is_con1">
                                     <div class="sc_pos">
                                         <h4><span class="starmark">*</span>Position:</h4>
-                                        <input type="text" id="position" name="position" value="<?php echo $addata[0]->position ?>" readonly />
+                                        <input type="text" id="position" name="position" value="<?php echo $addata[0]->position ?>"  readonly />
                                     </div>
                                     <div class="sc_dateNdur">
                                         <div class="sc_date">
                                             <h4><span class="starmark">*</span>Student Name :</h4>
-                                            <input type="text" id="name" name="name" value="<?php echo $data[0]->Name ?>" readonly />
+                                            <input type="text" id="name" name="name" value="<?php echo $data[0]->Name ?>"  readonly />
                                         </div>
                                     </div>
                                     <div class="sc_dateNdur">
                                         <div class="sc_date">
                                             <h4><span class="starmark">*</span>Date :</h4>
-                                            <input type="date" id="date" name="date" required />
+                                            <input type="date" id="date" name="date"  value="<?php echo $interview_data[0]->Date ?>"/>
                                         </div>
                                     </div>
                                     <div class="sc_time">
                                         <h4><span class="starmark">*</span>Select Time Period</h4>
                                         <div id="time-slots-container" class="sc_time-slots">
                                             <div class="time-slot">
-                                                <input type="time" id="starttime" name="starttime" required>
+                                                <input type="time" id="starttime" name="starttime" value="<?php echo $interview_data[0]->StartTime ?>">
                                                 <p>-</p>
-                                                <input type="time" id="endtime" name="endtime" required>
+                                                <input type="time" id="endtime" name="endtime" value="<?php echo $interview_data[0]->EndTime ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +125,6 @@
         }
         document.addEventListener("DOMContentLoaded", () => {
             const unavailableDates = <?php echo json_encode($unavailable_date); ?>;
-
             flatpickr("#date", {
                 dateFormat: "Y-m-d",
                 minDate: "today",
