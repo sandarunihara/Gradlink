@@ -23,7 +23,7 @@
                     <h1>Companies</h1>
                 </div>
 
-                
+
             </header>
 
             <?php $activeTab = 'pending-companies'; ?>
@@ -39,6 +39,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Company ID</th>
                             <th>Company Name</th>
                             <th>Contact Person</th>
                             <th>Email</th>
@@ -47,14 +48,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>WSO2</td>
-                            <td>Tharindu Perera</td>
-                            <td>tharindu@gmail.com</td>
-                            <td>071 273 4321</td>
-                            <td><button class="view-btn">View</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                        <?php if (!empty($blockedCompanyData)): ?>
+                            <?php foreach ($blockedCompanyData as $company): ?>
+                                <tr>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
+
+                                    
+                                    <td><button class="view-btn">View</button></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            <?php endforeach ?>
+
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="9">No Registered Companies</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 
