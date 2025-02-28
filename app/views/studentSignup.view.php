@@ -4,26 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student signup</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSignup.css"> 
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/allPages.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSignup.css"> 
 
 </head>
 <body>
     <div class="container">
-        <header>Student Signup</header>
-        <form id="signupForm" action="<?=ROOT?>/signup/student" method="post" enctype="multipart/form-data">
-            <div class="form first">
-                <div class="details personal">
-                    <span class="title">Personal Details</span>
+        <form id="regForm" action="<?=ROOT?>/signup/student" method="post" enctype="multipart/form-data">
+            <div class="header">
+                Student Signup
+            </div>
+            <!-- One "tab" for each step in the form: -->
+            <div class="tab">
+                <div class="user-details">
+                    <span class="title">
+                        Personal Details
+                    </span>
                     <div class="fields">
                         <div class="input-field">
-                            <label>Name</label>
+                            <label>First Name</label>
                             <input 
                                 type="text" 
-                                id="name" 
-                                name="name" 
-                                placeholder="Enter your name" 
+                                id="fname" 
+                                name="fname" 
+                                placeholder="Enter your first name" 
                                 required
+                                oninput="this.className = ''"
+                            >
+                        </div>
+                        <div class="input-field">
+                            <label>Last Name</label>
+                            <input 
+                                type="text" 
+                                id="lname" 
+                                name="lname" 
+                                placeholder="Enter your last name" 
+                                required
+                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -34,6 +51,7 @@
                                 name="email" 
                                 placeholder="Enter your email" 
                                 required
+                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -44,6 +62,7 @@
                                 name="NIC" 
                                 placeholder="Enter your NIC" 
                                 required
+                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -53,8 +72,8 @@
                                 id="contactNumber" 
                                 name="contactNumber" 
                                 placeholder="Enter your contact number (e.g. 071-234-5678)"
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
                                 required
+                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -65,15 +84,8 @@
                                 name="StudentId" 
                                 placeholder="Enter your student ID (e.g. 2021CS123)" 
                                 required
+                                oninput="this.className = ''"
                             >
-                        </div>
-                        <div class="input-field">
-                            <label>Degree Name</label>
-                            <select name="degreeName" id="degreeName" required>
-                                <option value="" disabled selected hidden>Degree Name</option>
-                                <option value="Computer Science">Computer Science</option>
-                                <option value="Information Systems">Information Systems</option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -87,6 +99,7 @@
                                 id="github" 
                                 name="github" 
                                 placeholder="Enter GitHub URL"
+                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -96,12 +109,13 @@
                                 id="linkedin" 
                                 name="linkedin" 
                                 placeholder="Enter LinkedIn URL"
+                                oninput="this.className = ''"
                             >
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="form second">
+            <div class="tab">
                 <div class="details skills">
                     <span class="title">Skills</span>
                     <div class="fields">
@@ -113,6 +127,7 @@
                                 name="skill" 
                                 placeholder="Enter your skills (e.g. Java, Python, etc.)"
                                 required
+                                oninput="this.className = ''"
                             >
                         </div>
                     </div>
@@ -128,25 +143,10 @@
                             cols="50" 
                             rows="5"
                             required
+                            oninput="this.className = ''"
                         ></textarea>
                     </div>
                 </div>
-                <div class="details certificates">
-                    <span class="title">Certificates</span>
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Certificates</label>
-                            <input 
-                                type="text" 
-                                id="certificate" 
-                                name="certificate" 
-                                placeholder="Enter your certificates (e.g. CCNA, etc.)"
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form third">
                 <div class="details documents">
                     <span class="title">Documents</span>
                     <div class="fields">
@@ -157,6 +157,7 @@
                                 id="profilePicture" 
                                 name="profilePicture" 
                                 required
+                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -165,46 +166,22 @@
                                 type="file" 
                                 id="cv" 
                                 name="cv"
-                            >
-                        </div>
-                    </div>
-                </div>
-                <div class="details security">
-                    <span class="title">Security</span>
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Password</label>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                placeholder="Enter password" 
-                                required
-                            >
-                        </div>
-                        <div class="input-field">
-                            <label>Confirm Password</label>
-                            <input 
-                                type="password"
-                                id="confirmPassword" 
-                                name="confirmPassword" 
-                                placeholder="Confirm password" 
-                                required
+                                oninput="this.className = ''"
                             >
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="buttons">
-                <button id="prevBtn">
-                    <span class="btnText">Previous</span>
-                </button>
-                <button id="nextBtn">
-                    <span class="btnText">Next</span>
-                </button>
-                <button type="submit" id="submitBtn">
-                    <span class="btnText">Sign up</span>
-                </button>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
+            <!-- Circles which indicates the steps of the form: -->
+            <div class="circles">
+                <span class="step"></span>
+                <span class="step"></span>
             </div>
         </form>
     </div>
