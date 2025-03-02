@@ -33,11 +33,45 @@
                         <h2>This is Round 01</h2>
                         
                     </div>
-
                 </div>
 
-
             </div>
+            <div class="company-list">
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>Round ID</th>
+                            <th>Round</th>
+                            <th>Status</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <?php if (!empty($blockedCompanyData)): ?>
+                            <?php foreach ($blockedCompanyData as $company): ?>
+                                <tr>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
+
+                                    
+                                    <td><button class="view-btn">View</button></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            <?php endforeach ?>
+
+                        <?php else: ?> -->
+                            <tr>
+                                <td colspan="9">No Registered Companies</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                    </div>
         </main>
     </div>
 
