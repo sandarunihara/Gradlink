@@ -1,73 +1,225 @@
-var currentTab = 0; // Current tab is set to be the first tab (0)
-showTab(currentTab); // Display the current tab
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const tab = document.getElementsByClassName("tab");
+const regForm = document.getElementById("regForm");
+const step = document.getElementsByClassName("step");
+const cv = document.getElementById("cv");
+const emailError = document.getElementById("emailError");
+const contactNumberError = document.getElementById("contactNumberError");
+const studentIdError = document.getElementById("studentIdError");
+const descriptionError = document.getElementById("descriptionError");
+const profilePictureError = document.getElementById("profilePictureError");
+const cvError = document.getElementById("cvError");
 
+var currentTab = 0;
+
+showTab(currentTab);
+
+// This function will display the specified tab of the form
 function showTab(n) {
-  // This function will display the specified tab of the form...
-  var x = document.getElementsByClassName("tab");
+  var x = tab;
   x[n].style.display = "block";
-  //... and fix the Previous/Next buttons:
+
   if (n == 0) {
-    document.getElementById("prevBtn").style.display = "none";
+    prevBtn.style.display = "none";
   } else {
-    document.getElementById("prevBtn").style.display = "inline";
+    prevBtn.style.display = "inline";
   }
-  if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+  if (n == x.length - 1) {
+    nextBtn.innerHTML = "Submit";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    nextBtn.innerHTML = "Next";
   }
-  //... and run a function that will display the correct step indicator:
-  fixStepIndicator(n)
+
+  fixStepIndicator(n);
 }
 
+// This function will figure out which tab to display
 function nextPrev(n) {
-  // This function will figure out which tab to display
-  var x = document.getElementsByClassName("tab");
-  // Exit the function if any field in the current tab is invalid:
+  var x = tab;
+
   if (n == 1 && !validateForm()) return false;
-  // Hide the current tab:
+
   x[currentTab].style.display = "none";
-  // Increase or decrease the current tab by 1:
+
   currentTab = currentTab + n;
-  // if you have reached the end of the form...
+
   if (currentTab >= x.length) {
-    // ... the form gets submitted:
-    console.log("Form");
-    document.getElementById("regForm").submit();
+    regForm.submit();
+
     return false;
   }
-  // Otherwise, display the correct tab:
+
   showTab(currentTab);
 }
 
+// This function deals with validation of the form fields
 function validateForm() {
-  // This function deals with validation of the form fields
-  var x, y, i, valid = true;
-  x = document.getElementsByClassName("tab");
+  var x,
+    y,
+    i,
+    valid = true;
+
+  x = tab;
   y = x[currentTab].querySelectorAll("input[required], textarea[required]");
-  // A loop that checks every input field in the current tab:
+
   for (i = 0; i < y.length; i++) {
-    // If a field is empty...
+    if (y[i].name == "email") {
+      valid = validMail(y[i]);
+    }
+    if (y[i].name == "contactNumber") {
+      valid = validContactNumber(y[i]);
+    }
+    if (y[i].name == "studentId") {
+      valid = validStudentIndex(y[i]);
+    }
+    if (y[i].name == "shortDesc") {
+      valid = isShortDescriptionValid(y[i]);
+    }
+    if (y[i].name == "profilePicture") {
+      valid = isValidProfilePicture(y[i]);
+    }
+    if (y[i].name == "cv") {
+      valid = isValidCV(y[i]);
+    }
     if (y[i].value == "") {
-      // add an "invalid" class to the field:
       y[i].className += " invalid";
-      // and set the current valid status to false
       valid = false;
+    } else {
+      y[i].classList.remove("invalid");
     }
   }
-  // If the valid status is true, mark the step as finished and valid:
+
   if (valid) {
-    document.getElementsByClassName("step")[currentTab].className += " finish";
+    step[currentTab].className += " finish";
   }
-  return valid; // return the valid status
+  return valid;
 }
 
+// This function removes the "active" class of all steps
 function fixStepIndicator(n) {
-  // This function removes the "active" class of all steps...
-  var i, x = document.getElementsByClassName("step");
+  var i,
+    x = step;
+
   for (i = 0; i < x.length; i++) {
     x[i].className = x[i].className.replace(" active", "");
   }
-  //... and adds the "active" class on the current step:
+
   x[n].className += " active";
+}
+
+function validMail(input) {
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!pattern.test(input.value)) {
+    emailError.innerHTML = "Invalid email address";
+    emailError.style.display = "block";
+    input.classList.add("invalid");
+    return false;
+  } else {
+    emailError.innerHTML = "";
+    emailError.style.display = "none";
+    input.classList.remove("invalid");
+    return true;
+  }
+}
+function validContactNumber(number) {
+  const pattern = /^0\d{2}-\d{3}-\d{4}$/;
+  if (!pattern.test(number.value)) {
+    contactNumberError.innerHTML = "Invalid contact number";
+    contactNumberError.style.display = "block";
+    number.classList.add("invalid");
+    return false;
+  } else {
+    contactNumberError.innerHTML = "";
+    contactNumberError.style.display = "none";
+    number.classList.remove("invalid");
+    return true;
+  }
+}
+function validStudentIndex(index) {
+  const pattern = /^\d{4}(CS|IS)\d{3}$/;
+  if (!pattern.test(index.value)) {
+    studentIdError.innerHTML = "Invalid student index number";
+    studentIdError.style.display = "block";
+    index.classList.add("invalid");
+    return false;
+  } else {
+    studentIdError.innerHTML = "";
+    studentIdError.style.display = "none";
+    index.classList.remove("invalid");
+    return true;
+  }
+}
+
+function isShortDescriptionValid(description) {
+  const words = description.value.trim().split(/\s+/);
+  if (words.length > 50) {
+    descriptionError.innerHTML = "Description is too long";
+    descriptionError.style.display = "block";
+    return false;
+  } else {
+    descriptionError.innerHTML = "";
+    descriptionError.style.display = "none";
+    return true;
+  }
+}
+function isValidProfilePicture(input) {
+  if (input.files.length === 0) {
+    profilePictureError.innerHTML = "Please upload a file.";
+    profilePictureError.style.display = "block";
+    return false;
+  }
+
+  const fileName = input.files[0].name.toLowerCase();
+  const pattern = /\.(jpg|jpeg|png)$/i;
+
+  if (!pattern.test(fileName)) {
+    profilePictureError.innerHTML =
+      "Invalid file type. Only JPG, JPEG, or PNG allowed.";
+    profilePictureError.style.display = "block";
+    input.classList.add("invalid");
+    return false;
+  } else {
+    profilePictureError.innerHTML = "";
+    profilePictureError.style.display = "none";
+    input.classList.remove("invalid");
+    return true;
+  }
+}
+function isValidCV(input) {
+  if (input.files.length === 0) {
+    cvError.innerHTML = "Please upload a file.";
+    cvError.style.display = "block";
+    input.classList.add("invalid");
+    return false;
+  }
+
+  const file = input.files[0];
+  const validMimeType = "application/pdf";
+  const validExtension = ".pdf";
+  let isValid = true;
+
+  // Check MIME type
+  if (file.type !== validMimeType) {
+    isValid = false;
+  }
+
+  // Check file extension
+  const fileName = file.name.toLowerCase();
+  if (!fileName.endsWith(validExtension)) {
+    isValid = false;
+  }
+
+  if (!isValid) {
+    cvError.innerHTML = "Invalid file type. Only PDF is allowed.";
+    cvError.style.display = "block";
+    input.classList.add("invalid");
+    return false;
+  } else {
+    cvError.innerHTML = "";
+    cvError.style.display = "none";
+    input.classList.remove("invalid");
+    return true;
+  }
 }
