@@ -29,7 +29,6 @@
                                 name="fname" 
                                 placeholder="Enter your first name" 
                                 required
-                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -40,7 +39,6 @@
                                 name="lname" 
                                 placeholder="Enter your last name" 
                                 required
-                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -51,8 +49,9 @@
                                 name="email" 
                                 placeholder="Enter your email" 
                                 required
-                                oninput="this.className = ''"
+                                oninput="validMail(this)"
                             >
+                            <span id="emailError" class="error"></span>
                         </div>
                         <div class="input-field">
                             <label>NIC</label>
@@ -62,7 +61,6 @@
                                 name="NIC" 
                                 placeholder="Enter your NIC" 
                                 required
-                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -73,19 +71,21 @@
                                 name="contactNumber" 
                                 placeholder="Enter your contact number (e.g. 071-234-5678)"
                                 required
-                                oninput="this.className = ''"
+                                oninput="validContactNumber(this)"
                             >
+                            <span id="contactNumberError" class="error"></span>
                         </div>
                         <div class="input-field">
                             <label>Student ID</label>
                             <input 
                                 type="text" 
-                                id="StudentId" 
-                                name="StudentId" 
+                                id="studentId" 
+                                name="studentId" 
                                 placeholder="Enter your student ID (e.g. 2021CS123)" 
                                 required
-                                oninput="this.className = ''"
+                                oninput="validStudentIndex(this)"
                             >
+                            <span id="studentIdError" class="error"></span>
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,6 @@
                                 id="github" 
                                 name="github" 
                                 placeholder="Enter GitHub URL"
-                                oninput="this.className = ''"
                             >
                         </div>
                         <div class="input-field">
@@ -109,7 +108,6 @@
                                 id="linkedin" 
                                 name="linkedin" 
                                 placeholder="Enter LinkedIn URL"
-                                oninput="this.className = ''"
                             >
                         </div>
                     </div>
@@ -127,7 +125,6 @@
                                 name="skill" 
                                 placeholder="Enter your skills (e.g. Java, Python, etc.)"
                                 required
-                                oninput="this.className = ''"
                             >
                         </div>
                     </div>
@@ -138,13 +135,14 @@
                         <label>Short Description</label>
                         <textarea
                             id="description" 
-                            name="ShortDesc" 
+                            name="shortDesc" 
                             placeholder="Enter a brief description about yourself (50 words)" 
                             cols="50" 
                             rows="5"
                             required
-                            oninput="this.className = ''"
+                            oninput="isShortDescriptionValid(this)"
                         ></textarea>
+                        <span id="descriptionError" class="error"></span>
                     </div>
                 </div>
                 <div class="details documents">
@@ -157,8 +155,9 @@
                                 id="profilePicture" 
                                 name="profilePicture" 
                                 required
-                                oninput="this.className = ''"
+                                onchange="isValidProfilePicture(this)"
                             >
+                            <span id="profilePictureError" class="error"></span>
                         </div>
                         <div class="input-field">
                             <label>CV</label>
@@ -166,8 +165,9 @@
                                 type="file" 
                                 id="cv" 
                                 name="cv"
-                                oninput="this.className = ''"
+                                onchange="isValidCV(this)"
                             >
+                            <span id="cvError" class="error"></span>
                         </div>
                     </div>
                 </div>
