@@ -18,14 +18,13 @@ class DashboardRound
                     'round_id' => $roundDetail->roundId,
                     'round' => $roundDetail->round,
                     'active' => $roundDetail->active,
-                    'from' => $roundDetail->from,
-                    'to' => $roundDetail->to
+                    'startDate' => $roundDetail->startDate,
+                    'endDate' => $roundDetail->endDate
                 ];
             }
             $this->view('Coordinator/Round/dashboardRound', ['roundData' => $roundData]);
         }
 
 
-        $this->view('Coordinator/Round/dashboardRound');
     }
 }

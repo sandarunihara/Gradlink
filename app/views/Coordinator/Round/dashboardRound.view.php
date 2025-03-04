@@ -43,20 +43,20 @@
                             <th>Round ID</th>
                             <th>Round</th>
                             <th>Status</th>
-                            <th>From</th>
-                            <th>To</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <?php if (!empty($blockedCompanyData)): ?>
-                            <?php foreach ($blockedCompanyData as $company): ?>
+                        <?php if (!empty($roundData)): ?>
+                            <?php foreach ($roundData as $round): ?>
                                 <tr>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['round_id'] : $round->round_id) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['round'] : $round->round) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['active'] : $round->active) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['startDate'] : $round->startDate) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['endDate'] : $round->endDate) ?></td>
 
                                     
                                     <td><button class="view-btn">View</button></td>
@@ -64,7 +64,7 @@
                                 <!-- Add more rows as needed -->
                             <?php endforeach ?>
 
-                        <?php else: ?> -->
+                        <?php else: ?>
                             <tr>
                                 <td colspan="9">No Registered Companies</td>
                             </tr>
