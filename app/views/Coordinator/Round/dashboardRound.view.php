@@ -36,41 +36,21 @@
                 </div>
 
             </div>
-            <div class="company-list">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Round ID</th>
-                            <th>Round</th>
-                            <th>Status</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($roundData)): ?>
-                            <?php foreach ($roundData as $round): ?>
-                                <tr>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['round_id'] : $round->round_id) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['round'] : $round->round) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['active'] : $round->active) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['startDate'] : $round->startDate) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $round) ? $round['endDate'] : $round->endDate) ?></td>
-
-
-                                    <td><button class="view-btn">View</button></td>
-                                </tr>
-                                <!-- Add more rows as needed -->
-                            <?php endforeach ?>
-
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="9">No Registered Companies</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+            <div class="round-cards-container">
+                <?php if (!empty($roundData)): ?>
+                    <?php foreach ($roundData as $round): ?>
+                        <div class="round-card" data-start="<?= htmlspecialchars(is_array($round) ? $round['startDate'] : $round->startDate) ?>">
+                            <h3>Round <?= htmlspecialchars(is_array($round) ? $round['round'] : $round->round) ?></h3>
+                            <p><strong>Round ID:</strong> <?= htmlspecialchars(is_array($round) ? $round['round_id'] : $round->round_id) ?></p>
+                            <p><strong>Status:</strong> <?= htmlspecialchars(is_array($round) ? $round['active'] : $round->active) ?></p>
+                            <p><strong>Start Date:</strong> <?= htmlspecialchars(is_array($round) ? $round['startDate'] : $round->startDate) ?></p>
+                            <p><strong>End Date:</strong> <?= htmlspecialchars(is_array($round) ? $round['endDate'] : $round->endDate) ?></p>
+                            <button class="view-btn">View</button>
+                        </div>
+                    <?php endforeach ?>
+                <?php else: ?>
+                    <p>No Registered Rounds</p>
+                <?php endif; ?>
             </div>
 
             <!-- Modal Structure -->
@@ -105,6 +85,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const today = new Date().toISOString().split("T")[0];
+
+            // Highlight today's round
+            document.querySelectorAll(".round-card").forEach(card => {
+                const startDate = card.getAttribute("data-start");
+                if (startDate === today) {
+                    card.classList.add("today"); // Apply different color for today
+                }
+            });
+
             const viewButtons = document.querySelectorAll(".view-btn");
             const modal = document.getElementById("roundModal");
             const closeBtn = document.querySelector(".close-btn");
@@ -115,32 +105,38 @@
             const endDateField = document.getElementById("endDate");
             const roundForm = document.getElementById("roundForm");
 
+            // Open modal and load data
             viewButtons.forEach(button => {
                 button.addEventListener("click", function() {
-                    const row = this.closest("tr");
-                    roundIdField.value = row.cells[0].innerText;
-                    roundField.value = row.cells[1].innerText;
-                    statusField.value = row.cells[2].innerText;
-                    startDateField.value = row.cells[3].innerText;
-                    endDateField.value = row.cells[4].innerText;
+                    const card = this.closest(".round-card");
+
+                    roundIdField.value = card.querySelector("p:nth-child(2)").innerText.split(": ")[1];
+                    roundField.value = card.querySelector("h3").innerText.replace("Round ", "");
+                    statusField.value = card.querySelector("p:nth-child(3)").innerText.split(": ")[1];
+                    startDateField.value = card.querySelector("p:nth-child(4)").innerText.split(": ")[1];
+                    endDateField.value = card.querySelector("p:nth-child(5)").innerText.split(": ")[1];
 
                     modal.style.display = "flex";
                 });
             });
 
+            // Close modal when clicking the close button
             closeBtn.addEventListener("click", function() {
                 modal.style.display = "none";
             });
 
+            // Close modal when clicking outside the modal
             window.addEventListener("click", function(event) {
                 if (event.target === modal) {
                     modal.style.display = "none";
                 }
             });
 
+            // Handle form submission with validation
             roundForm.addEventListener("submit", function(event) {
                 event.preventDefault();
                 const today = new Date().toISOString().split("T")[0];
+
                 if (startDateField.value < today) {
                     alert("Start date cannot be in the past!");
                     return;
@@ -149,6 +145,7 @@
                     alert("End date must be after the start date!");
                     return;
                 }
+
                 alert("Round updated successfully!");
                 modal.style.display = "none";
             });
