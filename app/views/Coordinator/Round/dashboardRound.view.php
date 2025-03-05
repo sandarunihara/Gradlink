@@ -40,7 +40,7 @@
                 <?php if (!empty($roundData)): ?>
                     <?php foreach ($roundData as $round): ?>
                         <div class="round-card" data-start="<?= htmlspecialchars(is_array($round) ? $round['startDate'] : $round->startDate) ?>">
-                            <h3>Round <?= htmlspecialchars(is_array($round) ? $round['round'] : $round->round) ?></h3>
+                            <h3> <?= htmlspecialchars(is_array($round) ? $round['round'] : $round->round) ?></h3>
                             <p><strong>Round ID:</strong> <?= htmlspecialchars(is_array($round) ? $round['round_id'] : $round->round_id) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars(is_array($round) ? $round['active'] : $round->active) ?></p>
                             <p><strong>Start Date:</strong> <?= htmlspecialchars(is_array($round) ? $round['startDate'] : $round->startDate) ?></p>
