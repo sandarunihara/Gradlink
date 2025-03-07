@@ -5,8 +5,8 @@
 
         public function index()
         {
-            $this->view('createpassword');
-            //$this->view('roleSelection');
+            //$this->view('createpassword');
+            $this->view('roleSelection');
         }
         public function student()
         {
