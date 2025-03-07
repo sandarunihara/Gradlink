@@ -25,15 +25,18 @@ class StudentsRequests
         $reqdata = [];
         $hasShortlisted = false;
         $hasRecruited = false;
+        // show($advertisementIds);
         foreach ($advertisementIds as $id) {
+            // show($id);
             $data = $model->findreq($id);
-            if (empty($data)) {
-                $_SESSION['hasShortlisted'] = $hasShortlisted;
-                $_SESSION['hasRecruited'] = $hasRecruited;
-                $this->view('Company/StudentsRequests', ['data' => $reqdata]);
-                exit();
-            }
-            if (is_array($data) || is_object($data)) {
+            // show($data);
+            // if (empty($data)) {
+            //     $_SESSION['hasShortlisted'] = $hasShortlisted;
+            //     $_SESSION['hasRecruited'] = $hasRecruited;
+            //     $this->view('Company/StudentsRequests', ['data' => $reqdata]);
+            //     exit();
+            // }
+            if (!empty($data)) {
                 foreach ($data as $item) {
 
                     if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
@@ -57,8 +60,8 @@ class StudentsRequests
                     // }
                 }
             }
-            // show($reqdata);
         }
+        // show($reqdata);
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;

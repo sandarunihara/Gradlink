@@ -182,7 +182,7 @@ class Schedule
                                                     </div>
                                                     <div class='content'>
                                                         <p>Dear {$studentdata->Name},</p>
-                                                        <p>This is to inform you about the details of your scheduled interview for a potential internship at <strong>{$companydata->Name}</strong>.</p>
+                                                        <p>This is to inform you about the details of your Re-Scheduled interview for a potential internship at <strong>{$companydata->Name}</strong>.</p>
                                                         <p><strong>Interview Details:</strong></p>
                                                         <ul>
                                                             <li><strong>Date:</strong> {$data['Date']}</li>

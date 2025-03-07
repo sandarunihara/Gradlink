@@ -14,24 +14,30 @@ class Advertisements
         $model = new C_Advertisement;
         $modelstudent = new C_Dashboard;
 
-        $companyId=[
-            'CompanyId'=>$user->CompanyId
+        $companyId = [
+            'CompanyId' => $user->CompanyId
         ];
 
         $data = $model->find($companyId);
-
+        foreach($data as $advertisement){
+            if($advertisement->status != 'Trash'){
+                $data1[]=$advertisement;
+            }
+        }
+        
         // Get the current date
         $currentDate = date('Y-m-d');
         // Check if data is empty
-        if (empty($data)) {
-            $this->view('Company/Advertisements', ['data' => $data, 'activeCount' => 0, 'deactiveCount' => 0, 'numOfapplyStudents' => 0]);
+        if (empty($data1)) {
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0, 'numOfapplyStudents' => 0]);
         } else {
 
             $advertisementIds = [];
-            foreach ($data as $advertisement) {
+            foreach ($data1 as $advertisement) {
                 $advertisementIds[] = $advertisement->advertisementId;
                 // Check if the deadline is in the past
-                if ($advertisement->deadline < $currentDate) {
+
+                if ($advertisement->status=='Active' && $advertisement->deadline < $currentDate) {
                     // Update the status to 'Inactive'
                     $model->update($advertisement->advertisementId, ['status' => 'Deactive'], 'advertisementId');
                 }
@@ -52,11 +58,11 @@ class Advertisements
             $numOfapplyStudents = count($studentIds);
 
 
-            $activeData = array_filter($data, function ($advertisement) {
+            $activeData = array_filter($data1, function ($advertisement) {
                 return $advertisement->status === 'Active';
             });
 
-            $deactiveData = array_filter($data, function ($advertisement) {
+            $deactiveData = array_filter($data1, function ($advertisement) {
                 return $advertisement->status === 'Deactive';
             });
 
@@ -68,7 +74,7 @@ class Advertisements
             $activeCount = count($activeData);
             $deactiveCount = count($deactiveData);
 
-            $this->view('Company/Advertisements', ['data' => $data, 'activeCount' => $activeCount, 'deactiveCount' => $deactiveCount, 'numOfapplyStudents' => $numOfapplyStudents]);
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => $activeCount, 'deactiveCount' => $deactiveCount, 'numOfapplyStudents' => $numOfapplyStudents]);
         }
     }
 
@@ -216,25 +222,33 @@ class Advertisements
     public function delete($id)
     {
         $model = new C_Advertisement;
-        $result = $model->delete($id, 'advertisementId');
-        $modelstudent = new student_advertisement;
-        print_r($result);
-        $finddata = $modelstudent->first(['AdvertisementId' => $id]);
-        if (!empty($finddata)) {
-            $resultstudent = $modelstudent->delete1($id, 'AdvertisementId');
-            if ($result && $resultstudent) {
-                header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
-                exit;
-            } else {
-                echo "Error: Could not delete the advertisement.";
-            }
+        $Update_status = [
+            'status' => 'Trash'
+        ];
+        $result = $model->update($id, $Update_status, 'AdvertisementId');
+        if ($result['status'] == 'success') {
+            header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+            exit;
         }else{
-            if ($result) {
-                header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
-                exit;
-            } else {
-                echo "Error: Could not delete the advertisement.";
-            }
+            echo "Error: Could not delete the advertisement.";
         }
+        // $modelstudent = new student_advertisement;
+        // $finddata = $modelstudent->first(['AdvertisementId' => $id]);
+        // if (!empty($finddata)) {
+        //     $resultstudent = $modelstudent->delete1($id, 'AdvertisementId');
+        //     if ($result && $resultstudent) {
+        //         header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+        //         exit;
+        //     } else {
+        //         echo "Error: Could not delete the advertisement.";
+        //     }
+        // }else{
+        //     if ($result) {
+        //         header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+        //         exit;
+        //     } else {
+        //         echo "Error: Could not delete the advertisement.";
+        //     }
+        // }
     }
 }

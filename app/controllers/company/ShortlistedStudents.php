@@ -20,6 +20,7 @@ class ShortlistedStudents
 
         $model = new C_Dashboard;
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
+
         if (empty($data)) {
             $this->view('Company/ShortlistedStudents', ['data' => []]);
             exit();
@@ -34,31 +35,31 @@ class ShortlistedStudents
         $hasRecruited = false;
         foreach ($advertisementIds as $id) {
             $data = $model->findreq($id);
-            if (empty($data)) {
-                $_SESSION['hasShortlisted'] = $hasShortlisted;
-                $_SESSION['hasRecruited'] = $hasRecruited;
-                $this->view('Company/ShortlistedStudents', ['data' => $reqdata]);
-                exit();
-            }
-            // if (is_array($data) || is_object($data)) {
-            foreach ($data as $item) {
-                if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
-                    $hasShortlisted = true;
+            // if (empty($data)) {
+            //     $_SESSION['hasShortlisted'] = $hasShortlisted;
+            //     $_SESSION['hasRecruited'] = $hasRecruited;
+            //     $this->view('Company/ShortlistedStudents', ['data' => $reqdata]);
+            //     exit();
+            // }
+            if (!empty($data)) {
+                foreach ($data as $item) {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                        $hasShortlisted = true;
+                    }
+                    if ($item->Jobstatus === 'Recruit') {
+                        $hasRecruited = true;
+                    }
+                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
+                        $reqdata[] = [
+                            "StudentId" => $item->StudentId,
+                            'AdvertisementId' => $item->advertisementId,
+                            'Student Name' => $item->Name,
+                            'Student Degree' => $item->DegreeName,
+                            'Position' => $item->position,
+                            'Action' => $item->Jobstatus
+                        ];
+                    }
                 }
-                if ($item->Jobstatus === 'Recruit') {
-                    $hasRecruited = true;
-                }
-                if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
-                    $reqdata[] = [
-                        "StudentId" => $item->StudentId,
-                        'AdvertisementId' => $item->advertisementId,
-                        'Student Name' => $item->Name,
-                        'Student Degree' => $item->DegreeName,
-                        'Position' => $item->position,
-                        'Action' => $item->Jobstatus
-                    ];
-                }
-                // }
             }
         }
 
