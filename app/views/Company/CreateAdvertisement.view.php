@@ -273,6 +273,8 @@
             // Read the image file as a data URL
             const reader = new FileReader();
             reader.onload = function(e) {
+                
+                
                 const imageUrl = e.target.result; // This is the base64 encoded image
 
                 // Update the modal content with the form data
