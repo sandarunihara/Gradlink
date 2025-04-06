@@ -32,6 +32,10 @@
                                 <p><?php echo $numOfapplyStudents ?></p>
                             </div>
                             <div class="stat-card">
+                                <h2>Pending Advertisements</h2>
+                                <p><?php echo $pendingCount; ?></p>
+                            </div>
+                            <div class="stat-card">
                                 <h2>Active Advertisements</h2>
                                 <p><?php echo $activeCount; ?></p>
                             </div>
@@ -45,6 +49,7 @@
                                 <h2>Posts</h2>
                                 <select id="status" name="status" required onchange="filterPosts()">
                                     <option value="All">All</option>
+                                    <option value="Pending">Pending</option>
                                     <option value="Active">Active</option>
                                     <option value="Deactive">Deactive</option>
                                 </select>
@@ -75,7 +80,16 @@
                                             <p class="position"><?php echo $advertisement->position; ?></p>
                                             <p>Type :<span><?php echo $advertisement->workingMode; ?></span></p>
                                             <p>No of interns :<span><?php echo $advertisement->numOfInterns; ?></span></p>
-                                            <p>Status :<span style="color: <?php echo ($advertisement->status === 'Active') ? 'green' : 'red'; ?>"><?php echo $advertisement->status; ?></span></p>
+                                            <p>Status :<span style="color: <?php echo match (strtolower($advertisement->status)) {
+                                                                                'active'    => '#22C55E',  // Vibrant green
+                                                                                'deactive'  => '#F97316',  // Bright orange
+                                                                                'rejected'  => '#EF4444',  // Strong red
+                                                                                'pending'   => '#64748B',   // Cool gray
+                                                                                default     => '#6B7280'    // Neutral gray
+                                                                            }; 
+                                                                            ?>; font-weight: bold;">
+                                                    <?php echo $advertisement->status; ?>
+                                                </span></p>
                                             <p>Deadline :<span><?php echo $advertisement->deadline; ?></span></p>
                                         </div>
                                     </div>

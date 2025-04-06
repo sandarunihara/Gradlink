@@ -279,7 +279,7 @@ class ToastSystem {
   }
 
   show(message, type, options = {}) {
-    const { autoClose = 5000, closeButton = true } = options;
+    const { autoClose = 3000, closeButton = true } = options;
     const toastId = `toast-${Date.now()}`;
     
     if (this.activeToasts.has(toastId)) return;

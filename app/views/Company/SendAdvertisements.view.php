@@ -297,7 +297,7 @@
             const numOfInterns = element.dataset.interns;
             const workingMode = element.dataset.workingmode;
             const image = element.dataset.image;
-            console.log(image);
+            // console.log(image);
 
 
             // Now populate the modal fields
@@ -322,7 +322,6 @@
 
         function closeConfirmationModal() {
             document.getElementById('confirmation-modal').style.display = 'none';
-
         }
 
         function submitForm() {
@@ -354,7 +353,6 @@
 
         function confirmDelete(id) {
             window.location.href = '../delete/' + id;
-            successToast("Advertisement deleted successfully");
         }
 
 
@@ -365,14 +363,20 @@
             error: <?php echo !empty($data['errors']) ? json_encode($data['errors']) : 'null'; ?>
         };
         // console.log(toastMessages.success);
-        
+
         // Show toasts if messages exist
         document.addEventListener('DOMContentLoaded', function() {
             if (toastMessages.success) {
-                successToast(toastMessages.success);
+                successToast(toastMessages.success, {
+                    autoClose: 3000, // 3 seconds 
+                    closeButton: false
+                });
             }
             if (toastMessages.error) {
-                errorToast(toastMessages.error);
+                errorToast(toastMessages.error, {
+                    autoClose: 3000, // 3 seconds 
+                    closeButton: false
+                });
             }
         });
     </script>

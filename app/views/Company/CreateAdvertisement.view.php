@@ -311,7 +311,7 @@
 
         function submitForm() {
             document.getElementById('ad-form').submit();
-            successToast("Advertisement created successfully");
+            // successToast("Advertisement created successfully");
         }
 
         function previewImage(event, previewId) {
@@ -334,6 +334,14 @@
             }
         }
     </script>
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 </body>
 
 </html>

@@ -52,7 +52,7 @@ class Advertisements
         $currentDate = date('Y-m-d');
         // Check if data is empty
         if (empty($data1)) {
-            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0, 'numOfapplyStudents' => $numOfapplyStudents]);
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0,'pendingCount'=>0, 'numOfapplyStudents' => $numOfapplyStudents]);
         } else {
 
             $advertisementIds = [];
@@ -72,16 +72,22 @@ class Advertisements
             $deactiveData = array_filter($data1, function ($advertisement) {
                 return $advertisement->status === 'Deactive';
             });
+            
+            $pendingData = array_filter($data1, function ($advertisement) {
+                return $advertisement->status === 'Pending';
+            });
 
             // Re-index the array after filtering
             $activeData = array_values($activeData);
             $deactiveData = array_values($deactiveData);
+            $pendingData = array_values($pendingData);
 
             // Count active and deactivated advertisements
             $activeCount = count($activeData);
             $deactiveCount = count($deactiveData);
+            $pendingCount = count($pendingData);
 
-            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => $activeCount, 'deactiveCount' => $deactiveCount, 'numOfapplyStudents' => $numOfapplyStudents]);
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => $activeCount, 'deactiveCount' => $deactiveCount,'pendingCount'=>$pendingCount, 'numOfapplyStudents' => $numOfapplyStudents]);
         }
     }
 
@@ -149,10 +155,18 @@ class Advertisements
             if ($model->validate($data)) {
                 $result = $model->insert($data);
                 if ($result) {
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Advertisement created successfully'
+                    ];
                     $data['success'] = "Advertisement created successfully.";
-                    header('Location: ../Advertisements/dashboard'); // Redirect to the dashboard after successful submission
+                    header('Location: ../Advertisements/dashboard'); 
                     exit;
                 } else {
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'There was an issue saving the advertisement'
+                    ];
                     $data['error'] = "There was an issue saving the advertisement.";
                 }
             } else {
@@ -222,10 +236,10 @@ class Advertisements
 
 
             unset($_SESSION['flash_success'], $_SESSION['flash_error']);
-            $this->view('Company/SendAdvertisements', ['data' => $data]);
         } else {
             $data['errors'] = "Advertisement not found.";
         }
+        $this->view('Company/SendAdvertisements', ['data' => $data]);
     }
 
 

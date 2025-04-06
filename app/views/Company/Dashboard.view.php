@@ -298,6 +298,15 @@
             }
         });
     </script>
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 </body>
 
 </html>
