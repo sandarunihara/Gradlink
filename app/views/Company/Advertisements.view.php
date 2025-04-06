@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -103,7 +103,7 @@
             postCards.forEach(post => {
                 const postStatus = post.getAttribute('data-status');
 
-                if (selectedStatus === 'All' ||  selectedStatus=== postStatus) {
+                if (selectedStatus === 'All' || selectedStatus === postStatus) {
                     post.style.display = 'block';
                 } else {
                     post.style.display = 'none';
@@ -111,6 +111,15 @@
             });
         }
     </script>
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 </body>
 
 </html>

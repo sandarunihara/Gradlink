@@ -19,33 +19,21 @@ class Advertisements
         ];
 
         $data = $model->find($companyId);
-        foreach($data as $advertisement){
-            if($advertisement->status != 'Trash'){
-                $data1[]=$advertisement;
+        $data1 = [];
+        $ALLadvertisementID = [];
+        $numOfapplyStudents = 0;
+        if (!empty($data)) {
+            foreach ($data as $advertisement) {
+                if ($advertisement->status != 'Trash') {
+                    $data1[] = $advertisement;
+                }
+                $ALLadvertisementID[] = $advertisement->advertisementId;
             }
         }
-        
-        // Get the current date
-        $currentDate = date('Y-m-d');
-        // Check if data is empty
-        if (empty($data1)) {
-            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0, 'numOfapplyStudents' => 0]);
-        } else {
-
-            $advertisementIds = [];
-            foreach ($data1 as $advertisement) {
-                $advertisementIds[] = $advertisement->advertisementId;
-                // Check if the deadline is in the past
-
-                if ($advertisement->status=='Active' && $advertisement->deadline < $currentDate) {
-                    // Update the status to 'Inactive'
-                    $model->update($advertisement->advertisementId, ['status' => 'Deactive'], 'advertisementId');
-                }
-            }
-
+        if (!empty($ALLadvertisementID)) {
             $studentIds = [];
             $applystudent = [];
-            foreach ($advertisementIds as $id) {
+            foreach ($ALLadvertisementID as $id) {
                 $applystudent = $modelstudent->find(['advertisementId' => $id], 'studentadvertisement');
                 if (!empty($applystudent)) {
                     foreach ($applystudent as $student) {
@@ -56,7 +44,26 @@ class Advertisements
                 }
             }
             $numOfapplyStudents = count($studentIds);
+        }
 
+
+
+        // Get the current date
+        $currentDate = date('Y-m-d');
+        // Check if data is empty
+        if (empty($data1)) {
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0, 'numOfapplyStudents' => $numOfapplyStudents]);
+        } else {
+
+            $advertisementIds = [];
+            foreach ($data1 as $advertisement) {
+                $advertisementIds[] = $advertisement->advertisementId;
+                // Check if the deadline is in the past
+                if ($advertisement->status == 'Active' && $advertisement->deadline < $currentDate) {
+                    // Update the status to 'Inactive'
+                    $model->update($advertisement->advertisementId, ['status' => 'Deactive'], 'advertisementId');
+                }
+            }
 
             $activeData = array_filter($data1, function ($advertisement) {
                 return $advertisement->status === 'Active';
@@ -141,7 +148,6 @@ class Advertisements
             // Validate and insert the data into the database
             if ($model->validate($data)) {
                 $result = $model->insert($data);
-                print_r($result);
                 if ($result) {
                     $data['success'] = "Advertisement created successfully.";
                     header('Location: ../Advertisements/dashboard'); // Redirect to the dashboard after successful submission
@@ -167,11 +173,11 @@ class Advertisements
         $data = $model->find(['advertisementId' => $id]);
         $advertisementId = $id;
 
+        // $data['errors']='';
+        // $data['success']='';
         if ($data) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $model = new C_Advertisement;
-
-
                 // // Handle the file upload and convert it to base64
                 $imageBase64 = '';
                 // print_r($_FILES['image']);
@@ -184,7 +190,6 @@ class Advertisements
                 }
 
 
-
                 $updatedata = [
                     'position' => $_POST['position'] ?? '',
                     'description' => $_POST['description'] ?? '',
@@ -194,26 +199,32 @@ class Advertisements
                     'deadline' => $_POST['deadline'] ?? '',
                     'image' => $imageBase64,
                 ];
-
                 if ($model->validate($_POST)) {
                     $result = $model->update($advertisementId, $updatedata, 'advertisementId');
-                    if ($result) {
-                        // Redirect to the same page after successful submission
+
+                    if ($result['status'] == 'success') {
+                        $_SESSION['flash_success'] = "Advertisement updated successfully";
                         header("Location: " . $_SERVER['REQUEST_URI']);
                         exit;
                     } else {
-                        echo "There was an issue saving the advertisement.";
+                        $_SESSION['flash_errors'] = "There was an issue saving the advertisement";
+                        header("Location: " . $_SERVER['REQUEST_URI']);
+                        exit;
                     }
                 } else {
-                    $data['errors'] = $model->errors;
                     // Handle validation errors
-                    print_r($data['errors']);
+                    $_SESSION['flash_errors'] = $model->errors;
                 }
             }
-            // Pass the data data to the view
+
+            $data['success'] = $_SESSION['flash_success'] ?? '';
+            $data['errors'] = $_SESSION['flash_errors'] ?? '';
+
+
+            unset($_SESSION['flash_success'], $_SESSION['flash_error']);
             $this->view('Company/SendAdvertisements', ['data' => $data]);
         } else {
-            echo "Advertisement not found.";
+            $data['errors'] = "Advertisement not found.";
         }
     }
 
@@ -227,28 +238,17 @@ class Advertisements
         ];
         $result = $model->update($id, $Update_status, 'AdvertisementId');
         if ($result['status'] == 'success') {
+            $_SESSION['flash'] = [
+                'type' => 'success',
+                'message' => 'Advertisement deleted successfully'
+            ];
             header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
             exit;
-        }else{
-            echo "Error: Could not delete the advertisement.";
+        } else {
+            $_SESSION['flash'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not delete the advertisement.'
+            ];
         }
-        // $modelstudent = new student_advertisement;
-        // $finddata = $modelstudent->first(['AdvertisementId' => $id]);
-        // if (!empty($finddata)) {
-        //     $resultstudent = $modelstudent->delete1($id, 'AdvertisementId');
-        //     if ($result && $resultstudent) {
-        //         header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
-        //         exit;
-        //     } else {
-        //         echo "Error: Could not delete the advertisement.";
-        //     }
-        // }else{
-        //     if ($result) {
-        //         header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
-        //         exit;
-        //     } else {
-        //         echo "Error: Could not delete the advertisement.";
-        //     }
-        // }
     }
 }

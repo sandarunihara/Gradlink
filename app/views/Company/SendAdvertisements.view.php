@@ -11,7 +11,7 @@
 </head>
 
 <body class="body">
-    
+
     <div class="dashboard">
         <div class="side">
             <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
@@ -21,31 +21,31 @@
                 <div class="d">
                     <div>
                         <?php if (isset($data) && !empty($data)): ?>
-                        <?php
-                        $status = $data[0]->status;
-                        switch ($status) {
-                            case 'Active':
-                                $statusClass = 'Active';
-                                break;
-                            case 'Deactive':
-                                $statusClass = 'Deactive';
-                                break;
-                            case 'Pending':
-                                $statusClass = 'Pending';
-                                break;
-                            case 'Shortlist':
-                                $statusText = 'Shortlisted';
-                                $statusClass = 'Shortlist';
-                                break;
-                            default:
-                                $statusClass = 'Pendiiing';
-                                break;
-                        }
-                        ?>
-                        <h1>Advertisement Post
+                            <?php
+                            $status = $data[0]->status;
+                            switch ($status) {
+                                case 'Active':
+                                    $statusClass = 'Active';
+                                    break;
+                                case 'Deactive':
+                                    $statusClass = 'Deactive';
+                                    break;
+                                case 'Pending':
+                                    $statusClass = 'Pending';
+                                    break;
+                                case 'Shortlist':
+                                    $statusText = 'Shortlisted';
+                                    $statusClass = 'Shortlist';
+                                    break;
+                                default:
+                                    $statusClass = 'Pendiiing';
+                                    break;
+                            }
+                            ?>
+                            <h1>Advertisement Post
                                 <span class="statu <?php echo $statusClass; ?>"><?php echo $data[0]->status ?></span>
                             </h1>
-                            <?php endif; ?>
+                        <?php endif; ?>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
@@ -327,7 +327,7 @@
 
         function submitForm() {
             document.getElementById('ad-form').submit();
-            successToast("Advertisement updated successfully");
+            // successToast("Advertisement updated successfully");
         }
 
 
@@ -356,6 +356,25 @@
             window.location.href = '../delete/' + id;
             successToast("Advertisement deleted successfully");
         }
+
+
+        // Update annd delete Success or Error message
+        // update messages
+        const toastMessages = {
+            success: <?php echo !empty($data['success']) ? json_encode($data['success']) : 'null'; ?>,
+            error: <?php echo !empty($data['errors']) ? json_encode($data['errors']) : 'null'; ?>
+        };
+        // console.log(toastMessages.success);
+        
+        // Show toasts if messages exist
+        document.addEventListener('DOMContentLoaded', function() {
+            if (toastMessages.success) {
+                successToast(toastMessages.success);
+            }
+            if (toastMessages.error) {
+                errorToast(toastMessages.error);
+            }
+        });
     </script>
 
 </body>

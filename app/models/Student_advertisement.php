@@ -38,7 +38,7 @@ class student_advertisement
 
 		// Assuming `query` method handles the prepared statement and returns the result
 		$result = $this->query($query, $params);
-
+		// show($result);
 		return $result;
 	}
 
