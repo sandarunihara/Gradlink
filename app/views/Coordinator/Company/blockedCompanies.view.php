@@ -57,8 +57,16 @@
                                     <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
 
-                                    
-                                    <td><button class="view-btn">View</button></td>
+
+                                    <td>
+                                        <button
+                                            class="view-btn"
+                                            data-id="<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>"
+                                            data-name="<?= htmlspecialchars(is_array($company) ? $company['company_name'] : $company->company_name) ?>"
+                                            data-reason="<?= htmlspecialchars(is_array($company) ? $company['comment'] : $company->comment) ?>">
+                                            View
+                                        </button>
+                                    </td>
                                 </tr>
                                 <!-- Add more rows as needed -->
                             <?php endforeach ?>
@@ -75,7 +83,40 @@
 
         </main>
     </div>
+    <div class="modal" id="companyModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Company Details</h2>
+            <p><strong>Company ID:</strong> <span id="modalCompanyId"></span></p>
+            <p><strong>Company Name:</strong> <span id="modalCompanyName"></span></p>
+            <p><strong>Reason for Blocking:</strong></p>
+            <p id="modalBlockReason" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;"></p>
+        </div>
+    </div>
+
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script>
+        document.querySelectorAll('.view-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Get data from button
+                const companyId = button.dataset.id;
+                const companyName = button.dataset.name;
+                const blockReason = button.dataset.reason;
+
+                // Fill modal content
+                document.getElementById('modalCompanyId').innerText = companyId;
+                document.getElementById('modalCompanyName').innerText = companyName;
+                document.getElementById('modalBlockReason').innerText = blockReason;
+
+                // Show modal
+                document.getElementById('companyModal').style.display = 'flex';
+            });
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('companyModal').style.display = 'none';
+        });
+    </script>
 
 </body>
 
