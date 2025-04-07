@@ -26,10 +26,6 @@
                 <div class="sr_main">
                     <div class="sr_search">
                         <div class="filterbar">
-                            <div class="sr_search-container">
-                                <input id="searchInput" type="text" placeholder="Search Student">
-                                <i class="fas fa-search"></i>
-                            </div>
                             <select class="role-select">
                                 <option value="all">All Positions</option>
                                 <option value="Quality Assurance">Quality Assurance</option>
@@ -74,11 +70,18 @@
                                     <option value="pending">Pending</option>
                                 </select>
                             </div>
+                            <div class="sr_search-container">
+                                <input id="searchInput" type="text" placeholder="Search by Skills" autocomplete="off" oninput="showSuggestions()">
+                                <i class="fas fa-search"></i>
+                                <div id="suggestions" class="suggestions-box"></div>
+                            </div>
                         </div>
                         <div>
-                            <a href="../StudentsRequests/exportData">
-                                <button class="export-btn">Export Data</button>
-                            </a>
+                            <?php if ($_SESSION['hasShortlisted'] == 1) : ?>
+                                <a href="../ShortlistedStudents/dashboard" class="shortbutton">
+                                    <button class="export-btn">Shortlisted List</button>
+                                </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="sr_t">
@@ -139,6 +142,14 @@
                                                     <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
                                                     <td class="degree"><?php echo htmlspecialchars($student['Student Degree']); ?></td>
                                                     <td class="position"><?php echo htmlspecialchars($student['Position']); ?></td>
+                                                    <td class="skill" style="display: none;">
+                                                        <?php
+                                                        $skills = explode(', ', $student['Skills']); // Convert comma-separated string to array
+                                                        foreach ($skills as $skill) {
+                                                            echo "<div>" . htmlspecialchars($skill) . "</div>";
+                                                        }
+                                                        ?>
+                                                    </td>
                                                     <td>
                                                         <div class="<?php echo $statusClass; ?>">
                                                             <span class="action"><?php echo $statusText; ?></span>
@@ -146,13 +157,13 @@
                                                     </td>
                                                     <?php if ($statusText != 'Rejected'): ?>
                                                         <td class="viewpro">
-                                                            <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
+                                                            <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="profile-link">
                                                                 <button class="view-profile-btn">View Profile</button>
                                                             </a>
                                                         </td>
                                                     <?php elseif ($statusText == 'Rejected'): ?>
                                                         <td class="viewprodel">
-                                                            <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
+                                                            <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="profile-link">
                                                                 <button class="view-profile-btn-with-remove">View Profile</button>
                                                             </a>
                                                             <a class="removebtn" href="../StudentsRequests/deletedatarow/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
@@ -184,27 +195,181 @@
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
     <script>
+        const skillsList = [
+            //  Programming Languages
+            "JavaScript", "Python", "Java", "C", "C++", "C#", "TypeScript", "Go", "Swift", "Kotlin", "Dart", "Rust", "Ruby", "PHP", "Perl", "R", "MATLAB",
+
+            //  Frontend Frameworks & Libraries
+            "React", "Vue.js", "Angular", "Svelte", "Next.js", "Nuxt.js", "Bootstrap", "Tailwind CSS", "jQuery",
+
+            //  Backend Frameworks & Technologies
+            "Node.js", "Express.js", "Spring Boot", "Django", "Flask", "FastAPI", "Ruby on Rails", "ASP.NET Core", "Laravel", "CodeIgniter",
+
+            //  Mobile Development
+            "Flutter", "React Native", "SwiftUI", "Jetpack Compose", "Ionic", "Xamarin",
+
+            //  Databases & Query Languages
+            "MySQL", "PostgreSQL", "MongoDB", "SQLite", "Firebase", "Oracle", "Microsoft SQL Server", "Redis", "GraphQL", "Cassandra", "MariaDB", "DynamoDB",
+
+            //  DevOps & Cloud
+            "Docker", "Kubernetes", "AWS", "Azure", "Google Cloud", "Terraform", "Jenkins", "GitHub Actions", "CI/CD", "Ansible",
+
+            //  Version Control & Tools
+            "Git", "GitHub", "GitLab", "Bitbucket", "SVN",
+
+            //  Cybersecurity & Networking
+            "Ethical Hacking", "Penetration Testing", "Cybersecurity", "Cryptography", "Network Security", "Wireshark", "Metasploit",
+
+            //  AI, ML, and Data Science
+            "TensorFlow", "PyTorch", "Keras", "Scikit-learn", "Pandas", "NumPy", "Matplotlib", "OpenCV", "NLTK", "Hugging Face", "Stable Diffusion",
+
+            //  IoT & Embedded Systems
+            "Arduino", "ESP32", "Raspberry Pi", "MicroPython", "Embedded C",
+
+            //  Game Development
+            "Unity", "Unreal Engine", "Godot", "Cocos2d", "Phaser.js",
+
+            //  Blockchain & Web3
+            "Solidity", "Ethereum", "Polygon", "Hyperledger", "Smart Contracts",
+
+            //  UI/UX & Design Tools
+            "Figma", "Adobe XD", "Sketch", "Photoshop", "Illustrator",
+
+            //  Other Technologies
+            "WebSockets", "REST API", "GraphQL API", "MQTT", "WebRTC"
+        ];
+
+        function showSuggestions() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.toLowerCase();
+            const suggestionsBox = document.getElementById('suggestions');
+
+            if (query.length === 0) {
+                suggestionsBox.style.display = "none";
+                return;
+            }
+
+            let matches = skillsList.filter(skill => skill.toLowerCase().includes(query)); // Exact match filtering
+
+            // If no exact matches, use fuzzy matching (similar words)
+            if (matches.length === 0) {
+                matches = skillsList.filter(skill => fuzzyMatch(query, skill.toLowerCase()));
+            }
+
+            suggestionsBox.innerHTML = "";
+            if (matches.length > 0) {
+                matches.forEach(skill => {
+                    const div = document.createElement("div");
+                    div.textContent = skill;
+                    div.onclick = function() {
+                        input.value = skill; // Set input value to the selected skill
+                        suggestionsBox.style.display = "none"; // Hide suggestions
+                        filterTable(); // Call the existing filter function
+                    };
+                    suggestionsBox.appendChild(div);
+                });
+                suggestionsBox.style.display = "block";
+            } else {
+                suggestionsBox.style.display = "none";
+            }
+        }
+
+        // Simple fuzzy matching function (checks how similar two words are)
+        function fuzzyMatch(query, skill) {
+            let mistakes = 0;
+            let i = 0,
+                j = 0;
+
+            while (i < query.length && j < skill.length) {
+                if (query[i] !== skill[j]) {
+                    mistakes++;
+                    if (mistakes > 2) return false; // Allow small errors (2 character mismatches)
+                } else {
+                    i++;
+                }
+                j++;
+            }
+            return true;
+        }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener("click", function(event) {
+            if (!event.target.closest(".sr_search-container")) {
+                document.getElementById("suggestions").style.display = "none";
+            }
+        });
+
+
+
+
+        // Add click handler for profile links
+        document.addEventListener('click', function(e) {
+            const profileLink = e.target.closest('.profile-link');
+            if (profileLink) {
+                e.preventDefault();
+
+                // Get current filter values
+                const position = document.querySelector('.role-select').value;
+                const status = document.querySelector('.status-select').value;
+                const skillSearch = document.getElementById('searchInput').value
+
+                // Build new URL with parameters
+                const newUrl = `${profileLink.href}?position=${encodeURIComponent(position)}&status=${encodeURIComponent(status)}&skill=${encodeURIComponent(skillSearch)}`;
+
+                // Navigate to the new URL
+                window.location.href = newUrl;
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Read URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const position = urlParams.get('position') || 'all';
+            const status = urlParams.get('status') || 'all';
+            const skillSearch = urlParams.get('skill') || '';
+
+            // Set filter values
+            document.querySelector('.role-select').value = position;
+            document.querySelector('.status-select').value = status;
+            document.getElementById('searchInput').value = skillSearch;
+
+            // Apply initial filters
+            filterTable();
+        });
+
+
+
         document.getElementById('searchInput').addEventListener('input', filterTable);
         document.querySelector('.role-select').addEventListener('change', filterTable);
         document.querySelector('.status-select').addEventListener('change', filterTable);
 
         function filterTable() {
-            const searchValue = document.getElementById('searchInput').value.toLowerCase();
             const selectedRole = document.querySelector('.role-select').value.toLowerCase();
             const selectedStatus = document.querySelector('.status-select').value.toLowerCase();
+            const skillSearch = document.getElementById('searchInput').value.toLowerCase();
             const rows = document.querySelectorAll('.sr_row');
 
+            // Update URL without reload
+            const params = new URLSearchParams();
+            params.set('position', selectedRole);
+            params.set('status', selectedStatus);
+            params.set('skill', skillSearch);
+            window.history.replaceState(null, '', '?' + params.toString());
+
             rows.forEach(row => {
-                const studentName = row.querySelector('.name').textContent.toLowerCase();
+                // const studentName = row.querySelector('.name').textContent.toLowerCase();
                 const studentPosition = row.querySelector('.position').textContent.toLowerCase(); // Position
                 const studentStatus = row.querySelector('.action').textContent.toLowerCase(); // Adjusted to get text directly from the div
+                const studentSkills = Array.from(row.querySelectorAll('.skill div')).map(skill => skill.textContent.toLowerCase());
 
-                const matchesSearch = studentName.includes(searchValue);
+                // const matchesSearch = studentName.includes(searchValue);
                 const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
                 const matchesStatus = (selectedStatus === "all" || studentStatus === selectedStatus.toLowerCase());
+                const matchesSkill = (skillSearch === "" || studentSkills.some(skill => skill.includes(skillSearch)));
 
                 // Show row if it matches search, role filter, and status filter
-                if (matchesSearch && matchesRole && matchesStatus) {
+                if (matchesSkill && matchesRole && matchesStatus) {
                     row.style.display = ''; // Show the row
                 } else {
                     row.style.display = 'none'; // Hide the row

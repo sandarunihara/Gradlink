@@ -36,6 +36,49 @@
 .sr_search-container i{
     padding-left: 10px;
 }
+
+.suggestions-box {
+    position: absolute;
+    top: 185px;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 235px;
+    border-radius: 10px;
+    display: none;
+    z-index: 1000;
+}
+.suggestions-box div {
+    padding: 8px;
+    cursor: pointer;
+}
+.suggestions-box div:hover {
+    background: #f0f0f0;
+}
+.shortbutton{
+    text-decoration: none;
+}
+
+.shortbutton button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    width: 170px;
+    background: #008cff;
+    color: white;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px rgba(160, 160, 160, 0.25);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.shortbutton button:hover{
+    transform: scale(1.05);
+}
+
 .sr_filter-container{
     padding-left: 5px;
     padding-right: 10px;
@@ -230,3 +273,83 @@
     display: block;
 }
 
+
+
+/* ******************* Recruit Student ****************** */
+
+.recruit-student-list{
+    padding-top: 30px;
+    max-height: 560px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.stu-profile{
+    text-decoration: none;
+    color: #000000;
+    background-color: #cae0fc;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(165, 165, 165, 0.664);
+    border-radius: 10px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 800px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.stu-profile:hover{
+    background-color: #90befb;
+}
+.profile-photo{
+    width: 105px;
+    height: 105px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+}
+.profile-photo img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+.student-details{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    gap: 5px;
+}
+.name-container{
+    display: flex;
+    flex-direction: column;
+}
+.name-detail{
+    font-weight: bolder;
+    font-size: larger;
+}
+.position-detail{
+    font-weight: 100;
+    font-size: x-small;
+}
+.other-detail-container p{
+    font-weight: bolder;
+    font-size: smaller;
+}
+.report-one{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.green-dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: green;
+}
+.report-message{
+    font-weight: bolder;
+}

@@ -19,36 +19,33 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Students Requests</h1>
+                        <h1>Interview Schedule</h1>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="sr_main">
                     <div class="sr_search">
-                        <h3>Interview Schedule</h3>
-
+                        <h3>Schedule</h3>
                     </div>
                     <div class="s_background">
                         <?php if (!empty($data)) : ?>
                             <?php foreach ($data as $slot) : ?>
                                 <div class="s_table">
-                                    <div>
+                                    <div class="de_list">
                                         <p>Position : <span><?php echo $slot['Position']; ?></span></p>
                                         <p>Student Name :<span> <?php echo $slot['StudentName']; ?></span></p>
                                         <p>Date : <span><?php echo $slot['Date']; ?></span></p>
                                         <p>Time : <span><?php echo $slot['StartTime']; ?> to <?php echo $slot['EndTime']; ?></span></p>
                                     </div>
-                                    <div class="s_delnedit">
+                                    <a class="s_delnedit" href="http://localhost/Gradlink/public/company/Schedule/editschedule/<?php echo $slot['advertisementId']?>/<?php echo $slot['StudentId']?>">
                                         <i class="fas fa-pencil-alt"></i>
-                                        <i class="fas fa-trash-alt fa-trash-alty"></i>
-                                    </div>
+                                    </a>
                                 </div>
+                                
                             <?php endforeach; ?>
                         <?php else : ?>
                             <p>No Schedule available.</p>
                         <?php endif; ?>
-
-
                     </div>
                 </div>
             </div>
