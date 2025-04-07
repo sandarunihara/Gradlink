@@ -71,7 +71,7 @@ class StudentsRequests
     // public function deletedatarow($advertisementId, $StudentId)
     // {
     //     $model = new C_Dashboard;
-    //     $result=$model->update($StudentId, $advertisementId, ['Companyrowstatus' => 0]);
+    //     $result=$model->update($StudentId, $advertisementId, ['Jobstatus' => 'Trash']);
     //     if ($result['status']) {
     //         // Redirect to the same page after successful submission
     //         $success = "Student Request deleted successfully.";
@@ -113,18 +113,28 @@ class StudentsRequests
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
                 if ($_POST['submit_action'] === 'Shortlist') {
-                    $success = "Student Job Status updated successfully.";
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Student Status updated'
+                    ];
                     header("Location: $backUrl");
                     exit;
                 } else {
-                    $success = "Student Job Status updated successfully.";
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Student Status updated'
+                    ];
                     header("Location: $backUrl");
                     exit;
                 }
                 // Redirect to the same page after successful submission
             } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'There was an issue update the Student Status'
+                ];
                 $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'error' => $error, 'url' => $backUrl]);
+                $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'url' => $backUrl]);
                 exit;
             }
         }
@@ -133,8 +143,8 @@ class StudentsRequests
     }
 
 
-    public function filterstudents()
-    {
-        $this->view('Company/FilterStudents');
-    }
+    // public function filterstudents()
+    // {
+    //     $this->view('Company/FilterStudents');
+    // }
 }

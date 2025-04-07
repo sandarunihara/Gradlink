@@ -180,18 +180,34 @@ class ShortlistedStudents
                                         </html>";
 
                         $mail->send();
-                        $data['success'] = "OTP sent to your email. Please check your inbox.";
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Student has been recruited and notified successfully'
+                        ];
+                        header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
+                        exit;
                     } catch (Exception $e) {
-                        $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
+                        ];
+                        $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                        exit;
                     }
                 } else {
-                    $error = "Email not found";
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "Email not found"
+                    ];
+                    $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                    exit;
                 }
-                header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
-                exit;
             } else {
-                $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "There was an issue update the Student Status Pleace Try again!"
+                ];
+                $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
                 exit;
             }
         }
@@ -344,16 +360,26 @@ class ShortlistedStudents
                                             </html>";
 
                         $mail->send();
-                        $data['success'] = "OTP sent to your email. Please check your inbox.";
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Interview is scheduled and student has been notified'
+                        ];
                     } catch (Exception $e) {
-                        $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
+                        ];
                     }
                 }
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/' . $advertisementId . '/' . $studentId);
                 exit;
             } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "There was an issue creating the Interview Schedule."
+                ];
                 $error = "There was an issue creating the Interview Schedule.";
-                $this->view('Company/CreateSchedule', ['error' => $error]);
+                $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date, 'error' => $error]);
                 exit;
             }
         }

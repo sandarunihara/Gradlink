@@ -164,7 +164,7 @@ class Advertisements
                     exit;
                 } else {
                     $_SESSION['flash'] = [
-                        'type' => 'success',
+                        'type' => 'error',
                         'message' => 'There was an issue saving the advertisement'
                     ];
                     $data['error'] = "There was an issue saving the advertisement.";

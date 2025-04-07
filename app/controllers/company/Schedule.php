@@ -212,6 +212,10 @@ class Schedule
                                             </html>";
 
                         $mail->send();
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Interview is updated and student has been notified'
+                        ];
                         $data['success'] = "Email sent to Student's email.";
                     } catch (Exception $e) {
                         $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
