@@ -32,6 +32,10 @@
             <a href="/GRadlink/public/PDC_coordinator/dashboardCompanyComplain">
                 <li data-title="Complains"><i class="fas fa-exclamation-circle fa-lg"></i></li>
             </a>
+
+            <a href="/GRadlink/public/PDC_coordinator/dashboardRound">
+                <li data-title="Rounds"><i class="fas fa-cog fa-lg"></i></li>
+            </a>
         </ul>
 
         <a href="<?=ROOT?>/logout" class="logout" data-title="Logout">
