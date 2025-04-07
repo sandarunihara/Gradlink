@@ -239,4 +239,35 @@ class C_Advertisement
         var_dump($result);
         //return $result;
     }
+
+    public function topAdvertisement(){
+        $query = "SELECT
+                    a.advertisementId,
+                    a.position,
+                    a.deadline,
+                    a.workingMode,
+                    c.Name
+                    FROM advertisement a
+                    JOIN company c ON a.CompanyId = c.CompanyId
+                    WHERE deadline >= CURDATE()  
+                    ORDER BY deadline ASC
+                    LIMIT 3";
+        $result = $this->query($query);
+        return $result;
+    }
+
+    public function topCompanyByAdd(){
+        $query = "SELECT
+                    c.CompanyId,
+                    c.Name,
+                    c.profileimg,
+                    COUNT(a.advertisementId) AS ad_count
+                    FROM advertisement a
+                    JOIN company c ON  a.CompanyId = c.CompanyId
+                    GROUP BY c.CompanyId
+                    ORDER BY ad_count DESC
+                    LIMIT 2";
+        $result = $this->query($query);
+        return $result;
+    }
 }

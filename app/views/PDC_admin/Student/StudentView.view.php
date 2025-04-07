@@ -116,7 +116,7 @@
                             <?php foreach ($data['applications'] as $application): ?>
                                 <div class="company-card">
                                     <div class="card-header">
-                                        <img src="<?= ROOT ?>/<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
+                                        <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Image" >
                                         <h3 class="company-name"><?= htmlspecialchars($application['ComName']) ?></h3>
                                         <span class="job-status <?= strtolower(str_replace(' ', '-', htmlspecialchars($application['Jobstatus']))) ?>">
                                             <?= htmlspecialchars($application['Jobstatus']) ?>

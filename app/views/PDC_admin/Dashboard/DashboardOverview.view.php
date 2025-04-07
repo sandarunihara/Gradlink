@@ -1,146 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
- 
 <head>
-    <title>Dashboard</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/dashboard/overviewDashboard.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css?v=<?= time() ?>">
-
-
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/dashboard/overviewDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
-
 <body>
 
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar") ?>
-
-        <main class="main-content">
-            <header class="header">
-                <div class="header-left">
-                    <h1>Dashboard</h1>
-                </div>
-   
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
+    <?php $this->renderComponent("pdc_adminsidebar") ?>
+        <div class="content">
+            <div class="left">
+                <div class="header">
+                    <div>
+                        <h1>Dashboard</h1>
+                    </div>
+                    <div class="icons">
+                        <i class="fas fa-bell"></i>
+                        <i class="fas fa-user"></i>
                     </div>
                 </div>
-            </header>
-
-            <div class='round-type'>1st Round</div>
-
-
-            <div class="main-cards">
-                <div class='card' onclick='navigateToCompanyList();'>
-                    <div class='card-inner'>
-                        <i class="material-icons">business</i>
-                        <h3>Company</h3>
+                <div class="cards">
+                    <div class="card">
+                        <i class="fas fa-user-graduate" style="font-size: 24px; color:rgb(19, 22, 25);"></i>
+                        <h3>Registered Students</h3>
+                        <p><?= $cards['registeredStdCount'];?></p>
                     </div>
-                    <h1>35</h1>
-                </div>
-
-                <div class='card' onclick='navigateToStudentView();'>
-                    <div class='card-inner'>
-                        <i class="material-icons">school </i>
-                        <h3>Student</h3>
+                    <div class="card">
+                        <i class="fas fa-building" style="font-size: 24px; color:rgb(18, 46, 25);"></i>
+                        <h3>Registered Companies</h3>
+                        <p><?= $cards['registeredCompCount'];?></p>
                     </div>
-                    <h1><?= htmlspecialchars($stdcount) ?></h1>
-                </div>
-            </div>
-            <div class="analysis-container">
-            <div class="recruitment-analysis">
-                <div class="title">
-                    <p>Recruitment Analysis</p>
+                    <div class="card">
+                        <i class="fas fa-clipboard-list" style="font-size: 24px; color:rgb(52, 45, 25);"></i>
+                        <h3>Total Placements</h3>
+                        <p><?= $cards['workingStdCount'];?></p>
+                    </div>
                 </div>
                 <div class="graphs">
-                    <div id="donutchart-cs" style="width: 90%; height: 200px;"></div>
-                    <div id="donutchart-is" style="width: 90%; height: 200px;"></div>
+                    <div class="chart-container">
+                        <h3 id="chartHeading">Student Status</h3>
+                        <canvas id="studentChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Placement Trends (Last 5 Years)</h3>
+                        <canvas id="placementChart"></canvas>
+                    </div>
+                </div>
+                <div class="orders-table">
+                    <h3>Recent Advertisements</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Company</th>
+                                <th>Position</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th> <!-- Changed to a more meaningful column name -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(!empty($table)): ?>
+                            <?php foreach($table as $advertisement): ?>
+                                <tr>
+                                    <td><?= $advertisement['advertisementId'];?></td>
+                                    <td><?= $advertisement['companyName'];?></td>
+                                    <td><?= $advertisement['position'];?></td>
+                                    <td><?= $advertisement['deadline'];?></td>
+                                    <td><?= $advertisement['workingMode'];?></td>
+                                    <td>
+                                        <a href="<?= ROOT ?>/PDC_admin/ViewAdvertisement/show/<?= $advertisement['advertisementId'] ?>">
+                                            <button class="view-btn" title="Click to view details">View</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <td colspan="6">No advertisements found</td>
+                        <?php endif; ?>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <div class="right">
+            <div class="date-time">
+                <span class="round"><?= $cards['round'] ?></span>
+                <div class="datetime-container">
+                    <span id="date"></span> | <span id="time"></span>
                 </div>
             </div>
-
-    <div class="company-performance">
-        <div class="title">
-            <p>Company Performance Analysis</p>
-        </div>
-        <div id="curve_chart" style="width: 90%; height: 300px;"></div>
-    </div>
-</div>
-
             
 
-        </main> 
-
-        <script type="text/javascript">
-            google.charts.load("current", { packages: ["corechart"] });
-            google.charts.setOnLoadCallback(drawAllCharts);
-
-            function drawAllCharts() {
-                // Computer Science Degree Pie Chart
-                var dataCs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 80],
-                    ['Rejected', 20],
-                    ['Pending', 70],
-                    ['Not Applied', 12]
-                ]);
-
-                var optionsCs = {
-                    title: 'Computer Science Degree',
-                    pieHole: 0.4,
-                };
-
-                var chartCs = new google.visualization.PieChart(document.getElementById('donutchart-cs'));
-                chartCs.draw(dataCs, optionsCs);
-
-                // Information System Degree Pie Chart
-                var dataIs = google.visualization.arrayToDataTable([
-                    ['Status', 'Number of students'],
-                    ['Selected', 60],
-                    ['Rejected', 10],
-                    ['Pending', 10],
-                    ['Not Applied', 20]
-                ]);
-
-                var optionsIs = {
-                    title: 'Information System Degree',
-                    pieHole: 0.4,
-                };
-
-                var chartIs = new google.visualization.PieChart(document.getElementById('donutchart-is'));
-                chartIs.draw(dataIs, optionsIs);
-
-                // Curve Chart for Company Performance
-                var dataCurve = google.visualization.arrayToDataTable([
-                    ['Year', 'CS', 'IS'],
-                    ['2016', 130, 80],
-                    ['2017', 117, 46],
-                    ['2018', 66, 112],
-                    ['2019', 103, 54],
-                    ['2020', 100, 84],
-                    ['2021', 150, 94],
-                    ['2022', 180, 34]
-                ]);
+            
+            <div class="top-company">
+                <h3>Top Companies</h3>
                 
-                var optionsCurve = {
-                    title: 'Internship',
-                    curveType: 'function',
-                    legend: { position: 'bottom' }
-                };
+                    <div class='cards'>
+                        <?php if (!empty($company)): ?>
+                            <?php foreach($company as $comp): ?>
+                                <div class="company-card">
+                                    <img src="data:image/jpeg;base64,<?= $comp['profileimg'] ?>" alt="logo">
+                                    <span><?= $comp['Name'];?></span>
+                                    <a href="<?= ROOT ?>/PDC_admin/ViewCompany/show/<?= $comp['CompanyId'] ?>">
+                                        <button class="view-btn" href='<?= ROOT ?>/'>View</button>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No companies found</p>
+                        <?php endif; ?>
+                    </div>
+                    
+            </div>
+            <div class="top-student">
+                <h3>Top 5 Students (GPA)</h3>
+                <ol class="student-list">
+                    <li>
+                        <span class="student-name">John Doe</span>
+                        <span class="gpa">9.8</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Jane Smith</span>
+                        <span class="gpa">9.7</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Mike Johnson</span>
+                        <span class="gpa">9.6</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Sarah Lee</span>
+                        <span class="gpa">9.5</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Chris Evans</span>
+                        <span class="gpa">9.4</span>
+                    </li>
+                </ol>
+            </div>
 
-                var curveChart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-                curveChart.draw(dataCurve, optionsCurve);
+            </div>
+        </div>
+    </div>
+    <script>
+
+const studentChartCtx = document.getElementById('studentChart').getContext('2d');
+const studentChart = new Chart(studentChartCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Recruited', 'Rejected', 'Applied', 'Shortlisted'],
+        datasets: [{
+            data: [
+                <?= intval($cards['workingStdCount']); ?>, 
+                <?= intval($cards['rejectedStdCount']); ?>, 
+                <?= intval($cards['appliedStdCount']); ?>, 
+                <?= intval($cards['notAppliedStdCount']); ?>
+            ], 
+            backgroundColor: ['#a4abf0', '#f3917c', '#e7eeb0', '#a6ed8d'], 
+            borderColor: ['#a4abf0', '#f3917c', '#e7eeb0', '#a6ed8d'], 
+            borderWidth: 1, 
+            hoverBackgroundColor: ['#8c95e8', '#f2704c', '#d3e18b', '#84dd65'], 
+            hoverBorderColor: ['#8c95e8', '#f2704c', '#d3e18b', '#84dd65'], 
+            hoverBorderWidth: 2,
+            barPercentage: 0.5, 
+            categoryPercentage: 0.6,
+            borderSkipped: false // Ensures bars display correctly
+        }]
+    },
+    options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 100 }
+                    }
+                },
             }
-        </script>
-    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
-</body>
+});
 
+
+        const placementChartCtx = document.getElementById('placementChart').getContext('2d');
+    new Chart(placementChartCtx, {
+        type: 'line',
+        data: {
+            labels: ['2019', '2020', '2021', '2022', '2023'],
+            datasets: [
+                {
+                    label: 'CS Placements',
+                    data: [200, 250, 350, 450, 500], // Sample CS placement data
+                    borderColor: '#2196F3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                    fill: true
+                },
+                {
+                    label: 'IS Placements',
+                    data: [180, 200, 300, 400, 450], // Sample IS placement data
+                    borderColor: '#FF5733',
+                    backgroundColor: 'rgba(255, 87, 51, 0.2)',
+                    fill: true
+                }
+            ]
+        },
+        options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 100 }
+                    }
+                },
+            }
+    });
+
+        function updateDateTime() {
+            const dateElement = document.getElementById('date');
+            const timeElement = document.getElementById('time');
+            
+            const now = new Date();
+            
+            
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = now.toLocaleDateString('en-US', options);
+            
+            
+            const time = now.toLocaleTimeString('en-US');
+            
+            dateElement.textContent = date;
+            timeElement.textContent = time;
+        }
+
+        setInterval(updateDateTime, 1000);
+
+        updateDateTime();
+
+    </script>
+</body>
 </html>

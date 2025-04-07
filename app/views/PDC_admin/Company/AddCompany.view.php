@@ -38,7 +38,8 @@
                     class="company-form"
                     method="POST"
                     action="<?= ROOT ?>/PDC_admin/AddCompany/create"
-                    onsubmit="return validateContactNumber()">
+                    onsubmit="return validateContactNumber()"
+                    >
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
                         <input
@@ -79,10 +80,11 @@
                             Please enter a valid contact number (10 digits, starting with 07).
                         </small>
                     </div>
-                </form>
                     <div class="button-line">
                         <button class="btn submit-btn"  type="submit"><b>Submit</b></button>
                     </div>
+                </form>
+                    
             </section>
 
             <script>
