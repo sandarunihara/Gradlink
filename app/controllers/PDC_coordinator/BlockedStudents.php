@@ -5,31 +5,29 @@ class BlockedStudents
     public function index()
     {
         // redirect("company-dashboard");
-        // $model = new company;
-        // $data = $model->findAllBlocked();
+        $model = new Student;
+        $data = $model->findAllBlocked();
 
-        // if($data == false || empty($data)){
-        //     $this->view('Coordinator/Company/blockedStudents');
-        // }
-        // else{
-        //     $blockedCompanyData = [];
+        if($data == false || empty($data)){
+            $this->view('Coordinator/Student/blockedStudents');
+        }
+        else{
+            $blockedStudentData = [];
 
-        //     foreach ($data as $companydetail) {
-        //         $blockedCompanyData[] = [
-        //             'company_id' => $companydetail->CompanyId,
-        //             'company_name' => $companydetail->Name,
-        //             'email' => $companydetail->Email,
-        //             'contact_person' => $companydetail->ContactPerson,
-        //             'contact_number' => $companydetail->ContactNum,
-        //             'comment' => $companydetail->commentBlock,
-        //             'status' => $companydetail->Status,
-        //         ];
-        //     }
-        // $this->view('Coordinator/Company/blockedStudents', ['blockedCompanyData' => $blockedCompanyData]);
+            foreach ($data as $studentDetail) {
+                $blockedStudentData[] = [
+                    'student_id' => $studentDetail->StudentId,
+                    'student_name' => $studentDetail->Name,
+                    'nic' => $studentDetail->NIC,
+                    'degree' => $studentDetail->DegreeName,
+                    'student_email' => $studentDetail->Email,
+                    'contact_no' => $studentDetail->ContactNum
+                ];
+            }
+        $this->view('Coordinator/Student/blockedStudents', ['blockedStudentData' => $blockedStudentData]);
 
-        // }
+        }
 
-        $this->view('Coordinator/Student/blockedStudents');
     }
 }
 

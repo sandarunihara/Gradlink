@@ -3,7 +3,7 @@
     <button class="tab-button <?= $activeTab == 'student-list' ? 'active' : '' ?>"
         onclick=" window.location.href='/Gradlink/public/PDC_coordinator/dashboardStudent'">Student List</button>
     <button class="tab-button  <?= $activeTab == 'blocked-students' ? 'active' : '' ?>"
-        onclick="window.location.href='/Gradlink/public/PDC_coordinator/blockedStudents'">Blocked Companies</button>
+        onclick="window.location.href='/Gradlink/public/PDC_coordinator/blockedStudents'">Blocked Students</button>
 </div>
 
 <script>
