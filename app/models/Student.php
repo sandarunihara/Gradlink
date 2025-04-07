@@ -103,8 +103,32 @@ class student
         return $result ? $result[0] : null;
     }
 
-	public function count(){
-		$query = "SELECT COUNT(*) FROM $this->table";
+	public function registeredCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked'";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function workingCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Recruited'";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function rejectedCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Rejected'";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function appliedCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function notAppliedCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Not Applied'";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
 	}
