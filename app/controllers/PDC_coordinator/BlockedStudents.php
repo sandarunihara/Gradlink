@@ -21,7 +21,8 @@ class BlockedStudents
                     'nic' => $studentDetail->NIC,
                     'degree' => $studentDetail->DegreeName,
                     'student_email' => $studentDetail->Email,
-                    'contact_no' => $studentDetail->ContactNum
+                    'contact_no' => $studentDetail->ContactNum,
+                    'comment' => $studentDetail->commentBlock,
                 ];
             }
         $this->view('Coordinator/Student/blockedStudents', ['blockedStudentData' => $blockedStudentData]);
