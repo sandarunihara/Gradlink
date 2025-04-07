@@ -19,7 +19,9 @@
     viewButtons.forEach(button => {
         button.addEventListener('click', () => {
             const advertisementId = button.getAttribute('data-advertisement-id');
-            const url = '<?=ROOT?>' + '/Student/StudentAd/viewAdvertisement/' + '?advertisementId=' + encodeURIComponent(advertisementId);
+            const url = 'http://localhost/Gradlink/public' + '/Student/StudentAd/viewAdvertisement/' + '?advertisementId=' + encodeURIComponent(advertisementId);
+            //console.log(url);
+            
             window.location.href = url;
         });
     });
