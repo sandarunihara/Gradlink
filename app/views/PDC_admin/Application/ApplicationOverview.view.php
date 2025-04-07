@@ -19,16 +19,6 @@
                 <div class="header-left">
                     <h1>Applications</h1>
                 </div>
-
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
             </header>
 
             <?php $activeTab = 'applications'; ?>
@@ -51,37 +41,37 @@
                             <th>Degree</th>
                             <th>Applied Company</th>
                             <th>Position</th>
-                            <th>Advertisement ID</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2022/CS/123</td>
-                            <td>D.M. Perera</td>
-                            <td>CS</td>
-                            <td>WSO2</td>
-                            <td>Software Engineer</td>
-                            <td>003</td>
-                            <td>
-                                <select class="status-btn" id="status" name="status">
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                </select>
-                            </td>
-                            <td><button class="view-btn">View Profile</button></td>
-                            <!-- View -> Go to the student profile -->
-                        </tr>
-
+                        <?php if($data == null) : ?>
+                            <tr>
+                                <td colspan="8">No applications found</td>
+                            </tr>
+                        <?php else : ?>
+                            <?php foreach ($data as $row) : ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($row->StudentId) ?></td>
+                                    <td><?= htmlspecialchars($row->StudentName) ?></td>
+                                    <td><?= htmlspecialchars($row->DegreeName) ?></td>
+                                    <td><?= htmlspecialchars($row->CompanyName) ?></td>
+                                    <td><?= htmlspecialchars($row->position) ?></td>
+                                    <td><?= htmlspecialchars($row->Jobstatus) ?></td>
+                                    <td>
+                                        <button class="view-btn" onclick="navigateToViewApplication('<?= htmlspecialchars($row->StudentId)?>','<?= htmlspecialchars($row->advertisementId)?>')">View</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 
             </section>
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
 
 </body>
 

@@ -34,7 +34,7 @@
                         'CreatedAt' => $apply->CreatedAt,
                         'position' => $apply->position,
                         'ComName' => $apply->Name,
-                        'CompanyLogo' => $apply->CompanyLogo
+                        'CompanyLogo' => $apply->profileimg
                     ];
                 }
             } else {

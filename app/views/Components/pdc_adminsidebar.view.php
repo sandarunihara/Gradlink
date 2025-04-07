@@ -29,9 +29,9 @@
                 <li data-title="Sessions"><i class="fas fa-calendar-alt fa-lg"></i></li>
             </a>
             
-            <a href="<?=ROOT?>/PDC_admin/AdminComplainOverview/dashboard">
+            <!-- <a href="<?=ROOT?>/PDC_admin/AdminComplainOverview/dashboard">
                 <li data-title="Complains"><i class="fas fa-exclamation-circle fa-lg"></i></li>
-            </a>
+            </a> -->
         </ul>
 
         <a href="<?=ROOT?>/logout" class="logout" data-title="Logout">

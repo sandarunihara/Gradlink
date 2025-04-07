@@ -1,200 +1,246 @@
-* {
-    box-sizing: border-box;
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-}
-
-body {
-    background-color: #c8cbd4;
-    display: flex;
-    height: 100vh;
 }
 
 .container {
     display: flex;
-    width: 100%;
 }
 
 .content {
-    flex: 1;
+    flex-grow: 1;
     padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* max-width: 1000px; */
+    overflow: hidden;
+    margin-left: 7%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-right: 1%;
 }
 
+/* Header Styling */
 .header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Advertisement Image */
+.advertisement-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Company Info Section */
+.company-info {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.company-form {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.student-title {
-    display: flex;
-    align-items: center;
-}
-
-.student-title h1 {
-    margin: 0;
-    font-size: 26px;
-    color: #4b0082;
-}
-
-.edit-btn {
-    background: none;
-    border-radius: 50%;
-    border: 2px solid #4b0082;
-    margin-left: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    color: #4b0082;
-    padding: 3px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.edit-btn:hover {
-    background-color: rgba(75, 0, 130, 0.1);
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 15px;
 }
 
-.header-right img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.user-info {
+/* Form Group Styling */
+.form-group {
     display: flex;
     flex-direction: column;
 }
 
-.user-info span {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.user-info small {
-    font-size: 14px;
-    color: #777;
-}
-.student-info {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
-}
-
-.student-form {
-    display: grid;
-    grid-template-columns: 1fr 3fr; /* Two columns: labels and inputs */
-    column-gap: 30px; /* Gap between label and input */
-    row-gap: 20px; /* Gap between rows */
-    align-items: center;
-}
-
-.form-group {
-    display: contents; /* Allow labels and inputs to align properly in grid */
-    position: relative; /* Necessary for absolute positioning of error messages */
-}
-
 .form-group label {
-    font-weight: bold;
-    justify-self: start;
-    white-space: nowrap; /* Keep labels on one line */
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select {
-    padding: 10px;
+.form-group textarea {
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border-radius: 8px;
     width: 100%;
-    box-sizing: border-box;
-    cursor: pointer; /* Inputs are readonly */
+    background-color: #f9f9f9;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #ff6600;
+    outline: none;
+    background: #fff;
 }
 
 .form-group textarea {
-    resize: none;
-    height: 100px;
+    height: 120px;
+    resize: vertical;
 }
 
-.form-group .error {
-    color: #d9534f; /* Bootstrap-inspired red color */
-    font-size: 14px; /* Smaller font for errors */
-    margin-top: 5px; /* Spacing below the input */
-    grid-column: 2 / 3; /* Aligns error under the input in the second column */
-    font-family: 'Arial', sans-serif;
-}
-
-.button-line{
+/* Buttons */
+.button-line {
     display: flex;
     justify-content: space-between;
-}
-
-.action-buttons {
     margin-top: 20px;
-    justify-content: end;
-    display: flex;
-    gap: 4%;
 }
 
 .btn {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-.update-btn {
-    background-color: #007bff;
-    color: #ffffff;
-}
-
-.update-btn:hover{
-    background-color: #0872dc;
-}
-
-.block-btn {
-    background-color: #eb0000;
-    color: #fff;
-}
-
-.block-btn:hover{
-    background-color: #f20303;
+.btn:hover {
+    opacity: 0.9;
 }
 
 .back-btn {
-    background-color: #000000;
-    color: #ffffff;
-    margin-left: auto;
-
-}
-
-.back-btn:hover{
-    background-color: #26282b;
-}
-
-.view-progress-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #333;
     color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-start;
 }
 
-.view-progress-btn:hover{
-    background-color: #0872dc;
+.learn-more-btn {
+    background-color: #ff6600;
+    color: white;
 }
+
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+
+    .company-info {
+        padding: 15px;
+    }
+
+    .button-line {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Modal background overlay */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content - centered */
+.modal form {
+    background: #fff;
+    padding: 25px;
+    width: 420px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #ff0000;
+}
+
+/* Label */
+.modal label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Textarea */
+.modal textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.modal textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    background: #fff;
+}
+
+/* Submit Button */
+.modal button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.modal button:hover {
+    background-color: #0056b3;
+}
+
+/* Fade-in animation
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+} */

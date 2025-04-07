@@ -15,22 +15,38 @@ class student_advertisement
 		'CV',
 	];
 
+
+	function findall(){
+		$query = "SELECT 
+    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail
+					FROM studentadvertisement sa
+					JOIN student s ON sa.StudentId = s.StudentId 
+					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
+					JOIN company c ON a.CompanyId = c.CompanyId;
+					";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
 	function findstudentad($advertisementId, $studentId)
 	{
 		// Prepare the SQL query with placeholders for parameters
 		$query = "SELECT 
-					*
-              FROM 
-                    studentadvertisement
-              JOIN 
-                    student ON studentadvertisement.StudentId = student.StudentId
-              JOIN 
-                    advertisement ON studentadvertisement.AdvertisementId = advertisement.AdvertisementId
-              WHERE 
-                    advertisement.advertisementId = :advertisementId 
-                    AND student.StudentId = :StudentId";
+    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail
+					FROM studentadvertisement sa
+					JOIN student s ON sa.StudentId = s.StudentId 
+					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
+					JOIN company c ON a.CompanyId = c.CompanyId
+              		WHERE 
+                    a.advertisementId = :advertisementId 
+                    AND s.StudentId = :StudentId";
 
-		// Bind the parameters and execute the query
+
 		$params = [
 			':advertisementId' => $advertisementId,
 			':StudentId' => $studentId
@@ -65,7 +81,8 @@ class student_advertisement
 					studentadvertisement.CreatedAt,
 					advertisement.position, 
 					advertisement.advertisementId,
-					company.Name
+					company.Name,
+					company.profileimg
               FROM 
                     studentadvertisement
               JOIN 
