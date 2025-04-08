@@ -29,11 +29,6 @@
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="sc_main">
-                    <div class="sc">
-                        <div class="calendar-container">
-                            <div id="calendar"></div>
-                        </div>
-                    </div>
                     <form id="schedule-form" class="sc_background" method="post">
                         <div class="sc_iner">
                             <a href="http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/<?php echo $addata[0]->advertisementId  ?>/<?php echo $data[0]->StudentId  ?>" class="sc_container">
@@ -56,6 +51,9 @@
                                         <div class="sc_date">
                                             <h4><span class="starmark">*</span>Date :</h4>
                                             <input type="date" id="date" name="date" required />
+                                            <div class="pre-interview">
+                                                <a onclick="openCalendarModal()">View Scheduled Interviews</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="sc_time">
@@ -85,6 +83,11 @@
                             </div>
                         </div>
                     </form>
+                    <div class="sc">
+                        <!-- <div class="calendar-container">
+                            <div id="calendar"></div>
+                        </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,6 +104,16 @@
         </div>
     </div>
 
+    <div class="calendar-modal" id="calendarModal">
+    <div class="calendar-modal-content">
+        <button class="close-calendar-modal" onclick="closeCalendarModal()">Close</button>
+        <div class="calendar-container">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+
 
 
     <div id="toast-container" class="toast-container"></div>
@@ -112,23 +125,38 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const unavailableDates = <?php echo json_encode($unavailable_date); ?>;
-            
-            // Initialize date picker
-            flatpickr("#date", {
-                dateFormat: "Y-m-d",
-                minDate: "today",
-                disable: unavailableDates.map(date => new Date(date))
-            });
-            
-            // Initialize FullCalendar
+        const unavailableDates = <?php echo json_encode($unavailable_date); ?>;
+        let calendar = null;
+
+        // Initialize flatpickr
+        flatpickr("#date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            disable: unavailableDates.map(date => new Date(date))
+        });
+
+        // Show modal when user clicks "View Schedules"
+        window.openCalendarModal = function() {
+            const modal = document.getElementById('calendarModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            // Destroy previous calendar if exists
+            if (calendar) {
+                calendar.destroy();
+                calendar = null;
+            }
+
+            // Initialize new calendar
             const calendarEl = document.getElementById('calendar');
-            const calendar = new FullCalendar.Calendar(calendarEl, {
+            calendarEl.innerHTML = ''; // Clear any remaining elements
+
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    right: 'dayGridMonth'
                 },
                 events: {
                     url: 'http://localhost/Gradlink/public/company/ShortlistedStudents/getInterviewSchedules',
@@ -137,32 +165,74 @@
                         errorToast('Failed to fetch interview schedules');
                     }
                 },
+                eventDisplay: 'list-item',
                 eventClick: function(info) {
-                    alert(
-                        'Interview Details\n\n' +
-                        'Student: ' + info.event.extendedProps.StudentName + '\n' +
-                        'Position: ' + info.event.extendedProps.position + '\n' +
-                        'Date: ' + info.event.start.toLocaleDateString() + '\n' +
-                        'Time: ' + info.event.start.toLocaleTimeString() + ' - ' + 
-                        (info.event.end ? info.event.end.toLocaleTimeString() : '')
-                    );
+                    const msg = `Interview Details\n\n
+                        Student: ${info.event.extendedProps.StudentName}
+                        Position: ${info.event.extendedProps.position}
+                        Date: ${info.event.start.toLocaleDateString()}
+                        Time: ${info.event.start.toLocaleTimeString()}
+                        `;
+                    alert(msg);
                 },
                 dateClick: function(info) {
                     document.getElementById('date').value = info.dateStr;
                 },
-                eventColor: '#3788d8'
+                eventColor: '#3788d8',
+                height: '100%',
+                contentHeight: 'auto',
+                aspectRatio: 1.35,
+                windowResize: function(view) {
+                    calendar.updateSize();
+                },
             });
-            console.log(calendar);
-            
+
             calendar.render();
 
-            // Refresh calendar after form submission
-            document.getElementById('schedule-form').addEventListener('submit', function() {
+            // Force resize after render
+            setTimeout(() => {
+                calendar.updateSize();
+                // Second resize to ensure proper layout
                 setTimeout(() => {
-                    calendar.refetchEvents();
-                }, 1000);
-            });
+                    calendar.updateSize();
+                    // Third resize for good measure
+                    setTimeout(() => calendar.updateSize(), 50);
+                }, 100);
+            }, 50);
+        };
+
+        // Close modal
+        window.closeCalendarModal = function() {
+            document.getElementById('calendarModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Destroy calendar when closing
+            if (calendar) {
+                calendar.destroy();
+                calendar = null;
+            }
+        };
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (calendar) {
+                setTimeout(() => {
+                    calendar.updateSize();
+                }, 100);
+            }
         });
+
+        // Refresh after form submit
+        document.getElementById('schedule-form').addEventListener('submit', function() {
+            setTimeout(() => {
+                if (calendar) {
+                    calendar.refetchEvents();
+                }
+            }, 1000);
+        });
+    });
+
+
         // Get the modal popup
 
         function validateAndShowModal(event) {
