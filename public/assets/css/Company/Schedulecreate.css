@@ -396,7 +396,7 @@ f1f7ff */
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000;
+    z-index: 1150;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
 }
@@ -449,6 +449,12 @@ f1f7ff */
 
 .modal-buttons button:hover {
     opacity: 0.8;
+}
+.event-details {
+    padding: 20px;
+    white-space: pre-line; /* Preserves line breaks from the message */
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
 }
 
 

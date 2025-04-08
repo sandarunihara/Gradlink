@@ -103,16 +103,24 @@
             </div>
         </div>
     </div>
-
+    
     <div class="calendar-modal" id="calendarModal">
-    <div class="calendar-modal-content">
-        <button class="close-calendar-modal" onclick="closeCalendarModal()">Close</button>
-        <div class="calendar-container">
-            <div id="calendar"></div>
+        <div class="calendar-modal-content">
+            <button class="close-calendar-modal" onclick="closeCalendarModal()">Close</button>
+            <div class="calendar-container">
+                <div id="calendar"></div>
+            </div>
         </div>
     </div>
-</div>
-
+    
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+        <div id="event-details" class="event-details"></div>
+            <div class="modal-buttons">
+                <button class="no-btn" onclick="closeeventModal()">Close</button>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -173,10 +181,10 @@
                         Date: ${info.event.start.toLocaleDateString()}
                         Time: ${info.event.start.toLocaleTimeString()}
                         `;
-                    alert(msg);
+                        openeventModal(msg);
                 },
                 dateClick: function(info) {
-                    document.getElementById('date').value = info.dateStr;
+                    // document.getElementById('date').value = info.dateStr;
                 },
                 eventColor: '#3788d8',
                 height: '100%',
@@ -231,7 +239,16 @@
             }, 1000);
         });
     });
+    
+    function openeventModal(message) {
+        const modal = document.getElementById("event-modal");
+        document.getElementById('event-details').textContent = message;
+        modal.style.display = 'flex';
+    }
 
+    function closeeventModal() {
+        document.getElementById('event-modal').style.display = 'none';
+    }
 
         // Get the modal popup
 

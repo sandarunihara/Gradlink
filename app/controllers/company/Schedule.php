@@ -41,7 +41,6 @@ class Schedule
                     $studentdata = $studentmodel->findbyId($item->StudentId);
                     $studentadvertisement = new student_advertisement;
                     $studentaddata = $studentadvertisement->findstudentad($item->advertisementId, $item->StudentId);
-                    // show($studentaddata);
                     $interviewdata[] = [
                         'Position' => $studentaddata[0]->position,
                         'StudentName' => $studentdata[0]->Name,
@@ -54,7 +53,6 @@ class Schedule
                 }
             }
         }
-        // show($interviewdata);
 
         $this->view('Company/Schedule', ['data' => $interviewdata]);
     }
