@@ -197,6 +197,12 @@ class company
 		}
 	}
 
+	public function registeredCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked'";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
 	// public function findallwithCompany(){
 	// 	try {
 	// 		$query = "SELECT "

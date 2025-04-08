@@ -20,7 +20,6 @@
         <main class="content">
             <header class="header">
                 <div class="header-left">
-                    <i class="material-icons">menu</i>
                     <h1>Advertisement</h1>
                 </div>
 

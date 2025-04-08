@@ -290,3 +290,58 @@ function openModal(adid, action, email) {
 function closeModal() {
     document.getElementById("actionModal").style.display = "none";
 }
+
+
+function navigateToViewApplication(studentId, advertisementId){
+    //console.log("navigate to,",studentId, advertisementId);
+    window.location.href = "/Gradlink/public/PDC_admin/AdminApplicationOverview/show/" + studentId + "/" + advertisementId;
+}
+
+
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    
+    // Hide all tab contents
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    
+    // Remove "active" class from all tab buttons
+    tablinks = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+    
+    // Show the selected tab and add "active" class
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.classList.add("active");
+}
+
+// Automatically open "Student Details" tab on page load
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("StudentDetails").style.display = "block";
+    document.querySelector(".tab-btn").classList.add("active");
+});
+
+
+function updateDateTime() {
+    const now = new Date();
+
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+
+    const formattedTime = now.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit', 
+        hour12: true 
+    });
+
+    document.getElementById('date-time').textContent = `${formattedDate} | ${formattedTime}`;
+}
+
+setInterval(updateDateTime, 1000);
+
+
+updateDateTime();

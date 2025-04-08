@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/viewSession.css?v=<?= time() ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+
 
 </head>
 
 <body>
     <div class="container">
+        <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="content">
             <header class="header">
             <div class="student-title">
@@ -21,15 +24,6 @@
                     <button class="edit-btn">&#9998;</button>
                 </div>
 
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
             </header>
             <section class="student-info">
                 <form class="student-form" id="session-form" method='POST' action="<?= ROOT ?>/PDC_admin/ViewSession/edit/<?= $session->session_id ?>">
@@ -44,9 +38,9 @@
 
                     <div class="form-group">
                         <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($session->company_name) ?>" readonly>
-                        <?php if (!empty($errors['company_name'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['company_name']) ?></span>
+                        <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($session->Name) ?>" readonly>
+                        <?php if (!empty($errors['Name'])): ?>
+                            <span class="error"><?= htmlspecialchars($errors['Name']) ?></span>
                         <?php endif; ?>
                     </div>
 

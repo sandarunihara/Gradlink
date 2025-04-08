@@ -18,16 +18,6 @@
                 <div class="header-left">
                     <h1>Sessions</h1>
                 </div>
-
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/img/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>John</span>
-                        <small>Admin</small>
-                    </div>
-                </div>
             </header>
 
             <section class="company-list">
@@ -60,7 +50,7 @@
                             <?php foreach($sessionData as $session): ?>
                                 <tr>
                                     <td><?= htmlspecialchars(is_array($session) ? $session['session_name'] : $session->session_name) ?></td>
-                                    <td><?= htmlspecialchars(is_array($session) ? $session['company_name'] : $session->company_name) ?></td>
+                                    <td><?= htmlspecialchars(is_array($session) ? $session['CompanyId'] : $session->CompanyId) ?></td>
                                     <td><?= htmlspecialchars(is_array($session) ? $session['hall_number'] : $session->hall_number) ?></td>
                                     <td><?= htmlspecialchars(is_array($session) ? $session['session_date'] : $session->session_date) ?></td>
                                     <td><?= htmlspecialchars(is_array($session) ? $session['time_slot'] : $session->time_slot) ?></td>
