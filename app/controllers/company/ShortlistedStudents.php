@@ -385,4 +385,44 @@ class ShortlistedStudents
         }
         $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date]);
     }
+
+    public function getInterviewSchedules()
+    {
+        $companyID = $_SESSION['USER']->CompanyId;
+        $advertisementModel = new C_Advertisement;
+        $interviewmodel = new interview_time_slot;
+        $student = new student;
+        $advertisementData = $advertisementModel->find(['CompanyId' => $companyID]);
+        $advertisementID = [];
+        $interview_data = [];
+        $events = [];
+        if (!empty($advertisementData)) {
+            foreach ($advertisementData as $advertisement) {
+                $interview_data[] = $interviewmodel->find(['advertisementId' => $advertisement->advertisementId]);
+            }
+            if (!empty($interview_data)) {
+                foreach ($interview_data as $eachAD) {
+                    if (!empty($eachAD)) {
+                        foreach ($eachAD as $interview) {
+                            $studentName = $student->find($interview->StudentId)->Name;
+                            $advertisementposition = $advertisementModel->find(['advertisementId' => $interview->advertisementId])[0]->position;
+                            $events[] = [
+                                'title' => $advertisementposition,
+                                'position' => $advertisementposition,
+                                'StudentName' => $studentName,
+                                'StudentId' => $interview->StudentId,
+                                'advertisementId' => $interview->advertisementId,
+                                'start' => $interview->Date . 'T' . $interview->StartTime,
+                                'end' => $interview->Date . 'T' . $interview->EndTime,
+                                'color' => '#3788d8'
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+        header('Content-Type: application/json');
+        echo json_encode($events);
+        exit;
+    }
 }

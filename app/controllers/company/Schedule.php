@@ -30,9 +30,9 @@ class Schedule
             ];
             $data[] = $interviewmodel->find($interview_para);
         }
+        // show($data);
         // show($interviewdata);
         // $data=$interviewmodel->findall();
-        // show($data);
         $interviewdata = [];
         foreach ($data as $item) {
             if (!empty($item)) {

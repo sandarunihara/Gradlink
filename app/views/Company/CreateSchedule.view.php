@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Schedulecreate.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- FullCalendar CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 <body class="body">
@@ -25,6 +30,9 @@
                 </div>
                 <div class="sc_main">
                     <div class="sc">
+                        <div class="calendar-container">
+                            <div id="calendar"></div>
+                        </div>
                     </div>
                     <form id="schedule-form" class="sc_background" method="post">
                         <div class="sc_iner">
@@ -98,11 +106,63 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <!-- Then load flatpickr -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const unavailableDates = <?php echo json_encode($unavailable_date); ?>;
+            
+            // Initialize date picker
+            flatpickr("#date", {
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                disable: unavailableDates.map(date => new Date(date))
+            });
+            
+            // Initialize FullCalendar
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: {
+                    url: 'http://localhost/Gradlink/public/company/ShortlistedStudents/getInterviewSchedules',
+                    method: 'GET',
+                    failure: function() {
+                        errorToast('Failed to fetch interview schedules');
+                    }
+                },
+                eventClick: function(info) {
+                    alert(
+                        'Interview Details\n\n' +
+                        'Student: ' + info.event.extendedProps.StudentName + '\n' +
+                        'Position: ' + info.event.extendedProps.position + '\n' +
+                        'Date: ' + info.event.start.toLocaleDateString() + '\n' +
+                        'Time: ' + info.event.start.toLocaleTimeString() + ' - ' + 
+                        (info.event.end ? info.event.end.toLocaleTimeString() : '')
+                    );
+                },
+                dateClick: function(info) {
+                    document.getElementById('date').value = info.dateStr;
+                },
+                eventColor: '#3788d8'
+            });
+            console.log(calendar);
+            
+            calendar.render();
+
+            // Refresh calendar after form submission
+            document.getElementById('schedule-form').addEventListener('submit', function() {
+                setTimeout(() => {
+                    calendar.refetchEvents();
+                }, 1000);
+            });
+        });
         // Get the modal popup
 
         function validateAndShowModal(event) {
@@ -122,15 +182,6 @@
             // Show confirmation modal if form is valid
             openConfirmationModal();
         }
-        document.addEventListener("DOMContentLoaded", () => {
-            const unavailableDates = <?php echo json_encode($unavailable_date); ?>;
-
-            flatpickr("#date", {
-                dateFormat: "Y-m-d",
-                minDate: "today",
-                disable: unavailableDates.map(date => new Date(date))
-            });
-        });
 
         function openConfirmationModal() {
             document.getElementById('confirmation-modal').style.display = 'block';
