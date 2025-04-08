@@ -20,11 +20,10 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <i class="material-icons">menu</i>
                     <h1>Companies</h1>
                 </div>
 
-                
+
             </header>
 
             <?php $activeTab = 'pending-companies'; ?>
@@ -40,6 +39,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Company ID</th>
                             <th>Company Name</th>
                             <th>Contact Person</th>
                             <th>Email</th>
@@ -48,14 +48,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>WSO2</td>
-                            <td>Tharindu Perera</td>
-                            <td>tharindu@gmail.com</td>
-                            <td>071 273 4321</td>
-                            <td><button class="view-btn">View</button></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                        <?php if (!empty($blockedCompanyData)): ?>
+                            <?php foreach ($blockedCompanyData as $company): ?>
+                                <tr>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
+                                    <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
+
+
+                                    <td>
+                                        <button
+                                            class="view-btn"
+                                            data-id="<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>"
+                                            data-name="<?= htmlspecialchars(is_array($company) ? $company['company_name'] : $company->company_name) ?>"
+                                            data-reason="<?= htmlspecialchars(is_array($company) ? $company['comment'] : $company->comment) ?>">
+                                            View
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            <?php endforeach ?>
+
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="9">No Registered Companies</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 
@@ -63,7 +83,40 @@
 
         </main>
     </div>
+    <div class="modal" id="companyModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Company Details</h2>
+            <p><strong>Company ID:</strong> <span id="modalCompanyId"></span></p>
+            <p><strong>Company Name:</strong> <span id="modalCompanyName"></span></p>
+            <p><strong>Reason for Blocking:</strong></p>
+            <p id="modalBlockReason" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;"></p>
+        </div>
+    </div>
+
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script>
+        document.querySelectorAll('.view-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Get data from button
+                const companyId = button.dataset.id;
+                const companyName = button.dataset.name;
+                const blockReason = button.dataset.reason;
+
+                // Fill modal content
+                document.getElementById('modalCompanyId').innerText = companyId;
+                document.getElementById('modalCompanyName').innerText = companyName;
+                document.getElementById('modalBlockReason').innerText = blockReason;
+
+                // Show modal
+                document.getElementById('companyModal').style.display = 'flex';
+            });
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('companyModal').style.display = 'none';
+        });
+    </script>
 
 </body>
 

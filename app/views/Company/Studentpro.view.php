@@ -260,19 +260,18 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 
 
     <script>
-        <?php if (!empty($error)) : ?>
-            errorToast("<?php echo addslashes($error); ?>");
-        <?php endif; ?>
-        <?php if (!empty($success)) : ?>
-            successToast("<?php echo addslashes($success); ?>");
-        <?php endif; ?>
-
-
-
-
         // To open and close the modals and confirm actions
         function openShortlistConfirmModal(event) {
             event.preventDefault(); // Prevents the form from submitting immediately

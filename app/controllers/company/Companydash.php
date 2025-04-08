@@ -14,6 +14,13 @@ class Companydash
         $model = new C_Dashboard;
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 
+        
+        // foreach($alldata as $advertisement){
+        //     if($advertisement->status != 'Trash'){
+        //         $data[]=$advertisement;
+        //     }
+        // }
+        
         if (empty($data)) {
             $hasShortlisted = false;
             $hasRecruited = false;
@@ -23,6 +30,7 @@ class Companydash
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
+            // show($data);
             $numOfAdvertisements = count($data);
 
             $allStatuses = ["Active", "Deactive", "Pending", "Rejected"];
