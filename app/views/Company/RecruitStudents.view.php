@@ -97,62 +97,16 @@
         }
     </script>
 
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
+
 </body>
 
 </html>
-
-<!-- 
-<div class="sr_table">
-                            
-                            <div>
-                                asd
-                            </div>
-                        </div> -->
-
-
-
-<!-- <table class="student-table">
-                                    <thead class="sr_table_t">
-                                        <th>
-                                            <h5>Student Name</h5>
-                                        </th>
-                                        <th>
-                                            <h5>Student Degree</h5>
-                                        </th>
-                                        <th>
-                                            <h5>Position</h5>
-                                        </th>
-                                        <th>
-                                            <h5>Action</h5>
-                                        </th>
-                                        <th>
-                                            <h5>View</h5>
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (isset($data) && !empty($data)): ?>
-                                            <?php foreach ($data as $student): ?>
-                                                <?php
-                                                $status = $student['Action'];
-                                                $statusClass = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Reject' : 'Pending');
-                                                $statusText = ($status == 'Recruit') ? 'Recruit' : (($status == 'Reject') ? 'Rejected' : 'Awaiting');
-                                                ?>
-                                                <tr class="sr_row">
-                                                    <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
-                                                    <td class="degree"><?php echo htmlspecialchars($student['Student Degree']); ?></td>
-                                                    <td class="position"><?php echo htmlspecialchars($student['Position']); ?></td>
-                                                    <td>
-                                                        <div class="<?php echo $statusClass; ?>">
-                                                            <span class="action"><?php echo $statusText; ?></span>
-                                                        </div>
-                                                    </td>
-                                                    <td><a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <tr>
-                                                <td colspan="5">No students found</td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table> -->

@@ -30,9 +30,9 @@ class Schedule
             ];
             $data[] = $interviewmodel->find($interview_para);
         }
+        // show($data);
         // show($interviewdata);
         // $data=$interviewmodel->findall();
-        // show($data);
         $interviewdata = [];
         foreach ($data as $item) {
             if (!empty($item)) {
@@ -53,7 +53,6 @@ class Schedule
                 }
             }
         }
-        // show($interviewdata);
 
         $this->view('Company/Schedule', ['data' => $interviewdata]);
     }
@@ -182,7 +181,7 @@ class Schedule
                                                     </div>
                                                     <div class='content'>
                                                         <p>Dear {$studentdata->Name},</p>
-                                                        <p>This is to inform you about the details of your scheduled interview for a potential internship at <strong>{$companydata->Name}</strong>.</p>
+                                                        <p>This is to inform you about the details of your Re-Scheduled interview for a potential internship at <strong>{$companydata->Name}</strong>.</p>
                                                         <p><strong>Interview Details:</strong></p>
                                                         <ul>
                                                             <li><strong>Date:</strong> {$data['Date']}</li>
@@ -211,6 +210,10 @@ class Schedule
                                             </html>";
 
                         $mail->send();
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Interview is updated and student has been notified'
+                        ];
                         $data['success'] = "Email sent to Student's email.";
                     } catch (Exception $e) {
                         $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
