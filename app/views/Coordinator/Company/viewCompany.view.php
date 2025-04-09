@@ -19,13 +19,18 @@
         <?php $this->renderComponent("coordinatorDashboard")  ?>
 
         <main class="main-content">
+            <a href="<?= ROOT ?>/PDC_coordinator/dashboardCompany" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
             <header class="header">
+
+
                 <div class="company-title">
                     <h1 name="company_name"><?= htmlspecialchars($companyData['company_name'] ?? '') ?></h1>
                     <button class="edit-btn">&#9998;</button>
                 </div>
 
-                
+
             </header>
 
             <?php $this->renderComponent("companyTabs") ?>
@@ -91,12 +96,12 @@
                         </div>
                         <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
                         <div>
-                        <small id="contact-error" class="error-message" style="color: red; display: none; ">
-                            Please enter a valid contact number (10 digits, starting with 07).
-                        </small>
-                    </div>
+                            <small id="contact-error" class="error-message" style="color: red; display: none; ">
+                                Please enter a valid contact number (10 digits, starting with 07).
+                            </small>
+                        </div>
                     </form>
-                    
+
                 <?php else: ?>
                     <p>No company data available.</p>
                 <?php endif; ?>

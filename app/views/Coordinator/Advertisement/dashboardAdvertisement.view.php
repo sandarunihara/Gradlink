@@ -30,7 +30,7 @@
 
             <div class="tab-content">
                 <div id="ongoingad-list" class="tab-pane active ">
-                    <section class="company-list">
+                    <!-- <section class="company-list"> -->
                         <div class="list-header">
                             <h2>Ongoing Advertisement List</h2>
                             <div class="search-box">
@@ -76,7 +76,7 @@
                             </tbody>
                         </table>
 
-                    </section>
+                    <!-- </section> -->
                 </div>
             </div>
 
