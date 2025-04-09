@@ -105,6 +105,7 @@ class StudentAd{
 
         $advertisementId = $_GET['advertisementId'];
         $model = new C_Advertisement;
+        //show($advertisementId);
         // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $advertisementId]);
         $student_advertisement = new student_advertisement;

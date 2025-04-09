@@ -18,6 +18,9 @@
         <?php $this->renderComponent("coordinatorDashboard") ?>
 
         <main class="main-content">
+        <a href="<?= ROOT ?>/PDC_coordinator/dashboardStudent" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
             <header class="header">
                 <div class="company-title">
                     <h1 name="company_name"><?= htmlspecialchars($studentData['student_name'] ?? '') ?></h1>
