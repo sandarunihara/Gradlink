@@ -61,6 +61,7 @@ class StudentProfile{
             //show($_SESSION);
             header('Location: '.ROOT.'/Student/StudentProfile/profile');
         }else{
+            //show($data);
             $this-> view('Student/ProfileEdit',$data);
         }
     }
