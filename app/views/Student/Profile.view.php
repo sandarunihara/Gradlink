@@ -86,24 +86,6 @@
                     </p>
                 </div>
             </div>
-            <!--Certificates Section-->
-            <div class="student-certificate">
-                <div class="topic1">
-                    <p class="certificate-header">Cetificates</p>
-                </div>
-                <div class="cetificatesContent">
-                    <div class="cetificates">
-                        <?php for ($i = 0; $i < count($data['Certificates']); $i++) { ?>
-                            <a href="<?php echo htmlspecialchars($data['Certificates'][$i] ->CredentialUrl)?>" target="_blank"><p>
-                                <?php echo htmlspecialchars($data['Certificates'][$i] -> Name)?>
-                                form
-                                <?php echo htmlspecialchars($data['Certificates'][$i] -> Organization)?>
-                                <br>
-                            </p></a>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
             <!-- Footer Section -->
             <div class="student-profile-footer">
                 <div class="student-edit">
