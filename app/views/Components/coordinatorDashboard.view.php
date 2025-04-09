@@ -17,7 +17,7 @@
                 <li data-title="Student"><i class="fas fa-user-graduate fa-lg"></i></li>
             </a>
 
-            <a href="/GRadlink/public/PDC_coordinator/dashboardAdvertisement">
+            <a href="/GRadlink/public/PDC_coordinator/dashboardAdvertisement/active">
                 <li data-title="Advertisements"><i class="fas fa-bullhorn fa-lg"></i></li>
             </a>
 
