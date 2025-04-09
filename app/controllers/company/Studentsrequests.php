@@ -25,15 +25,18 @@ class StudentsRequests
         $reqdata = [];
         $hasShortlisted = false;
         $hasRecruited = false;
+        // show($advertisementIds);
         foreach ($advertisementIds as $id) {
+            // show($id);
             $data = $model->findreq($id);
-            if (empty($data)) {
-                $_SESSION['hasShortlisted'] = $hasShortlisted;
-                $_SESSION['hasRecruited'] = $hasRecruited;
-                $this->view('Company/StudentsRequests', ['data' => $reqdata]);
-                exit();
-            }
-            if (is_array($data) || is_object($data)) {
+            // show($data);
+            // if (empty($data)) {
+            //     $_SESSION['hasShortlisted'] = $hasShortlisted;
+            //     $_SESSION['hasRecruited'] = $hasRecruited;
+            //     $this->view('Company/StudentsRequests', ['data' => $reqdata]);
+            //     exit();
+            // }
+            if (!empty($data)) {
                 foreach ($data as $item) {
 
                     if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
@@ -57,8 +60,8 @@ class StudentsRequests
                     // }
                 }
             }
-            // show($reqdata);
         }
+        // show($reqdata);
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
@@ -68,7 +71,7 @@ class StudentsRequests
     // public function deletedatarow($advertisementId, $StudentId)
     // {
     //     $model = new C_Dashboard;
-    //     $result=$model->update($StudentId, $advertisementId, ['Companyrowstatus' => 0]);
+    //     $result=$model->update($StudentId, $advertisementId, ['Jobstatus' => 'Trash']);
     //     if ($result['status']) {
     //         // Redirect to the same page after successful submission
     //         $success = "Student Request deleted successfully.";
@@ -110,18 +113,28 @@ class StudentsRequests
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
                 if ($_POST['submit_action'] === 'Shortlist') {
-                    $success = "Student Job Status updated successfully.";
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Student Status updated'
+                    ];
                     header("Location: $backUrl");
                     exit;
                 } else {
-                    $success = "Student Job Status updated successfully.";
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Student Status updated'
+                    ];
                     header("Location: $backUrl");
                     exit;
                 }
                 // Redirect to the same page after successful submission
             } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'There was an issue update the Student Status'
+                ];
                 $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'error' => $error, 'url' => $backUrl]);
+                $this->view('Company/Studentpro', ['data' => $data, 'studentJobstatus' => $studentJobstatus, 'url' => $backUrl]);
                 exit;
             }
         }
@@ -130,8 +143,8 @@ class StudentsRequests
     }
 
 
-    public function filterstudents()
-    {
-        $this->view('Company/FilterStudents');
-    }
+    // public function filterstudents()
+    // {
+    //     $this->view('Company/FilterStudents');
+    // }
 }

@@ -20,6 +20,7 @@ class ShortlistedStudents
 
         $model = new C_Dashboard;
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
+
         if (empty($data)) {
             $this->view('Company/ShortlistedStudents', ['data' => []]);
             exit();
@@ -34,31 +35,31 @@ class ShortlistedStudents
         $hasRecruited = false;
         foreach ($advertisementIds as $id) {
             $data = $model->findreq($id);
-            if (empty($data)) {
-                $_SESSION['hasShortlisted'] = $hasShortlisted;
-                $_SESSION['hasRecruited'] = $hasRecruited;
-                $this->view('Company/ShortlistedStudents', ['data' => $reqdata]);
-                exit();
-            }
-            // if (is_array($data) || is_object($data)) {
-            foreach ($data as $item) {
-                if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
-                    $hasShortlisted = true;
+            // if (empty($data)) {
+            //     $_SESSION['hasShortlisted'] = $hasShortlisted;
+            //     $_SESSION['hasRecruited'] = $hasRecruited;
+            //     $this->view('Company/ShortlistedStudents', ['data' => $reqdata]);
+            //     exit();
+            // }
+            if (!empty($data)) {
+                foreach ($data as $item) {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                        $hasShortlisted = true;
+                    }
+                    if ($item->Jobstatus === 'Recruit') {
+                        $hasRecruited = true;
+                    }
+                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
+                        $reqdata[] = [
+                            "StudentId" => $item->StudentId,
+                            'AdvertisementId' => $item->advertisementId,
+                            'Student Name' => $item->Name,
+                            'Student Degree' => $item->DegreeName,
+                            'Position' => $item->position,
+                            'Action' => $item->Jobstatus
+                        ];
+                    }
                 }
-                if ($item->Jobstatus === 'Recruit') {
-                    $hasRecruited = true;
-                }
-                if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
-                    $reqdata[] = [
-                        "StudentId" => $item->StudentId,
-                        'AdvertisementId' => $item->advertisementId,
-                        'Student Name' => $item->Name,
-                        'Student Degree' => $item->DegreeName,
-                        'Position' => $item->position,
-                        'Action' => $item->Jobstatus
-                    ];
-                }
-                // }
             }
         }
 
@@ -179,18 +180,34 @@ class ShortlistedStudents
                                         </html>";
 
                         $mail->send();
-                        $data['success'] = "OTP sent to your email. Please check your inbox.";
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Student has been recruited and notified successfully'
+                        ];
+                        header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
+                        exit;
                     } catch (Exception $e) {
-                        $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
+                        ];
+                        $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                        exit;
                     }
                 } else {
-                    $error = "Email not found";
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "Email not found"
+                    ];
+                    $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                    exit;
                 }
-                header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
-                exit;
             } else {
-                $error = "There was an issue update the Student Job Status.";
-                $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'error' => $error, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "There was an issue update the Student Status Pleace Try again!"
+                ];
+                $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
                 exit;
             }
         }
@@ -343,19 +360,69 @@ class ShortlistedStudents
                                             </html>";
 
                         $mail->send();
-                        $data['success'] = "OTP sent to your email. Please check your inbox.";
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Interview is scheduled and student has been notified'
+                        ];
                     } catch (Exception $e) {
-                        $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
+                        ];
                     }
                 }
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/' . $advertisementId . '/' . $studentId);
                 exit;
             } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "There was an issue creating the Interview Schedule."
+                ];
                 $error = "There was an issue creating the Interview Schedule.";
-                $this->view('Company/CreateSchedule', ['error' => $error]);
+                $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date, 'error' => $error]);
                 exit;
             }
         }
         $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date]);
+    }
+
+    public function getInterviewSchedules()
+    {
+        $companyID = $_SESSION['USER']->CompanyId;
+        $advertisementModel = new C_Advertisement;
+        $interviewmodel = new interview_time_slot;
+        $student = new student;
+        $advertisementData = $advertisementModel->find(['CompanyId' => $companyID]);
+        $advertisementID = [];
+        $interview_data = [];
+        $events = [];
+        if (!empty($advertisementData)) {
+            foreach ($advertisementData as $advertisement) {
+                $interview_data[] = $interviewmodel->find(['advertisementId' => $advertisement->advertisementId]);
+            }
+            if (!empty($interview_data)) {
+                foreach ($interview_data as $eachAD) {
+                    if (!empty($eachAD)) {
+                        foreach ($eachAD as $interview) {
+                            $studentName = $student->find($interview->StudentId)->Name;
+                            $advertisementposition = $advertisementModel->find(['advertisementId' => $interview->advertisementId])[0]->position;
+                            $events[] = [
+                                'title' => $advertisementposition,
+                                'position' => $advertisementposition,
+                                'StudentName' => $studentName,
+                                'StudentId' => $interview->StudentId,
+                                'advertisementId' => $interview->advertisementId,
+                                'start' => $interview->Date . 'T' . $interview->StartTime,
+                                'end' => $interview->Date . 'T' . $interview->EndTime,
+                                'color' => '#3788d8'
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+        header('Content-Type: application/json');
+        echo json_encode($events);
+        exit;
     }
 }

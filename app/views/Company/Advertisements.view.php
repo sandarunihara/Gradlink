@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -32,6 +32,10 @@
                                 <p><?php echo $numOfapplyStudents ?></p>
                             </div>
                             <div class="stat-card">
+                                <h2>Pending Advertisements</h2>
+                                <p><?php echo $pendingCount; ?></p>
+                            </div>
+                            <div class="stat-card">
                                 <h2>Active Advertisements</h2>
                                 <p><?php echo $activeCount; ?></p>
                             </div>
@@ -45,6 +49,7 @@
                                 <h2>Posts</h2>
                                 <select id="status" name="status" required onchange="filterPosts()">
                                     <option value="All">All</option>
+                                    <option value="Pending">Pending</option>
                                     <option value="Active">Active</option>
                                     <option value="Deactive">Deactive</option>
                                 </select>
@@ -75,7 +80,16 @@
                                             <p class="position"><?php echo $advertisement->position; ?></p>
                                             <p>Type :<span><?php echo $advertisement->workingMode; ?></span></p>
                                             <p>No of interns :<span><?php echo $advertisement->numOfInterns; ?></span></p>
-                                            <p>Status :<span style="color: <?php echo ($advertisement->status === 'Active') ? 'green' : 'red'; ?>"><?php echo $advertisement->status; ?></span></p>
+                                            <p>Status :<span style="color: <?php echo match (strtolower($advertisement->status)) {
+                                                                                'active'    => '#22C55E',  // Vibrant green
+                                                                                'deactive'  => '#F97316',  // Bright orange
+                                                                                'rejected'  => '#EF4444',  // Strong red
+                                                                                'pending'   => '#64748B',   // Cool gray
+                                                                                default     => '#6B7280'    // Neutral gray
+                                                                            }; 
+                                                                            ?>; font-weight: bold;">
+                                                    <?php echo $advertisement->status; ?>
+                                                </span></p>
                                             <p>Deadline :<span><?php echo $advertisement->deadline; ?></span></p>
                                         </div>
                                     </div>
@@ -103,7 +117,7 @@
             postCards.forEach(post => {
                 const postStatus = post.getAttribute('data-status');
 
-                if (selectedStatus === 'All' ||  selectedStatus=== postStatus) {
+                if (selectedStatus === 'All' || selectedStatus === postStatus) {
                     post.style.display = 'block';
                 } else {
                     post.style.display = 'none';
@@ -111,6 +125,15 @@
             });
         }
     </script>
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 </body>
 
 </html>

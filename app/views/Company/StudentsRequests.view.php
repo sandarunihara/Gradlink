@@ -162,13 +162,11 @@
                                                             </a>
                                                         </td>
                                                     <?php elseif ($statusText == 'Rejected'): ?>
-                                                        <td class="viewprodel">
+                                                        <td class="viewpro">
                                                             <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="profile-link">
                                                                 <button class="view-profile-btn-with-remove">View Profile</button>
                                                             </a>
-                                                            <a class="removebtn" href="../StudentsRequests/deletedatarow/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>">
-                                                                <button class="view-profile-btn-remove">Remove Data</button>
-                                                            </a>
+                                                            
                                                             <!-- <i class="removebtn fas fa-trash-alt fa-trash-alty"></i> -->
                                                         </td>
                                                     <?php endif ?>
@@ -378,6 +376,15 @@
         }
     </script>
 
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 
 
 </body>
