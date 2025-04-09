@@ -42,28 +42,28 @@ class DashboardAdvertisement
         }
     }
 
-    public function dashboard(){
+    public function active(){
         $model = new C_Advertisement;
         $data = $model->findallActivewithCompany();
-        $this-> view('PDC_admin/Advertisement/AdvertisementOverview' , $data);
+        $this-> view('Coordinator/Advertisement/activeAdvertisements' , $data);
     }
 
     public function deactive(){
         $model = new C_Advertisement;
         $data = $model->findallDeactivewithCompany(); 
-        $this->view('PDC_admin/Advertisement/DeactiveAdvertisement' , $data);
+        $this->view('Coordinator/Advertisement/deactiveAdvertisements' , $data);
     }
 
     public function rejected(){
         $model = new C_Advertisement;
         $data = $model->findallRejectedwithCompany(); 
-        $this->view('PDC_admin/Advertisement/RejectedAdvertisement' , $data);
+        $this->view('Coordinator/Advertisement/rejectedAdvertisements' , $data);
     }
 
     public function pending(){
 
         $model = new C_Advertisement;
         $data = $model->findAllPending();
-        $this-> view('PDC_admin/Advertisement/PendingAdvertisement' , $data);
+        $this-> view('Coordinator/Advertisement/pendingAdvertisements' , $data);
     } 
 }

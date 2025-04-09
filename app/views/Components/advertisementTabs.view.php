@@ -1,9 +1,9 @@
 <!-- Tabs Section -->
 <div class="tabs">
-    <button class="tab-button <?= $activeTab == 'active-list' ? 'active' : '' ?>" onclick=" window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/dashboard'" >Ongoing List</button>
-    <button class="tab-button  <?= $activeTab == 'deactive-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/deactive'" >Pending Advertisements</button>
+    <button class="tab-button <?= $activeTab == 'active-list' ? 'active' : '' ?>" onclick=" window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/active'" >Active Advertisements</button>
+    <button class="tab-button  <?= $activeTab == 'deactive-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/deactive'" >Deactive Advertisements</button>
     <button class="tab-button  <?= $activeTab == 'pending-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/pending'" >Pending Advertisements</button>
-    <button class="tab-button  <?= $activeTab == 'rejected-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/rejected'" >Pending Advertisements</button>
+    <button class="tab-button  <?= $activeTab == 'rejected-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/dashboardAdvertisement/rejected'" >Rejected Advertisements</button>
 </div>
 
 <script>
