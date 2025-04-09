@@ -235,7 +235,7 @@ class Advertisements
             $data['errors'] = $_SESSION['flash_errors'] ?? '';
 
 
-            unset($_SESSION['flash_success'], $_SESSION['flash_error']);
+            unset($_SESSION['flash_success'], $_SESSION['flash_errors']);
         } else {
             $data['errors'] = "Advertisement not found.";
         }
