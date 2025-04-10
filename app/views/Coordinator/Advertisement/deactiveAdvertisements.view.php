@@ -61,7 +61,8 @@
                                         <td><?= htmlspecialchars($advertisement->workingMode) ?></td>
                                         <td><?= htmlspecialchars($advertisement->startdate) ?></td>
                                         <td><?= htmlspecialchars($advertisement->deadline) ?></td>
-                                        <td><button class="view-btn">View</button></td>
+                                        <td><button class="view-btn" onclick="navigateToViewAdvertisement('<?= htmlspecialchars($advertisement->advertisementId) ?>')">View</button></td>
+                                        
                                         <!-- View -> Go to the advertisement -->
                                     </tr>
 
