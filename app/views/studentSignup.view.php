@@ -165,6 +165,7 @@
                                 type="file" 
                                 id="cv" 
                                 name="cv"
+                                required
                                 onchange="isValidCV(this)"
                             >
                             <span id="cvError" class="error"></span>

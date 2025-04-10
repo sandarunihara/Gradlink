@@ -60,27 +60,28 @@ function validateForm() {
     i,
     valid = true;
 
+  let results = [];
   x = tab;
   y = x[currentTab].querySelectorAll("input[required], textarea[required]");
 
   for (i = 0; i < y.length; i++) {
     if (y[i].name == "email") {
-      valid = validMail(y[i]);
+      results.push(validMail(y[i]));
     }
     if (y[i].name == "contactNumber") {
-      valid = validContactNumber(y[i]);
+      results.push(validContactNumber(y[i]));
     }
     if (y[i].name == "studentId") {
-      valid = validStudentIndex(y[i]);
+      results.push(validStudentIndex(y[i]));
     }
     if (y[i].name == "shortDesc") {
-      valid = isShortDescriptionValid(y[i]);
+      results.push(isShortDescriptionValid(y[i]));
     }
     if (y[i].name == "profilePicture") {
-      valid = isValidProfilePicture(y[i]);
+      results.push(isValidProfilePicture(y[i]));
     }
     if (y[i].name == "cv") {
-      valid = isValidCV(y[i]);
+      results.push(isValidCV(y[i]));
     }
     if (y[i].value == "") {
       y[i].className += " invalid";
@@ -90,6 +91,10 @@ function validateForm() {
     }
   }
 
+  //console.log(results);
+  if (results.includes(false)) {
+    valid = false;
+  }
   if (valid) {
     step[currentTab].className += " finish";
   }
