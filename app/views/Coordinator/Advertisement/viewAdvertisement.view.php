@@ -37,16 +37,12 @@
 
             <section class="company-info">
                 <?php if (!empty($data)): ?>
-                    <script>
-                        const data = <?= json_encode($data, JSON_PRETTY_PRINT | JSON_HEX_TAG); ?>;
-                        console.log(data);
-                    </script>
-                    <!-- <?php
-                            echo "<pre>";
-                            print_r($data);
-                            echo "</pre>";
-                            ?> -->
+                    
+                            <div class="image-container">
+                    <img src="data:image/jpeg;base64,<?= htmlspecialchars($data->image) ?>" alt="Advertisement Image">
+                </div>
                     <form class="company-form" >
+                        
                         <div class="form-group">
                             <label for="position">Position</label>
                             <input type="text" id="position" name="position" value="<?= htmlspecialchars($data->position) ?>" readonly >
