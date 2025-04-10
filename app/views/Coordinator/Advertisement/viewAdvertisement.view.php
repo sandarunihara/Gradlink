@@ -22,39 +22,38 @@
             <!-- <a href="<?= ROOT ?>/PDC_coordinator/dashboardAdvertisement/active" class="back-button">
                 <i class="fas fa-arrow-left"></i>
             </a> -->
+
+
             <header class="header">
-
-
-                <div class="company-title">
-                    <h1 name="company_name"><?= htmlspecialchars($data->advertisementId) ?></h1>
-                    <!-- <button class="edit-btn">&#9998;</button> -->
+                <div class="header-left">
+                    <h1>Advertisements</h1>
                 </div>
-
-
             </header>
-
             <?php $this->renderComponent("advertisementTabs") ?>
-
+            <div class="company-title">
+                <h1 name="company_name" style="margin-top: 25px;"><?= htmlspecialchars($data->advertisementId) ?></h1>
+                <!-- <button class="edit-btn">&#9998;</button> -->
+            </div>
             <section class="company-info">
                 <?php if (!empty($data)): ?>
-                    
-                            <div class="image-container">
-                    <img src="data:image/jpeg;base64,<?= htmlspecialchars($data->image) ?>" alt="Advertisement Image">
-                </div>
-                    <form class="company-form" >
-                        
+
+                    <div class="image-container">
+                        <img src="data:image/jpeg;base64,<?= htmlspecialchars($data->image) ?>" alt="Advertisement Image">
+                    </div>
+                    <form class="company-form">
+
                         <div class="form-group">
                             <label for="position">Position</label>
-                            <input type="text" id="position" name="position" value="<?= htmlspecialchars($data->position) ?>" readonly >
-                            
+                            <input type="text" id="position" name="position" value="<?= htmlspecialchars($data->position) ?>" readonly>
+
                         </div>
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
-                            <input type="text" id="company-name" name="company-name" value="<?= htmlspecialchars($data->Name) ?>" readonly >
+                            <input type="text" id="company-name" name="company-name" value="<?= htmlspecialchars($data->Name) ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
-                            <input type="text" id="status" name="status" value="<?= htmlspecialchars($data->status) ?>" readonly >
+                            <input type="text" id="status" name="status" value="<?= htmlspecialchars($data->status) ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
@@ -62,17 +61,17 @@
                         </div>
                         <div class="form-group">
                             <label for="interns">Number of Interns Required</label>
-                            <input type="text" id="interns" name="interns" value="<?= htmlspecialchars($data->numOfInterns) ?>" readonly >
+                            <input type="text" id="interns" name="interns" value="<?= htmlspecialchars($data->numOfInterns) ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="mode">Working Mode</label>
-                            <input type="text" id="mode" name="mode" value="<?= htmlspecialchars($data->workingMode) ?>" readonly >
+                            <input type="text" id="mode" name="mode" value="<?= htmlspecialchars($data->workingMode) ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="start-date">Start Date</label>
-                            <input type="text" id="start-date" name="start-date" value="<?= htmlspecialchars($data->startdate) ?>" readonly >
+                            <input type="text" id="start-date" name="start-date" value="<?= htmlspecialchars($data->startdate) ?>" readonly>
                         </div>
-                       
+
                         <div class="form-group">
                             <label for="end-date">End Date</label>
                             <input type="text" id="end-date" name="end-date" value="<?= htmlspecialchars($data->deadline) ?>" readonly required>
@@ -84,7 +83,7 @@
                 <?php endif; ?>
 
             </section>
-           
+
         </main>
     </div>
 
