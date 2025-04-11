@@ -128,7 +128,19 @@ class RecruitStudents
 
             // show($update_report);
             if ($update_report['status'] == 'success' && $update_report_reply == true) {
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Report reply update successfully'
+                ];
                 header("Location: http://localhost/Gradlink/public/company/RecruitStudents/studentprofile/$advertisementId/$StudentId");
+                exit;
+            }else{
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'There was an issue update report reply'
+                ];
+                header("Location: http://localhost/Gradlink/public/company/RecruitStudents/studentprofile/$advertisementId/$StudentId");
+                exit;
             }
         }
 

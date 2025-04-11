@@ -11,7 +11,7 @@ class Dashboard
         $companyModel = new company;
 
         $totalCompanies = $companyModel->getTotalCount();
-        $totalStudents = $studentModel->count();
+        $totalStudents = $studentModel->registeredCount();
         $totalAdvertisements = $advertisementModel->OngoingAdvertisementCount();
 
         $pendingCSCount = $coordinatorModel->pendingCSCount();

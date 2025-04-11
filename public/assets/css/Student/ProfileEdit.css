@@ -1,146 +1,71 @@
-.main-content{
+.container{
+    margin: 120px auto 0 auto;
     position: relative;
-    padding: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Container for the form */
-.update-box {
-    width: 100%;
     max-width: 900px;
-    background: #fff;
+    width: 100%;
+    border-radius: 6px;
     padding: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    margin-top: 40px;
-}
-
-/* Form Header */
-.update-box h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-/* Label styling */
-label {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 8px;
-    display: block;
-    color: #555;
-}
-
-/* Box for GitHub and LinkedIn Inputs */
-.box1 {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-input[type="url"],
-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background-color: #fafafa;
-    transition: all 0.2s ease;
-}
-
-input[type="url"]:focus,
-input:focus {
-    border-color: #007bff;
     background-color: #fff;
-    outline: none;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
-
-/* Box for Skill checkboxes */
-.box2 {
-    margin-top: 30px;
-}
-
-/* Box for Short Description Textarea */
-.box3 {
-    margin-top: 30px;
-}
-
 textarea {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background-color: #fafafa;
     resize: none;
     min-height: 120px;
-    transition: all 0.2s ease;
+}
+.box {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
 }
 
-textarea:focus {
-    border-color: #007bff;
-    background-color: #fff;
-    outline: none;
+.box label {
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #2e2e2e;
 }
 
-/* Error and Success Messages */
-.error-message, .valid-message {
-    font-size: 0.9rem;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.error-message {
-    color: #e74c3c;
-}
-
-.valid-message {
-    color: #2ecc71;
-}
-
-/* Submit Button */
-button {
+.box input,
+.box textarea {
     width: 100%;
-    padding: 12px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    background-color: #28a745;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.box input:focus,
+.box textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: Raleway, sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
     margin-top: 20px;
 }
 
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-/* Button Hover effect */
 button:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
-
-/* Form Container Responsiveness */
-@media (max-width: 768px) {
-    .update-box {
-        width: 90%;
-        padding: 20px;
-    }
-
-    input[type="url"],
-    textarea,
-    button {
-        font-size: 1rem;
-    }
+input.invalid{
+    background-color: #ffdddd;
+}
+textarea.invalid{
+    border-color: #ff4d4d;
+    background-color: #ffdddd;
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+}
+.error{
+    display:none;
+    color: red;
 }

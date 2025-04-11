@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <form id="regForm" action="<?=ROOT?>/signup/student" method="post" enctype="multipart/form-data">
+        <form id="regForm" action="<?=ROOT?>/signup/createpassword" method="post" enctype="multipart/form-data">
             <div class="header">
                 Student Signup
             </div>
@@ -69,7 +69,7 @@
                                 type="tel" 
                                 id="contactNumber" 
                                 name="contactNumber" 
-                                placeholder="Enter your contact number (e.g. 071-234-5678)"
+                                placeholder="Enter your contact number (e.g. 0712345678)"
                                 required
                                 oninput="validContactNumber(this)"
                             >
@@ -79,8 +79,8 @@
                             <label>Student ID</label>
                             <input 
                                 type="text" 
-                                id="studentId" 
-                                name="studentId" 
+                                id="userId" 
+                                name="userId" 
                                 placeholder="Enter your student ID (e.g. 2021CS123)" 
                                 required
                                 oninput="validStudentIndex(this)"
@@ -145,7 +145,7 @@
                         <span id="descriptionError" class="error"></span>
                     </div>
                 </div>
-                <div class="details documents">
+                <!-- <div class="details documents">
                     <span class="title">Documents</span>
                     <div class="fields">
                         <div class="input-field">
@@ -165,12 +165,13 @@
                                 type="file" 
                                 id="cv" 
                                 name="cv"
+                                required
                                 onchange="isValidCV(this)"
                             >
                             <span id="cvError" class="error"></span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div style="overflow:auto;">
                 <div style="float:right;">

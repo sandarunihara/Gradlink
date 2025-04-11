@@ -19,13 +19,18 @@
         <?php $this->renderComponent("coordinatorDashboard")  ?>
 
         <main class="main-content">
+            <a href="<?= ROOT ?>/PDC_coordinator/dashboardCompany" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
             <header class="header">
+
+
                 <div class="company-title">
                     <h1 name="company_name"><?= htmlspecialchars($companyData['company_name'] ?? '') ?></h1>
                     <button class="edit-btn">&#9998;</button>
                 </div>
 
-                
+
             </header>
 
             <?php $this->renderComponent("companyTabs") ?>
@@ -91,20 +96,12 @@
                         </div>
                         <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
                         <div>
-                        <small id="contact-error" class="error-message" style="color: red; display: none; ">
-                            Please enter a valid contact number (10 digits, starting with 07).
-                        </small>
-                    </div>
-                    </form>
-                    <div class="button-line">
-                        <button class="view-profile-btn hidden" >LinkedIn</button>
-                        <div class="action-buttons" >
-                            <button class="btn update-btn" >View Profile</button>
-                            <!-- <button class="btn delete-btn" id="delete-btn" onclick="clickDeleteBtn('<?= $companyData[0]['company_id'] ?>');">Delete</button> -->
-                            <!-- <button class="btn update-btn" id="update-btn" onclick="enableEditing()">Edit</button> -->
-
+                            <small id="contact-error" class="error-message" style="color: red; display: none; ">
+                                Please enter a valid contact number (10 digits, starting with 07).
+                            </small>
                         </div>
-                    </div>
+                    </form>
+
                 <?php else: ?>
                     <p>No company data available.</p>
                 <?php endif; ?>

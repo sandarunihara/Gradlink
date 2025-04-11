@@ -15,20 +15,15 @@
     </a>
     <img src="<?= ROOT ?>/assets/img/glogo.png" alt="Gradlink Logo" class="logo-overlay">
     <div class="maincontainer">
-    <?php if (!isset($data['rowdata']) && !isset($data['rowdata']->otp)): ?>
-        <form class="useridcontainer" method="post">
-            <input type="text" name="userId" id="userId" required placeholder="userId" value="<?= htmlspecialchars($_POST['userId'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
-            <button type="submit"><i class="fa fa-arrow-right"></i></button>
-        </form>
-        <?php elseif (isset($data['rowdata']) && !isset($data['rowdata']->otp)): ?>
+        <?php if(isset($data['user']) && !isset($data['user']['otp'])): ?>
             <form method="post" onsubmit="return validotp()">
                 <div class="otp-input-container">
                     <label for="otp">Verification Code</label>
                     <p id="otpInstructions" class="otpdetails">
                         Please enter the 6-digit OTP sent to your
                         <?php
-                        if (!empty($data['rowdata']->Email)) {
-                            $email = htmlspecialchars($data['rowdata']->Email, ENT_QUOTES, 'UTF-8');
+                        if (!empty($data['user']['Email'])) {
+                            $email = htmlspecialchars($data['user']['Email'], ENT_QUOTES, 'UTF-8');
                             $maskedEmail = preg_replace('/(?<=.).(?=.*@)/', '*', $email);
                             echo "$maskedEmail";
                         }
@@ -47,15 +42,15 @@
                     <button type="submit" name="verifyOtp">Verify OTP</button>
                 </div>
             </form>
-        <?php elseif (isset($data['rowdata']->otp)): ?>
+        <?php elseif (isset($data['user']['otp'])): ?>
             <p class="regname">Register Name:
                 <?php
-                echo htmlspecialchars($data['rowdata']->Name ?? '', ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($data['user']['Name'] ?? '', ENT_QUOTES, 'UTF-8');
                 ?>
             </p>
             <p>Register Email:
                 <?php
-                echo htmlspecialchars($data['rowdata']->Email ?? '', ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($data['user']['Email'] ?? '', ENT_QUOTES, 'UTF-8');
                 ?>
             </p>
 

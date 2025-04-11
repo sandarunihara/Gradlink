@@ -9,8 +9,8 @@ class StudentProfile{
         $skill = new student_skill;
         $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
-        $certificate = new certificate;
-        $data['Certificates'] = $certificate -> where($arr, [], '', 'do_not_order');
+        // $certificate = new certificate;
+        // $data['Certificates'] = $certificate -> where($arr, [], '', 'do_not_order');
 
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
@@ -59,8 +59,9 @@ class StudentProfile{
                 $_SESSION['isUpdate'] = 0;
             }
             //show($_SESSION);
-            header('Location: '.ROOT.'/Student/StudentProfile/profile');
+            redirect('Student/StudentProfile/profile');
         }else{
+            //show($data);
             $this-> view('Student/ProfileEdit',$data);
         }
     }

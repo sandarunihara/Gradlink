@@ -60,27 +60,28 @@ function validateForm() {
     i,
     valid = true;
 
+  let results = [];
   x = tab;
   y = x[currentTab].querySelectorAll("input[required], textarea[required]");
 
   for (i = 0; i < y.length; i++) {
     if (y[i].name == "email") {
-      valid = validMail(y[i]);
+      results.push(validMail(y[i]));
     }
     if (y[i].name == "contactNumber") {
-      valid = validContactNumber(y[i]);
+      results.push(validContactNumber(y[i]));
     }
     if (y[i].name == "studentId") {
-      valid = validStudentIndex(y[i]);
+      results.push(validStudentIndex(y[i]));
     }
     if (y[i].name == "shortDesc") {
-      valid = isShortDescriptionValid(y[i]);
+      results.push(isShortDescriptionValid(y[i]));
     }
     if (y[i].name == "profilePicture") {
-      valid = isValidProfilePicture(y[i]);
+      results.push(isValidProfilePicture(y[i]));
     }
     if (y[i].name == "cv") {
-      valid = isValidCV(y[i]);
+      results.push(isValidCV(y[i]));
     }
     if (y[i].value == "") {
       y[i].className += " invalid";
@@ -90,6 +91,10 @@ function validateForm() {
     }
   }
 
+  //console.log(results);
+  if (results.includes(false)) {
+    valid = false;
+  }
   if (valid) {
     step[currentTab].className += " finish";
   }
@@ -124,8 +129,8 @@ function validMail(input) {
   }
 }
 function validContactNumber(number) {
-  const pattern = /^0\d{2}-\d{3}-\d{4}$/;
-  if (!pattern.test(number.value)) {
+  const numValue = number.value.trim();
+  if (!/^\d{10}$/.test(numValue)) {
     contactNumberError.innerHTML = "Invalid contact number";
     contactNumberError.style.display = "block";
     number.classList.add("invalid");
@@ -138,7 +143,7 @@ function validContactNumber(number) {
   }
 }
 function validStudentIndex(index) {
-  const pattern = /^\d{4}(CS|IS)\d{3}$/;
+  const pattern = /^\d{4}(CS|IS|cs|is)\d{3}$/;
   if (!pattern.test(index.value)) {
     studentIdError.innerHTML = "Invalid student index number";
     studentIdError.style.display = "block";

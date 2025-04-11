@@ -34,22 +34,28 @@ class Schedule
         // show($interviewdata);
         // $data=$interviewmodel->findall();
         $interviewdata = [];
+        $currentDate = date('Y-m-d');
         foreach ($data as $item) {
             if (!empty($item)) {
                 foreach ($item as $item) {
-                    $studentmodel = new C_Student;
-                    $studentdata = $studentmodel->findbyId($item->StudentId);
-                    $studentadvertisement = new student_advertisement;
-                    $studentaddata = $studentadvertisement->findstudentad($item->advertisementId, $item->StudentId);
-                    $interviewdata[] = [
-                        'Position' => $studentaddata[0]->position,
-                        'StudentName' => $studentdata[0]->Name,
-                        'StudentId' => $studentdata[0]->StudentId,
-                        'advertisementId' => $item->advertisementId,
-                        'Date' => $item->Date,
-                        'StartTime' => $item->StartTime,
-                        'EndTime' => $item->EndTime
-                    ];
+                    // show($item);
+                    if($item->Date < $currentDate){
+                        $interviewmodel->delete($item->InterviewId,'InterviewId');
+                    }else{
+                        $studentmodel = new C_Student;
+                        $studentdata = $studentmodel->findbyId($item->StudentId);
+                        $studentadvertisement = new student_advertisement;
+                        $studentaddata = $studentadvertisement->findstudentad($item->advertisementId, $item->StudentId);
+                        $interviewdata[] = [
+                            'Position' => $studentaddata[0]->position,
+                            'StudentName' => $studentdata[0]->Name,
+                            'StudentId' => $studentdata[0]->StudentId,
+                            'advertisementId' => $item->advertisementId,
+                            'Date' => $item->Date,
+                            'StartTime' => $item->StartTime,
+                            'EndTime' => $item->EndTime
+                        ];
+                    }
                 }
             }
         }
@@ -216,6 +222,10 @@ class Schedule
                         ];
                         $data['success'] = "Email sent to Student's email.";
                     } catch (Exception $e) {
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => 'Failed to updated Interview'
+                        ];
                         $data['errors'] = "Failed to send email. Error: {$mail->ErrorInfo}";
                     }
                 }
@@ -223,6 +233,11 @@ class Schedule
                 exit;
             } else {
                 $error = "There was an issue creating the Interview Schedule.";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'There was an issue Re-Schedule the Interview'
+                ];
+                header(`Location: http://localhost/Gradlink/public/company/Schedule/editschedule/$advertisementId/$studentId`);
                 $this->view('Company/CreateSchedule', ['error' => $error]);
                 exit;
             }
