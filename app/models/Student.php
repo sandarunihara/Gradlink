@@ -19,6 +19,11 @@ class student
 		'ContactNum',
 		'Github',
 		'Linkedin',
+		'ProfilePic',
+		'cv',
+		'block',
+		'completed',
+		'registered',
 		'noOfAppliedAds',
 	];
 

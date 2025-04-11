@@ -45,6 +45,7 @@
                                 'Skill' => $_POST['skill'],
 
                             ]);
+
                             if(strpos ($_SESSION['user']['StudentId'], 'cs') !== false ){
                                 $_SESSION['user']['DegreeName'] = 'Computer Science';
                             }elseif(strpos ($_SESSION['user']['StudentId'], 'is') !== false){
@@ -52,9 +53,38 @@
                             }else{
                                 $data['errors'] = "Invalid User ID";
                             }
-                            //show($_SESSION);
-                            //$profilePicture = $_FILES['profilePicture'];
-                            //$cv = $_FILES['cv'];
+                            $profilePictureName = $_FILES['profilePicture']['name'];
+                            $profilePictureTempName = $_FILES['profilePicture']['tmp_name'];
+
+                            $profilePictureExt = strtolower(pathinfo($profilePictureName, PATHINFO_EXTENSION));
+                            $profilePictureActualName = strtolower(pathinfo($profilePictureName, PATHINFO_FILENAME));
+                            $profilePictureNewName = preg_replace("/[^\w-]/", "_", $profilePictureActualName) . uniqid('', true) . "." . $profilePictureExt;
+                            $profilePictureDestination = __DIR__ . '/../../public/assets/img/Student/' . $profilePictureNewName;
+
+                            if (move_uploaded_file($profilePictureTempName, $profilePictureDestination)) {
+                                $_SESSION['user']['ProfilePic'] = $profilePictureNewName;
+                            } else {
+                                $data['errors'] = "Failed to upload profile picture.";
+                            }
+
+                            $cvName = $_FILES['cv']['name'];
+                            $cvTempName = $_FILES['cv']['tmp_name'];
+
+                            $cvExt = strtolower(pathinfo($cvName, PATHINFO_EXTENSION));
+                            $cvActualName = strtolower(pathinfo($cvName, PATHINFO_FILENAME));
+                            $cvNewName = preg_replace("/[^\w-]/", "_", $cvActualName) . uniqid('', true) . "." . $cvExt;
+                            $cvDestination = __DIR__ . '/../../public/assets/uploads/cv/' . $cvNewName;
+
+                            if (move_uploaded_file($cvTempName, $cvDestination)) {
+                                $_SESSION['user']['cv'] = $cvNewName;
+                            } else {
+                                $data['errors'] = "Failed to upload profile picture.";
+                            }
+                            $_SESSION['user']['block'] = 1;
+                            $_SESSION['user']['completed'] = 0;
+                            $_SESSION['user']['noOfAppliedAds'] = 0;
+                            $_SESSION['user']['registered'] = 0;
+                            //show($_SESSION['user']);
                             break;
                         case 4:
                             $user = new company;
@@ -186,6 +216,7 @@
                             // show($imageBase64);
                             //$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
                             
+                            //show($_SESSION['user']);
                             $result = $user->insert($_SESSION['user'], $id_column);
                             //show($result);
                             // Unset and destroy the session
