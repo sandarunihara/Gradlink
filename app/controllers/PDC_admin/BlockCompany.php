@@ -12,23 +12,41 @@ require "../app/libs/Exception.php";
         public function dashboard(){
             $model = new company;
             $companyData = $model->findAllBlocked();
-            $this-> view('PDC_admin/Company/CompanyBlock' , ['companyData' => $companyData]);
+            $this->view('PDC_admin/Company/CompanyBlock', [
+                'companyData' => $companyData,
+                'activeTab' => 'blocked-companies'
+            ]);
+            
         }
 
-        public function unblock($companyId){
+        public function unblock(){
             $model = new company;
+            $companyId = $_POST['companyId'];
             $companyData = $model->findById($companyId);
             if($companyData->Status == "Blocked"){
                 $updatedStatus = $model->update($companyId , ['Status' => 'Ongoing'] , 'companyId');
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
-                    $getresult = $this->sendEmail($companyData->Email, $companyId);
-                    redirect('PDC_admin/AdminCompanyOverview/dashboard');
-                    exit;
+                    $this->sendEmail($companyData->Email, $companyId);
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Company unblocked successfully'
+                    ];
                 }
                 else{
-                    echo "Failed to unblock";
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Failed to unblock company'
+                    ];
                 }
             }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Company is already unblocked'
+                ];
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']); // back to the previous page
+            exit;
         }
 
         private function sendEmail($email, $companyId){

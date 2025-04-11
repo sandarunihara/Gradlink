@@ -21,57 +21,55 @@
                 </div>
             </header>
 
-            <div class='tabs'>
-                <?php $activeTab = 'company-list'; ?>
-                <?php $this->renderPDC_adminTabs("companyTabs") ?>
+            <div class="tabs">
+                <?php $this->renderPDC_adminTabs("companyTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
             <div class="tab-content">
-                <div id="company-list" class="tab-pane active">
-                <section class="company-list">
-                <div class="list-header">
-                    <div class="search-box">
-                        <input type="text" id="search-query" placeholder="Search Company" />
-                        <button onclick="searchCompany()">Search</button>
-                        <!-- <button onclick="navigateToAddCompany()" class="add-btn">Add</button> -->
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Contact Person</th>
-                            <th>Email</th>
-                            <th>Contact Number</th>
-                            <th>Action</th> <!-- Added a column header for the button -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if($companyData == null) : ?>
-                            <tr>
-                                <td colspan="6">No Companies found</td>
-                            </tr>
-                        <?php else : ?>
-
-                            <?php foreach ($companyData as $company) : ?>
+                
+                <!-- Pending Companies Tab -->
+                <div id="pending-companies" class="tab-pane active">
+                    <section class="company-list">
+                        <div class="list-header">
+                            <div class="search-box">
+                                <input type="text" id='search-query' placeholder="Search Company" />
+                                <button onclick="searchCompany()">Search</button>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?= htmlspecialchars(is_array($company) ? $company['Name'] : $company->Name) ?></td>
-                                    <td><?= htmlspecialchars(is_array($company) ? $company['ContactPerson'] : $company->ContactPerson) ?></td>
-                                    <td><?= htmlspecialchars(is_array($company) ? $company['Email'] : $company->Email) ?></td>
-                                    <td><?= htmlspecialchars(is_array($company) ? $company['ContactNum'] : $company->ContactNum) ?></td>
-                                    <td>
-                                    <button class="view-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $company['CompanyId'] : $company->CompanyId) ?>')">View</button>
-                                    </td>
+                                    <th>Company Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Email</th>
+                                    <th>Contact Number</th>
+                                    <th></th>
                                 </tr>
-                            <?php endforeach; ?>
-                            
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody id='company-table-body'>
+                                <?php if(!empty($companyData)): ?>
+                                    <?php foreach($companyData as $company): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['Name'] : $company->Name) ?></td>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['ContactPerson'] : $company->ContactPerson) ?></td>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['Email'] : $company->Email) ?></td>
+                                            <td><?= htmlspecialchars(is_array($company) ? $company['ContactNum'] : $company->ContactNum) ?></td>
+                                            <td><button class="view-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $com['CompanyId'] : $company->CompanyId) ?>')">View</button></td>
 
-            </section>
+                                            <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
+                                            <td></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Companies found.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </section>
                 </div>
-            </div>
+           
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>

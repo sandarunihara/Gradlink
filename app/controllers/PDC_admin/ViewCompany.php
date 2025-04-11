@@ -21,26 +21,40 @@ require "../app/libs/Exception.php";
             }
         }
 
-        public function block($companyId){
+        public function block(){
             $model = new company;
+            $companyId = $_POST['companyId'];
+            $reason = $_POST['block_reason'];
+            
             $companyData = $model->findById($companyId);
-            $reason = $_GET['reason'] ?? '';
             $email = $companyData->Email;
 
             if($companyData->Status == "Ongoing"){
                 
                 $updatedStatus = $model->update($companyId , ['Status' => 'Blocked'] , 'companyId');
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
-                    echo "Company blocked successfully";
-                    $getresult = $this->sendEmail($email, $companyId, $reason);
-                    var_dump($getresult);
-                    redirect('PDC_admin/AdminCompanyOverview/dashboard');
-                    exit;
+                    //echo "Company blocked successfully";
+                    $this->sendEmail($email, $companyId, $reason);
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Company blocked successfully'
+                    ];
                 }
                 else{
-                    echo "Failed to block";
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Failed to block company'
+                    ];
                 }
             }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Company is already blocked'
+                ];
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
         }
 
 
