@@ -73,7 +73,7 @@ class student
 	}
 
 	public function findAllBlocked(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Blocked'";
+		$query = "SELECT * FROM $this->table WHERE block = '1'";
 		$result = $this->query($query);
 		if($result){
 			return $result;

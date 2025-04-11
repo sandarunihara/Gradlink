@@ -4,6 +4,10 @@ function navigateToViewCompany(company_id) {
 
 }
 
+function navigateToViewAdvertisement(advertisement_id) {
+    window.location.href = "/Gradlink/public/pdc_coordinator/viewAdvertisement?id=" + encodeURIComponent(advertisement_id);
+
+}
 function navigateToAddCompany() {
     window.location.href = "/Gradlink/public/pdc_coordinator/addCompany";
 }

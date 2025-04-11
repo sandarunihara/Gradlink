@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Student/dashboardStudent.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
+
 </head>
 
 <body>
@@ -20,9 +22,10 @@
                 <div class="header-left">
                     <h1>Students</h1>
                 </div>
-
-                
             </header>
+
+            <?php $activeTab = 'student-list'; ?>
+            <?php $this->renderComponent("studentTabs") ?>
 
             <section class="company-list">
                 <div class="list-header">
