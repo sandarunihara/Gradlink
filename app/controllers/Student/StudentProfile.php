@@ -59,7 +59,7 @@ class StudentProfile{
                 $_SESSION['isUpdate'] = 0;
             }
             //show($_SESSION);
-            header('Location: '.ROOT.'/Student/StudentProfile/profile');
+            redirect('Student/StudentProfile/profile');
         }else{
             //show($data);
             $this-> view('Student/ProfileEdit',$data);

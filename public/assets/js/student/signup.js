@@ -129,8 +129,8 @@ function validMail(input) {
   }
 }
 function validContactNumber(number) {
-  const pattern = /^0\d{2}-\d{3}-\d{4}$/;
-  if (!pattern.test(number.value)) {
+  const numValue = number.value.trim();
+  if (!/^\d{10}$/.test(numValue)) {
     contactNumberError.innerHTML = "Invalid contact number";
     contactNumberError.style.display = "block";
     number.classList.add("invalid");
@@ -143,7 +143,7 @@ function validContactNumber(number) {
   }
 }
 function validStudentIndex(index) {
-  const pattern = /^\d{4}(CS|IS)\d{3}$/;
+  const pattern = /^\d{4}(CS|IS|cs|is)\d{3}$/;
   if (!pattern.test(index.value)) {
     studentIdError.innerHTML = "Invalid student index number";
     studentIdError.style.display = "block";
