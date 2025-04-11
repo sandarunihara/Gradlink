@@ -12,20 +12,19 @@
 </head>
 
 <body>
-<div class="container">
+    <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Pending Companies</h1>
+                    <h1>Company List</h1>
                 </div>
             </header>
 
             <div class="tabs">
-                <?php $activeTab = 'company-list'; ?>
-                <?php $this->renderPDC_adminTabs("companyTabs") ?>
-
+                <?php $this->renderPDC_adminTabs("companyTabs", ['activeTab' => $activeTab]); ?>
             </div>
+
             
             <div class="tab-content">
 
@@ -35,7 +34,9 @@
                             <div class="search-box">
                                 <input type="text" id='search-query' placeholder="Search Company" />
                                 <button onclick="searchCompany()">Search</button>
-                                <button onclick="navigateToAddCompany()" class="add-btn">Add</button>
+                            </div>
+                            <div>
+                                <button onclick="navigateToAddCompany()" class="add-btn"></button>
                             </div>
                         </div>
                         <table>
@@ -45,6 +46,7 @@
                                     <th>Contact Person</th>
                                     <th>Email</th>
                                     <th>Contact Number</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>

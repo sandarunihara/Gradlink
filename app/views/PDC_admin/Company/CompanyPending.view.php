@@ -23,10 +23,9 @@
             </header>
 
             <div class="tabs">
-                <?php $activeTab = 'pending-companies'; ?>
-                <?php $this->renderPDC_adminTabs("companyTabs") ?>
-
+                <?php $this->renderPDC_adminTabs("companyTabs", ['activeTab' => $activeTab]); ?>
             </div>
+
             
             <div class="tab-content">
                 
