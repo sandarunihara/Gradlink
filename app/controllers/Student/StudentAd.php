@@ -21,7 +21,7 @@ class StudentAd{
             $currentRound = $round -> getRound();
             if ($currentRound == 1 && $noOfAppliedAds >= 5){
                 $_SESSION['isLimit'] = 1;
-                header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+                redirect('Student/StudentAd/advertisement');
                 exit;
             }else{
                 $_SESSION['isLimit'] = 0;
@@ -93,7 +93,7 @@ class StudentAd{
                 $_SESSION['isTypeError'] = 1;
             }
             //show($data);
-            header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+            redirect('Student/StudentAd/advertisement');
         }else{
             //show($data);
             $this-> view('Student/Internship', $data);        
@@ -131,7 +131,7 @@ class StudentAd{
         $currentRound = $round -> getRound();
         if ($currentRound == 1 && $noOfAppliedAds >= 5){
             $_SESSION['isLimit'] = 1;
-            header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+            redirect('Student/StudentAd/advertisement');
             exit;
         }else{
             $_SESSION['isLimit'] = 0;
@@ -206,7 +206,7 @@ class StudentAd{
             }else{
                 $_SESSION['isTypeError'] = 1;
             }
-            header('location: ' . ROOT . '/Student/StudentAd/advertisement/'); 
+            redirect('Student/StudentAd/advertisement');
         }
 
     }
