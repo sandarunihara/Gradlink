@@ -135,4 +135,22 @@ class student_advertisement
     
         return $result;
     }
+
+	function findExceptRecruited(){
+		$query = "SELECT 
+    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail
+					FROM studentadvertisement sa
+					JOIN student s ON sa.StudentId = s.StudentId 
+					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
+					JOIN company c ON a.CompanyId = c.CompanyId
+					WHERE sa.Jobstatus != 'Recruit';
+					";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
 }

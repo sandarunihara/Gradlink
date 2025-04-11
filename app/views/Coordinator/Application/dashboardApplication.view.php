@@ -22,7 +22,7 @@
                     <h1>Applications</h1>
                 </div>
 
-                
+
             </header>
 
             <?php $activeTab = 'applications-list'; ?>
@@ -49,25 +49,25 @@
                                     <th>Applied Company</th>
                                     <th>Position</th>
                                     <th>Advertisement ID</th>
+                                    <th>Status</th>
+
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (!empty($applicationData)): ?>
-                                    <?php foreach ($applicationData as $application): ?>
-                                        <tr>
-
-                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['student_id'] : $application->student_id) ?></td>
-                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['student_name'] : $application->student_name) ?></td>
-                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['degree_name'] : $application->degree_name) ?></td>
-                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['company_name'] : $application->company_name) ?></td>
-                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['position'] : $application->position) ?></td>
-                                            <td><?= htmlspecialchars(string: is_array(value: $application) ? $application['advertisement_id'] : $application->advertisement_id) ?></td>
-
-                                            <td><button class="view-btn">View Profile</button></td>
-                                            <!-- View -> Go to the student profile -->
-                                        </tr>
-                                    <?php endforeach ?>
+                                <?php if (!empty($data)): ?>
+                                    <?php foreach ($data as $row) : ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($row->StudentId) ?></td>
+                                    <td><?= htmlspecialchars($row->StudentName) ?></td>
+                                    <td><?= htmlspecialchars($row->DegreeName) ?></td>
+                                    <td><?= htmlspecialchars($row->CompanyName) ?></td>
+                                    <td><?= htmlspecialchars($row->position) ?></td>
+                                    <td><?= htmlspecialchars($row->advertisementId) ?></td>
+                                    <td><?= htmlspecialchars($row->Jobstatus) ?></td>
+                                    
+                                </tr>
+                            <?php endforeach; ?>
 
                                 <?php else: ?>
                                     <tr>
