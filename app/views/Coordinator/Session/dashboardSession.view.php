@@ -36,7 +36,9 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Session No.</th>
+                            <th>Session ID.</th>
+                            <th>Session Name</th>
+                            <th>Hall Number</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Company</th>
