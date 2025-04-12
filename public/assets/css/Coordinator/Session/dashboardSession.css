@@ -151,3 +151,71 @@ table td {
     color: #fff;
 }
 
+.session-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.session-card {
+    background: #ffffff;
+    padding: 40px 30px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-left: 5px solid #007bff;
+    position: relative;
+}
+
+.session-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+.session-id {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #eef5ff;
+    color: #2c5282;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #bee3f8;
+}
+
+.card-header {
+    margin-bottom: 15px;
+    padding-right: 60px; /* Space for session ID */
+}
+.session-card h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.session-card p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.session-card .expand-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #007bff;
+    transition: transform 0.3s ease;
+}
+
+.session-card .expand-btn.rotate i {
+    transform: rotate(180deg);
+}
+
+.description {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
