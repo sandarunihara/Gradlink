@@ -90,9 +90,12 @@
             <div class="modal-content">
                 <span class="close" data-close="studentModal">&times;</span>
                 <h2>Student Details</h2>
-                <p><span>ID:</span> <span id="modalStudentId"></span></p>
+                <p><span>Registration No:</span> <span id="modalStudentId"></span></p>
                 <p><span>Name:</span> <span id="modalStudentName"></span></p>
+                <p><span>NIC:</span> <span id="modalStudentNIC"></span></p>
                 <p><span>Degree:</span> <span id="modalStudentDegree"></span></p>
+                <p><span>Email:</span> <span id="modalStudentEmail"></span></p>
+                <p><span>Contact No:</span> <span id="modalStudentContact"></span></p>
             </div>
         </div>
 
@@ -101,8 +104,13 @@
             <div class="modal-content">
                 <span class="close" data-close="adModal">&times;</span>
                 <h2>Advertisement Details</h2>
-                <p><span>ID:</span> <span id="modalAdId"></span></p>
+                <p><span>Advertisement ID:</span> <span id="modalAdId"></span></p>
                 <p><span>Position:</span> <span id="modalAdPosition"></span></p>
+                <p><span>Company Name:</span> <span id="modalAdCompany"></span></p>
+                <p><span>Working Mode:</span> <span id="modalAdWorkingMode"></span></p>
+                <p><span>Status:</span> <span id="modalAdStatus"></span></p>
+                <p><span>Start Date:</span> <span id="modalAdStart"></span></p>
+                <p><span>Deadline:</span> <span id="modalAdDeadline"></span></p>
             </div>
         </div>
 
@@ -111,7 +119,10 @@
             <div class="modal-content">
                 <span class="close" data-close="companyModal">&times;</span>
                 <h2>Company Details</h2>
+                <p><span>Company ID:</span> <span id="modalCompanyID"></span></p>
                 <p><span>Name:</span> <span id="modalCompanyName"></span></p>
+                <p><span>Contact Person:</span> <span id="modalCompanyContactPerson"></span></p>
+                <p><span>Email:</span> <span id="modalCompanyEmail"></span></p>
             </div>
         </div>
 
@@ -129,7 +140,10 @@
                     const data = JSON.parse(this.dataset.student);
                     document.getElementById("modalStudentId").textContent = data.StudentId;
                     document.getElementById("modalStudentName").textContent = data.StudentName;
+                    document.getElementById("modalStudentNIC").textContent = data.NIC;
+                    document.getElementById("modalStudentEmail").textContent = data.Email;
                     document.getElementById("modalStudentDegree").textContent = data.DegreeName;
+                    document.getElementById("modalStudentContact").textContent = data.ContactNum;
                     document.getElementById("studentModal").style.display = "block";
                 });
             });
@@ -141,6 +155,11 @@
                     const data = JSON.parse(this.dataset.ad);
                     document.getElementById("modalAdId").textContent = data.advertisementId;
                     document.getElementById("modalAdPosition").textContent = data.position;
+                    document.getElementById("modalAdCompany").textContent = data.CompanyName;
+                    document.getElementById("modalAdWorkingMode").textContent = data.workingMode;
+                    document.getElementById("modalAdStatus").textContent = data.status;
+                    document.getElementById("modalAdStart").textContent = data.startdate;
+                    document.getElementById("modalAdDeadline").textContent = data.deadline;
                     document.getElementById("adModal").style.display = "block";
                 });
             });
@@ -150,7 +169,10 @@
                 link.addEventListener("click", function(e) {
                     e.preventDefault();
                     const data = JSON.parse(this.dataset.company);
+                    document.getElementById("modalCompanyID").textContent = data.CompanyId;
                     document.getElementById("modalCompanyName").textContent = data.CompanyName;
+                    document.getElementById("modalCompanyContactPerson").textContent = data.ContactPerson;
+                    document.getElementById("modalCompanyEmail").textContent = data.CompanyEmail;
                     document.getElementById("companyModal").style.display = "block";
                 });
             });
