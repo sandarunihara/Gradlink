@@ -325,23 +325,67 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function updateDateTime() {
-    const now = new Date();
+// function updateDateTime() {
+//     const now = new Date();
 
-    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+//     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+//     const formattedDate = now.toLocaleDateString('en-US', dateOptions);
 
-    const formattedTime = now.toLocaleTimeString('en-US', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit', 
-        hour12: true 
+//     const formattedTime = now.toLocaleTimeString('en-US', { 
+//         hour: '2-digit', 
+//         minute: '2-digit', 
+//         second: '2-digit', 
+//         hour12: true 
+//     });
+
+//     document.getElementById('date-time').textContent = `${formattedDate} | ${formattedTime}`;
+// }
+
+// setInterval(updateDateTime, 1000);
+
+
+// updateDateTime();
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const studentRows = document.querySelectorAll('tbody tr');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.blur();
+            });
+
+            this.classList.add('active');
+            
+            const degreeToShow = this.getAttribute('data-degree');
+            const searchTerm = document.querySelector('.search-box input').value.toLowerCase();
+            
+            studentRows.forEach(row => {
+                const degreeCell = row.querySelector('td:nth-child(3)');
+                const nameCell = row.querySelector('td:nth-child(2)');
+                const idCell = row.querySelector('td:nth-child(1)');
+                
+                const matchesDegree = degreeToShow === 'all' || 
+                                    degreeCell.textContent.trim() === degreeToShow;
+                
+                const matchesSearch = searchTerm === '' ||
+                                    nameCell.textContent.toLowerCase().includes(searchTerm) ||
+                                    idCell.textContent.toLowerCase().includes(searchTerm);
+                
+                if (matchesDegree && matchesSearch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
     });
-
-    document.getElementById('date-time').textContent = `${formattedDate} | ${formattedTime}`;
-}
-
-setInterval(updateDateTime, 1000);
-
-
-updateDateTime();
+    
+    const searchInput = document.querySelector('.search-box input');
+    searchInput.addEventListener('input', function() {
+        document.querySelector('.filter-btn.active').click();
+    });
+});

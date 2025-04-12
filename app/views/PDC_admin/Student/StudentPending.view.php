@@ -20,10 +20,9 @@
                     <h1>Pending Students</h1>
                 </div>
             </header>
-
-            <div class="tab">
-                <?php $activeTab = 'pending-Students'; ?>
-                <?php $this->renderPDC_adminTabs("studentTabs") ?>
+            
+            <div class="tabs">
+                <?php $this->renderPDC_adminTabs("studentTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
             <div class="tab-content">
@@ -34,6 +33,19 @@
                                 <input type="text" placeholder="Search Students" />
                                 <button> Search
                                 </button>
+
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active" data-degree="all">
+                                        <i class="fas fa-users"></i> All
+                                    </button>
+                                    <button class="filter-btn" data-degree="Computer Science">
+                                        CS
+                                    </button>
+                                    <button class="filter-btn" data-degree="Information System">
+                                        IS
+                                    </button>
+                                </div>
+
                             </div>
                             <div class="action-buttons">
                             <!-- <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button> -->

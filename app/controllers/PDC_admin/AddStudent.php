@@ -36,7 +36,10 @@ require "../app/libs/Exception.php";
                         'Linkedin' => $student->Linkedin
                     ];
                 }
-                $this->view('PDC_admin/Student/StudentOverview', ['studentData' => $studentData]);
+                $this->view('PDC_admin/Student/StudentOverview', [
+                    'studentData' => $studentData,
+                    'activeTab' => 'Not-Applied'
+                ]);
             }
         }
         

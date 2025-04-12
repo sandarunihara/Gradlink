@@ -8,7 +8,11 @@
             $studentData = $model->findAllPending();
             //var_dump($studentData);   
 
-            $this-> view('PDC_admin/Student/StudentPending' , ['studentData' => $studentData]);
+            $this-> view('PDC_admin/Student/StudentPending' , [
+                'studentData' => $studentData,
+                'activeTab' => 'pending-Students'
+
+            ]);
             // $id = $studentData[0] -> StudentId;
 
             // $studentapply = $applyDetails->findAppliedCompanies($id);

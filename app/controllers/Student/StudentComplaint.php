@@ -49,7 +49,7 @@ class StudentComplaint{
                 $_SESSION['isInsert'] = 0;
             }
             //show($data);
-            header('location: ' . ROOT . '/Student/StudentComplaint/complaint/');
+            redirect('Student/StudentComplaint/complaint');
         }else{
             $this-> view('Student/NewComplaint', $data);
         }
@@ -91,6 +91,6 @@ class StudentComplaint{
         $data = [];
         $complaint = new complaint;
         $_SESSION['isDelete'] = $complaint -> delete($complaintId, 'ComplaintId');
-        header('location: ' . ROOT . '/Student/StudentComplaint/complaint/');
+        redirect('Student/StudentComplaint/complaint');
     }
 }
