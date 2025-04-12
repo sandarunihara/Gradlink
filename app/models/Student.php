@@ -22,32 +22,78 @@ class student
 		'noOfAppliedAds',
 	];
 
-	public function validate($data) {
+	public function validate($data , $ispartialData = false){
 		$this->errors = []; // Clear errors each time validate is called
-	
-		if (empty($data['StudentId']) || !preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
+
+		if($ispartialData == false){
+			if (empty($data['StudentId']) || !preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
+				$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
+			}
+			if (empty($data['NIC']) || !preg_match('/^(\d{9}[vVxX]|\d{12})$/', $data['NIC'])) {
+				$this->errors['NIC'] = "NIC must be 9 digits followed by 'V' or 'X', or 12 digits.";
+			}
+			if (empty($data['Name'])) {
+				$this->errors['Name'] = "Student Name is required.";
+			}
+			if (empty($data['Email']) || !filter_var($data['Email'], FILTER_VALIDATE_EMAIL)) {
+				$this->errors['Email'] = "Valid Email is required.";
+			}
+			if (empty($data['DegreeName']) || !in_array($data['DegreeName'], ['Computer Science', 'Information System'])) {
+				$this->errors['DegreeName'] = "Please select a valid Degree Name.";
+			}
+			if (empty($data['Status']) || !in_array($data['Status'], ['Not Applied', 'Pending', 'Ongoing' , 'Rejected'])) {
+				$this->errors['Status'] = "Please select a valid Status.";
+			}
+			if (empty($data['ContactNum']) || !preg_match('/^\+?\d{10,15}$/', $data['ContactNum'])) {
+				$this->errors['ContactNum'] = "Contact number must be 10-15 digits and may start with '+'.";
+			}
+		}
+		else{
+			if (isset($data['StudentId']) && (!preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId']))) {
+				$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
+			}
+			if (isset($data['NIC']) && (!preg_match('/^(\d{9}[vVxX]|\d{12})$/', $data['NIC']))) {
+				$this->errors['NIC'] = "NIC must be 9 digits followed by 'V' or 'X', or 12 digits.";
+			}
+			if (isset($data['Name']) && empty($data['Name'])) {
+				$this->errors['Name'] = "Student Name is required.";
+			}
+			if (isset($data['Email']) && (!filter_var($data['Email'], FILTER_VALIDATE_EMAIL))) {
+				$this->errors['Email'] = "Valid Email is required.";
+			}
+			if (isset($data['DegreeName']) && (!in_array($data['DegreeName'], ['Computer Science', 'Information System']))) {
+				$this->errors['DegreeName'] = "Please select a valid Degree Name.";
+			}
+			if (isset($data['Status']) && (!in_array($data['Status'], ['Not Applied', 'Pending', 'Ongoing', 'Rejected']))) {
+				$this->errors['Status'] = "Please select a valid Status.";
+			}
+			if (isset($data['ContactNum']) && (!preg_match('/^\+?\d{10,15}$/', $data['ContactNum']))) {
+				$this->errors['ContactNum'] = "Contact number must be 10-15 digits and may start with '+'.";
+			}
+		}
+
+		return empty($this->errors);
+	}
+
+	public function validating($data){
+		$this->errors = [];
+
+		if (!preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
 			$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
 		}
-		if (empty($data['NIC']) || !preg_match('/^(\d{9}[vVxX]|\d{12})$/', $data['NIC'])) {
+		if (!preg_match('/^(\d{9}[vVxX]|\d{12})$/', $data['NIC'])) {
 			$this->errors['NIC'] = "NIC must be 9 digits followed by 'V' or 'X', or 12 digits.";
 		}
-		if (empty($data['Name'])) {
-			$this->errors['Name'] = "Student Name is required.";
-		}
-		if (empty($data['Email']) || !filter_var($data['Email'], FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var($data['Email'], FILTER_VALIDATE_EMAIL)) {
 			$this->errors['Email'] = "Valid Email is required.";
 		}
-		if (empty($data['DegreeName']) || !in_array($data['DegreeName'], ['Computer Science', 'Information System'])) {
-			$this->errors['DegreeName'] = "Please select a valid Degree Name.";
+
+		show($this->errors);
+
+		if (empty($this->errors)) {
+			return true;
 		}
-		if (empty($data['Status']) || !in_array($data['Status'], ['Not Applied', 'Pending', 'Recruited'])) {
-			$this->errors['Status'] = "Please select a valid Status.";
-		}
-		if (empty($data['ContactNum']) || !preg_match('/^\+?\d{10,15}$/', $data['ContactNum'])) {
-			$this->errors['ContactNum'] = "Contact number must be 10-15 digits and may start with '+'.";
-		}
-	
-		return empty($this->errors); // Validation passes if no errors
+		return false;
 	}
 
 
@@ -147,6 +193,21 @@ class student
         $result = $this->query($query, $params);
         return $result ? $result[0] : null;
     }
+
+	public function firstMatch($conditions = []){
+		$where = [];
+		$params = [];
+
+		foreach($conditions as $key => $value){
+			$where[] = "$key = :$key";
+			$params[":$key"] = $value;
+		}
+
+		$query = "SELECT * FROM $this->table WHERE " . implode(' AND ', $where) . " LIMIT 1";
+
+		$result = $this->query($query, $params);
+		return $result ? $result[0] : null;
+	}
 
 	public function registeredCount(){
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked'";
