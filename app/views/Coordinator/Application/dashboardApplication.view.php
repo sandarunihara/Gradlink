@@ -58,22 +58,15 @@
                             <?php if (!empty($data)): ?>
                                 <?php foreach ($data as $row) : ?>
                                     <tr>
-                                        <td>
-                                            <a href="#" class="open-modal"
-                                                data-student='<?= json_encode($row) ?>'>
-                                                <?= htmlspecialchars($row->StudentId) ?>
-                                            </a>
-                                        </td>
-
-                                        <!-- <td><?= htmlspecialchars($row->StudentId) ?></td> -->
+                                        <td><a href="#" class="open-modal student-link" data-student='<?= json_encode($row) ?>'><?= htmlspecialchars($row->StudentId) ?></a></td>
                                         <td><?= htmlspecialchars($row->StudentName) ?></td>
                                         <td><?= htmlspecialchars($row->DegreeName) ?></td>
-                                        <td><?= htmlspecialchars($row->CompanyName) ?></td>
+                                        <td><a href="#" class="open-modal company-link" data-company='<?= json_encode($row) ?>'><?= htmlspecialchars($row->CompanyName) ?></a></td>
                                         <td><?= htmlspecialchars($row->position) ?></td>
-                                        <td><?= htmlspecialchars($row->advertisementId) ?></td>
+                                        <td><a href="#" class="open-modal ad-link" data-ad='<?= json_encode($row) ?>'><?= htmlspecialchars($row->advertisementId) ?></a></td>
                                         <td><?= htmlspecialchars($row->Jobstatus) ?></td>
-
                                     </tr>
+
                                 <?php endforeach; ?>
 
                             <?php else: ?>
@@ -92,55 +85,94 @@
             </div>
 
         </main>
+        <!-- Student Modal -->
         <div id="studentModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close" data-close="studentModal">&times;</span>
                 <h2>Student Details</h2>
-                <p><strong>Registration No:</strong> <span id="modal-studentId"></span></p>
-                <p><strong>Name:</strong> <span id="modal-name"></span></p>
-                <p><strong>Degree:</strong> <span id="modal-degree"></span></p>
-                <p><strong>Company:</strong> <span id="modal-company"></span></p>
-                <p><strong>Position:</strong> <span id="modal-position"></span></p>
-                <p><strong>Advertisement ID:</strong> <span id="modal-ad-id"></span></p>
-                <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                <p><span>ID:</span> <span id="modalStudentId"></span></p>
+                <p><span>Name:</span> <span id="modalStudentName"></span></p>
+                <p><span>Degree:</span> <span id="modalStudentDegree"></span></p>
             </div>
         </div>
+
+        <!-- Advertisement Modal -->
+        <div id="adModal" class="modal">
+            <div class="modal-content">
+                <span class="close" data-close="adModal">&times;</span>
+                <h2>Advertisement Details</h2>
+                <p><span>ID:</span> <span id="modalAdId"></span></p>
+                <p><span>Position:</span> <span id="modalAdPosition"></span></p>
+            </div>
+        </div>
+
+        <!-- Company Modal -->
+        <div id="companyModal" class="modal">
+            <div class="modal-content">
+                <span class="close" data-close="companyModal">&times;</span>
+                <h2>Company Details</h2>
+                <p><span>Name:</span> <span id="modalCompanyName"></span></p>
+            </div>
+        </div>
+
 
     </div>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById("studentModal");
-            const closeBtn = document.querySelector(".modal .close");
+        document.addEventListener("DOMContentLoaded", function() {
 
-            document.querySelectorAll(".open-modal").forEach(link => {
+            // Show and populate student modal
+            document.querySelectorAll(".student-link").forEach(link => {
                 link.addEventListener("click", function(e) {
                     e.preventDefault();
-                    const student = JSON.parse(this.dataset.student);
-                    document.getElementById("modal-studentId").textContent = student.StudentId;
-                    document.getElementById("modal-name").textContent = student.StudentName;
-                    document.getElementById("modal-degree").textContent = student.DegreeName;
-                    document.getElementById("modal-company").textContent = student.CompanyName;
-                    document.getElementById("modal-position").textContent = student.position;
-                    document.getElementById("modal-ad-id").textContent = student.advertisementId;
-                    document.getElementById("modal-status").textContent = student.Jobstatus;
-
-                    modal.style.display = "block";
+                    const data = JSON.parse(this.dataset.student);
+                    document.getElementById("modalStudentId").textContent = data.StudentId;
+                    document.getElementById("modalStudentName").textContent = data.StudentName;
+                    document.getElementById("modalStudentDegree").textContent = data.DegreeName;
+                    document.getElementById("studentModal").style.display = "block";
                 });
             });
 
-            closeBtn.onclick = function() {
-                modal.style.display = "none";
-            }
+            // Show and populate ad modal
+            document.querySelectorAll(".ad-link").forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const data = JSON.parse(this.dataset.ad);
+                    document.getElementById("modalAdId").textContent = data.advertisementId;
+                    document.getElementById("modalAdPosition").textContent = data.position;
+                    document.getElementById("adModal").style.display = "block";
+                });
+            });
 
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
+            // Show and populate company modal
+            document.querySelectorAll(".company-link").forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const data = JSON.parse(this.dataset.company);
+                    document.getElementById("modalCompanyName").textContent = data.CompanyName;
+                    document.getElementById("companyModal").style.display = "block";
+                });
+            });
+
+            // Close modals
+            document.querySelectorAll(".close").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const modalId = this.getAttribute("data-close");
+                    document.getElementById(modalId).style.display = "none";
+                });
+            });
+
+            // Click outside modal to close
+            window.addEventListener("click", function(e) {
+                document.querySelectorAll(".modal").forEach(modal => {
+                    if (e.target === modal) modal.style.display = "none";
+                });
+            });
+
         });
     </script>
+
 
 </body>
 

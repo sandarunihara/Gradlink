@@ -183,7 +183,7 @@ table td {
     display: none;
     position: fixed;
     z-index: 9999;
-    padding-top: 80px;
+    padding-top: 200px;
     left: 0;
     top: 0;
     width: 100%;
@@ -207,7 +207,7 @@ table td {
 .modal-content h2 {
     margin-bottom: 20px;
     font-size: 22px;
-    color: #333;
+    color: #2b237c;
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
 }
@@ -220,7 +220,7 @@ table td {
 
 .modal-content span {
     font-weight: 500;
-    color: #000;
+    color: #000000;
 }
 
 .close {
