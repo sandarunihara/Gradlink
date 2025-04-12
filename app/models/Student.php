@@ -20,6 +20,7 @@ class student
 		'Github',
 		'Linkedin',
 		'noOfAppliedAds',
+		'block'
 	];
 
 	public function validate($data , $ispartialData = false){

@@ -49,7 +49,7 @@
                                 <button> 
                                     Search
                                 </button>
-
+ 
                                 <div class="filter-buttons">
                                     <button class="filter-btn active" data-degree="all">
                                         <i class="fas fa-users"></i> All

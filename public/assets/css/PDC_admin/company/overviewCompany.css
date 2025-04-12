@@ -92,43 +92,41 @@ main.main-content {
     align-items: center;
     margin-bottom: 24px;
 }
+
+.search-box {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
 .search-box input {
-    flex-grow: 1;
-    padding: 12px 16px;
-    background-color: #f5f7fa;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    font-size: 14px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-    transition: all 0.2s ease;
-}
-
-.search-box input:focus {
+    padding: 8px 16px;
+    border: none;
     outline: none;
-    border-color: #a0aec0;
-    box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.1);
-}
-
-.search-box input::placeholder {
-    color: #a0aec0;
+    font-size: 13px;
+    min-width: 240px;
+    background: transparent;
 }
 
 .search-box button {
-    padding: 12px 20px;
-    background-color: #4a5568;
-    color: #fff;
+    padding: 8px 16px;
+    background: #f8f9fa;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
+    color: #6c757d;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .search-box button:hover {
-    background-color: #2d3748;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #e9ecef;
+    color: #495057;
 }
+
+
 
 .add-btn {
     width: 36px;

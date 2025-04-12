@@ -243,12 +243,6 @@ function searchCompany() {
     }
 }
 
-function blockStudent(studentId){
-    if(confirm("Are you sure you want to block this student?")){
-        window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/block/" + studentId;
-    }
-}
-
 function unblockStudent(studentId){
     if(confirm("Are you sure you want to unblock this student?")){
         window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/unblock/" + studentId;
