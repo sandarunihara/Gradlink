@@ -66,7 +66,7 @@
 
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="9">No Registered Companies</td>
+                                        <td colspan="9">No Working Students Found</td>
                                     </tr>
                                 <?php endif; ?>
 
