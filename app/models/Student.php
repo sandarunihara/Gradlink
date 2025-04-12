@@ -49,6 +49,29 @@ class student
 	
 		return empty($this->errors); // Validation passes if no errors
 	}
+
+
+	public function validateRegisteredStudents($data){
+		$this->errors = [];
+
+		if (empty($data['StudentId']) || !preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
+			$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
+		}
+		if (empty($data['NIC']) || !preg_match('/^(\d{9}[vVxX]|\d{12})$/', $data['NIC'])) {
+			$this->errors['NIC'] = "NIC must be 9 digits followed by 'V' or 'X', or 12 digits.";
+		}
+		if (empty($data['Name'])) {
+			$this->errors['Name'] = "Student Name is required.";
+		}
+		if (empty($data['Email']) || !filter_var($data['Email'], FILTER_VALIDATE_EMAIL)) {
+			$this->errors['Email'] = "Valid Email is required.";
+		}
+
+		if (empty($this->errors)) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 	
@@ -63,6 +86,28 @@ class student
 
 	public function findnotapplied(){
 		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function findRecruited(){
+		$query = "SELECT * FROM $this->table WHERE Status = 'Ongoing'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function findRejected(){
+		$query = "SELECT * FROM $this->table WHERE Status = 'Rejected'";
 		$result = $this->query($query);
 		if($result){
 			return $result;

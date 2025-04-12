@@ -40,35 +40,23 @@
                         
                         <div class="form-group">
                             <label for="contact-number">Contact Number</label>
-                            <input type="text" id="contact-number" placeholder="Mobile" name="contact_number" />
-                            <small id="contact-error" class="error-message">Please enter a valid contact number (10 digits, starting with 07).</small>
-                        </div>
+                            <input type="text" id="contact-number" placeholder="Mobile" name="contact_number" 
+                                pattern="^07\d{8}$"
+                                required
+                            />
+                            <small class="format-hint">Format: 07XXXXXXXX (e.g., 0771234567)</small>
+                            </div>
                     </div>
 
                     <div class="button-line">
-                        <button class="btn submit-btn" type="submit"><b>Submit</b></button>
                         <button class="btn back-btn" onclick="history.back()"><b>Back</b></button>
+                        <button class="btn submit-btn" type="submit"><b>Submit</b></button> 
                     </div>
 
                 </form>
             </section>
-
-            <script>
-                function validateContactNumber() {
-                    const contactNumber = document.getElementById('contact-number').value;
-                    const contactNumberPattern = /^07\d{8}$/;
-                    const errorElement = document.getElementById('contact-error');
-
-                    if (!contactNumberPattern.test(contactNumber)) {
-                        errorElement.style.display = 'block';
-                        return false;
-                    }
-
-                    errorElement.style.display = 'none';
-                    return true;
-                }
-            </script>
         </main>
     </div>
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
 </body>
 </html>

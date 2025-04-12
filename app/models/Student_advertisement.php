@@ -98,6 +98,17 @@ class student_advertisement
 
 		return $result;
 	}
+
+	function noOfAppliedCompanies($studentId){
+		$query = "SELECT COUNT(*) AS count FROM studentadvertisement WHERE StudentId = :StudentId AND JobStatus != 'Reject'";
+		$params = [':StudentId' => $studentId];
+		$result = $this->query($query, $params);
+		return $result[0]->count;
+	}
+
+
+
+
 	function findRecruitCompany($studentId){
 		$query ="SELECT
 					advertisement.CompanyId

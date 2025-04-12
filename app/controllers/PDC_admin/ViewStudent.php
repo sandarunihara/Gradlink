@@ -11,6 +11,7 @@
             //$id = $studentData[0] -> StudentId;
             $studentapply = $applyDetails->findAppliedCompanies($studentId);
             //var_dump($studentapply);
+            $count = $applyDetails->noOfAppliedCompanies($studentId);
 
             $data = [
                 'StudentId'=> $studentData -> StudentId,
@@ -22,6 +23,7 @@
                 'ContactNum'=> $studentData -> ContactNum,
                 'Github'=> $studentData -> Github,
                 'Linkedin'=> $studentData -> Linkedin,
+                'noOfAppliedAds' => $count,
                 'applications'=> []
                 
             ];
