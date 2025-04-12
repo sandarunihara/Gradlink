@@ -61,7 +61,7 @@
         {
             $model = new student;
             $errors = [];
-
+            //var_dump($_POST);
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = [
                     'StudentId' => $_POST['StudentId'],
@@ -70,48 +70,95 @@
                     'Email' => $_POST['Email'],
                     'ContactNum' => $_POST['ContactNum'],
                     'DegreeName' => $_POST['DegreeName'],
-                    'Status' => $_POST['Status']
+                    'Status' => $_POST['Status'],
+                    'ShortDesc' => $_POST['ShortDesc'],
                 ];
 
+                $current = $model->find($studentId);
 
-                if ($model->validate($data)) {
-                    $updatedStatus = $model->update($studentId, $data, 'StudentId');
+                $changedData = [];
 
-                    if ($updatedStatus && $updatedStatus['status'] === 'success') {
-                        redirect('PDC_admin/AdminStudentOverview/dashboard');
-                        exit;
-                    } else {
-                        $errors['general'] = "Error: Could not update the student.";
+                $fields = [
+                    'StudentId',
+                    'NIC',
+                    'Name',
+                    'Email',
+                    'ContactNum',
+                    'DegreeName',
+                    'Status',
+                    'ShortDesc'
+                ];
+
+                foreach($fields as $field){
+                    if(isset($_POST[$field]) && $_POST[$field] != $current->$field){
+                        $changedData[$field] = $_POST[$field];
                     }
-                } else {
-                    $errors = $model->errors;
                 }
-            }
 
-            $data = $model->find($studentId);
-            if (!$data) {
-                $errors['general'] = "No student data found for the given ID.";
-            }
-
-            $this->view('PDC_admin/Student/StudentView', ['student' => $data, 'errors' => $errors]);
-
-        }
-
-        public function block($studentId){
-            $model = new student;
-            $studentData = $model->find($studentId);
-            if($studentData->Status != 'Blocked'){
-                $data = [
-                    'Status' => 'Blocked'
-                ];
-                $updatedStatus = $model->update($studentId, $data, 'StudentId');
-                if($updatedStatus && $updatedStatus['status'] === 'success'){
-                    redirect('PDC_admin/BlockStudent/dashboard');
+                if (empty($changedData)) {
+                    $_SESSION['flash_message'] = [
+                        'type' => 'info',
+                        'message' => 'No changes were made'
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
                     exit;
                 }
-                else{
-                    echo "Error: Could not block the student.Already Blocked";
+
+                if ($model->validate($changedData , true)) {
+                    $checkFields = array_intersect(['StudentId', 'NIC', 'Email', 'Name'], array_keys($changedData));
+                    $conflict = false;
+                    $conflictMessage = [];
+
+                    //show($checkFields);
+
+                    foreach ($checkFields as $field) {
+                        $existing = $model->firstMatch([$field => $changedData[$field]]);
+                        if ($existing && $existing->StudentId != $studentId) {
+                            $conflict = true;
+                            $conflictMessage[] = "The $field is already in use.";
+                        }
+                    }
+
+                    // var_dump($conflictMessage);
+                    // var_dump($conflict);    
+                    // var_dump($existing);
+                        
+                if(!$conflict){
+                    $updatedStatus = $model->update($studentId, $changedData, 'StudentId');
+                        if ($updatedStatus && $updatedStatus['status'] === 'success'){
+                            $_SESSION['flash_message'] = [
+                                'type' => 'success',
+                                'message' => 'Student successfully Updated'
+                            ];
+
+                            if(isset($changedData['StudentId'])){
+                                $new = $changedData['StudentId'];
+                                header('Location: ' . ROOT . '/PDC_admin/ViewStudent/show/' . $new);
+                                exit;
+                            };
+                        }
+                        else{
+                            $_SESSION['flash_message'] = [
+                                'type' => 'error',
+                                'message' => 'Error: Could not update the student.'
+                            ];
+                        }
                 }
+                else{
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Student cannot be updated: ' . implode(', ', $conflictMessage)
+                    ];
+                }
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Validation failed for the provided data'
+                ];
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
             }
         }
 

@@ -67,7 +67,7 @@ require "../app/libs/Exception.php";
                     $arr['Name'] = $data['Name'];
                     $arr['Email'] = $data['Email'];
 
-                    $result1 = $model->where($arr, [], '', 'do_not_order');
+                    $result1 = $model->orWhere($arr, [], '', 'do_not_order');
                     if(empty($result1)){
                         $result = $model->insert($data);
                         if ($result) {
@@ -85,10 +85,26 @@ require "../app/libs/Exception.php";
 
                     }
                     else{
-                        $_SESSION['flash_message'] = [
-                            'type' => 'error',
-                            'message' => 'Student already Registered'
-                        ];
+                        $conflic = [];
+                            $existing = $result1[0];
+
+                            if($existing->StudentId == $data['StudentId']){
+                                $conflic[] = "Student ID already exists";
+                            }
+                            if($existing->NIC == $data['NIC']){
+                                $conflic[] = "NIC already exists";
+                            }
+                            if($existing->Email == $data['Email']){
+                                $conflic[] = "Email already exists";
+                            }
+                            if($existing->Name == $data['Name']){
+                                $conflic[] = "Name already exists";
+                            }
+                            
+                            $_SESSION['flash_message'] = [
+                                'type' => 'error',
+                                'message' => 'Student cannot be registered: ' . implode(', ', array_unique($conflic))
+                            ];
                     }
                 }
             }

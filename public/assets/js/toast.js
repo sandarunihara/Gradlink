@@ -343,6 +343,10 @@ function errorToast(message, options) {
   toast.show(message, 'error', options);
 }
 
+function infoToast(message, options) {
+  toast.show(message, 'info', options);
+}
+
 // Auto-initialize
 if (document.readyState !== 'loading') {
   new ToastSystem();

@@ -303,6 +303,192 @@
             background-color: #218838;
         }
 
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-cancel {
+            background-color: #e9ecef;
+            color: var(--dark);
+        }
+
+        .btn-cancel:hover {
+            background-color: #dee2e6;
+        }
+
+        .btn-save {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background-color: #218838;
+        }
+
+        .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast-message {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: white;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.toast-success {
+    background-color: #28a745;
+}
+
+.toast-error {
+    background-color: #dc3545;
+}
+
+.toast-info {
+    background-color: #17a2b8;
+}
+
+.toast-close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-hint {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
         @media (max-width: 992px) {
             .student-details {
                 grid-template-columns: 1fr;
@@ -334,6 +520,22 @@
 </head>
 
 <body>
+
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+
+
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="content">
@@ -442,7 +644,7 @@
                 <button class="btn btn-back" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <button class="btn btn-update" id="edit-btn-student">
+                <button class="btn btn-update" id="edit-btn-student" onclick="openUpdateform()">
                     <i class="fas fa-edit"></i> Update
                 </button>
                 <?php if ($data['Status'] === 'Blocked'): ?>
@@ -456,7 +658,113 @@
                 <?php endif; ?>
             </div>
         </main>
+
+        <div class="modal-overlay" id="updateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-edit"></i> Update Student Information</h2>
+                <button class="modal-close" onclick="hideUpdateForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="studentUpdateForm" method="post"       
+                    action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['StudentId']) ?>">
+                >
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['Name']) ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['Email']) ?>">
+                            <small class="form-hint">Format: example@domain.com</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentId" class="form-label">Student ID</label>
+                            <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['StudentId']) ?>"
+                                pattern="\d{4}[a-z]{2}\d{3}"
+                            >
+                            <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="nic" class="form-label">NIC Number</label>
+                            <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['NIC']) ?>"
+                                pattern="^\d{12}$"
+                            >
+                            <small class="form-hint">Format: 200456789012</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact" class="form-label">Contact Number</label>
+                            <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['ContactNum']) ?>"
+                                pattern="\d{10,15}$"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="degree" class="form-label">Degree Program</label>
+                            <select id="degree" name="DegreeName" class="form-control">
+                                <option value="<?= htmlspecialchars($data['DegreeName']) ?>" selected>
+                                    <?= htmlspecialchars($data['DegreeName']) ?>
+                                </option>
+                                <option value="<?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
+                                    <?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['Status']) ?>" hidden>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="github" class="form-label">GitHub Profile</label>
+                        <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['Github']) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
+                            pattern="https?://github\.com/.+">
+                        >
+                        <small class="form-hint">Format: https://github.com/username</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkedin" class="form-label">LinkedIn Profile</label>
+                        <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['Linkedin']) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
+                            pattern="https?://(www\.)?linkedin\.com/in/.+">
+                        >
+                        <small class="form-hint">Format: https://linkedin.com/in/username</small>    
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-label">Student Description</label>
+                        <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['ShortDesc']) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" onclick="hideUpdateForm()">Cancel</button>
+                        <button type="submit" class="btn btn-save">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+    <script>
+        function openUpdateform(){
+            document.getElementById('updateModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideUpdateForm(){
+            document.getElementById('updateModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 </body>
 </html>
