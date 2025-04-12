@@ -324,7 +324,6 @@
             visibility: visible;
         }
 
-        /* Modal Content */
         .modal-content {
             background-color: white;
             border-radius: var(--border-radius);
@@ -372,7 +371,6 @@
             padding: 1.5rem;
         }
 
-        /* Form Styles */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -442,52 +440,180 @@
         }
 
         .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-}
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
 
-.toast-message {
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    color: white;
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 0.5s ease;
-    position: relative;
-}
+        .toast-message {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: white;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            position: relative;
+        }
 
-.toast-success {
-    background-color: #28a745;
-}
+        .toast-success {
+            background-color: #28a745;
+        }
 
-.toast-error {
-    background-color: #dc3545;
-}
+        .toast-error {
+            background-color: #dc3545;
+        }
 
-.toast-info {
-    background-color: #17a2b8;
-}
+        .toast-info {
+            background-color: #17a2b8;
+        }
 
-.toast-close-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
+        .toast-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-.form-hint {
-    display: block;
-    font-size: 12px;
-    color: #6b7280;
-    margin-top: 5px;
-}
+        .form-hint {
+            display: block;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 500px;
+            max-width: 95%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+
+        .modal-actions {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        #unblock-modal .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 500px;
+            max-width: 95%;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        #unblock-modal .modal-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        #unblock-modal .modal-content p {
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+        }
 
         @media (max-width: 992px) {
             .student-details {
@@ -520,7 +646,6 @@
 </head>
 
 <body>
-
     <?php 
         if (isset($_SESSION['flash_message'])): 
             $message = htmlspecialchars($_SESSION['flash_message']['message']);
@@ -535,12 +660,10 @@
         </script>
     <?php endif; ?>
 
-
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="content">
             <div class="profile-header">
-                <!-- Add profile image if available -->
                 <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="Profile Image" class="profile-image">
                 <div class="profile-title">
                     <h1><?= htmlspecialchars($data['Name']) ?></h1>
@@ -647,7 +770,7 @@
                 <button class="btn btn-update" id="edit-btn-student" onclick="openUpdateform()">
                     <i class="fas fa-edit"></i> Update
                 </button>
-                <?php if ($data['Status'] === 'Blocked'): ?>
+                <?php if ($data['block'] === 1): ?>
                     <button class="btn btn-unblock" onclick="unblockStudent('<?= htmlspecialchars($data['StudentId']) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>
@@ -659,100 +782,134 @@
             </div>
         </main>
 
-        <div class="modal-overlay" id="updateModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-user-edit"></i> Update Student Information</h2>
-                <button class="modal-close" onclick="hideUpdateForm()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="studentUpdateForm" method="post"       
-                    action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['StudentId']) ?>">
-                >
-                    <div class="form-row">
+        <div id="block-modal" class="modal">
+            <div class="modal-content">
+                <form id="block-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/block">
+                    <input type="hidden" name="StudentId" id="student-id" value="">
+                    <div class="modal-header">
+                        <h3>Block Student</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please provide a reason for blocking <?= htmlspecialchars($data['Name']) ?>. This message will be sent to the student's email.</p>
                         <div class="form-group">
-                            <label for="name" class="form-label">Full Name</label>
-                            <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['Name']) ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['Email']) ?>">
-                            <small class="form-hint">Format: example@domain.com</small>
+                            <label for="block-reason">Reason for Blocking</label>
+                            <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>
+                            <p id="modal-message" style="color: red; margin-top: 10px;"></p>
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="studentId" class="form-label">Student ID</label>
-                            <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['StudentId']) ?>"
-                                pattern="\d{4}[a-z]{2}\d{3}"
-                            >
-                            <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="nic" class="form-label">NIC Number</label>
-                            <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['NIC']) ?>"
-                                pattern="^\d{12}$"
-                            >
-                            <small class="form-hint">Format: 200456789012</small>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contact" class="form-label">Contact Number</label>
-                            <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['ContactNum']) ?>"
-                                pattern="\d{10,15}$"
-                            >
-                        </div>
-                        <div class="form-group">
-                            <label for="degree" class="form-label">Degree Program</label>
-                            <select id="degree" name="DegreeName" class="form-control">
-                                <option value="<?= htmlspecialchars($data['DegreeName']) ?>" selected>
-                                    <?= htmlspecialchars($data['DegreeName']) ?>
-                                </option>
-                                <option value="<?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
-                                    <?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['Status']) ?>" hidden>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="github" class="form-label">GitHub Profile</label>
-                        <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['Github']) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
-                            pattern="https?://github\.com/.+">
-                        >
-                        <small class="form-hint">Format: https://github.com/username</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="linkedin" class="form-label">LinkedIn Profile</label>
-                        <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['Linkedin']) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
-                            pattern="https?://(www\.)?linkedin\.com/in/.+">
-                        >
-                        <small class="form-hint">Format: https://linkedin.com/in/username</small>    
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description" class="form-label">Student Description</label>
-                        <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['ShortDesc']) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-cancel" onclick="hideUpdateForm()">Cancel</button>
-                        <button type="submit" class="btn btn-save">Save Changes</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
 
+        <div id="unblock-modal" class="modal">
+            <div class="modal-content">
+                <form id="unblock-form" method="post" action="<?= ROOT ?>/PDC_admin/BlockStudent/unblock">
+                    <input type="hidden" name="StudentId" id="unblock-student-id" value="">
+                    <div class="modal-header">
+                        <h3>Unblock Student</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to unblock this student?</p>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Yes, Unblock</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="updateModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-edit"></i> Update Student Information</h2>
+                    <button class="modal-close" onclick="hideUpdateForm()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['StudentId']) ?>">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['Name']) ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['Email']) ?>">
+                                <small class="form-hint">Format: example@domain.com</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="studentId" class="form-label">Student ID</label>
+                                <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['StudentId']) ?>"
+                                    pattern="\d{4}[a-z]{2}\d{3}">
+                                <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="nic" class="form-label">NIC Number</label>
+                                <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['NIC']) ?>"
+                                    pattern="^\d{12}$">
+                                <small class="form-hint">Format: 200456789012</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact" class="form-label">Contact Number</label>
+                                <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['ContactNum']) ?>"
+                                    pattern="\d{10,15}$">
+                            </div>
+                            <div class="form-group">
+                                <label for="degree" class="form-label">Degree Program</label>
+                                <select id="degree" name="DegreeName" class="form-control">
+                                    <option value="<?= htmlspecialchars($data['DegreeName']) ?>" selected>
+                                        <?= htmlspecialchars($data['DegreeName']) ?>
+                                    </option>
+                                    <option value="<?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
+                                        <?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['Status']) ?>" hidden>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="github" class="form-label">GitHub Profile</label>
+                            <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['Github']) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
+                                pattern="https?://github\.com/.+">
+                            <small class="form-hint">Format: https://github.com/username</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="linkedin" class="form-label">LinkedIn Profile</label>
+                            <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['Linkedin']) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
+                                pattern="https?://(www\.)?linkedin\.com/in/.+">
+                            <small class="form-hint">Format: https://linkedin.com/in/username</small>    
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="form-label">Student Description</label>
+                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['ShortDesc']) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-cancel" onclick="hideUpdateForm()">Cancel</button>
+                            <button type="submit" class="btn btn-save">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
@@ -764,6 +921,23 @@
         function hideUpdateForm(){
             document.getElementById('updateModal').classList.remove('active');
             document.body.style.overflow = 'auto';
+        }
+        
+        function blockStudent(StudentId) {
+            document.getElementById("student-id").value = StudentId;
+            document.getElementById("block-modal").classList.add("active");
+        }
+
+        function unblockStudent(StudentId) {
+            document.getElementById("unblock-student-id").value = StudentId;
+            document.getElementById("unblock-modal").classList.add("active");
+        }
+
+        function closeModal() {
+            document.getElementById("block-modal").classList.remove("active");
+            document.getElementById("unblock-modal").classList.remove("active");
+            document.getElementById("block-reason").value = "";
+            document.getElementById("modal-message").textContent = "";
         }
     </script>
 </body>

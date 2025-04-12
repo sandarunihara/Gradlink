@@ -132,33 +132,37 @@
                 if(isset($data['StudentId'])){
                     $new_id = $data['StudentId'];
                     unset($data['StudentId']);
-
+                
                     $query = "UPDATE $this->table SET ";
-                    
+                
                     foreach ($data as $key => $value) {
                         $query .= "$key = :$key, ";
                     }
-                    
-                    $query .= "$id_column = :new_id WHERE $id_column = :old_id";
-
+                
+                    $query = rtrim($query, ", "); // ← Add this line
+                
+                    $query .= " $id_column = :new_id WHERE $id_column = :old_id";
+                
                     $data['new_id'] = $new_id;
                     $data['old_id'] = $id;
                 }
+                
                 else{
                     $query = "UPDATE $this->table SET ";
-                    
+
                     foreach ($data as $key => $value) {
                         $query .= "$key = :$key, ";
                     }
                     
                     $query = rtrim($query, ", ");
+
                     $query .= " WHERE $id_column = :$id_column";
                     $data[$id_column] = $id;
+                    //show($data);
+
                 }
         
-                // Execute the query
                 $this->query($query, $data);
-        
                 // Return a success message if update is successful
                 return [
                     'status' => 'success',
