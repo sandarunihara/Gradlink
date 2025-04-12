@@ -60,23 +60,46 @@ require "../app/libs/Exception.php";
             ];
 
             if($model->validate($data)){
-                $model->insert($data);
-                if($model){
-                    $this->sendEmail($data['Email'], $data['StudentId']);
-                    //echo "succefully added";
-                    redirect('PDC_admin/AddStudent/dashboard');
-                }
-                else{
-                    echo "failed to add";
+                if($model->validateRegisteredStudents($data)){
+                    $arr = [];
+                    $arr['StudentId'] = $data['StudentId'];
+                    $arr['NIC'] = $data['NIC'];
+                    $arr['Name'] = $data['Name'];
+                    $arr['Email'] = $data['Email'];
+
+                    $result1 = $model->where($arr, [], '', 'do_not_order');
+                    if(empty($result1)){
+                        $result = $model->insert($data);
+                        if ($result) {
+                            $this->sendEmail($data['Email'], $data['StudentId']);
+                            $_SESSION['flash_message'] = [
+                                'type' => 'success',
+                                'message' => 'Student successfully Registered'
+                            ];
+                        } else {
+                            $_SESSION['flash_message'] = [
+                                'type' => 'error',
+                                'message' => 'Failed to register Student'
+                            ];
+                        }
+
+                    }
+                    else{
+                        $_SESSION['flash_message'] = [
+                            'type' => 'error',
+                            'message' => 'Student already Registered'
+                        ];
+                    }
                 }
             }
             else{
-                $errors = $model->errors;
-                $this->view('PDC_admin/Student/AddStudent', [
-                    'errors' => $model->errors,
-                    'old_data' => $data
-                ]);
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Validation Failed'
+                ];
             }
+            header('Location: /Gradlink/public/PDC_admin/AdminStudentOverview/dashboard');
+            exit;
         }
 
 

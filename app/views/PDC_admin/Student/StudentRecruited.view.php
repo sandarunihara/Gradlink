@@ -12,42 +12,26 @@
 </head>
 
 <body>
-
-    <?php 
-        if (isset($_SESSION['flash_message'])): 
-            $message = htmlspecialchars($_SESSION['flash_message']['message']);
-            $type = htmlspecialchars($_SESSION['flash_message']['type']);
-            unset($_SESSION['flash_message']);
-        ?>
-        <script>
-            window.__flashMessage = {
-                message: "<?= $message ?>",
-                type: "<?= $type ?>"
-            };
-        </script>
-    <?php endif; ?>
-
     <div class="container">
     <?php $this->renderComponent("pdc_adminsidebar")  ?>
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Students</h1>
+                    <h1>Recruited Students</h1>
                 </div>
             </header>
-
+            
             <div class="tabs">
                 <?php $this->renderPDC_adminTabs("studentTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
             <div class="tab-content">
-                <div id="Not-Applied" class="tab-pane active">
+                <div id="recruited-Students" class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
                             <div class="search-box">
                                 <input type="text" placeholder="Search Students" />
-                                <button> 
-                                    Search
+                                <button> Search
                                 </button>
 
                                 <div class="filter-buttons">
@@ -64,7 +48,7 @@
 
                             </div>
                             <div class="action-buttons">
-                            <button class="add-btn" onclick="navigateToAddStudent();" ></button>
+                            <!-- <button class="add-btn" onclick="navigateToAddStudent();" >+ Add</button> -->
                         </div>
                         </div>
                         <table>
@@ -109,7 +93,6 @@
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
-    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
 
 </body>
 

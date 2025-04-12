@@ -279,3 +279,40 @@ tbody tr:hover {
     color: #a0aec0;
     font-size: 15px;
 }
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast-message {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: white;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.toast-success {
+    background-color: #28a745;
+}
+
+.toast-error {
+    background-color: #dc3545;
+}
+
+.toast-close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}

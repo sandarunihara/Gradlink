@@ -12,4 +12,24 @@ class AdminStudentOverview{
             ]
         );
     } 
+
+    public function recruited(){
+        $model = new student;
+        $studentData = $model->findRecruited();
+        $this->view('PDC_admin/Student/StudentRecruited', [
+            'studentData' => $studentData,
+            'activeTab' => 'recruited-Students'
+        ]
+    );
+    }
+
+    public function rejected(){
+        $model = new student;
+        $studentData = $model->findRejected();
+        $this->view('PDC_admin/Student/StudentRejected', [
+            'studentData' => $studentData,
+            'activeTab' => 'rejected-Students'
+        ]
+    );
+    }
 }
