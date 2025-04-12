@@ -133,7 +133,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            // Show and populate student modal
+            // student modal
             document.querySelectorAll(".student-link").forEach(link => {
                 link.addEventListener("click", function(e) {
                     e.preventDefault();
@@ -148,7 +148,7 @@
                 });
             });
 
-            // Show and populate ad modal
+            // ad modal
             document.querySelectorAll(".ad-link").forEach(link => {
                 link.addEventListener("click", function(e) {
                     e.preventDefault();
@@ -164,7 +164,7 @@
                 });
             });
 
-            // Show and populate company modal
+            // company modal
             document.querySelectorAll(".company-link").forEach(link => {
                 link.addEventListener("click", function(e) {
                     e.preventDefault();
