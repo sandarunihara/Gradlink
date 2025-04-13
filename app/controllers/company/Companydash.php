@@ -14,13 +14,13 @@ class Companydash
         $model = new C_Dashboard;
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 
-        
+
         // foreach($alldata as $advertisement){
         //     if($advertisement->status != 'Trash'){
         //         $data[]=$advertisement;
         //     }
         // }
-        
+
         if (empty($data)) {
             $hasShortlisted = false;
             $hasRecruited = false;
@@ -126,7 +126,7 @@ class Companydash
                 if (!empty($data)) {
                     if (is_array($data) || is_object($data)) {
                         foreach ($data as $item) {
-                            if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                            if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
                                 $hasShortlisted = true;
                             }
 
@@ -191,20 +191,48 @@ class Companydash
             $monthlyCounts = array_fill_keys(array_keys($uniqueMonths), 0);
             // show($monthlyCounts);
 
-            foreach ($applystudent2 as $applications) { 
+            foreach ($applystudent2 as $applications) {
                 if (is_array($applications)) {
                     foreach ($applications as $student) {
                         $yearMonthKey = date("Y M", strtotime($student->CreatedAt));
-        
+
                         if (isset($monthlyCounts[$yearMonthKey])) {
                             $monthlyCounts[$yearMonthKey]++;
                         }
                     }
                 }
             }
-            uksort($monthlyCounts, function($a, $b) {
+            uksort($monthlyCounts, function ($a, $b) {
                 return strtotime($a) - strtotime($b);
             });
+
+            // Interview Schedule rerender
+            $TodayDate = date('Y-m-d');
+            $interviewmodel = new interview_time_slot;
+            $admodal = new C_Advertisement;
+            $appliedadmodal = new C_Dashboard;
+            $interviewdata = [];
+            foreach ($advertisementIds as $id) {
+                $interview_para = [
+                    'advertisementId' => $id
+                ];
+                $interviewdata[] = $interviewmodel->find($interview_para);
+            }
+            if (!empty($interviewdata)) {
+                foreach ($interviewdata as $adinterview) {
+                    if (!empty($adinterview)) {
+                        foreach ($adinterview as $inter) {
+                            if ($inter->Date < $TodayDate) {
+                                $interviewmodel->delete($inter->InterviewId, 'InterviewId');
+                                $appliedadmodal->update($inter->StudentId, $inter->advertisementId, ['Jobstatus' => 'Reject']);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
 
 
             $numOfapplyStudents = count($studentIds);

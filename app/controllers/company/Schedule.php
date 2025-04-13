@@ -19,6 +19,7 @@ class Schedule
 
         $interviewmodel = new interview_time_slot;
         $admodal = new C_Advertisement;
+        $appliedadmodal=new C_Dashboard;
         $companyId = [
             'CompanyId' => $user->CompanyId
         ];
@@ -30,17 +31,24 @@ class Schedule
             ];
             $data[] = $interviewmodel->find($interview_para);
         }
-        // show($data);
-        // show($interviewdata);
-        // $data=$interviewmodel->findall();
         $interviewdata = [];
         $currentDate = date('Y-m-d');
         foreach ($data as $item) {
             if (!empty($item)) {
                 foreach ($item as $item) {
-                    // show($item);
+                    // show($adkeys);
                     if($item->Date < $currentDate){
-                        $interviewmodel->delete($item->InterviewId,'InterviewId');
+                        $adkeys=[
+                            'StudentId'=>$item->StudentId,
+                            'advertisementId'=>$item->advertisementId
+                        ];
+                        $da=$appliedadmodal->find($adkeys,'studentadvertisement');
+                        if($da[0]->Jobstatus == 'Interview Scheduled'){
+                            $appliedadmodal->update($item->StudentId,$item->advertisementId,['Jobstatus'=>'Interview Expired']);
+                        }
+                        if($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit'){
+                            $interviewmodel->delete($item->InterviewId,'InterviewId');
+                        }
                     }else{
                         $studentmodel = new C_Student;
                         $studentdata = $studentmodel->findbyId($item->StudentId);

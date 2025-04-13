@@ -43,13 +43,13 @@ class ShortlistedStudents
             // }
             if (!empty($data)) {
                 foreach ($data as $item) {
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
                         $hasShortlisted = true;
                     }
                     if ($item->Jobstatus === 'Recruit') {
                         $hasRecruited = true;
                     }
-                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled') {
+                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled'|| $item->Jobstatus == 'Interview Expired' ) {
                         $reqdata[] = [
                             "StudentId" => $item->StudentId,
                             'AdvertisementId' => $item->advertisementId,
@@ -93,113 +93,123 @@ class ShortlistedStudents
             $studentdata = [
                 'Status' => $_POST['submit_action']
             ];
+            // show($updatedata);Reject
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
-            $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
+            // $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
             if ($result['status']) {
-                $success = "Student Job Status updated successfully.";
-                if (!empty($data[0]->Email) && !empty($companydata->Email)) {
-                    $studentemail = $data[0]->Email;
-                    $studentname = $data[0]->Name;
-                    try {
-                        $mail = new PHPMailer(true);
-                        $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
-                        $mail->SMTPAuth = true;
-                        $mail->Username = 'sandarunihara15@gmail.com'; // Your email
-                        $mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
-                        $mail->Port = 587;
-                        $mail->setFrom($companydata->Email, $companydata->Name);
-                        $mail->addAddress($studentemail);
-                        $mail->isHTML(true);
-                        $mail->Subject = 'Congratulations on Your Internship Selection!';
-                        $mail->Body = "
-                                        <html>
-                                            <head>
-                                                <style>
-                                                    body {
-                                                        font-family: Arial, sans-serif;
-                                                        line-height: 1.6;
-                                                        color: #333;
-                                                        background-color: #f9f9f9;
-                                                        padding: 0;
-                                                        margin: 0;
-                                                    }
-                                                    .email-container {
-                                                        max-width: 600px;
-                                                        margin: 20px auto;
-                                                        background: #ffffff;
-                                                        border: 1px solid #ddd;
-                                                        border-radius: 8px;
-                                                        overflow: hidden;
-                                                    }
-                                                    .header {
-                                                        background-color: #03B754;
-                                                        color: #ffffff;
-                                                        padding: 20px;
-                                                        text-align: center;
-                                                    }
-                                                    .header h1 {
-                                                        margin: 0;
-                                                        font-size: 24px;
-                                                    }
-                                                    .content {
-                                                        padding: 20px;
-                                                    }
-                                                    .content p {
-                                                        margin: 10px 0;
-                                                    }
-                                                    .footer {
-                                                        background-color: #f4f4f4;
-                                                        text-align: center;
-                                                        padding: 10px;
-                                                        font-size: 12px;
-                                                        color: #666;
-                                                        border-top: 1px solid #ddd;
-                                                    }
-                                                </style>
-                                            </head>
-                                            <body>
-                                                <div class='email-container'>
-                                                    <div class='header'>
-                                                        <h1>Welcome to {$companydata->Name}!</h1>
+                if ($_POST['submit_action'] != 'Reject') {
+                    $success = "Student Job Status updated successfully.";
+                    if (!empty($data[0]->Email) && !empty($companydata->Email)) {
+                        $studentemail = $data[0]->Email;
+                        $studentname = $data[0]->Name;
+                        try {
+                            $mail = new PHPMailer(true);
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+                            $mail->SMTPAuth = true;
+                            $mail->Username = 'sandarunihara15@gmail.com'; // Your email
+                            $mail->Password = 'gwko wgdm ffqx fzcm'; // Your app password
+                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+                            $mail->Port = 587;
+                            $mail->setFrom($companydata->Email, $companydata->Name);
+                            $mail->addAddress($studentemail);
+                            $mail->isHTML(true);
+                            $mail->Subject = 'Congratulations on Your Internship Selection!';
+                            $mail->Body = "
+                                            <html>
+                                                <head>
+                                                    <style>
+                                                        body {
+                                                            font-family: Arial, sans-serif;
+                                                            line-height: 1.6;
+                                                            color: #333;
+                                                            background-color: #f9f9f9;
+                                                            padding: 0;
+                                                            margin: 0;
+                                                        }
+                                                        .email-container {
+                                                            max-width: 600px;
+                                                            margin: 20px auto;
+                                                            background: #ffffff;
+                                                            border: 1px solid #ddd;
+                                                            border-radius: 8px;
+                                                            overflow: hidden;
+                                                        }
+                                                        .header {
+                                                            background-color: #03B754;
+                                                            color: #ffffff;
+                                                            padding: 20px;
+                                                            text-align: center;
+                                                        }
+                                                        .header h1 {
+                                                            margin: 0;
+                                                            font-size: 24px;
+                                                        }
+                                                        .content {
+                                                            padding: 20px;
+                                                        }
+                                                        .content p {
+                                                            margin: 10px 0;
+                                                        }
+                                                        .footer {
+                                                            background-color: #f4f4f4;
+                                                            text-align: center;
+                                                            padding: 10px;
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                            border-top: 1px solid #ddd;
+                                                        }
+                                                    </style>
+                                                </head>
+                                                <body>
+                                                    <div class='email-container'>
+                                                        <div class='header'>
+                                                            <h1>Welcome to {$companydata->Name}!</h1>
+                                                        </div>
+                                                        <div class='content'>
+                                                            <p>Dear {$data[0]->Name},</p>
+                                                            <p>We are thrilled to inform you that you have been selected for an internship at <strong>{$companydata->Name}</strong>. This role offers you a unique opportunity to learn, grow, and contribute to our team.</p>
+                                                            <p>Details regarding your onboarding process and responsibilities will be shared soon. If you have any immediate questions, please don't hesitate to contact us at <strong>{$companydata->ContactNum}</strong>.</p>
+                                                            <p>We are excited to welcome you aboard and look forward to a fruitful collaboration.</p>
+                                                            <p>Warm regards,</p>
+                                                            <p><strong>{$companydata->Name}</strong></p>
+                                                        </div>
+                                                        <div class='footer'>
+                                                            <p>&copy; {$companydata->Name} | All rights reserved.</p>
+                                                        </div>
                                                     </div>
-                                                    <div class='content'>
-                                                        <p>Dear {$data[0]->Name},</p>
-                                                        <p>We are thrilled to inform you that you have been selected for an internship at <strong>{$companydata->Name}</strong>. This role offers you a unique opportunity to learn, grow, and contribute to our team.</p>
-                                                        <p>Details regarding your onboarding process and responsibilities will be shared soon. If you have any immediate questions, please don't hesitate to contact us at <strong>{$companydata->ContactNum}</strong>.</p>
-                                                        <p>We are excited to welcome you aboard and look forward to a fruitful collaboration.</p>
-                                                        <p>Warm regards,</p>
-                                                        <p><strong>{$companydata->Name}</strong></p>
-                                                    </div>
-                                                    <div class='footer'>
-                                                        <p>&copy; {$companydata->Name} | All rights reserved.</p>
-                                                    </div>
-                                                </div>
-                                            </body>
-                                        </html>";
+                                                </body>
+                                            </html>";
 
-                        $mail->send();
-                        $_SESSION['flash'] = [
-                            'type' => 'success',
-                            'message' => 'Student has been recruited and notified successfully'
-                        ];
-                        header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
-                        exit;
-                    } catch (Exception $e) {
+                            $mail->send();
+                            $_SESSION['flash'] = [
+                                'type' => 'success',
+                                'message' => 'Student has been recruited and notified successfully'
+                            ];
+                            header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
+                            exit;
+                        } catch (Exception $e) {
+                            $_SESSION['flash'] = [
+                                'type' => 'error',
+                                'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
+                            ];
+                            $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                            exit;
+                        }
+                    } else {
                         $_SESSION['flash'] = [
                             'type' => 'error',
-                            'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
+                            'message' => "Email not found"
                         ];
                         $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
                         exit;
                     }
                 } else {
                     $_SESSION['flash'] = [
-                        'type' => 'error',
-                        'message' => "Email not found"
+                        'type' => 'success',
+                        'message' => 'Student Status updated'
                     ];
-                    $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                    header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
                     exit;
                 }
             } else {
@@ -371,7 +381,7 @@ class ShortlistedStudents
                         ];
                     }
                 }
-                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/studentprofile/' . $advertisementId . '/' . $studentId);
+                header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
                 exit;
             } else {
                 $_SESSION['flash'] = [
