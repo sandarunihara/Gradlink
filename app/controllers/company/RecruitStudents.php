@@ -35,7 +35,7 @@ class RecruitStudents
             // }
             if (!empty($data)) {
                 foreach ($data as $item) {
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
                         $hasShortlisted = true;
                     }
                     if ($item->Jobstatus === 'Recruit') {
