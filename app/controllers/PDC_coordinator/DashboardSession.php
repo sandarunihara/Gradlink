@@ -4,6 +4,8 @@ class DashboardSession
     use Controller;
     public function index()
     {
-        $this->view('Coordinator/Session/dashboardSession');
+        $model = new PDC_Session;
+        $sessionData = $model->findSessionWithCompany();
+        $this->view('Coordinator/Session/dashboardSession', ['sessionData' => $sessionData]);
     }
 }

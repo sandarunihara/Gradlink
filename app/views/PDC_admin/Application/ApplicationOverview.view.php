@@ -21,16 +21,40 @@
                 </div>
             </header>
 
-            <?php $activeTab = 'applications'; ?>
-            <?php $this->renderPDC_adminTabs("applicationTabs") ?>
+            <div class="tabs">
+                <?php $this->renderPDC_adminTabs("applicationTabs", ['activeTab' => $activeTab]); ?>
+            </div>
 
             <section class="company-list">
                 <div class="list-header">
-                    <h2>Applications</h2>
-                    <div class="search-box">
+                    <div class="search-box-add">
                         <input type="text" placeholder="Search Students" />
-                        <button> Search
+                        <button> 
+                            Search
                         </button>
+
+                        <div class="filter-buttons-add">
+                            <button class="filter-btn-add active" data-status="all" data-degree="all">
+                                <i class="fas fa-users"></i> All
+                            </button>
+                            <button class="filter-btn-add" data-status="Pending">
+                                pending
+                            </button>
+                            <button class="filter-btn-add" data-status="Shortlist">
+                                shortlisted
+                            </button>
+                            <button class="filter-btn-add" data-status="Reject">
+                                rejected
+                            </button>
+
+                            <button class="degree-filter-btn" data-degree="Computer Science">
+                                CS
+                            </button>
+                            <button class="degree-filter-btn" data-degree="Information System">
+                                IS
+                            </button>
+                        </div>
+
                     </div>
                 </div>
                 <table>

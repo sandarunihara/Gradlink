@@ -21,51 +21,70 @@
                     <h1>Sessions</h1>
                 </div>
 
-                
+
             </header>
 
-            <section class="company-list">
-                <div class="list-header">
-                    <h2>Scheduled Sessions</h2>
-                    <div class="search-box">
-                        <input type="text" placeholder="Search Students" />
-                        <button> Search
-                        </button>
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Session No.</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Company</th>
-                            <th>Description</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>2024/10/05</td>
-                            <td>11.00am</td>
-                            <td>IFS</td>
-                            <td>entrepreneurship</td>
-                            
-                            <!-- <td><button class="view-btn">View</button></td> -->
-                            <!-- View -> Go to the student profile -->
-                        </tr>
-                        
-                    </tbody>
-                </table>
+            <!-- <section class="company-list"> -->
 
-            </section>
+            <div class="session-card-grid">
+                <?php if (!empty($sessionData)) : ?>
+                    <?php foreach ($sessionData as $session) : ?>
+                        <div class="session-card">
+                            <div class="card-header">
+                                <h3><?= htmlspecialchars($session->session_name) ?></h3>
+                                <span class="session-id"><?= htmlspecialchars($session->session_id) ?></span>
+                            </div>
+                            <div class="card-body">
+    <p><strong>Hall:</strong> <?= htmlspecialchars($session->hall_number) ?></p>
+    <p><strong>Date:</strong> <?= htmlspecialchars($session->session_date) ?></p>
+    <p><strong>Time:</strong> <?= htmlspecialchars($session->time_slot) ?></p>
+    <p><strong>Company:</strong> <?= htmlspecialchars($session->Name) ?></p>
 
-            
+    <div class="description-toggle">
+        <button class="expand-btn">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="description" style="display: none;">
+            <p><strong>Description:</strong> <?= htmlspecialchars($session->description) ?></p>
+        </div>
+    </div>
+</div>
+
+                        </div>
+
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p class="no-session">No sessions scheduled.</p>
+                <?php endif; ?>
+            </div>
+
+
+            <!-- </section> -->
+
+
 
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <script>
+    document.querySelectorAll('.expand-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const description = button.closest('.description-toggle').querySelector('.description');
+            const icon = button.querySelector('i');
+            
+            if (description.style.display === 'block') {
+                description.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                description.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        });
+    });
+</script>
+
 
 </body>
 

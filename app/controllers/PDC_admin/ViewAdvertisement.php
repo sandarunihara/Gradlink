@@ -35,12 +35,21 @@ class ViewAdvertisement {
 
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
-            redirect('PDC_admin/AdminAdvertisementOverview/dashboard');
-            exit;
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'Advertisement successfully deactivated'
+            ];
+
         }
         else{
-            echo "Error: Could not deactivate the advertisement.";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not deactivate the advertisement.'
+            ];
         }
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     public function activate($advertisementId , $action){
@@ -55,11 +64,20 @@ class ViewAdvertisement {
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId);
-            redirect('PDC_admin/AdminAdvertisementOverview/deactive');
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'Advertisement successfully activated'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
         else{
-            echo "Error: Could not activate the advertisement.";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not activate the advertisement.'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
         }
     }
 
@@ -75,11 +93,20 @@ class ViewAdvertisement {
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
-            redirect('PDC_admin/PendingAdvertisement/dashboard');
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'Advertisement successfully rejected'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
         else{
-            echo "Error: Could not reject the advertisement.";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not reject the advertisement.'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
         }
     }
 

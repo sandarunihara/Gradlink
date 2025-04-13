@@ -32,7 +32,7 @@
                 <div id="applications-list" class="tab-pane active ">
 
                     <!-- Working Students -->
-                    <section class="company-list">
+                    <!-- <section class="company-list"> -->
                         <div class="list-header">
                             <h2>Recruited Students</h2>
 
@@ -46,24 +46,34 @@
                                     <th>Position</th>
                                     <th>Started Date</th>
                                     <th>Ending Date</th>
-                                    <th></th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if (!empty($data)): ?>
+                                    <?php foreach ($data as $row) : ?>
                                 <tr>
-                                    <td>2022/CS/123</td>
-                                    <td>T.Y. Silva</td>
-                                    <td>WSO2</td>
-                                    <td>Software Engineer</td>
-                                    <td>2024/10/14</td>
-                                    <td>2025/04/14</td>
-                                    <td><button class="view-btn">View Profile</button></td>
+                                    <td><?= htmlspecialchars($row->StudentId) ?></td>
+                                    <td><?= htmlspecialchars($row->StudentName) ?></td>
+                                    <td><?= htmlspecialchars($row->DegreeName) ?></td>
+                                    <td><?= htmlspecialchars($row->CompanyName) ?></td>
+                                    <td><?= htmlspecialchars($row->position) ?></td>
+                                    <td><?= htmlspecialchars($row->advertisementId) ?></td>
+                                    <td><?= htmlspecialchars($row->Jobstatus) ?></td>
+                                    
                                 </tr>
-                                <!-- Add more rows as needed -->
+                            <?php endforeach; ?>
+
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Working Students Found</td>
+                                    </tr>
+                                <?php endif; ?>
+
                             </tbody>
                         </table>
 
-                    </section>
+                    <!-- </section> -->
                 </div>
             </div>
 

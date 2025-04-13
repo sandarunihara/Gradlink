@@ -1,5 +1,12 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require "../app/libs/SMTP.php";
+require "../app/libs/PHPMailer.php";
+require "../app/libs/Exception.php";
+
     class ViewStudent{
         use Controller;
 
@@ -11,6 +18,7 @@
             //$id = $studentData[0] -> StudentId;
             $studentapply = $applyDetails->findAppliedCompanies($studentId);
             //var_dump($studentapply);
+            $count = $applyDetails->noOfAppliedCompanies($studentId);
 
             $data = [
                 'StudentId'=> $studentData -> StudentId,
@@ -22,7 +30,9 @@
                 'ContactNum'=> $studentData -> ContactNum,
                 'Github'=> $studentData -> Github,
                 'Linkedin'=> $studentData -> Linkedin,
-                'applications'=> []
+                'noOfAppliedAds' => $count,
+                'applications'=> [],
+                'block' => $studentData->block
                 
             ];
 
@@ -59,7 +69,7 @@
         {
             $model = new student;
             $errors = [];
-
+            //var_dump($_POST);
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = [
                     'StudentId' => $_POST['StudentId'],
@@ -68,66 +78,239 @@
                     'Email' => $_POST['Email'],
                     'ContactNum' => $_POST['ContactNum'],
                     'DegreeName' => $_POST['DegreeName'],
-                    'Status' => $_POST['Status']
+                    'Status' => $_POST['Status'],
+                    'ShortDesc' => $_POST['ShortDesc'],
                 ];
 
+                $current = $model->find($studentId);
 
-                if ($model->validate($data)) {
-                    $updatedStatus = $model->update($studentId, $data, 'StudentId');
+                $changedData = [];
 
-                    if ($updatedStatus && $updatedStatus['status'] === 'success') {
-                        redirect('PDC_admin/AdminStudentOverview/dashboard');
-                        exit;
-                    } else {
-                        $errors['general'] = "Error: Could not update the student.";
+                $fields = [
+                    'StudentId',
+                    'NIC',
+                    'Name',
+                    'Email',
+                    'ContactNum',
+                    'DegreeName',
+                    'Status',
+                    'ShortDesc'
+                ];
+
+                foreach($fields as $field){
+                    if(isset($_POST[$field]) && $_POST[$field] != $current->$field){
+                        $changedData[$field] = $_POST[$field];
                     }
+                }
+
+                if (empty($changedData)) {
+                    $_SESSION['flash_message'] = [
+                        'type' => 'info',
+                        'message' => 'No changes were made'
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
+                }
+
+                if ($model->validate($changedData , true)) {
+                    $checkFields = array_intersect(['StudentId', 'NIC', 'Email', 'Name'], array_keys($changedData));
+                    $conflict = false;
+                    $conflictMessage = [];
+
+                    //show($checkFields);
+
+                    foreach ($checkFields as $field) {
+                        $existing = $model->firstMatch([$field => $changedData[$field]]);
+                        if ($existing && $existing->StudentId != $studentId) {
+                            $conflict = true;
+                            $conflictMessage[] = "The $field is already in use.";
+                        }
+                    }
+
+                    // var_dump($conflictMessage);
+                    // var_dump($conflict);    
+                    // var_dump($existing);
+                        
+                if(!$conflict){
+                    $updatedStatus = $model->update($studentId, $changedData, 'StudentId');
+                        if ($updatedStatus && $updatedStatus['status'] === 'success'){
+                            $_SESSION['flash_message'] = [
+                                'type' => 'success',
+                                'message' => 'Student successfully Updated'
+                            ];
+
+                            if(isset($changedData['StudentId'])){
+                                $new = $changedData['StudentId'];
+                                header('Location: ' . ROOT . '/PDC_admin/ViewStudent/show/' . $new);
+                                exit;
+                            };
+                        }
+                        else{
+                            $_SESSION['flash_message'] = [
+                                'type' => 'error',
+                                'message' => 'Error: Could not update the student.'
+                            ];
+                        }
+                }
+                else{
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Student cannot be updated: ' . implode(', ', $conflictMessage)
+                    ];
+                }
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Validation failed for the provided data'
+                ];
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+            }
+        }
+
+        public function block() {
+            $model = new student;
+            $studentId = $_POST['StudentId'];
+            $reason = $_POST['block_reason'];
+            
+            try {
+                $studentData = $model->find($studentId);
+                
+                if (!$studentData) {
+                    throw new Exception("Student not found");
+                }
+        
+                if (isset($studentData->block) && $studentData->block == 1) {
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Student is already blocked'
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
+                }
+
+                $updatedStatus = $model->update($studentId, ['block' => 1], 'StudentId');
+                
+                if ($updatedStatus['status'] === 'success') {
+                    $this->sendEmail($studentData->Email, $studentId, $reason);
+                    
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Student blocked successfully'
+                    ];
                 } else {
-                    $errors = $model->errors;
+                    throw new Exception($updatedStatus['message']);
                 }
+                
+            } catch (Exception $e) {
+                show($e->getMessage());
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Failed to block student: ' . $e->getMessage()
+                ];
             }
-
-            $data = $model->find($studentId);
-            if (!$data) {
-                $errors['general'] = "No student data found for the given ID.";
-            }
-
-            $this->view('PDC_admin/Student/StudentView', ['student' => $data, 'errors' => $errors]);
-
+            
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
         }
 
-        public function block($studentId){
-            $model = new student;
-            $studentData = $model->find($studentId);
-            if($studentData->Status != 'Blocked'){
-                $data = [
-                    'Status' => 'Blocked'
-                ];
-                $updatedStatus = $model->update($studentId, $data, 'StudentId');
-                if($updatedStatus && $updatedStatus['status'] === 'success'){
-                    redirect('PDC_admin/BlockStudent/dashboard');
-                    exit;
+        private function sendEmail($email, $studentId, $reason) {
+            try {
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+                $mail->SMTPAuth = true;
+                $mail->Username = 'gradlink6@gmail.com'; // Your email
+                $mail->Password = 'sesk zjnj mhvb uxlh'; // Your app password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+                $mail->Port = 587;
+        
+                $mail->setFrom('gradlink6@gmail.com', 'Gradlink');
+                $mail->addAddress($email);
+        
+                $mail->isHTML(true);
+                $mail->Subject = 'Student Blocked';
+                $mail->Body = "
+                    <html>
+                        <head>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    line-height: 1.6;
+                                    color: #333;
+                                    margin: 0;
+                                    padding: 0;
+                                    background-color: #f9f9f9;
+                                }
+                                .container {
+                                    max-width: 600px;
+                                    margin: 30px auto;
+                                    padding: 20px;
+                                    background: #ffffff;
+                                    border-radius: 8px;
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                                }
+                                .header {
+                                    background: #f7e6e5;
+                                    color: red;
+                                    padding: 15px;
+                                    text-align: center;
+                                    border-radius: 8px 8px 0 0;
+                                }
+                                .footer {
+                                    text-align: center;
+                                    font-size: 12px;
+                                    margin-top: 20px;
+                                    color: #777;
+                                }
+                                .content {
+                                    padding: 20px;
+                                    font-size: 16px;
+                                    color: #333;
+                                    line-height: 1.6;
+                                }
+                                .reason {
+                                    padding: 15px;
+                                    border-radius: 5px;
+                                    margin-top: 15px;
+                                    color: black;
+                                    font-weight: bold;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class='container'>
+                                <div class='header'>
+                                    <h1>Company Blocked Notification</h1>
+                                </div>
+                                <div class='content'>
+                                    <p>Dear User,</p>
+                                    <p>We are writing to inform you that your with Student ID <strong>{$studentId}</strong> has been blocked in our system.</p>
+                                    <p><strong>Reason for Blocking:</strong></p>
+                                    <div class='reason'>
+                                        {$reason}
+                                    </div>
+                                    <p>If you believe this is an error or need more information, please contact our support team.</p>
+                                    <p>Thank you for your understanding.</p>
+                                </div>
+                                <div class='footer'>
+                                    &copy; 2025 GRADLINK. All rights reserved.
+                                </div>
+                            </div>
+                        </body>
+                    </html>
+                ";
+        
+                if ($mail->send()) {
+                    echo "Email sent successfully to {$email}";
+                } else {
+                    echo "Email could not be sent. Error: {$mail->ErrorInfo}";
                 }
-                else{
-                    echo "Error: Could not block the student.Already Blocked";
-                }
-            }
-        }
-
-        public function unblock($studentId){
-            $model = new student;
-            $studentData = $model->find($studentId);
-            if($studentData->Status == 'Blocked'){
-                $data = [
-                    'Status' => 'Not Applied'
-                ];
-                $updatedStatus = $model->update($studentId, $data, 'StudentId');
-                if($updatedStatus && $updatedStatus['status'] === 'success'){
-                    redirect('PDC_admin/AdminStudentOverview/dashboard');
-                    exit;
-                }
-                else{
-                    echo "Error: Could not unblock the student.";
-                }
+        
+            } catch (Exception $e) {
+                echo "Email could not be sent. Error: {$mail->ErrorInfo}";
             }
         }
 

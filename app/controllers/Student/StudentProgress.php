@@ -69,7 +69,7 @@ class StudentProgress{
             }else{
                 $_SESSION['isTypeError'] = 1;
             }
-            header('location: ' . ROOT . '/Student/StudentProgress/progressReport/'); 
+            redirect('Student/StudentProgress/progressReport');
         }
     }
 

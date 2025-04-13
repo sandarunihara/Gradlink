@@ -1,12 +1,14 @@
 <?php
 
-class PDC_Session {
+class PDC_Session
+{
     use Model;
 
     protected $table = 'session';
 
-    public function validate($data) {
-    $this->errors = [];
+    public function validate($data)
+    {
+        $this->errors = [];
         if (empty($data['session_name']) || strlen($data['session_name']) < 3) {
             $this->errors['session_name'] = "Session name must be at least 3 characters long.";
         }
@@ -35,30 +37,44 @@ class PDC_Session {
         return $result;
     }
 
-    public function find($id){
+    public function find($id)
+    {
         $query = "SELECT * FROM $this->table WHERE session_id = :id";
         $params = [':id' => $id];
         $result = $this->query($query, $params);
         return $result ? $result[0] : null;
     }
 
-    public function remove($id){
+    public function remove($id)
+    {
         $query = "DELETE FROM $this->table WHERE session_id = :id";
         $params = [':id' => $id];
         return $this->query($query, $params);
     }
 
-    public function findby($column,$data){
+    public function findby($column, $data)
+    {
         $query = "SELECT * FROM $this->table WHERE $column = :data LIMIT 1";
         $params = [':data' => $data];
         $result = $this->query($query, $params);
         return $result ? $result[0] : false;
     }
 
-    public function findSessions($date){
+    public function findSessions($date)
+    {
         $query = "SELECT * FROM session WHERE session_date = :date OR session_date > :date";
         $params = [':date' => $date];
         $result = $this->query($query, $params);
+        return $result ? $result : false;
+    }
+
+    public function findSessionWithCompany()
+    {
+        $query = "SELECT session.*, company.Name 
+        FROM 
+        session 
+        JOIN company ON session.CompanyId = company.CompanyId";
+        $result = $this->query($query);
         return $result ? $result : false;
     }
 }

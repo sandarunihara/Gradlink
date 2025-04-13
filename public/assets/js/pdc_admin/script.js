@@ -243,9 +243,27 @@ function searchCompany() {
     }
 }
 
-function blockStudent(studentId){
-    if(confirm("Are you sure you want to block this student?")){
-        window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/block/" + studentId;
+function searchAdd(){
+    const query = document.getElementById('search-query').value.toLowerCase();
+    const tableBody = document.getElementById('add-table-body');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].innerText.toLowerCase().includes(query)) {
+                match = true;
+                break;
+            }
+        }
+
+        if (match) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
     }
 }
 
@@ -325,23 +343,130 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function updateDateTime() {
-    const now = new Date();
+// function updateDateTime() {
+//     const now = new Date();
 
-    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+//     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+//     const formattedDate = now.toLocaleDateString('en-US', dateOptions);
 
-    const formattedTime = now.toLocaleTimeString('en-US', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit', 
-        hour12: true 
+//     const formattedTime = now.toLocaleTimeString('en-US', { 
+//         hour: '2-digit', 
+//         minute: '2-digit', 
+//         second: '2-digit', 
+//         hour12: true 
+//     });
+
+//     document.getElementById('date-time').textContent = `${formattedDate} | ${formattedTime}`;
+// }
+
+// setInterval(updateDateTime, 1000);
+
+
+// updateDateTime();
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const studentRows = document.querySelectorAll('tbody tr');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.blur();
+            });
+
+            this.classList.add('active');
+            
+            const degreeToShow = this.getAttribute('data-degree');
+            const searchTerm = document.querySelector('.search-box input').value.toLowerCase();
+            
+            studentRows.forEach(row => {
+                const degreeCell = row.querySelector('td:nth-child(3)');
+                const nameCell = row.querySelector('td:nth-child(2)');
+                const idCell = row.querySelector('td:nth-child(1)');
+                
+                const matchesDegree = degreeToShow === 'all' || 
+                                    degreeCell.textContent.trim() === degreeToShow;
+                
+                const matchesSearch = searchTerm === '' ||
+                                    nameCell.textContent.toLowerCase().includes(searchTerm) ||
+                                    idCell.textContent.toLowerCase().includes(searchTerm);
+
+                console.log("Degree to show:", degreeToShow);
+                console.log("Cell content:", degreeCell.textContent.trim());
+                
+                if (matchesDegree && matchesSearch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    const searchInput = document.querySelector('.search-box input');
+    searchInput.addEventListener('input', function() {
+        document.querySelector('.filter-btn.active').click();
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn-add');
+    const degreeFilterButtons = document.querySelectorAll('.degree-filter-btn');
+    const addRows = document.querySelectorAll('tbody tr');
+    const searchInput = document.querySelector('.search-box-add input');
+
+    let currentStatus = 'all';
+    let currentDegree = 'all';
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        addRows.forEach(row => {
+            const statusCell = row.querySelector('td:nth-child(6)');
+            const degreeCell = row.querySelector('td:nth-child(3)');
+            const nameCell = row.querySelector('td:nth-child(2)');
+            const idCell = row.querySelector('td:nth-child(1)');
+
+            const matchesStatus = 
+                currentStatus === 'all' || 
+                statusCell.textContent.trim() === currentStatus;
+
+            const matchesDegree = 
+                currentDegree === 'all' || 
+                degreeCell.textContent.trim() === currentDegree;
+
+            const matchesSearch = 
+                searchTerm === '' ||
+                nameCell.textContent.toLowerCase().includes(searchTerm) ||
+                idCell.textContent.toLowerCase().includes(searchTerm);
+
+            row.style.display = (matchesStatus && matchesDegree && matchesSearch) ? '' : 'none';
+        });
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentStatus = this.getAttribute('data-status') || 'all';
+            applyFilters();
+        });
     });
 
-    document.getElementById('date-time').textContent = `${formattedDate} | ${formattedTime}`;
-}
+    degreeFilterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            degreeFilterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentDegree = this.getAttribute('data-degree') || 'all';
+            applyFilters();
+        });
+    });
 
-setInterval(updateDateTime, 1000);
+    searchInput.addEventListener('input', applyFilters);
 
-
-updateDateTime();
+    document.querySelector('.filter-btn-add[data-status="all"]').click();
+});

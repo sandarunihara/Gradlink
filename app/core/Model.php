@@ -46,6 +46,36 @@
             return $this->query($query, $data);
         }
 
+        public function orWhere($data, $data_not = [], $order_column = '', $order_type = 'ASC') {
+            $keys = array_keys($data);
+            $keys_not = array_keys($data_not);
+            $query = "SELECT * FROM $this->table WHERE ";
+            
+            foreach ($keys as $key) {
+                $query .= $key . " = :" . $key . " OR ";
+            }
+            
+            foreach ($keys_not as $key) {
+                $query .= $key . " != :" . $key . " OR ";
+            }
+            
+            $query = trim($query, " OR ");
+            
+            if (!empty($order_column) && $order_type != 'do_not_order') {
+                $query .= " ORDER BY $order_column $order_type";
+            }
+            
+            if ($this->limit !== false) {
+                $query .= " LIMIT $this->limit";
+            }
+            if ($this->offset !== false) {
+                $query .= " OFFSET $this->offset";
+            }
+            
+            $merged_data = array_merge($data, $data_not);
+            return $this->query($query, $merged_data);
+        }
+
         public function first($data, $data_not = []){
             $keys = array_keys($data);
             $keys_not = array_keys($data_not);
@@ -98,23 +128,41 @@
                         }
                     }
                 }
-        
-                $keys = array_keys($data);
-                $query = "UPDATE $this->table SET ";
-        
-                foreach ($keys as $key) {
-                    $query .= $key . " = :$key, ";
+
+                if (isset($data['StudentId'])) {
+                    $new_id = $data['StudentId'];
+                    unset($data['StudentId']);
+                
+                    $data['StudentId'] = $new_id;
+                    $query = "UPDATE $this->table SET ";
+                
+                    foreach ($data as $key => $value) {
+                        $query .= "$key = :$key, ";
+                    }
+                
+                    $query = rtrim($query, ", ");
+                    $query .= " WHERE $id_column = :old_id";
+                
+                    $data['old_id'] = $id;
+                }
+                
+                
+                else{
+                    $query = "UPDATE $this->table SET ";
+
+                    foreach ($data as $key => $value) {
+                        $query .= "$key = :$key, ";
+                    }
+                    
+                    $query = rtrim($query, ", ");
+
+                    $query .= " WHERE $id_column = :$id_column";
+                    $data[$id_column] = $id;
+                    //show($data);
+
                 }
         
-                $query = trim($query, ", ");
-                $query .= " WHERE $id_column = :$id_column";
-        
-                // Add the ID to the data array
-                $data[$id_column] = $id;
-        
-                // Execute the query
                 $this->query($query, $data);
-        
                 // Return a success message if update is successful
                 return [
                     'status' => 'success',

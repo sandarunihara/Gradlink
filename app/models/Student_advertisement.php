@@ -22,7 +22,8 @@ class student_advertisement
 					FROM studentadvertisement sa
 					JOIN student s ON sa.StudentId = s.StudentId 
 					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
-					JOIN company c ON a.CompanyId = c.CompanyId;
+					JOIN company c ON a.CompanyId = c.CompanyId
+					WHERE sa.Jobstatus != 'Recruit';
 					";
 		$result = $this->query($query);
 		if($result){
@@ -98,6 +99,17 @@ class student_advertisement
 
 		return $result;
 	}
+
+	function noOfAppliedCompanies($studentId){
+		$query = "SELECT COUNT(*) AS count FROM studentadvertisement WHERE StudentId = :StudentId AND JobStatus != 'Reject'";
+		$params = [':StudentId' => $studentId];
+		$result = $this->query($query, $params);
+		return $result[0]->count;
+	}
+
+
+
+
 	function findRecruitCompany($studentId){
 		$query ="SELECT
 					advertisement.CompanyId
@@ -114,25 +126,39 @@ class student_advertisement
 		return $result[0] -> CompanyId;
 	}
 
-	public function find($data) {
-        // Check if $data is an associative array or a single value
-        if (is_array($data)) {
-            $keys = array_keys($data);
-            $query = "SELECT * FROM studentadvertisement WHERE ";
-        
-            foreach ($keys as $key) {
-                $query .= $key . " = :" . $key . " AND ";
-            }
-        
-            $query = trim($query, "AND "); // Trim the trailing "AND"
-            
-            $result = $this->query($query, $data);
-        } else {
-            // Assume $data is a single ID (like CompanyId)
-            $query = "SELECT * FROM studentadvertisement WHERE StudentId = :StudentId";
-            $result = $this->query($query, ['StudentId' => $data]);
-        }
-    
-        return $result;
-    }
+	function findExceptRecruited(){
+		$query = "SELECT 
+    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail
+					FROM studentadvertisement sa
+					JOIN student s ON sa.StudentId = s.StudentId 
+					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
+					JOIN company c ON a.CompanyId = c.CompanyId
+					WHERE sa.Jobstatus != 'Recruit';
+					";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
+	function findRecruitedList(){
+		$query = "SELECT 
+    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail
+					FROM studentadvertisement sa
+					JOIN student s ON sa.StudentId = s.StudentId 
+					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
+					JOIN company c ON a.CompanyId = c.CompanyId
+					WHERE sa.Jobstatus = 'Recruit';
+					";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
 }

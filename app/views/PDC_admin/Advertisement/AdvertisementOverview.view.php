@@ -23,9 +23,8 @@
                 </div>
             </header>
 
-            <div class="tab">
-                <?php $activeTab = 'advertisement-list'; ?>
-                <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
+            <div class="tabs">
+                <?php $this->renderPDC_adminTabs("advertisementTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
             
@@ -33,11 +32,10 @@
                 <div class="tab-pane active" id="advertisement-list">
                 <section class="company-list">
                     <div class="list-header">
-                        <div class="search-box">
-                            <input type="text" placeholder="Search Company" />
-                            <button> Search
-                            </button>
-                        </div>
+                            <div class="search-box">
+                                <input type="text" id='search-query' placeholder="Search Advertisement" />
+                                <button onclick="searchAdd()">Search</button>
+                            </div>
                     </div>
                     <table>
                         <thead>
@@ -50,7 +48,7 @@
                                 <th>Action</th> <!-- Added a column header for the button -->
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id='add-table-body'>
                             <?php if($data == null) : ?>
                                 <tr>
                                     <td colspan="6">No advertisements found</td>

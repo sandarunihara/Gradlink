@@ -78,36 +78,37 @@ class AddCompany{
                     
                     if ($result) {
 
-                        $getin = $this->sendEmail($email, $companyId);
-                        //var_dump($getin);
-
-                        echo "<script>alert('Company added successfully.');
-                                window.location.href = '" . ROOT . "/PDC_admin/PendingCompany/dashboard';
-                        </script>";
-
-                        echo "<script>
-                                alert('Company added successfully.');
-                                window.location.href = '" . ROOT . "/PDC_admin/PendingCompany/dashboard';
-                              </script>";
-
+                        $this->sendEmail($email, $companyId);
+                        $_SESSION['flash_message'] = [
+                            'type' => 'success',
+                            'message' => 'Company successfully Added'
+                        ];
                     } else {
-                        echo "<script>alert('Problem in inserting.');
-                                window.location.href = '/PDC_admin/PendingCompany/dashboard';
-                        </script>";
-
-                        echo "<script>alert('Company is already registered.');</script>";
+                        $_SESSION['flash_message'] = [
+                            'type' => 'error',
+                            'message' => 'Failed to add company'
+                        ];
                     }
                 } else {
-                    echo "<script>alert('Company is already registered.');</script>";
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Company is already Added'
+                    ];
                 }
             } else {
-                echo "Validation failed";
-                $errors = $model->errors;
-                $this->view('PDC_admin/Company/AddCompany', ['errors' => $errors]);
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Validation Failed'
+                ];
             }
         } else {
-            echo "Error";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error Occured'
+            ];
         }
+        header('Location: /Gradlink/public/PDC_admin/PendingCompany/dashboard');
+        exit;
     }
 
     private function sendEmail($email, $companyId){
@@ -175,14 +176,14 @@ class AddCompany{
             ";
 
             if($mail->send()){
-                echo "Email sent successfully to {$email}";
+                true;
             }
             else{
-                echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+                false;
             }
             
         } catch (Exception $e) {
-            echo "Email could not be sent. Error: {$mail->ErrorInfo}";
+            false;
         }
     }
 }

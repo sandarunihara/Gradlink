@@ -432,7 +432,7 @@ class POP3
 
     /**
      * POP3 connection error handler.
-     *
+     *  
      * @param int    $errno
      * @param string $errstr
      * @param string $errfile

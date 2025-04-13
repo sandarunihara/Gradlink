@@ -13,6 +13,21 @@
 
     <body>
 
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+
+
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="main-content">
@@ -23,10 +38,9 @@
             </header>
 
             <div class="tabs">
-                <?php $activeTab = 'pending-companies'; ?>
-                <?php $this->renderPDC_adminTabs("companyTabs") ?>
-
+                <?php $this->renderPDC_adminTabs("companyTabs", ['activeTab' => $activeTab]); ?>
             </div>
+
             
             <div class="tab-content">
                 
@@ -77,6 +91,7 @@
     </div>
 
         <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
+        <script src="<?= ROOT ?>/assets/js/toast.js"></script>
 
 
     </body>

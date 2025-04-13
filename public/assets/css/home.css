@@ -1,74 +1,121 @@
-/* General Reset */
+/* Modern CSS Reset */
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #f8fafc;
+    --text-color: #1e293b;
+    --text-light: #64748b;
+    --light-gray: #e2e8f0;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
-/* Body Styling */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: #f8f9fa;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--secondary-color);
+    overflow-x: hidden;
 }
 
-/* Header Section */
+/* Container */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
 .header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px 0;
+}
+
+.header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo Section */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Logo Styles */
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 20px;
 }
 
 .logo {
     display: flex;
     align-items: center;
     font-size: 1.8rem;
-    font-weight: bold;
-    color: #0984E3;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
 }
 
 .logo-icon {
-    background-color: #0984E3;
-    color: #fff;
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    line-height: 35px;
-    border-radius: 50%;
-    margin-right: 8px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-right: 10px;
+    font-weight: 600;
 }
 
-.university-logo img {
-    width:60px;
-    height: auto;
+/* Social Icons */
+.social {
+    display: flex;
+    gap: 15px;
 }
 
-/* Social Media Section */
 .social a {
-    color: #333;
-    font-size: 1.2rem;
-    margin-left: 15px;
-    transition: color 0.3s;
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: var(--transition);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .social a:hover {
-    color: #0984E3;
+    color: var(--primary-color);
+    background-color: rgba(37, 99, 235, 0.1);
 }
 
-/* Contact Info Section */
+/* Contact Info */
 .contact-info {
     display: flex;
-    gap: 30px;
+    gap: 25px;
 }
 
 .contact, .mail {
@@ -76,65 +123,269 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 0.9rem;
+    color: var(--text-light);
 }
 
 .contact i, .mail i {
-    color: #0984E3;
+    color: var(--primary-color);
+    font-size: 1rem;
 }
 
-/* Content Section */
-.content {
-    display: flex;
-    justify-content: space-between;
+/* Hero Section */
+.hero {
+    padding: 80px 0;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
     align-items: center;
-    margin: 50px auto;
-    max-width: 1200px;
-    padding: 0 30px;
 }
 
-.text-section {
-    max-width: 50%;
+.hero-text {
+    max-width: 550px;
+}
+
+.hero-image {
+    position: relative;
+}
+
+.featured-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 2;
+}
+
+.image-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.8) 100%);
+    border-radius: 12px;
+    top: -15px;
+    right: -15px;
+    z-index: 1;
 }
 
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: #333;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
 }
 
 .highlight {
-    color: #0984E3;
+    color: var(--primary-color);
+    position: relative;
 }
 
-.description {
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: rgba(37, 99, 235, 0.2);
+    z-index: -1;
+    border-radius: 4px;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    max-width: 90%;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
     font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: #555;
-}
-
-/* Login Button */
-.login {
-    display: flex;
-    margin-top: 15px;
-}
-
-.login button {
-    padding: 10px 15px;
     border: none;
-    background-color: #0984E3;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 5px;
     cursor: pointer;
 }
 
-.login button:hover {
-    background-color: #0b76c9;
+.btn i {
+    margin-left: 8px;
+    font-size: 0.9rem;
 }
 
-/* Image Section */
-.image-section img {
-    max-width: 100%;
-    height: auto;
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    margin-left: 15px;
+}
+
+.btn-secondary:hover {
+    color: var(--primary-dark);
+}
+
+.cta-buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* Trust Badges */
+.trust-badges {
+    background-color: var(--white);
+    padding: 30px 0;
+    border-top: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.trust-badges p {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.badges {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.badge-item {
+    font-weight: 600;
+    color: var(--text-light);
+    opacity: 0.8;
+    transition: var(--transition);
+}
+
+.badge-item:hover {
+    color: var(--primary-color);
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .hero-text {
+        max-width: 100%;
+        text-align: center;
+    }
+    
+    .hero-description {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .stats {
+        justify-content: center;
+    }
+    
+    .image-overlay {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .header-right {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .contact-info {
+        gap: 15px;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn-secondary {
+        margin-left: 0;
+    }
+    
+    .stats {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 60px 0;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
 }

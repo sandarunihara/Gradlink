@@ -7,7 +7,24 @@
             $model = new Student_advertisement;
             $data = $model->findall();
             //show($data);
-            $this-> view('PDC_admin/Application/ApplicationOverview' , $data);
+            $this-> view('PDC_admin/Application/ApplicationOverview' , 
+            [
+                'data' => $data,
+                'activeTab' => 'applications'
+            ] 
+            );
+        }
+
+        public function working(){
+            $model = new Student_advertisement;
+            $data = $model->findRecruitedList();
+            //show($data);
+            $this-> view('PDC_admin/Application/Working' , 
+            [
+                'data' => $data,
+                'activeTab' => 'working-students'
+            ] 
+            );
         }
 
         public function show($studentId , $advertisementId){

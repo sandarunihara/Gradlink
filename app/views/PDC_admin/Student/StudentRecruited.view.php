@@ -17,7 +17,7 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Pending Students</h1>
+                    <h1>Recruited Students</h1>
                 </div>
             </header>
             
@@ -26,7 +26,7 @@
             </div>
 
             <div class="tab-content">
-                <div id="pending-Students" class="tab-pane active">
+                <div id="recruited-Students" class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
                             <div class="search-box">
