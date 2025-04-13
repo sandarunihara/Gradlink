@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/overviewSession.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
-
 </head>
 
 <body>
@@ -21,10 +19,6 @@
                     <h1>Sessions</h1>
                 </div>
             </header>
-
-            <div class="tabs">
-                <?php $this->renderPDC_adminTabs("sessionTabs", ['activeTab' => $activeTab]); ?>
-            </div>
 
             <section class="company-list">
                 <div class="list-header">
