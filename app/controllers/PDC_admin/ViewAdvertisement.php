@@ -35,12 +35,21 @@ class ViewAdvertisement {
 
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
-            redirect('PDC_admin/AdminAdvertisementOverview/dashboard');
-            exit;
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'Student successfully Updated'
+            ];
+
         }
         else{
-            echo "Error: Could not deactivate the advertisement.";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not deactivate the advertisement.'
+            ];
         }
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     public function activate($advertisementId , $action){
