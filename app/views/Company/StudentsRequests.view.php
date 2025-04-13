@@ -126,6 +126,10 @@
                                                         $statusText = 'Interview Scheduled';
                                                         $statusClass = 'Sendemail';
                                                         break;
+                                                    case 'Interview Expired':
+                                                        $statusText = 'Interview Expired';
+                                                        $statusClass = 'Sendemail';
+                                                        break;
                                                     case 'Shortlist':
                                                         $statusText = 'Shortlisted';
                                                         $statusClass = 'Shortlist';
@@ -135,7 +139,6 @@
                                                         $statusClass = 'Pending';
                                                         break;
                                                 }
-
 
                                                 ?>
                                                 <tr class="sr_row">
@@ -166,7 +169,7 @@
                                                             <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="profile-link">
                                                                 <button class="view-profile-btn-with-remove">View Profile</button>
                                                             </a>
-                                                            
+
                                                             <!-- <i class="removebtn fas fa-trash-alt fa-trash-alty"></i> -->
                                                         </td>
                                                     <?php endif ?>
@@ -182,6 +185,26 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (isset($removedlist) && !empty($removedlist)): ?>
+                        <?php
+                        $names = array_map(function ($student) {
+                            return htmlspecialchars($student['Student Name']);
+                        }, $removedlist);
+
+                        $nameList = implode(', ', $names);
+                        ?>
+
+                        <div class="removed-message">
+                            <strong><?php echo $nameList; ?></strong> have been recruited by another company and are therefore no longer under consideration.
+                            <form method="POST" action="">
+
+                                <button type="submit" value="close" name="submit">sub</button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+
+
+
                 </div>
             </div>
         </div>

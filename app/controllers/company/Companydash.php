@@ -223,8 +223,17 @@ class Companydash
                     if (!empty($adinterview)) {
                         foreach ($adinterview as $inter) {
                             if ($inter->Date < $TodayDate) {
-                                $interviewmodel->delete($inter->InterviewId, 'InterviewId');
-                                $appliedadmodal->update($inter->StudentId, $inter->advertisementId, ['Jobstatus' => 'Reject']);
+                                $adkeys=[
+                                    'StudentId'=>$item->StudentId,
+                                    'advertisementId'=>$item->advertisementId
+                                ];
+                                $da=$appliedadmodal->find($adkeys,'studentadvertisement');
+                                if($da[0]->Jobstatus == 'Interview Scheduled'){
+                                    $appliedadmodal->update($item->StudentId,$item->advertisementId,['Jobstatus'=>'Interview Expired']);
+                                }
+                                if($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit'){
+                                    $interviewmodel->delete($item->InterviewId,'InterviewId');
+                                }
                             }
                         }
                     }
