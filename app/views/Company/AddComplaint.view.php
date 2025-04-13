@@ -26,6 +26,7 @@
                 </div>
                 <div class="m_main">
                     <div class="complaint-navbar">
+                        
                         <div class="headcontainer">
                             <div class="m_content">
                                 <a href="http://localhost/Gradlink/public/company/Complaint/dashboard" class="backbtn">
