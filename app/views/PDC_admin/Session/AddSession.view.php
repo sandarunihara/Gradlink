@@ -6,34 +6,245 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Session</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/addSession.css?v=<?= time() ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
 
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .content {
+            width: 95%;
+            padding: 40px 5%;
+            background-color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            margin-left: 5%;
+            height: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-right img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-info span {
+            font-weight: 600;
+        }
+
+        .user-info small {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .company-info {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .company-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            background-color: #fafafa;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2b36b7;
+            outline: none;
+            box-shadow: 0 0 8px rgba(43, 54, 183, 0.5);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: #1e3c72;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input:focus::placeholder {
+            color: transparent;
+        }
+
+        .error {
+            color: #ef4444;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .button-line {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            grid-column: 1 / -1;
+        }
+
+        .back-btn,
+        .confirm-btn {
+            padding: 16px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn:hover,
+        .confirm-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:active,
+        .confirm-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-btn {
+            background: #e5e7eb;
+            color: #4b5563;
+            width: 240px;
+        }
+
+        .back-btn:hover {
+            background: #d1d5db;
+        }
+
+        .confirm-btn {
+            background: #1e3c72;
+            color: white;
+            width: 240px;
+        }
+
+        .confirm-btn:hover {
+            background: #172554;
+        }
+
+        .format-hint {
+            display: block;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .button-line {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .back-btn,
+            .confirm-btn {
+                width: 100%;
+            }
+            
+            .company-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
+        <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="content">
             <header class="header">
                 <div class="header-left">
-                    <i class="material-icons">menu</i>
-                    <h1>Sessions</h1>
-                </div>
-
-                <div class="header-right">
-                    <i class="material-icons">notifications</i>
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
-
-                    <div class="user-info">
-                        <span>Jonitha Cathrine</span>
-                        <small>Admin</small>
-                    </div>
+                    <i class="material-icons">event</i>
+                    <h1>Create Session</h1>
                 </div>
             </header>
 
             <section class="company-info">
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submit" id="session-form">
-
-
                     <div class="form-group">
                         <label for="session-name">Session Name</label>
                         <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
@@ -73,10 +284,13 @@
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
                         <input type="text" id="contact-number" name="contact_number" placeholder="Contact Number" 
-                            value="<?= htmlspecialchars($old_data['contact_number'] ?? '') ?>" required>
+                            value="<?= htmlspecialchars($old_data['contact_number'] ?? '') ?>" 
+                            pattern="^0\d{9}$"
+                            required>
                         <?php if (!empty($errors['contact_number'])): ?>
                             <span class="error"><?= htmlspecialchars($errors['contact_number']) ?></span>
                         <?php endif; ?>
+                        <small class="format-hint">Format: 0XXXXXXXXX (e.g., 0771234567)</small>
                     </div>
 
                     <div class="form-group">
@@ -115,18 +329,17 @@
                     </div>
 
                     <div class="button-line">
-                    <button class="back-btn" onclick='navigateToViewSession()'>Back</button>
-                    <div class="action-buttons">
-                        <button type="submit" class="btn confirm-btn">Confirm</button>
+                        <button type="button" class="back-btn" onclick="history.back()">Back</button>
+                        <button type="submit" class="confirm-btn">Confirm</button>
                     </div>
-                </div>
                 </form>
-                
-
             </section>
         </main>
     </div>
-    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
+    <script>
+        function navigateToViewSession() {
+            window.location.href = "<?= ROOT ?>/PDC_admin/ViewSession";
+        }
+    </script>
 </body>
-
 </html>

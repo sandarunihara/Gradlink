@@ -6,6 +6,7 @@ class ViewSession {
     public function show($sessionId) {
         $model = new PDC_Session;
         $data = $model->find($sessionId);
+        //show($data);
 
         if ($data) {
             $this->view('PDC_admin/Session/SessionView', ['session' => $data]);

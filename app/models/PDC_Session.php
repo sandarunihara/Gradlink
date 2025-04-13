@@ -6,6 +6,17 @@ class PDC_Session
 
     protected $table = 'session';
 
+    protected $allowedColumns = [
+
+		'session_id',
+		'session_name',
+		'hall_number',
+		'session_date',
+		'time_slot',
+        'description',
+        'CompanyId'
+	];
+
     public function validate($data)
     {
         $this->errors = [];
@@ -32,17 +43,35 @@ class PDC_Session
 
     public function findall()
     {
-        $query = "SELECT * FROM $this->table";
+        $query = "SELECT c.*,s.* 
+                  FROM $this->table s
+                  JOIN company c ON s.CompanyId = c.CompanyID
+                  WHERE s.session_date >= CURDATE()
+                  ";
+        $result = $this->query($query);
+        return $result;
+    }
+
+    public function findCompleted(){
+        $query = "SELECT c.*,s.* 
+                  FROM $this->table s
+                  JOIN company c ON s.CompanyId = c.CompanyID
+                  WHERE s.session_date < CURDATE()
+                  ";
         $result = $this->query($query);
         return $result;
     }
 
     public function find($id)
     {
-        $query = "SELECT * FROM $this->table WHERE session_id = :id";
+        $query = "SELECT c.*,s.*
+                 FROM session s 
+                 JOIN company c ON s.CompanyId = c.CompanyID
+                 WHERE s.session_id = :id
+                 ;";
         $params = [':id' => $id];
-        $result = $this->query($query, $params);
-        return $result ? $result[0] : null;
+        $result = $this->query($query , $params);
+        return $result ? $result[0] : false;
     }
 
     public function remove($id)
