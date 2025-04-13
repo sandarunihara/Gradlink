@@ -243,6 +243,30 @@ function searchCompany() {
     }
 }
 
+function searchAdd(){
+    const query = document.getElementById('search-query').value.toLowerCase();
+    const tableBody = document.getElementById('add-table-body');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].innerText.toLowerCase().includes(query)) {
+                match = true;
+                break;
+            }
+        }
+
+        if (match) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
 function unblockStudent(studentId){
     if(confirm("Are you sure you want to unblock this student?")){
         window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/unblock/" + studentId;

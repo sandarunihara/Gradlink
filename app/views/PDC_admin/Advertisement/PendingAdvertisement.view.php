@@ -24,9 +24,8 @@
 
             </header>
 
-            <div class="tab">
-                <?php $activeTab = 'pending-advertisements'; ?>
-                <?php $this->renderPDC_adminTabs("advertisementTabs") ?>
+            <div class="tabs">
+                <?php $this->renderPDC_adminTabs("advertisementTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
             
@@ -35,9 +34,8 @@
                 <section class="company-list">
                     <div class="list-header">
                         <div class="search-box">
-                            <input type="text" placeholder="Search Company" />
-                            <button> Search
-                            </button>
+                            <input type="text" id='search-query' placeholder="Search Advertisement" />
+                            <button onclick="searchAdd()">Search</button>
                         </div>
                     </div>
                     <table>
