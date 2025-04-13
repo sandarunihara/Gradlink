@@ -22,7 +22,8 @@ class student_advertisement
 					FROM studentadvertisement sa
 					JOIN student s ON sa.StudentId = s.StudentId 
 					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
-					JOIN company c ON a.CompanyId = c.CompanyId;
+					JOIN company c ON a.CompanyId = c.CompanyId
+					WHERE sa.Jobstatus != 'Recruit';
 					";
 		$result = $this->query($query);
 		if($result){

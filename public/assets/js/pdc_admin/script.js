@@ -392,6 +392,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const matchesSearch = searchTerm === '' ||
                                     nameCell.textContent.toLowerCase().includes(searchTerm) ||
                                     idCell.textContent.toLowerCase().includes(searchTerm);
+
+                console.log("Degree to show:", degreeToShow);
+                console.log("Cell content:", degreeCell.textContent.trim());
                 
                 if (matchesDegree && matchesSearch) {
                     row.style.display = '';
@@ -406,4 +409,64 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.addEventListener('input', function() {
         document.querySelector('.filter-btn.active').click();
     });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn-add');
+    const degreeFilterButtons = document.querySelectorAll('.degree-filter-btn');
+    const addRows = document.querySelectorAll('tbody tr');
+    const searchInput = document.querySelector('.search-box-add input');
+
+    let currentStatus = 'all';
+    let currentDegree = 'all';
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        addRows.forEach(row => {
+            const statusCell = row.querySelector('td:nth-child(6)');
+            const degreeCell = row.querySelector('td:nth-child(3)');
+            const nameCell = row.querySelector('td:nth-child(2)');
+            const idCell = row.querySelector('td:nth-child(1)');
+
+            const matchesStatus = 
+                currentStatus === 'all' || 
+                statusCell.textContent.trim() === currentStatus;
+
+            const matchesDegree = 
+                currentDegree === 'all' || 
+                degreeCell.textContent.trim() === currentDegree;
+
+            const matchesSearch = 
+                searchTerm === '' ||
+                nameCell.textContent.toLowerCase().includes(searchTerm) ||
+                idCell.textContent.toLowerCase().includes(searchTerm);
+
+            row.style.display = (matchesStatus && matchesDegree && matchesSearch) ? '' : 'none';
+        });
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentStatus = this.getAttribute('data-status') || 'all';
+            applyFilters();
+        });
+    });
+
+    degreeFilterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            degreeFilterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentDegree = this.getAttribute('data-degree') || 'all';
+            applyFilters();
+        });
+    });
+
+    searchInput.addEventListener('input', applyFilters);
+
+    document.querySelector('.filter-btn-add[data-status="all"]').click();
 });

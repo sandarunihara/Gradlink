@@ -37,7 +37,7 @@ class ViewAdvertisement {
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
             $_SESSION['flash_message'] = [
                 'type' => 'success',
-                'message' => 'Student successfully Updated'
+                'message' => 'Advertisement successfully deactivated'
             ];
 
         }
@@ -64,11 +64,20 @@ class ViewAdvertisement {
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId);
-            redirect('PDC_admin/AdminAdvertisementOverview/deactive');
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'Advertisement successfully activated'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
         else{
-            echo "Error: Could not activate the advertisement.";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not activate the advertisement.'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
         }
     }
 
@@ -84,11 +93,20 @@ class ViewAdvertisement {
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
-            redirect('PDC_admin/PendingAdvertisement/dashboard');
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'Advertisement successfully rejected'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
         else{
-            echo "Error: Could not reject the advertisement.";
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'message' => 'Error: Could not reject the advertisement.'
+            ];
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
         }
     }
 

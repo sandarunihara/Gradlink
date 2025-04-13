@@ -19,15 +19,12 @@
             $type = htmlspecialchars($_SESSION['flash_message']['type']);
             unset($_SESSION['flash_message']);
         ?>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    <?php if ($type === 'success'): ?>
-                        successToast('<?= $message ?>');
-                    <?php else: ?>
-                        errorToast('<?= $message ?>');
-                    <?php endif; ?>
-                });
-            </script>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
     <?php endif; ?>
 
 
@@ -220,5 +217,6 @@
         }
         
     </script>
+    <script src="<?= ROOT ?>/assets/js/toast.js>"></script>
 </body>
 </html>
