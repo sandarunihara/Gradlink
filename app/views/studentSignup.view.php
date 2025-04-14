@@ -81,7 +81,7 @@
                                 type="text" 
                                 id="userId" 
                                 name="userId" 
-                                placeholder="Enter your student ID (e.g. 2021CS123)" 
+                                placeholder="Enter your student ID" 
                                 required
                                 oninput="validStudentIndex(this)"
                             >

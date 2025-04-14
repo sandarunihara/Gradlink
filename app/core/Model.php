@@ -141,4 +141,18 @@
 
             return 1;
         }
+        /* Transaction Methods*/
+        public function beginTransaction(){
+            $this->connect()->beginTransaction(); //begin the transaction with calling pdo beginTransaction
+        }
+
+        //commit the transaction
+        public function commit(){
+            $this->connect()->commit(); //commit the transaction with calling pdo commit
+        }
+
+        //rollback if any error occurs
+        public function rollBack(){
+            $this->connect()->rollBack(); //rollback the transaction with calling pdo rollBack
+        }        
     }

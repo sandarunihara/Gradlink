@@ -9,7 +9,7 @@
     class Signup
     {
         use Controller;
-
+        use Model;
         public function index()
         {
             //$this->view('createpassword');
@@ -80,7 +80,8 @@
                             } else {
                                 $data['errors'] = "Failed to upload profile picture.";
                             }
-                            $_SESSION['user']['block'] = 1;
+                            $_SESSION['user']['Status'] = 'NotApplied';
+                            $_SESSION['user']['block'] = 0;
                             $_SESSION['user']['completed'] = 0;
                             $_SESSION['user']['noOfAppliedAds'] = 0;
                             $_SESSION['user']['registered'] = 0;
@@ -190,6 +191,7 @@
                             switch ($userNum) {
                                 case 9:
                                     $user = new student;
+                                    $skill = new student_skill;
                                     $id_column = 'StudentId';
                                     break;
                                 case 4:
@@ -208,27 +210,37 @@
                                     $data['errors'] = "Invalid User ID";
                                     break;
                             }
-                            $_SESSION['user']['Password'] = password_hash($password, PASSWORD_DEFAULT);
-                            //show($_SESSION);
-                            // $imagedata = file_get_contents(ROOT . '/assets/img/defaultpro.png');
-                            // $imageBase64 = base64_encode($imagedata);
-                            // $imgresult= $user->update($id, ['profileimg' => $imageBase64], $id_column);
-                            // show($imageBase64);
-                            //$results = $user->update($id, ['Password' => password_hash($password, PASSWORD_DEFAULT)], $id_column);
+                            $_SESSION['user']['Password'] = password_hash($password, PASSWORD_DEFAULT);                            
                             
-                            //show($_SESSION['user']);
-                            $result = $user->insert($_SESSION['user'], $id_column);
-                            //show($result);
-                            // Unset and destroy the session
-                            if ($result === true) {
-                                session_unset();
-                                session_destroy();
-                                $data['success'] = "Password created successfully. Please login.";
-                                $user->update($id, ['Status' => 'Ongoing'], $id_column);
-                                redirect('login');
-                                exit;
-                            } else {
-                                $data['errors'] = "Failed to create password. Please try again.";
+                            $skills = array_map('trim', explode(",", $_SESSION['user']['Skill']));
+                            try {
+                                $this->beginTransaction(); // Start transaction
+                                $result1 = $user->insert($_SESSION['user'], $id_column);
+                                if(!$result1){
+                                    throw new Exception("Failed to insert student table data.");
+                                }
+                                $result2 = $skill -> insertSkill($id, $skills);
+                                //show($skills);
+                                if(!$result2){
+                                    throw new Exception("Failed to insert student skill data.");
+                                }
+                                // Unset and destroy the session
+                                if ($result1 && $result2) {
+                                    session_unset();
+                                    session_destroy();
+                                    $data['success'] = "Password created successfully. Please login.";
+                                    redirect('login');
+                                    exit;
+                                } else {
+                                    $data['errors'] = "Failed to create password. Please try again.";
+                                }
+                                $this->commit(); // Commit transaction
+                                return true;
+
+                            } catch (Exception $e) {
+                                $this->rollback(); // Rollback transaction on error
+                                $data['errors'] = "Transaction failed: " . $e->getMessage();
+                                return $data['errors'];
                             }
                         } else {
                             $data['errors'] = "User session data is missing. Please try again.";
