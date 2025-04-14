@@ -184,12 +184,15 @@
         public function delete($id, $id_column) {
             $data[$id_column] = $id;
             $query = "DELETE FROM $this->table WHERE $id_column = :$id_column";
-            
-            // Execute the query
-            $this->query($query, $data);
-
-            return 1;
+            $result = $this->query($query, $data);
+            //show($result);
+            if($result) {
+                return true;
+            } else {
+                return false;
+            }
         }
+
         /* Transaction Methods*/
         public function beginTransaction(){
             $this->connect()->beginTransaction(); //begin the transaction with calling pdo beginTransaction

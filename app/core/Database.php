@@ -39,12 +39,13 @@
             $stmt = $con->prepare($query);
             $check = $stmt->execute($data);
 
-
+            
             if($check){
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 if(is_array($result) && count($result)){
                     return $result;
-                }  
+                }
+                return true;
             }
             return false;
         }

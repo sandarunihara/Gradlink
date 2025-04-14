@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/session/overviewSession.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
+
 </head>
 
 <body>
@@ -20,15 +22,16 @@
                 </div>
             </header>
 
+            <div class="tabs">
+                <?php $this->renderPDC_adminTabs("sessionTabs", ['activeTab' => $activeTab]); ?>
+            </div>
+
             <section class="company-list">
                 <div class="list-header">
                     <div class="search-box">    
                         <input type="text" placeholder="Search Students" />
                         <button> Search
                         </button>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="add-btn" onclick="navigateToAddSession();" ></button>
                     </div>
                 </div>
                 <table>
@@ -44,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(!empty($sessionData)): ?>
+                        <?php if(!empty($sessionData) && is_array($sessionData)): ?>
                             <?php foreach($sessionData as $session): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($session->session_name) ?></td>
@@ -58,7 +61,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="9">No scheduled sessions found.</td>
+                                <td colspan="9">No completed sessions found.</td>
                             </tr>
                         <?php endif; ?>
                         

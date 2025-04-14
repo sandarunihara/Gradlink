@@ -6,10 +6,7 @@
             
             $model = new PDC_Session;
             $sessionData = $model->findall();
-
-            // show(
-            //     $sessionData
-            // );
+            //show($sessionData);
 
             $this->view('PDC_admin/Session/SessionOverview', 
             ['sessionData' => $sessionData,
@@ -21,7 +18,7 @@
             $model = new PDC_Session;
             $sessionData = $model->findCompleted();
 
-            $this->view('PDC_admin/Session/SessionOverview', 
+            $this->view('PDC_admin/Session/SessionCompleted', 
             ['sessionData' => $sessionData,
             'activeTab' => 'completed'
             ]);

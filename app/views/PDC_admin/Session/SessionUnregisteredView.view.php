@@ -685,14 +685,14 @@
 
                     <div style="display: flex; gap: 1.5rem; margin: 1.5rem;">
                         <div class="avatar" style="background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%); color: #065f46;">
-                            <?= substr(htmlspecialchars($session->Name), 0, 1) ?>
+                            <?= substr(htmlspecialchars($session->other_company_name), 0, 1) ?>
                         </div>
                         <div>
                             <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: #065f46;">
-                                <?= htmlspecialchars($session->Name) ?>
+                                <?= htmlspecialchars($session->other_company_name) ?>
                             </h3>
                             <p style="color: var(--gray); font-size: 0.9rem;">
-                                ID: <?= htmlspecialchars($session->CompanyId) ?>
+                                ID: NONE
                             </p>
                         </div>
                     </div>
@@ -701,43 +701,20 @@
                         <div class="details-grid">
                             <div>
                                 <div class="detail-item">
-                                    <div class="detail-label">Industry</div>
-                                    <div class="detail-value"><?= htmlspecialchars($session->ShortDesc) ?></div>
-                                </div>
-                                <div class="detail-item">
                                     <div class="detail-label">Contact Person</div>
-                                    <div class="detail-value"><?= htmlspecialchars($session->ContactPerson) ?></div>
+                                    <div class="detail-value"><?= htmlspecialchars($session->contact_person) ?></div>
                                 </div>
                             </div>
                             <div>
                                 <div class="detail-item">
                                     <div class="detail-label">Contact Information</div>
                                     <div class="detail-value">
-                                        <i class="fas fa-phone"></i> <?= htmlspecialchars($session->ContactNum) ?><br>
-                                        <i class="fas fa-envelope"></i> <?= htmlspecialchars($session->Email) ?>
-                                    </div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Location</div>
-                                    <div class="detail-value">
-                                        <?= htmlspecialchars($session->No) ?>, <?= htmlspecialchars($session->Lane) ?>,<br>
-                                        <?= htmlspecialchars($session->City) ?>, <?= htmlspecialchars($session->District) ?>
+                                        <i class="fas fa-phone"></i> <?= htmlspecialchars($session->contact_number) ?><br>
+                                        <i class="fas fa-envelope"></i> <?= htmlspecialchars($session->email) ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <a href="<?= htmlspecialchars($session->Website) ?>" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-globe"></i> Website
-                        </a>
-                        <a href="<?= htmlspecialchars($session->Linkedin) ?>" target="_blank" class="btn btn-outline">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                        <a href="<?= ROOT ?>/PDC_admin/ViewCompany/show/<?= $session->CompanyId ?>" class="btn btn-primary">
-                            <i class="fas fa-external-link-alt"></i> View Full Profile
-                        </a>
                     </div>
                 </div>
             </div>
@@ -746,9 +723,9 @@
 
     <div id="delete-modal" class="modal">
         <div class="modal-content">
-            <form id="delete-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/remove">
+            <form id="delete-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/removeUnregistered">
                 <input type="hidden" name="session_id" id="session-id" value="">
-                <input type="hidden" name="email" id="email" value="<?= htmlspecialchars($session->Email) ?>">
+                <input type="hidden" name="email" id="email" value="<?= htmlspecialchars($session->email) ?>">
                 <div class="modal-header">
                     <h3>Delete Session</h3>
                 </div>

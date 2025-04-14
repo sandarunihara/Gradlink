@@ -64,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(!empty($sessionData)): ?>
+                        <?php if(!empty($sessionData) && is_array($sessionData)): ?>
                             <?php foreach($sessionData as $session): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($session->session_name) ?></td>
@@ -72,7 +72,7 @@
                                     <td><?= htmlspecialchars($session->hall_number) ?></td>
                                     <td><?= htmlspecialchars($session->session_date) ?></td>
                                     <td><?= htmlspecialchars($session->time_slot) ?></td>
-                                    <td><button class="view-btn" onclick="navigateToShowSession(<?= $session->session_id ?>)">View</button></td>
+                                    <td><button class="view-btn" onclick="navigateToShowUnregisteredSession(<?= $session->session_id ?>)">View</button></td>
                                     <td></td>
                                 </tr>
                             <?php endforeach; ?>

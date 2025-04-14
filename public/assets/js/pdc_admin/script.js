@@ -38,6 +38,10 @@ function navigateToViewSession() {
     window.location.href = "/Gradlink/public/PDC_admin/AdminSessionOverview/dashboard";
 }
 
+function navigateToShowUnregisteredSession(sessionId){
+    window.location.href = "/Gradlink/public/PDC_admin/ViewSession/showUnregistered/" + sessionId;
+}
+
 
 function navigateToShowSession(sessionId) {
     console.log("Navigating to Session Profile with ID:", sessionId);
