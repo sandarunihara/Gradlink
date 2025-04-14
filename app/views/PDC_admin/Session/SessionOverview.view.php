@@ -13,6 +13,24 @@
 </head>
 
 <body>
+
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                <?php if ($type === 'success'): ?>
+                    successToast('<?= $message ?>');
+                <?php else: ?>
+                    errorToast('<?= $message ?>');
+                <?php endif; ?>
+            });
+        </script>
+    <?php endif; ?>
+
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar")  ?>
         <main class="main-content">
@@ -45,7 +63,6 @@
                             <th>Hall Number</th>
                             <th>Date</th>
                             <th>Time Slot</th>
-                            <th></th>
                             <th></th>
                         </tr>
                     </thead>

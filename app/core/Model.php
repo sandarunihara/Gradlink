@@ -112,6 +112,7 @@
             $keys = array_keys($data);
             $query = "INSERT INTO $this->table (".implode(",", $keys).") VALUES (:".implode(", :", $keys).")";
             //echo $query;
+            //show($query);
             $this->query($query, $data);
 
             return true;

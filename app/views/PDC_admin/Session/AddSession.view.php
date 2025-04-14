@@ -247,85 +247,67 @@
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submit" id="session-form">
                     <div class="form-group">
                         <label for="session-name">Session Name</label>
-                        <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
-                            value="<?= htmlspecialchars($old_data['session_name'] ?? '') ?>" required>
-                        <?php if (!empty($errors['session_name'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['session_name']) ?></span>
-                        <?php endif; ?>
+                        <input type="text" id="session-name" name="session_name" placeholder="Session Name" required>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="company-name">Company Name</label>
+                        <select id="company-name" name="company_name" required>
+                            <option value="" >Select Company</option>
+
+                            <?php 
+                                foreach($companyData as $company){
+                                    echo "<option value='{$company->CompanyId}'>{$company->Name}</option>";
+                                }
+                            ?>
+
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="other-company-group" style="display: none;">
+                        <label for="other-company-name">Enter Company Name</label>
+                        <input type="text" id="other-company-name" name="other_company_name" placeholder="Type company name...">
                     </div>
 
                     <div class="form-group">
-                        <label for="company-name">Company Name</label>
-                        <input type="text" id="company-name" name="company_name" placeholder="Company Name" 
-                            value="<?= htmlspecialchars($old_data['company_name'] ?? '') ?>" required>
-                        <?php if (!empty($errors['company_name'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['company_name']) ?></span>
-                        <?php endif; ?>
+                        <input type="text" name="CompanyId" id="company-id" hidden>
                     </div>
 
                     <div class="form-group">
                         <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" name="email" placeholder="Company Email" 
-                            value="<?= htmlspecialchars($old_data['email'] ?? '') ?>" required>
-                        <?php if (!empty($errors['email'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['email']) ?></span>
-                        <?php endif; ?>
+                        <input type="email" id="email-address" name="email" placeholder="Company Email" required>
                     </div>
 
                     <div class="form-group">
                         <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person" 
-                            value="<?= htmlspecialchars($old_data['contact_person'] ?? '') ?>" required>
-                        <?php if (!empty($errors['contact_person'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['contact_person']) ?></span>
-                        <?php endif; ?>
+                        <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person" required>
                     </div>
 
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
                         <input type="text" id="contact-number" name="contact_number" placeholder="Contact Number" 
-                            value="<?= htmlspecialchars($old_data['contact_number'] ?? '') ?>" 
-                            pattern="^0\d{9}$"
+                            pattern="^07\d{8}$"
                             required>
-                        <?php if (!empty($errors['contact_number'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['contact_number']) ?></span>
-                        <?php endif; ?>
                         <small class="format-hint">Format: 0XXXXXXXXX (e.g., 0771234567)</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="hall-number">Hall Name</label>
-                        <select id="hall-number" name="hall_number" required>
-                            <option value="" disabled <?= empty($old_data['hall_number']) ? 'selected' : '' ?>>Select Hall</option>
-                            <option value="W001" <?= ($old_data['hall_number'] ?? '') === 'W001' ? 'selected' : '' ?>>W001</option>
-                            <option value="S104" <?= ($old_data['hall_number'] ?? '') === 'S104' ? 'selected' : '' ?>>S104</option>
-                            <option value="S202" <?= ($old_data['hall_number'] ?? '') === 'S202' ? 'selected' : '' ?>>S202</option>
-                        </select>
-                        <?php if (!empty($errors['hall_number'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['hall_number']) ?></span>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="form-group">
                         <label for="session-date">Session Date</label>
-                        <input type="date" id="session-date" name="session_date" placeholder="Session Date" 
-                            value="<?= htmlspecialchars($old_data['session_date'] ?? '') ?>" required>
-                        <?php if (!empty($errors['session_date'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['session_date']) ?></span>
-                        <?php endif; ?>
+                        <input type="date" id="session-date" name="session_date" placeholder="Session Date" required>
                     </div>
 
                     <div class="form-group">
                         <label for="time-slot">Time Slot</label>
                         <select id="time-slot" name="time_slot" required>
-                            <option value="" disabled <?= empty($old_data['time_slot']) ? 'selected' : '' ?>>Select Time Slot</option>
-                            <option value="9:00 AM - 11:00 AM" <?= ($old_data['time_slot'] ?? '') === '9:00 AM - 11:00 AM' ? 'selected' : '' ?>>9:00 AM - 11:00 AM</option>
-                            <option value="11:00 AM - 1:00 PM" <?= ($old_data['time_slot'] ?? '') === '11:00 AM - 1:00 PM' ? 'selected' : '' ?>>11:00 AM - 1:00 PM</option>
-                            <option value="2:00 PM - 4:00 PM" <?= ($old_data['time_slot'] ?? '') === '2:00 PM - 4:00 PM' ? 'selected' : '' ?>>2:00 PM - 4:00 PM</option>
                         </select>
-                        <?php if (!empty($errors['time_slot'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['time_slot']) ?></span>
-                        <?php endif; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hall-number">Hall Name</label>
+                        <select id="hall-number" name="hall_number" required>
+                        </select>
                     </div>
 
                     <div class="button-line">
@@ -337,9 +319,150 @@
         </main>
     </div>
     <script>
-        function navigateToViewSession() {
-            window.location.href = "<?= ROOT ?>/PDC_admin/ViewSession";
-        }
+
+        document.addEventListener("DOMContentLoaded", function(){
+
+            function navigateToViewSession() {
+                window.location.href = "<?= ROOT ?>/PDC_admin/ViewSession";
+            }
+
+            const companyName = document.getElementById("company-name");
+            const companyId = document.getElementById("company-id");
+            const email = document.getElementById("email-address");
+            const contactPerson = document.getElementById("contact-person");
+            const contactNumber = document.getElementById("contact-number");
+
+            const hallname = document.getElementById('hall-number');
+            const timeslot = document.getElementById('time-slot');
+            const date = document.getElementById('session-date');
+
+            const otherCompany = document.getElementById('other-company-group');
+            const companyData = <?php echo json_encode($companyData); ?>;
+
+            const allTimeSlots = [
+                            "9:00 AM - 11:00 AM",
+                            "11:00 AM - 1:00 PM",
+                            "1:00 PM - 3:00 PM",
+                            "3:00 PM - 5:00 PM"
+                        ];
+
+            const allHalls = ["W001", "S104", "S202" ,"W004"];
+
+
+
+            companyName.addEventListener("change", function(){
+                const selectedCom = this.value;
+                // console.log(companyName.value);
+                // console.log(selectedCom);
+                if(selectedCom !== 'other'){
+                    otherCompany.style.display = 'none';
+                    const selectedCompany = companyData.find(c => c.CompanyId == companyName.value);
+                    //console.log(selectedCompany);
+                    if(selectedCompany){
+                        companyId.value = selectedCompany.CompanyId;
+                        email.value = selectedCompany.Email;
+                        contactPerson.value = selectedCompany.ContactPerson;
+                        contactNumber.value = selectedCompany.ContactNum;
+                    }
+                }
+                else{
+                    otherCompany.style.display = 'block';
+                    email.value = "";
+                    contactPerson.value = "";
+                    contactNumber.value = "";
+                }
+            })
+
+            // hallname.addEventListener("change", function () {
+            //     const selectedHall = this.value;
+
+            //     fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=hall&value=${selectedHall}`)
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             console.log("Fetched data:", data);
+
+            //             const timeSlotSelect = document.getElementById("time-slot");
+            //             const dateSelect = document.getElementById('session-date');
+            //             dateSelect.value = "";
+            //             timeSlotSelect.value = "";
+            //             timeSlotSelect.innerHTML = '<option value="" >Select Time Slot</option>';
+
+            //             const unavailableTimeSlots = data.map(item => item.time_slot);
+
+            //             const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+
+            //             availableTimeSlots.forEach(slot => {
+            //                 const option = document.createElement("option");
+            //                 option.value = slot;
+            //                 option.textContent = slot;
+            //                 timeSlotSelect.appendChild(option);
+            //             });
+            //         })
+            //         .catch(error => {
+            //             console.error("Error fetching availability:", error);
+            //         });
+            // });
+
+
+            date.addEventListener("change", function (){
+                const selectedDate = this.value;
+                //console.log("Selected date:", selectedDate);
+                fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=date&value=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        //console.log("Fetched data:", data);
+
+                        const timeSlotSelect = document.getElementById("time-slot");
+
+                        const unavailableTimeSlots = data.map(item => item.time_slot);
+                        const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+                        //console.log(availableTimeSlots);
+
+                        timeSlotSelect.innerHTML = '<option value="" >Select Time Slot</option>';
+                        availableTimeSlots.forEach(slot => {
+                            const option = document.createElement("option");
+                            option.value = slot;
+                            option.textContent = slot;
+                            timeSlotSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching availability:", error);
+                    });
+            })
+
+            timeslot.addEventListener("change", function () {
+                const selectedDate = date.value;
+                const selectedSlot = this.value;
+
+                if (!selectedDate || !selectedSlot) return;
+
+                fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=date&value=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const hallSelect = document.getElementById("hall-number");
+
+                        hallSelect.innerHTML = '<option value="">Select Hall</option>';
+
+                        const unavailableHalls = data.filter(item => item.time_slot === selectedSlot).map(item => item.hall_number);
+                        const availableHalls = allHalls.filter(hall => !unavailableHalls.includes(hall));
+
+                        console.log(availableHalls);
+
+                        availableHalls.forEach(hall => {
+                            const option = document.createElement("option");
+                            option.value = hall;
+                            option.textContent = hall;
+                            hallSelect.appendChild(option);
+                        });
+
+                    })
+                    .catch(error => {
+                        console.error("Error filtering halls based on time slot:", error);
+                    });
+            });
+        })
+
     </script>
 </body>
 </html>

@@ -230,7 +230,6 @@ tbody tr:hover {
     color: #a0aec0;
     font-size: 15px;
 }
-
 .toast-container {
     position: fixed;
     top: 20px;
@@ -239,31 +238,42 @@ tbody tr:hover {
 }
 
 .toast-message {
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    color: white;
+    background: #fff;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 250px;
     opacity: 0;
     transform: translateX(100%);
-    transition: all 0.5s ease;
-    position: relative;
+    transition: all 0.3s ease;
 }
 
-.toast-success {
-    background-color: #28a745;
+.toast-message.toast-success {
+    border-left: 4px solid var(--success-color);
 }
 
-.toast-error {
-    background-color: #dc3545;
+.toast-message.toast-error {
+    border-left: 4px solid var(--danger-color);
+}
+
+.toast-content {
+    flex: 1;
 }
 
 .toast-close-btn {
-    background: transparent;
+    background: none;
     border: none;
-    color: white;
-    position: absolute;
-    right: 5px;
-    top: 5px;
+    color: var(--gray-color);
     cursor: pointer;
-    font-size: 16px;
+    margin-left: 1rem;
+    font-size: 1rem;
+    padding: 0;
+}
+
+.toast-close-btn:hover {
+    color: var(--dark-color);
 }

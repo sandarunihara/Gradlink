@@ -7,6 +7,10 @@
             $model = new PDC_Session;
             $sessionData = $model->findall();
 
+            // show(
+            //     $sessionData
+            // );
+
             $this->view('PDC_admin/Session/SessionOverview', 
             ['sessionData' => $sessionData,
             'activeTab' => 'upcoming'
