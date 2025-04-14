@@ -89,28 +89,6 @@
                 ><?= htmlspecialchars($data['Student'] -> ShortDesc) ?></textarea>
                 <span id="descriptionError" class="error"></span>
             </div>
-            <div class=box>
-                <!-- profile photo -->
-                <label for="profilePic">Profile Picture</label>
-                <input type="file"
-                    id="profilePhoto" 
-                    name="ProfilePhoto" 
-                    accept="image/*"
-                    onchange="previewImage(event)"
-                    required
-                >
-            </div>
-            <div class=box>
-                <!-- CV Upload -->
-                <label for="cv">CV</label>
-                <input 
-                    type="file" 
-                    id="cv" 
-                    name="CV" 
-                    accept=".pdf, .doc, .docx"
-                    required
-                >
-            </div>
             <div class="button-container">
                 <!-- Submit Button -->
                 <button 

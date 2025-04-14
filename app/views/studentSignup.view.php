@@ -81,7 +81,7 @@
                                 type="text" 
                                 id="userId" 
                                 name="userId" 
-                                placeholder="Enter your student ID (e.g. 2021CS123)" 
+                                placeholder="Enter your student ID" 
                                 required
                                 oninput="validStudentIndex(this)"
                             >
@@ -145,7 +145,7 @@
                         <span id="descriptionError" class="error"></span>
                     </div>
                 </div>
-                <!-- <div class="details documents">
+                <div class="details documents">
                     <span class="title">Documents</span>
                     <div class="fields">
                         <div class="input-field">
@@ -171,7 +171,7 @@
                             <span id="cvError" class="error"></span>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
             <div style="overflow:auto;">
                 <div style="float:right;">

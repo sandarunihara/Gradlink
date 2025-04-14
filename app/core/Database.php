@@ -73,7 +73,7 @@
         }
         // Destructor to ensure the connection is closed
         public function __destruct() {
-        self::closeConnection();
-    }
+            self::closeConnection();
+        }
     }
   
