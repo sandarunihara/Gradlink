@@ -89,42 +89,57 @@ class ViewSession {
 
     public function edit($sessionId)
     {
-
+        $model = new PDC_Session;
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             
-            //var_dump($_POST);
-            $model = new PDC_Session;
+            //show($_POST);
             $errors = [];
 
             $data = [
+                'session_id' => $_POST['session_id'],
                 'session_name' => $_POST['session_name'],
-                'company_name' => $_POST['company_name'],
-                'email' => $_POST['email'],
-                'contact_person' => $_POST['contact_person'],
-                'contact_number' => $_POST['contact_number'],
                 'hall_number' => $_POST['hall_number'],
                 'session_date' => $_POST['session_date'],
-                'time_slot' => $_POST['time_slot']
+                'time_slot' => $_POST['time_slot'],
+                'description' => $_POST['description'],
+                'CompanyId' => $_POST['CompanyId'],
+                'email' => $_POST['email'],
+                'contact_number' => $_POST['contact_number'],
             ];
 
-            //var_dump(is_array($data));
+            // $r = $model->validate($data);
+            // show($r);
 
-            $model = new PDC_Session;
             if($model->validate($data)){
                 $updatedStatus = $model->update($sessionId,$data,'session_id');
-
+                //show($updatedStatus);
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
-                    redirect('PDC_admin/AdminSessionOverview/dashboard');
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Session successfully Updated'
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
                     exit;
                 }
                 else{
-                    $errors['general'] = "Error: Could not update the student.";
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Error: Could not update the session.'
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
                 }    
             }
             else{
-                $errors = $model->errors;
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Could not update the session.'
+                ];
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
             }
         }
+
         $data = $model->find($sessionId);
             if (!$data) {
                 $errors['general'] = "No student data found for the given ID.";

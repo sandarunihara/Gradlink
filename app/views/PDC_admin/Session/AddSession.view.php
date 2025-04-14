@@ -287,6 +287,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="description" class="form-label">Session Description</label>
+                        <textarea id="description" name="description" class="form-control form-textarea"></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label for="session-date">Session Date</label>
                         <input type="date" 
                             id="session-date" 
@@ -403,11 +408,46 @@
                     .then(data => {
                         //console.log("Fetched data:", data);
 
+                        const  slotHalls = {};
+
+                        data.forEach(item => {
+                            if(!slotHalls[item.time_slot]){
+                                slotHalls[item.time_slot] = new Set();
+                            }
+                            slotHalls[item.time_slot].add(item.hall_number)
+                        })
+
+                        console.log(slotHalls);
+
+                        const mapped = Object.entries(slotHalls).map(([timeslot , setHalls])=> {
+                            return{
+                                timeslot,
+                                count: setHalls.size
+                            }
+                        }
+                        )
+
+                        console.log(mapped);
+
+                        const unavailableTimeSlots = mapped.filter(({ count }) => 
+                            count === allHalls.length
+                        ).map(({ timeslot }) => timeslot);
+                        
+                        console.log(unavailableTimeSlots);
+
+
+                        const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+
+                        console.log(availableTimeSlots);
+
                         const timeSlotSelect = document.getElementById("time-slot");
 
-                        const unavailableTimeSlots = data.map(item => item.time_slot);
-                        const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+
+
+                        //const unavailableTimeSlots = data.map(item => (item.time_slot));
+                        //const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
                         //console.log(availableTimeSlots);
+
 
                         timeSlotSelect.innerHTML = '<option value="" >Select Time Slot</option>';
                         availableTimeSlots.forEach(slot => {
