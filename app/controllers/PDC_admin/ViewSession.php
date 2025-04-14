@@ -148,6 +148,66 @@ class ViewSession {
         
         }
 
+        public function editUnreg($sessionId){
+            $model = new PDC_Unreg_Session;
+            //show($_POST);
+            if($_SERVER['REQUEST_METHOD'] === 'POST'){
+                
+                //show($_POST);
+                $errors = [];
+    
+                $data = [
+                    'session_id' => $_POST['session_id'],
+                    'session_name' => $_POST['session_name'],
+                    'hall_number' => $_POST['hall_number'],
+                    'session_date' => $_POST['session_date'],
+                    'time_slot' => $_POST['time_slot'],
+                    'description' => $_POST['description'],
+                    'email' => $_POST['email'],
+                    'contact_number' => $_POST['contact_number'],
+                ];
+    
+                // $r = $model->validate($data);
+                // show($r);
+    
+                if($model->validate($data)){
+                    $updatedStatus = $model->update($sessionId,$data,'session_id');
+                    //show($updatedStatus);
+                    if($updatedStatus && $updatedStatus['status'] === 'success'){
+                        $_SESSION['flash_message'] = [
+                            'type' => 'success',
+                            'message' => 'Session successfully Updated'
+                        ];
+                        header('Location: ' . $_SERVER['HTTP_REFERER']);
+                        exit;
+                    }
+                    else{
+                        $_SESSION['flash_message'] = [
+                            'type' => 'error',
+                            'message' => 'Error: Could not update the session.'
+                        ];
+                        header('Location: ' . $_SERVER['HTTP_REFERER']);
+                        exit;
+                    }    
+                }
+                else{
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Error: Could not update the session.'
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
+                }
+            }
+    
+            $data = $model->find($sessionId);
+                if (!$data) {
+                    $errors['general'] = "No student data found for the given ID.";
+                }
+                $this->view('PDC_admin/Session/SessionView', ['session' => $data, 'errors' => $errors]);
+            
+            }
+
         private function sendEmail($email, $reason) {
             try {
                 $mail = new PHPMailer(true);
