@@ -585,10 +585,227 @@
     }
 }
 
+
+.toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast-message {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: white;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .toast-success {
+            background-color: #28a745;
+        }
+
+        .toast-error {
+            background-color: #dc3545;
+        }
+
+        .toast-info {
+            background-color: #17a2b8;
+        }
+
+        .toast-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+              /* Update Modal Styles */
+.update-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.update-modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-modal-content {
+    background-color: white;
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-20px);
+    opacity: 0;
+    animation: slideIn 0.3s ease-out forwards;
+    overflow: hidden;
+    border-top: 4px solid var(--primary);
+}
+
+.update-modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.update-modal-header h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.update-modal-header h3 i {
+    color: var(--primary);
+}
+
+.update-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: color 0.2s;
+    padding: 0.25rem;
+    border-radius: 4px;
+}
+
+.update-modal-close:hover {
+    color: var(--danger);
+    background-color: #f3f4f6;
+}
+
+.update-modal-body {
+    padding: 1.5rem;
+}
+
+.update-modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+/* Form Styles */
+#sessionUpdateForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+#sessionUpdateForm input[type="text"],
+#sessionUpdateForm input[type="date"],
+#sessionUpdateForm select,
+#sessionUpdateForm textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: var(--border-radius-sm);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+#sessionUpdateForm input[type="text"]:focus,
+#sessionUpdateForm input[type="date"]:focus,
+#sessionUpdateForm select:focus,
+#sessionUpdateForm textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+#sessionUpdateForm textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
     </style>
 </head>
 
 <body>
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
 
@@ -653,14 +870,8 @@
                                 <div class="detail-item">
                                     <div class="detail-label">Venue</div>
                                     <div class="detail-value">
-                                        <?= htmlspecialchars($session->hall_number) ?> - 
-                                        <?= $session->hall_number == 'W001' ? 'Main Auditorium' : 
-                                           ($session->hall_number == 'S104' ? 'Seminar Room' : 'Conference Hall') ?>
+                                        <?= htmlspecialchars($session->hall_number) ?>
                                     </div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Session Type</div>
-                                    <div class="detail-value"><?= htmlspecialchars($session->session_type ?? 'Standard') ?></div>
                                 </div>
                             </div>
                         </div>
@@ -745,6 +956,92 @@
         </div>
     </div>
 
+    <div id="update-modal" class="update-modal">
+        <div class="update-modal-content">
+            <div class="update-modal-header">
+                <h3><i class="fas fa-edit"></i> Update Session Details</h3>
+                <button class="update-modal-close" onclick="closeUpdateModal()">&times;</button>
+            </div>
+            <div class="update-modal-body">
+                <form id="sessionUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/editUnreg/<?= htmlspecialchars($session->session_id) ?>">
+                    
+                    <div class="form-group">
+                        <label for="session-name" class="form-label">Session Name</label>
+                        <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
+                            value="<?= htmlspecialchars($session->session_name) ?>" 
+                        required>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="session_id" id="session-id" 
+                            value="<?= htmlspecialchars($session->session_id) ?>"
+                        >
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="email" id="company-email" 
+                            value="<?= htmlspecialchars($session->email) ?>"
+                        >
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="contact_number" id="contact-number" 
+                            value="<?= htmlspecialchars($session->contact_number) ?>"
+                        >
+                    </div>
+
+                    
+                    
+                    <div class="form-group">
+                        <label for="description" class="form-label">Session Description</label>
+                        <textarea id="description" name="description" class="form-control form-textarea"><?= !empty($session->description) ? htmlspecialchars($session->description) : '' ?></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="session-date" class="form-label">Session Date</label>
+                            <input type="date"
+                                id="session-date" 
+                                name="session_date" 
+                                placeholder="Session Date"
+                                min="<?= date('Y-m-d') ?>" 
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time" class="form-label">Time Slot</label>
+                            <select id="time-slot" name="time_slot" 
+                                value="<?= htmlspecialchars($session->time_slot) ?>"
+                                required>
+                            </select>
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="hall-number" class="form-label">Hall Name</label>
+                            <select id="hall-number" name="hall_number" 
+                                value="<?= htmlspecialchars($session->hall_number) ?>"
+                                required>
+                            </select>
+                        </div>
+
+                    </div>
+                    
+                    <div class="update-modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeUpdateModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+
+
     <script>
 
         function closeModal(){
@@ -754,7 +1051,13 @@
             document.getElementById('modal-message').innerText = '';
         }
 
+        function closeUpdateModal() {
+            const modal = document.getElementById('update-modal');
+            modal.classList.remove('active');
+        }
+
         const deletebtn = document.getElementById('delete-btn');
+        const updateBtn = document.getElementById('edit-toggle-btn');
             
         deletebtn.addEventListener('click', function() {
             const sessionId = <?= json_encode($session->session_id) ?>;
@@ -762,32 +1065,12 @@
             document.getElementById('delete-modal').classList.add('active');
         });
 
+        updateBtn.addEventListener('click', function() {
+            document.getElementById('update-modal').classList.add('active');
+        });
+
 
         document.addEventListener('DOMContentLoaded', function() {
-
-            const validity = document.getElementById('check-date');
-            const sessionDateStr = "<?= $session->session_date ?>";
-            
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            const sessionDate = new Date(sessionDateStr);
-            sessionDate.setHours(0, 0, 0, 0);
-            
-            const formattedDate = sessionDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            if (sessionDate < today) {
-                validity.innerHTML = `<i class="fas fa-clock"></i> Expired on ${formattedDate}`;
-                validity.classList.add('status-expired');
-            } else {
-                validity.innerHTML = `<i class="fas fa-calendar-day"></i> ${formattedDate}`;
-                validity.classList.add('status-active');
-            }
-
 
             // Tab functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
@@ -803,6 +1086,113 @@
                     document.getElementById(tabId).classList.add('active');
                 });
             });
+
+            const hallname = document.getElementById('hall-number');
+            const timeslot = document.getElementById('time-slot');
+            const date = document.getElementById('session-date');
+
+            const allTimeSlots = [
+                            "9:00 AM - 11:00 AM",
+                            "11:00 AM - 1:00 PM",
+                            "1:00 PM - 3:00 PM",
+                            "3:00 PM - 5:00 PM"
+                        ];
+
+            const allHalls = ["W001", "S104", "S202" ,"W004"];
+
+            date.addEventListener("change", function (){
+                const selectedDate = this.value;
+                //console.log("Selected date:", selectedDate);
+                fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=date&value=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        //console.log("Fetched data:", data);
+
+                        const  slotHalls = {};
+
+                        data.forEach(item => {
+                            if(!slotHalls[item.time_slot]){
+                                slotHalls[item.time_slot] = new Set();
+                            }
+                            slotHalls[item.time_slot].add(item.hall_number)
+                        })
+
+                        console.log(slotHalls);
+
+                        const mapped = Object.entries(slotHalls).map(([timeslot , setHalls])=> {
+                            return{
+                                timeslot,
+                                count: setHalls.size
+                            }
+                        }
+                        )
+
+                        console.log(mapped);
+
+                        const unavailableTimeSlots = mapped.filter(({ count }) => 
+                            count === allHalls.length
+                        ).map(({ timeslot }) => timeslot);
+                        
+                        console.log(unavailableTimeSlots);
+
+
+                        const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+
+                        console.log(availableTimeSlots);
+
+                        const timeSlotSelect = document.getElementById("time-slot");
+
+
+
+                        //const unavailableTimeSlots = data.map(item => (item.time_slot));
+                        //const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+                        //console.log(availableTimeSlots);
+
+
+                        timeSlotSelect.innerHTML = '<option value="" >Select Time Slot</option>';
+                        availableTimeSlots.forEach(slot => {
+                            const option = document.createElement("option");
+                            option.value = slot;
+                            option.textContent = slot;
+                            timeSlotSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching availability:", error);
+                    });
+            })
+
+            timeslot.addEventListener("change", function () {
+                const selectedDate = date.value;
+                const selectedSlot = this.value;
+
+                if (!selectedDate || !selectedSlot) return;
+
+                fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=date&value=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const hallSelect = document.getElementById("hall-number");
+
+                        hallSelect.innerHTML = '<option value="">Select Hall</option>';
+
+                        const unavailableHalls = data.filter(item => item.time_slot === selectedSlot).map(item => item.hall_number);
+                        const availableHalls = allHalls.filter(hall => !unavailableHalls.includes(hall));
+
+                        console.log(availableHalls);
+
+                        availableHalls.forEach(hall => {
+                            const option = document.createElement("option");
+                            option.value = hall;
+                            option.textContent = hall;
+                            hallSelect.appendChild(option);
+                        });
+
+                    })
+                    .catch(error => {
+                        console.error("Error filtering halls based on time slot:", error);
+                    });
+            });
+
             
         });
     </script>
