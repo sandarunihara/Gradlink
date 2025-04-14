@@ -14,7 +14,7 @@ class PDC_Unreg_Session{
         'other_company_name',
         'email',
         'contact_number',
-        'conatact_person'
+        'contact_person'
     ];
 
     public function validate($data){
@@ -56,6 +56,13 @@ class PDC_Unreg_Session{
         $params = [':session_date' => $session_date];
         $result = $this->query($query, $params);
         return $result ? $result : [];
+    }
+
+    public function find($sessionId){
+        $query = "SELECT * FROM $this->table WHERE session_id = :session_id";
+        $params = [':session_id' => $sessionId];
+        $result = $this->query($query, $params);
+        return $result ? $result[0] : null;
     }
 
 

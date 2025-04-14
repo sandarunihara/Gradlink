@@ -64,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(!empty($sessionData)): ?>
+                        <?php if(!empty($sessionData) && is_array($sessionData)): ?>
                             <?php foreach($sessionData as $session): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($session->session_name) ?></td>

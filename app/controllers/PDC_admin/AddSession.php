@@ -63,26 +63,40 @@ require "../app/libs/Exception.php";
         }
 
         public function GetAvailability(){
-            $type = $_GET['type'];
-            $data = $_GET['value'];
-            $model = new PDC_Session;
-            $modelunreg = new PDC_Unreg_Session;
-            
-            if($type == 'hall'){
-                $response = $model->getAvailableTimeSlotsAndDates($data);
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit;
-            }
-            else if($type == 'date'){
-                $response1 = $model->getAvailableHallAndTimeSlots($data);
-                $response2 = $modelunreg->getAvailableHallAndTimeSlots($data);
-                $response = array_merge($response1, $response2);
-                header('Content-Type: application/json');
-                echo json_encode($response);
+            header('Content-Type: application/json');
+        
+            try {
+                $type = $_GET['type'] ?? null;
+                $data = $_GET['value'] ?? null;
+        
+                $model = new PDC_Session;
+                $modelunreg = new PDC_Unreg_Session;
+        
+                if ($type === 'hall') {
+                    $response = $model->getAvailableTimeSlotsAndDates($data) ?? [];
+                    echo json_encode($response);
+                    exit;
+                } elseif ($type === 'date') {
+                    $response1 = $model->getAvailableHallAndTimeSlots($data) ?? [];
+                    $response2 = $modelunreg->getAvailableHallAndTimeSlots($data) ?? [];
+        
+                    if (!is_array($response1)) $response1 = [];
+                    if (!is_array($response2)) $response2 = [];
+        
+                    $response = array_merge($response1, $response2);
+                    echo json_encode($response);
+                    exit;
+                } else {
+                    echo json_encode(["error" => "Invalid type"]);
+                    exit;
+                }
+        
+            } catch (Exception $e) {
+                echo json_encode(["error" => $e->getMessage()]);
                 exit;
             }
         }
+        
 
         public function submit(){
             $model = new PDC_Session;
@@ -161,6 +175,8 @@ require "../app/libs/Exception.php";
                 'session_date' => $_POST['session_date'],
                 'time_slot' => $_POST['time_slot']
             ];
+
+            //show($data);
 
             $result = $model->insert($data);
             if($result){
