@@ -30,6 +30,10 @@ function navigateToAddSession() {
     window.location.href = "/Gradlink/public/PDC_admin/AddSession/showAddForm";
 }
 
+function navigateToAddUnregiteredSession(){
+    window.location.href = "/Gradlink/public/PDC_admin/AddSession/showAddAddUnregisteredForm";
+}
+
 function navigateToViewSession() {
     window.location.href = "/Gradlink/public/PDC_admin/AdminSessionOverview/dashboard";
 }

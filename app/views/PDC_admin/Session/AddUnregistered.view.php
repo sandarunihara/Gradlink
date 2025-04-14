@@ -244,28 +244,16 @@
             </header>
 
             <section class="company-info">
-                <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submit" id="session-form">
+                <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submitUnreg" id="session-form">
                     <div class="form-group">
                         <label for="session-name">Session Name</label>
                         <input type="text" id="session-name" name="session_name" placeholder="Session Name" required>
                     </div>
 
                     
-                    <div class="form-group">
-                        <label for="company-name">Company Name</label>
-                        <select id="company-name" name="company_name" required>
-                            <option value="" >Select Company</option>
-
-                            <?php 
-                                foreach($companyData as $company){
-                                    echo "<option value='{$company->CompanyId}'>{$company->Name}</option>";
-                                }
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group" style="display: none;">
-                        <input type="text" name="CompanyId" id="company-id">
+                    <div class="form-group" id="company-group">
+                        <label for="company-name">Enter Company Name</label>
+                        <input type="text" id="company-name" name="company_name" placeholder="Type company name...">
                     </div>
 
                     <div class="form-group">
@@ -336,8 +324,6 @@
 
             const companyData = <?php echo json_encode($companyData); ?>;
 
-            console.log(companyData);
-
             const allTimeSlots = [
                             "9:00 AM - 11:00 AM",
                             "11:00 AM - 1:00 PM",
@@ -346,53 +332,6 @@
                         ];
 
             const allHalls = ["W001", "S104", "S202" ,"W004"];
-
-
-
-            companyName.addEventListener("change", function(){
-                const selectedCom = this.value;
-                //console.log(companyName.value);
-                //console.log(selectedCom);
-                const selectedCompany = companyData.find(c => c.CompanyId == companyName.value);
-                //console.log(selectedCompany);
-                if(selectedCompany){
-                    companyId.value = selectedCompany.CompanyId;
-                    email.value = selectedCompany.Email;
-                    contactPerson.value = selectedCompany.ContactPerson;
-                    contactNumber.value = selectedCompany.ContactNum;
-                }
-                
-            })
-
-            // hallname.addEventListener("change", function () {
-            //     const selectedHall = this.value;
-
-            //     fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=hall&value=${selectedHall}`)
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             console.log("Fetched data:", data);
-
-            //             const timeSlotSelect = document.getElementById("time-slot");
-            //             const dateSelect = document.getElementById('session-date');
-            //             dateSelect.value = "";
-            //             timeSlotSelect.value = "";
-            //             timeSlotSelect.innerHTML = '<option value="" >Select Time Slot</option>';
-
-            //             const unavailableTimeSlots = data.map(item => item.time_slot);
-
-            //             const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
-
-            //             availableTimeSlots.forEach(slot => {
-            //                 const option = document.createElement("option");
-            //                 option.value = slot;
-            //                 option.textContent = slot;
-            //                 timeSlotSelect.appendChild(option);
-            //             });
-            //         })
-            //         .catch(error => {
-            //             console.error("Error fetching availability:", error);
-            //         });
-            // });
 
 
             date.addEventListener("change", function (){

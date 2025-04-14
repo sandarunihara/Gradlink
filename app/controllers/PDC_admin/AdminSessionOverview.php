@@ -27,4 +27,14 @@
             ]);
 
         }
+
+        public function unregistered(){
+            $model = new PDC_Unreg_Session;
+            $sessionData = $model->findAll();
+
+            $this->view('PDC_admin/Session/SessionNull', 
+            ['sessionData' => $sessionData,
+            'activeTab' => 'unregisteredCompany'
+            ]);
+        }
     }
