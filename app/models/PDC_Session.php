@@ -41,6 +41,28 @@ class PDC_Session
         return empty($this->errors);
     }
 
+    public function getAvailableTimeSlotsAndDates($hall_number){
+        $query = "SELECT session_date, time_slot 
+                  FROM $this->table 
+                  WHERE hall_number = :hall_number";
+                  
+        $params = [':hall_number' => $hall_number];
+        $result = $this->query($query, $params);
+        return $result ? $result : [];
+    }
+
+    public function getAvailableHallAndTimeSlots($session_date){
+        $query = "SELECT hall_number, time_slot 
+                  FROM $this->table 
+                  WHERE session_date = :session_date
+                  AND session_date >= CURDATE()
+                  ";
+                  
+        $params = [':session_date' => $session_date];
+        $result = $this->query($query, $params);
+        return $result ? $result : [];
+    }
+
     public function findall()
     {
         $query = "SELECT c.*,s.* 
