@@ -110,6 +110,10 @@
                                                         $statusText = 'Interview Scheduled';
                                                         $statusClass = 'Sendemail';
                                                         break;
+                                                    case 'Interview Expired':
+                                                        $statusText = 'Interview Expired';
+                                                        $statusClass = 'Sendemail';
+                                                        break;
                                                     default:
                                                         $statusText = 'Awaiting';
                                                         $statusClass = 'Pending';
