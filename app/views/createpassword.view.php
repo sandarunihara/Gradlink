@@ -79,18 +79,18 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
-    <?php if (!empty($data['success'])): ?>
+    <?php if(array_key_exists('success', $data)){ ?>
         <script>
             const success = "<?php echo addslashes($data['success']); ?>";
             successToast(success);
         </script>
-    <?php endif; ?>
-    <?php if (!empty($data['errors'])): ?>
+    <?php } ?>
+    <?php if(array_key_exists('errors', $data)){ ?>
         <script>
-            errorToast("<?php echo addslashes($data['errors']); ?>");
+            const errors = "<?php echo addslashes($data['errors']); ?>";
+            errorToast(errors);
         </script>
-    <?php endif; ?>
-
+    <?php } ?>
 
     <script>
         document.querySelectorAll('.otp-box').forEach((input, index, inputs) => {
