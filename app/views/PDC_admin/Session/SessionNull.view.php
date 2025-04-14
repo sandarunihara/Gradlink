@@ -49,7 +49,7 @@
                         </button>
                     </div>
                     <div class="action-buttons">
-                        <button class="add-btn" onclick="navigateToAddSession();" ></button>
+                        <button class="add-btn" onclick="navigateToAddUnregiteredSession();" ></button>
                     </div>
                 </div>
                 <table>
@@ -68,7 +68,7 @@
                             <?php foreach($sessionData as $session): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($session->session_name) ?></td>
-                                    <td><?= htmlspecialchars($session->Name) ?></td>
+                                    <td><?= htmlspecialchars($session->other_company_name) ?></td>
                                     <td><?= htmlspecialchars($session->hall_number) ?></td>
                                     <td><?= htmlspecialchars($session->session_date) ?></td>
                                     <td><?= htmlspecialchars($session->time_slot) ?></td>

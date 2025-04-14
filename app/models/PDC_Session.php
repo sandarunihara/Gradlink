@@ -84,6 +84,17 @@ class PDC_Session
         return $result;
     }
 
+    public function findUnregistered(){
+        $query = "SELECT * 
+                  FROM $this->table 
+                  WHERE session_date >= CURDATE()
+                  AND CompanyId IS NULL
+                  ";
+
+        $result = $this->query($query);
+        return $result;
+    }
+
     public function find($id)
     {
         $query = "SELECT c.*,s.*

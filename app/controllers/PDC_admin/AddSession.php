@@ -50,10 +50,23 @@ require "../app/libs/Exception.php";
             ]);
         }
 
+        public function showAddAddUnregisteredForm(){
+            $model = new company;
+            $session = new PDC_Session;
+            $data = $model->findAllOngoing();
+            
+
+            //show($data);
+            $this->view('PDC_admin/Session/AddUnregistered' , [
+                'companyData' => $data
+            ]);
+        }
+
         public function GetAvailability(){
             $type = $_GET['type'];
             $data = $_GET['value'];
             $model = new PDC_Session;
+            $modelunreg = new PDC_Unreg_Session;
             
             if($type == 'hall'){
                 $response = $model->getAvailableTimeSlotsAndDates($data);
@@ -62,7 +75,9 @@ require "../app/libs/Exception.php";
                 exit;
             }
             else if($type == 'date'){
-                $response = $model->getAvailableHallAndTimeSlots($data);
+                $response1 = $model->getAvailableHallAndTimeSlots($data);
+                $response2 = $modelunreg->getAvailableHallAndTimeSlots($data);
+                $response = array_merge($response1, $response2);
                 header('Content-Type: application/json');
                 echo json_encode($response);
                 exit;
@@ -86,8 +101,68 @@ require "../app/libs/Exception.php";
 
             //show($data);
 
-            $result = $model->insert($data);
+            if($data['company_name'] != 'other'){
+                $result = $model->insert($data);
 
+                if($result){
+                    $this->sendEmail($data);
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Session successfully Added'
+                    ];
+                }
+                else{
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Failed to add session'
+                    ];
+                }
+
+                header('Location: /Gradlink/public/PDC_admin/AdminSessionOverview/dashboard');
+                exit;
+            }
+            else{
+                $data['company_name'] = $data['otherCompany'];
+                unset($data['otherCompany']);
+                $result = $model->insert($data);
+
+                if($result){
+                    $this->sendEmail($data);
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Session successfully Added'
+                    ];
+                }
+                else{
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Failed to add session'
+                    ];
+                }
+
+                header('Location: /Gradlink/public/PDC_admin/AdminSessionOverview/dashboard');
+                exit;
+            }
+
+            
+        }
+
+        public function submitUnreg(){
+
+            $model = new PDC_Unreg_Session;
+            //show($_POST);
+            $data = [
+                'session_name' => $_POST['session_name'],
+                'other_company_name' => $_POST['company_name'],
+                'email' => $_POST['email'],
+                'contact_person' => $_POST['contact_person'],
+                'contact_number' => $_POST['contact_number'],
+                'hall_number' => $_POST['hall_number'],
+                'session_date' => $_POST['session_date'],
+                'time_slot' => $_POST['time_slot']
+            ];
+
+            $result = $model->insert($data);
             if($result){
                 $this->sendEmail($data);
                 $_SESSION['flash_message'] = [
@@ -101,9 +176,8 @@ require "../app/libs/Exception.php";
                     'message' => 'Failed to add session'
                 ];
             }
+            header('Location: /Gradlink/public/PDC_admin/AdminSessionOverview/unregistered');
 
-            header('Location: /Gradlink/public/PDC_admin/AdminSessionOverview/dashboard');
-            exit;
         }
 
         private function sendEmail($data) {
@@ -178,7 +252,7 @@ require "../app/libs/Exception.php";
                                 
                                 <p>Dear {$data['contact_person']},</p>
                                 
-                                <p>Your session with GradLink has been successfully scheduled. Below are the details:</p>
+                                <p>Your session with has been successfully scheduled. Below are the details:</p>
                                 
                                 <div class='details'>
                                     <div class='detail-row'>
@@ -207,7 +281,7 @@ require "../app/libs/Exception.php";
                                     </div>
                                 </div>
                                 
-                                <p>Please arrive 15 minutes before your scheduled time. If you need to make any changes, please contact us immediately.</p>
+                                <p>If you need to make any changes, please contact us immediately.</p>
                                 
                                 <div class='footer'>
                                     &copy; " . date('Y') . " GRADLINK - Professional Development Center. All rights reserved.
