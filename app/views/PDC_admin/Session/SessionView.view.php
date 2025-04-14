@@ -12,7 +12,7 @@
     <style>
         :root {
             --primary: #1e40af;
-            --primary-light:rgb(53, 112, 180);
+            --primary-light: rgb(53, 112, 180);
             --primary-dark: rgb(3, 19, 45);
             --secondary: #6b7280;
             --success: #10b981;
@@ -50,9 +50,9 @@
         .content {
             flex: 1;
             padding: 1.5rem 2rem;
-            margin-left: 5%;  /* Sidebar is 5% of width */
-            width: 95%;       /* Content is 95% of width */
-            padding-left: 5%; /* Add padding for content */
+            margin-left: 5%;
+            width: 95%;
+            padding-left: 5%;
         }
 
         .header {
@@ -291,6 +291,16 @@
             text-decoration: underline;
         }
 
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
         .tag {
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
@@ -373,7 +383,6 @@
             color: var(--primary);
         }
 
-        /* Grid layout for session details */
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -386,7 +395,6 @@
             }
         }
 
-        /* Company card styles */
         .company-card {
             border: 1px solid #e5e7eb;
             border-radius: var(--border-radius-sm);
@@ -422,6 +430,7 @@
             display: flex;
             gap: 0.75rem;
         }
+
         .status-expired {
             color: #dc2626;
             background-color: #fee2e2;
@@ -430,25 +439,111 @@
             font-weight: 500;
         }
 
-        .status-active {
-            color: #16a34a;
-            background-color: #dcfce7;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-weight: 500;
-        }
+        /* Delete Modal Styles */
+        /* Delete Modal Styles */
+.delete-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
 
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-            border-color: var(--danger);
-        }
+.delete-modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
-        .btn-danger:hover {
-            background-color: #dc2626;
-        }
+.delete-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
 
-        .modal {
+.delete-modal-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.delete-modal-body {
+    padding: 20px;
+}
+
+.delete-modal-body p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.delete-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+        /* Update Modal Styles */
+.update-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -461,43 +556,38 @@
     animation: fadeIn 0.3s ease-out;
 }
 
-.modal.active {
+.update-modal.active {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.modal-content {
+.update-modal-content {
     background-color: white;
     border-radius: var(--border-radius);
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     margin: 1rem;
     box-shadow: var(--shadow-lg);
     transform: translateY(-20px);
     opacity: 0;
     animation: slideIn 0.3s ease-out forwards;
     overflow: hidden;
+    border-top: 4px solid var(--primary);
 }
 
-.modal-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #ef4444, #dc2626);
-}
-
-.modal-header {
+.update-modal-header {
     padding: 1.5rem;
     border-bottom: 1px solid #e5e7eb;
+    background-color: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.modal-header h3 {
+.update-modal-header h3 {
     margin: 0;
-    color: var(--danger);
+    color: var(--primary);
     font-size: 1.25rem;
     font-weight: 600;
     display: flex;
@@ -505,67 +595,95 @@
     gap: 0.75rem;
 }
 
-.modal-header h3::before {
-    content: '!';
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    background-color: var(--danger);
-    color: white;
-    border-radius: 50%;
-    font-weight: bold;
+.update-modal-header h3 i {
+    color: var(--primary);
 }
 
-.modal-body {
+.update-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: color 0.2s;
+    padding: 0.25rem;
+    border-radius: 4px;
+}
+
+.update-modal-close:hover {
+    color: var(--danger);
+    background-color: #f3f4f6;
+}
+
+.update-modal-body {
     padding: 1.5rem;
 }
 
-.modal-body p {
-    margin-bottom: 1rem;
-    color: var(--dark);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--dark);
-}
-
-#delete-reason {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: var(--border-radius-sm);
-    font-family: inherit;
-    min-height: 120px;
-    resize: vertical;
-    transition: border-color 0.2s;
-}
-
-#delete-reason:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-}
-
-.modal-footer {
+.update-modal-footer {
     padding: 1rem 1.5rem;
     border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
     display: flex;
     justify-content: flex-end;
     gap: 0.75rem;
 }
 
-#modal-message {
+/* Form Styles */
+#sessionUpdateForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
     font-size: 0.875rem;
-    margin-top: 0.5rem;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+#sessionUpdateForm input[type="text"],
+#sessionUpdateForm input[type="date"],
+#sessionUpdateForm select,
+#sessionUpdateForm textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: var(--border-radius-sm);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+#sessionUpdateForm input[type="text"]:focus,
+#sessionUpdateForm input[type="date"]:focus,
+#sessionUpdateForm select:focus,
+#sessionUpdateForm textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+#sessionUpdateForm textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Animations */
@@ -585,10 +703,65 @@
     }
 }
 
+.toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast-message {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: white;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .toast-success {
+            background-color: #28a745;
+        }
+
+        .toast-error {
+            background-color: #dc3545;
+        }
+
+        .toast-info {
+            background-color: #17a2b8;
+        }
+
+        .toast-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 
 <body>
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+    
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
 
@@ -744,73 +917,151 @@
         </main>
     </div>
 
-    <div id="delete-modal" class="modal">
-        <div class="modal-content">
+    <div id="delete-modal" class="delete-modal">
+        <div class="delete-modal-content">
             <form id="delete-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/remove">
                 <input type="hidden" name="session_id" id="session-id" value="">
                 <input type="hidden" name="email" id="email" value="<?= htmlspecialchars($session->Email) ?>">
-                <div class="modal-header">
+                <div class="delete-modal-header">
                     <h3>Delete Session</h3>
                 </div>
-                <div class="modal-body">
+                <div class="delete-modal-body">
+                    <p>Are you sure you want to delete this session? This action cannot be undone.</p>
                     <p>Please provide a reason for deletion. This message will be sent to the company's email.</p>
                     <div class="form-group">
-                        <label for="block-reason">Reason for Deletion</label>
-                        <textarea id="delete-reason" name="delete_reason" placeholder="Enter your reason here..." required></textarea>
+                        <label for="delete-reason">Reason for Deletion</label>
+                        <textarea id="delete-reason" name="delete_reason" class="form-control form-textarea" placeholder="Enter your reason here..." required></textarea>
                         <p id="modal-message" style="color: red; margin-top: 10px;"></p>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="delete-modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete Session</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <div id="update-modal" class="update-modal">
+        <div class="update-modal-content">
+            <div class="update-modal-header">
+                <h3><i class="fas fa-edit"></i> Update Session Details</h3>
+                <button class="update-modal-close" onclick="closeUpdateModal()">&times;</button>
+            </div>
+            <div class="update-modal-body">
+                <form id="sessionUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/edit/<?= htmlspecialchars($session->session_id) ?>">
+                    
+                    <div class="form-group">
+                        <label for="session-name" class="form-label">Session Name</label>
+                        <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
+                            value="<?= htmlspecialchars($session->session_name) ?>" 
+                        required>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="session_id" id="session-id" 
+                            value="<?= htmlspecialchars($session->session_id) ?>"
+                        >
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="CompanyId" id="company-id" 
+                            value="<?= htmlspecialchars($session->CompanyId) ?>"
+                        >
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="email" id="company-email" 
+                            value="<?= htmlspecialchars($session->Email) ?>"
+                        >
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <input type="text" name="contact_number" id="contact-number" 
+                            value="<?= htmlspecialchars($session->ContactNum) ?>"
+                        >
+                    </div>
+
+                    
+                    
+                    <div class="form-group">
+                        <label for="description" class="form-label">Session Description</label>
+                        <textarea id="description" name="description" class="form-control form-textarea"><?= !empty($session->description) ? htmlspecialchars($session->description) : '' ?></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="session-date" class="form-label">Session Date</label>
+                            <input type="date"
+                                id="session-date" 
+                                name="session_date" 
+                                placeholder="Session Date"
+                                min="<?= date('Y-m-d') ?>" 
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time" class="form-label">Time Slot</label>
+                            <select id="time-slot" name="time_slot" 
+                                value="<?= htmlspecialchars($session->time_slot) ?>"
+                                required>
+                            </select>
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="hall-number" class="form-label">Hall Name</label>
+                            <select id="hall-number" name="hall_number" 
+                                value="<?= htmlspecialchars($session->hall_number) ?>"
+                                required>
+                            </select>
+                        </div>
+
+                    </div>
+                    
+                    <div class="update-modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeUpdateModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+
+
     <script>
 
-        function closeModal(){
+        function closeDeleteModal() {
             const modal = document.getElementById('delete-modal');
-            modal.classList.remove('active');
+            modal.style.display = 'none';
             document.getElementById('delete-reason').value = '';
             document.getElementById('modal-message').innerText = '';
         }
 
-        const deletebtn = document.getElementById('delete-btn');
+        function closeUpdateModal() {
+            const modal = document.getElementById('update-modal');
+            modal.classList.remove('active');
+        }
+
+        const deleteBtn = document.getElementById('delete-btn');
+        const updateBtn = document.getElementById('edit-toggle-btn');
             
-        deletebtn.addEventListener('click', function() {
+        deleteBtn.addEventListener('click', function() {
             const sessionId = <?= json_encode($session->session_id) ?>;
             document.getElementById('session-id').value = sessionId;
-            document.getElementById('delete-modal').classList.add('active');
+            document.getElementById('delete-modal').style.display = 'flex';
         });
 
+        updateBtn.addEventListener('click', function() {
+            document.getElementById('update-modal').classList.add('active');
+        });
 
         document.addEventListener('DOMContentLoaded', function() {
-
-            const validity = document.getElementById('check-date');
-            const sessionDateStr = "<?= $session->session_date ?>";
-            
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            const sessionDate = new Date(sessionDateStr);
-            sessionDate.setHours(0, 0, 0, 0);
-            
-            const formattedDate = sessionDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            if (sessionDate < today) {
-                validity.innerHTML = `<i class="fas fa-clock"></i> Expired on ${formattedDate}`;
-                validity.classList.add('status-expired');
-            } else {
-                validity.innerHTML = `<i class="fas fa-calendar-day"></i> ${formattedDate}`;
-                validity.classList.add('status-active');
-            }
-
 
             // Tab functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
@@ -826,6 +1077,118 @@
                     document.getElementById(tabId).classList.add('active');
                 });
             });
+
+
+            const hallname = document.getElementById('hall-number');
+            const timeslot = document.getElementById('time-slot');
+            const date = document.getElementById('session-date');
+
+            const allTimeSlots = [
+                            "9:00 AM - 11:00 AM",
+                            "11:00 AM - 1:00 PM",
+                            "1:00 PM - 3:00 PM",
+                            "3:00 PM - 5:00 PM"
+                        ];
+
+            const allHalls = ["W001", "S104", "S202" ,"W004"];
+
+            date.addEventListener("change", function (){
+                const selectedDate = this.value;
+                //console.log("Selected date:", selectedDate);
+                fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=date&value=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        //console.log("Fetched data:", data);
+
+                        const  slotHalls = {};
+
+                        data.forEach(item => {
+                            if(!slotHalls[item.time_slot]){
+                                slotHalls[item.time_slot] = new Set();
+                            }
+                            slotHalls[item.time_slot].add(item.hall_number)
+                        })
+
+                        console.log(slotHalls);
+
+                        const mapped = Object.entries(slotHalls).map(([timeslot , setHalls])=> {
+                            return{
+                                timeslot,
+                                count: setHalls.size
+                            }
+                        }
+                        )
+
+                        console.log(mapped);
+
+                        const unavailableTimeSlots = mapped.filter(({ count }) => 
+                            count === allHalls.length
+                        ).map(({ timeslot }) => timeslot);
+                        
+                        console.log(unavailableTimeSlots);
+
+
+                        const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+
+                        console.log(availableTimeSlots);
+
+                        const timeSlotSelect = document.getElementById("time-slot");
+
+
+
+                        //const unavailableTimeSlots = data.map(item => (item.time_slot));
+                        //const availableTimeSlots = allTimeSlots.filter(slot => !unavailableTimeSlots.includes(slot));
+                        //console.log(availableTimeSlots);
+
+
+                        timeSlotSelect.innerHTML = '<option value="" >Select Time Slot</option>';
+                        availableTimeSlots.forEach(slot => {
+                            const option = document.createElement("option");
+                            option.value = slot;
+                            option.textContent = slot;
+                            timeSlotSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching availability:", error);
+                    });
+            })
+
+            timeslot.addEventListener("change", function () {
+                const selectedDate = date.value;
+                const selectedSlot = this.value;
+
+                if (!selectedDate || !selectedSlot) return;
+
+                fetch(`<?= ROOT ?>/PDC_admin/AddSession/GetAvailability?type=date&value=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const hallSelect = document.getElementById("hall-number");
+
+                        hallSelect.innerHTML = '<option value="">Select Hall</option>';
+
+                        const unavailableHalls = data.filter(item => item.time_slot === selectedSlot).map(item => item.hall_number);
+                        const availableHalls = allHalls.filter(hall => !unavailableHalls.includes(hall));
+
+                        console.log(availableHalls);
+
+                        availableHalls.forEach(hall => {
+                            const option = document.createElement("option");
+                            option.value = hall;
+                            option.textContent = hall;
+                            hallSelect.appendChild(option);
+                        });
+
+                    })
+                    .catch(error => {
+                        console.error("Error filtering halls based on time slot:", error);
+                    });
+            });
+
+
+
+
+
             
         });
     </script>
