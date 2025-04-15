@@ -25,4 +25,15 @@ class round
         $result = $this->query($query);
         return $result[0] -> round;
     }
+
+    public function update($roundId, $startDate, $endDate)
+    {
+        $query = "UPDATE $this->table SET startDate = :startDate, endDate = :endDate WHERE roundId = :roundId";
+        $params = [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'roundId' => $roundId
+        ];
+        return $this->query($query, $params);
+    }
 }
