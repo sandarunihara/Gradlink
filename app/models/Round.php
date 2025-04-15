@@ -23,6 +23,7 @@ class round
     public function getRound(){
         $query = "SELECT round FROM $this->table WHERE active = 1 OR CURDATE() BETWEEN startDate AND endDate";
         $result = $this->query($query);
+        //show($result);
         return $result[0] -> round;
     }
 }
