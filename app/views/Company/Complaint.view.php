@@ -61,33 +61,29 @@
                                             </th>
                                         </thead>
                                         <tbody>
-                                            <tr class="complaint-row">
-                                                <td class="date">2024-01-10</td>
-                                                <td class="topic">Lack of Guidance</td>
-                                                <td>
-                                                    <!-- status -->
-                                                    <button class="reviewed" onclick="location.href='<?= ROOT ?>/company/CComplaint/viewComplaint'">
-                                                        <span class="status">Reviewed</span>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr class="complaint-row">
-                                                <td class="date">2024-01-10</td>
-                                                <td class="topic">Lack of Guidance</td>
-                                                <td>
-                                                    <!-- status -->
-                                                    <button class="not-reviewed" onclick="location.href=''">
-                                                        <span class="status">Not Reviewed</span>
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                            <?php if (isset($data) && !empty($data)): ?>
+                                                <?php foreach ($data as $Complaint): ?>
+                                                    <tr class="complaint-row">
+                                                        <td class="date"><?php echo $Complaint->CreatedAt ?></td>
+                                                        <td class="topic"><?php echo $Complaint->Topic ?></td>
+                                                        <td>
+                                                            <!-- status -->
+                                                            <button class="reviewed" onclick="location.href=`<?= ROOT ?>/company/CComplaint/viewComplaint/<?php echo $Complaint->ComplaintId ?>`">
+                                                                <span class="status"><?php echo $Complaint->Status ?></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="5">No Old Complaints found</td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>

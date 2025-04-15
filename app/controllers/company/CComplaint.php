@@ -16,9 +16,25 @@ class CComplaint
         $this->view('Company/Complaint',['data'=>$data]);
     }
 
-    public function viewComplaint()
+    public function viewComplaint($complaintId)
     {
-        $this->view('Company/ViewComplaint');
+        $model=new complaint;
+        $reply_model=new pdc_coordinator_complaint;
+        $req=[
+            'ComplaintId'=>$complaintId
+        ];
+        $res=$model->where($req,[], '', 'do_not_order');
+        $data=$res[0];
+        $replydata=$reply_model->where($req,[],'','do_not_order');
+        if(!empty($replydata)){
+            $reply=$replydata[0]->Reply;
+        }
+        if(!empty($reply)){
+            $data->Reply = $reply;
+        }else{
+            $data->Reply ='';
+        }
+        $this->view('Company/ViewComplaint',['data'=>$data]);
     }
 
     public function addComplaint()
@@ -53,5 +69,9 @@ class CComplaint
         }
         
         $this->view('Company/AddComplaint');
+    }
+
+    public function deleteComplaint($id){
+        
     }
 }

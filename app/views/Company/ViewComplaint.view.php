@@ -35,20 +35,21 @@
                     </div>
                     <div id="view-complaint-box">
                         <div class="complaint-description-box">
-                            <h2>Complaint Description</h2>
+                            <h3><?php echo $data->Topic ?></h3>
                             <p class="complaint-description">
-                                Complaint Description
+                                <?php echo $data->Description ?>
                             </p>
                         </div>
                         <div class="complaint-description-box">
-                            <h2>Coordinator's Response</h2>
+                            <h3>Coordinator's Response</h3>
                             <p class="complaint-description">
-                                Coordinator's Response
+                                <?php if (!empty($data->Reply)): ?>
+                                    <?php echo $data->Reply ?>
+                                <?php else : ?>
+                                    Not Review yet
+                                <?php endif; ?>
                             </p>
                         </div>
-                        <a href="<?= ROOT ?>/">
-                            <button id="complaintDleteBtn">Delete Complaint</button>
-                        </a>
                     </div>
                 </div>
             </div>
