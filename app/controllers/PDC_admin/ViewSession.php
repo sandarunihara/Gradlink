@@ -42,7 +42,7 @@ class ViewSession {
         $reason = $_POST['delete_reason'];
         $email = $_POST['email'];
         $data = $model->delete($sessionId,'session_id');
-        //show($data);
+
         if ($data) {
             $this->sendEmail($email , $reason);
             $_SESSION['flash_message'] = [
@@ -106,6 +106,8 @@ class ViewSession {
                 'email' => $_POST['email'],
                 'contact_number' => $_POST['contact_number'],
             ];
+
+            //show($data);
 
             // $r = $model->validate($data);
             // show($r);

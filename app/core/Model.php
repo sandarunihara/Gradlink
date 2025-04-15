@@ -185,7 +185,6 @@
             $data[$id_column] = $id;
             $query = "DELETE FROM $this->table WHERE $id_column = :$id_column";
             $result = $this->query($query, $data);
-            //show($result);
             if($result) {
                 return true;
             } else {

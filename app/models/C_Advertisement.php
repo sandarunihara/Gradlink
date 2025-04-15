@@ -158,14 +158,13 @@ class C_Advertisement
                     advertisement.startdate,
                     advertisement.image,
                     company.Name,
-                    company.profileimg,
+                    company.profileimg
                 FROM 
                     advertisement
                 JOIN 
                     company ON advertisement.CompanyId = company.CompanyId
                 WHERE
-                    advertisement.status = 'Pending'";
-
+                    advertisement.status = 'Pending';";
 
         $result = $this->query($query);
         //show($result);
