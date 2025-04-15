@@ -48,7 +48,7 @@ class Login
 			if ($user) {
 				$row = $user->first($arr);
 				if ($row && password_verify($_POST['password'], $row->Password)) {
-					// RoundStatusUpdater::update();
+					RoundStatusUpdater::update();
 					
 					// Set session for the user
 					session_start();
