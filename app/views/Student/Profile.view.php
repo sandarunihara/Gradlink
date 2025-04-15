@@ -22,7 +22,8 @@
             <div class="student-profile-header">
                 <!-- Profile Picture -->
                 <div class="student-profile-picture">
-                    <img src="<?=ROOT?>/assets/img/Student/Sandeepa.jpg" alt="Profile Picture">
+                    <i class="fas fa-pen"></i>
+                    <img src="<?=ROOT?>/assets/img/Student/<?php echo htmlspecialchars($data['Student'] -> ProfilePic)?>" alt="Profile Picture">
                 </div>
                 
                 <!-- Profile Info (Name & Major) -->
@@ -90,6 +91,14 @@
             <div class="student-profile-footer">
                 <div class="student-edit">
                     <button onclick="location.href='<?=ROOT?>/Student/StudentProfile/ProfileEdit';">Update Profile</button>
+                </div>
+                <div class="cv-download">
+                    <a href="<?=ROOT?>/assets/uploads/cv/ <?php echo htmlspecialchars($data['Student'] -> cv)?>" target="_blank">
+                        <button>
+                            <i class="fas fa-file-arrow-down"></i> 
+                            <span>Download Resume</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
