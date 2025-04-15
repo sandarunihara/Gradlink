@@ -56,7 +56,7 @@ class Login
 					session_start();
 					$_SESSION['USER'] = $row;
 					$_SESSION['PATH'] = $path;
-					$_SESSION['ROUND'] = $round->roundId;
+					$_SESSION['ROUNDID'] = $round->roundId;
 
 					if (!empty($_POST['remember_me'])) {
 						$cookieValue = base64_encode(json_encode([
