@@ -59,4 +59,23 @@ class interview_time_slot
 
         return $result;
     }
+    public function deleteinterview($conditions) {
+        // Build the WHERE clause dynamically from the $conditions array
+        $whereClauses = [];
+        foreach ($conditions as $column => $value) {
+            $whereClauses[] = "$column = :$column";
+        }
+    
+        $whereSQL = implode(' AND ', $whereClauses);
+        $query = "DELETE FROM $this->table WHERE $whereSQL";
+    
+        // Execute the query and check if successful
+        $success = $this->query($query, $conditions);
+    
+        if (!$success) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

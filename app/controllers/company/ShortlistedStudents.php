@@ -101,7 +101,20 @@ class ShortlistedStudents
                 }
             }
         }
-
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && $_POST['submit'] == 'close') {
+            foreach ($removedlist as $removeapplication) {
+                $paradata = [
+                    'StudentId' => $removeapplication['StudentId'],
+                    'AdvertisementId' => $removeapplication['AdvertisementId']
+                ];
+                $responce = $model->deletead($paradata);
+                if ($responce) {
+                    header("Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard?position=all&status=all&skill=");
+                    exit();
+                }
+            }
+        }
+        // show($removedlist);
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
         $this->view('Company/ShortlistedStudents', ['data' => $reqdata,'removedlist'=>$removedlist]);
