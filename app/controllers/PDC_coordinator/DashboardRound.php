@@ -45,9 +45,11 @@ class DashboardRound
                         break;
                     }
                 }
+                
+                $active = ($startDate <= $today && $endDate >= $today) ? 1 : 0;
 
                 if (empty($errors)) {
-                    $success = $model->update($roundId, $startDate, $endDate);
+                    $success = $model->update($roundId, $startDate, $endDate, $active);
                     if ($success) {
                         $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Round updated successfully'];
                     } else {
