@@ -41,7 +41,8 @@ class DashboardRound
             foreach ($existingRounds as $round) {
                 if ($round->roundId != $roundId) {
                     if ($startDate <= $round->endDate && $endDate >= $round->startDate) {
-                        $errors[] = "This date range overlaps with Round " . $round->round;
+                        $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Date range overlaps with '. $round->round];
+                        // $errors[] = "This date range overlaps with Round " . $round->round;
                         break;
                     }
                 }
@@ -49,6 +50,10 @@ class DashboardRound
                 $active = ($startDate <= $today && $endDate >= $today) ? 1 : 0;
 
                 if (empty($errors)) {
+                    if ($active == 1) {
+                        $model->deactivateAllRoundsExcept($roundId);
+                    }
+        
                     $success = $model->update($roundId, $startDate, $endDate, $active);
                     if ($success) {
                         $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Round updated successfully'];
