@@ -47,14 +47,19 @@
                 <?php if (!empty($roundData)): ?>
                     <?php foreach ($roundData as $round): ?>
                         <div class="round-card" data-start="<?= htmlspecialchars($round->startDate) ?>">
-                            <h3> <?= htmlspecialchars($round->round) ?></h3>
+                            <h3><?= htmlspecialchars($round->round) ?></h3>
                             <p><strong>Round ID:</strong> <?= htmlspecialchars($round->roundId) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($round->active) ?></p>
-                            <p><strong>Start Date:</strong> <?= htmlspecialchars($round->startDate) ?></p>
-                            <p><strong>End Date:</strong> <?= htmlspecialchars($round->endDate) ?></p>
-                            <button class="view-btn">View</button>
+
+                            <?php if (strtolower($round->round) !== 'none'): ?>
+                                <p><strong>Start Date:</strong> <?= htmlspecialchars($round->startDate) ?></p>
+                                <p><strong>End Date:</strong> <?= htmlspecialchars($round->endDate) ?></p>
+                                <button class="view-btn">View</button>
+                            <?php else: ?>
+                                <button class="view-btn" disabled style="opacity: 0.5; cursor: not-allowed;">View</button>
+                            <?php endif; ?>
                         </div>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p>No Registered Rounds</p>
                 <?php endif; ?>
