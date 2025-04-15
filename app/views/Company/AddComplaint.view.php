@@ -26,33 +26,27 @@
                 </div>
                 <div class="m_main">
                     <div class="complaint-navbar">
-                        
+
                         <div class="headcontainer">
                             <div class="m_content">
-                                <a href="http://localhost/Gradlink/public/company/Complaint/dashboard" class="backbtn">
+                                <a href="http://localhost/Gradlink/public/company/CComplaint/dashboard" class="backbtn">
                                     <i class="fas fa-chevron-left"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <form id="descriptionForm" method="post" action="<?= ROOT ?>/company/Complaint/dashboard">
+                    <form id="form" method="post" action="">
                         <!-- Topic Input -->
                         <label for="topic">Topic</label>
-                        <input type="text" name="topic" id="topi" placeholder="Enter the topic" oninput="validateTopic()" required>
+                        <input type="text" name="topic" id="topic" placeholder="Enter the topic">
 
                         <!-- Description Textarea -->
-                        <label for="description">Description </label>
-                        <textarea required name="description" id="descriptio" cols="50" rows="5" oninput="validateDescription()"></textarea>
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" cols="50" rows="5"></textarea>
 
-                        <span class="error-message" id="descriptionError"></span>
-                        <span class="valid-message" id="descriptionValidMessage"></span>
-                        <span class="error-message" id="topicError"></span>
+                        <span class="error-message" id="errorMessage"></span>
                         <div class="button-container">
-                            <button
-                                type="submit"
-                                id="submit">
-                                Submit
-                            </button>
+                            <button type="submit" id="submitButton">Submit</button>
                             <button type="button" id="clearButton" onclick="clearForm()">Clear Form</button>
                         </div>
                     </form>
@@ -60,6 +54,20 @@
             </div>
         </div>
     </div>
+    <script src="<?= ROOT ?>/assets/js/company/newComplaint.js"></script>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 </body>
-<script src="<?=ROOT?>/assets/js/Student/newComplaint.js"></script>
+
 </html>

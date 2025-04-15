@@ -38,7 +38,7 @@
                 <li data-title="Messages"><i class="fas fa-comments"></i></li>
             </a>
             
-            <a href="/Gradlink/public/company/Complaint/dashboard">
+            <a href="/Gradlink/public/company/CComplaint/dashboard">
                 <li data-title="Complaint"><i class="fas fa-exclamation-triangle"></i></li>
             </a>
         </ul>

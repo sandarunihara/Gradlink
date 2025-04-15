@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="add-complaint">
-                                <a href="<?= ROOT ?>/company/Complaint/addComplaint"><button>+ Add New</button></a>
+                                <a href="<?= ROOT ?>/company/CComplaint/addComplaint"><button>+ Add New</button></a>
                             </div>
                         </div>
                         <div class="compliant-table-div">
@@ -66,7 +66,7 @@
                                                 <td class="topic">Lack of Guidance</td>
                                                 <td>
                                                     <!-- status -->
-                                                    <button class="reviewed" onclick="location.href='<?= ROOT ?>/company/Complaint/viewComplaint'">
+                                                    <button class="reviewed" onclick="location.href='<?= ROOT ?>/company/CComplaint/viewComplaint'">
                                                         <span class="status">Reviewed</span>
                                                     </button>
                                                 </td>
@@ -93,6 +93,19 @@
             </div>
         </div>
     </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
 </body>
 
 </html>
