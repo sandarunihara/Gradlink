@@ -28,6 +28,13 @@ class round
         return $result[0]->round;
     }
 
+    public function getActiveRound()
+    {
+        $query = "SELECT * FROM $this->table WHERE active = 1";
+        $result = $this->query($query);
+        return $result[0];
+    }
+
     public function update($roundId, $startDate, $endDate, $active)
     {
         $query = "UPDATE $this->table SET startDate = :startDate, endDate = :endDate, active = :active WHERE roundId = :roundId";
