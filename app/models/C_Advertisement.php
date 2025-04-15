@@ -164,11 +164,20 @@ class C_Advertisement
                 JOIN 
                     company ON advertisement.CompanyId = company.CompanyId
                 WHERE
-                    advertisement.status = 'Pending'";
-
+                    advertisement.status = 'Pending';";
 
         $result = $this->query($query);
+        //show($result);
         return $result;
+    }
+
+
+    public function findAllPendingcount(){
+        $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'Pending'";
+
+        $result = $this->query($query);
+        //show($result);
+        return $result[0]->{'total'};
     }
 
     public function findallDeactivewithCompany(){

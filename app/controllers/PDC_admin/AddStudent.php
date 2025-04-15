@@ -105,7 +105,9 @@ require "../app/libs/Exception.php";
                                 'type' => 'error',
                                 'message' => 'Student cannot be registered: ' . implode(', ', array_unique($conflic))
                             ];
-                    }
+                            header('Location: ' . $_SERVER['HTTP_REFERER']);
+                            exit;
+                        }
                 }
             }
             else{

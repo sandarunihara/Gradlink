@@ -23,7 +23,7 @@ function errorToast(message) {
 // Success message
 function successToast(message) {
   const toastContainer = document.getElementById("toast-container");
-
+  
   // Create a new toast element
   const toast = document.createElement("div");
   toast.className = "toast-message-success";
@@ -47,6 +47,8 @@ function closeToast(toastElement, messageType) {
 
 // Display stored toasts on page load
 window.addEventListener("DOMContentLoaded", () => {
+  const errorMessage = localStorage.getItem("errorMessage");
+  const successMessage = localStorage.getItem("successMessage");
 
   // Show the error toast if there's a stored error message
   if (errorMessage) {

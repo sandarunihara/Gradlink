@@ -28,6 +28,10 @@
             <a href="<?=ROOT?>/PDC_admin/AdminSessionOverview/dashboard">
                 <li data-title="Sessions"><i class="fas fa-calendar-alt fa-lg"></i></li>
             </a>
+
+            <a href="<?=ROOT?>/PDC_admin/AdminProfileOverview/dashboard">
+                <li data-title="Profile"><i class="fas fa-user fa-lg"></i></li>
+            </a>
             
             <!-- <a href="<?=ROOT?>/PDC_admin/AdminComplainOverview/dashboard">
                 <li data-title="Complains"><i class="fas fa-exclamation-circle fa-lg"></i></li>

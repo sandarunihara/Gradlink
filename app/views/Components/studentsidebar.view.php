@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="profile">
             <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $_SESSION['USER']->Name?>.jpg" alt="Student Image"/>
+                <img src="<?=ROOT?>/assets/img/Student/<?php echo $_SESSION['USER']->ProfilePic?>" alt="Student Image"/>
             </a>
         </div>
         
@@ -43,20 +43,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const listItems = document.querySelectorAll('.sidebar ul li');
-        listItems.forEach((item) => {
-            item.addEventListener('click', () => {
-                listItems.forEach((li) => li.classList.remove('active')); // Remove active from all
-                item.classList.add('active'); // Add active to clicked item
-            });
-        });
-    });
+        const savedActive = localStorage.getItem('activeItem'); // Retrieve saved index
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const listItems = document.querySelectorAll('.sidebar ul li');
-        const savedActive = localStorage.getItem('activeItem'); // Retrieve saved item
-        if (savedActive) {
+        if (savedActive !== null && listItems[savedActive]) {
             listItems.forEach((item) => item.classList.remove('active'));
-            listItems[savedActive].classList.add('active'); // Set active based on saved index
+            listItems[savedActive].classList.add('active');
         }
 
         listItems.forEach((item, index) => {
@@ -68,4 +59,6 @@
         });
     });
 </script>
+
+
 

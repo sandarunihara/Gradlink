@@ -11,7 +11,14 @@ class pdc_assistant
 		'AssistantId',	
 		'Password',
 		'Name',
-		'Degree'
+		'Degree',
+		'Email',
+		'profile_picture',
+		'cover_picture',
+		'gender',
+		'contact_number',
+		'address',
+		'dob'
 	];
 	
 	public function validate($data)
@@ -35,4 +42,16 @@ class pdc_assistant
 
 		return false;
 	}
+
+	public function findById($AssistantId)
+	{
+		$record = $this->where(['AssistantId' => $AssistantId], [] , '' , 'do_not_order');
+		//show($record);
+		if($record)
+		{
+			return $record[0];
+		}
+		return false;
+	}
+
 }

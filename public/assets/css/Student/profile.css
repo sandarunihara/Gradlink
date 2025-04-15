@@ -32,6 +32,7 @@
 .student-profile-info-2,
 .student-profile-info-3 {
     margin-top: 20px;
+    
 }
 .student-profile-info-3 {
     display: flex;
@@ -54,24 +55,6 @@
     border-radius: 10px;
     border: #D2D2D2 1px solid;
 }
-.certificate-header{
-    font-weight: bold;
-    margin-top: 20px;
-}
-.cetificatesContent{
-    margin-top:20px;
-    background-color: #f2f2f2;
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: #D2D2D2 1px solid;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-.cetificatesContent a{
-    text-decoration: none;
-    color: #007bff;
-}
 .student-short-description{
     margin-top: 50px;
 }
@@ -82,8 +65,10 @@
 .student-profile-footer {
     display: flex;
     margin-top: 30px;
+    justify-content: space-between;
 }
-.student-edit{
+.student-edit
+.cv-download{
     margin-top: 50px;
 }
 .student-edit a{
@@ -103,4 +88,14 @@
 }
 .student-edit button:hover{
     background-color: #2980B9;
+}
+.cv-download button{
+    padding: 10px 20px;
+    background-color: #3498DB;
+    color: white;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }

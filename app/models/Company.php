@@ -203,6 +203,12 @@ class company
 		return $result[0]->{'COUNT(*)'};
 	}
 
+	public function pendingCount(){
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
+		$result = $this->query($query);
+		return $result[0]->{'COUNT(*)'};
+	}
+
 	// public function findallwithCompany(){
 	// 	try {
 	// 		$query = "SELECT "
