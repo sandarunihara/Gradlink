@@ -23,32 +23,35 @@
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
-                <div class="m_main">
-                    <div class="complaint-navbar">
-                        <div class="headcontainer">
-                            <div class="m_content">
-                                <a href="http://localhost/Gradlink/public/company/CComplaint/dashboard" class="backbtn">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
+                <div class="c_content">
+                    <div class="m_main">
+                        <div class="complaint-navbar">
+                            <div class="headcontainer">
+                                <div class="m_content">
+                                    <a href="http://localhost/Gradlink/public/company/CComplaint/dashboard" class="backbtn">
+                                        <i class="fas fa-chevron-left"></i>
+                                        BACK
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="view-complaint-box">
-                        <div class="complaint-description-box">
-                            <h3><?php echo $data->Topic ?></h3>
-                            <p class="complaint-description">
-                                <?php echo $data->Description ?>
-                            </p>
-                        </div>
-                        <div class="complaint-description-box">
-                            <h3>Coordinator's Response</h3>
-                            <p class="complaint-description">
-                                <?php if (!empty($data->Reply)): ?>
-                                    <?php echo $data->Reply ?>
-                                <?php else : ?>
-                                    Not Review yet
-                                <?php endif; ?>
-                            </p>
+                        <div id="view-complaint-box">
+                            <div class="complaint-description-box">
+                                <h3><?php echo $data->Topic ?></h3>
+                                <p class="complaint-description">
+                                    <?php echo $data->Description ?>
+                                </p>
+                            </div>
+                            <div class="complaint-description-box">
+                                <h3>Coordinator's Response</h3>
+                                <p class="complaint-description">
+                                    <?php if (!empty($data->Reply)): ?>
+                                        <?php echo $data->Reply ?>
+                                    <?php else : ?>
+                                        Not Review yet
+                                    <?php endif; ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

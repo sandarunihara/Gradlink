@@ -41,9 +41,22 @@ function clearForm() {
 
 
 // Prevent form submission if validation fails
-form.addEventListener('submit', (event) => {
+
+function openRecruitConfirmModal(event) {
+    event.preventDefault();
     if (!validateForm()) {
         event.preventDefault();
         
+    }else{
+        document.getElementById('Recruit-modal').style.display = 'flex';
     }
-});
+}
+// Submits the form after confirmation
+function confirmAction() {
+    // Submit the form
+    document.getElementById('form').submit();
+}
+
+function closeRecruitConfirmModal() {
+    document.getElementById('Recruit-modal').style.display = 'none';
+}

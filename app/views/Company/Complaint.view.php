@@ -27,11 +27,6 @@
                     <div class="m_main">
                         <div class="complaint-navbar">
                             <div class="headcontainer">
-                                <div class="m_content">
-                                    <a href="http://localhost/Gradlink/public/company/Companydash/dashboard" class="backbtn">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </a>
-                                </div>
                                 <div class="complaint-filter-container">
                                     <i class="fas fa-filter"></i>
                                     <select class="status-select">
