@@ -121,7 +121,7 @@
         public function update($id, $data, $id_column) {
 
             try {
-                /* Remove unwanted data */
+                //echo ($this->table);
                 if (!empty($this->allowedColumns)) {
                     foreach ($data as $key => $value) {
                         if (!in_array($key, $this->allowedColumns)) {
@@ -158,20 +158,19 @@
                     $query = rtrim($query, ", ");
 
                     $query .= " WHERE $id_column = :$id_column";
+                    //show($query);
                     $data[$id_column] = $id;
-                    //show($data);
+                    //how($data);
 
                 }
         
                 $this->query($query, $data);
-                // Return a success message if update is successful
                 return [
                     'status' => 'success',
                     'message' => 'Record updated successfully.'
                 ];
         
             } catch (Exception $e) {
-                // Catch any errors and return an error message
                 return [
                     'status' => 'error',
                     'message' => 'Failed to update record: ' . $e->getMessage()

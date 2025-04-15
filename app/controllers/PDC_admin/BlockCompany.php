@@ -23,8 +23,8 @@ require "../app/libs/Exception.php";
             $model = new company;
             $companyId = $_POST['companyId'];
             $companyData = $model->findById($companyId);
-            if($companyData->Status == "Blocked"){
-                $updatedStatus = $model->update($companyId , ['Status' => 'Ongoing'] , 'companyId');
+            if($companyData->block != 0){
+                $updatedStatus = $model->update($companyId , ['block' => 0] , 'companyId');
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
                     $this->sendEmail($companyData->Email, $companyId);
                     $_SESSION['flash_message'] = [

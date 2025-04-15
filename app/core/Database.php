@@ -38,7 +38,6 @@
             $con = $this->connect();
             $stmt = $con->prepare($query);
             $check = $stmt->execute($data);
-
             
             if($check){
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
