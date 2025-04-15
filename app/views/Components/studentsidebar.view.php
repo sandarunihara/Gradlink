@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="profile">
             <a href="<?=ROOT?>/Student/StudentProfile/Profile">
-                <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $_SESSION['USER']->Name?>.jpg" alt="Student Image"/>
+                <img src="<?=ROOT?>/assets/img/Student/<?php echo $_SESSION['USER']->ProfilePic?>" alt="Student Image"/>
             </a>
         </div>
         
