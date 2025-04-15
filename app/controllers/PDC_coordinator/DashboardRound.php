@@ -5,6 +5,11 @@ class DashboardRound
     use Controller;
     public function index()
     {
+        // echo $_SESSION;
+
+        // echo "<pre>";
+        //     print_r($_SESSION);
+        //     echo "</pre>";
         $model = new round;
         $data = $model->findall();
 
