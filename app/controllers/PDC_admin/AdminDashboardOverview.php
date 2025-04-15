@@ -56,6 +56,7 @@ class AdminDashboardOverview{
         }
 
         //var_dump($data['table'][0]['companyName']);
+        //show($data);
 
         $this-> view('PDC_admin/Dashboard/DashboardOverview' , $data);
     } 

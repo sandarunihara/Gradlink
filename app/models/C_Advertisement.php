@@ -158,7 +158,7 @@ class C_Advertisement
                     advertisement.startdate,
                     advertisement.image,
                     company.Name,
-                    company.profileimg
+                    company.profileimg,
                 FROM 
                     advertisement
                 JOIN 
@@ -168,7 +168,17 @@ class C_Advertisement
 
 
         $result = $this->query($query);
+        //show($result);
         return $result;
+    }
+
+
+    public function findAllPendingcount(){
+        $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'Pending'";
+
+        $result = $this->query($query);
+        //show($result);
+        return $result[0]->{'total'};
     }
 
     public function findallDeactivewithCompany(){
