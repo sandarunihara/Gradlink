@@ -467,6 +467,67 @@
             cursor: pointer;
             font-size: 16px;
         }
+
+        .toggle-password {
+        position: absolute;
+        right: 15px;
+        top: 42px;
+        cursor: pointer;
+        color: var(--dark-gray);
+    }
+    
+    .password-strength-meter {
+        height: 4px;
+        background-color: var(--medium-gray);
+        margin-top: 8px;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    
+    .strength-bar {
+        height: 100%;
+        width: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s, background-color 0.3s;
+    }
+    
+    .password-requirements {
+        color: var(--dark-gray);
+        margin-top: 5px;
+        display: block;
+    }
+    
+    .password-requirements ul {
+        margin-top: 5px;
+        padding-left: 20px;
+    }
+    
+    .password-requirements li {
+        list-style-type: none;
+        position: relative;
+    }
+    
+    .password-requirements li:before {
+        content: "✗";
+        color: var(--accent-color);
+        position: absolute;
+        left: -20px;
+    }
+    
+    .password-requirements li.valid:before {
+        content: "✓";
+        color: #28a745;
+    }
+    
+    .form-group {
+        position: relative;
+    }
+    
+    .text-error {
+        color: var(--accent-color);
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
     </style>
 </head>
 
@@ -579,7 +640,7 @@
                             <span class="info-value">2 weeks ago</span>
                         </div>
                         <div class="action-buttons">
-                            <button class="btn btn-outline">
+                            <button class="btn btn-outline" id='change-password-btn' >
                                 <i class="fas fa-key"></i> Change Password
                             </button>
                             <button class="btn btn-primary" id='edit-btn'>
@@ -590,6 +651,48 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <div class="modal" id='changePasswordModal'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Change Password</h2>
+                <button class="close-btn" id="closePasswordModalBtn" onclick="closemodal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/changePassword/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('currentPassword')"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        <div class="password-strength-meter">
+                            <div class="strength-bar"></div>
+                        </div>
+                        <small class="password-requirements">
+                            Password must be at least 8 characters long and contain:
+                        </small>
+                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('newPassword')"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('confirmPassword')"></i>
+                        <small id="passwordMatchError" class="text-error" style="display:none;color:var(--accent-color);">Passwords do not match</small>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" id="cancelPasswordBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="savePasswordBtn">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="editProfileModal">
@@ -661,6 +764,8 @@
         const closebtn = document.getElementById('cancelEditBtn')
         const avatarInput = document.getElementById('avatarInput');
         const avatarPreview = document.getElementById('avatarPreview');
+        const changebtn = document.getElementById('change-password-btn');
+        const changePasswordModal = document.getElementById('changePasswordModal');
 
         editbtn.addEventListener("click" , function(){
             editProfile.style.display = 'flex';
@@ -668,9 +773,15 @@
 
         })
 
+        changebtn.addEventListener("click" , function(){
+            changePasswordModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        })
+
         function closemodal(){
             editProfile.style.display = 'none';
             document.body.style.overflow = 'auto';
+            changePasswordModal.style.display = 'none';
         }
 
         avatarInput.addEventListener('change', function() {
