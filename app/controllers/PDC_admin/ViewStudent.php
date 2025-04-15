@@ -214,13 +214,20 @@ require "../app/libs/Exception.php";
                 $updatedStatus = $model->update($studentId, $stdChange , 'StudentId');
                 
                 if ($updatedStatus['status'] === 'success') {
-                    $action->insert($actionData);
-                    $this->sendEmail($studentData->Email, $studentId, $reason);
+                    if($action->insert($actionData)){
+                        $this->sendEmail($studentData->Email, $studentId, $reason);
                     
-                    $_SESSION['flash_message'] = [
-                        'type' => 'success',
-                        'message' => 'Student blocked successfully'
-                    ];
+                        $_SESSION['flash_message'] = [
+                            'type' => 'success',
+                            'message' => 'Student blocked successfully'
+                        ];
+                    }
+                    else{
+                        $_SESSION['flash_message'] = [
+                            'type' => 'error',
+                            'message' => 'Failed to log action'
+                        ];
+                    }
                 } else {
                     throw new Exception($updatedStatus['message']);
                 }

@@ -23,23 +23,45 @@ class ViewAdvertisement {
 
     public function deactivate($advertisementId , $reason , $action){
         $model = new C_Advertisement;
+        $action = new Action_logs;
+
+
         $companyDet = $model -> findwithcompany($advertisementId);
         $CompanyId = $companyDet->CompanyId;
         $mail = $companyDet->Email;
 
+        $actor_id = $_SESSION['USER']->AssistantId;
+
         $data = [
             'status' => 'Deactive'
+        ];
+
+        $actionData = [
+            'actor_id' => $actor_id,
+            'actor_role' => 'admin',
+            'target_id' => $advertisementId,
+            'target_type' => 'advertisement',
+            'action_type' => 'deactivate',
+            'reason' => $reason,
+            'timestamp' => date('Y-m-d H:i:s')
         ];
         
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
 
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
-            $_SESSION['flash_message'] = [
-                'type' => 'success',
-                'message' => 'Advertisement successfully deactivated'
-            ];
-
+            if($action->insert($actionData)){
+                $_SESSION['flash_message'] = [
+                    'type' => 'success',
+                    'message' => 'Advertisement successfully deactivated'
+                ];
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Could not log the action.'
+                ];
+            }
         }
         else{
             $_SESSION['flash_message'] = [
@@ -83,20 +105,42 @@ class ViewAdvertisement {
 
     public function reject($advertisementId , $reason , $action){
         $model = new C_Advertisement;
+        $action = new Action_logs;
+
         $companyDet = $model -> findwithcompany($advertisementId);
         $CompanyId = $companyDet->CompanyId;
         $mail = $companyDet->Email;
+
+        $actor_id = $_SESSION['USER']->AssistantId;
+
         $data = [
             'status' => 'Rejected'
+        ];
+
+        $actionData = [
+            'actor_id' => $actor_id,
+            'actor_role' => 'admin',
+            'target_id' => $advertisementId,
+            'target_type' => 'advertisement',
+            'action_type' => 'reject',
+            'reason' => $reason,
+            'timestamp' => date('Y-m-d H:i:s')
         ];
         
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
         if($updatedStatus && $updatedStatus['status'] === 'success'){
-            $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
-            $_SESSION['flash_message'] = [
-                'type' => 'success',
-                'message' => 'Advertisement successfully rejected'
-            ];
+            if($action->insert($actionData)){
+                $_SESSION['flash_message'] = [
+                    'type' => 'success',
+                    'message' => 'Advertisement successfully rejected'
+                ];
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Could not log the action.'
+                ];
+            }
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }

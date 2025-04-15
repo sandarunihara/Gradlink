@@ -14,7 +14,8 @@ class PDC_Session
 		'session_date',
 		'time_slot',
         'description',
-        'CompanyId'
+        'CompanyId',
+        'deleted'
 	];
 
     public function validate($data)
@@ -44,7 +45,9 @@ class PDC_Session
     public function getAvailableTimeSlotsAndDates($hall_number){
         $query = "SELECT session_date, time_slot 
                   FROM $this->table 
-                  WHERE hall_number = :hall_number";
+                  WHERE hall_number = :hall_number
+                  AND deleted = 0
+                  ;";
                   
         $params = [':hall_number' => $hall_number];
         $result = $this->query($query, $params);
@@ -55,8 +58,8 @@ class PDC_Session
         $query = "SELECT hall_number, time_slot 
                   FROM $this->table 
                   WHERE session_date = :session_date
-                  AND session_date >= CURDATE()
-                  ";
+                  AND session_date >= CURDATE() AND deleted = 0
+                  ;";
                   
         $params = [':session_date' => $session_date];
         $result = $this->query($query, $params);
@@ -68,7 +71,7 @@ class PDC_Session
         $query = "SELECT c.*,s.* 
                   FROM $this->table s
                   JOIN company c ON s.CompanyId = c.CompanyID
-                  WHERE s.session_date >= CURDATE()
+                  WHERE s.session_date >= CURDATE() AND s.deleted = 0
                   ";
         $result = $this->query($query);
         return $result;
@@ -78,7 +81,7 @@ class PDC_Session
         $query = "SELECT c.*,s.* 
                   FROM $this->table s
                   JOIN company c ON s.CompanyId = c.CompanyID
-                  WHERE s.session_date < CURDATE()
+                  WHERE s.session_date < CURDATE() AND s.deleted = 0
                   ";
         $result = $this->query($query);
         return $result;
