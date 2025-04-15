@@ -97,11 +97,11 @@ require "../app/libs/Exception.php";
                         <body>
                             <div class='container'>
                                 <div class='header'>
-                                    <h1>Company Unblocked</h1>
+                                    <h1>Student Unblocked</h1>
                                 </div>
                                 <p>Dear User,</p>
-                                <p>Your company has been added to our system agian and is currently in the <strong>Ongoing</strong> status.</p>
-                                <p><strong>Your Company ID:</strong> {$studentId}</p>
+                                <p>Your has been added to our system agian and is currently in the <strong>Not applied</strong> status.</p>
+                                <p><strong>Your Student ID:</strong> {$studentId}</p>
                                 <p>Thank you for your patience.</p>
                                 <div class='footer'>
                                     &copy; 2025 GRADLINK. All rights reserved.
