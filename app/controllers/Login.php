@@ -6,6 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require "../app/libs/SMTP.php";
 require "../app/libs/PHPMailer.php";
 require "../app/libs/Exception.php";
+require_once "../app/libs/update_round_status.php";
 
 
 class Login
@@ -47,6 +48,8 @@ class Login
 			if ($user) {
 				$row = $user->first($arr);
 				if ($row && password_verify($_POST['password'], $row->Password)) {
+					RoundStatusUpdater::update();
+					
 					// Set session for the user
 					session_start();
 					$_SESSION['USER'] = $row;

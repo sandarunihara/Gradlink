@@ -100,6 +100,7 @@
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            localStorage.clear(); // Clear local storage on page load
             const togglePassword = document.querySelector('.toggle-password');
             const passwordInput = document.getElementById('password');
             

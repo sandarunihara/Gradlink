@@ -8,4 +8,6 @@ class DashboardSession
         $sessionData = $model->findSessionWithCompany();
         $this->view('Coordinator/Session/dashboardSession', ['sessionData' => $sessionData]);
     }
+
+    
 }

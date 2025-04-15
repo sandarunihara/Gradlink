@@ -27,9 +27,7 @@
                     placeholder="Enter GitHub Profile URL" 
                     value="<?= htmlspecialchars($data['Student'] -> Github) ?>"
                     required
-                    oninput="validateGithub(this)"
                 >
-                <span id="githubError" class="error"></span>
             </div>
             <div class="box">
                 <!-- LinkedIn URL Input -->
@@ -41,9 +39,7 @@
                     placeholder="Enter LinkedIn Profile URL" 
                     value="<?= htmlspecialchars($data['Student'] -> Linkedin) ?>"
                     required
-                    oninput="validateLinkedin(this)"
                 >
-                <span id="linkedinError" class="error"></span>
             </div>
             <div class="box">
                 <!--Contact Number Input -->
@@ -52,7 +48,7 @@
                     type="tel" 
                     id="contact" 
                     name="Contact" 
-                    placeholder="Enter your contact number (e.g. 071-234-5678)"
+                    placeholder="Enter your contact number (e.g. 0712345678)"
                     value="<?= htmlspecialchars($data['Student'] -> ContactNum) ?>"
                     required
                     oninput="validateContact(this)"
@@ -60,8 +56,8 @@
                 <span id="contactError" class="error"></span>
             </div>
             <div class="box">
-                <label for="skill">Skills</label>
                 <!-- Skills Input -->
+                <label for="skill">Skills</label>
                 <input 
                     type="text"
                     id="skill"
@@ -92,9 +88,8 @@
             <div class="button-container">
                 <!-- Submit Button -->
                 <button 
+                    id="submitButton"
                     type="submit" 
-                    disabled
-                    name="submit" 
                 >                     
                     Save
 

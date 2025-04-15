@@ -1,79 +1,59 @@
-const githubInput = document.getElementById('github');
-const linkedinInput = document.getElementById('linkedin');
+const contactInput = document.getElementById('contact');
 const descriptionInput = document.getElementById('description');
-const skillInput = document.getElementById('skill');
-const formError = document.getElementById('formError');
-const saveButton = document.querySelector('button[type="submit"]');
+
+const submitButton = document.getElementById('submitButton');
+
 const updateForm = document.getElementById('updateForm');
 
+const contactError = document.getElementById('contactError');
+const descriptionError = document.getElementById('descriptionError');
+
+// Validate contact number (10 digits)
+function validateContact(contactInput) {
+    const contact = contactInput.value;
+    const isValid = /^\d{10}$/.test(contact);
+    if (!isValid) {
+        contactError.innerHTML = 'Please enter a valid 10-digit contact number.';
+        contactError.style.display = 'block';
+        contactInput.classList.add('invalid');
+        return false;
+    } else {
+        contactError.innerHTML = '';
+        contactError.style.display = 'none';
+        contactInput.classList.remove('invalid');
+        return true;
+    }
+}
 // Word count utility
 function countWords(text) {
     return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 }
-
-// Validate GitHub and LinkedIn URLs
-function validateURL(input, platform) {
-    try {
-        const url = new URL(input);
-        if (platform === 'GitHub' && url.hostname.includes('github.com')) {
-            return true;
-        }
-        if (platform === 'LinkedIn' && url.hostname.includes('linkedin.com')) {
-            return true;
-        } 
-        return false;
-    } catch {
-        return false;
-    }
-}
-
 // Validate description word count
-function validateDescription() {
+function validateShortDescription(descriptionInput) {
     const description = descriptionInput.value;
     const wordCount = countWords(description);
-    let isValid = true;
 
     if (wordCount > 50) {
-        formError.textContent = 'Description is too long. Maximum 50 words allowed.';
-        isValid = false;
+        descriptionError.textContent = 'Description should not exceed 50 words.';
+        descriptionError.style.display = 'block';
+        descriptionInput.classList.add('invalid');
+        return false;
     } else {
-        formError.textContent = ''; // Clear the error if the description is valid
+        descriptionError.textContent = '';
+        descriptionError.style.display = 'none';
+        descriptionInput.classList.remove('invalid');
+        return true;
     }
-
-    return isValid;
 }
 
-// Validate the entire form
-function validateForm() {
-    const isGithubValid = validateURL(githubInput.value, 'GitHub');
-    const isLinkedInValid = validateURL(linkedinInput.value, 'LinkedIn');
-    const isDescriptionValid = validateDescription();
-    const isSkillAdded = skillInput.value.trim().length > 0;
+submitButton.addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent form submission
 
-    if (!isGithubValid) {
-        formError.textContent = 'Please enter a valid GitHub profile URL.';
-    } else if (!isLinkedInValid) {
-        formError.textContent = 'Please enter a valid LinkedIn profile URL.';
-    } else if (!isDescriptionValid) {
-        // Error message handled in validateDescription
-    } else {
-        formError.textContent = ''; // Clear any previous error messages
-    }
+    const isContactValid = validateContact(contactInput);
+    const isDescriptionValid = validateShortDescription(descriptionInput);
 
-    // Enable/disable the save button based on validation
-    saveButton.disabled = !(isGithubValid && isLinkedInValid && isDescriptionValid) && !isSkillAdded;
-    return isGithubValid && isLinkedInValid && isDescriptionValid;
-}
-
-// Event listeners for form inputs
-githubInput.addEventListener('input', validateForm);
-linkedinInput.addEventListener('input', validateForm);
-descriptionInput.addEventListener('input', validateForm);
-skillInput.addEventListener('input', validateForm);
-
-// Prevent form submission if validation fails
-updateForm.addEventListener('submit', (event) => {
-    if (!validateForm()) {
-        event.preventDefault();
+    if (isContactValid && isDescriptionValid) {
+        updateForm.submit(); // Submit the form if all validations pass
     }
 });
+

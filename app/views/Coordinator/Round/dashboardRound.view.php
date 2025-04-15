@@ -25,6 +25,13 @@
 
             </header>
 
+            <?php if (!empty($_SESSION['flash_message'])): ?>
+                <div class="flash-message <?= $_SESSION['flash_message']['type'] ?>">
+                    <?= $_SESSION['flash_message']['message'] ?>
+                    <?php unset($_SESSION['flash_message']); ?>
+                </div>
+            <?php endif; ?>
+
             <div class="tab-content">
                 <!-- Company List Tab -->
                 <div id="company-list" class="tab-pane active ">
@@ -39,15 +46,20 @@
             <div class="round-cards-container">
                 <?php if (!empty($roundData)): ?>
                     <?php foreach ($roundData as $round): ?>
-                        <div class="round-card" data-start="<?= htmlspecialchars(is_array($round) ? $round['startDate'] : $round->startDate) ?>">
-                            <h3> <?= htmlspecialchars(is_array($round) ? $round['round'] : $round->round) ?></h3>
-                            <p><strong>Round ID:</strong> <?= htmlspecialchars(is_array($round) ? $round['round_id'] : $round->round_id) ?></p>
-                            <p><strong>Status:</strong> <?= htmlspecialchars(is_array($round) ? $round['active'] : $round->active) ?></p>
-                            <p><strong>Start Date:</strong> <?= htmlspecialchars(is_array($round) ? $round['startDate'] : $round->startDate) ?></p>
-                            <p><strong>End Date:</strong> <?= htmlspecialchars(is_array($round) ? $round['endDate'] : $round->endDate) ?></p>
-                            <button class="view-btn">View</button>
+                        <div class="round-card" data-start="<?= htmlspecialchars($round->startDate) ?>">
+                            <h3><?= htmlspecialchars($round->round) ?></h3>
+                            <p><strong>Round ID:</strong> <?= htmlspecialchars($round->roundId) ?></p>
+                            <p><strong>Status:</strong> <?= htmlspecialchars($round->active) ?></p>
+
+                            <?php if (strtolower($round->round) !== 'none'): ?>
+                                <p><strong>Start Date:</strong> <?= htmlspecialchars($round->startDate) ?></p>
+                                <p><strong>End Date:</strong> <?= htmlspecialchars($round->endDate) ?></p>
+                                <button class="view-btn">View</button>
+                            <?php else: ?>
+                                <button class="view-btn" disabled style="opacity: 0.5; cursor: not-allowed;">View</button>
+                            <?php endif; ?>
                         </div>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p>No Registered Rounds</p>
                 <?php endif; ?>
@@ -58,21 +70,21 @@
                 <div class="modal-content">
                     <span class="close-btn">&times;</span>
                     <h2>Round Details</h2>
-                    <form id="roundForm">
+                    <form id="roundForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/DashboardRound/updateRound">
                         <label for="roundId">Round ID:</label>
-                        <input type="text" id="roundId" disabled>
+                        <input type="text" id="roundId" name="roundId" readonly>
 
                         <label for="round">Round:</label>
-                        <input type="text" id="round" disabled>
+                        <input type="text" id="round" name="round" readonly>
 
                         <label for="status">Status:</label>
-                        <input type="text" id="status" disabled>
+                        <input type="text" id="status" name="status" disabled>
 
                         <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" required>
+                        <input type="date" id="startDate" name="startDate" required>
 
                         <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" required>
+                        <input type="date" id="endDate" name="endDate" required>
 
                         <button type="submit" class="update-btn">Update</button>
                     </form>
@@ -134,21 +146,22 @@
 
             // Handle form submission with validation
             roundForm.addEventListener("submit", function(event) {
-                event.preventDefault();
                 const today = new Date().toISOString().split("T")[0];
 
                 if (startDateField.value < today) {
                     alert("Start date cannot be in the past!");
+                    event.preventDefault();
                     return;
                 }
                 if (endDateField.value <= startDateField.value) {
                     alert("End date must be after the start date!");
+                    event.preventDefault();
                     return;
                 }
 
-                alert("Round updated successfully!");
-                modal.style.display = "none";
+                // Allow normal form submission
             });
+
         });
     </script>
 
