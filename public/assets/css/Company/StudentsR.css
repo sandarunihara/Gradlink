@@ -173,14 +173,15 @@
     width: 100%;
     padding: 8px;
     font-size: 14px;
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: #7db5f9;
+    color: #000000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
+
 .view-profile-btn:hover {
-    background-color: #0056b3;
+    background-color: #007bff;
 }
 .Recruit {
     width: 80%;
@@ -237,14 +238,14 @@
     width: 100%;
     padding: 8px;
     font-size: 14px;
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: #7db5f9;
+    color: #000000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 .view-profile-btn-with-remove:hover {
-    background-color: #0056b3;
+    background-color: #007bff;
 }
 .viewprodel {
     transition: all 0.3s ease-in-out;
