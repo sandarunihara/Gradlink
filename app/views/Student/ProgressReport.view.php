@@ -81,16 +81,21 @@
         </div>
     </div>
 <!-- Popup Box -->
-<div id="popupBox" class="popup hidden">
+<div id="popupBox" class="popup">
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentProgress/addProgressReport" method="post" enctype="multipart/form-data">
             <h2>Add New Progress Report</h2>
-            <input type="file" id="fileUpload" accept=".pdf" name="file" required>
-            <br><br>
+            <input 
+                type="file" 
+                id="fileUpload" 
+                name="file" 
+                required
+                onchange="validateFile(this)"
+            >
+            <span id="error-id" class="error"></span>
             <button 
                 type="submit" 
                 id="saveBtn"
-                name="submit"
             >
             SAVE
             </button>
@@ -100,35 +105,18 @@
 <!-- Toast -->
     <div id="toast-container" class="toast-container"></div>
 
-    <?php if(array_key_exists('isInsert', $_SESSION)){ ?>
-        <?php if($_SESSION['isInsert']){?>
-            <script>
-                successToast("Progress report added successfully");
-            </script>
-        <?php }else{ ?>
-            <script>
-                errorToast("Failed to add progress report");
-            </script>
-        <?php } ?>
-        <?php unset($_SESSION['isInsert']);?>
+    <?php if(array_key_exists('success', $data)){ ?>
+        <script>
+            successToast("<?= $data['success'] ?>");
+        </script>
+        <?php unset($_SESSION['success']); ?>
     <?php }?>
 
-    <?php if(array_key_exists('isBig', $_SESSION)){ ?>
-        <?php if($_SESSION['isBig']){?>
-            <script>
-                errorToast("Your file is too big!");
-            </script>
-        <?php unset($_SESSION['isBig']);?>
-        <?php }?>
-    <?php }?>
-
-    <?php if(array_key_exists('isTypeError', $_SESSION)){ ?>
-        <?php if($_SESSION['isTypeError']){?>
-            <script>
-                errorToast("You cannot upload files of this type!");
-            </script>
-        <?php unset($_SESSION['isTypeError']);?>
-        <?php }?>
+    <?php if(array_key_exists('erros', $data)){ ?>
+        <script>
+            errorToast("<?= $data['erros'] ?>");
+        </script>
+        <?php unset($_SESSION['errors']); ?>
     <?php }?>
     
 <!-- script for popup box -->
@@ -139,21 +127,69 @@
     const popupContent = document.querySelector('.popup-content');
     const saveBtn = document.getElementById('saveBtn');
     const form = document.querySelector('form');
+    const fileUpload = document.getElementById('fileUpload');
+    const errorId = document.getElementById('error-id');
     
     addNewBtn.addEventListener('click', () => {
-        popupBox.classList.remove('hidden');
+        popupBox.style.display = 'flex'; // Show modal
     });
 
-    saveBtn.addEventListener('click', () => {
-        const fileUpload = document.getElementById('fileUpload').files;
-        if (fileUpload.length !== 0) {
+    saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(validateFile(fileUpload)){
             form.submit();
         }
     });
+
+    function validateFile(input){
+        const file = input.files[0];
+        const validMimeType = "application/pdf";
+        const validExtension = ".pdf";
+        const validSize = 1000000; // 1MB in bytes
+        let isValid = true;
+
+        if(file.size === 0){
+            errorId.innerHTML = "Please select a file.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }else if(file.size > validSize){
+            errorId.innerHTML = "File size exceeds 1MB.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }else{
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+            input.classList.remove("invalid");
+        }
+        // Check MIME type
+        if (file.type !== validMimeType) {
+            isValid = false;
+        }
+
+        // Check file extension
+        const fileName = file.name.toLowerCase();
+        if (!fileName.endsWith(validExtension)) {
+            isValid = false;
+        }
+
+        if (!isValid) {
+            errorId.innerHTML = "Invalid file type. Only PDF is allowed.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        } else {
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+            input.classList.remove("invalid");
+            return true;
+        }
+    }
     // Hide popup when clicking outside the content box
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
-            popupBox.classList.add('hidden');
+            popupBox.style.display = 'none'; // Hide modal
         }
     });
 </script>

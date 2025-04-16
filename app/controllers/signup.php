@@ -214,7 +214,9 @@
                             
                             $skills = array_map('trim', explode(",", $_SESSION['user']['Skill']));
                             try {
-                                $this->beginTransaction(); // Start transaction
+                                // Start transaction
+                                $this->beginTransaction(); 
+                                
                                 $result1 = $user->insert($_SESSION['user'], $id_column);
                                 if(!$result1){
                                     throw new Exception("Failed to insert student table data.");
@@ -234,13 +236,15 @@
                                 } else {
                                     $data['errors'] = "Failed to create password. Please try again.";
                                 }
-                                $this->commit(); // Commit transaction
+
+                                // Commit transaction
+                                $this->commit();
                                 return true;
 
                             } catch (Exception $e) {
                                 $this->rollback(); // Rollback transaction on error
                                 $data['errors'] = "Transaction failed: " . $e->getMessage();
-                                return $data['errors'];
+                                return false;
                             }
                         } else {
                             $data['errors'] = "User session data is missing. Please try again.";
