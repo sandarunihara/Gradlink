@@ -25,7 +25,9 @@ class student
 		'completed',
 		'registered',
 		'noOfAppliedAds',
-		'block'
+		'block',
+		'block_count',
+		'last_blocked_at'
 	];
 
 	public function validate($data , $ispartialData = false){
