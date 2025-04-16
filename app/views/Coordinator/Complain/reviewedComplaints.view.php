@@ -20,13 +20,10 @@
             <header class="header">
                 <div class="header-left">
                     <h1>Complaints</h1>
-
                 </div>
-
-               
-
             </header>
-            <?php $activeTab = 'complaint-list'; ?>
+
+            <?php $activeTab = 'reviewed-complaint-list'; ?>
             <?php $this->renderComponent("complaintTabs") ?>
 
             <div class="filter-buttons">
