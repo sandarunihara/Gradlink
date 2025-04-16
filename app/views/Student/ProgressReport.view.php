@@ -145,7 +145,7 @@
         const file = input.files[0];
         const validMimeType = "application/pdf";
         const validExtension = ".pdf";
-        const validSize = 1000000; // 1MB in bytes
+        const validSize = 5000000; // 5MB in bytes
         let isValid = true;
 
         if(file.size === 0){

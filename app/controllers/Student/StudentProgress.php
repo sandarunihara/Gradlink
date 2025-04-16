@@ -60,6 +60,7 @@ class StudentProgress{
                     if($isInsert1 && $isInsert2){
                         $data['success'] = "Progress report added successfully";
                         $_SESSION['success'] = $data['success'];
+                        redirect('Student/StudentProgress/progressReport');
                     }else{
                         throw new Exception("File upload failed.");
                     }
@@ -79,8 +80,8 @@ class StudentProgress{
                 $_SESSION['errors'] = $data['errors'];
                 return false;                        
             }
-            show($data);
-            redirect('Student/StudentProgress/progressReport');
         }
+        show($data);
+        redirect('Student/StudentProgress/progressReport');
     }
 }
