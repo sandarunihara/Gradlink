@@ -3,6 +3,7 @@
 class Studentdash{
     use BaseController;
     public function dashboard(){
+        
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
 
