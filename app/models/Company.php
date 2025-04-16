@@ -23,6 +23,9 @@ class company
 		'profileimg',
 		'coverimg',
 		'AssistantId',
+		'block',
+		'block_count',
+		'last_blocked_at'
 	];
 
 	public function validate($data)
@@ -102,7 +105,7 @@ class company
 	public function findAllOngoing(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NOT NULL";
+			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NOT NULL AND block != 1";
 			$result = $this->query($query, ['status' => 'Ongoing']);
 			return $result;
 		} catch (Exception $e) {
@@ -164,7 +167,7 @@ class company
 	public function findAllPending(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NULL";
+			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NULL AND block != 1";
 
 			$result = $this->query($query, ['status' => 'Pending']);
 
@@ -177,8 +180,8 @@ class company
 
 	public function findAllBlocked(): array|bool{
 		try{
-			$query = "SELECT * FROM company WHERE Status = :status";
-			$result = $this->query($query, ['status' => 'Blocked']);
+			$query = "SELECT * FROM company WHERE block = 1";
+			$result = $this->query($query);
 			return $result;
 		} catch (Exception $e) {
 			error_log("Error fetching blocked companies: " . $e->getMessage());

@@ -47,6 +47,8 @@ class Login
 
 			if ($user) {
 				$row = $user->first($arr);
+				$roundData = new round;
+				$round = $roundData->getActiveRound();
 				if ($row && password_verify($_POST['password'], $row->Password)) {
 					RoundStatusUpdater::update();
 					
@@ -54,6 +56,7 @@ class Login
 					session_start();
 					$_SESSION['USER'] = $row;
 					$_SESSION['PATH'] = $path;
+					$_SESSION['ROUNDID'] = $round->roundId;
 
 					if (!empty($_POST['remember_me'])) {
 						$cookieValue = base64_encode(json_encode([

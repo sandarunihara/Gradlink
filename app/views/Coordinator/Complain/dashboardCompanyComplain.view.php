@@ -31,7 +31,7 @@
             <div class="tab-content">
                 <div id="applications-list" class="tab-pane active ">
 
-                    <section class="company-list">
+                    <!-- <section class="company-list"> -->
                         <div class="list-header">
                             <h2>Company Complaints</h2>
                             <div class="search-box">
@@ -68,7 +68,7 @@
                             </tbody>
                         </table>
 
-                    </section>
+                    <!-- </section> -->
 
                     
                 </div>
