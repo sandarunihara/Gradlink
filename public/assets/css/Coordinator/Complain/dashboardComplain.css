@@ -88,66 +88,129 @@ body {
     color: #2b237c;
 }
 
-.complaints-container {
-    padding: 20px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.complaints-header {
+.search-box {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    gap: 4%;
 }
 
-.filter-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.filter-btn {
-    padding: 8px 16px;
-    background-color: #eee;
-    border: none;
+.search-box input {
+    padding: 10px;
     border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s;
+    background-color: #4a8af4;
+    color: #fff;
 }
 
-.filter-btn.active,
-.filter-btn:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-.complaints-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
+table thead {
+    background-color: #f1f5ff;
+}
+
+table th, table td {
+    padding: 1.2%;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+table th {
+    font-size: 16px;
+    color: #333;
+}
+
+table td {
+    font-size: 14px;
+    color: #555;
+}
+
+.view-btn {
+    background-color: #fff;
+    border: 1px solid #4a8af4;
+    color: #4a8af4;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-btn:hover {
+    background-color: #4a8af4;
+    color: #fff;
+}
+
+.status-btn {
+    appearance: none;
+    background-color: #adf1a4;
+    border: 0px solid #003217;
+    color: #0c591e;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+.pending {
+    background-color: #c2c6c29a; /* Light green for Pending */
+    color: #040404;
+}
+
+.approved {
+    background-color: #66ff6697; /* Green for Approved */
+    color: #003300;
+}
+
+.rejected {
+    background-color: #ff6666b0; /* Red for Rejected */
+    color: #660000;
+}
+
+/* Container grid for cards */
+.complaints-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Complaint card styling */
 .complaint-card {
     background-color: #fff;
-    padding: 15px 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    transition: 0.3s ease;
 }
 
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 12px;
 }
 
 .profile-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .profile-info img {
@@ -160,47 +223,81 @@ body {
 .identity h3 {
     margin: 0;
     font-size: 1rem;
+    font-weight: 600;
+    color: #333;
 }
 
 .identity p {
     margin: 0;
     font-size: 0.85rem;
-    color: gray;
+    color: #777;
 }
 
-.timestamp p {
-    margin: 0;
+.timestamp {
     text-align: right;
     font-size: 0.8rem;
-    color: #888;
+    color: #666;
 }
 
-.card-body .company-name {
-    font-weight: 600;
+.card-body {
+    margin: 10px 0;
+}
+
+.company-name {
+    font-weight: 500;
     color: #333;
+    margin-bottom: 6px;
 }
 
-.card-body .description {
-    margin-top: 5px;
-    color: #555;
+.description {
+    font-size: 0.95rem;
+    color: #444;
 }
 
 .card-footer {
-    display: flex;
-    justify-content: flex-end;
+    text-align: right;
 }
 
 .reply-btn {
-    padding: 8px 12px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 8px;
+    padding: 8px 16px;
+    background-color: #007bff;
     color: white;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s;
+    transition: 0.2s ease-in-out;
 }
 
 .reply-btn:hover {
-    background-color: #218838;
+    background-color: #0056b3;
+}
+
+/* Filter buttons */
+.filter-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 0 20px;
+    margin-top: 15px;
+}
+
+.filter-btn {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.filter-btn.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
 }

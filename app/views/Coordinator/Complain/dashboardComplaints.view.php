@@ -20,42 +20,58 @@
             <header class="header">
                 <div class="header-left">
                     <h1>Complaints</h1>
-                    
+
                 </div>
 
 
             </header>
 
             <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="student">Student Complaints</button>
-                        <button class="filter-btn" data-filter="company">Company Complaints</button>
-                    </div>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="student">Student Complaints</button>
+                <button class="filter-btn" data-filter="company">Company Complaints</button>
+            </div>
 
+            <p class="flash-message">
+                <?php if (isset($_SESSION['flash_message'])): ?>
+                    <span class="<?= $_SESSION['flash_message']['type'] ?>">
+                        <?= $_SESSION['flash_message']['message'] ?>
+                    </span>
+                    <?php unset($_SESSION['flash_message']); ?>
+                <?php endif; ?>
+            </p>
             <div class="complaints-grid" id="complaintsGrid">
                 <!-- Example card; dynamically generate from PHP or JS -->
-                <div class="complaint-card" data-type="student">
-                    <div class="card-header">
-                        <div class="profile-info">
-                            <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="profile">
-                            <div class="identity">
-                                <h3>M.A. Perera</h3>
-                                <p>Student</p>
+                <?php foreach ($complaints as $complaint): ?>
+                    <div class="complaint-card" data-type="<?= htmlspecialchars($complaint->type) ?>">
+                        <div class="card-header">
+                            <div class="profile-info">
+                                <!-- <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="profile"> -->
+                                <div class="identity">
+                                    <h3>
+                                        <?= $complaint->type === 'student' ? htmlspecialchars($complaint->StudentName) : htmlspecialchars($complaint->CompanyName) ?>
+                                    </h3>
+                                    <p><?= ucfirst(htmlspecialchars($complaint->type)) ?></p>
+                                </div>
+                            </div>
+                            <div class="timestamp">
+                                <p><?= date('Y/m/d', strtotime($complaint->CreatedAt)) ?></p>
+                                <p><?= date('g:i A', strtotime($complaint->CreatedAt)) ?></p>
                             </div>
                         </div>
-                        <div class="timestamp">
-                            <p>2024/10/10</p>
-                            <p>9:00 AM</p>
+
+                        <div class="card-body">
+                            <p><strong><?= htmlspecialchars($complaint->Topic) ?></strong></p>
+                            <p> <?= htmlspecialchars($complaint->Description) ?></p>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="reply-btn">Add Reply</button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <p class="company-name">Company: WSO2</p>
-                        <p class="description">Unprofessional Behavior of Intern</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="reply-btn">Add Reply</button>
-                    </div>
-                </div>
+                <?php endforeach; ?>
+
+
 
                 <!-- More complaint cards dynamically added -->
             </div>
@@ -66,27 +82,26 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const complaintCards = document.querySelectorAll('.complaint-card');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const complaintCards = document.querySelectorAll('.complaint-card');
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const filter = button.getAttribute('data-filter');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.getAttribute('data-filter');
 
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
 
-            complaintCards.forEach(card => {
-                if (filter === 'all' || card.getAttribute('data-type') === filter) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                    complaintCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
             });
         });
-    });
-});
-
     </script>
 
 </body>

@@ -4,8 +4,26 @@ class DashboardComplaints
     use Controller;
     public function index()
     {
-        // redirect("company-dashboard");
-        $this->view('Coordinator/Complain/dashboardComplaints');
+        $complaintModel = new complaint;
+        $complaints = $complaintModel->findAllNotReviewed();
+
+        // echo "<pre>";
+        // print_r($complaints);
+        // echo "</pre>";
+
+        if ($complaints == null) {
+            $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'No complaints found.'];
+            $complaints = [];
+        } else {
+            // Add 'type' to each complaint (student or company)
+            foreach ($complaints as $complaint) {
+                $complaint->type = $complaint->StudentId ? 'student' : 'company';
+            }
+            // unset($complaint); // break the reference
+        }
+
+        $this->view('Coordinator/Complain/dashboardComplaints', [
+            'complaints' => $complaints
+        ]);
     }
 }
-
