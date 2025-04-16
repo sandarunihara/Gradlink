@@ -46,7 +46,7 @@
             <div class="round-cards-container">
                 <?php if (!empty($roundData)): ?>
                     <?php foreach ($roundData as $round): ?>
-                        <div class="round-card" data-start="<?= htmlspecialchars($round->startDate) ?>">
+                        <div class="round-card" data-status="<?= htmlspecialchars($round->active) ?>">
                             <h3><?= htmlspecialchars($round->round) ?></h3>
                             <p><strong>Round ID:</strong> <?= htmlspecialchars($round->roundId) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($round->active) ?></p>
@@ -101,9 +101,9 @@
 
             // Highlight today's round
             document.querySelectorAll(".round-card").forEach(card => {
-                const startDate = card.getAttribute("data-start");
-                if (startDate === today) {
-                    card.classList.add("today"); // Apply different color for today
+                const status = card.getAttribute("data-status");
+                if (status === "1" || status === 1) {
+                    card.classList.add("active-round");
                 }
             });
 
