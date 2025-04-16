@@ -143,7 +143,7 @@ function validContactNumber(number) {
   }
 }
 function validStudentIndex(index) {
-  const pattern = /^\d{4}(CS|IS|cs|is)\d{3}$/;
+  const pattern = /^\d{4}(CS|IS)\d{3}$/;
   if (!pattern.test(index.value)) {
     studentIdError.innerHTML = "Invalid student index number";
     studentIdError.style.display = "block";
@@ -193,12 +193,6 @@ function isValidProfilePicture(input) {
   }
 }
 function isValidCV(input) {
-  if (input.files.length === 0) {
-    cvError.innerHTML = "Please upload a file.";
-    cvError.style.display = "block";
-    input.classList.add("invalid");
-    return false;
-  }
 
   const file = input.files[0];
   const validMimeType = "application/pdf";
