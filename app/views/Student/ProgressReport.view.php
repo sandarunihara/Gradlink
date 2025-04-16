@@ -45,10 +45,11 @@
                             <?php if (isset($data['ProgressDocs']) && !empty($data['ProgressDocs'])): ?>
                                 <?php foreach ($data['ProgressDocs'] as $ProgressDoc): ?>
                                     <?php
-                                    $status = $ProgressDoc -> Status;
-                                    $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
-                                    $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
+                                        $status = $ProgressDoc -> Status;
+                                        $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
+                                        $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
                                     ?>
+
                                     <tr>
                                         <td><?php
                                             $SubmissionDate = $ProgressDoc -> SubmissionDate;
@@ -63,9 +64,13 @@
                                             ?>
                                         </td>
                                         <td>
-                                            <div class="<?php echo $statusClass; ?>">
-                                                <?php echo $statusText; ?>
-                                            </div>
+                                            <a 
+                                                href="<?=ROOT?>/assets/uploads/progress_docs/ <?php echo htmlspecialchars($ProgressDoc -> Name)?>" 
+                                                target="_blank">
+                                                    <div class="<?php echo $statusClass; ?>">
+                                                        <?php echo $statusText; ?>
+                                                    </div>
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
