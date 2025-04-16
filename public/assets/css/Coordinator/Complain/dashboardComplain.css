@@ -304,3 +304,18 @@ table td {
     color: white;
     box-shadow: 0 0 8px rgba(0, 119, 182, 0.4);
 }
+.mark-reviewed-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.mark-reviewed-btn:hover {
+    background-color: #218838;
+}

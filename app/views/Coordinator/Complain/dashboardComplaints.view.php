@@ -23,7 +23,7 @@
 
                 </div>
 
-               
+
 
             </header>
             <?php $activeTab = 'complaint-list'; ?>
@@ -70,6 +70,9 @@
 
                         <div class="card-footer">
                             <button class="reply-btn">Add Reply</button>
+                            <button class="mark-reviewed-btn" data-id="<?= htmlspecialchars($complaint->ComplaintId) ?>">
+                                <i class="fas fa-check"></i> Mark as Reviewed
+                            </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
