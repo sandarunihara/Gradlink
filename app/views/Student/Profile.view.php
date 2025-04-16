@@ -133,9 +133,16 @@
 <script>
     const profilePic = document.getElementById('profile-pic');
     const profilePicturePreview = document.getElementById('profile-picture-preview');
-
+    const profilePicturePreviewContent = document.querySelector('.profile-picture-preview-content');
     profilePic.addEventListener('click', () =>{
         profilePicturePreview.style.display = 'flex'; // Show the preview
+    });
+
+    // Hide popup when clicking outside the content box
+    profilePicturePreview.addEventListener('click', (event) => {
+    if (!profilePicturePreviewContent.contains(event.target)) {
+        profilePicturePreview.style.display = 'none'; // Hide modal
+    }
     });
 </script>
 </body>

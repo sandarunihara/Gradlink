@@ -121,7 +121,4 @@
     width: 30%;
     text-align: center;
     border-radius: 8px;
-    transform: scale(0); /* Initial scale for zoom-in effect */
-    opacity: 0; /* Initial opacity */
-    animation: zoomIn 0.3s forwards;
 }
