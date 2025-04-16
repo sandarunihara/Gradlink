@@ -34,4 +34,19 @@
         }
 
 
+        public function findAllReviewed()
+        {
+            $query = "SELECT complaint.*, 
+                 company.Name AS CompanyName, 
+                 student.Name AS StudentName,
+                 complaint.CreatedAt AS CreatedAt,
+                 complaint.Status AS ComplaintStatus
+          FROM $this->table 
+          LEFT JOIN company ON complaint.CompanyId = company.CompanyId
+          LEFT JOIN student ON complaint.StudentId = student.StudentId
+          WHERE complaint.Status = 'Reviewed' 
+          ORDER BY complaint.CreatedAt DESC";
+            $result = $this->query($query);
+            return $result;
+        }
     }

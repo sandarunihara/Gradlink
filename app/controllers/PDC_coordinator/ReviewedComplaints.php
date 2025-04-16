@@ -5,14 +5,14 @@ class ReviewedComplaints
     public function index()
     {
         $complaintModel = new complaint;
-        $complaints = $complaintModel->findAllNotReviewed();
+        $complaints = $complaintModel->findAllReviewed();
 
         // echo "<pre>";
         // print_r($complaints);
         // echo "</pre>";
 
         if ($complaints == null) {
-            $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'No complaints found.'];
+            $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'No reviewed complaints found.'];
             $complaints = [];
         } else {
             // Add 'type' to each complaint (student or company)
