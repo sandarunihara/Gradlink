@@ -84,6 +84,24 @@
                     </div>
                 <?php endforeach; ?>
 
+                <!-- Reply Popup Modal -->
+                <div id="replyModal" class="modal hidden">
+                    <div class="modal-content">
+                        <span class="close-btn">&times;</span>
+                        <!-- <h2>Add Reply</h2> -->
+                        <p><strong>Name:</strong> <span id="modalName"></span></p>
+                        <p><strong>Topic:</strong> <span id="modalTopic"></span></p>
+                        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+
+                        <form id="replyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/dashboardComplaints/addReply">
+                            <input type="hidden" name="complaintId" id="modalComplaintId">
+                            <label for="replyText">Your Reply:</label>
+                            <textarea name="replyText" id="replyText" rows="5" required></textarea>
+                            <button type="submit">Submit Reply</button>
+                        </form>
+                    </div>
+                </div>
+
 
 
                 <!-- More complaint cards dynamically added -->
@@ -94,37 +112,61 @@
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
-
         document.querySelectorAll('.mark-reviewed-btn').forEach(button => {
-            
+
             button.addEventListener('click', () => {
                 const complaintId = button.getAttribute('data-id');
-              
+
                 console.log(complaintId);
-                
+
                 fetch("<?= ROOT ?>/PDC_coordinator/dashboardComplaints/markReviewed", {
-                    method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                    body: "id=" + encodeURIComponent(complaintId)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.success) {
-                        location.reload();
-                        button.closest('.complaint-card').remove();
-                        alert(data.message); 
-                    } else {
-                        alert('Failed to update status.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: "id=" + encodeURIComponent(complaintId)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.success) {
+                            location.reload();
+                            button.closest('.complaint-card').remove();
+                            alert(data.message);
+                        } else {
+                            alert('Failed to update status.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             });
-        });          
+        });
+
+        document.querySelectorAll('.reply-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const card = button.closest('.complaint-card');
+                const name = card.querySelector('.identity h3').innerText;
+                const topic = card.querySelector('.card-body strong').innerText;
+                const description = card.querySelector('.card-body p:nth-of-type(2)').innerText;
+                const complaintId = card.querySelector('.mark-reviewed-btn').getAttribute('data-id');
+
+                // Fill the modal fields
+                document.getElementById('modalName').innerText = name;
+                document.getElementById('modalTopic').innerText = topic;
+                document.getElementById('modalDescription').innerText = description;
+                document.getElementById('modalComplaintId').value = complaintId;
+
+                // Show the modal
+                document.getElementById('replyModal').classList.remove('hidden');
+            });
+        });
+
+        // Close the modal
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            document.getElementById('replyModal').classList.add('hidden');
+        });
+
 
         document.addEventListener("DOMContentLoaded", () => {
             const filterButtons = document.querySelectorAll('.filter-btn');
@@ -146,6 +188,20 @@
                     });
                 });
             });
+        });
+
+        const replyModal = document.getElementById('replyModal');
+        const closeBtn = replyModal.querySelector('.close-btn');
+
+        closeBtn.addEventListener('click', () => {
+            replyModal.classList.add('hidden');
+        });
+
+        // Optional: Close popup when clicking outside the modal content
+        replyModal.addEventListener('click', (e) => {
+            if (e.target === replyModal) {
+                replyModal.classList.add('hidden');
+            }
         });
     </script>
 
