@@ -88,19 +88,25 @@
                 <div id="replyModal" class="modal hidden">
                     <div class="modal-content">
                         <span class="close-btn">&times;</span>
-                        <!-- <h2>Add Reply</h2> -->
-                        <p><strong>Name:</strong> <span id="modalName"></span></p>
-                        <p><strong>Topic:</strong> <span id="modalTopic"></span></p>
-                        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
-
                         <form id="replyForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/dashboardComplaints/addReply">
                             <input type="hidden" name="complaintId" id="modalComplaintId">
-                            <label for="replyText">Your Reply:</label>
-                            <textarea name="replyText" id="replyText" rows="5" required></textarea>
-                            <button type="submit">Submit Reply</button>
+
+                            <p><strong>Name:</strong> <span id="modalName"></span></p>
+                            <p><strong>Topic:</strong> <span id="modalTopic"></span></p>
+                            <p><strong>Description:</strong></p>
+                            <p id="modalDescription" class="description-box"></p>
+
+                            <label for="replyText"><strong>Your Reply:</strong></label>
+                            <textarea name="reply" id="replyText" rows="5" required></textarea>
+
+                            <div class="modal-buttons">
+                                <button type="submit" class="submit-btn">Submit Reply</button>
+                                <button type="button" class="close-btn secondary-btn">Cancel</button>
+                            </div>
                         </form>
                     </div>
                 </div>
+
 
 
 
@@ -143,24 +149,44 @@
             });
         });
 
-        document.querySelectorAll('.reply-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const card = button.closest('.complaint-card');
-                const name = card.querySelector('.identity h3').innerText;
-                const topic = card.querySelector('.card-body strong').innerText;
-                const description = card.querySelector('.card-body p:nth-of-type(2)').innerText;
-                const complaintId = card.querySelector('.mark-reviewed-btn').getAttribute('data-id');
+        document.addEventListener("DOMContentLoaded", () => {
+            const replyModal = document.getElementById('replyModal');
+            const replyForm = document.getElementById('replyForm');
 
-                // Fill the modal fields
-                document.getElementById('modalName').innerText = name;
-                document.getElementById('modalTopic').innerText = topic;
-                document.getElementById('modalDescription').innerText = description;
-                document.getElementById('modalComplaintId').value = complaintId;
+            // Open popup with data
+            document.querySelectorAll('.reply-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const card = button.closest('.complaint-card');
+                    const name = card.querySelector('.identity h3').innerText;
+                    const topic = card.querySelector('.card-body strong').innerText;
+                    const description = card.querySelector('.card-body p:nth-of-type(2)').innerText;
+                    const complaintId = card.querySelector('.mark-reviewed-btn').getAttribute('data-id');
 
-                // Show the modal
-                document.getElementById('replyModal').classList.remove('hidden');
+                    document.getElementById('modalName').innerText = name;
+                    document.getElementById('modalTopic').innerText = topic;
+                    document.getElementById('modalDescription').innerText = description;
+                    document.getElementById('modalComplaintId').value = complaintId;
+
+                    replyModal.classList.remove('hidden');
+                });
+            });
+
+            // Close logic
+            const closeModal = () => {
+                replyModal.classList.add('hidden');
+                replyForm.reset();
+            };
+
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', closeModal);
+            });
+
+            // Close when clicking outside modal
+            replyModal.addEventListener('click', (e) => {
+                if (e.target === replyModal) closeModal();
             });
         });
+
 
         // Close the modal
         document.querySelector('.close-btn').addEventListener('click', () => {
@@ -190,19 +216,8 @@
             });
         });
 
-        const replyModal = document.getElementById('replyModal');
-        const closeBtn = replyModal.querySelector('.close-btn');
-
-        closeBtn.addEventListener('click', () => {
-            replyModal.classList.add('hidden');
-        });
-
-        // Optional: Close popup when clicking outside the modal content
-        replyModal.addEventListener('click', (e) => {
-            if (e.target === replyModal) {
-                replyModal.classList.add('hidden');
-            }
-        });
+   
+        
     </script>
 
 
