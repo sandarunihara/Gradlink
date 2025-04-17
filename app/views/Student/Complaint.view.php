@@ -82,30 +82,18 @@
     <!-- Toast -->
     <div id="toast-container" class="toast-container"></div>
 
-    <?php if(array_key_exists('isInsert', $_SESSION)){ ?>
-        <?php if($_SESSION['isInsert']){?>
-            <script>
-                successToast("Complaint added successfully");
-            </script>
-        <?php }else{ ?>
-            <script>
-                errorToast("Failed to add complaint");
-            </script>
-        <?php } ?>
-        <?php unset($_SESSION['isInsert']);?>
+    <?php if(array_key_exists('success', $_SESSION)){ ?>
+        <script>
+            successToast("<?php echo $_SESSION['success']; ?>");
+        </script>
+        <?php unset($_SESSION['success']);?>
     <?php }?>
     
-    <?php if(array_key_exists('isDelete', $_SESSION)){ ?>
-        <?php if($_SESSION['isDelete']){?>
-            <script>
-                successToast("Complaint deleted successfully");
-            </script>
-        <?php }else{ ?>
-            <script>
-                errorToast("Failed to delete complaint");
-            </script>
-        <?php } ?>
-        <?php unset($_SESSION['isDelete']);?>
+    <?php if(array_key_exists('errors', $_SESSION)){ ?>
+        <script>
+            successToast("<?php echo $_SESSION['errors']; ?>");
+        </script>
+        <?php unset($_SESSION['errors']);?>
     <?php }?>
     
     <script>

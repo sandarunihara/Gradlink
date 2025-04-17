@@ -225,6 +225,11 @@ input[type="file"] {
 #okBtn:hover {
   background-color: #218838;
 }
+
+.error{
+  display:none;
+  color: red;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .filter {
