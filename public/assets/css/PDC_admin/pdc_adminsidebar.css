@@ -1,41 +1,34 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    background-color: #f0f0f5;
-}
-
-.page {
-    width: 5%;
-    position: fixed;
-}
-
 .sidebar {
     height: 100vh;
+    width: 80px; /* Compact width for a modern look */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:flex-start;
-    padding: 20px 15px;
-    background-color: rgb(10, 10, 30);
+    justify-content: flex-start;
+    padding: 24px 8px 24px 8px;
+    background: linear-gradient(180deg, #18192b 0%, #23244a 100%);
+    box-shadow: 2px 0 16px rgba(20, 20, 40, 0.10);
     position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999; /* Always on top */
+    transition: box-shadow 0.3s;
+}
+
+.sidebar:hover {
+    box-shadow: 4px 0 24px rgba(20, 20, 40, 0.15);
 }
 
 .profile {
-    margin-bottom: 0;
+    margin-bottom: 32px;
 }
 
 .profile img {
-    width: 60px;
-    height: 60px;
-    border-radius: 100%;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
 ul {
@@ -43,106 +36,96 @@ ul {
     flex-direction: column;
     align-items: center;
     list-style: none;
-    gap: 12px; /* Space between each list item */
+    gap: 18px;
     text-align: center;
-    margin-top: 50px; /* Adjust this value to control the distance from the profile picture */
+    margin-top: 24px;
 }
-
-
 
 ul li {
     position: relative;
-    padding: 10px 0;
-}
-
-ul li:hover i {
-    color: white;
-    transform: scale(1.4);
-}
-
-ul li.active i {
-    color: rgb(187, 189, 215);
-    transform: scale(1.4);
+    padding: 8px 0;
+    width: 100%;
 }
 
 ul li i {
-    color: white;
-    transition: all 0.3s ease-in-out;
+    color: #e0e0ff;
+    font-size: 24px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+ul li:hover i,
+ul li.active i {
+    color: #9b9dbe;
+    transform: scale(1.50);
 }
 
 ul li::after {
     content: attr(data-title);
     position: absolute;
     top: 50%;
-    left: 120%; /* Adjust tooltip positioning */
+    left: 110%;
     transform: translateY(-50%);
-    background-color: white; /* White background for tooltip */
-    color: black; /* Black text for contrast */
-    padding: 8px 12px; /* Padding for a clean look */
-    border-radius: 20px; 
-    white-space: nowrap;
-    font-size: 14px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    opacity: 0; 
+    background: #fff;
+    color: #23244a;
+    padding: 7px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1;
-    margin-left: 10px;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-left: 8px;
+    white-space: nowrap;
+    z-index: 10000;
 }
 
-
-/* Show tooltip and arrow on hover */
-ul li:hover::after,
-ul li:hover::before {
+ul li:hover::after {
     opacity: 1;
-    transform: translateY(-50%) translateX(0); /* Smooth appearance */
+    transform: translateY(-50%) translateX(0);
 }
 
 .logout {
-    position: relative; /* Required for ::after to position correctly */
-    margin-top: 80px;
-    display: flex; /* To align icon properly */
+    margin-top: auto;
+    margin-bottom: 12px;
+    display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     text-decoration: none;
 }
 
 .logout i {
-    color: white;
-    transition: all 0.3s ease-in-out; /* Smooth hover effects */
+    color: #e0e0ff;
+    font-size: 24px;
+    transition: color 0.2s, transform 0.2s;
 }
 
 .logout:hover i {
-    transform: scale(1.4);
+    color: #e32424;
+    transform: scale(1.50);
 }
 
 .logout::after {
     content: attr(data-title);
     position: absolute;
     top: 50%;
-    left: 120%; /* Adjust tooltip positioning */
+    left: 110%;
     transform: translateY(-50%);
-    background-color: white;
-    color: black;
-    padding: 8px 12px;
-    border-radius: 20px;
-    white-space: nowrap;
-    font-size: 14px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    color: #23244a;
+    padding: 7px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1;
-    margin-left: 10px;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-left: 8px;
+    white-space: nowrap;
+    z-index: 10000;
 }
 
 .logout:hover::after {
     opacity: 1;
     transform: translateY(-50%) translateX(0);
-}
-
-ul li.active i {
-    color: #bbbddd;
-    transform: scale(1.4);
-    transition: all 0.3s ease-in-out;
 }

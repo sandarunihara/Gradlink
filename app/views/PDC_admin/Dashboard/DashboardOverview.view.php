@@ -654,6 +654,68 @@
             color: #2c3e50;
             margin-left: auto;
         }
+        .round-badge {
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
+        color: white;
+        border-radius: 24px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(63, 81, 181, 0.25);
+        position: relative;
+        overflow: hidden;
+        border: 2px solid rgba(255,255,255,0.2);
+        transition: all 0.3s ease;
+        }
+
+        .round-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(63, 81, 181, 0.35);
+        }
+
+        .round-badge::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0) 60%
+        );
+        }
+
+        .round-label {
+        margin-right: 0.75rem;
+        font-weight: 500;
+        position: relative;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        }
+
+        .round-number {
+        font-weight: 700;
+        background: white;
+        color: #3f51b5;
+        padding: 0.25rem 0.75rem;
+        border-radius: 16px;
+        min-width: 2rem;
+        text-align: center;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 1.1rem;
+        position: relative;
+        transition: all 0.3s ease;
+        }
+
+        .round-badge:hover .round-number {
+        transform: scale(1.05);
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
     </style>
 
 </head>
@@ -669,13 +731,10 @@
                     <h1>Dashboard Overview</h1>
                 </div>
                 <div class="header-right">
-                    <div class="date-time-card">
-                        <span class="current-round">ROUND <?= $_SESSION['ROUNDID'] ?></span>
-                        <div class="datetime">
-                            <span id="date"></span>
-                            <span id="time"></span>
-                        </div>
-                    </div>
+                <span class="round-badge">
+                    <span class="round-label">Current Placement Round</span>
+                    <span class="round-number"><?= $_SESSION['ROUNDID'] ?></span>
+                </span>
                     <!-- <div class="user-actions">
                         <button class="notification-btn">
                             <i class="fas fa-bell"></i>

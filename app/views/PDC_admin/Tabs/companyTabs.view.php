@@ -1,7 +1,7 @@
 <div class="tabs">
     <button class="tab-button <?= $tabprops['activeTab'] === 'company-list' ? 'active' : '' ?>"
         onclick="window.location.href='/Gradlink/public/PDC_admin/AdminCompanyOverview/dashboard'">
-        Company List
+        Active Companies
     </button>
 
     <button class="tab-button <?= $tabprops['activeTab'] === 'pending-companies' ? 'active' : '' ?>"

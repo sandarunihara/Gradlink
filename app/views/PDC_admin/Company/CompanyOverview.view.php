@@ -13,7 +13,10 @@
 
 <body>
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar") ?>
+        <div class="sidebar">
+            <?php $this->renderComponent("pdc_adminsidebar") ?>
+
+        </div>
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
@@ -58,7 +61,7 @@
                                             <td><?= htmlspecialchars(is_array($company) ? $company['ContactPerson'] : $company->ContactPerson) ?></td>
                                             <td><?= htmlspecialchars(is_array($company) ? $company['Email'] : $company->Email) ?></td>
                                             <td><?= htmlspecialchars(is_array($company) ? $company['ContactNum'] : $company->ContactNum) ?></td>
-                                            <td><button class="view-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $com['CompanyId'] : $company->CompanyId) ?>')">View</button></td>
+                                            <td><button class="view-btn action-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $com['CompanyId'] : $company->CompanyId) ?>')"><i class="fas fa-eye"></i> View</button></td>
 
                                             <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
                                             <td></td>
