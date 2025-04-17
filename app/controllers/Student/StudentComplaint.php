@@ -111,8 +111,41 @@ class StudentComplaint{
     public function deleteComplaint(){
         $complaintId = $_GET['complaintId'];
         $data = [];
-        $complaint = new complaint;
-        $_SESSION['isDelete'] = $complaint -> delete($complaintId, 'ComplaintId');
-        redirect('Student/StudentComplaint/complaint');
+
+        try {
+            $this->beginTransaction();
+
+            $complaint = new complaint;
+            $isDelete1 = $complaint -> delete($complaintId, 'ComplaintId');
+
+            $pdc_coordinator_complaint = new pdc_coordinator_complaint;
+            $isDelete2 = $pdc_coordinator_complaint -> delete($complaintId, 'ComplaintId');
+            
+            if(!($isDelete1 && $isDelete2)){
+                throw new Exception("Error deleting complaint");
+            }
+
+            $student_activity = new student_activity;
+            $data['ActivityDescription'] = "Deleted a complaint";
+            $isInsert = $student_activity -> insert($data);
+
+            if(!$isInsert){
+                throw new Exception("Error inserting data into student_activity table");
+            }
+            $_SESSION['success'] = "Complaint deleted successfully";
+
+            $this->commit();
+            show($_SESSION);
+            redirect('Student/StudentComplaint/complaint');
+            return true;
+
+        } catch (Exception $e) {
+            //methana awlk thiynwa transaction eka rollback wenne na
+            $this->rollback();
+            $_SESSION['errors'] = "Error deleting complaint: " . $e -> getMessage();
+            show($_SESSION);
+            redirect('Student/StudentComplaint/complaint');
+            return false;
+        }
     }
 }
