@@ -87,6 +87,32 @@
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
+
+        document.querySelectorAll('mark-reviewed-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const complaintId = button.getAttribute('data-id');
+                
+                fetch(`<?= ROOT ?>/PDC_coordinator/ComplaintReview/updateStatus`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: `id=${complaintId}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        button.closest('.complaint-card').remove();
+                    } else {
+                        alert('Failed to update status.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });          
+
         document.addEventListener("DOMContentLoaded", () => {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const complaintCards = document.querySelectorAll('.complaint-card');
@@ -109,6 +135,7 @@
             });
         });
     </script>
+
 
 </body>
 
