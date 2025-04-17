@@ -5,7 +5,8 @@
     const popupContent = document.querySelector('.popup-content');
     const okBtn = document.getElementById('okBtn');
     const form = document.querySelector('form');
-
+    const errorId = document.getElementById('errorId');
+    const cvUpload = document.getElementById('cvUpload');
 
     // Show popup when any "Apply" button is clicked
     applyButtons.forEach(button => {
@@ -25,10 +26,10 @@
             window.location.href = url;
         });
     });
-    // Hide popup and handle file upload when "OK" button is clicked
-    okBtn.addEventListener('click', () => {
-        const cvFile = document.getElementById('cvUpload').files;
-        if(cvFile.length !== 0) {
+    // Handle file upload when "OK" button is clicked
+    okBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(validateFile(cvUpload)){
             form.submit();
         }
     });
@@ -39,6 +40,52 @@
             popupBox.classList.add('hidden');
         }
     });
+    function validateFile(input){
+        const file = input.files[0];
+        const validMimeType = "application/pdf";
+        const validExtension = ".pdf";
+        const validSize = 5000000; // 5MB in bytes
+        let isValid = true;
+
+        if(file === undefined){
+            errorId.innerHTML = "Please select a file.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }else if(file.size > validSize){
+            errorId.innerHTML = "File size exceeds 1MB.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }else{
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+            input.classList.remove("invalid");
+        }
+        // Check MIME type
+        if (file.type !== validMimeType) {
+            isValid = false;
+        }
+
+        // Check file extension
+        const fileName = file.name.toLowerCase();
+        if (!fileName.endsWith(validExtension)) {
+            isValid = false;
+        }
+
+        if (!isValid) {
+            errorId.innerHTML = "Invalid file type. Only PDF is allowed.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        } else {
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+            input.classList.remove("invalid");
+            return true;
+        }
+    }
+
     document.getElementById("searchIcon").addEventListener("click", function () {
         const searchTerm = document.getElementById("searchInput").value.toLowerCase();
         const jobCards = document.querySelectorAll(".job-card");

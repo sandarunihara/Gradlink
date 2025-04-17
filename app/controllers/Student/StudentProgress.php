@@ -24,25 +24,25 @@ class StudentProgress{
     public function addProgressReport(){
         $data = [];
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            $file = $_FILES['file'];
-            //show($file);
-            $fileName = $_FILES['file']['name'];
-            $fileTempName = $_FILES['file']['tmp_name'];
-            $fileSize = $_FILES['file']['size'];
-            $fileError = $_FILES['file']['error'];
-            $fileType = $_FILES['file']['type'];
-        
-            $fileExt = explode('.', $fileName);
-            $fileActualName = strtolower(current($fileExt));
-            $fileActualExt = strtolower(end($fileExt));
-        
-            $base = preg_replace("/[^\w-]/", "_", $fileActualName);
-            $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
-            $fileDestination = __DIR__ . '/../../../public/assets/uploads/progress_docs/'. $fileNameNew;
-
             try {
                 // Start transaction
                 $this->beginTransaction(); 
+
+                $file = $_FILES['file'];
+                //show($file);
+                $fileName = $_FILES['file']['name'];
+                $fileTempName = $_FILES['file']['tmp_name'];
+                $fileSize = $_FILES['file']['size'];
+                $fileError = $_FILES['file']['error'];
+                $fileType = $_FILES['file']['type'];
+            
+                $fileExt = explode('.', $fileName);
+                $fileActualName = strtolower(current($fileExt));
+                $fileActualExt = strtolower(end($fileExt));
+            
+                $base = preg_replace("/[^\w-]/", "_", $fileActualName);
+                $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
+                $fileDestination = __DIR__ . '/../../../public/assets/uploads/progress_docs/'. $fileNameNew;
 
                 if(move_uploaded_file($fileTempName, $fileDestination)){
                     $data['Name'] = $fileNameNew;
@@ -51,37 +51,36 @@ class StudentProgress{
                     $progress_doc = new progress_doc;
                     $isInsert1 = $progress_doc -> insert($data);
 
-                    if($isInsert1){
-                        $data['ActivityDescription'] = "Uploaded a Progress Report";
-                        $student_activity = new student_activity;
-                        $isInsert2 = $student_activity -> insert($data);
+                    if(!$isInsert1){
+                        throw new Exception("Error inserting data into progress_doc table");
                     }
+                    $data['ActivityDescription'] = "Uploaded a Progress Report";
+                    $student_activity = new student_activity;
+                    $isInsert2 = $student_activity -> insert($data);
 
-                    if($isInsert1 && $isInsert2){
-                        $data['success'] = "Progress report added successfully";
-                        $_SESSION['success'] = $data['success'];
-                        redirect('Student/StudentProgress/progressReport');
-                    }else{
-                        throw new Exception("File upload failed.");
+                    if(!$isInsert2){
+                        throw new Exception("Error inserting data into student_activity table");
                     }
-
+                    
                 }else{
                     throw new Exception("File upload failed.");
                 }
 
+                $_SESSION['success'] = "Progress report added successfully";
+
                 //show($data);
+                redirect('Student/StudentProgress/progressReport');
+                
                 // Commit transaction
                 $this->commit(); 
                 return true;
 
             } catch (Exception $e) {
                 $this->rollback(); // Rollback transaction on error
-                $data['errors'] = "Transaction failed: " . $e->getMessage();
-                $_SESSION['errors'] = $data['errors'];
+                $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
+                redirect('Student/StudentProgress/progressReport');
                 return false;                        
             }
         }
-        show($data);
-        redirect('Student/StudentProgress/progressReport');
     }
 }

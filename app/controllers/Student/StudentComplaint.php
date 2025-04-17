@@ -60,15 +60,18 @@ class StudentComplaint{
                 
                 // Commit transaction
                 $this->commit();
+                
+                //show($data);
+                redirect('Student/StudentComplaint/complaint');
                 return true;
             } catch (Exception $e) {
                 $this->rollback(); // Rollback transaction on error
                 $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
+                
+                //show($data);
+                redirect('Student/StudentComplaint/complaint');
                 return false;
             }
-            
-            //show($data);
-            redirect('Student/StudentComplaint/complaint');
         }else{
             $this-> view('Student/NewComplaint', $data);
         }
