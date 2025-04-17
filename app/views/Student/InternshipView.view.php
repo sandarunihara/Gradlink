@@ -89,12 +89,17 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
-            <input type="file" id="cvUpload" accept=".pdf" name="file" required>
-            <br><br>
+            <input 
+                type="file" 
+                id="cvUpload"
+                name="file" 
+                required
+                onchange="validateFile(this)"
+            >
+            <span id="errorId" class="error"></span>
             <button 
                 type="submit"
                 id="okBtn" 
-                name="submit"
             >
             OK
             </button>
@@ -109,6 +114,8 @@
     const popupContent = document.querySelector('.popup-content');
     const okBtn = document.getElementById('okBtn');
     const form = document.querySelector('form');
+    const errorId = document.getElementById('errorId');
+    const cvUpload = document.getElementById('cvUpload');
 
 
     // Show popup when any "Apply" button is clicked
@@ -119,14 +126,57 @@
 
     });
 
-    // Hide popup and handle file upload when "OK" button is clicked
-    okBtn.addEventListener('click', () => {
-        const cvFile = document.getElementById('cvUpload').files;
-        if(cvFile.length !== 0) {
+    okBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(validateFile(cvUpload)){
             form.submit();
         }
     });
+    function validateFile(input){
+        const file = input.files[0];
+        const validMimeType = "application/pdf";
+        const validExtension = ".pdf";
+        const validSize = 5000000; // 5MB in bytes
+        let isValid = true;
 
+        if(file === undefined){
+            errorId.innerHTML = "Please select a file.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }else if(file.size > validSize){
+            errorId.innerHTML = "File size exceeds 1MB.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }else{
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+            input.classList.remove("invalid");
+        }
+        // Check MIME type
+        if (file.type !== validMimeType) {
+            isValid = false;
+        }
+
+        // Check file extension
+        const fileName = file.name.toLowerCase();
+        if (!fileName.endsWith(validExtension)) {
+            isValid = false;
+        }
+
+        if (!isValid) {
+            errorId.innerHTML = "Invalid file type. Only PDF is allowed.";
+            errorId.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        } else {
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+            input.classList.remove("invalid");
+            return true;
+        }
+    }
     // Hide popup when clicking outside the content box
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
