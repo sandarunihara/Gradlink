@@ -25,7 +25,8 @@ class company
 		'AssistantId',
 		'block',
 		'block_count',
-		'last_blocked_at'
+		'last_blocked_at',
+		'created_at',
 	];
 
 	public function validate($data)
@@ -210,6 +211,26 @@ class company
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function getWeeklyCompany($week = 5){
+		$query = "SELECT YEAR(created_at) as year,
+    			         WEEK(created_at, 1) as week,
+                         COUNT(*) as count
+				  FROM $this->table
+				  WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL :week WEEK)
+				  GROUP BY year, week
+				  ORDER BY year DESC, week DESC;
+		
+		";
+		$params = [':week' => $week];
+		$result = $this->query($query, $params);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
 	}
 
 	// public function findallwithCompany(){

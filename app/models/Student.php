@@ -27,7 +27,8 @@ class student
 		'noOfAppliedAds',
 		'block',
 		'block_count',
-		'last_blocked_at'
+		'last_blocked_at',
+		'created_at'
 	];
 
 	public function validate($data , $ispartialData = false){
@@ -275,6 +276,27 @@ class student
     
         return $result;
     }
+
+	public function getWeeklyStudent($week = 5){
+		$query = "SELECT YEAR(created_at) as year,
+    			         WEEK(created_at, 1) as week,
+                         COUNT(*) as count
+				  FROM $this->table
+				  WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL :week WEEK)
+				  GROUP BY year, week
+				  ORDER BY year DESC, week DESC
+				;";
+		$params = [':week' => $week];
+		$result = $this->query($query, $params);
+		//show($result);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+		
+	}
 
 }
 

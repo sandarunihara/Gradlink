@@ -15,7 +15,8 @@ class PDC_Session
 		'time_slot',
         'description',
         'CompanyId',
-        'deleted'
+        'deleted',
+        'created_at'
 	];
 
     public function validate($data)
