@@ -89,82 +89,6 @@ body {
 }
 
 
-
-/* Container grid for cards */
-.complaints-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-/* Complaint card styling */
-.complaint-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: 0.3s ease;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.profile-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.profile-info img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.identity h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #000000;
-}
-
-.identity p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #777;
-}
-
-.timestamp {
-    text-align: right;
-    font-size: 0.8rem;
-    color: #666;
-}
-
-.card-body {
-    margin: 30px 0;
-    color: #353535;
-}
-
-.company-name {
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-.description {
-    font-size: 0.95rem;
-    color: #444;
-}
-
 .card-footer {
     text-align: right;
     margin-top: 20px;
@@ -381,4 +305,107 @@ body {
 .secondary-btn:hover {
     background-color: #b3b3b3;
     transform: scale(1.02);
+}
+
+.complaints-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+    padding: 30px;
+}
+
+/* Complaint card */
+.complaint-card {
+    background: linear-gradient(135deg, #ffffff, #f8f9fb);
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-left: 5px solid #007bff;
+    position: relative;
+}
+
+.complaint-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Header section */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.identity h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0;
+}
+
+.identity p {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 2px 0 0;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #999;
+    text-align: right;
+}
+
+/* Body */
+.card-body {
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid #eee;
+}
+
+.card-body .topic {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.card-body .description {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Reply section */
+.reply-box {
+    margin-top: 12px;
+    padding: 12px;
+    background-color: #eaf4ff;
+    /* border-left: 4px solid #007bff; */
+    border-radius: 8px;
+}
+
+.reply-label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #0056b3;
+}
+
+.reply-text {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.reply-text em {
+    color: #999;
+    font-style: italic;
 }

@@ -61,13 +61,17 @@
                         </div>
 
                         <div class="card-body">
-                            <p><strong><?= htmlspecialchars($complaint->Topic) ?></strong></p>
-                            <p> <?= htmlspecialchars($complaint->Description) ?></p>
-                        </div>
-
-                        <div class="card-footer">
-                            <button class="reply-btn">Add Reply</button>
-                        </div>
+    <p class="topic"><strong><?= htmlspecialchars($complaint->Topic) ?></strong></p>
+    <p class="description"><?= htmlspecialchars($complaint->Description) ?></p>
+    
+    <div class="reply-box">
+        <p class="reply-label"><strong>Reply:</strong></p>
+        <p class="reply-text">
+            <?= !empty($complaint->reply) ? htmlspecialchars($complaint->reply) : '<em>No reply added.</em>' ?>
+        </p>
+    </div>
+</div>
+                        
                     </div>
                 <?php endforeach; ?>
 
