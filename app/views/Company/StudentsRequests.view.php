@@ -103,7 +103,7 @@
                                             <h5>Action</h5>
                                         </th>
                                         <th>
-                                            <h5>View</h5>
+                                            <h5></h5>
                                         </th>
                                     </thead>
                                     <tbody>

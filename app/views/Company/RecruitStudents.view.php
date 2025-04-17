@@ -42,7 +42,7 @@
                             <?php foreach ($data as $student): ?>
                                 <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="stu-profile">
                                     <div class="profile-photo">
-                                        <img src="<?= ROOT ?>/assets/img/Student/Sandeepa.jpg" />
+                                        <img src="<?= ROOT ?>/assets/img/Company/pro.jpg" />
                                     </div>
                                     <div class="student-details">
                                         <div class="name-container">

@@ -146,7 +146,24 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <?php if (isset($removedlist) && !empty($removedlist)): ?>
+                        <?php
+                        $names = array_map(function ($student) {
+                            return htmlspecialchars($student['Student Name']);
+                        }, $removedlist);
 
+                        $nameList = implode(', ', $names);
+                        ?>
+
+                        <div class="removed-message">
+                            <strong><?php echo $nameList; ?></strong> have been recruited by another company and are therefore no longer under consideration.
+                            <form method="POST" action="">
+
+                                <button type="submit" value="close" name="submit">sub</button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
 
 
                 </div>

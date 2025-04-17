@@ -148,8 +148,7 @@ class C_Dashboard
     
         // Execute the query and check if successful
         $success = $this->query($query, $conditions);
-    
-        if ($success) {
+        if (!$success) {
             return true;
         } else {
             return false;
