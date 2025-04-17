@@ -122,6 +122,8 @@
 
             try {
                 //echo ($this->table);
+                $this->table = get_class($this);
+                //show($this->table);                
                 if (!empty($this->allowedColumns)) {
                     foreach ($data as $key => $value) {
                         if (!in_array($key, $this->allowedColumns)) {
@@ -149,6 +151,7 @@
                 
                 
                 else{
+                    
                     $query = "UPDATE $this->table SET ";
 
                     foreach ($data as $key => $value) {
@@ -158,10 +161,10 @@
                     $query = rtrim($query, ", ");
 
                     $query .= " WHERE $id_column = :$id_column";
-                    //show($query);
-                    $data[$id_column] = $id;
-                    //how($data);
+                    
+                    //show($r);
 
+                    $data[$id_column] = $id;
                 }
         
                 $this->query($query, $data);

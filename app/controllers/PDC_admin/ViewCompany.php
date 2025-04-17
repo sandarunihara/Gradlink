@@ -29,16 +29,48 @@ require "../app/libs/Exception.php";
             $companyData = $model->findById($companyId);
             $email = $companyData->Email;
 
-            if($companyData->Status == "Ongoing"){
+            $action = new Action_logs;
+
+            $actor_id = $_SESSION['USER']->AssistantId;
+
+            $actionData = [
+                'actor_id' => $actor_id,
+                'actor_role' => 'admin',
+                'target_id' => $companyId,
+                'target_type' => 'company',
+                'action_type' => 'block',
+                'reason' => $reason,
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+            
+
+            if($companyData->Status == "Ongoing" || $companyData->Status == "Pending"){
+
+                $updateData = [
+                    'Status' => 'Blocked',
+                    'block' => 1,
+                    'block_count' => $companyData->block_count + 1,
+                    'last_blocked_at' => date('Y-m-d H:i:s')
+                ];
                 
-                $updatedStatus = $model->update($companyId , ['Status' => 'Blocked'] , 'companyId');
+                $updatedStatus = $model->update($companyId , $updateData , 'companyId');
+                //show($updatedStatus);
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
                     //echo "Company blocked successfully";
-                    $this->sendEmail($email, $companyId, $reason);
-                    $_SESSION['flash_message'] = [
-                        'type' => 'success',
-                        'message' => 'Company blocked successfully'
-                    ];
+                    if($action->insert($actionData)){
+                        $this->sendEmail($email, $companyId, $reason);
+                    
+                        $_SESSION['flash_message'] = [
+                            'type' => 'success',
+                            'message' => 'Company blocked successfully'
+                        ];
+                    }
+                    else{
+                        $_SESSION['flash_message'] = [
+                            'type' => 'error',
+                            'message' => 'Failed to log action'
+                        ];
+                    }
                 }
                 else{
                     $_SESSION['flash_message'] = [

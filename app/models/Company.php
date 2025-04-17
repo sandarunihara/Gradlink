@@ -98,7 +98,7 @@ class company
 
 	public function gethighestadid()
 	{
-		$query = "SELECT CompanyId FROM company ORDER BY CompanyId DESC LIMIT 1";
+		$query = "SELECT CompanyId FROM $this->table ORDER BY CompanyId DESC LIMIT 1";
 		$result = $this->query($query);
 		return $result ? $result[0]->CompanyId : null;
 	}
@@ -106,7 +106,7 @@ class company
 	public function findAllOngoing(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NOT NULL AND block != 1";
+			$query = "SELECT * FROM $this->table WHERE Status = :status AND Password IS NOT NULL AND block != 1";
 			$result = $this->query($query, ['status' => 'Ongoing']);
 			return $result;
 		} catch (Exception $e) {
@@ -120,7 +120,7 @@ class company
 		if (is_array($data)) {
 			// Build query dynamically for associative array
 			$keys = array_keys($data);
-			$query = "SELECT * FROM company WHERE ";
+			$query = "SELECT * FROM $this->table WHERE ";
 
 			foreach ($keys as $key) {
 				$query .= $key . " = :" . $key . " AND ";
@@ -137,7 +137,7 @@ class company
 			$result = $this->query($query, $data);
 		} else {
 			// Assume $data is a single value (like CompanyId)
-			$query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
+			$query = "SELECT * FROM $this->table WHERE CompanyId = :CompanyId";
 
 			// Debug: Log the query and data
 			error_log("Generated Query: " . $query);
@@ -152,7 +152,7 @@ class company
 	public function findEmailById($companyId)
 	{
 		try {
-			$query = "SELECT Email FROM company WHERE CompanyId = :companyId";
+			$query = "SELECT Email FROM $this->table WHERE CompanyId = :companyId";
 
 			$result = $this->query($query, ['companyId' => $companyId]);
 
@@ -168,7 +168,7 @@ class company
 	public function findAllPending(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NULL AND block != 1";
+			$query = "SELECT * FROM $this->table WHERE Status = :status AND Password IS NULL AND block != 1";
 
 			$result = $this->query($query, ['status' => 'Pending']);
 
@@ -181,7 +181,7 @@ class company
 
 	public function findAllBlocked(): array|bool{
 		try{
-			$query = "SELECT * FROM company WHERE block = 1";
+			$query = "SELECT * FROM $this->table WHERE block = 1 AND Status = 'Blocked'";
 			$result = $this->query($query);
 			return $result;
 		} catch (Exception $e) {
@@ -192,7 +192,7 @@ class company
 
 	public function getTotalCount(): mixed{
 		try{
-			$query = "SELECT COUNT(CompanyId) AS total FROM company";
+			$query = "SELECT COUNT(CompanyId) AS total FROM $this->table";
 			$result = $this->query($query);
 			return $result[0]->{'total'};
 		}catch (Exception $e) {
