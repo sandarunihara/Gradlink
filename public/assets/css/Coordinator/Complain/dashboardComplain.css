@@ -319,3 +319,18 @@ table td {
 .mark-reviewed-btn:hover {
     background-color: #218838;
 }
+
+.flash-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-weight: 500;
+}
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

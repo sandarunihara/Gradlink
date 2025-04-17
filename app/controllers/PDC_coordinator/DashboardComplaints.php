@@ -29,22 +29,33 @@ class DashboardComplaints
 
     public function markReviewed()
     {
+        
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
+            
+            $id = $_POST['id'] ?? null; // Get the ID from the POST request
 
+            // echo "<pre>";
+            // print_r($id);
+            // echo "</pre>";
             if($id) {
                 $complaintModel = new complaint;
-                $result = $complaintModel->markReviewed($id);
+                $complaintModel->markReviewed($id);
+                
+                // $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Complaint marked as reviewed successfully.'];
 
-                if($result) {
-                    $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Complaint marked as reviewed.'];
-                } else {
-                    $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Failed to mark complaint as reviewed.'];
-                }
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Complaint marked as reviewed.',
+                  
+                ]);
+                // Redirect to the index method after marking as reviewed
+                
             } else {
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Invalid complaint ID.'];
             }
             
         } 
     }
+
+//   
 }

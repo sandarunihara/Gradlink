@@ -35,6 +35,13 @@
                 <button class="filter-btn" data-filter="company">Company Complaints</button>
             </div>
 
+            <?php if (!empty($_SESSION['flash_message'])): ?>
+                <div class="flash-message <?= $_SESSION['flash_message']['type'] ?>">
+                    <?= $_SESSION['flash_message']['message'] ?>
+                    <?php unset($_SESSION['flash_message']); ?>
+                </div>
+            <?php endif; ?>
+
             <p class="flash-message">
                 <?php if (isset($_SESSION['flash_message'])): ?>
                     <span class="<?= $_SESSION['flash_message']['type'] ?>">
@@ -88,21 +95,27 @@
 
     <script>
 
-        document.querySelectorAll('mark-reviewed-btn').forEach(button => {
+        document.querySelectorAll('.mark-reviewed-btn').forEach(button => {
+            
             button.addEventListener('click', () => {
                 const complaintId = button.getAttribute('data-id');
+              
+                console.log(complaintId);
                 
-                fetch(`<?= ROOT ?>/PDC_coordinator/ComplaintReview/updateStatus`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: `id=${complaintId}`
+                fetch("<?= ROOT ?>/PDC_coordinator/dashboardComplaints/markReviewed", {
+                    method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                    body: "id=" + encodeURIComponent(complaintId)
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     if (data.success) {
+                        location.reload();
                         button.closest('.complaint-card').remove();
+                        alert(data.message); 
                     } else {
                         alert('Failed to update status.');
                     }
