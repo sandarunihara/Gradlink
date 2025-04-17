@@ -26,4 +26,25 @@ class DashboardComplaints
             'complaints' => $complaints
         ]);
     }
+
+    public function markReviewed()
+    {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+
+            if($id) {
+                $complaintModel = new complaint;
+                $result = $complaintModel->markReviewed($id);
+
+                if($result) {
+                    $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Complaint marked as reviewed.'];
+                } else {
+                    $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Failed to mark complaint as reviewed.'];
+                }
+            } else {
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Invalid complaint ID.'];
+            }
+            
+        } 
+    }
 }
