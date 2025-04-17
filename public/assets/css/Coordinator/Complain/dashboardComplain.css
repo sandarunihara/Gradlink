@@ -88,28 +88,7 @@ body {
     color: #2b237c;
 }
 
-.search-box {
-    display: flex;
-    align-items: center;
-    gap: 4%;
-}
 
-
-
-.pending {
-    background-color: #c2c6c29a; /* Light green for Pending */
-    color: #040404;
-}
-
-.approved {
-    background-color: #66ff6697; /* Green for Approved */
-    color: #003300;
-}
-
-.rejected {
-    background-color: #ff6666b0; /* Red for Rejected */
-    color: #660000;
-}
 
 /* Container grid for cards */
 .complaints-grid {
@@ -155,7 +134,7 @@ body {
     margin: 0;
     font-size: 1rem;
     font-weight: 600;
-    color: #333;
+    color: #000000;
 }
 
 .identity p {
@@ -171,7 +150,8 @@ body {
 }
 
 .card-body {
-    margin: 10px 0;
+    margin: 30px 0;
+    color: #353535;
 }
 
 .company-name {
@@ -187,6 +167,7 @@ body {
 
 .card-footer {
     text-align: right;
+    margin-top: 20px;
 }
 
 .reply-btn {
