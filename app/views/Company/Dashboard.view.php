@@ -11,8 +11,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="<?php echo ROOT ?>/assets/js/Cscript.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+        <script src="<?= ROOT ?>/assets/js/company/dashboard.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </head>
@@ -30,75 +33,79 @@
                         </div>
                         <?php $this->renderComponent("companyheader") ?>
                     </div>
-                    <div class="d_main">
-                        <div>
-                            <h3>Overview</h3>
-                        </div>
-                        <div class="d_allsummery">
-                            <!-- Key Metrics Cards -->
-                            <div class="metrics-grid">
-                                <div class="metric-card">
-                                    <div class="metric-icon">
-                                        <i class="fas fa-bullhorn"></i>
+                    <div class="overview">
+                        <h3>Overview</h3>
+                    </div>
+                    <div class="all-content">
+                        <div class="full-content">
+                            <div class="d_main">
+                                <div class="d_allsummery">
+                                    <!-- Key Metrics Cards -->
+                                    <div class="metrics-grid">
+                                        <div class="metric-card">
+                                            <div class="metric-icon">
+                                                <i class="fas fa-bullhorn"></i>
+                                            </div>
+                                            <div class="metric-info">
+                                                <h3>Total Advertisements</h3>
+                                                <p class="metric-value"><?php echo $numOfAdvertisements ?></p>
+                                                <p class="metric-change positive"><i class="fas fa-bullhorn"></i> 12% from last month</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="metric-card">
+                                            <div class="metric-icon">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <div class="metric-info">
+                                                <h3>Total Student Applied</h3>
+                                                <p class="metric-value"><?php echo $numOfStudents; ?></p>
+                                                <p class="metric-change positive"><i class="fas fa-users"></i> 8% from last month</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="metric-card">
+                                            <div class="metric-icon">
+                                                <i class="fas fa-user-check"></i>
+                                            </div>
+                                            <div class="metric-info">
+                                                <h3>Total Student Shortlisted</h3>
+                                                <p class="metric-value"><?php echo $numOfShortlistStudents ?></p>
+                                                <p class="metric-change positive"><i class="fas fa-user-check"></i> 15% from last round</p>
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    <div class="metric-info">
-                                        <h3>Total Advertisements</h3>
-                                        <p class="metric-value"><?php echo $numOfAdvertisements ?></p>
-                                        <p class="metric-change positive"><i class="fas fa-bullhorn"></i> 12% from last month</p>
+                                </div>
+                                <div class="bottomcontent">
+                                    <div class="charts-section">
+                                        <div class="chart-card">
+                                            <div class="chart-header">
+                                                <h3>Student Placement Status</h3>
+                                                <div class="chart-legend">
+                                                    <button class="chart-toggle active" onclick="toggleChart('studentStatusChart', this)">Placement Status</button>
+                                                    <button class="chart-toggle" onclick="toggleChart('applicationtrendschart', this)">Application Trends</button>
+                                                </div>
+                                            </div>
+                                            <div id="studentStatusChart" class="chart-container hh" style="display: block;"></div>
+                                            <div id="applicationtrendschart" class="chart-container" style="display: none;"></div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="metric-card">
-                                    <div class="metric-icon">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                    <div class="metric-info">
-                                        <h3>Total Student Applied</h3>
-                                        <p class="metric-value"><?php echo $numOfStudents; ?></p>
-                                        <p class="metric-change positive"><i class="fas fa-users"></i> 8% from last month</p>
-                                    </div>
-                                </div>
 
-                                <div class="metric-card">
-                                    <div class="metric-icon">
-                                        <i class="fas fa-user-check"></i>
-                                    </div>
-                                    <div class="metric-info">
-                                        <h3>Total Student Shortlisted</h3>
-                                        <p class="metric-value"><?php echo $numOfShortlistStudents ?></p>
-                                        <p class="metric-change positive"><i class="fas fa-user-check"></i> 15% from last round</p>
-                                    </div>
-                                </div>
-
-                                <div class="metric-card">
-                                    <div class="metric-icon">
-                                        <i class="fas fa-file-contract"></i>
-                                    </div>
-                                    <div class="metric-info">
-                                        <h3>Active Ads</h3>
-                                        <p class="metric-value">dsa</p>
-                                        <p class="metric-change neutral"><i class="fas fa-minus"></i> No change</p>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                        <div class="bottomcontent">
-                            <div class="charts-section">
-                                <div class="chart-card">
-                                    <div class="chart-header">
-                                        <h3>Student Placement Status</h3>
-                                        <div class="chart-legend">
-                                        </div>
+                            <div class="second-content">
+                                <div class="calendar-with-schedule-data">
+                                    <h3>Interview Schedule</h3>
+                                    <div class="compact-calendar-header"></div>
+                                    <div id="compactCalendar"></div>
+                                    <div class="topic-content">
+                                        <h4 class="upcommingevent">Upcomming Interview</h4>
+                                        <a href="http://localhost/Gradlink/public/company/Schedule/dashboard" class="view-all">view all</a>
                                     </div>
-                                    <div id="studentStatusChart"></div>
-                                </div>
-                                <div class="chart-card">
-                                    <div class="chart-header">
-                                        <h3>Monthly application trends</h3>
-                                        <div class="chart-legend">
-                                        </div>
-                                    </div>
-                                    <div id="applicationtrendschart"></div>
+                                    <div id="upcomingEvents" class="upcoming-events-container"></div>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +163,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div>
+                            <div class="ch">
                                 <div class="chart-card">
                                     <div class="chart-header">
                                         <h3>Students Status</h3>
@@ -165,58 +172,125 @@
                                     </div>
                                     <div id="StudentsStatuschart"></div>
                                 </div>
-
-                                <!-- <div class="d_2com">
-                                <div class="d_messaage"> -->
-                                <div class="d_msglist">
-                                    <h3>Messages</h3>
-                                    <?php
-                                    $details = [
-                                        "Tech Talk" => "../Messages/TechTalk",
-                                        "Intern Call" => "../Messages/pdc_message",
-                                    ];
-
-                                    $data = [
-                                        ["name" => "PDC", "detail" => "Tech Talk", "time" => "7:34 PM"],
-                                        ["name" => "PDC", "detail" => "Intern Call", "time" => "7:34 PM"],
-                                    ];
-                                    ?>
-
-                                    <?php foreach ($data as $item): ?>
-                                        <?php
-                                        $detail = $item['detail'];
-                                        $link = isset($details[$detail]) ? $details[$detail] : "#";
-                                        ?>
-                                        <a href="<?php echo $link; ?>" class="m_container">
-                                            <div class="m_de">
-                                                <img src="<?php echo ROOT ?>/assets/img/company/pdcphoto.jpg" width="40" height="40" />
-                                                <div class="m_content">
-                                                    <span class="m_name"><?php echo $item['name']; ?></span>
-                                                    <span class="m_detail"><?php echo $detail; ?></span>
-                                                    <span class="m_time"><?php echo $item['time']; ?></span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    <?php endforeach; ?>
-                                </div>
                             </div>
-                            <!-- <div class="d_view_all">
-                                        <a href="../Messages/dashboard">
-                                            View All
-                                            <i class="fas fa-arrow-right"></i>
-                                        </a>
-                                    </div> -->
-                            <!-- </div> -->
-                            <!-- </div> -->
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Make sure FullCalendar is loaded before initializing
+                if (typeof FullCalendar !== 'undefined') {
+                    initCompactCalendar();
+                } else {
+                    console.error('FullCalendar is not loaded');
+                }
+
+                function initCompactCalendar() {
+                    const calendarEl = document.getElementById('compactCalendar');
+                    const upcomingEventsDiv = document.getElementById('upcomingEvents');
+
+                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        headerToolbar: {
+                            left: 'prev',
+                            center: 'title',
+                            right: 'next'
+                        },
+                        events: {
+                            url: 'http://localhost/Gradlink/public/company/ShortlistedStudents/getInterviewSchedules',
+                            method: 'GET',
+                            success: function(response) {
+                                console.log(response);
+
+                                const today = new Date();
+                                today.setHours(0, 0, 0, 0);
+                                const futureEvents = response.filter(event => {
+                                    const eventDate = new Date(event.start.split('T')[0]);
+                                    return eventDate >= today;
+                                });
+                                displayUpcomingEvents(futureEvents);
+
+                                // Transform the response to ensure allDay is true if you want full-day highlights
+                                return response.map(event => {
+                                    return {
+                                        ...event,
+                                        allDay: true, // Force all-day events
+                                        start: event.start.split('T')[0], // Remove time portion
+                                        end: event.end ? event.end.split('T')[0] : null,
+                                        color: '#484eff'
+                                    };
+                                });
+                            },
+                            failure: function() {
+                                console.error('Failed to fetch interview schedules');
+                                upcomingEventsDiv.innerHTML = '<p class="no-events">Error loading schedule</p>';
+                            }
+                        },
+                        eventDisplay: 'background', // This will highlight days with events
+                        height: 'auto',
+                        contentHeight: 'auto',
+                        aspectRatio: 0.8,
+                        eventColor: '#484eff',
+                        eventTextColor: '#fff',
+                        dayMaxEvents: true,
+                        dayCellContent: function(arg) {
+                            arg.dayNumberText = arg.dayNumberText.replace(/^0+/, '');
+                        },
+                        eventClick: function(info) {
+                            info.jsEvent.preventDefault();
+                        }
+                    });
+
+                    calendar.render();
+
+                    function displayUpcomingEvents(events) {
+                        const sortedEvents = [...events].sort((a, b) =>
+                            new Date(a.start) - new Date(b.start));
+
+                        const upcoming = sortedEvents.slice(0, 1);
+
+                        const html = upcoming.length > 0 ?
+                            upcoming.map(event => `
+                    <div class="upcoming-event">
+                        <h4>${event.position}</h4>
+                        <p><strong>Candidate:</strong> ${event.StudentName}</p>
+                        <p><strong>Date:</strong> ${formatDate(event.start)}</p>
+                        <p><strong>Time:</strong> ${formatTime(event.start, event.end)}</p>
+                        </div>
+                `).join('') :
+                            '<p class="no-events">No upcoming interviews</p>';
+
+                        upcomingEventsDiv.innerHTML = html;
+                    }
+
+                    function formatDate(dateString) {
+                        const options = {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        };
+                        return new Date(dateString).toLocaleDateString(undefined, options);
+                    }
+
+                    function formatTime(start, end) {
+                        const startTime = new Date(start).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        const endTime = new Date(end).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        return `${startTime} - ${endTime}`;
+                    }
+                }
+            });
+
+
             const AdStats = <?php echo json_encode($barchartdata); ?>;
             const AdStatslabels = AdStats.map(item => item.label);
             const AdStatscounts = AdStats.map(item => item.count);
@@ -236,7 +310,7 @@
                     bar: {
                         borderRadius: 4,
                         horizontal: false,
-                        columnWidth: '55%',
+                        columnWidth: '40%',
                     },
                 },
                 dataLabels: {
@@ -321,25 +395,33 @@
                 }
             };
 
-            var applicationtrendsChart = new ApexCharts(document.querySelector("#applicationtrendschart"), applicationtrendsOptions);
-            applicationtrendsChart.render();
+            // var applicationtrendsChart = new ApexCharts(document.querySelector("#applicationtrendschart"), applicationtrendsOptions);
+            // applicationtrendsChart.render();
 
             // student status
             const studentstatuschart = <?php echo json_encode($studentstatuschart); ?>;
             const statuslabels = studentstatuschart.map(item => item.label);
             const statusdata = studentstatuschart.map(item => item.count);
 
-            // Define color mapping based on status
+            // Base color per status
             const statusColorsMap = {
-                "Shortlist": "#6C63FF", // soft violet-blue (matches your side icons)
-                "Pending": "#FFB74D", // warm amber-orange (less harsh than pure amber)
-                "Recruit": "#4DB6AC", // teal (cool, modern accent)
-                "Reject": "#EF5350" // soft red (not too aggressive, fits UI style)
+                "Shortlist": "#6C63FF",
+                "Pending": "#FFB74D",
+                "Recruit": "#4DB6AC",
+                "Reject": "#EF5350"
             };
 
+            // Deeper gradient color per status
+            const gradientToColorsMap = {
+                "Shortlist": "#4438D1",
+                "Pending": "#F57C00",
+                "Recruit": "#00897B",
+                "Reject": "#C62828"
+            };
 
-            // Generate color array based on label order
-            const statusColors = statuslabels.map(label => statusColorsMap[label] || '#9E9E9E'); // fallback gray
+            // Build arrays from maps
+            const statusColors = statuslabels.map(label => statusColorsMap[label] || '#9E9E9E');
+            const gradientToColors = statuslabels.map(label => gradientToColorsMap[label] || '#616161');
 
             var StudentsStatusOptions = {
                 series: statusdata,
@@ -352,142 +434,69 @@
                 },
                 labels: statuslabels,
                 colors: statusColors,
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'dark',
+                        type: 'diagonal',
+                        shadeIntensity: 0.6,
+                        gradientToColors: gradientToColors,
+                        inverseColors: false,
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100]
+                    }
+                },
                 dataLabels: {
                     enabled: false
                 },
                 tooltip: {
                     y: {
-                        formatter: function(val) {
-                            return val + " students";
-                        }
+                        formatter: val => `${val} students`
                     }
                 }
             };
 
-
             var StudentsStatusChart = new ApexCharts(document.querySelector("#StudentsStatuschart"), StudentsStatusOptions);
             StudentsStatusChart.render();
 
-            // const ctx1 = document.getElementById('myChart').getContext('2d');
-            // console.log(AdStats);
 
-            // const labels = AdStats.map(label => label.label);
-            // const data = AdStats.map(data => data.count);
-            // const myChart = new Chart(ctx1, {
-            //     type: 'bar',
-            //     data: {
-            //         labels: labels,
-            //         datasets: [{
-            //             label: 'Applications per position',
-            //             data: data,
-            //             backgroundColor: [
-            //                 'rgba(75, 192, 192, 0.8)', // Teal
-            //                 'rgba(255, 159, 64, 0.8)', // Orange
-            //                 'rgba(255, 99, 132, 0.8)', // Red
-            //                 'rgba(54, 162, 235, 0.8)', // Blue
-            //                 'rgba(153, 102, 255, 0.8)', // Purple
-            //             ],
-            //             borderColor: [
-            //                 'rgba(75, 192, 192, 1)',
-            //                 'rgba(255, 159, 64, 1)',
-            //                 'rgba(255, 99, 132, 1)',
-            //                 'rgba(54, 162, 235, 1)',
-            //                 'rgba(153, 102, 255, 1)',
-            //             ],
-            //             borderWidth: 1
-            //         }]
-            //     },
-            //     options: {
-            //         responsive: true,
-            //         scales: {
-            //             y: {
-            //                 beginAtZero: true
-            //             }
-            //         }
-            //     }
-            // });
+            // Toggle functionality
+            let appChartRendered = false;
 
-            // const ctx4 = document.getElementById('myChartfortrends').getContext('2d');
+            function toggleChart(chartId, button) {
+                // Hide all charts
+                document.querySelectorAll('.chart-container').forEach(chart => {
+                    chart.style.display = 'none';
+                });
 
+                // Remove active class from all buttons
+                document.querySelectorAll('.chart-toggle').forEach(btn => {
+                    btn.classList.remove('active');
+                });
 
-            // const myChartfortrends = new Chart(ctx4, {
-            //     type: 'line',
-            //     data: {
-            //         labels: monthlyapplyKeys,
-            //         datasets: [{
-            //             label: 'Monthly Internship Applications',
-            //             data: monthlyapplyValues,
-            //             backgroundColor: 'rgba(58, 106, 255, 0.2)',
-            //             borderColor: 'rgba(58, 106, 255, 1)',
-            //             borderWidth: 2,
-            //             fill: true
-            //         }]
-            //     },
-            //     options: {
-            //         responsive: true,
-            //         scales: {
-            //             y: {
-            //                 beginAtZero: true
-            //             }
-            //         }
-            //     }
-            // });
+                // Show selected chart
+                const chartContainer = document.getElementById(chartId);
+                chartContainer.style.display = 'block';
 
+                // Add active class to clicked button
+                button.classList.add('active');
 
-
-            const ctx5 = document.getElementById('studentstatus').getContext('2d');
-
-
-            const studentstatus = new Chart(ctx5, {
-                type: 'pie',
-                data: {
-                    labels: statuslabels,
-                    datasets: [{
-                        data: statusdata,
-                        backgroundColor: ['#0056b3', '#f4b400', '#0f9d58', '#db4437', ],
-                        borderWidth: 0.5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            // display: false // Hide the legend
-                        },
-                        tooltip: {
-                            // enabled: true // Hide tooltips on hover
-                        }
-                    }
+                // If switching to the application trends chart and it hasn't been rendered yet
+                if (chartId === 'applicationtrendschart' && !appChartRendered) {
+                    // Render it now
+                    var applicationtrendsChart = new ApexCharts(chartContainer, applicationtrendsOptions);
+                    applicationtrendsChart.render();
+                    appChartRendered = true;
                 }
-            });
+            }
+
+
 
             // const ctx3 = document.getElementById('totalViewersChart2').getContext('2d');
             // const adstatus = <?php echo json_encode($countedadstatus); ?>;
-            // // console.log(adstatus);
             // const statusKeys = Object.keys(adstatus);
             // const statusValues = Object.values(adstatus);
-            // const totalViewersChart2 = new Chart(ctx3, {
-            //     type: 'pie',
-            //     data: {
-            //         labels: statusKeys,
-            //         datasets: [{
-            //             data: statusValues,
-            //             backgroundColor: ['#db4437', '#0f9d58', '#f4b400', '#0056b3'],
-            //             borderWidth: 0.5
-            //         }]
-            //     },
-            //     options: {
-            //         responsive: true,
-            //         plugins: {
-            //             legend: {
-            //                 display: false // Hide the legend
-            //             },
-            //             tooltip: {
-            //                 enabled: true // Hide tooltips on hover
-            //             }
-            //         }
-            //     }
-            // });
         </script>
         <!-- Toast message from session -->
         <?php if (isset($_SESSION['flash'])): ?>
