@@ -18,7 +18,8 @@ class pdc_assistant
 		'gender',
 		'contact_number',
 		'address',
-		'dob'
+		'dob',
+		'block'
 	];
 	
 	public function validate($data)

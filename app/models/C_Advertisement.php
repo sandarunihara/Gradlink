@@ -138,7 +138,9 @@ class C_Advertisement
                 JOIN 
                     company ON advertisement.CompanyId = company.CompanyId
                 WHERE
-                    advertisement.status = 'Active'";
+                    advertisement.status = 'Active' 
+                    AND company.block = 0
+                    ";
 
 
         $result = $this->query($query);
@@ -270,13 +272,33 @@ class C_Advertisement
                     c.CompanyId,
                     c.Name,
                     c.profileimg,
+                    c.Email,
                     COUNT(a.advertisementId) AS ad_count
                     FROM advertisement a
                     JOIN company c ON  a.CompanyId = c.CompanyId
                     GROUP BY c.CompanyId
                     ORDER BY ad_count DESC
-                    LIMIT 2";
+                    ";
         $result = $this->query($query);
         return $result;
+    }
+
+    public function getWeeklyAdvertisement($week = 5){
+        $query = "SELECT YEAR(created_at) as year,
+                    WEEK(created_at, 1) as week,
+                    COUNT(*) as count
+                    FROM $this->table
+                    WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL :week WEEK)
+                    GROUP BY year, week
+                    ORDER BY year DESC, week DESC;
+                    ";
+        $params = [':week' => $week];
+        $result = $this->query($query, $params);
+        if($result){
+            return $result;
+        }
+        else{
+            return false;
+        }
     }
 }

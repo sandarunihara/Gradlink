@@ -15,7 +15,8 @@ class PDC_Unreg_Session{
         'email',
         'contact_number',
         'contact_person',
-        'deleted'
+        'deleted',
+        'created_at'
     ];
 
     public function validate($data){
