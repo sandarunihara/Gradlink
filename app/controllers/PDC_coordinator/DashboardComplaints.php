@@ -29,32 +29,31 @@ class DashboardComplaints
 
     public function markReviewed()
     {
-        
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $id = $_POST['id'] ?? null; // Get the ID from the POST request
 
             // echo "<pre>";
             // print_r($id);
             // echo "</pre>";
-            if($id) {
+            if ($id) {
                 $complaintModel = new complaint;
                 $complaintModel->markReviewed($id);
-                
+
                 // $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Complaint marked as reviewed successfully.'];
 
                 echo json_encode([
                     'success' => true,
                     'message' => 'Complaint marked as reviewed.',
-                  
+
                 ]);
                 // Redirect to the index method after marking as reviewed
-                
+
             } else {
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Invalid complaint ID.'];
             }
-            
-        } 
+        }
     }
 
     public function addReply()
@@ -63,18 +62,23 @@ class DashboardComplaints
             $reply = $_POST['reply'] ?? null; // Get the reply from the POST request
             $complaintId = $_POST['complaintId'] ?? null; // Get the complaint ID from the POST request
 
+            //      echo "<pre>";
+            // print_r($_POST);
+            // echo "</pre>";
+
             if ($reply && $complaintId) {
                 $complaintModel = new complaint;
-                $complaintModel->addReply($complaintId, $reply);
-                
+                $success = $complaintModel->addReply($complaintId, $reply);
+
                 $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Reply added successfully.'];
                 
-                exit;
             } else {
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Invalid input.'];
             }
+            header("Location: " . ROOT . "/PDC_coordinator/dashboardComplaints");
+            exit;
         }
     }
 
-//   
+    //   
 }
