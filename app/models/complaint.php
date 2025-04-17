@@ -57,4 +57,10 @@
             // return $result;
 
         }
+
+        public function addReply($id, $reply)
+        {
+            $query = "UPDATE $this->table SET reply = :reply, Status = 'Reviewed' WHERE ComplaintId = :id";
+            return $this->query($query, ['id' => $id, 'reply' => $reply]);
+        }
     }

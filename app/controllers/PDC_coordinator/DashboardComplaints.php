@@ -57,5 +57,24 @@ class DashboardComplaints
         } 
     }
 
+    public function addReply()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $reply = $_POST['reply'] ?? null; // Get the reply from the POST request
+            $complaintId = $_POST['complaintId'] ?? null; // Get the complaint ID from the POST request
+
+            if ($reply && $complaintId) {
+                $complaintModel = new complaint;
+                $complaintModel->addReply($complaintId, $reply);
+                
+                $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Reply added successfully.'];
+                
+                exit;
+            } else {
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Invalid input.'];
+            }
+        }
+    }
+
 //   
 }
