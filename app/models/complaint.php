@@ -49,4 +49,11 @@
             $result = $this->query($query);
             return $result;
         }
+
+        public function markReviewed($id)
+        {
+            $query = "UPDATE $this->table SET Status = 'Reviewed' WHERE ComplaintId = :id";
+            $result = $this->query($query, ['id' => $id]);
+            return $result;
+        }
     }
