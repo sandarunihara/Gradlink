@@ -37,21 +37,44 @@ class ViewSession {
     public function remove()
     {
         $model = new PDC_Session;
+        $action = new Action_logs;
         //show($_POST);
         $sessionId = $_POST['session_id'];
         $reason = $_POST['delete_reason'];
         $email = $_POST['email'];
-        $data = $model->delete($sessionId,'session_id');
 
-        if ($data) {
-            $this->sendEmail($email , $reason);
-            $_SESSION['flash_message'] = [
-                'type' => 'success',
-                'message' => 'Session successfully deleted'
-            ];
-            header('Location: ' . ROOT . '/PDC_admin/AdminSessionOverview/dashboard');
-            exit;
-        } else {
+        $actor_id = $_SESSION['USER']->AssistantId;
+
+        $actionData = [
+            'actor_id' => $actor_id,
+            'actor_role' => 'admin',
+            'target_id' => $sessionId,
+            'target_type' => 'session',
+            'action_type' => 'delete',
+            'reason' => $reason,
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+
+        $updatedStatus = $model->update($sessionId , ['deleted' => 1] ,'session_id');
+        if($updatedStatus && $updatedStatus['status'] === 'success'){
+            if($action->insert($actionData)){
+                $this->sendEmail($email , $reason);
+                $_SESSION['flash_message'] = [
+                    'type' => 'success',
+                    'message' => 'Session successfully deleted'
+                ];
+                header('Location: ' . ROOT . '/PDC_admin/AdminSessionOverview/dashboard');
+                exit;
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Could not log the action.'
+                ];
+            }
+
+        }
+        else{
             $_SESSION['flash_message'] = [
                 'type' => 'error',
                 'message' => 'Error: Could not delete the session.'
@@ -63,21 +86,46 @@ class ViewSession {
 
     public function removeUnregistered(){
         $model = new PDC_Unreg_Session;
+        $action = new Action_logs;
+
         //show($_POST);
         $sessionId = $_POST['session_id'];
         $reason = $_POST['delete_reason'];
         $email = $_POST['email'];
-        $data = $model->delete($sessionId,'session_id');
-        //show($data);
-        if ($data) {
-            $this->sendEmail($email , $reason);
-            $_SESSION['flash_message'] = [
-                'type' => 'success',
-                'message' => 'Session successfully deleted'
-            ];
-            header('Location: ' . ROOT . '/PDC_admin/AdminSessionOverview/unregistered');
-            exit;
-        } else {
+
+        $actor_id = $_SESSION['USER']->AssistantId;
+
+        $actionData = [
+            'actor_id' => $actor_id,
+            'actor_role' => 'admin',
+            'target_id' => $sessionId,
+            'target_type' => 'session',
+            'action_type' => 'delete',
+            'reason' => $reason,
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+
+        $updatedStatus = $model->update($sessionId , ['deleted' => 1] ,'session_id');
+        //show($updatedStatus);
+        if($updatedStatus && $updatedStatus['status'] === 'success'){
+            if($action->insert($actionData)){
+                $this->sendEmail($email , $reason);
+                $_SESSION['flash_message'] = [
+                    'type' => 'success',
+                    'message' => 'Session successfully deleted'
+                ];
+                header('Location: ' . ROOT . '/PDC_admin/AdminSessionOverview/unregistered');
+                exit;
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Could not log the action.'
+                ];
+            }
+
+        }
+        else{
             $_SESSION['flash_message'] = [
                 'type' => 'error',
                 'message' => 'Error: Could not delete the session.'

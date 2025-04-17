@@ -23,6 +23,10 @@ class company
 		'profileimg',
 		'coverimg',
 		'AssistantId',
+		'block',
+		'block_count',
+		'last_blocked_at',
+		'created_at',
 	];
 
 	public function validate($data)
@@ -94,7 +98,7 @@ class company
 
 	public function gethighestadid()
 	{
-		$query = "SELECT CompanyId FROM company ORDER BY CompanyId DESC LIMIT 1";
+		$query = "SELECT CompanyId FROM $this->table ORDER BY CompanyId DESC LIMIT 1";
 		$result = $this->query($query);
 		return $result ? $result[0]->CompanyId : null;
 	}
@@ -102,7 +106,7 @@ class company
 	public function findAllOngoing(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NOT NULL";
+			$query = "SELECT * FROM $this->table WHERE Status = :status AND Password IS NOT NULL AND block != 1";
 			$result = $this->query($query, ['status' => 'Ongoing']);
 			return $result;
 		} catch (Exception $e) {
@@ -116,7 +120,7 @@ class company
 		if (is_array($data)) {
 			// Build query dynamically for associative array
 			$keys = array_keys($data);
-			$query = "SELECT * FROM company WHERE ";
+			$query = "SELECT * FROM $this->table WHERE ";
 
 			foreach ($keys as $key) {
 				$query .= $key . " = :" . $key . " AND ";
@@ -133,7 +137,7 @@ class company
 			$result = $this->query($query, $data);
 		} else {
 			// Assume $data is a single value (like CompanyId)
-			$query = "SELECT * FROM company WHERE CompanyId = :CompanyId";
+			$query = "SELECT * FROM $this->table WHERE CompanyId = :CompanyId";
 
 			// Debug: Log the query and data
 			error_log("Generated Query: " . $query);
@@ -148,7 +152,7 @@ class company
 	public function findEmailById($companyId)
 	{
 		try {
-			$query = "SELECT Email FROM company WHERE CompanyId = :companyId";
+			$query = "SELECT Email FROM $this->table WHERE CompanyId = :companyId";
 
 			$result = $this->query($query, ['companyId' => $companyId]);
 
@@ -164,7 +168,7 @@ class company
 	public function findAllPending(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM company WHERE Status = :status AND Password IS NULL";
+			$query = "SELECT * FROM $this->table WHERE Status = :status AND Password IS NULL AND block != 1";
 
 			$result = $this->query($query, ['status' => 'Pending']);
 
@@ -177,8 +181,8 @@ class company
 
 	public function findAllBlocked(): array|bool{
 		try{
-			$query = "SELECT * FROM company WHERE Status = :status";
-			$result = $this->query($query, ['status' => 'Blocked']);
+			$query = "SELECT * FROM $this->table WHERE block = 1 AND Status = 'Blocked'";
+			$result = $this->query($query);
 			return $result;
 		} catch (Exception $e) {
 			error_log("Error fetching blocked companies: " . $e->getMessage());
@@ -188,7 +192,7 @@ class company
 
 	public function getTotalCount(): mixed{
 		try{
-			$query = "SELECT COUNT(CompanyId) AS total FROM company";
+			$query = "SELECT COUNT(CompanyId) AS total FROM $this->table";
 			$result = $this->query($query);
 			return $result[0]->{'total'};
 		}catch (Exception $e) {
@@ -207,6 +211,26 @@ class company
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
+	}
+
+	public function getWeeklyCompany($week = 5){
+		$query = "SELECT YEAR(created_at) as year,
+    			         WEEK(created_at, 1) as week,
+                         COUNT(*) as count
+				  FROM $this->table
+				  WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL :week WEEK)
+				  GROUP BY year, week
+				  ORDER BY year DESC, week DESC;
+		
+		";
+		$params = [':week' => $week];
+		$result = $this->query($query, $params);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
 	}
 
 	// public function findallwithCompany(){

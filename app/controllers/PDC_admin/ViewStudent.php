@@ -172,8 +172,22 @@ require "../app/libs/Exception.php";
 
         public function block() {
             $model = new student;
+            $action = new Action_logs;
+
             $studentId = $_POST['StudentId'];
             $reason = $_POST['block_reason'];
+
+            $actor_id = $_SESSION['USER']->AssistantId;
+
+            $actionData = [
+                'actor_id' => $actor_id,
+                'actor_role' => 'admin',
+                'target_id' => $studentId,
+                'target_type' => 'student',
+                'action_type' => 'block',
+                'reason' => $reason,
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
             
             try {
                 $studentData = $model->find($studentId);
@@ -191,15 +205,29 @@ require "../app/libs/Exception.php";
                     exit;
                 }
 
-                $updatedStatus = $model->update($studentId, ['block' => 1], 'StudentId');
+                $stdChange = [
+                    'block' => 1,
+                    'block_count' => $studentData->block_count + 1,
+                    'last_blocked_at' => date('Y-m-d H:i:s')
+                ];
+
+                $updatedStatus = $model->update($studentId, $stdChange , 'StudentId');
                 
                 if ($updatedStatus['status'] === 'success') {
-                    $this->sendEmail($studentData->Email, $studentId, $reason);
+                    if($action->insert($actionData)){
+                        $this->sendEmail($studentData->Email, $studentId, $reason);
                     
-                    $_SESSION['flash_message'] = [
-                        'type' => 'success',
-                        'message' => 'Student blocked successfully'
-                    ];
+                        $_SESSION['flash_message'] = [
+                            'type' => 'success',
+                            'message' => 'Student blocked successfully'
+                        ];
+                    }
+                    else{
+                        $_SESSION['flash_message'] = [
+                            'type' => 'error',
+                            'message' => 'Failed to log action'
+                        ];
+                    }
                 } else {
                     throw new Exception($updatedStatus['message']);
                 }

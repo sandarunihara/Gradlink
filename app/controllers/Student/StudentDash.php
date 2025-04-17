@@ -3,6 +3,7 @@
 class Studentdash{
     use BaseController;
     public function dashboard(){
+        
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
 
@@ -38,14 +39,14 @@ class Studentdash{
     }  
 
 
-    public function renderoption($componentName, $componentProps = []){
-        $fileName = "../app/views/Student/" . $componentName . ".view.php";
-        if (file_exists($fileName)) {
-            require $fileName;
-        } else {
-            echo "Component not found";
-        }
-    }
+    // public function renderoption($componentName, $componentProps = []){
+    //     $fileName = "../app/views/Student/" . $componentName . ".view.php";
+    //     if (file_exists($fileName)) {
+    //         require $fileName;
+    //     } else {
+    //         echo "Component not found";
+    //     }
+    // }
  
 }
 

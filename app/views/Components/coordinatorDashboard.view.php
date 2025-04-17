@@ -29,7 +29,7 @@
                 <li data-title="Sessions"><i class="fas fa-calendar-alt fa-lg"></i></li>
             </a>
             
-            <a href="/GRadlink/public/PDC_coordinator/dashboardCompanyComplain">
+            <a href="/GRadlink/public/PDC_coordinator/dashboardComplaints">
                 <li data-title="Complains"><i class="fas fa-exclamation-circle fa-lg"></i></li>
             </a>
 

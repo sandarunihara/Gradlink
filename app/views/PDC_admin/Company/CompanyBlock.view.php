@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <title>Blocked Companies</title>
+    <title>Companies</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/company/blockCompany.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/company/overviewCompany.css?time=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
-                    <h1>Blocked Companies</h1>
+                    <h1>Company List</h1>
                 </div>
             </header>
 
@@ -25,16 +25,19 @@
                 <?php $this->renderPDC_adminTabs("companyTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
+            
             <div class="tab-content">
-                
-                <!-- Pending Companies Tab -->
-                <div id="pending-companies" class="tab-pane active">
+
+                <div id="company-list" class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
                             <div class="search-box">
                                 <input type="text" id='search-query' placeholder="Search Company" />
                                 <button onclick="searchCompany()">Search</button>
                             </div>
+                            <!-- <div>
+                                <button onclick="navigateToAddCompany()" class="add-btn"></button>
+                            </div> -->
                         </div>
                         <table>
                             <thead>
@@ -43,6 +46,7 @@
                                     <th>Contact Person</th>
                                     <th>Email</th>
                                     <th>Contact Number</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -54,7 +58,7 @@
                                             <td><?= htmlspecialchars(is_array($company) ? $company['ContactPerson'] : $company->ContactPerson) ?></td>
                                             <td><?= htmlspecialchars(is_array($company) ? $company['Email'] : $company->Email) ?></td>
                                             <td><?= htmlspecialchars(is_array($company) ? $company['ContactNum'] : $company->ContactNum) ?></td>
-                                            <td><button class="view-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $com['CompanyId'] : $company->CompanyId) ?>')">View</button></td>
+                                            <td><button class="view-btn action-btn" onclick="navigateToShowCompany('<?= htmlspecialchars(is_array($company) ? $com['CompanyId'] : $company->CompanyId) ?>')"><i class="fas fa-eye"></i> View</button></td>
 
                                             <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
                                             <td></td>
@@ -69,9 +73,10 @@
                         </table>
                     </section>
                 </div>
-           
+            </div>
         </main>
     </div>
+
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
 </body>
 

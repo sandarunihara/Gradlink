@@ -14,7 +14,9 @@ class PDC_Unreg_Session{
         'other_company_name',
         'email',
         'contact_number',
-        'contact_person'
+        'contact_person',
+        'deleted',
+        'created_at'
     ];
 
     public function validate($data){
@@ -41,7 +43,7 @@ class PDC_Unreg_Session{
     }
 
     public function findAll(){
-        $query = "SELECT * FROM $this->table";
+        $query = "SELECT * FROM $this->table WHERE deleted = 0";
         $result = $this->query($query);
         return $result ? $result : [];
     }
@@ -50,7 +52,7 @@ class PDC_Unreg_Session{
         $query = "SELECT hall_number, time_slot 
                   FROM $this->table 
                   WHERE session_date = :session_date
-                  AND session_date >= CURDATE()
+                  AND session_date >= CURDATE() AND deleted = 0
                   ";
                   
         $params = [':session_date' => $session_date];

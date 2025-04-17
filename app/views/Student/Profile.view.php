@@ -22,8 +22,11 @@
             <div class="student-profile-header">
                 <!-- Profile Picture -->
                 <div class="student-profile-picture">
-                    <i class="fas fa-pen"></i>
-                    <img src="<?=ROOT?>/assets/img/Student/<?php echo htmlspecialchars($data['Student'] -> ProfilePic)?>" alt="Profile Picture">
+                    <img 
+                        id="profile-pic"
+                        src="<?=ROOT?>/assets/img/Student/<?php echo htmlspecialchars($data['Student'] -> ProfilePic)?>" 
+                        alt="Profile Picture"
+                        >
                 </div>
                 
                 <!-- Profile Info (Name & Major) -->
@@ -92,14 +95,16 @@
                 <div class="student-edit">
                     <button onclick="location.href='<?=ROOT?>/Student/StudentProfile/ProfileEdit';">Update Profile</button>
                 </div>
-                <div class="cv-download">
-                    <a href="<?=ROOT?>/assets/uploads/cv/ <?php echo htmlspecialchars($data['Student'] -> cv)?>" target="_blank">
-                        <button>
-                            <i class="fas fa-file-arrow-down"></i> 
-                            <span>Download Resume</span>
-                        </button>
-                    </a>
-                </div>
+                <?php if($data['Student'] -> cv != null){ ?>
+                    <div class="cv-download">
+                        <a href="<?=ROOT?>/assets/uploads/cv/ <?php echo htmlspecialchars($data['Student'] -> cv)?>" target="_blank">
+                            <button>
+                                <i class="fas fa-file-arrow-down"></i> 
+                                <span>Download Resume</span>
+                            </button>
+                        </a>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>   
@@ -118,6 +123,30 @@
         <?php } ?>
         <?php unset($_SESSION['isUpdate']);?>
     <?php }?>
+
+    <!--Profile Picture Preview-->
+    <div id="profile-picture-preview" class="profile-picture-preview-container">
+        <div class="profile-picture-preview-content">
+            <p>fjlsllsmlcmldlsl,aal</p>
+        </div>
+    </div>
+<script>
+    const profilePic = document.getElementById('profile-pic');
+    const profilePicturePreview = document.getElementById('profile-picture-preview');
+    const profilePicturePreviewContent = document.querySelector('.profile-picture-preview-content');
+    profilePic.addEventListener('click', () =>{
+        profilePicturePreview.style.display = 'flex'; // Show the preview
+    });
+
+    // Hide popup when clicking outside the content box
+    profilePicturePreview.addEventListener('click', (event) => {
+    if (!profilePicturePreviewContent.contains(event.target)) {
+        profilePicturePreview.style.display = 'none'; // Hide modal
+    }
+    });
+</script>
 </body>
 </html>
+
+
 

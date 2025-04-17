@@ -354,6 +354,7 @@ class Signup
                             $result1 = $user->insert($_SESSION['user'], $id_column);
                             if (!$result1) {
                                 throw new Exception("Failed to insert student table data.");
+
                             }
                             $result2 = $skill->insertSkill($id, $skills);
                             //show($skills);

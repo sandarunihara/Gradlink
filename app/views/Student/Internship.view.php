@@ -99,14 +99,19 @@
 <!-- Popup Box -->
 <div id="popupBox" class="popup hidden">
     <div class="popup-content">
-        <form action="<?= ROOT ?>/Student/StudentAd/applyAdvertisement/" method="post" enctype="multipart/form-data">
+        <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
-            <input type="file" id="cvUpload" accept=".pdf" name="file" required>
-            <br><br>
+            <input 
+                type="file" 
+                id="cvUpload" 
+                name="file" 
+                required
+                onchange="validateFile(this)"
+            >
+            <span id="errorId" class="error"></span>
             <button 
                 type="submit"
                 id="okBtn" 
-                name="submit"
             >
             OK
             </button>
@@ -116,45 +121,20 @@
 <!-- Toast -->
 <div id="toast-container" class="toast-container"></div>
 
-<?php if(array_key_exists('isInsert', $_SESSION)){ ?>
-    <?php if($_SESSION['isInsert']){?>
+<?php if(array_key_exists('success', $_SESSION)){ ?>
         <script>
-            successToast("Application submitted successfully");
+            successToast("<?= $_SESSION['success'] ?>");
         </script>
-    <?php }else{ ?>
-        <script>
-            errorToast("Failed to submit application");
-        </script>
-    <?php } ?>
-    <?php unset($_SESSION['isInsert']);?>
+    <?php unset($_SESSION['success']);?>
 <?php }?>
 
-<?php if(array_key_exists('isBig', $_SESSION)){ ?>
-    <?php if($_SESSION['isBig']){?>
+<?php if(array_key_exists('errors', $_SESSION)){ ?>
         <script>
-            errorToast("Your file is too big!");
+            errorToast("<?= $_SESSION['errors'] ?>");
         </script>
-    <?php unset($_SESSION['isBig']);?>
-    <?php }?>
+    <?php unset($_SESSION['errors']);?>
 <?php }?>
 
-<?php if(array_key_exists('isTypeError', $_SESSION)){ ?>
-    <?php if($_SESSION['isTypeError']){?>
-        <script>
-            errorToast("You cannot upload files of this type!");
-        </script>
-    <?php unset($_SESSION['isTypeError']);?>
-    <?php }?>
-<?php }?>
-
-<?php if(array_key_exists('isLimit', $_SESSION)){ ?>
-    <?php if($_SESSION['isLimit']){?>
-        <script>
-            errorToast("You have reached the limit of 5 applications for this round");
-        </script>
-    <?php } ?>
-    <?php unset($_SESSION['isLimit']);?>
-<?php }?>
 <script src="<?=ROOT?>/assets/js/Student/internship.js"></script>
 </body>
 </html>

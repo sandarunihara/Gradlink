@@ -40,17 +40,16 @@
         .container {
             display: flex;
             min-height: 100vh;
-            width: 100%;
         }
 
         /* Main Content Area */
         .content {
+            margin-left: 80px; /* Same as sidebar width */
             flex: 1;
-            width: 95%;
-            
-            padding: 1rem;
-            padding-left: 8%;
-            transition: var(--transition);
+            padding: 40px 40px 40px 40px;
+            background-color: #f0f0f5;
+            min-height: 100vh;
+            transition: margin-left 0.3s;
         }
 
         /* Company Header Section */
@@ -404,53 +403,95 @@
             margin-bottom: 2rem;
         }
 
-        /* Toast Styles */
-.toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
+        .toast-message.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.toast-message {
-    background: #fff;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 250px;
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 0.3s ease;
+.toast-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
 }
 
-.toast-message.toast-success {
-    border-left: 4px solid var(--success-color);
+.toast-success {
+    background-color: rgba(40, 167, 69, 0.95);
 }
 
-.toast-message.toast-error {
-    border-left: 4px solid var(--danger-color);
+.toast-success::before {
+    background-color: #2ecc71;
 }
 
-.toast-content {
-    flex: 1;
+.toast-error {
+    background-color: rgba(220, 53, 69, 0.95);
+}
+
+.toast-error::before {
+    background-color: #e74c3c;
 }
 
 .toast-close-btn {
-    background: none;
+    background: transparent;
     border: none;
-    color: var(--gray-color);
+    color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    right: 8px;
+    top: 8px;
     cursor: pointer;
-    margin-left: 1rem;
-    font-size: 1rem;
-    padding: 0;
+    font-size: 14px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
 }
 
 .toast-close-btn:hover {
-    color: var(--dark-color);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.toast-content {
+    padding-right: 20px;
+    line-height: 1.5;
+}
+
+.toast-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.toast-text {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Progress bar animation */
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.toast-progress-bar {
+    height: 100%;
+    background: white;
+    animation: progress linear;
+    transform-origin: left;
+}
+
+@keyframes progress {
+    0% { transform: scaleX(1); }
+    100% { transform: scaleX(0); }
 }
 
         /* Responsive Adjustments */
@@ -485,28 +526,37 @@
 
 <body>
 
-    <?php 
-    if (isset($_SESSION['flash_message'])): 
-        $message = htmlspecialchars($_SESSION['flash_message']['message']);
-        $type = htmlspecialchars($_SESSION['flash_message']['type']);
-        unset($_SESSION['flash_message']);
-    ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Companies</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/company/overviewCompany.css?time=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
+</head>
+
+<body>
+    <?php if (isset($_SESSION['flash_message'])): ?>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                <?php if ($type === 'success'): ?>
-                    successToast('<?= $message ?>');
-                <?php else: ?>
-                    errorToast('<?= $message ?>');
-                <?php endif; ?>
-            });
+            window.__flashMessage = {
+                message: <?= json_encode($_SESSION['flash_message']['message']) ?>,
+                type: <?= json_encode($_SESSION['flash_message']['type']) ?>
+            };
+            window.__flashClearUrl = '/clear-flash'; // Your endpoint
         </script>
+        <?php unset($_SESSION['flash_message']); ?>
     <?php endif; ?>
 
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar") ?>
-        
+        <div class="sidebar">
+            <?php $this->renderComponent("pdc_adminsidebar") ?>
+        </div>
+    
         <main class="content">
-            <!-- Company Header with Cover Image -->
             <div class="company-header">
                 <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->coverimg) ? htmlspecialchars($companyData->coverimg) : 'assets/images/default-cover.jpg' ?>')">
                     <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->profileimg) ? htmlspecialchars($companyData->profileimg) : 'assets/images/default-profile.png' ?>')">
@@ -626,7 +676,7 @@
                 <button class="btn btn-back" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <?php if ($companyData->Status === 'Blocked'): ?>
+                <?php if ($companyData->block === 1): ?>
                     <button class="btn btn-unblock" onclick="unblockCompany('<?= htmlspecialchars($companyData->CompanyId) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>

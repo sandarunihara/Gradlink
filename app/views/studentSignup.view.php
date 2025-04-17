@@ -27,7 +27,7 @@
                                 type="text" 
                                 id="fname" 
                                 name="fname" 
-                                placeholder="Enter your first name" 
+                                placeholder="Enter your first name (e.g. 2021/CS/111)" 
                                 required
                             >
                         </div>
@@ -47,7 +47,7 @@
                                 type="email" 
                                 id="email" 
                                 name="email" 
-                                placeholder="Enter your email" 
+                                placeholder="Enter your email address (e.g. saman@gmail.com)" 
                                 required
                                 oninput="validMail(this)"
                             >
@@ -165,7 +165,6 @@
                                 type="file" 
                                 id="cv" 
                                 name="cv"
-                                required
                                 onchange="isValidCV(this)"
                             >
                             <span id="cvError" class="error"></span>
