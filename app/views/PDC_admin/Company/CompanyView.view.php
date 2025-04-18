@@ -521,6 +521,136 @@
                 padding-top: 70px;
             }
         }
+
+        .history-timeline {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 1rem;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 2px;
+    background: #e9ecef;
+}
+
+.history-item {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.history-item:last-child {
+    padding-bottom: 0;
+}
+
+.history-marker {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.history-item.blocked .history-marker {
+    background-color: var(--danger-color);
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.2);
+}
+
+.history-item.unblocked .history-marker {
+    background-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+}
+
+.history-marker::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+}
+
+.history-content {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.history-action {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.history-item.blocked .history-action {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+}
+
+.history-item.unblocked .history-action {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.history-date {
+    font-size: 0.8rem;
+    color: var(--gray-color);
+}
+
+.history-reason, .history-admin {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid #dee2e6;
+}
+
+.history-reason strong, .history-admin strong {
+    color: var(--dark-color);
+}
+
+.no-history {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--gray-color);
+}
+
+.no-history i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--success-color);
+}
+
+.no-history p {
+    margin: 0;
+}
+
+.block-stats {
+    font-size: 0.85rem;
+    color: var(--danger-color);
+    margin-top: 0.25rem;
+}
+
+.block-stats span {
+    margin-right: 0.5rem;
+}
     </style>
 </head>
 
@@ -558,19 +688,32 @@
     
         <main class="content">
             <div class="company-header">
-                <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->coverimg) ? htmlspecialchars($companyData->coverimg) : 'assets/images/default-cover.jpg' ?>')">
-                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->profileimg) ? htmlspecialchars($companyData->profileimg) : 'assets/images/default-profile.png' ?>')">
-                        <?php if (empty($companyData->profileimg)): ?>
-                            <div class="initials"><?= substr(htmlspecialchars($companyData->Name), 0, 1) ?></div>
+                <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($data['companyData']->coverimg) ? htmlspecialchars($data['companyData']->coverimg) : 'assets/images/default-cover.jpg' ?>')">
+                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($data['companyData']->profileimg) ? htmlspecialchars($data['companyData']->profileimg) : 'assets/images/default-profile.png' ?>')">
+                        <?php if (empty($data['companyData']->profileimg)): ?>
+                            <div class="initials"><?= substr(htmlspecialchars($data['companyData']->Name), 0, 1) ?></div>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="company-title">
-                    <h1><?= htmlspecialchars($companyData->Name) ?></h1>
-                    <span class="company-status <?= $companyData->Status === 'Blocked' ? 'status-blocked' : 'status-active' ?>">
-                        <i class="fas fa-<?= $companyData->Status === 'Blocked' ? 'ban' : 'check-circle' ?>"></i>
-                        <?= htmlspecialchars($companyData->Status) ?>
+
+                    <h1><?= htmlspecialchars($data['companyData']->Name) ?></h1>
+                    <span class="company-status <?= $data['companyData']->Status === 'Blocked' ? 'status-blocked' : 'status-active' ?>">
+                        <i class="fas fa-<?= $data['companyData']->Status === 'Blocked' ? 'ban' : 'check-circle' ?>"></i>
+                        <?= htmlspecialchars($data['companyData']->Status) ?>
                     </span>
+
+                    <?php if ($data['companyData']->block_count > 0): ?>
+                    <div class="block-stats">
+                        <span>Blocked <?= htmlspecialchars($data['companyData']->block_count) ?> time(s)</span>
+                        
+                        <?php if (!empty($data['companyData']->last_blocked_at)): ?>
+                        <span>• Last on <?= date('M j, Y', strtotime($data['companyData']->last_blocked_at)) ?></span>
+                        <?php endif; ?>
+                    
+                    </div>
+                    <?php endif; ?>
+
                 </div>
             </div>
 
@@ -585,19 +728,19 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Company ID</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->CompanyId) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->CompanyId) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Contact Person</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->ContactPerson) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->ContactPerson) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Email</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->Email) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->Email) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Phone</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->ContactNum) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->ContactNum) ?></div>
                         </div>
                     </div>
                 </div>
@@ -611,19 +754,19 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Street No</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->No) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->No) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Street Lane</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->Lane) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->Lane) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">City</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->City) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->City) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">District</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->District) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->District) ?></div>
                         </div>
                     </div>
                 </div>
@@ -636,7 +779,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Description</span>
-                        <div class="info-value" style="border-bottom: none; padding-bottom: 0;"><?= htmlspecialchars($companyData->ShortDesc) ?></div>
+                        <div class="info-value" style="border-bottom: none; padding-bottom: 0;"><?= htmlspecialchars($data['companyData']->ShortDesc) ?></div>
                     </div>
                 </div>
 
@@ -650,8 +793,8 @@
                         <div class="info-item">
                             <span class="info-label">Website</span>
                             <div class="info-value">
-                                <?php if (!empty($companyData->Website)): ?>
-                                    <a href="<?= htmlspecialchars($companyData->Website) ?>" target="_blank">Visit Website</a>
+                                <?php if (!empty($data['companyData']->Website)): ?>
+                                    <a href="<?= htmlspecialchars($data['companyData']->Website) ?>" target="_blank">Visit Website</a>
                                 <?php else: ?>
                                     Not provided
                                 <?php endif; ?>
@@ -660,8 +803,8 @@
                         <div class="info-item">
                             <span class="info-label">LinkedIn</span>
                             <div class="info-value">
-                                <?php if (!empty($companyData->Linkedin)): ?>
-                                    <a href="<?= htmlspecialchars($companyData->Linkedin) ?>" target="_blank">View Profile</a>
+                                <?php if (!empty($data['companyData']->Linkedin)): ?>
+                                    <a href="<?= htmlspecialchars($data['companyData']->Linkedin) ?>" target="_blank">View Profile</a>
                                 <?php else: ?>
                                     Not provided
                                 <?php endif; ?>
@@ -671,17 +814,62 @@
                 </div>
             </div>
 
+            <div class="info-card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>Block History</h2>
+                </div>
+                <?php if (!empty($data['actionDet'])): ?>
+                    <div class="history-timeline">
+                        <?php foreach ($data['actionDet'] as $record): ?>
+                            <div class="history-item <?= $record->action_type?>">
+                                <div class="history-marker">
+                                    <?php if ($record->action_type === 'blocked'): ?>
+                                        <i class="fas fa-ban"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-check-circle"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-header">
+                                        <div class="history-action-container">
+                                            <span class="history-action"><?= htmlspecialchars(ucfirst($record->action_type)) ?></span>
+                                            <?php if (!empty($record->actor_role)): ?>
+                                                <span class="history-role">• <?= htmlspecialchars($record->actor_role) ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <span class="history-date"><?= date('M j, Y \a\t g:i A', strtotime($record->timestamp)) ?></span>
+                                    </div>
+                                    <?php if (!empty($record->reason)): ?>
+                                        <div class="history-reason">
+                                            <span class="reason-label">Note:</span>
+                                            <span class="reason-text"><?= htmlspecialchars($record->reason) ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-history">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No block history recorded</p>
+                        <small class="no-history-sub">This user has never been blocked</small>
+                    </div>
+                <?php endif; ?>
+            </div>
+
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <button class="btn btn-back" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <?php if ($companyData->block === 1): ?>
-                    <button class="btn btn-unblock" onclick="unblockCompany('<?= htmlspecialchars($companyData->CompanyId) ?>')">
+                <?php if ($data['companyData']->block === 1): ?>
+                    <button class="btn btn-unblock" onclick="unblockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-block" onclick="blockCompany('<?= htmlspecialchars($companyData->CompanyId) ?>')">
+                    <button class="btn btn-block" onclick="blockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
                         <i class="fas fa-ban"></i> Block
                     </button>
                 <?php endif; ?>
