@@ -202,13 +202,13 @@ class company
 	}
 
 	public function registeredCount(){
-		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked'";
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked' AND block = 0";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
 	}
 
 	public function pendingCount(){
-		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending' AND block = 0";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
 	}

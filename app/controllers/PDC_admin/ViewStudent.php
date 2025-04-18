@@ -14,26 +14,26 @@ require "../app/libs/Exception.php";
             $model = new student;
             $applyDetails = new student_advertisement;
             $company = new company;
+            $action = new Action_logs;
+
             $studentData = $model->find($studentId);
             //$id = $studentData[0] -> StudentId;
             $studentapply = $applyDetails->findAppliedCompanies($studentId);
             //var_dump($studentapply);
             $count = $applyDetails->noOfAppliedCompanies($studentId);
 
+            $actor_id = $_SESSION['USER']->AssistantId;
+
+            $actionDet = $action->findDetails($studentId,$actor_id);
+
+            //show($actionDet);
+
             $data = [
-                'StudentId'=> $studentData -> StudentId,
-                'Name'=> $studentData -> Name,
-                'NIC'=> $studentData -> NIC,
-                'DegreeName'=> $studentData -> DegreeName,
-                'Status'=> $studentData -> Status,
-                'Email'=> $studentData -> Email,
-                'ContactNum'=> $studentData -> ContactNum,
-                'Github'=> $studentData -> Github,
-                'Linkedin'=> $studentData -> Linkedin,
+                'studentData' => $studentData,
                 'noOfAppliedAds' => $count,
                 'applications'=> [],
-                'block' => $studentData->block
-                
+                'block' => $studentData->block,
+                'actionDet' => $actionDet,
             ];
 
             
@@ -50,6 +50,8 @@ require "../app/libs/Exception.php";
             } else {
                 $studentapply = [];
             }
+
+            //show($data);
             
             $this-> view('PDC_admin/Student/StudentView' , $data);
         }
@@ -184,7 +186,7 @@ require "../app/libs/Exception.php";
                 'actor_role' => 'admin',
                 'target_id' => $studentId,
                 'target_type' => 'student',
-                'action_type' => 'block',
+                'action_type' => 'block',                                                                                                        
                 'reason' => $reason,
                 'timestamp' => date('Y-m-d H:i:s')
             ];
@@ -206,6 +208,7 @@ require "../app/libs/Exception.php";
                 }
 
                 $stdChange = [
+                    'Status' => 'Blocked',
                     'block' => 1,
                     'block_count' => $studentData->block_count + 1,
                     'last_blocked_at' => date('Y-m-d H:i:s')

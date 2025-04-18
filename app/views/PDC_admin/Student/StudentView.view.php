@@ -22,6 +22,9 @@
             --border-radius: 8px;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
+            --success-color: #4cc9f0;
+
+
         }
 
         * {
@@ -120,9 +123,15 @@
         .detail-card h3 {
             font-size: 1.1rem;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--dark);
             border-bottom: 1px solid #eee;
             padding-bottom: 0.5rem;
+        }
+
+        .detail-card i {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            color: var(--primary);
         }
 
         .detail-item {
@@ -642,6 +651,175 @@
                 justify-content: center;
             }
         }
+
+        .block-stats {
+            font-size: 0.85rem;
+            color: var(--danger);
+            margin-top: 0.25rem;
+        }
+
+        .block-stats span {
+            margin-right: 0.5rem;
+        }
+
+        .history-timeline {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 1rem;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 2px;
+    background: #e9ecef;
+}
+
+.history-item {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.history-item:last-child {
+    padding-bottom: 0;
+}
+
+.history-marker {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.history-item.blocked .history-marker {
+    background-color: var(--danger);
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.2);
+}
+
+.history-item.unblocked .history-marker {
+    background-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+}
+
+.history-marker::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+}
+
+.history-content {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.history-action {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: var(--dark);
+}
+
+.history-item.blocked .history-action {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger);
+}
+
+.history-item.unblocked .history-action {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.history-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.history-reason, .history-admin {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid #dee2e6;
+}
+
+.history-reason strong, .history-admin strong {
+    color: var(--danger);
+}
+
+.no-history {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--gray);
+}
+
+.no-history i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--success-color);
+}
+
+.no-history p {
+    margin: 0;
+}
+
+.info-card {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-header i {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            color: var(--primary);
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
     </style>
 </head>
 
@@ -666,11 +844,25 @@
             <div class="profile-header">
                 <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="Profile Image" class="profile-image">
                 <div class="profile-title">
-                    <h1><?= htmlspecialchars($data['Name']) ?></h1>
-                    <span class="status <?= $data['Status'] === 'Blocked' ? 'status-blocked' : ($data['Status'] === 'Pending' ? 'status-pending' : 'status-active') ?>">
-                        <i class="fas fa-<?= $data['Status'] === 'Blocked' ? 'ban' : ($data['Status'] === 'Pending' ? 'clock' : 'check-circle') ?>"></i>
-                        <?= htmlspecialchars($data['Status']) ?>
+                    <h1><?= htmlspecialchars($data['studentData']->Name) ?></h1>
+                    <span class="status <?= $data['studentData']->Status === 'Blocked' ? 'status-blocked' : ($data['studentData']->Status === 'Pending' ? 'status-pending' : 'status-active') ?>">
+                        <i class="fas fa-<?= $data['studentData']->Status === 'Blocked' ? 'ban' : ($data['studentData']->Status === 'Pending' ? 'clock' : 'check-circle') ?>"></i>
+                        <?= htmlspecialchars($data['studentData']->Status) ?>
                     </span>
+
+                    <?php if ($data['studentData']->block_count > 0): ?>
+                    <div class="block-stats">
+                        <span>Blocked <?= htmlspecialchars($data['studentData']->block_count) ?> time(s)</span>
+                        
+                        <?php if (!empty($data['studentData']->last_blocked_at)): ?>
+                        <span>• Last on <?= date('M j, Y', strtotime($data['studentData']->last_blocked_at)) ?></span>
+                        <?php endif; ?>
+                    
+                    </div>
+                    <?php endif; ?>
+
+
+
                 </div>
             </div>
 
@@ -679,19 +871,19 @@
                     <h3><i class="fas fa-id-card"></i> Basic Information</h3>
                     <div class="detail-item">
                         <span class="detail-label">Registration Number</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['StudentId']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->StudentId) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">NIC Number</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['NIC']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->NIC) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Degree Program</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['DegreeName']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->DegreeName) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Contact Number</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['ContactNum']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->ContactNum) ?></div>
                     </div>
                 </div>
 
@@ -699,18 +891,18 @@
                     <h3><i class="fas fa-envelope"></i> Contact Information</h3>
                     <div class="detail-item">
                         <span class="detail-label">Email Address</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['Email']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->Email) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Professional Links</span>
                         <div class="social-links">
-                            <?php if (!empty($data['Github'])): ?>
-                                <a href="<?= htmlspecialchars($data['Github']) ?>" target="_blank" class="social-link">
+                            <?php if (!empty($data['studentData']->Github)): ?>
+                                <a href="<?= htmlspecialchars($data['studentData']->Github) ?>" target="_blank" class="social-link">
                                     <i class="fab fa-github"></i> GitHub
                                 </a>
                             <?php endif; ?>
-                            <?php if (!empty($data['Linkedin'])): ?>
-                                <a href="<?= htmlspecialchars($data['Linkedin']) ?>" target="_blank" class="social-link">
+                            <?php if (!empty($data['studentData']->Linkedin)): ?>
+                                <a href="<?= htmlspecialchars($data['studentData']->Linkedin) ?>" target="_blank" class="social-link">
                                     <i class="fab fa-linkedin"></i> LinkedIn
                                 </a>
                             <?php endif; ?>
@@ -723,42 +915,90 @@
                 </div>
             </div>
 
-            <?php if (!empty($data['ShortDesc'])): ?>
+            <?php if (!empty($data['studentData']->ShortDesc)): ?>
             <div class="detail-card">
                 <h3><i class="fas fa-file-alt"></i> Student Description</h3>
-                <p><?= htmlspecialchars($data['ShortDesc']) ?></p>
+                <p><?= htmlspecialchars($data['studentData']->ShortDesc) ?></p>
             </div>
             <?php endif; ?>
 
             <div class="applications-section">
-                <h3 class="section-title"><i class="fas fa-briefcase"></i> Applied Companies</h3>
-                
-                <?php if (empty($data['applications'])): ?>
-                    <div class="no-applications">No companies applied yet</div>
-                <?php else: ?>
-                    <div class="applications-grid">
-                        <?php foreach ($data['applications'] as $application): ?>
-                            <div class="application-card">
-                                <div class="application-header">
-                                    <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
-                                    <div class="company-info">
-                                        <div class="company-name"><?= htmlspecialchars($application['ComName']) ?></div>
-                                        <span class="application-status 
-                                            <?= strtolower(str_replace(' ', '-', htmlspecialchars($application['Jobstatus']))) ?>">
-                                            <?= htmlspecialchars($application['Jobstatus']) ?>
-                                        </span>
+                <div class="detail-card">
+                    <h3 class="section-title"><i class="fas fa-briefcase"></i> Applied Companies</h3>
+                    
+                    <?php if (empty($data['applications'])): ?>
+                        <div class="no-applications">No companies applied yet</div>
+                    <?php else: ?>
+                        <div class="applications-grid">
+                            <?php foreach ($data['applications'] as $application): ?>
+                                <div class="application-card">
+                                    <div class="application-header">
+                                        <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
+                                        <div class="company-info">
+                                            <div class="company-name"><?= htmlspecialchars($application['ComName']) ?></div>
+                                            <span class="application-status 
+                                                <?= strtolower(str_replace(' ', '-', htmlspecialchars($application['Jobstatus']))) ?>">
+                                                <?= htmlspecialchars($application['Jobstatus']) ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="application-body">
+                                        <div class="application-detail">
+                                            <strong>Position:</strong> <?= htmlspecialchars($application['position']) ?>
+                                        </div>
+                                        <div class="application-detail">
+                                            <strong>Applied On:</strong> <?= htmlspecialchars($application['CreatedAt']) ?>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="application-body">
-                                    <div class="application-detail">
-                                        <strong>Position:</strong> <?= htmlspecialchars($application['position']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                </div>
+                
+
+            <div class="info-card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>Block History</h2>
+                </div>
+                <?php if (!empty($data['actionDet'])): ?>
+                    <div class="history-timeline">
+                        <?php foreach ($data['actionDet'] as $record): ?>
+                            <div class="history-item <?= $record->action_type?>">
+                                <div class="history-marker">
+                                    <?php if ($record->action_type === 'blocked'): ?>
+                                        <i class="fas fa-ban"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-check-circle"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-header">
+                                        <div class="history-action-container">
+                                            <span class="history-action"><?= htmlspecialchars(ucfirst($record->action_type)) ?></span>
+                                            <?php if (!empty($record->actor_role)): ?>
+                                                <span class="history-role">• <?= htmlspecialchars($record->actor_role) ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <span class="history-date"><?= date('M j, Y \a\t g:i A', strtotime($record->timestamp)) ?></span>
                                     </div>
-                                    <div class="application-detail">
-                                        <strong>Applied On:</strong> <?= htmlspecialchars($application['CreatedAt']) ?>
-                                    </div>
+                                    <?php if (!empty($record->reason)): ?>
+                                        <div class="history-reason">
+                                            <span class="reason-label">Note:</span>
+                                            <span class="reason-text"><?= htmlspecialchars($record->reason) ?></span>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-history">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No block history recorded</p>
+                        <small class="no-history-sub">This user has never been blocked</small>
                     </div>
                 <?php endif; ?>
             </div>
@@ -767,16 +1007,17 @@
                 <button class="btn btn-back" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <button class="btn btn-update" id="edit-btn-student" onclick="openUpdateform()">
-                    <i class="fas fa-edit"></i> Update
-                </button>
-                <?php if ($data['block'] === 1): ?>
-                    <button class="btn btn-unblock" onclick="unblockStudent('<?= htmlspecialchars($data['StudentId']) ?>')">
+
+                <?php if (($data['studentData']->block === 1) && ($data['studentData']->Status === 'Blocked')): ?>
+                    <button class="btn btn-unblock" onclick="unblockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-block" onclick="blockStudent('<?= htmlspecialchars($data['StudentId']) ?>')">
+                    <button class="btn btn-block" onclick="blockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
                         <i class="fas fa-ban"></i> Block
+                    </button>
+                    <button class="btn btn-update" id="edit-btn-student" onclick="openUpdateform()">
+                        <i class="fas fa-edit"></i> Update
                     </button>
                 <?php endif; ?>
             </div>
@@ -790,7 +1031,7 @@
                         <h3>Block Student</h3>
                     </div>
                     <div class="modal-body">
-                        <p>Please provide a reason for blocking <?= htmlspecialchars($data['Name']) ?>. This message will be sent to the student's email.</p>
+                        <p>Please provide a reason for blocking <?= htmlspecialchars($data['studentData']->Name) ?>. This message will be sent to the student's email.</p>
                         <div class="form-group">
                             <label for="block-reason">Reason for Blocking</label>
                             <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>
@@ -830,15 +1071,15 @@
                     <button class="modal-close" onclick="hideUpdateForm()">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['StudentId']) ?>">
+                    <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['studentData']->StudentId) ?>">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name" class="form-label">Full Name</label>
-                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['Name']) ?>">
+                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['studentData']->Name) ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['Email']) ?>">
+                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['studentData']->Email) ?>" required>
                                 <small class="form-hint">Format: example@domain.com</small>
                             </div>
                         </div>
@@ -846,14 +1087,17 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="studentId" class="form-label">Student ID</label>
-                                <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['StudentId']) ?>"
-                                    pattern="\d{4}[a-z]{2}\d{3}">
+                                <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['studentData']->StudentId) ?>"
+                                    pattern="\d{4}[a-z]{2}\d{3}"
+                                    required>
                                 <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
                             </div>
                             <div class="form-group">
                                 <label for="nic" class="form-label">NIC Number</label>
-                                <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['NIC']) ?>"
-                                    pattern="^\d{12}$">
+                                <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['studentData']->NIC) ?>"
+                                    pattern="^\d{12}$"
+                                    required
+                                    >
                                 <small class="form-hint">Format: 200456789012</small>
                             </div>
                         </div>
@@ -861,43 +1105,45 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="contact" class="form-label">Contact Number</label>
-                                <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['ContactNum']) ?>"
-                                    pattern="\d{10,15}$">
-                            </div>
+                                <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['studentData']->ContactNum) ?>"
+                                        pattern="^[0-9+\s()-]{7,20}$"
+                                        required
+                                ">
+                                </div>
                             <div class="form-group">
                                 <label for="degree" class="form-label">Degree Program</label>
                                 <select id="degree" name="DegreeName" class="form-control">
-                                    <option value="<?= htmlspecialchars($data['DegreeName']) ?>" selected>
-                                        <?= htmlspecialchars($data['DegreeName']) ?>
+                                    <option value="<?= htmlspecialchars($data['studentData']->DegreeName) ?>" selected>
+                                        <?= htmlspecialchars($data['studentData']->DegreeName) ?>
                                     </option>
-                                    <option value="<?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
-                                        <?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
+                                    <option value="<?= $data['studentData']->DegreeName == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
+                                        <?= $data['studentData']->DegreeName == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
                                     </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['Status']) ?>" hidden>
+                            <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['studentData']->Status) ?>" hidden>
                         </div>
 
                         <div class="form-group">
                             <label for="github" class="form-label">GitHub Profile</label>
-                            <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['Github']) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
+                            <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['studentData']->Github) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
                                 pattern="https?://github\.com/.+">
                             <small class="form-hint">Format: https://github.com/username</small>
                         </div>
 
                         <div class="form-group">
                             <label for="linkedin" class="form-label">LinkedIn Profile</label>
-                            <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['Linkedin']) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
+                            <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['studentData']->Linkedin) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
                                 pattern="https?://(www\.)?linkedin\.com/in/.+">
                             <small class="form-hint">Format: https://linkedin.com/in/username</small>    
                         </div>
 
                         <div class="form-group">
                             <label for="description" class="form-label">Student Description</label>
-                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['ShortDesc']) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
+                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['studentData']->ShortDesc) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
                         </div>
 
                         <div class="form-actions">

@@ -22,9 +22,20 @@ require "../app/libs/Exception.php";
             $model = new student;
             $studentId = $_POST['StudentId'];
             $studentData = $model->find($studentId);
-            if($studentData->block == 1){
-                $updatedStatus = $model->update($studentId , ['block' => 0] , 'StudentId');
+
+            //show($studentData);
+
+            if($studentData->block == 1 && $studentData->Status == 'Blocked'){
+
+                $data = [
+                    'Status' => 'Not applied',
+                    'block' => 0
+                ];
+
+
+                $updatedStatus = $model->update($studentId , $data , 'StudentId');
                 if($updatedStatus && $updatedStatus['status'] === 'success'){
+                    //show($studentData);
                     $this->sendEmail($studentData->Email, $studentId);
                     $_SESSION['flash_message'] = [
                         'type' => 'success',
