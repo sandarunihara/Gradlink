@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <style>
+        /* ================ ROOT VARIABLES ================ */
         :root {
+            /* Colors */
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --primary-light: #dbeafe;
@@ -22,6 +24,9 @@
             --dark: #111827;
             --gray: #6b7280;
             --gray-light: #e5e7eb;
+            --sidebar-width: 80px;
+            
+            /* UI Elements */
             --border-radius: 0.5rem;
             --border-radius-sm: 0.375rem;
             --border-radius-lg: 0.75rem;
@@ -30,6 +35,7 @@
             --transition: all 0.2s ease;
         }
 
+        /* ================ BASE STYLES ================ */
         * {
             margin: 0;
             padding: 0;
@@ -37,31 +43,40 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f5;
             color: var(--dark);
             line-height: 1.5;
         }
 
+        /* ================ LAYOUT STRUCTURE ================ */
         .container {
             display: flex;
             min-height: 100vh;
+            position: relative;
         }
 
         .content {
+            margin-left: var(--sidebar-width);
             flex: 1;
-            padding: 1.5rem 2rem;
-            margin-left: 5%;  /* Sidebar is 5% of width */
-            width: 95%;       /* Content is 95% of width */
-            padding-left: 5%; /* Add padding for content */
+            padding: 2rem;
+            min-height: 100vh;
             transition: var(--transition);
+            background-color: #f8fafc;
         }
 
+        @media (max-width: 768px) {
+            .content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ================ HEADER STYLES ================ */
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            justify-content: space-between;
+            margin-bottom: 24px;
         }
 
         .header-left h1 {
@@ -74,29 +89,40 @@
         .breadcrumb {
             font-size: 0.875rem;
             color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .breadcrumb span {
             color: var(--primary);
+            font-weight: 500;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 0.75rem;
+        .breadcrumb i {
+            font-size: 0.7rem;
+            color: var(--gray-light);
         }
 
+        /* ================ TAB SYSTEM ================ */
         .tabs {
             display: flex;
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 0.25rem;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
         .tab-btn {
             flex: 1;
+            min-width: 180px;
             padding: 0.75rem 1rem;
             background: none;
             border: none;
@@ -110,6 +136,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -131,13 +158,15 @@
             display: block;
         }
 
+        /* ================ CARD COMPONENTS ================ */
         .card {
             background: white;
             border-radius: var(--border-radius-lg);
             box-shadow: var(--box-shadow);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
             transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .card:hover {
@@ -149,8 +178,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid var(--gray-light);
         }
 
@@ -160,19 +189,30 @@
             color: var(--dark);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .card-header h2 i {
             color: var(--primary);
+            font-size: 1.1rem;
         }
 
         .card-body {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.75rem;
         }
 
+        .card-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* ================ DETAIL ITEMS ================ */
         .detail-item {
             display: flex;
             flex-direction: column;
@@ -181,7 +221,7 @@
 
         .detail-label {
             font-size: 0.75rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -191,23 +231,16 @@
             font-size: 0.95rem;
             color: var(--dark);
             font-weight: 500;
+            line-height: 1.5;
         }
 
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-light);
-        }
-
+        /* ================ BUTTONS ================ */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            padding: 0.6rem 1.25rem;
+            padding: 0.65rem 1.5rem;
             border-radius: var(--border-radius-sm);
             font-weight: 500;
             font-size: 0.875rem;
@@ -239,28 +272,6 @@
             transform: translateY(-1px);
         }
 
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #0284c7;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(14, 165, 233, 0.2);
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(239, 68, 68, 0.2);
-        }
-
         .btn-icon {
             width: 2.5rem;
             height: 2.5rem;
@@ -271,7 +282,7 @@
             padding: 0;
         }
 
-        /* Enhanced colorful status badges */
+        /* ================ STATUS BADGES ================ */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -286,35 +297,51 @@
         }
 
         .status-pending {
-            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+            background-color: #fef3c7;
             color: #92400e;
-            border-left: 3px solid #f59e0b;
         }
 
         .status-approved {
-            background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%);
+            background-color: #d1fae5;
             color: #065f46;
-            border-left: 3px solid #10b981;
         }
 
         .status-rejected {
-            background: linear-gradient(135deg, #fee2e2 0%, #fca5a5 100%);
+            background-color: #fee2e2;
             color: #b91c1c;
-            border-left: 3px solid #ef4444;
         }
 
-        .status-reviewing {
-            background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
-            color: #1e40af;
-            border-left: 3px solid #3b82f6;
+        .status-blocked {
+            background-color: #fee2e2;
+            color: #b91c1c;
         }
 
-        .status-shortlisted {
-            background: linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 100%);
-            color: #4338ca;
-            border-left: 3px solid #6366f1;
+        .status-ongoing {
+            background-color: #d1fae5;
+            color: #065f46;
         }
 
+        .status-active {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-deactive {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .status-reject {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-pending {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        /* ================ AVATAR & EMPTY STATES ================ */
         .avatar {
             width: 80px;
             height: 80px;
@@ -326,15 +353,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 600;
             color: var(--primary);
-        }
-
-        .avatar-sm {
-            width: 40px;
-            height: 40px;
-            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         .empty-state {
@@ -349,42 +371,126 @@
         .empty-state i {
             font-size: 3rem;
             color: var(--gray-light);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
         }
 
         .empty-state p {
             color: var(--gray);
             font-size: 0.95rem;
             max-width: 400px;
+            line-height: 1.6;
+        }
+
+        /* ================ TIMELINE ================ */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 1rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6ee7b7, #93c5fd, #fca5a5);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.75rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content {
+            margin-left: 1rem;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ================ UTILITY CLASSES ================ */
+        .flex-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .tag {
             display: inline-flex;
             align-items: center;
-            background-color: var(--primary-light);
-            color: var(--primary);
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--border-radius-sm);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin-right: 0.75rem;
+            margin-bottom: 0.75rem;
         }
 
+        /* ================ ANIMATIONS ================ */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ================ RESPONSIVE ADJUSTMENTS ================ */
         @media (max-width: 1024px) {
-            .content {
-                margin-left: 0;
-                padding: 1rem;
-                width: 100%;
+            .card-body {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             }
+        }
 
+        @media (max-width: 768px) {
+            .card {
+                padding: 1.5rem;
+            }
+            
             .card-body {
                 grid-template-columns: 1fr;
+            }
+            
+            .flex-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .card-footer {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -393,16 +499,11 @@
 <body>
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
-
         <main class="content">
             <header class="header">
                 <div class="header-left">
                     <h1>Application Overview</h1>
                 </div>
-                <?php if (!empty($application)) : ?>
-                <div class="action-buttons">
-                </div>
-                <?php endif; ?>
             </header>
 
             <div class="tabs">
@@ -425,13 +526,13 @@
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-user-graduate"></i> Student Information</h2>
-                            <span class="status-badge status-<?= strtolower($application['Status']) ?>">
+                            <span class="status-badge <?= strtolower($application['Status']) === 'blocked' ? 'status-blocked' : 'status-ongoing' ?>">
                                 <i class="fas fa-circle" style="font-size: 8px;"></i>
-                                <?= htmlspecialchars($application['Status']) ?>
+                                <?= strtolower($application['Status']) === 'blocked' ? 'Blocked' : 'Ongoing' ?>
                             </span>
                         </div>
                         
-                        <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="flex-row">
                             <div class="avatar" style="background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);">
                                 <?= substr(htmlspecialchars($application['StudentName']), 0, 1) ?>
                             </div>
@@ -440,9 +541,9 @@
                                     <?= htmlspecialchars($application['StudentName']) ?>
                                 </h3>
                                 <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem;">
-                                    ID: <?= htmlspecialchars($application['StudentId']) ?>
+                                    <i class="fas fa-id-card"></i> ID: <?= htmlspecialchars($application['StudentId']) ?>
                                 </p>
-                                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                                <div style="display: flex; gap: 1rem; margin-top: 0.75rem;">
                                     <a href="mailto:<?= htmlspecialchars($application['Email']) ?>" class="btn btn-icon btn-outline" style="font-size: 0.8rem;">
                                         <i class="fas fa-envelope"></i>
                                     </a>
@@ -456,11 +557,19 @@
                         <div class="card-body">
                             <div class="detail-item">
                                 <div class="detail-label">Email Address</div>
-                                <div class="detail-value"><?= htmlspecialchars($application['Email']) ?></div>
+                                <div class="detail-value">
+                                    <a href="mailto:<?= htmlspecialchars($application['Email']) ?>" style="color: var(--primary); text-decoration: none;">
+                                        <?= htmlspecialchars($application['Email']) ?>
+                                    </a>
+                                </div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Contact Number</div>
-                                <div class="detail-value"><?= htmlspecialchars($application['ContactNum']) ?></div>
+                                <div class="detail-value">
+                                    <a href="tel:<?= htmlspecialchars($application['ContactNum']) ?>" style="color: var(--primary); text-decoration: none;">
+                                        <?= htmlspecialchars($application['ContactNum']) ?>
+                                    </a>
+                                </div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Degree Program</div>
@@ -468,7 +577,63 @@
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Application Date</div>
-                                <div class="detail-value"><?= date('F d, Y', strtotime($application['ApplicationDate'] ?? 'now')) ?></div>
+                                <div class="detail-value">
+                                    <i class="far fa-calendar-alt" style="margin-right: 0.5rem; color: var(--gray);"></i>
+                                    <?= date('F d, Y', strtotime($application['ApplicationDate'] ?? 'now')) ?>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+
+                            <?php if($application['CV'] != null):?>
+                                <div class="detail-label">CV Status</div>
+                                    <div class="detail-value">
+                                        <span class="status-badge status-approved">
+                                            <i class="fas fa-check-circle" style="font-size: 8px;"></i>
+                                            Submitted
+                                        </span>
+                                    </div>
+                                </div>
+                            <?php else:?>
+                                <div class="detail-label">CV Status</div>
+                                    <div class="detail-value">
+                                        <span class="status-badge status-pending">
+                                            <i class="fas fa-clock" style="font-size: 8px;"></i>
+                                            Not Submitted
+                                        </span>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+
+                            <div class="detail-item">
+                                <div class="detail-label">Company Response</div>
+                                <div class="detail-value">
+                                    <?php if ($application['Jobstatus'] === 'Pending'): ?>
+                                        <span class="status-badge status-pending">
+                                            <i class="fas fa-clock" style="font-size: 8px;"></i>
+                                            Pending
+                                        </span>
+                                    <?php elseif ($application['Jobstatus'] === 'Reject'): ?>
+                                        <span class="status-badge status-rejected">
+                                            <i class="fas fa-times-circle" style="font-size: 8px;"></i>
+                                            Rejected
+                                        </span>
+                                    <?php elseif ($application['Jobstatus'] === 'Shortlist'): ?>
+                                        <span class="status-badge" style="background-color: #dbeafe; color: #1e40af;">
+                                            <i class="fas fa-list" style="font-size: 8px;"></i>
+                                            Shortlisted
+                                        </span>
+                                    <?php elseif ($application['Jobstatus'] === 'Recruit'): ?>
+                                        <span class="status-badge status-approved">
+                                            <i class="fas fa-check-circle" style="font-size: 8px;"></i>
+                                            Recruited
+                                        </span>
+                                    <?php else: ?>
+                                        <span class="status-badge" style="background-color: #e5e7eb; color: #4b5563;">
+                                            <i class="fas fa-question-circle" style="font-size: 8px;"></i>
+                                            Status Unknown
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                         
@@ -484,6 +649,9 @@
                             <i class="fas fa-user-slash"></i>
                             <h3>No Student Data Available</h3>
                             <p>The student information could not be found or is not available at this time.</p>
+                            <a href="<?= ROOT ?>/PDC_admin/applications" class="btn btn-primary mt-2">
+                                <i class="fas fa-arrow-left"></i> Back to Applications
+                            </a>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -495,13 +663,20 @@
                         <div class="card-header">
                             <h2><i class="fas fa-clipboard-list"></i> Advertisement Details</h2>
                             <span class="status-badge status-<?= strtolower($application['status']) ?>">
-                                <i class="fas fa-circle" style="font-size: 8px;"></i>
-                                <?= htmlspecialchars($application['status']) ?>
+                                <i class="fas 
+                                    <?= 
+                                    strtolower($application['status']) === 'active' ? 'fa-check-circle' : 
+                                    (strtolower($application['status']) === 'deactive' ? 'fa-times-circle' : 
+                                    (strtolower($application['status']) === 'reject' ? 'fa-ban' : 'fa-clock'))
+                                    ?>" 
+                                    style="font-size: 8px;">
+                                </i>
+                                <?= htmlspecialchars(ucfirst($application['status'])) ?>
                             </span>
                         </div>
                         
-                        <div style="margin-bottom: 1.5rem;">
-                            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: #2563eb;">
+                        <!-- <div style="margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--primary);">
                                 <?= htmlspecialchars($application['position']) ?>
                             </h3>
                             <div style="display: flex; flex-wrap: wrap; margin-bottom: 1rem;">
@@ -517,13 +692,17 @@
                                     <i class="fas fa-clock" style="margin-right: 0.25rem;"></i>
                                     Deadline: <?= htmlspecialchars($application['deadline']) ?>
                                 </span>
+                                <span class="tag" style="background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 80%); color: #065f46;">
+                                    <i class="fas fa-map-marker-alt" style="margin-right: 0.25rem;"></i>
+                                    <?= htmlspecialchars($application['location'] ?? 'Remote') ?>
+                                </span>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <div class="card-body">
                             <div class="detail-item" style="grid-column: 1 / -1;">
                                 <div class="detail-label">Description</div>
-                                <div class="detail-value" style="line-height: 1.6;">
+                                <div class="detail-value" style="line-height: 1.6; padding: 0.75rem; background-color: #f8fafc; border-radius: var(--border-radius-sm);">
                                     <?= nl2br(htmlspecialchars($application['description'] ?? 'No description available.')) ?>
                                 </div>
                             </div>
@@ -538,11 +717,28 @@
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Start Date</div>
-                                <div class="detail-value"><?= htmlspecialchars($application['startdate']) ?></div>
+                                <div class="detail-value">
+                                    <i class="far fa-calendar-alt" style="margin-right: 0.5rem; color: var(--gray);"></i>
+                                    <?= htmlspecialchars($application['startdate']) ?>
+                                </div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Application Deadline</div>
-                                <div class="detail-value"><?= htmlspecialchars($application['deadline']) ?></div>
+                                <div class="detail-value">
+                                    <i class="far fa-clock" style="margin-right: 0.5rem; color: var(--gray);"></i>
+                                    <?= htmlspecialchars($application['deadline']) ?>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Location</div>
+                                <div class="detail-value">
+                                    <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem; color: var(--gray);"></i>
+                                    <?= htmlspecialchars($application['location'] ?? 'Remote') ?>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Advertisement ID</div>
+                                <div class="detail-value"><?= htmlspecialchars($application['advertisementId']) ?></div>
                             </div>
                         </div>
                         
@@ -568,9 +764,21 @@
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-building"></i> Company Information</h2>
+
+                            <?php if($application['CompanyId'] != null):?>
+                                <span class="status-badge" style="background-color: #e0f2fe; color: #0369a1;">
+                                    <i class="fas fa-check-circle" style="font-size: 8px;"></i>
+                                    Verified Partner
+                                </span>
+                            <?php else:?>
+                                <span class="status-badge" style="background-color: #fef3c7; color: #92400e;">
+                                    <i class="fas fa-clock" style="font-size: 8px;"></i>
+                                    Not Verified
+                                </span>
+                            <?php endif;?>
                         </div>
                         
-                        <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="flex-row">
                             <div class="avatar" style="background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%); color: #065f46;">
                                 <?= substr(htmlspecialchars($application['CompanyName']), 0, 1) ?>
                             </div>
@@ -579,15 +787,30 @@
                                     <?= htmlspecialchars($application['CompanyName']) ?>
                                 </h3>
                                 <p style="color: var(--gray); font-size: 0.9rem;">
-                                    ID: <?= htmlspecialchars($application['CompanyId']) ?>
+                                    <i class="fas fa-id-card"></i> ID: <?= htmlspecialchars($application['CompanyId']) ?>
                                 </p>
+                                <div style="display: flex; gap: 1rem; margin-top: 0.75rem;">
+                                    <?php if (!empty($application['Website'])): ?>
+                                        <a href="<?= htmlspecialchars($application['Website']) ?>" target="_blank" class="btn btn-icon btn-outline" style="font-size: 0.8rem;">
+                                            <i class="fas fa-globe"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($application['Linkedin'])): ?>
+                                        <a href="<?= htmlspecialchars($application['Linkedin']) ?>" target="_blank" class="btn btn-icon btn-outline" style="font-size: 0.8rem;">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <button class="btn btn-icon btn-outline" style="font-size: 0.8rem;">
+                                        <i class="fas fa-phone"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="card-body">
                             <div class="detail-item" style="grid-column: 1 / -1;">
                                 <div class="detail-label">Company Description</div>
-                                <div class="detail-value" style="line-height: 1.6;">
+                                <div class="detail-value" style="line-height: 1.6; padding: 0.75rem; background-color: #f8fafc; border-radius: var(--border-radius-sm);">
                                     <?= nl2br(htmlspecialchars($application['ShortDesc'])) ?>
                                 </div>
                             </div>
@@ -598,7 +821,10 @@
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Location</div>
-                                <div class="detail-value"><?= htmlspecialchars($application['Location'] ?? 'Not specified') ?></div>
+                                <div class="detail-value">
+                                    <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem; color: var(--gray);"></i>
+                                    <?= htmlspecialchars($application['Location'] ?? 'Not specified') ?>
+                                </div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Website</div>
@@ -607,6 +833,22 @@
                                         <a href="<?= htmlspecialchars($application['Website']) ?>" target="_blank" style="color: var(--primary); text-decoration: none;">
                                             <?= htmlspecialchars($application['Website']) ?>
                                             <i class="fas fa-external-link-alt" style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        Not specified
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Contact Person</div>
+                                <div class="detail-value"><?= htmlspecialchars($application['ContactPerson'] ?? 'Not specified') ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Contact Email</div>
+                                <div class="detail-value">
+                                    <?php if (!empty($application['ContactEmail'])): ?>
+                                        <a href="mailto:<?= htmlspecialchars($application['ContactEmail']) ?>" style="color: var(--primary); text-decoration: none;">
+                                            <?= htmlspecialchars($application['ContactEmail']) ?>
                                         </a>
                                     <?php else: ?>
                                         Not specified
@@ -642,17 +884,22 @@
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-history"></i> Application Timeline</h2>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="status-badge" style="background-color: #f0fdf4; color: #065f46;">
+                                    <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                    In Progress
+                                </span>
+                            </div>
                         </div>
                         
-                        <div style="position: relative; padding-left: 30px; margin-top: 1rem;">
-                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #6ee7b7, #93c5fd, #fca5a5);"></div>
-                            
+                        <div class="timeline">
                             <!-- Timeline items would normally be dynamic from database -->
-                            <div style="position: relative; margin-bottom: 1.5rem; padding-bottom: 1.5rem;">
-                                <div style="position: absolute; left: -9px; top: 0; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%); border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-                                <div style="margin-left: 1rem;">
+                            <div class="timeline-item">
+                                <div class="timeline-marker" style="background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%);"></div>
+                                <div class="timeline-content">
                                     <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; color: #065f46;">Application Submitted</div>
-                                    <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem;">
+                                    <div class="timeline-date">
+                                        <i class="far fa-calendar-alt"></i>
                                         <?= date('F d, Y, h:i A', strtotime('-3 days')) ?>
                                     </div>
                                     <div style="font-size: 0.9rem; padding: 0.75rem; background-color: #f0fdf4; border-radius: var(--border-radius-sm); border-left: 3px solid #10b981;">
@@ -661,31 +908,34 @@
                                 </div>
                             </div>
                             
-                            <div style="position: relative; margin-bottom: 1.5rem; padding-bottom: 1.5rem;">
-                                <div style="position: absolute; left: -9px; top: 0; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%); border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-                                <div style="margin-left: 1rem;">
+                            <div class="timeline-item">
+                                <div class="timeline-marker" style="background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);"></div>
+                                <div class="timeline-content">
                                     <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; color: #1e40af;">Application Reviewed</div>
-                                    <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem;">
+                                    <div class="timeline-date">
+                                        <i class="far fa-calendar-alt"></i>
                                         <?= date('F d, Y, h:i A', strtotime('-2 days')) ?>
                                     </div>
                                     <div style="font-size: 0.9rem; padding: 0.75rem; background-color: #eff6ff; border-radius: var(--border-radius-sm); border-left: 3px solid #3b82f6;">
-                                        Application was reviewed by the PDC team.
+                                        Application was reviewed by the PDC team and marked as eligible.
                                     </div>
                                 </div>
                             </div>
                             
-                            <div style="position: relative;">
-                                <div style="position: absolute; left: -9px; top: 0; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%); border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-                                <div style="margin-left: 1rem;">
+                            <div class="timeline-item">
+                                <div class="timeline-marker" style="background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);"></div>
+                                <div class="timeline-content">
                                     <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; color: #92400e;">Pending Company Review</div>
-                                    <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem;">
+                                    <div class="timeline-date">
+                                        <i class="far fa-calendar-alt"></i>
                                         <?= date('F d, Y, h:i A', strtotime('-1 day')) ?>
                                     </div>
-                                    <div style="font-size: 0.9rem; padding: 0.75rem; background-color: var(--light); border-radius: var(--border-radius-sm);">
+                                    <div style="font-size: 0.9rem; padding: 0.75rem; background-color: #fefcbf; border-radius: var(--border-radius-sm); border-left: 3px solid #fbbf24;">
                                         Application forwarded to <?= htmlspecialchars($application['CompanyName']) ?> for review.
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 <?php else: ?>
@@ -701,7 +951,9 @@
         </main>
     </div>
 
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Tab functionality
             const tabButtons = document.querySelectorAll('.tab-btn');

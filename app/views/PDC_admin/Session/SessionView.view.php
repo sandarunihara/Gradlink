@@ -27,6 +27,7 @@
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -80,6 +81,97 @@
         .action-buttons {
             display: flex;
             gap: 0.75rem;
+        }
+
+        /* Improved Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(30, 64, 175, 0.1);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+        }
+
+        .btn-link {
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+            transform: none;
+        }
+
+        .btn-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8125rem;
         }
 
         .tabs {
@@ -197,8 +289,15 @@
             border-top: 1px solid #e5e7eb;
             background-color: #f9fafb;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             gap: 0.75rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-left: auto;
         }
 
         .avatar {
@@ -230,75 +329,6 @@
             font-size: 0.95rem;
             color: #111827;
             word-break: break-word;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius-sm);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: 1px solid transparent;
-        }
-
-        .btn i {
-            font-size: 0.875rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary-dark);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: #e0e7ff;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-            border-color: #4b5563;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        .btn-link {
-            background: transparent;
-            color: var(--primary);
-            text-decoration: none;
-            padding: 0;
-            border: none;
-        }
-
-        .btn-link:hover {
-            text-decoration: underline;
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-            border-color: var(--danger);
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
         }
 
         .tag {
@@ -439,271 +469,318 @@
             font-weight: 500;
         }
 
-        /* Delete Modal Styles */
-        /* Delete Modal Styles */
-.delete-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.delete-modal-content {
-    background-color: #fff;
-    border-radius: 8px;
-    width: 500px;
-    max-width: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+        .delete-modal.show {
+            display: flex;
+            opacity: 1;
+        }
 
-.delete-modal-header {
-    padding: 20px;
-    border-bottom: 1px solid #e5e5e5;
-}
+        .delete-modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
 
-.delete-modal-header h3 {
-    margin: 0;
-    color: #333;
-    font-size: 1.5rem;
-}
+        .delete-modal-header {
+            padding: 0 0 1.5rem 0;
+            border-bottom: none;
+            position: relative;
+        }
 
-.delete-modal-body {
-    padding: 20px;
-}
+        .delete-modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--danger);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
 
-.delete-modal-body p {
-    margin-bottom: 15px;
-    color: #555;
-}
+        .delete-modal-header h3::before {
+            content: '!';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
 
-.delete-modal-footer {
-    padding: 15px 20px;
-    border-top: 1px solid #e5e5e5;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
+        .delete-modal-body {
+            padding: 1rem 0;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
+        .delete-modal-body p {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #333;
-}
+        .delete-modal-footer {
+            padding: 1.5rem 0 0 0;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
 
-.form-control {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-.form-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
 
-.btn {
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    transition: background-color 0.3s ease;
-}
+        .form-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius-sm);
+            resize: vertical;
+            font-family: inherit;
+            transition: var(--transition);
+        }
 
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
-}
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
 
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
+        .modal-message {
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
 
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
+        .modal-message i {
+            color: var(--danger);
+        }
 
-.btn-danger:hover {
-    background-color: #c82333;
-}
+        @keyframes modalFadeIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
         /* Update Modal Styles */
-.update-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-out;
-}
+        .update-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
 
-.update-modal.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .update-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.update-modal-content {
-    background-color: white;
-    border-radius: var(--border-radius);
-    width: 100%;
-    max-width: 600px;
-    margin: 1rem;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-20px);
-    opacity: 0;
-    animation: slideIn 0.3s ease-out forwards;
-    overflow: hidden;
-    border-top: 4px solid var(--primary);
-}
+        .update-modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: slideIn 0.3s ease-out forwards;
+            overflow: hidden;
+            border-top: 4px solid var(--primary);
+        }
 
-.update-modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    background-color: #f8fafc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .update-modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.update-modal-header h3 {
-    margin: 0;
-    color: var(--primary);
-    font-size: 1.25rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+        .update-modal-header h3 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
 
-.update-modal-header h3 i {
-    color: var(--primary);
-}
+        .update-modal-header h3 i {
+            color: var(--primary);
+        }
 
-.update-modal-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--gray);
-    transition: color 0.2s;
-    padding: 0.25rem;
-    border-radius: 4px;
-}
+        .update-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.2s;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
 
-.update-modal-close:hover {
-    color: var(--danger);
-    background-color: #f3f4f6;
-}
+        .update-modal-close:hover {
+            color: var(--danger);
+            background-color: #f3f4f6;
+        }
 
-.update-modal-body {
-    padding: 1.5rem;
-}
+        .update-modal-body {
+            padding: 1.5rem;
+        }
 
-.update-modal-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-}
+        .update-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
 
-/* Form Styles */
-#sessionUpdateForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
+        #sessionUpdateForm {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
 
-.form-group {
-    margin-bottom: 1rem;
-}
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
 
-.form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--dark);
-}
+        #sessionUpdateForm input[type="text"],
+        #sessionUpdateForm input[type="date"],
+        #sessionUpdateForm select,
+        #sessionUpdateForm textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: var(--border-radius-sm);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
 
-#sessionUpdateForm input[type="text"],
-#sessionUpdateForm input[type="date"],
-#sessionUpdateForm select,
-#sessionUpdateForm textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: var(--border-radius-sm);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.875rem;
-    transition: all 0.2s;
-}
+        #sessionUpdateForm input[type="text"]:focus,
+        #sessionUpdateForm input[type="date"]:focus,
+        #sessionUpdateForm select:focus,
+        #sessionUpdateForm textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
 
-#sessionUpdateForm input[type="text"]:focus,
-#sessionUpdateForm input[type="date"]:focus,
-#sessionUpdateForm select:focus,
-#sessionUpdateForm textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-}
+        #sessionUpdateForm textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-#sessionUpdateForm textarea {
-    min-height: 100px;
-    resize: vertical;
-}
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
 
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
 
-@media (max-width: 600px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-}
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+        @keyframes slideIn {
+            from { 
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-@keyframes slideIn {
-    from { 
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to { 
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.toast-container {
+        .toast-container {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -744,6 +821,20 @@
             font-size: 16px;
         }
 
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 
@@ -769,14 +860,13 @@
             <header class="header">
                 <div class="header-left">
                     <h1><i class="fas fa-calendar-alt"></i> Session Details</h1>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn btn-outline" id="edit-toggle-btn">
-                        <i class="fas fa-edit"></i> Edit Session
-                    </button>
-                    <button class="btn btn-danger" id="delete-btn">
-                        <i class="fas fa-trash-alt"></i> Delete Session
-                    </button>
+                    <div class="breadcrumb">
+                        <a href="<?= ROOT ?>/PDC_admin"><i class="fas fa-home"></i> Dashboard</a>
+                        <span class="separator">/</span>
+                        <a href="<?= ROOT ?>/PDC_admin/ViewSession"><i class="fas fa-calendar"></i> Sessions</a>
+                        <span class="separator">/</span>
+                        <span>Details</span>
+                    </div>
                 </div>
             </header>
 
@@ -806,7 +896,12 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="detail-item" style="grid-column: 1 / -1;">
+                        <div class="detail-item">
+                            <div class="detail-label">Name</div>
+                            <div class="detail-value"><?= htmlspecialchars($session->session_name) ?></div>
+                        </div>
+
+                        <div class="detail-item">
                             <div class="detail-label">Description</div>
                             <div class="detail-value"><?= htmlspecialchars($session->description) ?></div>
                         </div>
@@ -831,10 +926,6 @@
                                            ($session->hall_number == 'S104' ? 'Seminar Room' : 'Conference Hall') ?>
                                     </div>
                                 </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Session Type</div>
-                                    <div class="detail-value"><?= htmlspecialchars($session->session_type ?? 'Standard') ?></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -843,9 +934,14 @@
                         <button type="button" class="btn btn-secondary" onclick="history.back()">
                             <i class="fas fa-arrow-left"></i> Back to Sessions
                         </button>
-                        <button type="button" class="btn btn-primary" id="save-btn" style="display: none;">
-                            <i class="fas fa-save"></i> Save Changes
-                        </button>
+                        <div class="card-actions">
+                            <button type="button" class="btn btn-outline" id="edit-toggle-btn">
+                                <i class="fas fa-edit"></i> Edit Session
+                            </button>
+                            <button type="button" class="btn btn-danger" id="delete-btn">
+                                <i class="fas fa-trash-alt"></i> Delete Session
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -902,12 +998,14 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="<?= htmlspecialchars($session->Website) ?>" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-globe"></i> Website
-                        </a>
-                        <a href="<?= htmlspecialchars($session->Linkedin) ?>" target="_blank" class="btn btn-outline">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
+                        <div>
+                            <a href="<?= htmlspecialchars($session->Website) ?>" target="_blank" class="btn btn-outline">
+                                <i class="fas fa-globe"></i> Website
+                            </a>
+                            <a href="<?= htmlspecialchars($session->Linkedin) ?>" target="_blank" class="btn btn-outline">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
                         <a href="<?= ROOT ?>/PDC_admin/ViewCompany/show/<?= $session->CompanyId ?>" class="btn btn-primary">
                             <i class="fas fa-external-link-alt"></i> View Full Profile
                         </a>
@@ -917,8 +1015,10 @@
         </main>
     </div>
 
+    <!-- Delete Confirmation Modal -->
     <div id="delete-modal" class="delete-modal">
         <div class="delete-modal-content">
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
             <form id="delete-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/remove">
                 <input type="hidden" name="session_id" id="session-id" value="">
                 <input type="hidden" name="email" id="email" value="<?= htmlspecialchars($session->Email) ?>">
@@ -927,10 +1027,13 @@
                 </div>
                 <div class="delete-modal-body">
                     <p>Are you sure you want to delete this session? This action cannot be undone.</p>
-                    <p>Please provide a reason for deletion. This message will be sent to the company's email.</p>
+                    <div class="modal-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Please provide a reason for deletion. This message will be sent to the company's email.</span>
+                    </div>
                     <div class="form-group">
                         <label for="delete-reason">Reason for Deletion</label>
-                        <textarea id="delete-reason" name="delete_reason" class="form-control form-textarea" placeholder="Enter your reason here..." required></textarea>
+                        <textarea id="delete-reason" name="delete_reason" class="form-textarea" placeholder="Enter your reason here..." required></textarea>
                         <p id="modal-message" style="color: red; margin-top: 10px;"></p>
                     </div>
                 </div>
@@ -942,13 +1045,15 @@
         </div>
     </div>
 
+    <!-- Update Session Modal -->
     <div id="update-modal" class="update-modal">
         <div class="update-modal-content">
             <div class="update-modal-header">
                 <h3><i class="fas fa-edit"></i> Update Session Details</h3>
-                <button class="update-modal-close" onclick="closeUpdateModal()">&times;</button>
             </div>
             <div class="update-modal-body">
+                <span class="close" onclick="closeUpdateModal()">&times;</span>
+
                 <form id="sessionUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/edit/<?= htmlspecialchars($session->session_id) ?>">
                     
                     <div class="form-group">
@@ -982,8 +1087,6 @@
                         >
                     </div>
 
-                    
-                    
                     <div class="form-group">
                         <label for="description" class="form-label">Session Description</label>
                         <textarea id="description" name="description" class="form-control form-textarea"><?= !empty($session->description) ? htmlspecialchars($session->description) : '' ?></textarea>
@@ -1007,11 +1110,9 @@
                                 required>
                             </select>
                         </div>
-
                     </div>
                     
                     <div class="form-row">
-
                         <div class="form-group">
                             <label for="hall-number" class="form-label">Hall Name</label>
                             <select id="hall-number" name="hall_number" 
@@ -1019,7 +1120,6 @@
                                 required>
                             </select>
                         </div>
-
                     </div>
                     
                     <div class="update-modal-footer">
@@ -1038,7 +1138,7 @@
 
         function closeDeleteModal() {
             const modal = document.getElementById('delete-modal');
-            modal.style.display = 'none';
+            modal.classList.remove('show');
             document.getElementById('delete-reason').value = '';
             document.getElementById('modal-message').innerText = '';
         }
@@ -1054,7 +1154,7 @@
         deleteBtn.addEventListener('click', function() {
             const sessionId = <?= json_encode($session->session_id) ?>;
             document.getElementById('session-id').value = sessionId;
-            document.getElementById('delete-modal').style.display = 'flex';
+            document.getElementById('delete-modal').classList.add('show');
         });
 
         updateBtn.addEventListener('click', function() {

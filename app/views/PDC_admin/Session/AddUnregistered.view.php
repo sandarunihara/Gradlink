@@ -10,38 +10,60 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary: #4e54c8;
+            --primary-dark: #23244a;
+            --accent: #3c41a2;
+            --background: #f0f0f5;
+            --card-bg: #fff;
+            --input-bg: #f7f8fa;
+            --input-border: #bbbddd;
+            --input-focus: #4e54c8;
+            --danger: #ef4444;
+            --gray: #64748b;
+            --dark-gray: #374151;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(67, 97, 238, 0.07);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: #f0f4f8;
-            display: flex;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            background-color: var(--background);
         }
 
         .container {
             display: flex;
-            width: 100%;
+            min-height: 100vh;
         }
 
-        .content {
-            width: 95%;
-            padding: 40px 5%;
-            background-color: #ffffff;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            margin-left: 5%;
-            height: 100%;
+        .main-content {
+            margin-left: 80px; /* Same as sidebar width */
+            flex: 1;
+            padding: 40px;
+            background-color: var(--background);
+            min-height: 100vh;
+            transition: margin-left 0.3s;
         }
 
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
         }
 
         .header-left {
@@ -50,183 +72,168 @@
             gap: 15px;
         }
 
-        .header-left h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-right img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-info span {
-            font-weight: 600;
-        }
-
-        .user-info small {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .company-info {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        .tab-content {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px 24px;
         }
 
         .company-form {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .filling-form {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px 32px;
+        }
+
+        @media (max-width: 900px) {
+            .filling-form {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .form-group label {
-            font-size: 14px;
+            font-size: 1rem;
             font-weight: 600;
-            color: #4b5563;
+            color: var(--dark-gray);
             margin-bottom: 8px;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
         }
 
         .form-group input,
-        .form-group select {
-            margin-top: 15px;
-            padding: 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            background-color: #fafafa;
+        .form-group select,
+        .form-group textarea {
+            padding: 14px 16px;
+            border: 1.5px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            font-size: 1rem;
+            color: #23244a;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.04);
+            outline: none;
             width: 100%;
-            font-size: 14px;
-            color: #333;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .form-group input::placeholder {
-            color: #aaa;
-            font-size: 14px;
-            font-style: italic;
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
         .form-group input:focus,
-        .form-group select:focus {
-            border-color: #2b36b7;
-            outline: none;
-            box-shadow: 0 0 8px rgba(43, 54, 183, 0.5);
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--input-focus);
+            background: #fff;
+            box-shadow: 0 0 0 2px rgba(78, 84, 200, 0.11);
         }
 
         .form-group input:hover,
-        .form-group select:hover {
-            border-color: #1e3c72;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: var(--primary-dark);
         }
 
-        .form-group input:focus::placeholder {
-            color: transparent;
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #b6b9c6;
+            font-size: 0.98rem;
+            font-style: italic;
+            opacity: 1;
         }
 
-        .error {
-            color: #ef4444;
-            font-size: 12px;
+        .format-hint {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 6px;
+            margin-left: 2px;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
             font-weight: 500;
-            margin-top: 5px;
-            display: block;
+            margin-top: 6px;
+            margin-left: 2px;
+            display: none;
         }
 
         .button-line {
             display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            grid-column: 1 / -1;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 32px;
         }
 
-        .back-btn,
-        .confirm-btn {
-            padding: 16px 48px;
-            font-size: 16px;
+        .btn {
+            padding: 15px 48px;
+            font-size: 1rem;
             font-weight: 600;
             border-radius: 8px;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.3s cubic-bezier(0.4,0,0.2,1), 
+                        color 0.3s cubic-bezier(0.4,0,0.2,1), 
+                        box-shadow 0.3s cubic-bezier(0.4,0,0.2,1), 
+                        transform 0.2s cubic-bezier(0.4,0,0.2,1);
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.07);
+            display: inline-block;
         }
 
-        .back-btn:hover,
-        .confirm-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        .submit-btn {
+            background: #4e54c8;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(67, 97, 238, 0.11);
         }
 
-        .back-btn:active,
-        .confirm-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        .submit-btn:hover, .submit-btn:focus {
+            background: #3c41a2;
+            box-shadow: 0 8px 30px rgba(78, 84, 200, 0.18);
+            transform: translateY(-2px) scale(1.04);
         }
 
         .back-btn {
-            background: #e5e7eb;
-            color: #4b5563;
-            width: 240px;
+            background: #e0e7ef;
+            color: var(--primary-dark);
         }
 
-        .back-btn:hover {
-            background: #d1d5db;
+        .back-btn:hover, .back-btn:focus {
+            background: #d1d9f0;
+            color: var(--primary);
+            transform: translateY(-2px) scale(1.04);
         }
 
-        .confirm-btn {
-            background: #1e3c72;
-            color: white;
-            width: 240px;
-        }
-
-        .confirm-btn:hover {
-            background: #172554;
-        }
-
-        .format-hint {
-            display: block;
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 5px;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
+            .main-content {
+                padding: 18px 2% 18px 2%;
+                margin-left: 0;
+                margin-top: 60px;
+            }
+            .tab-content {
+                padding: 18px 2% 18px 2%;
+            }
             .button-line {
                 flex-direction: column;
-                gap: 15px;
+                gap: 16px;
             }
-
-            .back-btn,
-            .confirm-btn {
+            .btn {
                 width: 100%;
-            }
-            
-            .company-form {
-                grid-template-columns: 1fr;
+                padding: 14px 0;
             }
         }
     </style>
@@ -235,7 +242,7 @@
 <body>
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
-        <main class="content">
+        <main class="main-content">
             <header class="header">
                 <div class="header-left">
                     <i class="material-icons">event</i>
@@ -243,65 +250,72 @@
                 </div>
             </header>
 
-            <section class="company-info">
+            <div class="tab-content">
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddSession/submitUnreg" id="session-form">
-                    <div class="form-group">
-                        <label for="session-name">Session Name</label>
-                        <input type="text" id="session-name" name="session_name" placeholder="Session Name" required>
-                    </div>
+                    <div class="filling-form">
+                        <div class="form-group">
+                            <label for="session-name">Session Name</label>
+                            <input type="text" id="session-name" name="session_name" placeholder="Session Name" required>
+                        </div>
 
-                    
-                    <div class="form-group" id="company-group">
-                        <label for="company-name">Enter Company Name</label>
-                        <input type="text" id="company-name" name="company_name" placeholder="Type company name...">
-                    </div>
+                        
+                        <div class="form-group" id="company-group">
+                            <label for="company-name">Enter Company Name</label>
+                            <input type="text" id="company-name" name="company_name" placeholder="Type company name..." required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" name="email" placeholder="Company Email" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="email-address">Email Address</label>
+                            <input type="email" id="email-address" name="email" placeholder="Company Email" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="contact-person">Contact Person</label>
-                        <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="contact-person">Contact Person</label>
+                            <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" name="contact_number" placeholder="Contact Number" 
-                            pattern="^07\d{8}$"
-                            required>
-                        <small class="format-hint">Format: 0XXXXXXXXX (e.g., 0771234567)</small>
-                    </div>
+                        <div class="form-group">
+                            <label for="contact-number">Contact Number</label>
+                            <input type="text" id="contact-number" name="contact_number" placeholder="Contact Number" 
+                                pattern="^[0-9+\s()-]{7,20}$"
+                                required>
+                            <small class="format-hint">Enter a valid phone number (e.g., +94 98765 43210 , 0733333333)</small>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="session-date">Session Date</label>
-                        <input type="date" 
-                            id="session-date" 
-                            name="session_date" 
-                            placeholder="Session Date" 
-                            min="<?= date('Y-m-d') ?>" 
-                            required>
-                    </div>
+                        <div class="form-group">
+                            <label for="description">Session Description</label>
+                            <textarea id="description" name="description" placeholder="Enter session description"></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="time-slot">Time Slot</label>
-                        <select id="time-slot" name="time_slot" required>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="session-date">Session Date</label>
+                            <input type="date" 
+                                id="session-date" 
+                                name="session_date" 
+                                placeholder="Session Date" 
+                                min="<?= date('Y-m-d') ?>" 
+                                required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="hall-number">Hall Name</label>
-                        <select id="hall-number" name="hall_number" required>
-                        </select>
+                        <div class="form-group">
+                            <label for="time-slot">Time Slot</label>
+                            <select id="time-slot" name="time_slot" required>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hall-number">Hall Name</label>
+                            <select id="hall-number" name="hall_number" required>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="button-line">
-                        <button type="button" class="back-btn" onclick="history.back()">Back</button>
-                        <button type="submit" class="confirm-btn">Confirm</button>
+                        <button type="button" class="btn back-btn" onclick="history.back()">Back</button>
+                        <button type="submit" class="btn submit-btn">Confirm</button>
                     </div>
                 </form>
-            </section>
+            </div>
         </main>
     </div>
     <script>
