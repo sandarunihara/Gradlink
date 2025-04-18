@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/advertisement/overviewAdvertisements.css?time=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/student/overviewStudent.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
     
@@ -63,7 +63,7 @@
                                         <td><?= htmlspecialchars($row->numOfInterns) ?></td>
                                         <td><?= htmlspecialchars($row->startdate) ?></td>
                                         <td><?= htmlspecialchars($row->deadline) ?></td>
-                                        <td><button onclick="navigateToAdvertisementView('<?= htmlspecialchars($row->advertisementId)?>')" class="view-btn">View</button></td> <!-- Correctly aligned in a separate column -->
+                                        <td><button class="view-btn action-btn" onclick="navigateToAdvertisementView('<?= htmlspecialchars($row->advertisementId)?>')" class="view-btn"><i class="fas fa-eye"></i> View</button></td> <!-- Correctly aligned in a separate column -->
                                     </tr>
                                 <?php endforeach; ?>
                                 

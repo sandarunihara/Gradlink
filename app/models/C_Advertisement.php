@@ -6,6 +6,24 @@ class C_Advertisement
 
     protected $table = 'advertisement';
 
+    protected $allowedColumns = [
+        'advertisementId',
+        'position',
+        'status',
+        'description',
+        'numOfInterns',
+        'workingMode',
+        'qualification',
+        'startdate',
+        'deadline',
+        'CompanyId',
+        'StaffId',
+        'image',
+        'commentReject',
+        'roundId',
+        'created_at'
+    ];
+
     public function validate($data)
     {
         $this->errors = [];
@@ -40,7 +58,7 @@ class C_Advertisement
         
         if (is_array($data)) {
             $keys = array_keys($data);
-            $query = "SELECT * FROM advertisement WHERE ";
+            $query = "SELECT * FROM $this->table WHERE ";
 
             foreach ($keys as $key) {
                 $query .= $key . " = :" . $key . " AND ";
@@ -51,7 +69,7 @@ class C_Advertisement
             $result = $this->query($query, $data);
         } else {
             // Assume $data is a single ID (like CompanyId)
-            $query = "SELECT * FROM advertisement WHERE advertisementId = :advertisementId";
+            $query = "SELECT * FROM $this->table WHERE advertisementId = :advertisementId";
             $result = $this->query($query, ['advertisementId' => $data]);
         }
 
@@ -87,7 +105,7 @@ class C_Advertisement
 
     function findall()
     {
-        $query = "SELECT * FROM advertisement";
+        $query = "SELECT * FROM $this->table";
 
         $result = $this->query($query);
         return $result;
@@ -95,7 +113,7 @@ class C_Advertisement
 
     public function gethighestadid()
     {
-        $query = "SELECT advertisementId FROM advertisement ORDER BY advertisementId DESC LIMIT 1";
+        $query = "SELECT advertisementId FROM $this->table ORDER BY advertisementId DESC LIMIT 1";
         $result = $this->query($query);
         return $result ? $result[0]->advertisementId : null;
     }
@@ -234,7 +252,7 @@ class C_Advertisement
 
     public function OngoingAdvertisementCount() {
         try{
-            $query = "SELECT COUNT(*) AS total FROM advertisement WHERE status = 'active'";
+            $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'active'";
 
             $result = $this->query($query);
 			return $result[0]->{'total'};

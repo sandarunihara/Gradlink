@@ -122,7 +122,7 @@
 
             try {
                 //echo ($this->table);
-                $this->table = get_class($this);
+                //$this->table = get_class($this);
                 //show($this->table);                
                 if (!empty($this->allowedColumns)) {
                     foreach ($data as $key => $value) {

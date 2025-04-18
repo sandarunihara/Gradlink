@@ -16,13 +16,16 @@
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
-            --success: #28a745;
+            --success: #4cc9f0;
             --warning: #ffc107;
             --danger: #dc3545;
             --border-radius: 8px;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
             --success-color: #4cc9f0;
+            --light-gray: #e9ecef;
+            --primary-dark: #3a0ca3;
+
 
 
         }
@@ -35,22 +38,23 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
+            background-color: #f0f0f5;
             color: var(--dark);
-            line-height: 1.6;
+            height: 100vh;
         }
 
         .container {
             display: flex;
             min-height: 100vh;
-            width: 100%;
         }
 
         .content {
+            margin-left: 80px; /* Same as sidebar width */
             flex: 1;
-            width: 95%;
-            padding: 2rem;
-            margin-left: 5%;
+            padding: 40px 40px 40px 40px;
+            background-color: #f0f0f5;
+            min-height: 100vh;
+            transition: margin-left 0.3s;
         }
 
         .header {
@@ -264,53 +268,20 @@
             padding: 0.75rem 1.5rem;
             border-radius: var(--border-radius);
             font-weight: 500;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: var(--transition);
-            border: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            border: none;
         }
 
-        .btn i {
-            font-size: 1rem;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-update {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-update:hover {
-            background-color: var(--secondary);
-        }
-
-        .btn-back {
-            background-color: #e9ecef;
-            color: var(--dark);
-        }
-
-        .btn-back:hover {
-            background-color: #dee2e6;
-        }
-
-        .btn-block {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-block:hover {
-            background-color: #c82333;
-        }
-
-        .btn-unblock {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-unblock:hover {
-            background-color: #218838;
-        }
 
         .modal-overlay {
             position: fixed;
@@ -376,6 +347,21 @@
             color: var(--danger);
         }
 
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
         .modal-body {
             padding: 1.5rem;
         }
@@ -431,12 +417,13 @@
         }
 
         .btn-cancel {
-            background-color: #e9ecef;
-            color: var(--dark);
+            background-color: white;
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
         }
 
         .btn-cancel:hover {
-            background-color: #dee2e6;
+            background-color: var(--light-gray);
         }
 
         .btn-save {
@@ -580,16 +567,17 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--secondary);
+            background-color: var(--primary-dark);
         }
 
         .btn-secondary {
-            background-color: #e9ecef;
-            color: var(--dark);
+            background-color: white;
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
         }
 
         .btn-secondary:hover {
-            background-color: #dee2e6;
+            background-color: var(--light-gray);
         }
 
         .modal-actions {
@@ -599,6 +587,19 @@
             justify-content: flex-end;
             gap: 1rem;
         }
+
+        .modal-message {
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            background-color: rgba(72, 149, 239, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
 
         #unblock-modal .modal-content {
             background: white;
@@ -820,6 +821,62 @@
             color: var(--dark);
         }
 
+        .modal-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .modal-field textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            resize: vertical;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .modal-field textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #3aa8d1;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color:rgb(196, 44, 59);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
     </style>
 </head>
 
@@ -839,7 +896,9 @@
     <?php endif; ?>
 
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar") ?>
+        <div class="sidebar">
+            <?php $this->renderComponent("pdc_adminsidebar") ?>
+        </div>
         <main class="content">
             <div class="profile-header">
                 <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="Profile Image" class="profile-image">
@@ -1004,19 +1063,19 @@
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-back" onclick="history.back()">
+                <button class="btn btn-outline" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
 
                 <?php if (($data['studentData']->block === 1) && ($data['studentData']->Status === 'Blocked')): ?>
-                    <button class="btn btn-unblock" onclick="unblockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
+                    <button class="btn btn-success" onclick="unblockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-block" onclick="blockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
+                    <button class="btn btn-danger" onclick="blockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
                         <i class="fas fa-ban"></i> Block
                     </button>
-                    <button class="btn btn-update" id="edit-btn-student" onclick="openUpdateform()">
+                    <button class="btn btn-success" id="edit-btn-student" onclick="openUpdateform()">
                         <i class="fas fa-edit"></i> Update
                     </button>
                 <?php endif; ?>
@@ -1025,19 +1084,28 @@
 
         <div id="block-modal" class="modal">
             <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
                 <form id="block-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/block">
                     <input type="hidden" name="StudentId" id="student-id" value="">
                     <div class="modal-header">
                         <h3>Block Student</h3>
                     </div>
+                    
                     <div class="modal-body">
-                        <p>Please provide a reason for blocking <?= htmlspecialchars($data['studentData']->Name) ?>. This message will be sent to the student's email.</p>
-                        <div class="form-group">
+
+                        <div id="confirmationMessage" class="modal-message">
+                            <i class="fas fa-info-circle"></i>
+                            <span id="messageText"> Please provide a reason for blocking <?= htmlspecialchars($data['studentData']->Name) ?>. This message will be sent to the student's email.</span>
+                        </div>
+
+                        <div class="modal-field">
                             <label for="block-reason">Reason for Blocking</label>
                             <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>
                             <p id="modal-message" style="color: red; margin-top: 10px;"></p>
                         </div>
+                        
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -1048,13 +1116,17 @@
 
         <div id="unblock-modal" class="modal">
             <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
                 <form id="unblock-form" method="post" action="<?= ROOT ?>/PDC_admin/BlockStudent/unblock">
                     <input type="hidden" name="StudentId" id="unblock-student-id" value="">
                     <div class="modal-header">
                         <h3>Unblock Student</h3>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to unblock this student?</p>
+                        <div class="modal-message">
+                            <i class="fas fa-info-circle"></i>
+                            <span> Are you sure you want to unblock this student?</span>                            
+                        </div>
                     </div>
                     <div class="modal-actions">
                         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
@@ -1067,8 +1139,8 @@
         <div class="modal-overlay" id="updateModal">
             <div class="modal-content">
                 <div class="modal-header">
+                    <span class="close" onclick="hideUpdateForm()">&times;</span>
                     <h2><i class="fas fa-user-edit"></i> Update Student Information</h2>
-                    <button class="modal-close" onclick="hideUpdateForm()">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['studentData']->StudentId) ?>">
@@ -1143,12 +1215,12 @@
 
                         <div class="form-group">
                             <label for="description" class="form-label">Student Description</label>
-                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['studentData']->ShortDesc) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
+                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['studentData']->ShortDesc) ? htmlspecialchars($data['studentData']->ShortDesc) : '' ?></textarea>
                         </div>
 
                         <div class="form-actions">
-                            <button type="button" class="btn btn-cancel" onclick="hideUpdateForm()">Cancel</button>
-                            <button type="submit" class="btn btn-save">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideUpdateForm()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
                 </div>
