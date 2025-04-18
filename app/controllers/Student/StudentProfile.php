@@ -2,6 +2,7 @@
 
 class StudentProfile{
     use BaseController;
+    use Model;
     public function profile(){
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
@@ -31,35 +32,53 @@ class StudentProfile{
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
             //show($_POST);
-            $result1 = $student -> update($arr['StudentId'], $_POST, 'StudentId');
-            
-            $studentSkills = trim($_POST['Skill'], ",");
-            $studentSkillsArray = explode(",", $studentSkills);
+            try {
+                $this->beginTransaction();
 
-            $isDelete = $skill -> delete($arr['StudentId'], 'StudentId');
-            $isUpdate2 = $skill -> insertSkill($data['StudentId'] ,$studentSkillsArray);
-            
-            if ($result1['status'] === "success") {
-                $isUpdate1 = 1;
-            }else{
-                $isUpdate1 = 0;
-            }
-
-            $data['ActivityDescription'] = "Updated your Profile";
-            $student_activity = new student_activity;
-            $isUpdate3 = $student_activity -> insert($data);
-            
-            if($isUpdate1 && $isUpdate2){
-                if($isUpdate3){
-                    $_SESSION['isUpdate'] = 1;
-                }else{
-                    $_SESSION['isUpdate'] = 0;
+                $result1 = $student -> update($arr['StudentId'], $_POST, 'StudentId');
+                
+                if($result1['status'] !== "success"){
+                    throw new Exception("Error updating student profile");
                 }
-            }else{
-                $_SESSION['isUpdate'] = 0;
+
+                $skill = new student_skill;
+                $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
+
+                if(!empty($data['Skills'])){
+                    $studentSkills = trim($_POST['Skill'], ",");
+                    $studentSkillsArray = explode(",", $studentSkills);
+
+                    $isDelete = $skill -> delete($arr['StudentId'], 'StudentId');
+
+                    if(!$isDelete){
+                        throw new Exception("Error deleting student skills");
+                    }
+                }
+                if(!empty($_POST['Skill'])){
+                    $isInsert2 = $skill -> insertSkill($data['StudentId'] ,$studentSkillsArray);
+                    if(!$isInsert2){
+                        throw new Exception("Error inserting student skills");
+                    }
+                }
+                
+                $data['ActivityDescription'] = "Updated your Profile";
+                $student_activity = new student_activity;
+                $isInsert3 = $student_activity -> insert($data);
+
+                if(!$isInsert3){
+                    throw new Exception("Error inserting data into student_activity table");
+                }
+                $_SESSION['success'] = "Profile updated successfully";
+                $this->commit();
+                redirect('Student/StudentProfile/profile');
+                return true;
+            } catch (Exception $e) {
+                $this->rollback(); // Rollback transaction on error
+                $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
+                
+                redirect('Student/StudentProfile/profile');
+                return false;            
             }
-            //show($_SESSION);
-            redirect('Student/StudentProfile/profile');
         }else{
             //show($data);
             $this-> view('Student/ProfileEdit',$data);
