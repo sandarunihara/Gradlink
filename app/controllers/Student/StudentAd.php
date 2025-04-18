@@ -18,7 +18,6 @@ class StudentAd{
         $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
         
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            //show($_POST);
             try {
                 $advertisementId = $_GET['advertisementId'];
                 $this->beginTransaction(); 
@@ -29,41 +28,61 @@ class StudentAd{
                     throw new Exception("You have reached the limit of 5 applications in this round.");
                 }
 
-                $file = $_FILES['file'];
-                $fileName = $_FILES['file']['name'];
-                $fileTempName = $_FILES['file']['tmp_name'];
-                $fileSize = $_FILES['file']['size'];
-                $fileError = $_FILES['file']['error'];
-                $fileType = $_FILES['file']['type'];
-            
-                $fileExt = explode('.', $fileName);
-                $fileActualName = strtolower(current($fileExt));
-                $fileActualExt = strtolower(end($fileExt));
-            
-                $base = preg_replace("/[^\w-]/", "_", $fileActualName);
-                $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
-                $fileDestination = __DIR__ . '/../../../public/assets/uploads/cv/'. $fileNameNew;
-                
-                if(move_uploaded_file($fileTempName, $fileDestination)){
-                    $data['StudentId'] = $_SESSION['USER'] -> StudentId;
-                    $data['AdvertisementId'] = $advertisementId;
-                    $data['JobStatus'] = "Pending";
-                    $data['CV'] = $fileNameNew;
+                if(array_key_exists('use_default_cv', $_POST)){ 
+                    
+                    $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+                    $student = new student;
+                    $arr['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+
+                    $data2['StudentId'] = $arr['Student'] -> StudentId;
+                    $data2['AdvertisementId'] = $advertisementId;
+                    $data2['JobStatus'] = "Pending";
+                    $data2['CV'] = $arr['Student'] -> cv;
                     $student_advertisement = new student_advertisement;
-                    $isInsert2 = $student_advertisement -> insert($data);
-    
+                    $isInsert2 = $student_advertisement -> insert($data2);
+
                     if(!$isInsert2){
                         throw new Exception("Error inserting data into student_advertisement table");
                     }
-                    $data1['noOfAppliedAds'] = $noOfAppliedAds + 1;
-                    $isUpdate = $student -> update($arr['StudentId'], $data1, 'StudentId');
-    
-                    if ($isUpdate['status'] !== "success"){
-                        throw new Exception("Error updating noOfAppliedAds in student table");
-                    }
                 }else{
-                    throw new Exception("File upload failed.");
+                    $file = $_FILES['file'];
+                    $fileName = $_FILES['file']['name'];
+                    $fileTempName = $_FILES['file']['tmp_name'];
+                    $fileSize = $_FILES['file']['size'];
+                    $fileError = $_FILES['file']['error'];
+                    $fileType = $_FILES['file']['type'];
+                    $fileExt = explode('.', $fileName);
+                    $fileActualName = strtolower(current($fileExt));
+                    $fileActualExt = strtolower(end($fileExt));
+                
+                    $base = preg_replace("/[^\w-]/", "_", $fileActualName);
+                    $fileNameNew = $base .uniqid('', true). ".".$fileActualExt;
+                    $fileDestination = __DIR__ . '/../../../public/assets/uploads/cv/'. $fileNameNew;
+                    
+                    if(move_uploaded_file($fileTempName, $fileDestination)){
+                        $data['StudentId'] = $_SESSION['USER'] -> StudentId;
+                        $data['AdvertisementId'] = $advertisementId;
+                        $data['JobStatus'] = "Pending";
+                        $data['CV'] = $fileNameNew;
+                        $student_advertisement = new student_advertisement;
+                        $isInsert2 = $student_advertisement -> insert($data);
+        
+                        if(!$isInsert2){
+                            throw new Exception("Error inserting data into student_advertisement table");
+                        }
+                    }else{
+                        throw new Exception("File upload failed.");
+                    }
+    
                 }
+                
+                $data1['noOfAppliedAds'] = $noOfAppliedAds + 1;
+                $isUpdate = $student -> update($arr['StudentId'], $data1, 'StudentId');
+
+                if ($isUpdate['status'] !== "success"){
+                    throw new Exception("Error updating noOfAppliedAds in student table");
+                }
+
                 foreach($data['AdDetails'] as $ad){
                     if($ad -> advertisementId == $advertisementId){
                         $position = $ad -> position;
@@ -94,6 +113,7 @@ class StudentAd{
             }
         }else{
             //show($data);
+            //show($_SESSION['USER']);
             $this-> view('Student/Internship', $data);        
         }
     }

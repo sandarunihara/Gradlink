@@ -7,7 +7,9 @@
     const form = document.querySelector('form');
     const errorId = document.getElementById('errorId');
     const cvUpload = document.getElementById('cvUpload');
-
+    const defaultCV = document.getElementById('defaultCV');
+    const defaltMessage = document.getElementById('defaultMessage');
+    
     // Show popup when any "Apply" button is clicked
     applyButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -26,14 +28,43 @@
             window.location.href = url;
         });
     });
+    defaultCV.addEventListener('click', ()=> {
+        const cv = JSON.parse(defaultCV.getAttribute('default-cv'));
+
+        const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
+        const extension = cv.split('.').pop();
+        let masked;
+
+        if(fileNameWithoutExtension.length < 5){
+            masked = cv;
+        }else{
+            const visiblePart = fileNameWithoutExtension.slice(-5);
+            masked = "***" + visiblePart + "." + extension;
+        }
+
+        cvUpload.style.display = "none";
+        defaltMessage.innerText = masked;
+        defaltMessage.classList.remove('hidden');
+
+        const defaultInput = document.createElement('input');
+        defaultInput.type = 'hidden';
+        defaultInput.name = 'use_default_cv';
+        defaultInput.value = cv;
+        form.appendChild(defaultInput);
+
+    });
     // Handle file upload when "OK" button is clicked
     okBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if(validateFile(cvUpload)){
+        if(cvUpload.value){
+            if(validateFile(cvUpload)){
+                form.submit();
+            }
+        }else{
             form.submit();
         }
-    });
 
+    });
     // Hide popup when clicking outside the content box
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {

@@ -101,17 +101,27 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
+            <span id="defaultMessage" class="hidden"></span>
+            <br>
             <input 
                 type="file" 
                 id="cvUpload" 
                 name="file" 
-                required
                 onchange="validateFile(this)"
+                class="cv-upload"
             >
             <span id="errorId" class="error"></span>
+            <button
+                type="button"
+                id="defaultCV"
+                default-cv = '<?php echo json_encode($_SESSION['USER'] -> cv);?>'
+            >
+            Choose Default Resume
+            </button>
+            <br>
             <button 
                 type="submit"
-                id="okBtn" 
+                id="okBtn"
             >
             OK
             </button>
