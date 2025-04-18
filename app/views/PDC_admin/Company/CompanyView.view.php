@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Profile | <?= htmlspecialchars($companyData->Name) ?></title>
+    <title>Company Profile | <?= htmlspecialchars($data['companyData']->Name) ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
@@ -886,7 +886,7 @@
                     <h3>Block Company</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Please provide a reason for blocking <?= htmlspecialchars($companyData->Name) ?>. This message will be sent to the company's email.</p>
+                    <p>Please provide a reason for blocking <?= htmlspecialchars($data['companyData']->Name) ?>. This message will be sent to the company's email.</p>
                     <div class="form-group">
                         <label for="block-reason">Reason for Blocking</label>
                         <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>

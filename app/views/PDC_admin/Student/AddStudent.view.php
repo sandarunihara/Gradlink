@@ -10,318 +10,318 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary: #4e54c8;
+            --primary-dark: #23244a;
+            --accent: #3c41a2;
+            --background: #f0f0f5;
+            --card-bg: #fff;
+            --input-bg: #f7f8fa;
+            --input-border: #bbbddd;
+            --input-focus: #4e54c8;
+            --danger: #ef4444;
+            --gray: #64748b;
+            --dark-gray: #374151;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(67, 97, 238, 0.07);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    background-color: #f0f4f8;
-    display: flex;
-    height: 100%;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+        }
 
-.container {
-    display: flex;
-    width: 100%;
-}
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
 
-.content {
-    width: 95%;
-    padding: 40px 5%;
-    background-color: #ffffff;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    margin-left: 5%;
-}
+        .main-content {
+            margin-left: 80px; /* Same as sidebar width */
+            flex: 1;
+            padding: 40px;
+            background-color: var(--background);
+            min-height: 100vh;
+            transition: var(--transition);
+        }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.header-left h1 {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 700;
-    color: #2d3748;
-}
+        .header h1 i {
+            color: var(--accent);
+        }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+        .tab-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+        }
 
-.header-right img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+        .company-form {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
 
-.user-info {
-    display: flex;
-    flex-direction: column;
-}
+        .filling-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px 32px;
+        }
 
-.user-info span {
-    font-weight: 600;
-}
+        @media (max-width: 900px) {
+            .filling-form {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .main-content {
+                padding: 24px 2%;
+            }
+        }
 
-.user-info small {
-    font-size: 12px;
-    color: #6b7280;
-}
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
 
-.company-info {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 8px;
+            letter-spacing: 0.01em;
+        }
 
-.company-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+        .form-group input,
+        .form-group select {
+            padding: 14px 16px;
+            border: 1.5px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            font-size: 1rem;
+            color: var(--primary-dark);
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.04);
+            outline: none;
+            width: 100%;
+        }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--input-focus);
+            background: #fff;
+            box-shadow: 0 0 0 2px rgba(78, 84, 200, 0.11);
+        }
 
-.form-group label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #4b5563;
-    margin-bottom: 8px;
-}
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: var(--primary-dark);
+        }
 
-.form-group input,
-.form-group select {
-    margin-top: 15px;
-    padding: 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    background-color: #fafafa;
-    width: 100%;
-    font-size: 14px;
-    color: #333;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+        .form-group input::placeholder {
+            color: #b6b9c6;
+            font-size: 0.98rem;
+            font-style: italic;
+        }
 
-.form-group input::placeholder {
-    color: #aaa;
-    font-size: 14px;
-    font-style: italic;
-}
+        .format-hint {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 6px;
+            margin-left: 2px;
+        }
 
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #2b36b7;
-    outline: none;
-    box-shadow: 0 0 8px rgba(43, 54, 183, 0.5);
-}
+        .error {
+            color: var(--danger);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 6px;
+            margin-left: 2px;
+        }
 
-.form-group input:hover,
-.form-group select:hover {
-    border-color: #1e3c72;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
+        .button-line {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 32px;
+        }
 
-.form-group input:focus::placeholder {
-    color: transparent;
-}
+        .btn {
+            padding: 15px 48px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.07);
+        }
 
-.error {
-    color: #ef4444;
-    font-size: 12px;
-    font-weight: 500;
-    margin-top: 5px;
-    display: block;
-}
+        .submit-btn {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(67, 97, 238, 0.11);
+        }
 
-.button-line {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-}
+        .submit-btn:hover {
+            background: var(--accent);
+            box-shadow: 0 8px 30px rgba(78, 84, 200, 0.18);
+            transform: translateY(-2px);
+        }
 
-.back-btn,
-.confirm-btn {
-    padding: 16px 48px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
+        .back-btn {
+            background: #e0e7ef;
+            color: var(--primary-dark);
+        }
 
-.back-btn:hover,
-.confirm-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-}
+        .back-btn:hover {
+            background: #d1d9f0;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
 
-.back-btn:active,
-.confirm-btn:active {
-    transform: translateY(2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.back-btn {
-    background: #e5e7eb;
-    color: #4b5563;
-    width: 240px;
-}
-
-.back-btn:hover {
-    background: #d1d5db;
-}
-
-.confirm-btn {
-    background: #1e3c72;
-    color: white;
-    width: 240px;
-}
-
-.confirm-btn:hover {
-    background: #172554;
-}
-
-.format-hint {
-    display: block;
-    font-size: 12px;
-    color: #6b7280;
-    margin-top: 5px;
-}
-
-@media (max-width: 768px) {
-    .button-line {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .back-btn,
-    .confirm-btn {
-        width: 100%;
-    }
-}
+        @media (max-width: 600px) {
+            .main-content {
+                padding: 18px 2%;
+                margin-left: 0;
+                margin-top: 60px;
+            }
+            .button-line {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .btn {
+                width: 100%;
+                padding: 14px 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
-        <main class="content">
+        <main class="main-content">
             <header class="header">
-                <div class="header-left">
+                <h1>
                     <i class="material-icons">school</i>
-                    <h1>Create Student</h1>
-                </div>
+                    Create Student
+                </h1>
             </header>
 
-            <section class="company-info">
+            <section class="tab-content">
                 <form class="company-form" method="POST" action="<?= ROOT ?>/PDC_admin/AddStudent/submit" id="student-form">
-                    <div class="form-group">
-                        <label for="student-id">Student ID</label>
-                        <input type="text" id="student-id" name="StudentId" placeholder="2022cs021" 
-                            value="<?= htmlspecialchars($old_data['StudentId'] ?? '') ?>" 
-                            pattern="\d{4}[a-z]{2}\d{3}"
-                            required>
-                        <?php if (!empty($errors['StudentId'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['StudentId']) ?></span>
-                        <?php endif; ?>
-                        <small class="format-hint">Format: 4 numbers, 2 letters, 3 numbers (e.g., 2022cs021)</small>
-                    </div>
+                    <div class="filling-form">
+                        <div class="form-group">
+                            <label for="student-id">Student ID</label>
+                            <input type="text" id="student-id" name="StudentId" placeholder="2022cs021" 
+                                value="<?= htmlspecialchars($old_data['StudentId'] ?? '') ?>" 
+                                pattern="\d{4}[a-z]{2}\d{3}"
+                                required>
+                            <?php if (!empty($errors['StudentId'])): ?>
+                                <span class="error"><?= htmlspecialchars($errors['StudentId']) ?></span>
+                            <?php endif; ?>
+                            <small class="format-hint">Format: 4 numbers, 2 letters, 3 numbers (e.g., 2022cs021)</small>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="student-nic">Student NIC</label>
-                        <input type="text" id="student-nic" name="NIC" placeholder="Student NIC"
-                            value="<?= htmlspecialchars($old_data['NIC'] ?? '') ?>"
-                            pattern="\d{12}"
-                            required>
-                        <?php if (!empty($errors['NIC'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['NIC']) ?></span>
-                        <?php endif; ?>
-                        <small class="format-hint">Format: 12 digits (e.g., 200156789012)</small>
-                    </div>
+                        <div class="form-group">
+                            <label for="student-nic">Student NIC</label>
+                            <input type="text" id="student-nic" name="NIC" placeholder="Student NIC"
+                                value="<?= htmlspecialchars($old_data['NIC'] ?? '') ?>"
+                                pattern="\d{12}"
+                                required>
+                            <?php if (!empty($errors['NIC'])): ?>
+                                <span class="error"><?= htmlspecialchars($errors['NIC']) ?></span>
+                            <?php endif; ?>
+                            <small class="format-hint">Format: 12 digits (e.g., 200156789012)</small>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="student-name">Student Name</label>
-                        <input type="text" id="student-name" name="Name" placeholder="Student Name"
-                            value="<?= htmlspecialchars($old_data['Name'] ?? '') ?>" required>
-                        <?php if (!empty($errors['Name'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['Name']) ?></span>
-                        <?php endif; ?>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="student-email">Email</label>
-                        <input type="email" id="student-email" name="Email" placeholder="Student Email"
-                            value="<?= htmlspecialchars($old_data['Email'] ?? '') ?>" required>
-                        <?php if (!empty($errors['Email'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['Email']) ?></span>
-                        <?php endif; ?>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="degree-name">Degree Name</label>
-                        <select id="degree-name" name="DegreeName" required>
-                            <option value="" disabled <?= empty($old_data['DegreeName']) ? 'selected' : '' ?>>Select Degree</option>
-                            <option value="Computer Science" <?= ($old_data['DegreeName'] ?? '') === 'Computer Science' ? 'selected' : '' ?>>Computer Science</option>
-                            <option value="Information System" <?= ($old_data['DegreeName'] ?? '') === 'Information System' ? 'selected' : '' ?>>Information System</option>
-                        </select>
-                        <?php if (!empty($errors['DegreeName'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['DegreeName']) ?></span>
-                        <?php endif; ?>
-                    </div>
+                        <div class="form-group">
+                            <label for="student-name">Student Name</label>
+                            <input type="text" id="student-name" name="Name" placeholder="Student Name"
+                                value="<?= htmlspecialchars($old_data['Name'] ?? '') ?>" required>
+                            <?php if (!empty($errors['Name'])): ?>
+                                <span class="error"><?= htmlspecialchars($errors['Name']) ?></span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="student-email">Email</label>
+                            <input type="email" id="student-email" name="Email" placeholder="Student Email"
+                                value="<?= htmlspecialchars($old_data['Email'] ?? '') ?>" required>
+                            <?php if (!empty($errors['Email'])): ?>
+                                <span class="error"><?= htmlspecialchars($errors['Email']) ?></span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="degree-name">Degree Name</label>
+                            <select id="degree-name" name="DegreeName" required>
+                                <option value="" disabled <?= empty($old_data['DegreeName']) ? 'selected' : '' ?>>Select Degree</option>
+                                <option value="Computer Science" <?= ($old_data['DegreeName'] ?? '') === 'Computer Science' ? 'selected' : '' ?>>Computer Science</option>
+                                <option value="Information System" <?= ($old_data['DegreeName'] ?? '') === 'Information System' ? 'selected' : '' ?>>Information System</option>
+                            </select>
+                            <?php if (!empty($errors['DegreeName'])): ?>
+                                <span class="error"><?= htmlspecialchars($errors['DegreeName']) ?></span>
+                            <?php endif; ?>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select id="status" name="Status" required>
-                            <option value="" disabled <?= empty($old_data['Status']) ? 'selected' : '' ?>>Select Status</option>
-                            <option value="Not Applied" <?= ($old_data['Status'] ?? 'Not Applied') === 'Not Applied' ? 'selected' : '' ?>>Not Applied</option>
-                            <option value="Pending" <?= ($old_data['Status'] ?? '') === 'Pending' ? 'selected' : '' ?>>Pending</option>
-                            <option value="Recruited" <?= ($old_data['Status'] ?? '') === 'Recruited' ? 'selected' : '' ?>>Recruited</option>
-                        </select>
-                        <?php if (!empty($errors['Status'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['Status']) ?></span>
-                        <?php endif; ?>
-                    </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="Status" required>
+                                <option value="" disabled <?= empty($old_data['Status']) ? 'selected' : '' ?>>Select Status</option>
+                                <option value="Not Applied" <?= ($old_data['Status'] ?? 'Not Applied') === 'Not Applied' ? 'selected' : '' ?>>Not Applied</option>
+                                <option value="Pending" <?= ($old_data['Status'] ?? '') === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                                <option value="Recruited" <?= ($old_data['Status'] ?? '') === 'Recruited' ? 'selected' : '' ?>>Recruited</option>
+                            </select>
+                            <?php if (!empty($errors['Status'])): ?>
+                                <span class="error"><?= htmlspecialchars($errors['Status']) ?></span>
+                            <?php endif; ?>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="contact-number">Contact Number</label>
-                        <input type="text" id="contact-number" name="ContactNum" placeholder="0771234567"
-                            value="<?= htmlspecialchars($old_data['ContactNum'] ?? '') ?>" 
-                            pattern="^07\d{8}$"
-                            required>
-                        <?php if (!empty($errors['ContactNum'])): ?>
-                            <span class="error"><?= htmlspecialchars($errors['ContactNum']) ?></span>
-                        <?php endif; ?>
-                        <small class="format-hint">Format: 07XXXXXXXX (e.g., 0771234567)</small>
+                        <div class="form-group">
+                            <label for="contact-number">Contact Number</label>
+                            <input type="text" id="contact-number" name="ContactNum" placeholder="0771234567"
+                                value="<?= htmlspecialchars($old_data['ContactNum'] ?? '') ?>" 
+                                pattern="^07\d{8}$"
+                                required>
+                            <?php if (!empty($errors['ContactNum'])): ?>
+                                <span class="error"
+                                    pattern="^[0-9+\s()-]{7,20}$"
+                                ><?= htmlspecialchars($errors['ContactNum']) ?></span>
+                            <?php endif; ?>
+                            <small class="format-hint">Enter a valid phone number (e.g., +94 98765 43210 , 0733333333)</small>
+                        </div>
                     </div>
                     
                     <div class="button-line">
-                        <button type="button" class="back-btn" onclick="history.back()">Back</button>
-                        <button type="submit" class="confirm-btn">Confirm</button>
+                        <button type="button" class="btn back-btn" onclick="history.back()">Back</button>
+                        <button type="submit" class="btn submit-btn">Create Student</button>
                     </div>
                 </form>
             </section>
