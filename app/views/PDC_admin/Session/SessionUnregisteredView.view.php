@@ -806,6 +806,7 @@
             };
         </script>
     <?php endif; ?>
+    
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
 

@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/application/overviewApplication.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/student/overviewStudent.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
 </head>
@@ -25,64 +25,70 @@
                 <?php $this->renderPDC_adminTabs("applicationTabs", ['activeTab' => $activeTab]); ?>
             </div>
 
-            <section class="company-list">
-                <div class="list-header">
-                    <div class="search-box">
-                        <input type="text" placeholder="Search Students" />
-                        <button> 
-                            Search
-                        </button>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <section class="company-list">
+                        <div class="list-header">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search Students" />
+                                <button> 
+                                    Search
+                                </button>
 
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-degree="all">
-                                <i class="fas fa-users"></i> All
-                            </button>
-                            <button class="filter-btn" data-degree="Computer Science">
-                                CS
-                            </button>
-                            <button class="filter-btn" data-degree="Information System">
-                                IS
-                            </button>
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active" data-degree="all">
+                                        <i class="fas fa-users"></i> All
+                                    </button>
+                                    <button class="filter-btn" data-degree="Computer Science">
+                                        CS
+                                    </button>
+                                    <button class="filter-btn" data-degree="Information System">
+                                        IS
+                                    </button>
+                                </div>
+
+                            </div>
                         </div>
-
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Registration No.</th>
-                            <th>Name</th>
-                            <th>Degree</th>
-                            <th>Applied Company</th>
-                            <th>Position</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if($data == null) : ?>
-                            <tr>
-                                <td colspan="8">No applications found</td>
-                            </tr>
-                        <?php else : ?>
-                            <?php foreach ($data as $row) : ?>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?= htmlspecialchars($row->StudentId) ?></td>
-                                    <td><?= htmlspecialchars($row->StudentName) ?></td>
-                                    <td><?= htmlspecialchars($row->DegreeName) ?></td>
-                                    <td><?= htmlspecialchars($row->CompanyName) ?></td>
-                                    <td><?= htmlspecialchars($row->position) ?></td>
-                                    <td><?= htmlspecialchars($row->Jobstatus) ?></td>
-                                    <td>
-                                        <button class="view-btn" onclick="navigateToViewApplication('<?= htmlspecialchars($row->StudentId)?>','<?= htmlspecialchars($row->advertisementId)?>')">View</button>
-                                    </td>
+                                    <th>Registration No.</th>
+                                    <th>Name</th>
+                                    <th>Degree</th>
+                                    <th>Applied Company</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th></th>
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                <?php if($data == null) : ?>
+                                    <tr>
+                                        <td colspan="8">No applications found</td>
+                                    </tr>
+                                <?php else : ?>
+                                    <?php foreach ($data as $row) : ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($row->StudentId) ?></td>
+                                            <td><?= htmlspecialchars($row->StudentName) ?></td>
+                                            <td><?= htmlspecialchars($row->DegreeName) ?></td>
+                                            <td><?= htmlspecialchars($row->CompanyName) ?></td>
+                                            <td><?= htmlspecialchars($row->position) ?></td>
+                                            <td><?= htmlspecialchars($row->Jobstatus) ?></td>
+                                            <td>
+                                            <button class="view-btn action-btn" onclick="navigateToViewApplication('<?= htmlspecialchars($row->StudentId)?>','<?= htmlspecialchars($row->advertisementId)?>')"><i class="fas fa-eye"></i> View</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
 
-            </section>
+                    </section>
+                </div>
+            </div>
+
+            
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
