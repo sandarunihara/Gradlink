@@ -89,17 +89,27 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
+            <span id="defaultMessage" class="hidden"></span>
+            <br>
             <input 
                 type="file" 
-                id="cvUpload"
+                id="cvUpload" 
                 name="file" 
-                required
                 onchange="validateFile(this)"
+                class="cv-upload"
             >
             <span id="errorId" class="error"></span>
+            <button
+                type="button"
+                id="defaultCV"
+                default-cv = '<?php echo json_encode($_SESSION['USER'] -> cv);?>'
+            >
+            Choose Default Resume
+            </button>
+            <br>
             <button 
                 type="submit"
-                id="okBtn" 
+                id="okBtn"
             >
             OK
             </button>
@@ -116,7 +126,8 @@
     const form = document.querySelector('form');
     const errorId = document.getElementById('errorId');
     const cvUpload = document.getElementById('cvUpload');
-
+    const defaultCV = document.getElementById('defaultCV');
+    const defaltMessage = document.getElementById('defaultMessage');
 
     // Show popup when any "Apply" button is clicked
     applyBtn.addEventListener('click', () => {
@@ -125,12 +136,41 @@
         form.action = form.action + '?advertisementId=' + encodeURIComponent(advertisementId);
 
     });
+    defaultCV.addEventListener('click', ()=> {
+        const cv = JSON.parse(defaultCV.getAttribute('default-cv'));
 
+        const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
+        const extension = cv.split('.').pop();
+        let masked;
+
+        if(fileNameWithoutExtension.length < 5){
+            masked = cv;
+        }else{
+            const visiblePart = fileNameWithoutExtension.slice(-5);
+            masked = "***" + visiblePart + "." + extension;
+        }
+
+        cvUpload.style.display = "none";
+        defaltMessage.innerText = masked;
+        defaltMessage.classList.remove('hidden');
+
+        const defaultInput = document.createElement('input');
+        defaultInput.type = 'hidden';
+        defaultInput.name = 'use_default_cv';
+        defaultInput.value = cv;
+        form.appendChild(defaultInput);
+
+    });
     okBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if(validateFile(cvUpload)){
+        if(cvUpload.value){
+            if(validateFile(cvUpload)){
+                form.submit();
+            }
+        }else{
             form.submit();
         }
+
     });
     function validateFile(input){
         const file = input.files[0];

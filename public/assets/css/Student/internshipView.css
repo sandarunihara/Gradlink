@@ -140,13 +140,26 @@
     width: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  input[type="file"] {
+  .cv-upload {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
   }
-  
+  #defaultCV{
+    font-size: 12px;
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  #defaultCV:hover {
+    background-color: #2f89c5;
+    transform: scale(1.02);
+  }
   /* OK button styling (ID or class specific) */
   #okBtn {
     margin-top: 10px;
@@ -156,10 +169,13 @@
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    
   }
   
   #okBtn:hover {
     background-color: #218838;
+    transform: scale(1.02);
+
   }
   
 .error{
