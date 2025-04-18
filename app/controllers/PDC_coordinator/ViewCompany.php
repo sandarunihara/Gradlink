@@ -12,53 +12,15 @@ class ViewCompany
             return;
         }
         $model = new company;
-        $data = $model->findById($id);
+        $companyData = $model->findById($id);
         // echo '<pre>';
         //         print_r($data);
         //         echo '</pre>';
         
-        if ($data) {
-            // $companyData = [];
-
-            // foreach ($data as $companydetail) {
-            //     $companyData[] = [
-            //         'company_id' => $companydetail->CompanyId,
-            //         'company_name' => $companydetail->Name,
-            //         'email' => $companydetail->Email,
-            //         'contact_person' => $companydetail->ContactPerson,
-            //         'contact_number' => $companydetail->ContactNum,
-            //         'address_no' => $companydetail->No,
-            //         'address_lane' => $companydetail->Lane,
-            //         'address_city' => $companydetail->City,
-            //         'address_district' => $companydetail->District,
-            //         'description' => $companydetail->ShortDesc,
-            //         'website' => $companydetail->Website,
-            //         'linkedin' => $companydetail->Linkedin
-            //     ];
-            // }
-
-            $companyData = [
-                'company_id' => $data->CompanyId,
-                'company_name' => $data->Name,
-                'email' => $data->Email,
-                'contact_person' => $data->ContactPerson,
-                'contact_number' => $data->ContactNum,
-                'address_no' => $data->No,
-                'address_lane' => $data->Lane,
-                'address_city' => $data->City,
-                'address_district' => $data->District,
-                'description' => $data->ShortDesc,
-                'website' => $data->Website,
-                'linkedin' => $data->Linkedin
-            ];
-            
-            // echo json_encode($companyData);
+        if ($companyData) {
             
             $this->view('Coordinator/Company/viewCompany', ['companyData' => $companyData]);
             
-            // echo json_encode($companyData);
-
-            // $this->view('Coordinator/Company/viewCompany', ['companyData' => $companyData]);
         } else {
             echo "No data found";
         }
