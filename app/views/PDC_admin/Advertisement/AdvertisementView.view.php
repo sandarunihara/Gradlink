@@ -35,7 +35,6 @@
             <header class="content-header">
                 <div class="header-title">
                     <h1>Advertisement Details</h1>
-                    <p class="breadcrumb">Dashboard / Advertisements / #<?= htmlspecialchars($data->advertisementId) ?></p>
                 </div>
                 <div class="header-actions">
                     <button class="btn btn-outline" onclick="history.back()">
@@ -161,6 +160,8 @@
     </div>
 
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js?v=<?= time() ?>"></script>
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>               
+
     <script>
         function openModal(adId, action, email) {
             const modal = document.getElementById('actionModal');
@@ -217,6 +218,5 @@
         }
         
     </script>
-    <script src="<?= ROOT ?>/assets/js/toast.js>"></script>
-</body>
+    </body>
 </html>

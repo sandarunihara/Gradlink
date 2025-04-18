@@ -45,8 +45,12 @@ class ViewAdvertisement {
             'reason' => $reason,
             'timestamp' => date('Y-m-d H:i:s')
         ];
-        
+
+        //show($actionData);
+
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
+
+        //show($updatedStatus);
 
         if($updatedStatus && $updatedStatus['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId , $reason);
@@ -90,17 +94,15 @@ class ViewAdvertisement {
                 'type' => 'success',
                 'message' => 'Advertisement successfully activated'
             ];
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
         }
         else{
             $_SESSION['flash_message'] = [
                 'type' => 'error',
                 'message' => 'Error: Could not activate the advertisement.'
             ];
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
         }
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     public function reject($advertisementId , $reason , $action){
@@ -141,17 +143,15 @@ class ViewAdvertisement {
                     'message' => 'Error: Could not log the action.'
                 ];
             }
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
         }
         else{
             $_SESSION['flash_message'] = [
                 'type' => 'error',
                 'message' => 'Error: Could not reject the advertisement.'
             ];
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
         }
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     public function handleAction(){

@@ -16,12 +16,18 @@
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
-            --success: #28a745;
+            --success: #4cc9f0;
             --warning: #ffc107;
             --danger: #dc3545;
             --border-radius: 8px;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
+            --success-color: #4cc9f0;
+            --light-gray: #e9ecef;
+            --primary-dark: #3a0ca3;
+
+
+
         }
 
         * {
@@ -32,22 +38,23 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
+            background-color: #f0f0f5;
             color: var(--dark);
-            line-height: 1.6;
+            height: 100vh;
         }
 
         .container {
             display: flex;
             min-height: 100vh;
-            width: 100%;
         }
 
         .content {
+            margin-left: 80px; /* Same as sidebar width */
             flex: 1;
-            width: 95%;
-            padding: 2rem;
-            margin-left: 5%;
+            padding: 40px 40px 40px 40px;
+            background-color: #f0f0f5;
+            min-height: 100vh;
+            transition: margin-left 0.3s;
         }
 
         .header {
@@ -120,9 +127,15 @@
         .detail-card h3 {
             font-size: 1.1rem;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--dark);
             border-bottom: 1px solid #eee;
             padding-bottom: 0.5rem;
+        }
+
+        .detail-card i {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            color: var(--primary);
         }
 
         .detail-item {
@@ -255,53 +268,20 @@
             padding: 0.75rem 1.5rem;
             border-radius: var(--border-radius);
             font-weight: 500;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: var(--transition);
-            border: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            border: none;
         }
 
-        .btn i {
-            font-size: 1rem;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-update {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-update:hover {
-            background-color: var(--secondary);
-        }
-
-        .btn-back {
-            background-color: #e9ecef;
-            color: var(--dark);
-        }
-
-        .btn-back:hover {
-            background-color: #dee2e6;
-        }
-
-        .btn-block {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-block:hover {
-            background-color: #c82333;
-        }
-
-        .btn-unblock {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-unblock:hover {
-            background-color: #218838;
-        }
 
         .modal-overlay {
             position: fixed;
@@ -367,6 +347,21 @@
             color: var(--danger);
         }
 
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
         .modal-body {
             padding: 1.5rem;
         }
@@ -422,12 +417,13 @@
         }
 
         .btn-cancel {
-            background-color: #e9ecef;
-            color: var(--dark);
+            background-color: white;
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
         }
 
         .btn-cancel:hover {
-            background-color: #dee2e6;
+            background-color: var(--light-gray);
         }
 
         .btn-save {
@@ -571,16 +567,17 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--secondary);
+            background-color: var(--primary-dark);
         }
 
         .btn-secondary {
-            background-color: #e9ecef;
-            color: var(--dark);
+            background-color: white;
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
         }
 
         .btn-secondary:hover {
-            background-color: #dee2e6;
+            background-color: var(--light-gray);
         }
 
         .modal-actions {
@@ -590,6 +587,19 @@
             justify-content: flex-end;
             gap: 1rem;
         }
+
+        .modal-message {
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            background-color: rgba(72, 149, 239, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
 
         #unblock-modal .modal-content {
             background: white;
@@ -642,6 +652,231 @@
                 justify-content: center;
             }
         }
+
+        .block-stats {
+            font-size: 0.85rem;
+            color: var(--danger);
+            margin-top: 0.25rem;
+        }
+
+        .block-stats span {
+            margin-right: 0.5rem;
+        }
+
+        .history-timeline {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 1rem;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 2px;
+    background: #e9ecef;
+}
+
+.history-item {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.history-item:last-child {
+    padding-bottom: 0;
+}
+
+.history-marker {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.history-item.blocked .history-marker {
+    background-color: var(--danger);
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.2);
+}
+
+.history-item.unblocked .history-marker {
+    background-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+}
+
+.history-marker::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+}
+
+.history-content {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.history-action {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: var(--dark);
+}
+
+.history-item.blocked .history-action {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger);
+}
+
+.history-item.unblocked .history-action {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.history-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.history-reason, .history-admin {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid #dee2e6;
+}
+
+.history-reason strong, .history-admin strong {
+    color: var(--danger);
+}
+
+.no-history {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--gray);
+}
+
+.no-history i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--success-color);
+}
+
+.no-history p {
+    margin: 0;
+}
+
+.info-card {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-header i {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            color: var(--primary);
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .modal-field textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            resize: vertical;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .modal-field textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #3aa8d1;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color:rgb(196, 44, 59);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
     </style>
 </head>
 
@@ -661,16 +896,32 @@
     <?php endif; ?>
 
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar") ?>
+        <div class="sidebar">
+            <?php $this->renderComponent("pdc_adminsidebar") ?>
+        </div>
         <main class="content">
             <div class="profile-header">
                 <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="Profile Image" class="profile-image">
                 <div class="profile-title">
-                    <h1><?= htmlspecialchars($data['Name']) ?></h1>
-                    <span class="status <?= $data['Status'] === 'Blocked' ? 'status-blocked' : ($data['Status'] === 'Pending' ? 'status-pending' : 'status-active') ?>">
-                        <i class="fas fa-<?= $data['Status'] === 'Blocked' ? 'ban' : ($data['Status'] === 'Pending' ? 'clock' : 'check-circle') ?>"></i>
-                        <?= htmlspecialchars($data['Status']) ?>
+                    <h1><?= htmlspecialchars($data['studentData']->Name) ?></h1>
+                    <span class="status <?= $data['studentData']->Status === 'Blocked' ? 'status-blocked' : ($data['studentData']->Status === 'Pending' ? 'status-pending' : 'status-active') ?>">
+                        <i class="fas fa-<?= $data['studentData']->Status === 'Blocked' ? 'ban' : ($data['studentData']->Status === 'Pending' ? 'clock' : 'check-circle') ?>"></i>
+                        <?= htmlspecialchars($data['studentData']->Status) ?>
                     </span>
+
+                    <?php if ($data['studentData']->block_count > 0): ?>
+                    <div class="block-stats">
+                        <span>Blocked <?= htmlspecialchars($data['studentData']->block_count) ?> time(s)</span>
+                        
+                        <?php if (!empty($data['studentData']->last_blocked_at)): ?>
+                        <span>• Last on <?= date('M j, Y', strtotime($data['studentData']->last_blocked_at)) ?></span>
+                        <?php endif; ?>
+                    
+                    </div>
+                    <?php endif; ?>
+
+
+
                 </div>
             </div>
 
@@ -679,19 +930,19 @@
                     <h3><i class="fas fa-id-card"></i> Basic Information</h3>
                     <div class="detail-item">
                         <span class="detail-label">Registration Number</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['StudentId']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->StudentId) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">NIC Number</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['NIC']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->NIC) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Degree Program</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['DegreeName']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->DegreeName) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Contact Number</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['ContactNum']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->ContactNum) ?></div>
                     </div>
                 </div>
 
@@ -699,18 +950,18 @@
                     <h3><i class="fas fa-envelope"></i> Contact Information</h3>
                     <div class="detail-item">
                         <span class="detail-label">Email Address</span>
-                        <div class="detail-value"><?= htmlspecialchars($data['Email']) ?></div>
+                        <div class="detail-value"><?= htmlspecialchars($data['studentData']->Email) ?></div>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Professional Links</span>
                         <div class="social-links">
-                            <?php if (!empty($data['Github'])): ?>
-                                <a href="<?= htmlspecialchars($data['Github']) ?>" target="_blank" class="social-link">
+                            <?php if (!empty($data['studentData']->Github)): ?>
+                                <a href="<?= htmlspecialchars($data['studentData']->Github) ?>" target="_blank" class="social-link">
                                     <i class="fab fa-github"></i> GitHub
                                 </a>
                             <?php endif; ?>
-                            <?php if (!empty($data['Linkedin'])): ?>
-                                <a href="<?= htmlspecialchars($data['Linkedin']) ?>" target="_blank" class="social-link">
+                            <?php if (!empty($data['studentData']->Linkedin)): ?>
+                                <a href="<?= htmlspecialchars($data['studentData']->Linkedin) ?>" target="_blank" class="social-link">
                                     <i class="fab fa-linkedin"></i> LinkedIn
                                 </a>
                             <?php endif; ?>
@@ -723,60 +974,109 @@
                 </div>
             </div>
 
-            <?php if (!empty($data['ShortDesc'])): ?>
+            <?php if (!empty($data['studentData']->ShortDesc)): ?>
             <div class="detail-card">
                 <h3><i class="fas fa-file-alt"></i> Student Description</h3>
-                <p><?= htmlspecialchars($data['ShortDesc']) ?></p>
+                <p><?= htmlspecialchars($data['studentData']->ShortDesc) ?></p>
             </div>
             <?php endif; ?>
 
             <div class="applications-section">
-                <h3 class="section-title"><i class="fas fa-briefcase"></i> Applied Companies</h3>
-                
-                <?php if (empty($data['applications'])): ?>
-                    <div class="no-applications">No companies applied yet</div>
-                <?php else: ?>
-                    <div class="applications-grid">
-                        <?php foreach ($data['applications'] as $application): ?>
-                            <div class="application-card">
-                                <div class="application-header">
-                                    <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
-                                    <div class="company-info">
-                                        <div class="company-name"><?= htmlspecialchars($application['ComName']) ?></div>
-                                        <span class="application-status 
-                                            <?= strtolower(str_replace(' ', '-', htmlspecialchars($application['Jobstatus']))) ?>">
-                                            <?= htmlspecialchars($application['Jobstatus']) ?>
-                                        </span>
+                <div class="detail-card">
+                    <h3 class="section-title"><i class="fas fa-briefcase"></i> Applied Companies</h3>
+                    
+                    <?php if (empty($data['applications'])): ?>
+                        <div class="no-applications">No companies applied yet</div>
+                    <?php else: ?>
+                        <div class="applications-grid">
+                            <?php foreach ($data['applications'] as $application): ?>
+                                <div class="application-card">
+                                    <div class="application-header">
+                                        <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
+                                        <div class="company-info">
+                                            <div class="company-name"><?= htmlspecialchars($application['ComName']) ?></div>
+                                            <span class="application-status 
+                                                <?= strtolower(str_replace(' ', '-', htmlspecialchars($application['Jobstatus']))) ?>">
+                                                <?= htmlspecialchars($application['Jobstatus']) ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="application-body">
+                                        <div class="application-detail">
+                                            <strong>Position:</strong> <?= htmlspecialchars($application['position']) ?>
+                                        </div>
+                                        <div class="application-detail">
+                                            <strong>Applied On:</strong> <?= htmlspecialchars($application['CreatedAt']) ?>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="application-body">
-                                    <div class="application-detail">
-                                        <strong>Position:</strong> <?= htmlspecialchars($application['position']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                </div>
+                
+
+            <div class="info-card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>Block History</h2>
+                </div>
+                <?php if (!empty($data['actionDet'])): ?>
+                    <div class="history-timeline">
+                        <?php foreach ($data['actionDet'] as $record): ?>
+                            <div class="history-item <?= $record->action_type?>">
+                                <div class="history-marker">
+                                    <?php if ($record->action_type === 'blocked'): ?>
+                                        <i class="fas fa-ban"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-check-circle"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-header">
+                                        <div class="history-action-container">
+                                            <span class="history-action"><?= htmlspecialchars(ucfirst($record->action_type)) ?></span>
+                                            <?php if (!empty($record->actor_role)): ?>
+                                                <span class="history-role">• <?= htmlspecialchars($record->actor_role) ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <span class="history-date"><?= date('M j, Y \a\t g:i A', strtotime($record->timestamp)) ?></span>
                                     </div>
-                                    <div class="application-detail">
-                                        <strong>Applied On:</strong> <?= htmlspecialchars($application['CreatedAt']) ?>
-                                    </div>
+                                    <?php if (!empty($record->reason)): ?>
+                                        <div class="history-reason">
+                                            <span class="reason-label">Note:</span>
+                                            <span class="reason-text"><?= htmlspecialchars($record->reason) ?></span>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-history">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No block history recorded</p>
+                        <small class="no-history-sub">This user has never been blocked</small>
                     </div>
                 <?php endif; ?>
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-back" onclick="history.back()">
+                <button class="btn btn-outline" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <button class="btn btn-update" id="edit-btn-student" onclick="openUpdateform()">
-                    <i class="fas fa-edit"></i> Update
-                </button>
-                <?php if ($data['block'] === 1): ?>
-                    <button class="btn btn-unblock" onclick="unblockStudent('<?= htmlspecialchars($data['StudentId']) ?>')">
+
+                <?php if (($data['studentData']->block === 1) && ($data['studentData']->Status === 'Blocked')): ?>
+                    <button class="btn btn-success" onclick="unblockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-block" onclick="blockStudent('<?= htmlspecialchars($data['StudentId']) ?>')">
+                    <button class="btn btn-danger" onclick="blockStudent('<?= htmlspecialchars($data['studentData']->StudentId) ?>')">
                         <i class="fas fa-ban"></i> Block
+                    </button>
+                    <button class="btn btn-success" id="edit-btn-student" onclick="openUpdateform()">
+                        <i class="fas fa-edit"></i> Update
                     </button>
                 <?php endif; ?>
             </div>
@@ -784,19 +1084,28 @@
 
         <div id="block-modal" class="modal">
             <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
                 <form id="block-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/block">
                     <input type="hidden" name="StudentId" id="student-id" value="">
                     <div class="modal-header">
                         <h3>Block Student</h3>
                     </div>
+                    
                     <div class="modal-body">
-                        <p>Please provide a reason for blocking <?= htmlspecialchars($data['Name']) ?>. This message will be sent to the student's email.</p>
-                        <div class="form-group">
+
+                        <div id="confirmationMessage" class="modal-message">
+                            <i class="fas fa-info-circle"></i>
+                            <span id="messageText"> Please provide a reason for blocking <?= htmlspecialchars($data['studentData']->Name) ?>. This message will be sent to the student's email.</span>
+                        </div>
+
+                        <div class="modal-field">
                             <label for="block-reason">Reason for Blocking</label>
                             <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>
                             <p id="modal-message" style="color: red; margin-top: 10px;"></p>
                         </div>
+                        
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -807,13 +1116,17 @@
 
         <div id="unblock-modal" class="modal">
             <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
                 <form id="unblock-form" method="post" action="<?= ROOT ?>/PDC_admin/BlockStudent/unblock">
                     <input type="hidden" name="StudentId" id="unblock-student-id" value="">
                     <div class="modal-header">
                         <h3>Unblock Student</h3>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to unblock this student?</p>
+                        <div class="modal-message">
+                            <i class="fas fa-info-circle"></i>
+                            <span> Are you sure you want to unblock this student?</span>                            
+                        </div>
                     </div>
                     <div class="modal-actions">
                         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
@@ -826,19 +1139,19 @@
         <div class="modal-overlay" id="updateModal">
             <div class="modal-content">
                 <div class="modal-header">
+                    <span class="close" onclick="hideUpdateForm()">&times;</span>
                     <h2><i class="fas fa-user-edit"></i> Update Student Information</h2>
-                    <button class="modal-close" onclick="hideUpdateForm()">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['StudentId']) ?>">
+                    <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['studentData']->StudentId) ?>">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name" class="form-label">Full Name</label>
-                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['Name']) ?>">
+                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['studentData']->Name) ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['Email']) ?>">
+                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['studentData']->Email) ?>" required>
                                 <small class="form-hint">Format: example@domain.com</small>
                             </div>
                         </div>
@@ -846,14 +1159,17 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="studentId" class="form-label">Student ID</label>
-                                <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['StudentId']) ?>"
-                                    pattern="\d{4}[a-z]{2}\d{3}">
+                                <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['studentData']->StudentId) ?>"
+                                    pattern="\d{4}[a-z]{2}\d{3}"
+                                    required>
                                 <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
                             </div>
                             <div class="form-group">
                                 <label for="nic" class="form-label">NIC Number</label>
-                                <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['NIC']) ?>"
-                                    pattern="^\d{12}$">
+                                <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['studentData']->NIC) ?>"
+                                    pattern="^\d{12}$"
+                                    required
+                                    >
                                 <small class="form-hint">Format: 200456789012</small>
                             </div>
                         </div>
@@ -861,48 +1177,50 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="contact" class="form-label">Contact Number</label>
-                                <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['ContactNum']) ?>"
-                                    pattern="\d{10,15}$">
-                            </div>
+                                <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['studentData']->ContactNum) ?>"
+                                        pattern="^[0-9+\s()-]{7,20}$"
+                                        required
+                                ">
+                                </div>
                             <div class="form-group">
                                 <label for="degree" class="form-label">Degree Program</label>
                                 <select id="degree" name="DegreeName" class="form-control">
-                                    <option value="<?= htmlspecialchars($data['DegreeName']) ?>" selected>
-                                        <?= htmlspecialchars($data['DegreeName']) ?>
+                                    <option value="<?= htmlspecialchars($data['studentData']->DegreeName) ?>" selected>
+                                        <?= htmlspecialchars($data['studentData']->DegreeName) ?>
                                     </option>
-                                    <option value="<?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
-                                        <?= $data['DegreeName'] == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
+                                    <option value="<?= $data['studentData']->DegreeName == 'Computer Science' ? 'Information System' : 'Computer Science' ?>">
+                                        <?= $data['studentData']->DegreeName == 'Computer Science' ? 'Information System' : 'Computer Science' ?>
                                     </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['Status']) ?>" hidden>
+                            <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['studentData']->Status) ?>" hidden>
                         </div>
 
                         <div class="form-group">
                             <label for="github" class="form-label">GitHub Profile</label>
-                            <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['Github']) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
+                            <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['studentData']->Github) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
                                 pattern="https?://github\.com/.+">
                             <small class="form-hint">Format: https://github.com/username</small>
                         </div>
 
                         <div class="form-group">
                             <label for="linkedin" class="form-label">LinkedIn Profile</label>
-                            <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['Linkedin']) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
+                            <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['studentData']->Linkedin) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
                                 pattern="https?://(www\.)?linkedin\.com/in/.+">
                             <small class="form-hint">Format: https://linkedin.com/in/username</small>    
                         </div>
 
                         <div class="form-group">
                             <label for="description" class="form-label">Student Description</label>
-                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['ShortDesc']) ? htmlspecialchars($data['ShortDesc']) : '' ?></textarea>
+                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['studentData']->ShortDesc) ? htmlspecialchars($data['studentData']->ShortDesc) : '' ?></textarea>
                         </div>
 
                         <div class="form-actions">
-                            <button type="button" class="btn btn-cancel" onclick="hideUpdateForm()">Cancel</button>
-                            <button type="submit" class="btn btn-save">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideUpdateForm()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
                 </div>

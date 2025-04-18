@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/advertisement/overviewAdvertisements.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/student/overviewStudent.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
     
@@ -14,6 +14,22 @@
 </head>
 
 <body>
+
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+
+
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar")  ?>
         <main class="main-content">
@@ -62,7 +78,7 @@
                                         <td><?= htmlspecialchars($row->numOfInterns) ?></td>
                                         <td><?= htmlspecialchars($row->startdate) ?></td>
                                         <td><?= htmlspecialchars($row->deadline) ?></td>
-                                        <td><button onclick="navigateToAdvertisementView('<?= htmlspecialchars($row->advertisementId)?>')" class="view-btn">View</button></td> <!-- Correctly aligned in a separate column -->
+                                        <td><button class="view-btn action-btn" onclick="navigateToAdvertisementView('<?= htmlspecialchars($row->advertisementId)?>')" class="view-btn"><i class="fas fa-eye"></i> View</button></td> <!-- Correctly aligned in a separate column -->
                                     </tr>
                                 <?php endforeach; ?>
                                 

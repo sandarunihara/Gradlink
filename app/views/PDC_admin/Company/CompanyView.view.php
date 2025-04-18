@@ -4,523 +4,689 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Profile | <?= htmlspecialchars($companyData->Name) ?></title>
+    <title>Company Profile | <?= htmlspecialchars($data['companyData']->Name) ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <style>
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --danger-color:rgb(206, 17, 17);
-            --success-color: #4cc9f0;
-            --warning-color: #f8961e;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --gray-color: #6c757d;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
+        /* ================ ROOT VARIABLES ================ */
+:root {
+  /* Colors */
+  --primary-color: #4361ee;
+  --primary-dark: #3a0ca3;
+  --light-gray: #e9ecef;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --danger-color: rgb(206, 17, 17);
+  --success-color: #4cc9f0;
+  --warning-color: #f8961e;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --gray-color: #6c757d;
+  
+  /* UI Elements */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* ================ BASE STYLES ================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f0f5;
+  color: var(--dark-color);
+  height: 100vh;
+}
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
+/* ================ LAYOUT ================ */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
 
-        /* Main Content Area */
-        .content {
-            margin-left: 80px; /* Same as sidebar width */
-            flex: 1;
-            padding: 40px 40px 40px 40px;
-            background-color: #f0f0f5;
-            min-height: 100vh;
-            transition: margin-left 0.3s;
-        }
+.content {
+  margin-left: 80px; /* Same as sidebar width */
+  flex: 1;
+  padding: 40px;
+  background-color: #f0f0f5;
+  min-height: 100vh;
+  transition: var(--transition);
+}
 
-        /* Company Header Section */
-        .company-header {
-            position: relative;
-            margin-bottom: 2rem;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-        }
+/* ================ COMPANY HEADER ================ */
+.company-header {
+  position: relative;
+  margin-bottom: 2rem;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+}
 
-        .cover-image {
-            height: 200px;
-            background: linear-gradient(135deg, #4361ee, #3a0ca3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
+.cover-image {
+  height: 200px;
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
 
-        .cover-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
+.cover-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
 
-        .company-logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            bottom: -60px;
-            left: 40px;
-            z-index: 2;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border: 4px solid white;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-        }
+.company-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: -60px;
+  left: 40px;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 4px solid white;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
 
-        .company-logo .initials {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
+.company-logo .initials {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
 
-        .company-title {
-            padding: 80px 40px 30px;
-            background: white;
-        }
+.company-title {
+  padding: 80px 40px 30px;
+  background: white;
+}
 
-        .company-title h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
+.company-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+}
 
-        .company-status {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
+/* ================ STATUS INDICATORS ================ */
+.company-status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
 
-        .status-active {
-            background-color: rgba(76, 201, 240, 0.1);
-            color: var(--success-color);
-        }
+.status-active {
+  background-color: rgba(76, 201, 240, 0.1);
+  color: var(--success-color);
+}
 
-        .status-blocked {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--danger-color);
-        }
+.status-blocked {
+  background-color: rgba(247, 37, 133, 0.1);
+  color: var(--danger-color);
+}
 
-        /* Company Info Section */
-        .company-info-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
+.block-stats {
+  font-size: 0.85rem;
+  color: var(--danger-color);
+  margin-top: 0.25rem;
+}
 
-        .info-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-        }
+.block-stats span {
+  margin-right: 0.5rem;
+}
 
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
+/* ================ INFO CARDS ================ */
+.company-info-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #eee;
-        }
+.info-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
 
-        .card-header i {
-            font-size: 1.25rem;
-            margin-right: 0.75rem;
-            color: var(--primary-color);
-        }
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
 
-        .card-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
+.card-header i {
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+  color: var(--primary-color);
+}
 
-        .info-item {
-            margin-bottom: 1rem;
-        }
+.card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
 
-        .info-label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--gray-color);
-            margin-bottom: 0.25rem;
-            display: block;
-        }
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
 
-        .info-value {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--dark-color);
-            padding: 0.5rem 0;
-            border-bottom: 1px dashed #e9ecef;
-        }
+.info-item {
+  margin-bottom: 1rem;
+}
 
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+.info-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-color);
+  margin-bottom: 0.25rem;
+  display: block;
+}
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.info-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #e9ecef;
+}
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+.info-value a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
+}
 
-        .btn i {
-            font-size: 1rem;
-        }
+.info-value a:hover {
+  text-decoration: underline;
+}
 
-        .btn-back {
-            background-color: #e9ecef;
-            color: var(--dark-color);
-        }
+/* ================ HISTORY TIMELINE ================ */
+.history-timeline {
+  position: relative;
+  padding-left: 30px;
+  margin-top: 1rem;
+}
 
-        .btn-back:hover {
-            background-color: #dee2e6;
-        }
+.history-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  width: 2px;
+  background: #e9ecef;
+}
 
-        .btn-block {
-            background-color: var(--danger-color);
-            color: white;
-        }
+.history-item {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
 
-        .btn-block:hover {
-            background-color:rgb(120, 4, 4);
-        }
+.history-item:last-child {
+  padding-bottom: 0;
+}
 
-        .btn-unblock {
-            background-color: var(--success-color);
-            color: white;
-        }
+.history-marker {
+  position: absolute;
+  left: -30px;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
 
-        .btn-unblock:hover {
-            background-color: #3ab8db;
-        }
+.history-item.blocked .history-marker {
+  background-color: var(--danger-color);
+  box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.2);
+}
 
-        /* Modal Styles */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
+.history-item.unblocked .history-marker {
+  background-color: var(--success-color);
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+}
 
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
+.history-marker::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+}
 
-        .modal-content {
-            background: white;
-            border-radius: var(--border-radius);
-            width: 500px;
-            max-width: 95%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: translateY(-20px);
-            transition: var(--transition);
-        }
+.history-content {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
 
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
 
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.history-action {
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
 
-        .modal-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
+.history-item.blocked .history-action {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--danger-color);
+}
 
-        .modal-body {
-            padding: 1.5rem;
-        }
+.history-item.unblocked .history-action {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--success-color);
+}
 
-        .modal-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
+.history-date {
+  font-size: 0.8rem;
+  color: var(--gray-color);
+}
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+.history-reason, .history-admin {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid #dee2e6;
+}
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--dark-color);
-        }
+.history-reason strong, .history-admin strong {
+  color: var(--dark-color);
+}
 
-        textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: 'Poppins', sans-serif;
-            resize: vertical;
-            min-height: 120px;
-            transition: var(--transition);
-        }
+.no-history {
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--gray-color);
+}
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-        }
+.no-history i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--success-color);
+}
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
+.no-history p {
+  margin: 0;
+}
 
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-        }
+/* ================ ACTION BUTTONS ================ */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 
-        .btn-secondary {
-            background-color: #e9ecef;
-            color: var(--dark-color);
-        }
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+}
 
-        .btn-secondary:hover {
-            background-color: #dee2e6;
-        }
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        .modal-actions {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
 
-        #unblock-modal .modal-content {
-            background: white;
-            border-radius: var(--border-radius);
-            width: 500px;
-            max-width: 95%;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: translateY(-20px);
-            transition: var(--transition);
-        }
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
 
-        #unblock-modal .modal-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 1rem;
-        }
+.btn-secondary {
+  background-color: white;
+  color: var(--gray-color);
+  border: 1px solid var(--light-gray);
+}
 
-        #unblock-modal .modal-content p {
-            font-size: 1rem;
-            color: var(--dark-color);
-            margin-bottom: 2rem;
-        }
+.btn-secondary:hover {
+  background-color: var(--light-gray);
+}
 
-        .toast-message.show {
-    opacity: 1;
-    transform: translateY(0);
+.btn-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #3aa8d1;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: rgb(173, 23, 23);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+.btn-back {
+  background-color: white;
+  color: var(--gray-color);
+  border: 1px solid var(--light-gray);
+}
+
+.btn-block {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.btn-unblock {
+  background-color: var(--success-color);
+  color: white;
+}
+
+/* ================ MODAL STYLES ================ */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: white;
+  border-radius: var(--border-radius);
+  width: 500px;
+  max-width: 95%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-20px);
+  transition: var(--transition);
+}
+
+.modal.active .modal-content {
+  transform: translateY(0);
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--gray-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close:hover {
+  color: var(--danger-color);
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer, .modal-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-field {
+  margin-bottom: 1.5rem;
+}
+
+.modal-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.modal-field textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--border-radius);
+  resize: vertical;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+.modal-field textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+.modal-message {
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  background-color: rgba(72, 149, 239, 0.1);
+  color: var(--primary-color);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* ================ TOAST MESSAGES ================ */
+.toast-message.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .toast-message::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
 }
 
 .toast-success {
-    background-color: rgba(40, 167, 69, 0.95);
+  background-color: rgba(40, 167, 69, 0.95);
 }
 
 .toast-success::before {
-    background-color: #2ecc71;
+  background-color: #2ecc71;
 }
 
 .toast-error {
-    background-color: rgba(220, 53, 69, 0.95);
+  background-color: rgba(220, 53, 69, 0.95);
 }
 
 .toast-error::before {
-    background-color: #e74c3c;
+  background-color: #e74c3c;
 }
 
 .toast-close-btn {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
 .toast-close-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 .toast-content {
-    padding-right: 20px;
-    line-height: 1.5;
+  padding-right: 20px;
+  line-height: 1.5;
 }
 
 .toast-title {
-    font-weight: 600;
-    margin-bottom: 4px;
-    font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 15px;
 }
 
 .toast-text {
-    font-size: 14px;
-    opacity: 0.9;
+  font-size: 14px;
+  opacity: 0.9;
 }
 
-/* Progress bar animation */
 .toast-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .toast-progress-bar {
-    height: 100%;
-    background: white;
-    animation: progress linear;
-    transform-origin: left;
+  height: 100%;
+  background: white;
+  animation: progress linear;
+  transform-origin: left;
 }
 
 @keyframes progress {
-    0% { transform: scaleX(1); }
-    100% { transform: scaleX(0); }
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
 }
 
-        /* Responsive Adjustments */
-        @media (max-width: 992px) {
-            .company-info-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-        }
+/* ================ RESPONSIVE STYLES ================ */
+@media (max-width: 992px) {
+  .company-info-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+}
 
-        @media (max-width: 768px) {
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .company-logo {
-                width: 100px;
-                height: 100px;
-                bottom: -50px;
-            }
-            
-            .company-title {
-                padding-top: 70px;
-            }
-        }
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .company-logo {
+    width: 100px;
+    height: 100px;
+    bottom: -50px;
+  }
+  
+  .company-title {
+    padding-top: 70px;
+  }
+}
     </style>
 </head>
 
@@ -558,19 +724,32 @@
     
         <main class="content">
             <div class="company-header">
-                <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->coverimg) ? htmlspecialchars($companyData->coverimg) : 'assets/images/default-cover.jpg' ?>')">
-                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->profileimg) ? htmlspecialchars($companyData->profileimg) : 'assets/images/default-profile.png' ?>')">
-                        <?php if (empty($companyData->profileimg)): ?>
-                            <div class="initials"><?= substr(htmlspecialchars($companyData->Name), 0, 1) ?></div>
+                <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($data['companyData']->coverimg) ? htmlspecialchars($data['companyData']->coverimg) : 'assets/images/default-cover.jpg' ?>')">
+                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($data['companyData']->profileimg) ? htmlspecialchars($data['companyData']->profileimg) : 'assets/images/default-profile.png' ?>')">
+                        <?php if (empty($data['companyData']->profileimg)): ?>
+                            <div class="initials"><?= substr(htmlspecialchars($data['companyData']->Name), 0, 1) ?></div>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="company-title">
-                    <h1><?= htmlspecialchars($companyData->Name) ?></h1>
-                    <span class="company-status <?= $companyData->Status === 'Blocked' ? 'status-blocked' : 'status-active' ?>">
-                        <i class="fas fa-<?= $companyData->Status === 'Blocked' ? 'ban' : 'check-circle' ?>"></i>
-                        <?= htmlspecialchars($companyData->Status) ?>
+
+                    <h1><?= htmlspecialchars($data['companyData']->Name) ?></h1>
+                    <span class="company-status <?= $data['companyData']->Status === 'Blocked' ? 'status-blocked' : 'status-active' ?>">
+                        <i class="fas fa-<?= $data['companyData']->Status === 'Blocked' ? 'ban' : 'check-circle' ?>"></i>
+                        <?= htmlspecialchars($data['companyData']->Status) ?>
                     </span>
+
+                    <?php if ($data['companyData']->block_count > 0): ?>
+                    <div class="block-stats">
+                        <span>Blocked <?= htmlspecialchars($data['companyData']->block_count) ?> time(s)</span>
+                        
+                        <?php if (!empty($data['companyData']->last_blocked_at)): ?>
+                        <span>• Last on <?= date('M j, Y', strtotime($data['companyData']->last_blocked_at)) ?></span>
+                        <?php endif; ?>
+                    
+                    </div>
+                    <?php endif; ?>
+
                 </div>
             </div>
 
@@ -585,19 +764,19 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Company ID</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->CompanyId) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->CompanyId) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Contact Person</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->ContactPerson) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->ContactPerson) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Email</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->Email) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->Email) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Phone</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->ContactNum) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->ContactNum) ?></div>
                         </div>
                     </div>
                 </div>
@@ -611,19 +790,19 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Street No</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->No) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->No) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Street Lane</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->Lane) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->Lane) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">City</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->City) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->City) ?></div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">District</span>
-                            <div class="info-value"><?= htmlspecialchars($companyData->District) ?></div>
+                            <div class="info-value"><?= htmlspecialchars($data['companyData']->District) ?></div>
                         </div>
                     </div>
                 </div>
@@ -636,7 +815,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Description</span>
-                        <div class="info-value" style="border-bottom: none; padding-bottom: 0;"><?= htmlspecialchars($companyData->ShortDesc) ?></div>
+                        <div class="info-value" style="border-bottom: none; padding-bottom: 0;"><?= htmlspecialchars($data['companyData']->ShortDesc) ?></div>
                     </div>
                 </div>
 
@@ -650,8 +829,8 @@
                         <div class="info-item">
                             <span class="info-label">Website</span>
                             <div class="info-value">
-                                <?php if (!empty($companyData->Website)): ?>
-                                    <a href="<?= htmlspecialchars($companyData->Website) ?>" target="_blank">Visit Website</a>
+                                <?php if (!empty($data['companyData']->Website)): ?>
+                                    <a href="<?= htmlspecialchars($data['companyData']->Website) ?>" target="_blank">Visit Website</a>
                                 <?php else: ?>
                                     Not provided
                                 <?php endif; ?>
@@ -660,8 +839,8 @@
                         <div class="info-item">
                             <span class="info-label">LinkedIn</span>
                             <div class="info-value">
-                                <?php if (!empty($companyData->Linkedin)): ?>
-                                    <a href="<?= htmlspecialchars($companyData->Linkedin) ?>" target="_blank">View Profile</a>
+                                <?php if (!empty($data['companyData']->Linkedin)): ?>
+                                    <a href="<?= htmlspecialchars($data['companyData']->Linkedin) ?>" target="_blank">View Profile</a>
                                 <?php else: ?>
                                     Not provided
                                 <?php endif; ?>
@@ -671,17 +850,62 @@
                 </div>
             </div>
 
+            <div class="info-card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>Block History</h2>
+                </div>
+                <?php if (!empty($data['actionDet'])): ?>
+                    <div class="history-timeline">
+                        <?php foreach ($data['actionDet'] as $record): ?>
+                            <div class="history-item <?= $record->action_type?>">
+                                <div class="history-marker">
+                                    <?php if ($record->action_type === 'blocked'): ?>
+                                        <i class="fas fa-ban"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-check-circle"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-header">
+                                        <div class="history-action-container">
+                                            <span class="history-action"><?= htmlspecialchars(ucfirst($record->action_type)) ?></span>
+                                            <?php if (!empty($record->actor_role)): ?>
+                                                <span class="history-role">• <?= htmlspecialchars($record->actor_role) ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <span class="history-date"><?= date('M j, Y \a\t g:i A', strtotime($record->timestamp)) ?></span>
+                                    </div>
+                                    <?php if (!empty($record->reason)): ?>
+                                        <div class="history-reason">
+                                            <span class="reason-label">Note:</span>
+                                            <span class="reason-text"><?= htmlspecialchars($record->reason) ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-history">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No block history recorded</p>
+                        <small class="no-history-sub">This user has never been blocked</small>
+                    </div>
+                <?php endif; ?>
+            </div>
+
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <button class="btn btn-back" onclick="history.back()">
+                <button class="btn btn-outline" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <?php if ($companyData->block === 1): ?>
-                    <button class="btn btn-unblock" onclick="unblockCompany('<?= htmlspecialchars($companyData->CompanyId) ?>')">
+                <?php if ($data['companyData']->block === 1): ?>
+                    <button class="btn btn-success" onclick="unblockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
                         <i class="fas fa-lock-open"></i> Unblock
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-block" onclick="blockCompany('<?= htmlspecialchars($companyData->CompanyId) ?>')">
+                    <button class="btn btn-danger" onclick="blockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
                         <i class="fas fa-ban"></i> Block
                     </button>
                 <?php endif; ?>
@@ -692,20 +916,30 @@
     <!-- Block Company Modal with Form -->
     <div id="block-modal" class="modal">
         <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
             <form id="block-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewCompany/block">
                 <input type="hidden" name="companyId" id="company-id" value="">
                 <div class="modal-header">
                     <h3>Block Company</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Please provide a reason for blocking <?= htmlspecialchars($companyData->Name) ?>. This message will be sent to the company's email.</p>
-                    <div class="form-group">
-                        <label for="block-reason">Reason for Blocking</label>
-                        <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>
-                        <p id="modal-message" style="color: red; margin-top: 10px;"></p>
+
+                    <div class="modal-field">
+                        <div class="form-group">
+                            <label for="block-reason">Reason for Blocking</label>
+                            <textarea id="block-reason" name="block_reason" placeholder="Enter your reason here..." required></textarea>
+                            <p id="modal-message" style="color: red; margin-top: 10px;"></p>
+                        </div>
                     </div>
+
+                    <div id="confirmationMessage" class="modal-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="messageText"> Please provide a reason for blocking <?= htmlspecialchars($data['companyData']->Name) ?>. This message will be sent to the company's email.</span>
+                    </div>
+
                 </div>
-                <div class="modal-footer">
+                
+                <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -716,13 +950,19 @@
     <!-- Unblock Company Modal -->
     <div id="unblock-modal" class="modal">
         <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
             <form id="unblock-form" method="post" action="<?= ROOT ?>/PDC_admin/BlockCompany/unblock">
                 <input type="hidden" name="companyId" id="unblock-company-id" value="">
                 <div class="modal-header">
                     <h3>Unblock Company</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to unblock this company?</p>
+                
+                    <div id="confirmationMessage" class="modal-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="messageText">Are you sure you want to unblock this company?</span>
+                    </div>
+
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>

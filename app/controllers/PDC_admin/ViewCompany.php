@@ -12,9 +12,27 @@ require "../app/libs/Exception.php";
         public function show($companyId){
             $model = new company;
             $companyData = $model->findById($companyId);
+            $action = new Action_logs;
+
+
+            $actor_id = $_SESSION['USER']->AssistantId;
+
+            $actionDet = $action->findDetails($companyId,$actor_id);
+
+            //show($actionDet);
+
             //var_dump($companyData);
+
+            $data = [
+                'companyData' => $companyData,
+                'actionDet' => $actionDet
+            ];
+
+            //show($data);
+
+
             if($companyData){
-                $this->view('PDC_admin/Company/CompanyView' , ['companyData' => $companyData]);
+                $this->view('PDC_admin/Company/CompanyView' , ['data' => $data]);
             }
             else{
                 echo "No data found";
