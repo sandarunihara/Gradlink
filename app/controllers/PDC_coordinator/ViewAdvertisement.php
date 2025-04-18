@@ -6,19 +6,21 @@ class ViewAdvertisement{
 
     public function index() {
 
-        $id = $_GET['id'] ?? null;
-        if ($id === null) {
+        $advertisementId = $_GET['id'] ?? null;
+        if ($advertisementId === null) {
             echo "Invalid or missing advertisement ID.";
             return;
         }
-        
-        $model = new C_Advertisement;
-        $data = $model->findwithcompany($id);
 
+        $model = new C_Advertisement;
+        $data = $model->findwithcompany($advertisementId);
+        //var_dump($data);
         if ($data) {
             $this->view('Coordinator/Advertisement/viewAdvertisement', ['data' => $data]);
         } else {
             echo "No data found";
         }
+        
+        
     }
 }
