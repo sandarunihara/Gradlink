@@ -50,7 +50,7 @@
                                 <?php foreach ($data['Complaints'] as $complaint): ?>
                                     <?php
                                     $status = $complaint -> Status;
-                                    $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
+                                    $statusClass = ($status == 'Reviewed') ? 'reviewed' : 'not-reviewed';
                                     $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
                                     ?>
                                     <tr class="complaint-row">
