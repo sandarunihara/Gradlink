@@ -14,110 +14,129 @@
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['flash_message'])):
+        $message = htmlspecialchars($_SESSION['flash_message']['message']);
+        $type = htmlspecialchars($_SESSION['flash_message']['type']);
+        unset($_SESSION['flash_message']);
+    ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard") ?>
 
-        <main class="main-content">
-        <a href="<?= ROOT ?>/PDC_coordinator/dashboardStudent" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <header class="header">
-                <div class="company-title">
-                    <h1 name="company_name"><?= htmlspecialchars($studentData['student_name'] ?? '') ?></h1>
+        <main class="content">
+            <div class="profile-header">
+                <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="Profile Image" class="profile-image">
+                <div class="profile-title">
+                    <h1><?= htmlspecialchars($data['Name']) ?></h1>
+                    <span class="status <?= $data['Status'] === 'Blocked' ? 'status-blocked' : ($data['Status'] === 'Pending' ? 'status-pending' : 'status-active') ?>">
+                        <i class="fas fa-<?= $data['Status'] === 'Blocked' ? 'ban' : ($data['Status'] === 'Pending' ? 'clock' : 'check-circle') ?>"></i>
+                        <?= htmlspecialchars($data['Status']) ?>
+                    </span>
+                </div>
+            </div>
 
+            <div class="student-details">
+                <div class="detail-card">
+                    <h3><i class="fas fa-id-card"></i> Basic Information</h3>
+                    <div class="detail-item">
+                        <span class="detail-label">Registration Number</span>
+                        <div class="detail-value"><?= htmlspecialchars($data['StudentId']) ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">NIC Number</span>
+                        <div class="detail-value"><?= htmlspecialchars($data['NIC']) ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Degree Program</span>
+                        <div class="detail-value"><?= htmlspecialchars($data['DegreeName']) ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Contact Number</span>
+                        <div class="detail-value"><?= htmlspecialchars($data['ContactNum']) ?></div>
+                    </div>
                 </div>
 
-
-            </header>
-
-            <section class="company-info">
-                <?php if (!empty($studentData)): ?>
-                    <script>
-                        const studentData = <?= json_encode($studentData, JSON_PRETTY_PRINT | JSON_HEX_TAG); ?>;
-                        console.log(studentData);
-                    </script>
-                    <!-- <?php
-                    echo "<pre>";
-                    print_r($studentData);
-                    echo "</pre>";
-                    ?> -->
-                    <form class="company-form" id="companyForm">
-                        <div class="form-group">
-                            <label for="company-name">Student Name</label>
-                            <input type="text" id="company-name" name="company_name"
-                                value="<?= htmlspecialchars($studentData['student_name'] ?? '') ?>" readonly required>
-                            <?php if (!empty($errors['student_name'])): ?>
-                                <div style="color: red; font-size: 14px;"><?= htmlspecialchars($errors['student_name']) ?></div>
+                <div class="detail-card">
+                    <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                    <div class="detail-item">
+                        <span class="detail-label">Email Address</span>
+                        <div class="detail-value"><?= htmlspecialchars($data['Email']) ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Professional Links</span>
+                        <div class="social-links">
+                            <?php if (!empty($data['Github'])): ?>
+                                <a href="<?= htmlspecialchars($data['Github']) ?>" target="_blank" class="social-link">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            <?php endif; ?>
+                            <?php if (!empty($data['Linkedin'])): ?>
+                                <a href="<?= htmlspecialchars($data['Linkedin']) ?>" target="_blank" class="social-link">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </a>
                             <?php endif; ?>
                         </div>
-                        <div class="form-group">
-                            <label for="contact-number">Registration No</label>
-                            <input type="text" id="contact-number" name="contact_number"
-                                value="<?= htmlspecialchars($studentData['student_id'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email-address">Email Address</label>
-                            <input type="email" id="email-address" name="email"
-                                value="<?= htmlspecialchars($studentData['email'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-number">NIC</label>
-                            <input type="text" id="contact-number" name="contact_number"
-                                value="<?= htmlspecialchars($studentData['nic'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Degree</label>
-                            <input type="text" id="address_no" name="address_no"
-                                value="<?= htmlspecialchars($studentData['degree'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Contact No</label>
-                            <input type="text" id="address_lane" name="address_lane"
-                                value="<?= htmlspecialchars($studentData['contact_no'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="linkedin">LinkedIn</label>
-                            <input type="url" id="linkedin" name="linkedin"
-                                value="<?= htmlspecialchars($studentData['linkedin']) ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="linkedin">Github</label>
-                            <input type="url" id="linkedin" name="linkedin"
-                                value="<?= htmlspecialchars($studentData['gitlink']) ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea id="description" name="description"
-                                readonly><?= htmlspecialchars($studentData['description']) ?></textarea>
-                        </div>
-                        <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
-                        <div>
-                            <small id="contact-error" class="error-message" style="color: red; display: none; ">
-                                Please enter a valid contact number (10 digits, starting with 07).
-                            </small>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Applications Count</span>
+                        <div class="detail-value"><?= htmlspecialchars($data['noOfAppliedAds']) ?> applications</div>
+                    </div>
+                </div>
+            </div>
 
+            <?php if (!empty($data['ShortDesc'])): ?>
+                <div class="detail-card">
+                    <h3><i class="fas fa-file-alt"></i> Student Description</h3>
+                    <p><?= htmlspecialchars($data['ShortDesc']) ?></p>
+                </div>
+            <?php endif; ?>
+
+            <div class="applications-section">
+                <h3 class="section-title"><i class="fas fa-briefcase"></i> Applied Companies</h3>
+
+                <?php if (empty($data['applications'])): ?>
+                    <div class="no-applications">No companies applied yet</div>
                 <?php else: ?>
-                    <p>No company data available.</p>
+                    <div class="applications-grid">
+                        <?php foreach ($data['applications'] as $application): ?>
+                            <div class="application-card">
+                                <div class="application-header">
+                                    <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
+                                    <div class="company-info">
+                                        <div class="company-name"><?= htmlspecialchars($application['ComName']) ?></div>
+                                        <span class="application-status 
+                                            <?= strtolower(str_replace(' ', '-', htmlspecialchars($application['Jobstatus']))) ?>">
+                                            <?= htmlspecialchars($application['Jobstatus']) ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="application-body">
+                                    <div class="application-detail">
+                                        <strong>Position:</strong> <?= htmlspecialchars($application['position']) ?>
+                                    </div>
+                                    <div class="application-detail">
+                                        <strong>Applied On:</strong> <?= htmlspecialchars($application['CreatedAt']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
+            </div>
 
-            </section>
-            <script>
-                function validateContactNumber() {
-                    const contactNumber = document.getElementById('contact-number').value;
-                    const contactNumberPattern = /^07\d{8}$/; // Validates Sri Lankan mobile numbers
-                    const errorElement = document.getElementById('contact-error');
-
-                    if (!contactNumberPattern.test(contactNumber)) {
-                        errorElement.style.display = 'block'; // Show error message
-                        return false; // Prevent form submission
-                    }
-
-                    errorElement.style.display = 'none'; // Hide error message if valid
-                    return true;
-                }
-            </script>
+            <div class="action-buttons">
+                <button class="btn btn-back" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                
+            </div>
         </main>
     </div>
 
