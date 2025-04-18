@@ -25,13 +25,13 @@
                     <h2>Welcome back!</h2>
                     <p>Sign in to access your internship management dashboard</p>
                 </div>
-                
+
                 <!-- Image placed here in the left panel -->
                 <div class="login-illustration">
-                    <img src="<?=ROOT?>/assets/img/login.jpg" alt="Login illustration">
+                    <img src="<?= ROOT ?>/assets/img/login.jpg" alt="Login illustration">
                 </div>
             </div>
-            
+
             <!-- Right Panel with Login Form -->
             <div class="login-right">
                 <form method="post" class="login-form">
@@ -39,7 +39,7 @@
                         <h2>Sign In</h2>
                         <p>Enter your credentials to continue</p>
                     </div>
-                    
+
                     <div class="input-group">
                         <label for="userId">User ID</label>
                         <div class="input-field">
@@ -47,7 +47,7 @@
                             <input type="text" id="userId" name="userId" required placeholder="Enter your user ID">
                         </div>
                     </div>
-                    
+
                     <div class="input-group">
                         <label for="password">Password</label>
                         <div class="input-field">
@@ -58,7 +58,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="form-options">
                         <div class="remember-me">
                             <input type="checkbox" id="remember_me" name="remember_me">
@@ -66,16 +66,16 @@
                         </div>
                         <a href="#" class="forgot-password">Forgot password?</a>
                     </div>
-                    
+
                     <button type="submit" class="login-btn">
                         <span>Sign In</span>
                         <i class="fas fa-arrow-right"></i>
                     </button>
-                    
+
                     <div class="divider">
                         <span>or</span>
                     </div>
-                    
+
                     <div class="social-login">
                         <button type="button" class="social-btn google">
                             <i class="fab fa-google"></i>
@@ -86,7 +86,7 @@
                             Continue with Microsoft
                         </button>
                     </div>
-                    
+
                     <div class="register-link">
                         Don't have an account? <a href="<?php echo ROOT ?>/signup">Create account</a>
                     </div>
@@ -103,7 +103,7 @@
             localStorage.clear(); // Clear local storage on page load
             const togglePassword = document.querySelector('.toggle-password');
             const passwordInput = document.getElementById('password');
-            
+
             if (togglePassword && passwordInput) {
                 togglePassword.addEventListener('click', function() {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -111,13 +111,13 @@
                     this.querySelector('i').classList.toggle('fa-eye-slash');
                 });
             }
-            
+
             const loginForm = document.querySelector('.login-form');
             if (loginForm) {
                 loginForm.addEventListener('submit', function(e) {
                     const userId = document.getElementById('userId').value.trim();
                     const password = document.getElementById('password').value.trim();
-                    
+
                     if (!userId || !password) {
                         e.preventDefault();
                         errorToast("Please enter both User ID and Password");
@@ -137,5 +137,17 @@
             successToast("Login successful!");
         </script>
     <?php endif; ?>
+
+    <!-- Toast message from session -->
+    <?php if (isset($_SESSION['flash'])): ?>
+        <script>
+            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+        </script>
+    <?php
+        unset($_SESSION['flash']);
+    endif;
+    ?>
+
 </body>
+
 </html>

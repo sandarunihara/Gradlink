@@ -19,12 +19,13 @@ class Schedule
 
         $interviewmodel = new interview_time_slot;
         $admodal = new C_Advertisement;
-        $appliedadmodal=new C_Dashboard;
+        $appliedadmodal = new C_Dashboard;
         $companyId = [
             'CompanyId' => $user->CompanyId
         ];
         $ad_data = $admodal->find($companyId);
         $data = [];
+        $removeinterviewdata=[];
         foreach ($ad_data as $ad_data) {
             $interview_para = [
                 'advertisementId' => $ad_data->advertisementId
@@ -33,42 +34,94 @@ class Schedule
         }
         $interviewdata = [];
         $currentDate = date('Y-m-d');
+        // show($data);
         foreach ($data as $item) {
             if (!empty($item)) {
                 foreach ($item as $item) {
-                    // show($adkeys);
-                    if($item->Date < $currentDate){
-                        $adkeys=[
-                            'StudentId'=>$item->StudentId,
-                            'advertisementId'=>$item->advertisementId
+                    if ($item->Date < $currentDate) {
+                        $adkeys = [
+                            'StudentId' => $item->StudentId,
+                            'advertisementId' => $item->advertisementId
                         ];
-                        $da=$appliedadmodal->find($adkeys,'studentadvertisement');
-                        if($da[0]->Jobstatus == 'Interview Scheduled'){
-                            $appliedadmodal->update($item->StudentId,$item->advertisementId,['Jobstatus'=>'Interview Expired']);
+                        $da = $appliedadmodal->find($adkeys, 'studentadvertisement');
+                        if ($da[0]->Jobstatus == 'Interview Scheduled') {
+                            $appliedadmodal->update($item->StudentId, $item->advertisementId, ['Jobstatus' => 'Interview Expired']);
                         }
-                        if($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit'){
-                            $interviewmodel->delete($item->InterviewId,'InterviewId');
+                        if ($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit') {
+                            $interviewmodel->delete($item->InterviewId, 'InterviewId');
                         }
-                    }else{
+                    } else {
                         $studentmodel = new C_Student;
                         $studentdata = $studentmodel->findbyId($item->StudentId);
                         $studentadvertisement = new student_advertisement;
                         $studentaddata = $studentadvertisement->findstudentad($item->advertisementId, $item->StudentId);
-                        $interviewdata[] = [
-                            'Position' => $studentaddata[0]->position,
-                            'StudentName' => $studentdata[0]->Name,
-                            'StudentId' => $studentdata[0]->StudentId,
-                            'advertisementId' => $item->advertisementId,
-                            'Date' => $item->Date,
-                            'StartTime' => $item->StartTime,
-                            'EndTime' => $item->EndTime
-                        ];
+                        $isrecriuted = $appliedadmodal->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement');
+                        if (!empty($isrecriuted)) {
+                            foreach ($isrecriuted as $students) {
+                                if (!empty($students)) {
+                                    $adcomapny = $admodal->find(['advertisementId' => $students->AdvertisementId]);
+                                    if ($adcomapny[0]->CompanyId == $user->CompanyId) {
+                                        $interviewdata[] = [
+                                            'Position' => $studentaddata[0]->position,
+                                            'StudentName' => $studentdata[0]->Name,
+                                            'StudentId' => $studentdata[0]->StudentId,
+                                            'advertisementId' => $item->advertisementId,
+                                            'Date' => $item->Date,
+                                            'StartTime' => $item->StartTime,
+                                            'EndTime' => $item->EndTime
+                                        ];
+                                    } else {
+                                        $removeinterviewdata[] = [
+                                            'Position' => $studentaddata[0]->position,
+                                            'StudentName' => $studentdata[0]->Name,
+                                            'StudentId' => $studentdata[0]->StudentId,
+                                            'advertisementId' => $item->advertisementId,
+                                            'Date' => $item->Date,
+                                            'StartTime' => $item->StartTime,
+                                            'EndTime' => $item->EndTime
+                                        ];
+                                    }
+                                } else {
+                                    $interviewdata[] = [
+                                        'Position' => $studentaddata[0]->position,
+                                        'StudentName' => $studentdata[0]->Name,
+                                        'StudentId' => $studentdata[0]->StudentId,
+                                        'advertisementId' => $item->advertisementId,
+                                        'Date' => $item->Date,
+                                        'StartTime' => $item->StartTime,
+                                        'EndTime' => $item->EndTime
+                                    ];
+                                }
+                            }
+                        } else {
+                            $interviewdata[] = [
+                                'Position' => $studentaddata[0]->position,
+                                'StudentName' => $studentdata[0]->Name,
+                                'StudentId' => $studentdata[0]->StudentId,
+                                'advertisementId' => $item->advertisementId,
+                                'Date' => $item->Date,
+                                'StartTime' => $item->StartTime,
+                                'EndTime' => $item->EndTime
+                            ];
+                        }
                     }
                 }
             }
         }
-
-        $this->view('Company/Schedule', ['data' => $interviewdata]);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && $_POST['submit'] == 'close') {
+            foreach ($removeinterviewdata as $removeapplication) {
+                $paradata = [
+                    'StudentId' => $removeapplication['StudentId'],
+                    'advertisementId' => $removeapplication['advertisementId']
+                ];
+                $responce = $interviewmodel->deleteinterview($paradata);
+                if ($responce) {
+                    header("Location: http://localhost/Gradlink/public/company/Schedule/dashboard");
+                    exit();
+                }
+            }
+        }
+        $this->view('Company/Schedule', ['data' => $interviewdata , 'removeinterviewdata'=>$removeinterviewdata]);
     }
 
     public function editschedule($advertisementId, $studentId)
@@ -83,13 +136,13 @@ class Schedule
         $companydata = $company->findById($_SESSION['USER']->CompanyId);
         $studentdata = $data[0];
         $model = new interview_time_slot;
-        $interview_para=[
+        $interview_para = [
             'StudentId' => $studentId,
             'advertisementId' => $advertisementId
         ];
-        $interview_data=$model->find($interview_para);
-        $interview_date=$interview_data[0]->Date;
-        $interview_id=$interview_data[0]->InterviewId;
+        $interview_data = $model->find($interview_para);
+        $interview_date = $interview_data[0]->Date;
+        $interview_id = $interview_data[0]->InterviewId;
         // show($interview_data[0]->InterviewId);
         $interview_para = [
             'StudentId' => $studentId
@@ -98,8 +151,8 @@ class Schedule
         $unavailable_date = [];
         if (!empty($student_before_shedule)) {
             foreach ($student_before_shedule as $interviewdate) {
-                if($interviewdate->Date != $interview_date)
-                $unavailable_date[] = $interviewdate->Date;
+                if ($interviewdate->Date != $interview_date)
+                    $unavailable_date[] = $interviewdate->Date;
             }
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -119,8 +172,8 @@ class Schedule
             ];
 
             $updateresult = $updatemodel->update($studentId, $advertisementId, $updatedata);
-            $result = $model->update($interview_id,$data,'InterviewId');
-            if ($result['status']=='success' && $updateresult['status']) {
+            $result = $model->update($interview_id, $data, 'InterviewId');
+            if ($result['status'] == 'success' && $updateresult['status']) {
                 $success = "Interview Schedule created successfully.";
                 if (!empty($studentdata->Email) && !empty($companydata->Email)) {
                     $studentemail = $studentdata->Email;
@@ -254,6 +307,6 @@ class Schedule
 
 
 
-        $this->view('Company/editSchedule',['data' => $data, 'addata' => $addata,'unavailable_date'=>$unavailable_date,'interview_data'=>$interview_data]);
+        $this->view('Company/editSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date, 'interview_data' => $interview_data]);
     }
 }

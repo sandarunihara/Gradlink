@@ -15,113 +15,144 @@
 </head>
 
 <body>
+    <?php if (isset($_SESSION['flash_message'])): ?>
+        <script>
+            window.__flashMessage = {
+                message: <?= json_encode($_SESSION['flash_message']['message']) ?>,
+                type: <?= json_encode($_SESSION['flash_message']['type']) ?>
+            };
+            window.__flashClearUrl = '/clear-flash'; // Your endpoint
+        </script>
+        <?php unset($_SESSION['flash_message']); ?>
+    <?php endif; ?>
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard")  ?>
 
-        <main class="main-content">
-            <a href="<?= ROOT ?>/PDC_coordinator/dashboardCompany" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <header class="header">
-
-
+        <a href="<?= ROOT ?>/PDC_coordinator/dashboardCompany" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <main class="content">
+            <div class="company-header">
+                <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->coverimg) ? htmlspecialchars($companyData->coverimg) : 'assets/images/default-cover.jpg' ?>')">
+                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->profileimg) ? htmlspecialchars($companyData->profileimg) : 'assets/images/default-profile.png' ?>')">
+                        <?php if (empty($companyData->profileimg)): ?>
+                            <div class="initials"><?= substr(htmlspecialchars($companyData->Name), 0, 1) ?></div>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <div class="company-title">
-                    <h1 name="company_name"><?= htmlspecialchars($companyData['company_name'] ?? '') ?></h1>
-                    <button class="edit-btn">&#9998;</button>
+                    <h1><?= htmlspecialchars($companyData->Name) ?></h1>
+                    <span class="company-status <?= $companyData->Status === 'Blocked' ? 'status-blocked' : 'status-active' ?>">
+                        <i class="fas fa-<?= $companyData->Status === 'Blocked' ? 'ban' : 'check-circle' ?>"></i>
+                        <?= htmlspecialchars($companyData->Status) ?>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Company Information Cards -->
+            <div class="company-info-container">
+                <!-- Basic Information Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-building"></i>
+                        <h2>Company Information</h2>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Company ID</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->CompanyId) ?></div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Contact Person</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->ContactPerson) ?></div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->Email) ?></div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Phone</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->ContactNum) ?></div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Address Information Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h2>Address</h2>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Street No</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->No) ?></div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Street Lane</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->Lane) ?></div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">City</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->City) ?></div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">District</span>
+                            <div class="info-value"><?= htmlspecialchars($companyData->District) ?></div>
+                        </div>
+                    </div>
+                </div>
 
-            </header>
+                <!-- Additional Information Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-info-circle"></i>
+                        <h2>Additional Details</h2>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Description</span>
+                        <div class="info-value" style="border-bottom: none; padding-bottom: 0;"><?= htmlspecialchars($companyData->ShortDesc) ?></div>
+                    </div>
+                </div>
 
-            <?php $this->renderComponent("companyTabs") ?>
+                <!-- Social Media Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-share-alt"></i>
+                        <h2>Social Media</h2>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Website</span>
+                            <div class="info-value">
+                                <?php if (!empty($companyData->Website)): ?>
+                                    <a href="<?= htmlspecialchars($companyData->Website) ?>" target="_blank">Visit Website</a>
+                                <?php else: ?>
+                                    Not provided
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">LinkedIn</span>
+                            <div class="info-value">
+                                <?php if (!empty($companyData->Linkedin)): ?>
+                                    <a href="<?= htmlspecialchars($companyData->Linkedin) ?>" target="_blank">View Profile</a>
+                                <?php else: ?>
+                                    Not provided
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <section class="company-info">
-                <?php if (!empty($companyData)): ?>
-                    <script>
-                        const companyData = <?= json_encode($companyData, JSON_PRETTY_PRINT | JSON_HEX_TAG); ?>;
-                        console.log(companyData);
-                    </script>
-                    <!-- <?php
-                            echo "<pre>";
-                            print_r($companyData);
-                            echo "</pre>";
-                            ?> -->
-                    <form class="company-form" id="companyForm" onsubmit="return validateContactNumber()" method="POST" action="<?= ROOT ?>/PDC_coordinator/viewCompany/edit/<?= htmlspecialchars($companyData[0]['company_id']) ?>">
-                        <div class="form-group">
-                            <label for="company-name">Company Name</label>
-                            <input type="text" id="company-name" name="company_name" value="<?= htmlspecialchars($companyData['company_name'] ?? '') ?>" readonly required>
-                            <?php if (!empty($errors['company_name'])): ?>
-                                <div style="color: red; font-size: 14px;"><?= htmlspecialchars($errors['company_name']) ?></div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="form-group">
-                            <label for="email-address">Email Address</label>
-                            <input type="email" id="email-address" name="email" value="<?= htmlspecialchars($companyData['email'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-number">Contact Number</label>
-                            <input type="text" id="contact-number" name="contact_number" value="<?= htmlspecialchars($companyData['contact_number'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address No</label>
-                            <input type="text" id="address_no" name="address_no" value="<?= htmlspecialchars($companyData['address_no'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address Lane</label>
-                            <input type="text" id="address_lane" name="address_lane" value="<?= htmlspecialchars($companyData['address_lane'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address City</label>
-                            <input type="text" id="address_city" name="address_city" value="<?= htmlspecialchars($companyData['address_city'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address District</label>
-                            <input type="text" id="address_district" name="address_district" value="<?= htmlspecialchars($companyData['address_district'] ?? '') ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea id="description" name="description" readonly><?= htmlspecialchars($companyData['description']) ?></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-person">Contact Person</label>
-                            <input type="text" id="contact-person" name="contact_person" value="<?= htmlspecialchars($companyData['contact_person']) ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="url" id="website" name="website" value="<?= htmlspecialchars($companyData['website']) ?>" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="linkedin">LinkedIn</label>
-                            <input type="url" id="linkedin" name="linkedin" value="<?= htmlspecialchars($companyData['linkedin']) ?>" readonly required>
-                        </div>
-                        <button class="btn update-btn" id="save-btn" type="submit" style="display: none;">Update</button>
-                        <div>
-                            <small id="contact-error" class="error-message" style="color: red; display: none; ">
-                                Please enter a valid contact number (10 digits, starting with 07).
-                            </small>
-                        </div>
-                    </form>
-
-                <?php else: ?>
-                    <p>No company data available.</p>
-                <?php endif; ?>
-
-            </section>
-            <script>
-                function validateContactNumber() {
-                    const contactNumber = document.getElementById('contact-number').value;
-                    const contactNumberPattern = /^07\d{8}$/; // Validates Sri Lankan mobile numbers
-                    const errorElement = document.getElementById('contact-error');
-
-                    if (!contactNumberPattern.test(contactNumber)) {
-                        errorElement.style.display = 'block'; // Show error message
-                        return false; // Prevent form submission
-                    }
-
-                    errorElement.style.display = 'none'; // Hide error message if valid
-                    return true;
-                }
-            </script>
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-back" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                
+            </div>
         </main>
     </div>
 

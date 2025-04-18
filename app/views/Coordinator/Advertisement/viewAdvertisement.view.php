@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisement</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/viewCompany.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Advertisement/viewAdvertisement.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/companyTabs.css">
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,6 +15,20 @@
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['flash_message'])):
+        $message = htmlspecialchars($_SESSION['flash_message']['message']);
+        $type = htmlspecialchars($_SESSION['flash_message']['type']);
+        unset($_SESSION['flash_message']);
+    ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard")  ?>
 
@@ -23,66 +37,76 @@
                 <i class="fas fa-arrow-left"></i>
             </a> -->
 
-
-            <header class="header">
-                <div class="header-left">
-                    <h1>Advertisements</h1>
+            <header class="content-header">
+                <div class="header-title">
+                    <h1>Advertisement Details</h1>
+                    <p class="breadcrumb">Dashboard / Advertisements / #<?= htmlspecialchars($data->advertisementId) ?></p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
                 </div>
             </header>
-            <?php $this->renderComponent("advertisementTabs") ?>
-            <div class="company-title">
-                <h1 name="company_name" style="margin-top: 25px;"><?= htmlspecialchars($data->advertisementId) ?></h1>
-                <!-- <button class="edit-btn">&#9998;</button> -->
-            </div>
-            <section class="company-info">
-                <?php if (!empty($data)): ?>
-
-                    <div class="image-container">
-                        <img src="data:image/jpeg;base64,<?= htmlspecialchars($data->image) ?>" alt="Advertisement Image">
+            
+            
+            <div class="advertisement-card">
+                <div class="card-header">
+                    <div class="advertisement-meta">
+                        <span class="status-badge <?= strtolower(htmlspecialchars($data->status)) ?>">
+                            <?= htmlspecialchars($data->status) ?>
+                        </span>
+                        <span class="post-date">
+                            <i class="far fa-calendar-alt"></i> Posted: <?= date('M d, Y', strtotime(htmlspecialchars($data->startdate))) ?>
+                        </span>
                     </div>
-                    <form class="company-form">
-
-                        <div class="form-group">
-                            <label for="position">Position</label>
-                            <input type="text" id="position" name="position" value="<?= htmlspecialchars($data->position) ?>" readonly>
-
+                    <h2 class="position-title"><?= htmlspecialchars($data->position) ?></h2>
+                    <p class="company-name">
+                        <i class="far fa-building"></i> <?= htmlspecialchars($data->Name) ?>
+                    </p>
+                </div>
+                
+                <div class="card-body">
+                    <div class="advertisement-media">
+                        <div class="media-container">
+                            <img src="data:image/jpeg;base64,<?= htmlspecialchars($data->image) ?>" alt="Advertisement Image" class="advertisement-image">
                         </div>
-                        <div class="form-group">
-                            <label for="company-name">Company Name</label>
-                            <input type="text" id="company-name" name="company-name" value="<?= htmlspecialchars($data->Name) ?>" readonly>
+                    </div>
+                    
+                    <div class="advertisement-details">
+                        <div class="detail-section">
+                            <h3 class="section-title">Position Details</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>Working Mode</label>
+                                    <p><?= htmlspecialchars($data->workingMode) ?></p>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Interns Required</label>
+                                    <p><?= htmlspecialchars($data->numOfInterns) ?></p>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Start Date</label>
+                                    <p><?= date('M d, Y', strtotime(htmlspecialchars($data->startdate))) ?></p>
+                                </div>
+                                <div class="detail-item">
+                                    <label>End Date</label>
+                                    <p><?= date('M d, Y', strtotime(htmlspecialchars($data->deadline))) ?></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <input type="text" id="status" name="status" value="<?= htmlspecialchars($data->status) ?>" readonly>
+                        
+                        <div class="detail-section">
+                            <h3 class="section-title">Description</h3>
+                            <div class="description-content">
+                                <?= nl2br(htmlspecialchars($data->description)) ?>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea readonly><?= htmlspecialchars($data->description) ?></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="interns">Number of Interns Required</label>
-                            <input type="text" id="interns" name="interns" value="<?= htmlspecialchars($data->numOfInterns) ?>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="mode">Working Mode</label>
-                            <input type="text" id="mode" name="mode" value="<?= htmlspecialchars($data->workingMode) ?>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="start-date">Start Date</label>
-                            <input type="text" id="start-date" name="start-date" value="<?= htmlspecialchars($data->startdate) ?>" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="end-date">End Date</label>
-                            <input type="text" id="end-date" name="end-date" value="<?= htmlspecialchars($data->deadline) ?>" readonly required>
-                        </div>
-                    </form>
-
-                <?php else: ?>
-                    <p>No data available.</p>
-                <?php endif; ?>
-
-            </section>
+                    </div>
+                </div>
+                
+                
+            </div>
 
         </main>
     </div>

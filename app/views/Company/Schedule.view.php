@@ -37,14 +37,31 @@
                                         <p>Date : <span><?php echo $slot['Date']; ?></span></p>
                                         <p>Time : <span><?php echo $slot['StartTime']; ?> to <?php echo $slot['EndTime']; ?></span></p>
                                     </div>
-                                    <a class="s_delnedit" href="http://localhost/Gradlink/public/company/Schedule/editschedule/<?php echo $slot['advertisementId']?>/<?php echo $slot['StudentId']?>">
+                                    <a class="s_delnedit" href="http://localhost/Gradlink/public/company/Schedule/editschedule/<?php echo $slot['advertisementId'] ?>/<?php echo $slot['StudentId'] ?>">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                 </div>
-                                
+
                             <?php endforeach; ?>
                         <?php else : ?>
                             <p>No Schedule available.</p>
+                        <?php endif; ?>
+                        <?php if (isset($removeinterviewdata) && !empty($removeinterviewdata)): ?>
+                            <?php
+                            $names = array_map(function ($student) {
+                                return htmlspecialchars($student['StudentName']);
+                            }, $removeinterviewdata);
+
+                            $nameList = implode(', ', $names);
+                            ?>
+
+                            <div class="removed-message">
+                                <strong><?php echo $nameList; ?></strong> have been recruited by another company and are therefore no longer under consideration.
+                                <form method="POST" action="">
+
+                                    <button type="submit" value="close" name="submit">sub</button>
+                                </form>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>

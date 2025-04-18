@@ -111,18 +111,18 @@
     <!-- Toast -->
     <div id="toast-container" class="toast-container"></div>
 
-    <?php if(array_key_exists('isUpdate', $_SESSION)){ ?>
-        <?php if($_SESSION['isUpdate'] === 1){?>
-            <script>
-                successToast("Profile updated successfully");
-            </script>
-        <?php }else{ ?>
-            <script>
-                errorToast("Failed to update profile");
-            </script>
-        <?php } ?>
-        <?php unset($_SESSION['isUpdate']);?>
-    <?php }?>
+    <?php if(array_key_exists('success', $_SESSION)){ ?>
+        <script>
+            successToast("<?php echo $_SESSION['success']?>");
+        </script>
+        <?php unset($_SESSION['success']);?>
+    <?php } ?>
+    <?php if(array_key_exists('errors', $_SESSION)){ ?>
+        <script>
+            errorToast("<?php echo $_SESSION['errors']?>");
+        </script>
+        <?php unset($_SESSION['errors']);?>
+    <?php } ?>
 
     <!--Profile Picture Preview-->
     <div id="profile-picture-preview" class="profile-picture-preview-container">
