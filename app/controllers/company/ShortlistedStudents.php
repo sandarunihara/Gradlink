@@ -126,6 +126,8 @@ class ShortlistedStudents
         $data = $model->findbyId($StudentId);
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
+        // show($studentad_data[0]->CV);
+        $data[0]->adCV=$studentad_data[0]->CV;
         $studentJobstatus = $studentad_data[0]->Jobstatus;
         $company = new company;
         $companydata = $company->findById($_SESSION['USER']->CompanyId);
@@ -283,7 +285,7 @@ class ShortlistedStudents
                 }
             }
         }
-
+        // show($data);    
         $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
     }
 

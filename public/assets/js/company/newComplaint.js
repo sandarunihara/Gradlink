@@ -54,7 +54,11 @@ function openRecruitConfirmModal(event) {
 // Submits the form after confirmation
 function confirmAction() {
     // Submit the form
-    document.getElementById('form').submit();
+    document.getElementById('Recruit-modal').style.display = 'none';
+    document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+    setTimeout(() => {
+        document.getElementById('form').submit();
+    }, 300); // slight delay to show animation before form submit
 }
 
 function closeRecruitConfirmModal() {

@@ -37,18 +37,18 @@
                                 <div class="is_con1">
                                     <div class="sc_pos">
                                         <h4><span class="starmark">*</span>Position:</h4>
-                                        <input type="text" id="position" name="position" value="<?php echo $addata[0]->position ?>"  readonly />
+                                        <input type="text" id="position" name="position" value="<?php echo $addata[0]->position ?>" readonly />
                                     </div>
                                     <div class="sc_dateNdur">
                                         <div class="sc_date">
                                             <h4><span class="starmark">*</span>Student Name :</h4>
-                                            <input type="text" id="name" name="name" value="<?php echo $data[0]->Name ?>"  readonly />
+                                            <input type="text" id="name" name="name" value="<?php echo $data[0]->Name ?>" readonly />
                                         </div>
                                     </div>
                                     <div class="sc_dateNdur">
                                         <div class="sc_date">
                                             <h4><span class="starmark">*</span>Date :</h4>
-                                            <input type="date" id="date" name="date"  value="<?php echo $interview_data[0]->Date ?>"/>
+                                            <input type="date" id="date" name="date" value="<?php echo $interview_data[0]->Date ?>" />
                                         </div>
                                     </div>
                                     <div class="sc_time">
@@ -94,6 +94,10 @@
         </div>
     </div>
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
 
 
     <div id="toast-container" class="toast-container"></div>
@@ -104,7 +108,7 @@
         <script>
             window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
         </script>
-    <?php   
+    <?php
         unset($_SESSION['flash']);
     endif;
     ?>
@@ -153,7 +157,11 @@
         }
 
         function submitForm() {
-            document.getElementById('schedule-form').submit();
+            document.getElementById('confirmation-modal').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('schedule-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
     </script>
 </body>
