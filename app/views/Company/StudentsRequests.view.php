@@ -175,7 +175,7 @@
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="5">No students found</td>
+                                                <td colspan="5" class="no-events">No students found</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>

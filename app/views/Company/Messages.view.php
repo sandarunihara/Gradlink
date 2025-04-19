@@ -24,6 +24,7 @@
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="m_main">
+                    <?php if(!empty($data)) : ?>
                     <!-- sort data -->
                     <?php
                     usort($data, function ($a, $b) {
@@ -57,7 +58,9 @@
                             </div>
                         </a>
                     <?php endforeach; ?>
-
+                   <?php else : ?>
+                    <p class="no-events">No Message found</p>
+                    <?php endif?>                 
 
                 </div>
             </div>

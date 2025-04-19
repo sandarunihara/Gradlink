@@ -37,12 +37,12 @@ function validateForm() {
   fields.forEach((field) => {
     const input = document.getElementById(field.id);
     const errorSpan = document.getElementById(field.id + "Error");
-  
+
     // Only validate if the field is in the current tab
     if (input && currentTabEl.contains(input)) {
       let value = input.value.trim();
       let showError = false;
-  
+
       if (!value && field.type !== "file") {
         showError = true;
       } else if (
@@ -73,7 +73,7 @@ function validateForm() {
           field.message = "Passwords do not match";
         }
       }
-  
+
       if (showError) {
         errorSpan.textContent = field.message;
         errorSpan.style.display = "block";
@@ -86,7 +86,6 @@ function validateForm() {
       }
     }
   });
-  
 
   return isValid;
 }
@@ -159,17 +158,16 @@ document.getElementById("password").addEventListener("input", function () {
 });
 
 function togglePasswordVisibility(id) {
-    const input = document.getElementById(id);
-    const toggleBtn = input.nextElementSibling;
-    if (input.type === "password") {
-      input.type = "text";
-      toggleBtn.textContent = "Hide";
-    } else {
-      input.type = "password";
-      toggleBtn.textContent = "Show";
-    }
+  const input = document.getElementById(id);
+  const toggleBtn = input.nextElementSibling;
+  if (input.type === "password") {
+    input.type = "text";
+    toggleBtn.textContent = "Hide";
+  } else {
+    input.type = "password";
+    toggleBtn.textContent = "Show";
   }
-  
+}
 
 function openRecruitConfirmModal(event) {
   if (event) event.preventDefault();
@@ -183,6 +181,8 @@ function closeRecruitConfirmModal() {
 function confirmAction() {
   // Hide modal first
   closeRecruitConfirmModal();
-  // Then submit the form
-  document.getElementById("companyForm").submit();
+  document.getElementById("loading-overlay").style.display = "flex"; // Show loader
+  setTimeout(() => {
+    document.getElementById("companyForm").submit();
+  }, 300); // slight delay to show animation before form submit
 }

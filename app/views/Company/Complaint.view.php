@@ -71,7 +71,7 @@
                                                 <?php endforeach; ?>
                                             <?php else: ?>
                                                 <tr>
-                                                    <td colspan="5">No Old Complaints found</td>
+                                                    <td colspan="5" class="no-events">No Old Complaints found</td>
                                                 </tr>
                                             <?php endif; ?>
                                         </tbody>

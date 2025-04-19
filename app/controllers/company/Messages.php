@@ -44,4 +44,25 @@ class Messages{
 
         $this-> view('Company/Pdc_message',['user' => $_SESSION['USER'],'data'=>$data]);
     }
+
+    public function getunread() {
+        $user = $_SESSION["USER"];
+        $model = new PDC_Session;
+        $result = $model->findall();
+        $data = [];
+    
+        if (!empty($result)) {
+            foreach ($result as $session) {
+                if ($session->CompanyId == $user->CompanyId && $session->message_read == 0) {
+                    $session->detail = 'Techtalk';
+                    $data[] = $session;
+                }
+            }
+        }
+    
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit;
+    }
+    
 }

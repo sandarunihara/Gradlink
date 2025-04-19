@@ -1,78 +1,77 @@
-.m_main{
-    width: 100%;
-    height: 570px;
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 50px;
-    margin-top: 30px;
+.m_main {
+  width: 100%;
+  height: 570px;
+  padding: 30px;
+  border-radius: 10px;
+  margin-right: 50px;
+  margin-top: 30px;
 }
-.m_container{
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: black;
-    height: fit-content;
-    width: 1000px;
-    background-color: #cae0fc;
-    border-radius: 7px;
-    padding: 10px;
-    box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
-    cursor: pointer;
-    transition: transform 0.7s ease;
+.m_container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: black;
+  height: fit-content;
+  width: 1000px;
+  background-color: #cae0fc;
+  border-radius: 7px;
+  padding: 10px;
+  box-shadow: 1px 1px 1px 1px rgba(211, 211, 211, 0.25);
+  cursor: pointer;
+  transition: transform 0.7s ease;
 }
-.m_de{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.m_de {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.m_container:hover{
-    transform: scale(1.02);
+.m_container:hover {
+  transform: scale(1.02);
 }
-.m_content{
-    display: flex;
-    flex-direction: column;
-    /* margin-left: 10px; */
-}
-.readmessage{
-    background-color: #007bff;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-}
-.unreadmessage{
-    background-color: transparent;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-}
-.image{
-    height: 50px;
-    width: 50px;
-    border-radius: 50%; 
-}
-.m_name{
-    font-size: 15px;
-    font-weight:500;
-}
-.m_detail{
-    font-size: 10px;
-}
-.m_time{
-    font-size: 10px;
-}
-.time_div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.time_div i{
-    font-size: 12px;
-    transition: all 0.5s ease;
-}
-.time_div:hover i{
-    color: #ff0000;
+.m_content {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 10px; */
 }
 
-
+.readmessage {
+  background-color: #007bff;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+.unreadmessage {
+  background-color: transparent;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+.image {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+.m_name {
+  font-size: 15px;
+  font-weight: 500;
+}
+.m_detail {
+  font-size: 10px;
+}
+.m_time {
+  font-size: 10px;
+}
+.time_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.time_div i {
+  font-size: 12px;
+  transition: all 0.5s ease;
+}
+.time_div:hover i {
+  color: #ff0000;
+}
