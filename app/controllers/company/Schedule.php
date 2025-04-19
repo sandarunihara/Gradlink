@@ -26,11 +26,13 @@ class Schedule
         $ad_data = $admodal->find($companyId);
         $data = [];
         $removeinterviewdata=[];
-        foreach ($ad_data as $ad_data) {
-            $interview_para = [
-                'advertisementId' => $ad_data->advertisementId
-            ];
-            $data[] = $interviewmodel->find($interview_para);
+        if(!empty($ad_data)){
+            foreach ($ad_data as $ad_data) {
+                $interview_para = [
+                    'advertisementId' => $ad_data->advertisementId
+                ];
+                $data[] = $interviewmodel->find($interview_para);
+            }
         }
         $interviewdata = [];
         $currentDate = date('Y-m-d');

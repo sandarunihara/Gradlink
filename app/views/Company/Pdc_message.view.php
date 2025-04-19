@@ -95,13 +95,3 @@
 </body>
 
 </html>
-
-<!-- <?php
-
-
-
-
-        // Output in a <p> tag
-        echo "<p>$message</p>";
-        ?>
- -->

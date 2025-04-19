@@ -164,7 +164,12 @@ class Companydash
             }
 
             sort($dates); // Sort the dates in ascending order
-            $earliestDate = $dates[0]; // Earliest date
+            if(!empty($dates)){
+
+                $earliestDate = $dates[0]; // Earliest date
+            }else{
+                $earliestDate=time();
+            }
             $today = time();
             $latestDate = $today; // Latest date
 
@@ -269,7 +274,7 @@ class Companydash
 
     public function calendar()
     {
-        $this->view('Components/calendar');
+        $this->view('Company/Calendar');
     }
 
 

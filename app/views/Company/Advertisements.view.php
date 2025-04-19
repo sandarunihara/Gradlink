@@ -96,7 +96,7 @@
                                     </div>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <h3>No advertisements found</h3>
+                                <p class="no-events">No advertisements found</p>
                             <?php endif; ?>
                         </div>
                     </div>

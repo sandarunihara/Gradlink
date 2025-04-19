@@ -64,7 +64,7 @@
                                 </a>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No students Recruit yet</p>
+                            <p class="no-events">No students Recruit yet</p>
                         <?php endif; ?>
                     </div>
                 </div>

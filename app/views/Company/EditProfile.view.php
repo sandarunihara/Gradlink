@@ -129,9 +129,87 @@
     </div>
 
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
 
 
     <script>
+        function validateProfileForm() {
+            const name = document.querySelector('input[name="Name"]').value.trim();
+            const shortDesc = document.querySelector('input[name="ShortDesc"]').value.trim();
+            const email = document.querySelector('input[name="Email"]').value.trim();
+            const contactPerson = document.querySelector('input[name="ContactPerson"]').value.trim();
+            const contactNum = document.querySelector('input[name="ContactNum"]').value.trim();
+            const linkedin = document.querySelector('input[name="Linkedin"]').value.trim();
+            const website = document.querySelector('input[name="Website"]').value.trim();
+            const no = document.querySelector('input[name="No"]').value.trim();
+            const lane = document.querySelector('input[name="Lane"]').value.trim();
+            const city = document.querySelector('input[name="City"]').value.trim();
+            const district = document.querySelector('input[name="District"]').value.trim();
+            const coverphoto = document.getElementById('coverphoto').files[0];
+            const profilephoto = document.getElementById('profilephoto').files[0];
+
+            const maxFileSize = 1024 * 1024; // 5MB
+
+            if (coverphoto && coverphoto.size > maxFileSize) {
+                errorToast("Cover photo exceeds the maximum file size of 1MB.");
+                return false;
+            }
+
+            if (profilephoto && profilephoto.size > maxFileSize) {
+                errorToast("Profile photo exceeds the maximum file size of 5MB.");
+                return false;
+            }
+
+            if (!name) {
+                errorToast("Company name is required.");
+                return false;
+            }
+
+            if (!shortDesc) {
+                errorToast("Please enter a short description.");
+                return false;
+            }
+
+            if (!email || !email.includes('@')) {
+                errorToast("Please enter a valid email address.");
+                return false;
+            }
+
+            if (!contactPerson) {
+                errorToast("Contact person is required.");
+                return false;
+            }
+
+            if (!contactNum || contactNum.length < 10) {
+                errorToast("Please enter a valid contact number.");
+                return false;
+            }
+
+            if (!linkedin) {
+                errorToast("LinkedIn profile URL is required.");
+                return false;
+            }
+
+            if (!website) {
+                errorToast("Website URL is required.");
+                return false;
+            }
+
+            if (!no || !lane || !city || !district) {
+                errorToast("Complete address information is required.");
+                return false;
+            }
+
+            return true;
+        }
+
 
         function goback() {
             window.location.href = "<?php echo ROOT ?>/company/Profile/dashboard";
@@ -157,12 +235,13 @@
         // Get the modal
 
         // Get the modal popup for confirm update
-
         function openconfirmeModal() {
-
-            document.getElementById('deleteconfirmation-modal').style.display = 'block';
-            modal.style.display = 'flex'; // Use flex for centering modal
+            if (validateProfileForm()) {
+                document.getElementById('deleteconfirmation-modal').style.display = 'block';
+                modal.style.display = 'flex';
+            }
         }
+
 
         function closeconfirmModal() {
             document.getElementById('deleteconfirmation-modal').style.display = 'none';

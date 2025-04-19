@@ -35,8 +35,25 @@
                                 <span class="round-label">Current Placement Round</span>
                                 <span class="round-number"><?= $_SESSION['ROUNDID'] ?></span>
                             </span>
+                            <div class="d_pro">
+                                <div class="d_profile">
+                                    <div class="notification-wrapper">
+                                        <div class="notification-icon" onclick="toggleNotifications()">
+                                            <i class="fas fa-bell"></i>
+                                            <span id="notificationCount" class="badge"></span>
+                                        </div>
+                                        <div id="notificationDropdown" class="dropdown-content" style="display: none;">
+                                            <i class="fas fa-close" onclick="toggleNotifications()"></i>
+                                            <div id="notificationsList">
+                                                <p>Loading notifications...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
                         </div>
-                        <?php $this->renderComponent("companyheader") ?>
                     </div>
                     <div class="overview">
                         <p>Overview</p>
@@ -103,7 +120,10 @@
                             </div>
                             <div class="second-content">
                                 <div class="calendar-with-schedule-data">
-                                    <h3>Interview Schedule</h3>
+                                    <div class="schedule-topic">
+                                        <h3>Interview Schedule</h3>
+                                        <a href="http://localhost/Gradlink/public/company/Companydash/calendar" class="view-all">view calendar</a>
+                                    </div>
                                     <div class="compact-calendar-header"></div>
                                     <div id="compactCalendar"></div>
                                     <div class="topic-content">
@@ -129,7 +149,7 @@
                                         </li>
                                         <?php
                                         if (empty($data)) {
-                                            echo '<li>No requests found</li>';
+                                            echo '<li class="no-events">No requests found</li>';
                                         } else {
                                             // Get the first 8 elements from $data
                                             $firstEight = array_slice($data, 0, 6);
@@ -187,6 +207,49 @@
         </div>
 
         <script>
+            function toggleNotifications() {
+                const dropdown = document.getElementById("notificationDropdown");
+                dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+            }
+
+            async function loadNotifications() {
+                try {
+                    const response = await fetch('http://localhost/Gradlink/public/company/Messages/getunread');
+                    const data = await response.json();
+
+                    const listContainer = document.getElementById("notificationsList");
+                    const badge = document.getElementById("notificationCount");
+
+                    listContainer.innerHTML = ''; // Clear previous
+
+                    if (data.length === 0) {
+                        listContainer.innerHTML = '<p>No new notifications</p>';
+                        badge.style.display = 'none';
+                    } else {
+                        badge.textContent = data.length;
+                        badge.style.display = 'inline-block';
+
+                        data.forEach(item => {
+                            const el = document.createElement('div');
+                            el.classList.add('notification-item');
+                            el.innerHTML = `
+                                            <strong>${item.session_name}</strong><br>
+                                            <span>${item.session_date} | ${item.time_slot}</span>
+                                        `;
+                            listContainer.appendChild(el);
+                        });
+                        console.log(listContainer);
+                        
+                    }
+
+                } catch (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            }
+
+            // Load on page load
+            document.addEventListener('DOMContentLoaded', loadNotifications);
+
             document.addEventListener("DOMContentLoaded", () => {
                 // Make sure FullCalendar is loaded before initializing
                 if (typeof FullCalendar !== 'undefined') {
