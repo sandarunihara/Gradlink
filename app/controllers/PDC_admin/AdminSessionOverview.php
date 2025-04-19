@@ -16,10 +16,15 @@
 
         public function completed(){
             $model = new PDC_Session;
+            $unregisteredModel = new PDC_Unreg_Session;
             $sessionData = $model->findCompleted();
+            $sessionDataUnregistered = $unregisteredModel->findCompleted();
+
+            $data = array_merge($sessionData, $sessionDataUnregistered);
+            //show($data);
 
             $this->view('PDC_admin/Session/SessionCompleted', 
-            ['sessionData' => $sessionData,
+            ['sessionData' => $data,
             'activeTab' => 'completed'
             ]);
 

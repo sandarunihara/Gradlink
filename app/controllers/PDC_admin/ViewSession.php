@@ -216,12 +216,13 @@ class ViewSession {
                     'email' => $_POST['email'],
                     'contact_number' => $_POST['contact_number'],
                 ];
+                //show($data);
     
                 // $r = $model->validate($data);
                 // show($r);
     
-                if($model->validate($data)){
-                    $updatedStatus = $model->update($sessionId,$data,'session_id');
+               
+                    $updatedStatus = $model->update($sessionId , $data, 'session_id');
                     //show($updatedStatus);
                     if($updatedStatus && $updatedStatus['status'] === 'success'){
                         $_SESSION['flash_message'] = [
@@ -239,24 +240,24 @@ class ViewSession {
                         header('Location: ' . $_SERVER['HTTP_REFERER']);
                         exit;
                     }    
-                }
-                else{
-                    $_SESSION['flash_message'] = [
-                        'type' => 'error',
-                        'message' => 'Error: Could not update the session.'
-                    ];
-                    header('Location: ' . $_SERVER['HTTP_REFERER']);
-                    exit;
+                
+                // else{
+                //     $_SESSION['flash_message'] = [
+                //         'type' => 'error',
+                //         'message' => 'Error: Could not update the session.'
+                //     ];
+                //     header('Location: ' . $_SERVER['HTTP_REFERER']);
+                //     exit;
                 }
             }
     
-            $data = $model->find($sessionId);
-                if (!$data) {
-                    $errors['general'] = "No student data found for the given ID.";
-                }
-                $this->view('PDC_admin/Session/SessionView', ['session' => $data, 'errors' => $errors]);
+            // $getdata = $model->find($sessionId);
+            //     if (!$data) {
+            //         $errors['general'] = "No student data found for the given ID.";
+            //     }
+            //     $this->view('PDC_admin/Session/SessionView', ['session' => $getdata, 'errors' => $errors]);
             
-            }
+            // }
 
         private function sendEmail($email, $reason) {
             try {

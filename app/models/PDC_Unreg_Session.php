@@ -67,6 +67,12 @@ class PDC_Unreg_Session{
         return $result ? $result[0] : null;
     }
 
+    public function findCompleted(){
+        $query = "SELECT * FROM $this->table WHERE session_date < CURDATE() AND deleted = 0;";
+        $result = $this->query($query);
+        return $result ? $result : [];
+    }
+
 
 
 }

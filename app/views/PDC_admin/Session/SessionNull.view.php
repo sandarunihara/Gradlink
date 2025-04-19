@@ -74,7 +74,7 @@
                                             <td><?= htmlspecialchars($session->hall_number) ?></td>
                                             <td><?= htmlspecialchars($session->session_date) ?></td>
                                             <td><?= htmlspecialchars($session->time_slot) ?></td>
-                                            <td><button class="view-btn action-btn" onclick="navigateToShowSession(<?= $session->session_id ?>)"><i class="fas fa-eye"></i> View</button></td>
+                                            <td><button class="view-btn action-btn" onclick="navigateToShowUnregisteredSession(<?= $session->session_id ?>)"><i class="fas fa-eye"></i> View</button></td>
                                             <td></td>
                                         </tr>
                                     <?php endforeach; ?>

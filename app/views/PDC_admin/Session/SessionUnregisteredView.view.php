@@ -12,7 +12,7 @@
     <style>
         :root {
             --primary: #1e40af;
-            --primary-light:rgb(53, 112, 180);
+            --primary-light: rgb(53, 112, 180);
             --primary-dark: rgb(3, 19, 45);
             --secondary: #6b7280;
             --success: #10b981;
@@ -27,6 +27,7 @@
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -50,9 +51,9 @@
         .content {
             flex: 1;
             padding: 1.5rem 2rem;
-            margin-left: 5%;  /* Sidebar is 5% of width */
-            width: 95%;       /* Content is 95% of width */
-            padding-left: 5%; /* Add padding for content */
+            margin-left: 5%;
+            width: 95%;
+            padding-left: 5%;
         }
 
         .header {
@@ -75,6 +76,97 @@
 
         .header-left h1 i {
             color: var(--primary);
+        }
+
+        /* Improved Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(30, 64, 175, 0.1);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+        }
+
+        .btn-link {
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+            transform: none;
+        }
+
+        .btn-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8125rem;
         }
 
         .action-buttons {
@@ -197,8 +289,15 @@
             border-top: 1px solid #e5e7eb;
             background-color: #f9fafb;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             gap: 0.75rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-left: auto;
         }
 
         .avatar {
@@ -230,65 +329,6 @@
             font-size: 0.95rem;
             color: #111827;
             word-break: break-word;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius-sm);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: 1px solid transparent;
-        }
-
-        .btn i {
-            font-size: 0.875rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary-dark);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: #e0e7ff;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-            border-color: #4b5563;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        .btn-link {
-            background: transparent;
-            color: var(--primary);
-            text-decoration: none;
-            padding: 0;
-            border: none;
-        }
-
-        .btn-link:hover {
-            text-decoration: underline;
         }
 
         .tag {
@@ -373,7 +413,6 @@
             color: var(--primary);
         }
 
-        /* Grid layout for session details */
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -386,42 +425,6 @@
             }
         }
 
-        /* Company card styles */
-        .company-card {
-            border: 1px solid #e5e7eb;
-            border-radius: var(--border-radius-sm);
-            overflow: hidden;
-        }
-
-        .company-header {
-            padding: 1rem;
-            background-color: #f0f9ff;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .company-header h4 {
-            margin: 0;
-            color: #111827;
-            font-size: 1.1rem;
-        }
-
-        .company-id {
-            font-size: 0.75rem;
-            color: var(--gray);
-            margin-top: 0.25rem;
-        }
-
-        .company-details {
-            padding: 1rem;
-        }
-
-        .company-links {
-            padding: 0.75rem 1rem;
-            background-color: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 0.75rem;
-        }
         .status-expired {
             color: #dc2626;
             background-color: #fee2e2;
@@ -438,155 +441,408 @@
             font-weight: 500;
         }
 
-        .btn-danger {
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            margin: 1rem;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: slideIn 0.3s ease-out forwards;
+            overflow: hidden;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--danger);
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .modal-header h3::before {
+            content: '!';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
             background-color: var(--danger);
             color: white;
-            border-color: var(--danger);
+            border-radius: 50%;
+            font-weight: bold;
         }
 
-        .btn-danger:hover {
-            background-color: #dc2626;
+        .modal-body {
+            padding: 1.5rem;
         }
 
-        .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-out;
-}
+        .modal-body p {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
 
-.modal.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-.modal-content {
-    background-color: white;
-    border-radius: var(--border-radius);
-    width: 100%;
-    max-width: 500px;
-    margin: 1rem;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-20px);
-    opacity: 0;
-    animation: slideIn 0.3s ease-out forwards;
-    overflow: hidden;
-}
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
 
-.modal-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #ef4444, #dc2626);
-}
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-}
+        .delete-modal.show {
+            display: flex;
+            opacity: 1;
+        }
 
-.modal-header h3 {
-    margin: 0;
-    color: var(--danger);
-    font-size: 1.25rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+        .delete-modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
 
-.modal-header h3::before {
-    content: '!';
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    background-color: var(--danger);
-    color: white;
-    border-radius: 50%;
-    font-weight: bold;
-}
+        .delete-modal-header {
+            padding: 0 0 1.5rem 0;
+            border-bottom: none;
+            position: relative;
+        }
 
-.modal-body {
-    padding: 1.5rem;
-}
+        .delete-modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--danger);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
 
-.modal-body p {
-    margin-bottom: 1rem;
-    color: var(--dark);
-}
+        .delete-modal-header h3::before {
+            content: '!';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
 
-.form-group {
-    margin-bottom: 1.5rem;
-}
+        .delete-modal-body {
+            padding: 1rem 0;
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--dark);
-}
+        .delete-modal-body p {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
 
-#delete-reason {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: var(--border-radius-sm);
-    font-family: inherit;
-    min-height: 120px;
-    resize: vertical;
-    transition: border-color 0.2s;
-}
+        .modal-message {
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
 
-#delete-reason:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-}
+        .modal-message i {
+            color: var(--danger);
+        }
 
-.modal-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-}
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-#modal-message {
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-}
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+        .form-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius-sm);
+            resize: vertical;
+            font-family: inherit;
+            transition: var(--transition);
+        }
 
-@keyframes slideIn {
-    from { 
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to { 
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
 
+        .delete-modal-footer {
+            padding: 1.5rem 0 0 0;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
 
-.toast-container {
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        #modal-message {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Update Modal Styles */
+        .update-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .update-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .update-modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: slideIn 0.3s ease-out forwards;
+            overflow: hidden;
+            border-top: 4px solid var(--primary);
+        }
+
+        .update-modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .update-modal-header h3 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .update-modal-header h3 i {
+            color: var(--primary);
+        }
+
+        .update-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.2s;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+
+        .update-modal-close:hover {
+            color: var(--danger);
+            background-color: #f3f4f6;
+        }
+
+        .update-modal-body {
+            padding: 1.5rem;
+        }
+
+        .update-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* Form Styles */
+        #sessionUpdateForm {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        #sessionUpdateForm input[type="text"],
+        #sessionUpdateForm input[type="date"],
+        #sessionUpdateForm select,
+        #sessionUpdateForm textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: var(--border-radius-sm);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        #sessionUpdateForm input[type="text"]:focus,
+        #sessionUpdateForm input[type="date"]:focus,
+        #sessionUpdateForm select:focus,
+        #sessionUpdateForm textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        #sessionUpdateForm textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-container {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -626,169 +882,6 @@
             cursor: pointer;
             font-size: 16px;
         }
-
-              /* Update Modal Styles */
-.update-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-out;
-}
-
-.update-modal.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.update-modal-content {
-    background-color: white;
-    border-radius: var(--border-radius);
-    width: 100%;
-    max-width: 600px;
-    margin: 1rem;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-20px);
-    opacity: 0;
-    animation: slideIn 0.3s ease-out forwards;
-    overflow: hidden;
-    border-top: 4px solid var(--primary);
-}
-
-.update-modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    background-color: #f8fafc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.update-modal-header h3 {
-    margin: 0;
-    color: var(--primary);
-    font-size: 1.25rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.update-modal-header h3 i {
-    color: var(--primary);
-}
-
-.update-modal-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--gray);
-    transition: color 0.2s;
-    padding: 0.25rem;
-    border-radius: 4px;
-}
-
-.update-modal-close:hover {
-    color: var(--danger);
-    background-color: #f3f4f6;
-}
-
-.update-modal-body {
-    padding: 1.5rem;
-}
-
-.update-modal-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-}
-
-/* Form Styles */
-#sessionUpdateForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--dark);
-}
-
-#sessionUpdateForm input[type="text"],
-#sessionUpdateForm input[type="date"],
-#sessionUpdateForm select,
-#sessionUpdateForm textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: var(--border-radius-sm);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.875rem;
-    transition: all 0.2s;
-}
-
-#sessionUpdateForm input[type="text"]:focus,
-#sessionUpdateForm input[type="date"]:focus,
-#sessionUpdateForm select:focus,
-#sessionUpdateForm textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-}
-
-#sessionUpdateForm textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-@media (max-width: 600px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { 
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to { 
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-
     </style>
 </head>
 
@@ -814,14 +907,13 @@
             <header class="header">
                 <div class="header-left">
                     <h1><i class="fas fa-calendar-alt"></i> Session Details</h1>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn btn-outline" id="edit-toggle-btn">
-                        <i class="fas fa-edit"></i> Edit Session
-                    </button>
-                    <button class="btn btn-danger" id="delete-btn">
-                        <i class="fas fa-trash-alt"></i> Delete Session
-                    </button>
+                    <div class="breadcrumb">
+                        <a href="<?= ROOT ?>/PDC_admin"><i class="fas fa-home"></i> Dashboard</a>
+                        <span class="separator">/</span>
+                        <a href="<?= ROOT ?>/PDC_admin/ViewSession"><i class="fas fa-calendar"></i> Sessions</a>
+                        <span class="separator">/</span>
+                        <span>Details</span>
+                    </div>
                 </div>
             </header>
 
@@ -882,9 +974,14 @@
                         <button type="button" class="btn btn-secondary" onclick="history.back()">
                             <i class="fas fa-arrow-left"></i> Back to Sessions
                         </button>
-                        <button type="button" class="btn btn-primary" id="save-btn" style="display: none;">
-                            <i class="fas fa-save"></i> Save Changes
-                        </button>
+                        <div class="card-actions" id="session-actions">
+                            <button type="button" class="btn btn-outline" id="edit-toggle-btn">
+                                <i class="fas fa-edit"></i> Edit Session
+                            </button>
+                            <button type="button" class="btn btn-danger" id="delete-btn">
+                                <i class="fas fa-trash-alt"></i> Delete Session
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -933,35 +1030,42 @@
         </main>
     </div>
 
-    <div id="delete-modal" class="modal">
-        <div class="modal-content">
-            <form id="delete-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/removeUnregistered">
-                <input type="hidden" name="session_id" id="session-id" value="">
-                <input type="hidden" name="email" id="email" value="<?= htmlspecialchars($session->email) ?>">
-                <div class="modal-header">
-                    <h3>Delete Session</h3>
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="delete-modal">
+    <div class="delete-modal-content">
+        <span class="close" onclick="closeDeleteModal()">&times;</span>
+        <form id="delete-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/removeUnregistered">
+            <input type="hidden" name="session_id" id="session-id" value="">
+            <input type="hidden" name="email" id="email" value="<?= htmlspecialchars($session->email) ?>">
+            <div class="delete-modal-header">
+                <h3>Delete Session</h3>
+            </div>
+            <div class="delete-modal-body">
+                <p>Please provide a reason for deletion. This message will be sent to the company's email.</p>
+                <div class="modal-message">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Are you sure you want to delete this session? This action cannot be undone.</span>
                 </div>
-                <div class="modal-body">
-                    <p>Please provide a reason for deletion. This message will be sent to the company's email.</p>
-                    <div class="form-group">
-                        <label for="block-reason">Reason for Deletion</label>
-                        <textarea id="delete-reason" name="delete_reason" placeholder="Enter your reason here..." required></textarea>
-                        <p id="modal-message" style="color: red; margin-top: 10px;"></p>
-                    </div>
+                <div class="form-group">
+                    <label for="delete-reason">Reason for Deletion</label>
+                    <textarea id="delete-reason" name="delete_reason" class="form-textarea" placeholder="Enter your reason here..." required></textarea>
+                    <p id="modal-message" style="color: red; margin-top: 10px;"></p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="delete-modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button type="submit" class="btn btn-danger">Delete Session</button>
+            </div>
+        </form>
     </div>
+</div>
 
+    <!-- Update Session Modal -->
     <div id="update-modal" class="update-modal">
         <div class="update-modal-content">
             <div class="update-modal-header">
                 <h3><i class="fas fa-edit"></i> Update Session Details</h3>
-                <button class="update-modal-close" onclick="closeUpdateModal()">&times;</button>
+                <span class="close" onclick="closeUpdateModal()">&times;</span>
             </div>
             <div class="update-modal-body">
                 <form id="sessionUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/editUnreg/<?= htmlspecialchars($session->session_id) ?>">
@@ -990,8 +1094,6 @@
                             value="<?= htmlspecialchars($session->contact_number) ?>"
                         >
                     </div>
-
-                    
                     
                     <div class="form-group">
                         <label for="description" class="form-label">Session Description</label>
@@ -1016,11 +1118,9 @@
                                 required>
                             </select>
                         </div>
-
                     </div>
                     
                     <div class="form-row">
-
                         <div class="form-group">
                             <label for="hall-number" class="form-label">Hall Name</label>
                             <select id="hall-number" name="hall_number" 
@@ -1028,7 +1128,6 @@
                                 required>
                             </select>
                         </div>
-
                     </div>
                     
                     <div class="update-modal-footer">
@@ -1045,9 +1144,9 @@
 
     <script>
 
-        function closeModal(){
+        function closeDeleteModal(){
             const modal = document.getElementById('delete-modal');
-            modal.classList.remove('active');
+            modal.classList.remove('show');
             document.getElementById('delete-reason').value = '';
             document.getElementById('modal-message').innerText = '';
         }
@@ -1063,7 +1162,7 @@
         deletebtn.addEventListener('click', function() {
             const sessionId = <?= json_encode($session->session_id) ?>;
             document.getElementById('session-id').value = sessionId;
-            document.getElementById('delete-modal').classList.add('active');
+            document.getElementById('delete-modal').classList.add('show');
         });
 
         updateBtn.addEventListener('click', function() {
@@ -1072,6 +1171,16 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
+
+            const actions = document.getElementById('session-actions');
+            const sessionDate = new Date("<?= $session->session_date ?>");
+            const currentDate = new Date();
+
+            if(sessionDate < currentDate){
+                actions.style.display = 'none';
+            } else {
+                actions.style.display = 'flex';
+            }
 
             // Tab functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
