@@ -90,6 +90,7 @@
                     <div class="register-link">
                         Don't have an account? <a href="<?php echo ROOT ?>/signup">Create account</a>
                     </div>
+
                 </form>
             </div>
         </div>

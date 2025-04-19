@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary-color:rgb(36, 115, 194);
-            --secondary-color:rgb(32, 61, 91);
+            --primary-color: rgb(36, 115, 194);
+            --secondary-color: rgb(32, 61, 91);
             --accent-color: #e74c3c;
             --light-gray: #f5f7fa;
             --medium-gray: #e0e0e0;
@@ -18,6 +18,9 @@
             --text-color: #333;
             --white: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --danger-color: #dc3545;
+            --gray-color: #6c757d;
         }
 
         * {
@@ -38,22 +41,24 @@
         }
 
         .main-content {
-            flex: 1;
-            padding: 2rem;
-            margin-left: 5%; /* Matching the sidebar width */
+            margin-left: 80px; /* Same as sidebar width */
+    flex: 1;
+    padding: 40px 40px 40px 40px;
+    background-color: #f0f0f5;
+    min-height: 100vh;
+    transition: margin-left 0.3s;
+
         }
 
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--medium-gray);
+            justify-content: space-between;
+            margin-bottom: 24px;
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 600;
             color: var(--secondary-color);
         }
@@ -135,20 +140,45 @@
             color: var(--primary-color);
         }
 
+        .security-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
         .info-item {
             display: flex;
-            margin-bottom: 1rem;
+            flex-direction: column;
+            padding: 1rem;
+            background-color: var(--light-gray);
+            border-radius: 8px;
         }
 
         .info-label {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            margin-bottom: 0.25rem;
             font-weight: 500;
-            color: var(--secondary-color);
-            min-width: 150px;
         }
 
         .info-value {
+            font-size: 1rem;
             color: var(--text-color);
-            flex: 1;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .security-info-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .stats-grid {
@@ -269,23 +299,25 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
             background-color: white;
-            border-radius: 10px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             animation: modalFadeIn 0.3s;
+            position: relative;
         }
 
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -299,27 +331,57 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 12px 12px 0 0;
         }
 
         .modal-header h2 {
             font-size: 1.5rem;
             color: var(--secondary-color);
+            margin: 0;
         }
 
-        .close-btn {
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
             background: none;
             border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark-gray);
+            padding: 0.5rem;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
         }
 
         .modal-body {
             padding: 1.5rem;
         }
 
+        /* Enhanced Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
         }
 
         .form-group label {
@@ -327,43 +389,55 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: var(--secondary-color);
+            font-size: 0.9rem;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.75rem 1rem;
             border: 1px solid var(--medium-gray);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: var(--light-gray);
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(36, 115, 194, 0.1);
+            background-color: var(--white);
         }
 
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--medium-gray);
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
         }
 
         .avatar-upload {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--medium-gray);
         }
 
         .avatar-preview {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--primary-color);
             margin-right: 1.5rem;
+            box-shadow: var(--shadow);
         }
 
         .avatar-upload-btn {
@@ -372,59 +446,98 @@
         }
 
         .upload-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             background-color: var(--light-gray);
-            border: 1px dashed var(--medium-gray);
-            border-radius: 6px;
+            border: 2px dashed var(--medium-gray);
+            border-radius: 8px;
             cursor: pointer;
             text-align: center;
             margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
         }
 
         .upload-btn:hover {
             background-color: #e9ecef;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
 
         .avatar-note {
             font-size: 0.8rem;
             color: var(--dark-gray);
+            max-width: 200px;
         }
 
-        @media (max-width: 992px) {
-            .profile-sections {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            position: sticky;
+            bottom: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* Password strength meter */
+        .password-strength-meter {
+            height: 4px;
+            background-color: var(--medium-gray);
+            margin-top: 8px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s, background-color 0.3s;
+        }
+        
+        .password-requirements {
+            color: var(--dark-gray);
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            cursor: pointer;
+            color: var(--dark-gray);
+            z-index: 2;
+        }
+        
+        .text-error {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: block;
         }
 
         @media (max-width: 768px) {
-            .profile-header {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .avatar-upload {
                 flex-direction: column;
                 text-align: center;
             }
             
-            .profile-avatar {
+            .avatar-preview {
                 margin-right: 0;
                 margin-bottom: 1rem;
-            }
-            
-            .info-item {
-                flex-direction: column;
-            }
-            
-            .info-label {
-                margin-bottom: 0.3rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                width: 95%;
             }
         }
         .toast-container {
@@ -627,20 +740,49 @@
 
                     <div class="profile-section">
                         <h3><i class="fas fa-lock"></i> Security</h3>
-                        <div class="info-item">
-                            <span class="info-label">Last Login:</span>
-                            <span class="info-value">Today, 09:42 AM</span>
+                        
+                        <div class="security-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Last Login:</span>
+                                <span class="info-value">
+                                    <?php 
+                                    if(isset($_SESSION['logintime'])) {
+                                        $loginTime = new DateTime($_SESSION['logintime']);
+                                        echo $loginTime->format('M j, Y \a\t g:i A');
+                                    } else {
+                                        echo 'Never logged in';
+                                    }
+                                    ?>
+                                </span>
+                            </div>
+                            
+                            <!-- <div class="info-item">
+                                <span class="info-label">Password Last Changed:</span>
+                                <span class="info-value">
+                                    <?php
+                                    if(isset($data[0]->password_changed_at)) {
+                                        $changedTime = new DateTime($data[0]->password_changed_at);
+                                        $interval = $changedTime->diff(new DateTime());
+                                        
+                                        if($interval->y > 0) {
+                                            echo $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
+                                        } elseif($interval->m > 0) {
+                                            echo $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
+                                        } elseif($interval->d > 0) {
+                                            echo $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
+                                        } else {
+                                            echo 'Today';
+                                        }
+                                    } else {
+                                        echo 'Never changed';
+                                    }
+                                    ?>
+                                </span>
+                            </div> -->
                         </div>
-                        <div class="info-item">
-                            <span class="info-label">Login IP:</span>
-                            <span class="info-value">192.168.1.105</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Password Last Changed:</span>
-                            <span class="info-value">2 weeks ago</span>
-                        </div>
+                        
                         <div class="action-buttons">
-                            <button class="btn btn-outline" id='change-password-btn' >
+                            <button class="btn btn-outline" id='change-password-btn'>
                                 <i class="fas fa-key"></i> Change Password
                             </button>
                             <button class="btn btn-primary" id='edit-btn'>
@@ -648,6 +790,8 @@
                             </button>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </main>
@@ -655,12 +799,15 @@
 
     <div class="modal" id='changePasswordModal'>
         <div class="modal-content">
+
             <div class="modal-header">
                 <h2>Change Password</h2>
                 <button class="close-btn" id="closePasswordModalBtn" onclick="closemodal()">&times;</button>
             </div>
+
             <div class="modal-body">
                 <form id="changePasswordForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/changePassword/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST">
+                    
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
@@ -687,11 +834,14 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline" id="cancelPasswordBtn">Cancel</button>
+                        <button class="btn btn-outline close-btn" onclick="closemodal()">Cancel</button>
                         <button type="submit" class="btn btn-primary" id="savePasswordBtn">Change Password</button>
                     </div>
+                
                 </form>
+            
             </div>
+        
         </div>
     </div>
 
@@ -699,103 +849,142 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Edit Profile</h2>
-                <button class="close-btn" id="closeModalBtn" onclick="closemodal()">&times;</button>
+                <button class="close" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body">
-            <form id="profileForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/edit/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST" enctype="multipart/form-data">
-                <div class="avatar-upload">
+                <form id="profileForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/edit/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST" enctype="multipart/form-data">
+                    <div class="avatar-upload">
                         <img src="<?= ROOT ?>/assets/images/default-avatar.jpg" alt="Avatar Preview" class="avatar-preview" id="avatarPreview">
                         <div class="avatar-upload-btn">
-                            <label for="avatarInput" class="upload-btn">Change Avatar</label>
+                            <label for="avatarInput" class="upload-btn">
+                                <i class="fas fa-camera"></i> Change Avatar
+                            </label>
                             <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;">
-                            <span class="avatar-note">Max. 2MB (JPG, PNG)</span>
+                            <span class="avatar-note">Recommended: Square image, max 2MB (JPG, PNG)</span>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" class="form-control" id="fullName" name="fullName" value="<?= $data[0]->Name ?>" required>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" value="<?= htmlspecialchars($data[0]->Name) ?>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($data[0]->Email) ?>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactNumber">Contact Number</label>
+                            <input type="tel" class="form-control" id="contactNumber" name="contactNumber" value="<?= htmlspecialchars($data[0]->contact_number) ?>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" class="form-control" id="dob" name="dob" value="<?= htmlspecialchars($data[0]->dob) ?>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender" name="gender" required>
+                                <option value="Male" <?= $data[0]->gender == 'Male' ? 'selected' : '' ?>>Male</option>
+                                <option value="Female" <?= $data[0]->gender == 'Female' ? 'selected' : '' ?>>Female</option>
+                                <option value="Other" <?= $data[0]->gender == 'Other' ? 'selected' : '' ?>>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="address">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required><?= htmlspecialchars($data[0]->address) ?></textarea>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?= $data[0]->Email ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="contactNumber">Contact Number</label>
-                        <input type="tel" class="form-control" id="contactNumber" name="contactNumber" value="<?= $data[0]->contact_number ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" class="form-control" id="dob" name="dob" value="<?= $data[0]->dob ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select class="form-control" id="gender" name="gender" required>
-                            <option value="Male" <?= $data[0]->gender == 'Male' ? 'selected' : '' ?>>Male</option>
-                            <option value="Female" <?= $data[0]->gender == 'Female' ? 'selected' : '' ?>>Female</option>
-                            <option value="Other" <?= $data[0]->gender == 'Other' ? 'selected' : '' ?>>Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea class="form-control" id="address" name="address" rows="3" required><?= $data[0]->address ?></textarea>
-                    </div>
                     <div class="modal-footer">
-                        <button class="btn btn-outline" id="cancelEditBtn" onclick="closemodal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+                        <button type="button" class="btn btn-outline" id="cancelEditBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveProfileBtn">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
                     </div>
                 </form>
             </div>
-            
         </div>
     </div>
+
 
 
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
-        const editbtn = document.getElementById('edit-btn');
-        const editProfile = document.getElementById('editProfileModal');
-        const closebtn = document.getElementById('cancelEditBtn')
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarPreview = document.getElementById('avatarPreview');
-        const changebtn = document.getElementById('change-password-btn');
-        const changePasswordModal = document.getElementById('changePasswordModal');
+        document.addEventListener('DOMContentLoaded', function() {
+            const editBtn = document.getElementById('edit-btn');
+            const editProfileModal = document.getElementById('editProfileModal');
+            const changeBtn = document.getElementById('change-password-btn');
+            const changePasswordModal = document.getElementById('changePasswordModal');
+            const closeButtons = document.querySelectorAll('.close, .btn-outline');
+            const avatarInput = document.getElementById('avatarInput');
+            const avatarPreview = document.getElementById('avatarPreview');
 
-        editbtn.addEventListener("click" , function(){
-            editProfile.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            // Open edit profile modal
+            editBtn.addEventListener("click", function() {
+                editProfileModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
 
-        })
+            // Open change password modal
+            changeBtn.addEventListener("click", function() {
+                changePasswordModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
 
-        changebtn.addEventListener("click" , function(){
-            changePasswordModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        })
+            // Close modals
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = 'auto';
+                });
+            });
 
-        function closemodal(){
-            editProfile.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            changePasswordModal.style.display = 'none';
-        }
-
-        avatarInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    avatarPreview.src = e.target.result;
+            // Close modal when clicking outside content
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                    document.body.style.overflow = 'auto';
                 }
-                reader.readAsDataURL(file);
+            });
+
+            // Avatar preview
+            avatarInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('File size exceeds 2MB limit');
+                        this.value = '';
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        avatarPreview.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Toggle password visibility function
+            function togglePasswordVisibility(inputId) {
+                const input = document.getElementById(inputId);
+                const icon = input.nextElementSibling;
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                } else {
+                    input.type = "password";
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                }
             }
         });
-
-        
     </script>
 </body>
 
