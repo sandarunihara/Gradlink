@@ -54,6 +54,7 @@
                                     <option value="Deactive">Deactive</option>
                                 </select>
                             </div>
+                            <?php if($_SESSION['ROUNDID']==1) : ?>
                             <div class="ss_create">
                                 <a href="../Advertisements/create">
                                     <button>
@@ -62,8 +63,8 @@
                                     </button>
                                 </a>
                             </div>
+                            <?php endif ?>
                         </div>
-
                         <div class="allpost">
                             <?php if (isset($data) && !empty($data)): ?>
                                 <?php foreach ($data as $advertisement): ?>

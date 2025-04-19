@@ -249,6 +249,11 @@
         </div>
     </div>
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
@@ -325,8 +330,11 @@
         }
 
         function submitForm() {
-            document.getElementById('ad-form').submit();
-            // successToast("Advertisement updated successfully");
+            document.getElementById('updateconfirmation-modal').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('ad-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
 
 
@@ -352,7 +360,11 @@
         }
 
         function confirmDelete(id) {
-            window.location.href = '../delete/' + id;
+            document.getElementById('deleteconfirmation-modal').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                window.location.href = '../delete/' + id;
+            }, 300);
         }
 
 

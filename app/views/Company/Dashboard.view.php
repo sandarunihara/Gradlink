@@ -516,6 +516,111 @@
         ?>
     </body>
 
+<?php elseif ($Status == 'Blocked') : ?>
+
+    <head>
+        <title>Gradlink</title>
+        <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
+        <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Companysidebar.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            body,
+            html {
+                font-family: 'Poppins', sans-serif;
+                background-color: rgb(206, 230, 255);
+                color: #333;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container {
+                width: 90%;
+                max-width: 650px;
+                background: #fff;
+                padding: 40px;
+                border-radius: 16px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 30px;
+                margin-bottom: 16px;
+                color: #0d6efd;
+            }
+
+            p {
+                font-size: 16px;
+                margin: 10px 0;
+            }
+
+            .company-info {
+                text-align: left;
+                margin: 24px 0;
+                padding: 16px;
+                background: #f8f9fa;
+                border-radius: 8px;
+            }
+
+            .company-info p {
+                margin: 8px 0;
+            }
+
+            .company-info strong {
+                display: inline-block;
+                width: 140px;
+            }
+
+            .logout-button {
+                margin-top: 30px;
+                padding: 12px 24px;
+                font-size: 16px;
+                color: #fff;
+                background-color: #dc3545;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .logout-button:hover {
+                background-color: #c82333;
+            }
+
+            @media (max-width: 600px) {
+                .company-info strong {
+                    width: 100px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Welcome, <span id="companyName"><?php echo $_SESSION['USER']->Name ?></span> ❌</h1>
+            <p>We're sorry, but your account has been <strong>blocked</strong> by the UCSC PDC.</p>
+            <p>If you believe this is a mistake or you have questions regarding your account status, please contact PDC for further assistance.</p>
+            <p><strong>Note:</strong> You will not be able to access system features until the issue is resolved.</p>
+
+            <div class="company-info">
+                <p><strong>Company Name:</strong> <?php echo $_SESSION['USER']->Name ?></p>
+                <p><strong>Email:</strong> <?php echo $_SESSION['USER']->Email ?></p>
+                <p><strong>Phone:</strong> <?php echo $_SESSION['USER']->ContactNum ?></p>
+            </div>
+
+            <form method="post" action="<?php echo ROOT ?>/logout">
+                <button class="logout-button" type="submit">Log Out</button>
+            </form>
+        </div>
+    </body>
+
+
+
 <?php else : ?>
 
     <head>

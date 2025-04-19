@@ -73,6 +73,11 @@
         </div>
     </div>
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+
     <script src="<?= ROOT ?>/assets/js/company/newComplaint.js"></script>
 
     <div id="toast-container" class="toast-container"></div>

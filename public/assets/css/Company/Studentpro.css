@@ -240,6 +240,15 @@
   flex-direction: column;
   gap: 10px;
 }
+.no-report {
+  font-style: italic;
+  color: #6c757d; /* soft gray */
+  font-size: 15px;
+  text-align: center;
+  margin: 20px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .report-con {
   background-color: white;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
