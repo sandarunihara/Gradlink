@@ -136,29 +136,46 @@
         form.action = form.action + '?advertisementId=' + encodeURIComponent(advertisementId);
 
     });
+    addEventListener("DOMContentLoaded", () => {
+        localStorage.setItem("clicked", "false");
+    });
     defaultCV.addEventListener('click', ()=> {
         const cv = JSON.parse(defaultCV.getAttribute('default-cv'));
 
-        const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
-        const extension = cv.split('.').pop();
-        let masked;
+        const clicked = localStorage.getItem("clicked");
+        if(clicked === "false"){
+            const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
+            const extension = cv.split('.').pop();
+            let masked;
 
-        if(fileNameWithoutExtension.length < 5){
-            masked = cv;
+            if(fileNameWithoutExtension.length < 5){
+                masked = cv;
+            }else{
+                const visiblePart = fileNameWithoutExtension.slice(-5);
+                masked = "***" + visiblePart + "." + extension;
+            }
+
+            cvUpload.style.display = "none";
+            defaltMessage.innerText = masked;
+            defaltMessage.classList.remove('hidden');
+
+            const defaultInput = document.createElement('input');
+            defaultInput.type = 'hidden';
+            defaultInput.name = 'use_default_cv';
+            defaultInput.value = cv;
+            form.appendChild(defaultInput);
+            localStorage.setItem("clicked", "true");
         }else{
-            const visiblePart = fileNameWithoutExtension.slice(-5);
-            masked = "***" + visiblePart + "." + extension;
+            const defaultInput = document.querySelector('input[name="use_default_cv"]');
+            if (defaultInput) {
+                form.removeChild(defaultInput);
+            }
+            cvUpload.style.display = "block";
+            defaltMessage.innerText = "";
+            defaltMessage.classList.add('hidden');
+            localStorage.setItem("clicked", "false");
         }
 
-        cvUpload.style.display = "none";
-        defaltMessage.innerText = masked;
-        defaltMessage.classList.remove('hidden');
-
-        const defaultInput = document.createElement('input');
-        defaultInput.type = 'hidden';
-        defaultInput.name = 'use_default_cv';
-        defaultInput.value = cv;
-        form.appendChild(defaultInput);
 
     });
     okBtn.addEventListener('click', (e) => {
@@ -220,6 +237,9 @@
     // Hide popup when clicking outside the content box
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
+            cvUpload.style.display = "block";
+            defaltMessage.innerText = "";
+            defaltMessage.classList.add('hidden');
             popupBox.classList.add('hidden');
         }
     });
