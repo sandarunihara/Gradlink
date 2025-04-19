@@ -33,7 +33,7 @@
                 </a>
             </ul>
         
-            <a href="<?=ROOT?>/logout" class="logout" data-title="Logout">
+            <a href="<?=ROOT?>/Logout" class="logout" data-title="Logout">
                 <i class="fas fa-sign-out-alt fa-lg"></i>
             </a>
         </div>
