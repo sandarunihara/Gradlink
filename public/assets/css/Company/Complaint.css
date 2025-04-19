@@ -1,4 +1,4 @@
-.main-container{
+.main-container {
   padding-right: 30px;
 }
 .m_main {
@@ -20,11 +20,11 @@
   color: black;
   transition: color 0.5s;
 }
-.headcontainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+.headcontainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 .backbtn i {
   font-size: 30px;
@@ -37,12 +37,12 @@
   margin-bottom: 20px;
 }
 .complaint-filter-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid rgba(165, 165, 165, 0.664);
-    border-radius: 10px;
-    padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(165, 165, 165, 0.664);
+  border-radius: 10px;
+  padding-left: 10px;
 }
 .complaint-filter-container select {
   border: none;
@@ -54,17 +54,17 @@
 
 .add-complaint button {
   padding: 10px 20px;
-  background-color: #3498db;
+  background-color: #008cff;
   color: white;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .add-complaint button:hover {
-  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
 .complaint-table-div {
@@ -75,9 +75,8 @@
 
 .complaint-table-background {
   background-color: white;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  border: 1px solid rgba(165, 165, 165, 0.664);
+  border: 1px solid #dddddd;
 }
 
 .complaint-table {
@@ -87,10 +86,11 @@
 .complaint-table th {
   height: fit-content;
   margin: 0;
-  padding: 15px;
-  background-color: #b7d8ff;
+  padding: 10px;
+  /* border-bottom: 1px solid #dddddd; */
+  /* background-color: #b7d8ff; */
   font-weight: 600;
-  font-size: large;
+  font-size: larger;
   color: #000000;
 }
 .complaint-table td {
@@ -104,9 +104,17 @@
 }
 .complaint-table thead,
 .complaint-table tbody tr {
+  border-bottom: 1px solid #dddddd;
   display: table;
   width: 100%;
   table-layout: fixed;
+}
+.complaint-table tbody tr {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.complaint-table tbody tr:last-of-type {
+  border-bottom: none;
 }
 
 .reviewed,
@@ -138,5 +146,3 @@
   background-color: orange;
   color: white;
 }
-
-

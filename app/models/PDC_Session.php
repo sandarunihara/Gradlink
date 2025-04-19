@@ -16,6 +16,7 @@ class PDC_Session
         'description',
         'CompanyId',
         'deleted',
+        'message_read',
         'created_at'
 	];
 

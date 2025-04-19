@@ -69,12 +69,13 @@
     border-radius: 10px;
     height: 40px;
     width: 170px;
-    background: #008cff;
+    background: linear-gradient(135deg, #7259B6 0%, #6B6FD5 100%);
     color: white;
     cursor: pointer;
     box-shadow: 1px 1px 1px 1px rgba(160, 160, 160, 0.25);
     transition: transform 0.3s ease, background 0.3s ease;
 }
+
 .shortbutton button:hover{
     transform: scale(1.05);
 }
@@ -104,10 +105,10 @@
 }
 .sr_table{
     background-color: white;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); */
     /* padding-top: 10px; */
     padding-bottom: 10px;
-    border: 1px solid rgba(165, 165, 165, 0.664);
+    /* border: 1px solid rgba(165, 165, 165, 0.664); */
     border-radius: 10px;
 }
 .role-select{
@@ -125,10 +126,14 @@
 }
 .sr_table_t{
     width: 100%;
-    background-color: #b7d8ff;
+    background: #cfd3f8;
+    background: linear-gradient(135deg, #e6e8f9 0%, #cfd3f8 100%);
+    color: #23244a;
+    border-bottom: 1px solid #e2e2ef;
+    /* background-color: #dfe2fc; */
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-
+    
 }
 
 .student-table {
@@ -160,29 +165,55 @@
     overflow-x: hidden;
     width: 100%;
 }
-.sr_row:nth-child(even) {
-  background-color: rgba(243, 243, 243, 0.675);
+.sr_row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: #d8d8d87a solid 1px;
 }
-.student-table thead,
-.student-table tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
+/* .sr_row:nth-child(even) {
+    background-color: rgba(243, 243, 243, 0.675);
+    } */
+    .student-table thead,
+    .student-table tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .view-profile-btn {
+        /* width: 100%; */
+        padding:5px 10px;
+        font-size: 14px;
+        background-color: #c6cbfa;
+        
+        color: #23244a;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    
+    .view-profile-btn:hover {
+        /* box-shadow: inset 0 0 0 2px #4e54c8; */
+    background-color: #8c97ff;
 }
-.view-profile-btn {
-    width: 100%;
-    padding: 8px;
+.view-profile-btn-with-remove{
+    /* width: 100%; */
+    padding:5px 10px;
     font-size: 14px;
-    background-color: #7db5f9;
-    color: #000000;
+    background-color: #c6cbfa;
+    color: #23244a;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
-
-.view-profile-btn:hover {
-    background-color: #007bff;
+.view-profile-btn-with-remove:hover {
+    /* box-shadow: inset 0 0 0 2px #4e54c8; */
+    background-color: #8c97ff;
 }
+tr:last-child td {
+    border-bottom: none;
+}
+
 .Recruit {
     width: 80%;
     margin-left: auto;
@@ -191,7 +222,8 @@
     outline: none;
     border-radius: 5px;
     color: #4DAA57;
-    border: 2px solid #4DAA57;
+    background-color: #ebf9ec;
+    border: 2px solid #ebf9ec;
 }
 .Shortlist {
     width: 80%;
@@ -201,7 +233,8 @@
     outline: none;
     border-radius: 5px;
     color: #0056b3;
-    border: 2px solid #0056b3;
+    background-color: #e4effb;
+    border: 2px solid #e4effb;
 }
 
 .Reject {
@@ -212,7 +245,8 @@
     outline: none;
     border-radius: 5px;
     color: red;
-    border: 2px solid red;
+    background-color: rgb(252, 231, 231);
+    border: 2px solid rgb(252, 231, 231);
 }
 .Pending {
     width: 80%;
@@ -222,7 +256,8 @@
     outline: none;
     border-radius: 5px;
     color: orange;
-    border: 2px solid orange; /* or any color you prefer for pending */
+    background-color: rgb(253, 245, 231);
+    border: 2px solid rgb(253, 245, 231); /* or any color you prefer for pending */
 }
 .Sendemail{
     width: 80%;
@@ -232,52 +267,13 @@
     outline: none;
     border-radius: 5px;
     color: #00cea8;
-    border: 2px solid #00cea8;
+    background-color: #e1faf5;
+    border: 2px solid #e1faf5;
 }
-.view-profile-btn-with-remove{
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    background-color: #7db5f9;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.view-profile-btn-with-remove:hover {
-    background-color: #007bff;
-}
-.viewprodel {
-    transition: all 0.3s ease-in-out;
-}
-.view-profile-btn-remove{
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    background-color: red;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.removebtn {
-    display: none;
-    transition: all 0.3s ease-in-out;
-}
-.sr_row:hover .viewprodel {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-.sr_row:hover .removebtn {
-    display: block;
-}
-
-
 
 /* ******************* Recruit Student ****************** */
-
+/* c6cbfa
+8c97ff */
 .recruit-student-list{
     padding-top: 30px;
     max-height: 560px;

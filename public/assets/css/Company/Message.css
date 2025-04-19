@@ -24,6 +24,8 @@
 }
 .m_de{
     display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .m_container:hover{
     transform: scale(1.02);
@@ -31,7 +33,19 @@
 .m_content{
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    /* margin-left: 10px; */
+}
+.readmessage{
+    background-color: #007bff;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+.unreadmessage{
+    background-color: transparent;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
 }
 .image{
     height: 50px;
