@@ -19,6 +19,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </head>
+    <!-- $_SESSION['ROUNDID'] -->
 
     <body class="body">
         <div class="dashboard">
@@ -28,13 +29,17 @@
             <div id="content" class="content">
                 <div class="main">
                     <div class="d">
-                        <div>
+                        <div class="upper-header">
                             <h1>DashBoard</h1>
+                            <span class="round-badge">
+                                <span class="round-label">Current Placement Round</span>
+                                <span class="round-number"><?= $_SESSION['ROUNDID'] ?></span>
+                            </span>
                         </div>
                         <?php $this->renderComponent("companyheader") ?>
                     </div>
                     <div class="overview">
-                        <h3>Overview</h3>
+                        <p>Overview</p>
                     </div>
                     <div class="all-content">
                         <div class="full-content">
@@ -42,7 +47,7 @@
                                 <div class="d_allsummery">
                                     <!-- Key Metrics Cards -->
                                     <div class="metrics-grid">
-                                        <div class="metric-card">
+                                        <div class="metric-card" onclick="window.location.href='http://localhost/Gradlink/public/company/Advertisements/dashboard'">
                                             <div class="metric-icon">
                                                 <i class="fas fa-bullhorn"></i>
                                             </div>
@@ -53,7 +58,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="metric-card">
+                                        <div class="metric-card" onclick="window.location.href='http://localhost/Gradlink/public/company/StudentsRequests/dashboard'">
                                             <div class="metric-icon">
                                                 <i class="fas fa-users"></i>
                                             </div>
@@ -64,7 +69,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="metric-card">
+                                        <div class="metric-card" onclick="window.location.href='http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard'">
                                             <div class="metric-icon">
                                                 <i class="fas fa-user-check"></i>
                                             </div>
@@ -111,9 +116,17 @@
                         </div>
                         <div class="bottomcontent2">
                             <div class="d_request">
-                                <h3>Student Requests</h3>
+                                <div class="table-header">
+                                    <h3>Student Requests</h3>
+                                    <a href="../StudentsRequests/dashboard" class="view-all">view all</a>
+                                </div>
                                 <div class="d_alllist">
                                     <ul>
+                                        <li>
+                                            <h5>Student Name</h5>
+                                            <h5>Position</h5>
+                                            <h5>Action</h5>
+                                        </li>
                                         <?php
                                         if (empty($data)) {
                                             echo '<li>No requests found</li>';
@@ -155,12 +168,6 @@
                                         }
                                         ?>
                                     </ul>
-                                </div>
-                                <div class="d_view_all">
-                                    <a href="../StudentsRequests/dashboard">
-                                        View All
-                                        <i class="fas fa-arrow-right"></i>
-                                    </a>
                                 </div>
                             </div>
                             <div class="ch">

@@ -112,70 +112,84 @@ class Advertisements
     }
 
     public function create()
-    {
-        $data = [];
-        $user = "";
-        if (isset($_SESSION['USER'])) {
-            $user = $_SESSION['USER'];
-        }
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $model = new C_Advertisement;
+{
+    $data = [];
+    $user = "";
+    if (isset($_SESSION['USER'])) {
+        $user = $_SESSION['USER'];
+    }
 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $model = new C_Advertisement;
+        $maxFileSize = 5 * 1024 * 1024; // 5 MB
+        $imageBase64 = '';
 
-            $maxFileSize = 5 * 1024 * 1024; // 5 MB
-            // Handle the file upload and convert it to base64
-            $imageBase64 = '';
-            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-
-                if ($_FILES['image']['size'] > $maxFileSize) {
-                    echo "Error: The file is too large. Maximum allowed size is 5MB.";
-                    return;
-                }
-
-                $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
-                $imageBase64 = base64_encode($imageData);
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            if ($_FILES['image']['size'] > $maxFileSize) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Error: The file is too large. Maximum allowed size is 5MB.'
+                ];
+                $this->view('Company/CreateAdvertisement', ['data' => $data]);
+                return;
             }
 
-            $Id = $this->getnextId();
-            $data = [
-                'advertisementId' => $Id,
-                'position' => $_POST['position'] ?? '',
-                'status' => 'Pending',
-                'description' => $_POST['description'] ?? '',
-                'numOfInterns' => $_POST['interns'] ?? '',
-                'workingMode' => $_POST['worktype'] ?? '',
-                'qualification' => $_POST['qualifications'] ?? '',
-                'deadline' => $_POST['deadline'] ?? '',
-                'image' => $imageBase64,
-                'startDate' => date('Y-m-d'),
-                'CompanyId' => $user->CompanyId
-            ];
+            $imageData = file_get_contents($_FILES['image']['tmp_name']);
+            $imageBase64 = base64_encode($imageData);
+        }
 
-            // Validate and insert the data into the database
-            if ($model->validate($data)) {
+        $Id = $this->getnextId();
+        $data = [
+            'advertisementId' => $Id,
+            'position' => $_POST['position'] ?? '',
+            'status' => 'Pending',
+            'description' => $_POST['description'] ?? '',
+            'numOfInterns' => $_POST['interns'] ?? '',
+            'workingMode' => $_POST['worktype'] ?? '',
+            'qualification' => $_POST['qualifications'] ?? '',
+            'deadline' => $_POST['deadline'] ?? '',
+            'image' => $imageBase64,
+            'startDate' => date('Y-m-d'),
+            'CompanyId' => $user->CompanyId
+        ];
+
+        if ($model->validate($data)) {
+            try {
                 $result = $model->insert($data);
                 if ($result) {
                     $_SESSION['flash'] = [
                         'type' => 'success',
-                        'message' => 'Advertisement created successfully'
+                        'message' => 'Advertisement created successfully.'
                     ];
-                    $data['success'] = "Advertisement created successfully.";
-                    header('Location: ../Advertisements/dashboard'); 
+                    header('Location: ../Advertisements/dashboard');
                     exit;
                 } else {
                     $_SESSION['flash'] = [
                         'type' => 'error',
-                        'message' => 'There was an issue saving the advertisement'
+                        'message' => 'There was an issue saving the advertisement.'
                     ];
-                    $data['error'] = "There was an issue saving the advertisement.";
                 }
-            } else {
-                $data['errors'] = $model->errors;
+            } catch (PDOException $e) {
+                if (str_contains($e->getMessage(), 'max_allowed_packet')) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => 'Error: Image is too large to be stored. Please use a smaller image.'
+                    ];
+                } else {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => 'A database error occurred: ' . $e->getMessage()
+                    ];
+                }
             }
+        } else {
+            $data['errors'] = $model->errors;
         }
-
-        $this->view('Company/CreateAdvertisement', ['data' => $data]);
     }
+
+    $this->view('Company/CreateAdvertisement', ['data' => $data]);
+}
+
 
 
 

@@ -11,7 +11,7 @@ class Companydash
             $user = $_SESSION['USER'];
         }
         
-
+        // show($_SESSION);
         $model = new C_Dashboard;
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 

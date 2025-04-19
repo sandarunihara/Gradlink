@@ -161,16 +161,14 @@
                                                     <?php if ($statusText != 'Rejected'): ?>
                                                         <td class="viewpro">
                                                             <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="profile-link">
-                                                                <button class="view-profile-btn">View Profile</button>
+                                                                <button class="view-profile-btn"><i class="fas fa-eye"></i> View Profile</button>
                                                             </a>
                                                         </td>
                                                     <?php elseif ($statusText == 'Rejected'): ?>
                                                         <td class="viewpro">
                                                             <a href="../StudentsRequests/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="profile-link">
-                                                                <button class="view-profile-btn-with-remove">View Profile</button>
+                                                                <button class="view-profile-btn-with-remove"><i class="fas fa-eye"></i> View Profile</button>
                                                             </a>
-
-                                                            <!-- <i class="removebtn fas fa-trash-alt fa-trash-alty"></i> -->
                                                         </td>
                                                     <?php endif ?>
                                                 </tr>
