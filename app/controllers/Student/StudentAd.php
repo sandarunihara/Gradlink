@@ -30,9 +30,7 @@ class StudentAd{
                 $advertisementId = $_GET['advertisementId'];
                 $this->beginTransaction(); 
 
-                $round = new round;
-                $currentRound = $round -> getRound();
-                if ($currentRound == 1 && $noOfAppliedAds >= 5){
+                if ($_SESSION['ROUNDID'] == 1 && $noOfAppliedAds <= $data['Student'] -> vacancy){
                     throw new Exception("You have reached the limit of 5 applications in this round.");
                 }
 
