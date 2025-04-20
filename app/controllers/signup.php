@@ -219,6 +219,7 @@ class Signup
                         $_SESSION['user']['Status'] = 'NotApplied';
                         $_SESSION['user']['completed'] = 0;
                         $_SESSION['user']['noOfAppliedAds'] = 0;
+                        $_SESSION['user']['registered'] = 1;
                         //show($_SESSION['user']);
                         break;
                     case 4:
