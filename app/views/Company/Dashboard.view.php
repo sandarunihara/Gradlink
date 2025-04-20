@@ -71,7 +71,7 @@
                                             <div class="metric-info">
                                                 <h3>Total Advertisements</h3>
                                                 <p class="metric-value"><?php echo $numOfAdvertisements ?></p>
-                                                <p class="metric-change positive"><i class="fas fa-bullhorn"></i> 12% from last month</p>
+                                                <p class="metric-change positive"><i class="fas fa-bullhorn"></i>Current Month ADs <?php echo $numOfcurrentmothAD; ?></p>
                                             </div>
                                         </div>
 
@@ -82,7 +82,7 @@
                                             <div class="metric-info">
                                                 <h3>Total Student Applied</h3>
                                                 <p class="metric-value"><?php echo $numOfStudents; ?></p>
-                                                <p class="metric-change positive"><i class="fas fa-users"></i> 8% from last month</p>
+                                                <p class="metric-change positive"><i class="fas fa-users"></i> this month's applicants <?php echo $lastmonthcount; ?></p>
                                             </div>
                                         </div>
 
@@ -93,7 +93,7 @@
                                             <div class="metric-info">
                                                 <h3>Total Student Shortlisted</h3>
                                                 <p class="metric-value"><?php echo $numOfShortlistStudents ?></p>
-                                                <p class="metric-change positive"><i class="fas fa-user-check"></i> 15% from last round</p>
+                                                <p class="metric-change positive"><i class="fas fa-user-check"></i>Click to view </p>
                                             </div>
                                         </div>
 

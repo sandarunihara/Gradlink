@@ -27,19 +27,29 @@ class Companydash
             $hasRecruited = false;
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
+            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0,'lastmonthcount'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
             // show($data);
             $numOfAdvertisements = count($data);
-
+            
             $allStatuses = ["Active", "Deactive", "Pending", "Rejected"];
             $advertisementIds = [];
+            $currentmothadvertisments=[];
             foreach ($data as $item) {
                 $advertisementIds[] = $item->advertisementId;
                 $adstatus[] = $item->status;
+                if(date('Y-m', strtotime($item->created_at)) == date('Y-m')){
+                    $currentmothadvertisments[]=$item;
+                }
             }
+            if(!empty($currentmothadvertisments)){
+                $numOfcurrentmothAD=count($currentmothadvertisments);
+            }else{
+                $numOfcurrentmothAD=0;
+            }
+            
 
             $countedadstatus = array_count_values($adstatus);
             foreach ($allStatuses as $status) {
@@ -165,7 +175,6 @@ class Companydash
 
             sort($dates); // Sort the dates in ascending order
             if(!empty($dates)){
-
                 $earliestDate = $dates[0]; // Earliest date
             }else{
                 $earliestDate=time();
@@ -211,7 +220,7 @@ class Companydash
             uksort($monthlyCounts, function ($a, $b) {
                 return strtotime($a) - strtotime($b);
             });
-
+            $lastmonthcount = end($monthlyCounts);
             // Interview Schedule rerender
             $TodayDate = date('Y-m-d');
             $interviewmodel = new interview_time_slot;
@@ -267,8 +276,9 @@ class Companydash
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
 
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts , 'Status'=>$user->Status]);
-            // $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => '', 'numOfShortlistStudents' => '', 'numOfAdvertisements' => '', 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => '']);
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD'=>$numOfcurrentmothAD,'lastmonthcount'=>$lastmonthcount , 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts , 'Status'=>$user->Status]);
+            // $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
+
         }
     }
 
