@@ -10,6 +10,7 @@ const studentIdError = document.getElementById("studentIdError");
 const descriptionError = document.getElementById("descriptionError");
 const profilePictureError = document.getElementById("profilePictureError");
 const cvError = document.getElementById("cvError");
+const nicError = document.getElementById("nicError");
 
 var currentTab = 0;
 
@@ -71,6 +72,9 @@ function validateForm() {
     if (y[i].name == "contactNumber") {
       results.push(validContactNumber(y[i]));
     }
+    if (y[i].name == "nic") {
+      results.push(validNIC(y[i]));
+    }
     if (y[i].name == "studentId") {
       results.push(validStudentIndex(y[i]));
     }
@@ -128,6 +132,21 @@ function validMail(input) {
     return true;
   }
 }
+function validNIC(input) {
+  const pattern = /^\d{12}$/;
+
+  if (!pattern.test(input.value)) {
+    nicError.innerHTML = "Invalid NIC number";
+    nicError.style.display = "block";
+    input.classList.add("invalid");
+    return false;
+  }else{
+    nicError.innerHTML = "";
+    nicError.style.display = "none";
+    input.classList.remove("invalid");
+    return true;
+  }
+}
 function validContactNumber(number) {
   const numValue = number.value.trim();
   if (!/^\d{10}$/.test(numValue)) {
@@ -143,7 +162,7 @@ function validContactNumber(number) {
   }
 }
 function validStudentIndex(index) {
-  const pattern = /^\d{4}(CS|IS)\d{3}$/;
+  const pattern = /^\d{4}(cs|is)\d{3}$/;
   if (!pattern.test(index.value)) {
     studentIdError.innerHTML = "Invalid student index number";
     studentIdError.style.display = "block";
@@ -222,3 +241,4 @@ function isValidCV(input) {
     return true;
   }
 }
+
