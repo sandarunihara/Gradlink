@@ -54,6 +54,7 @@
                                     <option value="Deactive">Deactive</option>
                                 </select>
                             </div>
+                            <?php if($_SESSION['ROUNDID']==1) : ?>
                             <div class="ss_create">
                                 <a href="../Advertisements/create">
                                     <button>
@@ -62,17 +63,17 @@
                                     </button>
                                 </a>
                             </div>
+                            <?php endif ?>
                         </div>
-
                         <div class="allpost">
                             <?php if (isset($data) && !empty($data)): ?>
                                 <?php foreach ($data as $advertisement): ?>
                                     <div class="postcard" data-status="<?php echo $advertisement->status; ?>">
                                         <div class="image">
                                             <?php if (!empty($advertisement->image)): ?>
-                                                <img src="data:image/jpeg;base64,<?php echo $advertisement->image; ?>" class="logo" />
+                                                <img src="<?php echo ROOT .'/assets/img/Company/advertisements/' .  $advertisement->image; ?>" class="logo" />
                                             <?php else: ?>
-                                                <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
+                                                <img src="" class="logo" /> 
                                             <?php endif; ?>
                                             <a href="../Advertisements/send/<?php echo $advertisement->advertisementId; ?>" class="top-left-link">Show Info</a>
                                         </div>
@@ -95,7 +96,7 @@
                                     </div>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <h3>No advertisements found</h3>
+                                <p class="no-events">No advertisements found</p>
                             <?php endif; ?>
                         </div>
                     </div>

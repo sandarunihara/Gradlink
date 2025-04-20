@@ -181,6 +181,11 @@
         </div>
     </div>
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
@@ -230,12 +235,6 @@
             const worktype = document.getElementById('worktype').value;
             const image = document.getElementById('image').files[0];
 
-            const maxFileSize = 0.9 * 1024 * 1024; // 5MB
-            if (image && image.size > maxFileSize) {
-                errorToast("The image file size exceeds the maximum allowed size of 5MB.");
-                return; // Prevent further form submission
-            }
-
             if (!position) {
                 errorToast("Please select a position from the dropdown.");
                 return;
@@ -273,8 +272,8 @@
             // Read the image file as a data URL
             const reader = new FileReader();
             reader.onload = function(e) {
-                
-                
+
+
                 const imageUrl = e.target.result; // This is the base64 encoded image
 
                 // Update the modal content with the form data
@@ -312,8 +311,11 @@
 
 
         function submitForm() {
-            document.getElementById('ad-form').submit();
-            // successToast("Advertisement created successfully");
+            document.getElementById('confirmation-modal').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('ad-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
 
         function previewImage(event, previewId) {

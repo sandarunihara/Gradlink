@@ -150,6 +150,7 @@ class StudentsRequests
 
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
+        $data[0]->adCV=$studentad_data[0]->CV;
         $studentJobstatus = $studentad_data[0]->Jobstatus;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {

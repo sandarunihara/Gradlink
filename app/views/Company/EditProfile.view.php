@@ -34,7 +34,7 @@
                     <div class="coverphoto">
                         <label for="coverphoto">
                             <img
-                                src="<?php echo !empty($data->coverimg) ? 'data:image/jpeg;base64,' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
+                                src="<?php echo !empty($data->coverimg) ? ROOT .'/assets/img/Company/' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
                                 id="coverPreview"
                                 alt="Cover Preview" />
                         </label>
@@ -46,7 +46,7 @@
                     <div class="prophoto">
                         <label for="profilephoto">
                             <img
-                                src="<?php echo !empty($data->profileimg) ? 'data:image/jpeg;base64,' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
+                                src="<?php echo !empty($data->profileimg) ? ROOT .'/assets/img/Company/' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
                                 class="pro_logo"
                                 id="profilePreview"
                                 width="200"
@@ -129,9 +129,108 @@
     </div>
 
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+
 
 
     <script>
+        function isValidEmail(email) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        }
+
+        function isValidPhone(contactNum) {
+            const pattern = /^0(7[01245678]\d{7}|[1-9]{2}\d{7})$/;
+            return pattern.test(contactNum);
+        }
+
+        function isValidLinkedInURL(url) {
+            const pattern = /^https:\/\/(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9_-]+\/?$/;
+            return pattern.test(url);
+        }
+
+
+        function isValidWebsiteURL(url) {
+            const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/\w.-]*)*\/?$/;
+            return pattern.test(url);
+        }
+
+
+        function validateProfileForm() {
+            const name = document.querySelector('input[name="Name"]').value.trim();
+            const shortDesc = document.querySelector('input[name="ShortDesc"]').value.trim();
+            const email = document.querySelector('input[name="Email"]').value.trim();
+            const contactPerson = document.querySelector('input[name="ContactPerson"]').value.trim();
+            const contactNum = document.querySelector('input[name="ContactNum"]').value.trim();
+            const linkedin = document.querySelector('input[name="Linkedin"]').value.trim();
+            const website = document.querySelector('input[name="Website"]').value.trim();
+            const no = document.querySelector('input[name="No"]').value.trim();
+            const lane = document.querySelector('input[name="Lane"]').value.trim();
+            const city = document.querySelector('input[name="City"]').value.trim();
+            const district = document.querySelector('input[name="District"]').value.trim();
+            const coverphoto = document.getElementById('coverphoto').files[0];
+            const profilephoto = document.getElementById('profilephoto').files[0];
+
+            // const maxFileSize = 1024 * 1024; // 5MB
+
+            // if (!coverphoto) {
+            //     errorToast("Cover photo is required.");
+            //     return false;
+            // }
+
+            // if (!profilephoto) {
+            //     errorToast("Profile photo is required.");
+            //     return false;
+            // }
+
+            if (!name) {
+                errorToast("Company name is required.");
+                return false;
+            }
+
+            if (!shortDesc) {
+                errorToast("Please enter a short description.");
+                return false;
+            }
+
+            if (!email || !isValidEmail(email)) {
+                errorToast("Please enter a valid email address.");
+                return false;
+            }
+
+            if (!contactPerson) {
+                errorToast("Contact person is required.");
+                return false;
+            }
+
+            if (!contactNum || !isValidPhone(contactNum)) {
+                errorToast("Please enter a valid contact number.");
+                return false;
+            }
+
+            if (!linkedin || !isValidLinkedInURL(linkedin)) {
+                errorToast("LinkedIn profile valid URL is required.");
+                return false;
+            }
+
+            if (!website || !isValidWebsiteURL(website)) {
+                errorToast("Website URL is required.");
+                return false;
+            }
+
+            if (!no || !lane || !city || !district) {
+                errorToast("Complete address information is required.");
+                return false;
+            }
+
+            return true;
+        }
+
 
         function goback() {
             window.location.href = "<?php echo ROOT ?>/company/Profile/dashboard";
@@ -157,12 +256,13 @@
         // Get the modal
 
         // Get the modal popup for confirm update
-
         function openconfirmeModal() {
-
-            document.getElementById('deleteconfirmation-modal').style.display = 'block';
-            modal.style.display = 'flex'; // Use flex for centering modal
+            if (validateProfileForm()) {
+                document.getElementById('deleteconfirmation-modal').style.display = 'block';
+                modal.style.display = 'flex';
+            }
         }
+
 
         function closeconfirmModal() {
             document.getElementById('deleteconfirmation-modal').style.display = 'none';
@@ -170,8 +270,11 @@
 
 
         function submitForm() {
-            document.getElementById('pro-form').submit();
-            successToast("Advertisement updated successfully");
+            document.getElementById('deleteconfirmation-modal').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('pro-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
     </script>
 

@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Company Signup</title>
+  <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/Fix.css">
   <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/Company/companySignup.css">
 
 </head>
@@ -168,6 +169,10 @@
       </div>
     </div>
   </div>
+
+  <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
 
   <div id="toast-container" class="toast-container"></div>
   <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>

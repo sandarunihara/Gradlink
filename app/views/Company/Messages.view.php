@@ -13,7 +13,7 @@
 <body class="body">
     <div class="dashboard">
         <div class="side">
-            <?php $this->renderComponent("companysidebar",['hasShortlisted'=>$_SESSION['hasShortlisted'],'hasRecruited'=>$_SESSION['hasRecruited']])  ?>
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
         </div>
         <div id="content">
             <div class="main">
@@ -24,43 +24,47 @@
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
                 <div class="m_main">
+                    <?php if(!empty($data)) : ?>
+                    <!-- sort data -->
                     <?php
-                    $details = [
-                        "Tech Talk" => "../Messages/TechTalk",
-                        "Intern Call" => "../Messages/pdc_message",
-                    ];
-
-                    $data = [
-                        ["name" => "PDC", "detail" => "Tech Talk", "time" => "7:34 PM"],
-                        ["name" => "PDC", "detail" => "Intern Call", "time" => "7:34 PM"],
-                    ];
+                    usort($data, function ($a, $b) {
+                        return strtotime($b->created_at) - strtotime($a->created_at);
+                    });
                     ?>
 
                     <?php foreach ($data as $item): ?>
                         <?php
-                        $detail = $item['detail'];
-                        $link = isset($details[$detail]) ? $details[$detail] : "#";
-                        ?>
-                        <a href="<?php echo $link; ?>" class="m_container">
-                            <div class="m_de">
-                                <img src="<?php echo ROOT ?>/assets/img/wso2.png" class="image"/>
-                                <div class="m_content">
-                                    <span class="m_name"><?php echo $item['name']; ?></span>
-                                    <span class="m_detail"><?php echo $detail; ?></span>
-                                    <span class="m_time"><?php echo $item['time']; ?></span>
-                                </div>
-                            </div>
+                        $detail = $item->detail;
+                        $senddate = date('Y-m-d', strtotime($item->created_at));
+                        $sendtime = date('h:i A', strtotime($item->created_at));
 
-                            <div class="time_div">
-                                <i class="fas fa-close"></i>
+                        ?>
+
+                        <a href="../Messages/pdc_message/<?php echo $item->session_id ?>" class="m_container">
+                            <div class="m_de">
+                                <?php if ($item->message_read == 0) : ?>
+                                    <div class="readmessage">
+                                    </div>
+                                <?php else : ?>
+                                    <div class="unreadmessage">
+                                    </div>
+                                <?php endif ?>
+                                <img src="<?php echo ROOT ?>/assets/img/Company/pdcphoto.jpg" class="image" />
+                                <div class="m_content">
+                                    <span class="m_name">PDC</span>
+                                    <span class="m_detail"><?php echo $detail; ?></span>
+                                    <span class="m_time"><?php echo $senddate; ?> <?php echo $sendtime; ?></span>
+                                </div>
                             </div>
                         </a>
                     <?php endforeach; ?>
-
+                   <?php else : ?>
+                    <p class="no-events">No Message found</p>
+                    <?php endif?>                 
 
                 </div>
             </div>
-            
+
         </div>
     </div>
 </body>

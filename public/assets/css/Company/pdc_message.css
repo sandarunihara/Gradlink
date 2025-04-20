@@ -1,8 +1,7 @@
 .m_main {
   background: #e9edff;
-  /* width: 1100px; */
-  width: 95%;
-  height: 570px;
+  /* width: 95%; */
+  height: 640px;
   padding: 30px;
   border-radius: 10px;
   margin-right: 50px;
@@ -57,11 +56,16 @@
 .backbtn:hover {
   color: red;
 }
+/* .upper-content{
+  display: flex;
+  justify-content: center;
+} */
 .m_content {
+  /* width: 50%; */
   background-color: white;
   border-radius: 7px;
   padding: 10px;
-  max-height: 480px;
+  max-height: 500px;
   overflow-y: auto;
 }
 .topic {
@@ -74,4 +78,24 @@ h2 {
 }
 .message {
   margin-left: 40px;
+}
+
+.message p {
+  line-height: 1.8;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.session-info-box {
+  border: 1px solid #ccc;
+  background-color: #eef6ff;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+}
+
+.session-info-box p {
+  margin: 6px 0;
+  font-weight: 500;
+  font-size: 15px;
 }

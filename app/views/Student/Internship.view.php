@@ -20,17 +20,23 @@
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="filter">
-            <div class="search-container">
-                <input id="searchInput" type="text" placeholder="Search Company">
+            <div>
+                <div class="search-container">
+                    <input id="searchInput" type="text" placeholder="Search Company" oninput="searchCompany(this.value)">
+                </div>
                 <i class="fas fa-search" id="searchIcon"></i>
             </div>
             <div class="filter-by-job">
                 <i class="fas fa-filter"></i>
-                <select>
+                <select id="positionSelect" onchange="searchByPosition()">
                     <option value="all">All Jobs</option>
-                    <option value="software-engineer">Software Engineer</option>
-                    <option value="qa">Quality Assuarance Engineer</option>
-                    <option value="dev-ops-engineer">Dev-Ops Engineer</option>
+                    <?php foreach ($data['differentRoles'] as $position) { ?>
+                        <option 
+                            value="<?= htmlspecialchars($position); ?>"
+                        >
+                            <?= htmlspecialchars($position); ?>
+                        </option>
+                    <?php } ?>
                 </select>
             </div>
         </div>
@@ -101,17 +107,27 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
+            <span id="defaultMessage" class="hidden"></span>
+            <br>
             <input 
                 type="file" 
                 id="cvUpload" 
                 name="file" 
-                required
                 onchange="validateFile(this)"
+                class="cv-upload"
             >
             <span id="errorId" class="error"></span>
+            <button
+                type="button"
+                id="defaultCV"
+                default-cv = '<?php echo json_encode($_SESSION['USER'] -> cv);?>'
+            >
+            Choose Default Resume
+            </button>
+            <br>
             <button 
                 type="submit"
-                id="okBtn" 
+                id="okBtn"
             >
             OK
             </button>

@@ -20,14 +20,6 @@
                 <img src="<?=ROOT?>/assets/img/companyG.png" alt="">
                 <p>Company</p>
             </div>
-            <div class="role" id="assistant" onclick="selectRole('assistant')">
-                <img src="<?=ROOT?>/assets/img/assistantG.png" alt="">
-                <p>PDC Assistant</p>
-            </div>
-            <div class="role" id="coordinator" onclick="selectRole('coordinator')">
-                <img src="<?=ROOT?>/assets/img/coordinatorG.png" alt="">
-                <p>PDC Coordinator</p>
-            </div>
         </div>
         <button id="continue-btn" disabled onclick="continueToPage()">Continue</button>
     </div>

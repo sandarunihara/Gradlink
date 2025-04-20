@@ -12,6 +12,9 @@
 
 <body class="body">
     <div class="dashboard">
+        <div class="side">
+            <?php $this->renderComponent("companysidebar", ['hasShortlisted' => $_SESSION['hasShortlisted'], 'hasRecruited' => $_SESSION['hasRecruited']])  ?>
+        </div>
         <div id="content">
             <div class="main">
                 <div class="d">
@@ -26,26 +29,61 @@
                             <a href="http://localhost/Gradlink/public/company/Messages/dashboard" class="backbtn">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
-                            <img src="<?php echo ROOT ?>/assets/img/wso2.png" />
+                            <img src="<?php echo ROOT ?>/assets/img/Company/pdcphoto.jpg" />
                             <div class="m_details">
                                 <span class="m_name">PDC</span>
                                 <span class="m_detail">Message</span>
                             </div>
                         </div>
+                        <?php
+                        $senddate = date('Y-m-d', strtotime($data->created_at));
+                        $sendtime = date('h:i A', strtotime($data->created_at));
+                        ?>
                         <div class="m_timedate">
-                            <span class="m_time">7.30 p.m</span>
-                            <span class="m_date">2024/11/21</span>
+                            <span class="m_time"><?php echo $sendtime ?></span>
+                            <span class="m_date"><?php echo $senddate ?></span>
                         </div>
                     </div>
+                    <?php
+                    $subject = "Session Notification - UCSC TechTalk: \"{$data->session_name}\"";
+                    ?>
+
                     <div class="m_content">
                         <div class="topic">
-                            <h2>Opportunity to Post Internship Advertisements</h2>
+                            <h2><?php echo $subject; ?></h2>
                         </div>
+
                         <div class="message">
-                            <p>Dear Company,</p>
-                            <p>We are excited to announce that the internship season for our students has officially begun! This is a fantastic opportunity for your organization to connect with talented and enthusiastic candidates eager to gain industry experience.</p>
-                            <p>How to Post Your Internship Advertisement:Log in to your company account on our portal.->Navigate to the "Advertisements" section in the sidebar.->Select the "Create Post" button.->Fill in the required details about the internship and submit your post.</p>
-                            <p>Our team is here to assist you with the process and ensure your advertisement reaches the right audience.</p>
+                            <p>Dear Company <?php echo htmlspecialchars($data->Name); ?>,</p>
+
+                            <p>
+                                We are pleased to confirm your participation in the upcoming UCSC TechTalk event. This platform aims to bridge the gap between academia and the tech industry by offering students the opportunity to engage directly with professionals and organizations like yours.
+                            </p>
+
+                            <div class="session-info-box">
+                                <p><strong>Session Title:</strong> <?php echo $data->session_name; ?></p>
+                                <p><strong>Date:</strong> <?php echo date("F j, Y", strtotime($data->session_date)); ?></p>
+                                <p><strong>Hall Number:</strong> <?php echo $data->hall_number; ?></p>
+                                <p><strong>Time Slot:</strong> <?php echo $data->time_slot; ?></p>
+                            </div>
+
+                            <?php if (!empty($data->description)): ?>
+                                <p><strong>Session Overview:</strong> <?php echo $data->description; ?></p>
+                            <?php endif; ?>
+
+                            <p>
+                                We kindly request you to be present at the venue at least 15 minutes prior to your scheduled time for final arrangements. Your contribution to this event is highly valued, and we believe your session will greatly benefit our students and attendees.
+                            </p>
+
+                            <p>
+                                Should you have any queries, logistical requirements, or need further assistance, please feel free to contact our organizing team at any time.
+                            </p>
+
+                            <p>
+                                Thank you once again for your involvement in UCSC TechTalk. We look forward to welcoming you to our campus and witnessing an insightful session.
+                            </p>
+
+                            <p>Regards,<br><strong>UCSC PDC</strong></p>
                         </div>
                     </div>
 

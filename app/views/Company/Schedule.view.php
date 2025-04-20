@@ -44,7 +44,7 @@
 
                             <?php endforeach; ?>
                         <?php else : ?>
-                            <p>No Schedule available.</p>
+                            <p class="no-events">No Schedule available.</p>
                         <?php endif; ?>
                         <?php if (isset($removeinterviewdata) && !empty($removeinterviewdata)): ?>
                             <?php

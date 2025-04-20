@@ -27,7 +27,7 @@
                                 type="text" 
                                 id="fname" 
                                 name="fname" 
-                                placeholder="Enter your first name (e.g. 2021/CS/111)" 
+                                placeholder="Enter your first name" 
                                 required
                             >
                         </div>
@@ -58,10 +58,12 @@
                             <input 
                                 type="text" 
                                 id="NIC" 
-                                name="NIC" 
-                                placeholder="Enter your NIC" 
+                                name="nic" 
+                                placeholder="Enter your NIC number (e.g. 2002********)" 
                                 required
+                                oninput="validNIC(this)"
                             >
+                            <span id="nicError" class="error"></span>
                         </div>
                         <div class="input-field">
                             <label>Contact Number</label>
@@ -81,7 +83,7 @@
                                 type="text" 
                                 id="userId" 
                                 name="userId" 
-                                placeholder="Enter your student ID" 
+                                placeholder="Enter your student ID (e.g. 2021cs111)" 
                                 required
                                 oninput="validStudentIndex(this)"
                             >

@@ -51,7 +51,7 @@
                                     <?php
                                     $status = $complaint -> Status;
                                     $statusClass = ($status == 'Reviewed') ? 'reviewed' : 'not-reviewed';
-                                    $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
+                                    $statusText = ($status == 'Reviewed') ? 'Reviewed' : 'Not Reviewed';
                                     ?>
                                     <tr class="complaint-row">
                                         <td class="date"><?php

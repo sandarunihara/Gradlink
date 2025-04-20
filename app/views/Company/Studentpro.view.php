@@ -30,7 +30,11 @@
                     </a>
                     <div class="stu_details">
                         <div class="stu_pro">
-                            <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
+                            <?php if (!empty($data[0]->ProfilePic)) : ?>
+                                <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $data[0]->ProfilePic ?>" />
+                            <?php else: ?>
+                                <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
+                            <?php endif ?>
                             <div class="stu_info">
                                 <span><?php echo $data[0]->Name ?></span>
                                 <p class="mail_no"><?php echo $data[0]->Email ?><br>
@@ -103,46 +107,49 @@
                             <h2>Curriculum Vitae(CV)</h2>
                             <div class="cv">
                                 <i class="fas fa-file-pdf"></i>
-                                <a href="pdf-link.pdf" target="_blank">Download here</a>
+                                <a href="<?php echo '/Gradlink/public/assets/uploads/cv/' . $data[0]->adCV; ?>" target="_blank">View here</a>
                             </div>
                         </div>
                         <div class="progress-report-container" id="progress-report-container">
                             <h2>Progress Reports</h2>
                             <div class="reports">
                                 <div class="unread-report">
-                                    <?php if(!empty($notReviewed)): ?>
-                                    <h3>Unread Reports</h3>
-                                    <?php foreach($notReviewed as $notReviewedreport): ?>
-                                    <div class="report-con">
-                                        <h4><?php echo $notReviewedreport->SubmissionDate ?></h4>
-                                        <div>
-                                            <i class="fas fa-file-pdf"></i>
-                                            <a href="<?php echo '/Gradlink/public/assets/uploads/progress_docs/' . $notReviewedreport->Name; ?>" target="_blank">View here</a>
-                                        </div>
-                                        <div class="report-button">
-                                            <button class="approve-report" onclick="openreportapproveModal(event,'<?php echo $notReviewedreport->	DocumentId; ?>')">Approve</button>
-                                            <button class="reject-report" onclick="openreportrejectModal(event,'<?php echo $notReviewedreport->	DocumentId; ?>')">Reject</button>
-                                        </div>
-                                    </div>
-                                    <?php endforeach; ?>
+                                    <?php if (!empty($notReviewed)): ?>
+                                        <h3>Unread Reports</h3>
+                                        <?php foreach ($notReviewed as $notReviewedreport): ?>
+                                            <div class="report-con">
+                                                <h4><?php echo $notReviewedreport->SubmissionDate ?></h4>
+                                                <div>
+                                                    <i class="fas fa-file-pdf"></i>
+                                                    <a href="<?php echo '/Gradlink/public/assets/uploads/progress_docs/' . $notReviewedreport->Name; ?>" target="_blank">View here</a>
+                                                </div>
+                                                <div class="report-button">
+                                                    <button class="approve-report" onclick="openreportapproveModal(event,'<?php echo $notReviewedreport->DocumentId; ?>')">Approve</button>
+                                                    <button class="reject-report" onclick="openreportrejectModal(event,'<?php echo $notReviewedreport->DocumentId; ?>')">Reject</button>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
                                 <div class="read-report">
-                                <?php if(!empty($Reviewed)): ?>
-                                    <h3>Read Reports</h3>
-                                    <?php foreach($Reviewed as $Reviewedreport): ?>
-                                    <div class="report-con">
-                                        <h4><?php echo $Reviewedreport->SubmissionDate ?></h4>
-                                        <div>
-                                            <i class="fas fa-file-pdf"></i>
-                                            <a href="<?php echo '/Gradlink/public/assets/uploads/progress_docs/' . $Reviewedreport->Name; ?>" target="_blank">View here</a>
-                                        </div>
-                                        <p><?php echo $Reviewedreport->Status ?></p>
-                                    </div>
-                                    <?php endforeach; ?>
+                                    <?php if (!empty($Reviewed)): ?>
+                                        <h3>Read Reports</h3>
+                                        <?php foreach ($Reviewed as $Reviewedreport): ?>
+                                            <div class="report-con">
+                                                <h4><?php echo $Reviewedreport->SubmissionDate ?></h4>
+                                                <div>
+                                                    <i class="fas fa-file-pdf"></i>
+                                                    <a href="<?php echo '/Gradlink/public/assets/uploads/progress_docs/' . $Reviewedreport->Name; ?>" target="_blank">View here</a>
+                                                </div>
+                                                <p><?php echo $Reviewedreport->Status ?></p>
+                                            </div>
+                                        <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
+                            <?php if (empty($Reviewed) && empty($notReviewed)): ?>
+                                <p class="no-report">No report is available at the moment</p>
+                            <?php endif ?>
                         </div>
                         <div class="all_ar">
                             <form id="actionForm" method="post" action="">
@@ -260,6 +267,11 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+
     <!-- Toast message from session -->
     <?php if (isset($_SESSION['flash'])): ?>
         <script>
@@ -309,9 +321,13 @@
             document.getElementById('actionInput').value = action;
             // Close the modal
             closeAllModals();
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('actionForm').submit();
+            }, 300); // slight delay to show animation before form submit
 
             // Submit the form
-            document.getElementById('actionForm').submit();
+            // document.getElementById('actionForm').submit();
         }
 
         function closeAllModals() {
@@ -327,12 +343,12 @@
 
 
         // for progress report
-        function openreportapproveModal(event,DocumentId) {
+        function openreportapproveModal(event, DocumentId) {
             event.preventDefault();
             document.getElementById('report-approve-modal').style.display = 'flex';
-            document.getElementById('DocumentId1').value=DocumentId;
-            
-            
+            document.getElementById('DocumentId1').value = DocumentId;
+
+
         }
 
         function closeapproveModal() {
@@ -344,14 +360,17 @@
 
         function confirmreportaction() {
             closeapproveModal();
-            document.getElementById('report-form').submit();
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('report-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
 
         // report reject modals
-        function openreportrejectModal(event,DocumentId) {
+        function openreportrejectModal(event, DocumentId) {
             event.preventDefault();
             document.getElementById('report-reject-modal').style.display = 'flex';
-            document.getElementById('DocumentId2').value=DocumentId;
+            document.getElementById('DocumentId2').value = DocumentId;
         }
 
         function closearejectModal() {
@@ -364,7 +383,10 @@
 
         function confirmrejectreportaction() {
             closearejectModal();
-            document.getElementById('report-reject-form').submit();
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('report-reject-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
     </script>
 

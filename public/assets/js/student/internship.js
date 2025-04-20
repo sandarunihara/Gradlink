@@ -7,7 +7,9 @@
     const form = document.querySelector('form');
     const errorId = document.getElementById('errorId');
     const cvUpload = document.getElementById('cvUpload');
-
+    const defaultCV = document.getElementById('defaultCV');
+    const defaltMessage = document.getElementById('defaultMessage');
+    
     // Show popup when any "Apply" button is clicked
     applyButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -26,17 +28,68 @@
             window.location.href = url;
         });
     });
+    addEventListener("DOMContentLoaded", () => {
+        localStorage.setItem("clicked", "false");
+    });
+
+    defaultCV.addEventListener('click', ()=> {
+        const cv = JSON.parse(defaultCV.getAttribute('default-cv'));
+
+        const clicked = localStorage.getItem("clicked");
+        if(clicked === "false"){
+            const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
+            const extension = cv.split('.').pop();
+            let masked;
+    
+            if(fileNameWithoutExtension.length < 5){
+                masked = cv;
+            }else{
+                const visiblePart = fileNameWithoutExtension.slice(-5);
+                masked = "***" + visiblePart + "." + extension;
+            }
+    
+            cvUpload.style.display = "none";
+            defaltMessage.innerText = masked;
+            defaltMessage.classList.remove('hidden');
+    
+            const defaultInput = document.createElement('input');
+            defaultInput.type = 'hidden';
+            defaultInput.name = 'use_default_cv';
+            defaultInput.value = cv;
+            form.appendChild(defaultInput);
+
+
+            localStorage.setItem("clicked", "true");
+        }else{
+            const defaultInput = document.querySelector('input[name="use_default_cv"]');
+            if (defaultInput) {
+                form.removeChild(defaultInput);
+            }
+            cvUpload.style.display = "block";
+            defaltMessage.innerText = "";
+            defaltMessage.classList.add('hidden');
+            localStorage.setItem("clicked", "false");
+        }
+
+    });
     // Handle file upload when "OK" button is clicked
     okBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if(validateFile(cvUpload)){
+        if(cvUpload.value){
+            if(validateFile(cvUpload)){
+                form.submit();
+            }
+        }else{
             form.submit();
         }
-    });
 
+    });
     // Hide popup when clicking outside the content box
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
+            cvUpload.style.display = "block";
+            defaltMessage.innerText = "";
+            defaltMessage.classList.add('hidden');
             popupBox.classList.add('hidden');
         }
     });
@@ -86,26 +139,56 @@
         }
     }
 
-    document.getElementById("searchIcon").addEventListener("click", function () {
-        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    function searchCompany(value) {
+        const searchTerm = value.toLowerCase().trim();
         const jobCards = document.querySelectorAll(".job-card");
-        
-        let companyNames = [];
-        jobCards.forEach(card => {
-            const companyName = card.querySelector(".job-details p").textContent.trim();
-            companyNames.push(companyName.toLowerCase());
-        });
-        //console.log(companyNames);
-        if(!companyNames.includes(searchTerm)){
-            errorToast("Company not found");
-        }else{
+    
+        if (searchTerm === "") {
+            // If input is empty, show all job cards
             jobCards.forEach(card => {
-                const companyName = card.querySelector(".job-details p").textContent.trim();
-                if(companyName.toLowerCase() === searchTerm){
-                    card.style.display = "block";
-                }else{
-                    card.style.display = "none";
-                }
+                card.style.display = "block";
             });
+            return;
         }
-    });
+    
+        let found = false;
+    
+        jobCards.forEach(card => {
+            const companyName = card.querySelector(".job-details p").textContent.trim().toLowerCase();
+            if (companyName.includes(searchTerm)) {
+                card.style.display = "block";
+                found = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
+    
+        if (!found) {
+            return;
+        }
+    }
+    function searchByPosition() {
+        const jobCards = document.querySelectorAll(".job-card");
+        const select = document.getElementById("positionSelect");
+        const selectedPosition = select.value.toLowerCase();
+
+        if(selectedPosition == "all"){
+            jobCards.forEach(card => {
+            card.style.display = "block";
+            });
+            return;
+        }
+        let found = false;
+    
+        jobCards.forEach(card => {
+            const companyName = card.querySelector(".job-details h3").textContent.trim().toLowerCase();
+            if (companyName === selectedPosition) {
+                card.style.display = "block";
+                found = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+    
+    

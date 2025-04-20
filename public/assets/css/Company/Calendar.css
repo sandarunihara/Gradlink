@@ -1,77 +1,24 @@
-.sc_main{
+/* Calendar  Styles */
+.main-container{
     width: 100%;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    margin-top: 30px;
+    max-height: 100%;
+}
+.m_main{
+    width: 100%;
+    padding-right: 30px;
+    padding-top: 5px;
+    overflow-y: hidden;
 }
 .sc_container{
-    text-decoration: none;
-    color: #474748;
     display: flex;
-    align-items: center;
-    width: fit-content;
-    gap: 5px;
-    transition:color 0.5s ease;
-    cursor: pointer;
-    width: 100%;
-    padding: 5px;
-    background: #cae0fc;
-    border-radius: 10px;
+  justify-content: start;
+  align-items: center;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: black;
+  transition: color 0.5s;
 }
-.sc_container:hover{
-    color: #006cdf;
-}
-.sc_background{
-    width: 100%;
-}
-/* Calendar Container Styles */
-
-
-/* FullCalendar Overrides */
-
-
-.sc {
-    order: 2;
-}
-
-.sc_background {
-    order: 1;
-}
-
-
- /* Calendar Modal Styles */
- .calendar-modal {
-    display: none;
-    position: fixed;
-    z-index: 1050;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.calendar-modal-content {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    width: 90%;
-    height: 90%;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    animation: zoomIn 0.3s forwards;
-    min-height: 0;
-}
-
 .calendar-container {
     flex: 1;
     min-height: 0;

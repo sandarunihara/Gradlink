@@ -66,7 +66,8 @@ class RecruitStudents
                             'Student Degree' => $item->DegreeName,
                             'Position' => $item->position,
                             'Action' => $item->Jobstatus,
-                            'NotReviewedstatus' => $notReviewedstatus
+                            'NotReviewedstatus' => $notReviewedstatus,
+                            'ProfilePic'=>$item->ProfilePic
                         ];
                     }
                 }
@@ -74,7 +75,6 @@ class RecruitStudents
             // show($reqdata);
 
         }
-
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
         $this->view('Company/RecruitStudents', ['data' => $reqdata]);
@@ -90,6 +90,7 @@ class RecruitStudents
         $data = $model->findbyId($StudentId);
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
+        $data[0]->adCV=$studentad_data[0]->CV;
         $studentJobstatus = $studentad_data[0]->Jobstatus;
 
         $notReviewed = [];

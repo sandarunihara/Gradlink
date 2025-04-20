@@ -42,7 +42,11 @@
                             <?php foreach ($data as $student): ?>
                                 <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="stu-profile">
                                     <div class="profile-photo">
-                                        <img src="<?= ROOT ?>/assets/img/Company/pro.jpg" />
+                                        <?php if (!empty($student['ProfilePic'])) : ?>
+                                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $student['ProfilePic'] ?>" />
+                                        <?php else: ?>
+                                            <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
+                                        <?php endif ?>
                                     </div>
                                     <div class="student-details">
                                         <div class="name-container">
@@ -60,7 +64,7 @@
                                 </a>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No students Recruit yet</p>
+                            <p class="no-events">No students Recruit yet</p>
                         <?php endif; ?>
                     </div>
                 </div>
