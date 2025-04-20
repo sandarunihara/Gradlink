@@ -189,9 +189,17 @@ function isShortDescriptionValid(description) {
   }
 }
 function isValidProfilePicture(input) {
+  const MAX_SIZE = 500 * 1024;
+
   if (input.files.length === 0) {
     profilePictureError.innerHTML = "Please upload a file.";
     profilePictureError.style.display = "block";
+    return false;
+  }
+  if (file.size > MAX_SIZE) {
+    profilePictureError.innerHTML = "File size must be less than 500KB.";
+    profilePictureError.style.display = "block";
+    input.classList.add("invalid");
     return false;
   }
 
