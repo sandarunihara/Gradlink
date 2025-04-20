@@ -199,8 +199,7 @@ function isValidProfilePicture(input) {
   const pattern = /\.(jpg|jpeg|png)$/i;
 
   if (!pattern.test(fileName)) {
-    profilePictureError.innerHTML =
-      "Invalid file type. Only JPG, JPEG, or PNG allowed.";
+    profilePictureError.innerHTML = "Invalid file type. Only JPG, JPEG, or PNG allowed.";
     profilePictureError.style.display = "block";
     input.classList.add("invalid");
     return false;
