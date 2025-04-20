@@ -217,10 +217,8 @@ class Signup
                             $data['errors'] = "Failed to upload profile picture.";
                         }
                         $_SESSION['user']['Status'] = 'NotApplied';
-                        $_SESSION['user']['block'] = 0;
                         $_SESSION['user']['completed'] = 0;
                         $_SESSION['user']['noOfAppliedAds'] = 0;
-                        $_SESSION['user']['registered'] = 0;
                         //show($_SESSION['user']);
                         break;
                     case 4:
