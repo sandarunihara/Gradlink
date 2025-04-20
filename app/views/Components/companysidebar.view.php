@@ -2,51 +2,51 @@
     <div class="sidebar">
         <div class="profile">
             <a href="/Gradlink/public/company/Profile/dashboard">
-                <img src="data:image/jpeg;base64,<?php echo $_SESSION['USER']->profileimg; ?>" alt="">
+                <img src="<?php echo !empty($_SESSION['USER']->profileimg) ? ROOT . '/assets/img/Company/' . $_SESSION['USER']->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>" alt="">
             </a>
         </div>
-        
+
         <ul>
             <a href="/Gradlink/public/company/Companydash/Dashboard">
                 <li data-title="Dashboard"><i class="fas option-i fa-home"></i></li>
             </a>
-            
+
             <a href="/Gradlink/public/company/StudentsRequests/dashboard">
                 <li data-title="Students Requests"><i class="fas fa-users"></i></li>
             </a>
-            
+
             <?php if (isset($componentProps['hasShortlisted']) && $componentProps['hasShortlisted']): ?>
                 <a href="/Gradlink/public/company/ShortlistedStudents/dashboard">
                     <li data-title="Shortlisted Students"><i class="fas fa-user-check"></i></li>
                 </a>
-                <?php endif; ?>
-                <?php if (isset($componentProps['hasRecruited']) && $componentProps['hasRecruited']): ?>
-                    <a href="/Gradlink/public/company/RecruitStudents/dashboard">
-                        <li data-title="Recruited Students"><i class="fas fa-user-tie"></i></li>
-                    </a>
             <?php endif; ?>
-            
+            <?php if (isset($componentProps['hasRecruited']) && $componentProps['hasRecruited']): ?>
+                <a href="/Gradlink/public/company/RecruitStudents/dashboard">
+                    <li data-title="Recruited Students"><i class="fas fa-user-tie"></i></li>
+                </a>
+            <?php endif; ?>
+
             <a href="/Gradlink/public/company/Advertisements/dashboard">
                 <li data-title="Advertisements"><i class="fas fa-bullhorn"></i></li>
             </a>
-            
+
             <a href="/Gradlink/public/company/Schedule/dashboard">
                 <li data-title="Schedule"><i class="fas fa-calendar-alt"></i></li>
             </a>
-            
+
             <a href="/Gradlink/public/company/Messages/dashboard">
                 <li data-title="Messages"><i class="fas fa-comments"></i></li>
             </a>
-            
+
             <a href="/Gradlink/public/company/CComplaint/dashboard">
                 <li data-title="Complaint"><i class="fas fa-exclamation-triangle"></i></li>
             </a>
         </ul>
-        
+
         <a href="<?= ROOT ?>/logout" class="logout" data-title="Logout">
             <i class="fas fa-sign-out-alt fa-lg"></i>
         </a>
-        
+
     </div>
 </div>
 
@@ -157,13 +157,13 @@
                     <p>Dashboard</p>
                 </div>
             </a> -->
-            <!-- <a class="option" href="/Gradlink/public/company/StudentsRequests/dashboard">
+<!-- <a class="option" href="/Gradlink/public/company/StudentsRequests/dashboard">
                 <i class="fas fa-users"></i>
                 <div class="text">
                     <p>Students Requests</p>
                 </div>
             </a> -->
-            <!-- <?php if (isset($componentProps['hasShortlisted']) && $componentProps['hasShortlisted']): ?>
+<!-- <?php if (isset($componentProps['hasShortlisted']) && $componentProps['hasShortlisted']): ?>
                 <a class="option shortlisted" href="/Gradlink/public/company/ShortlistedStudents/dashboard">
                     <i class="fas fa-user-check"></i>
                     <div class="text">
@@ -171,7 +171,7 @@
                     </div>
                 </a>
             <?php endif; ?> -->
-            <!-- <?php if (isset($componentProps['hasRecruited']) && $componentProps['hasRecruited']): ?>
+<!-- <?php if (isset($componentProps['hasRecruited']) && $componentProps['hasRecruited']): ?>
                 <a class="option recruited" href="/Gradlink/public/company/RecruitStudents/dashboard">
                     <i class="fas fa-user-tie"></i>
                     <div class="text">
@@ -179,25 +179,25 @@
                     </div>
                 </a>
             <?php endif; ?> -->
-            <!-- <a class="option" href="/Gradlink/public/company/Advertisements/dashboard">
+<!-- <a class="option" href="/Gradlink/public/company/Advertisements/dashboard">
                 <i class="fas fa-bullhorn"></i>
                 <div class="text">
                     <p>Advertisements</p>
                 </div>
             </a> -->
-            <!-- <a class="option" href="/Gradlink/public/company/Schedule/dashboard">
+<!-- <a class="option" href="/Gradlink/public/company/Schedule/dashboard">
                 <i class="fas fa-calendar-alt"></i>
                 <div class="text">
                     <p>Schedule</p>
                 </div>
             </a> -->
-            <!-- <a class="option" href="/Gradlink/public/company/Messages/dashboard">
+<!-- <a class="option" href="/Gradlink/public/company/Messages/dashboard">
                 <i class="fas fa-comments"></i>
                 <div class="text">
                     <p>Messages</p>
                 </div>
             </a> -->
-            <!-- <a class="option" href="/Gradlink/public/company/Profile/dashboard">
+<!-- <a class="option" href="/Gradlink/public/company/Profile/dashboard">
                 <i class="fas fa-user"></i>
                 <div class="text">
                     <p>Profile</p>

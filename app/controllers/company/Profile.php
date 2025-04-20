@@ -10,7 +10,7 @@ class Profile
             $user = $_SESSION['USER'];
         }
         $model = new company;
-        $data = $model->first(['CompanyId'=>$user->CompanyId]);
+        $data = $model->first(['CompanyId' => $user->CompanyId]);
         $this->view('Company/Profile', ['data' => $data, 'user' => $user]);
     }
 
@@ -21,21 +21,57 @@ class Profile
             $user = $_SESSION['USER'];
         }
         $model = new company;
-        $data = $model->first(['CompanyId'=>$user->CompanyId]);
+        $data = $model->first(['CompanyId' => $user->CompanyId]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // show($_POST);
             if (isset($_FILES['profilephoto']) && $_FILES['profilephoto']['error'] == 0) {
-                $imageData = file_get_contents($_FILES['profilephoto']['tmp_name']); // Get the image content
-                $proimageBase64 = base64_encode($imageData); // Encode image content in base64
-            }else{
+                $ProfilepicName = $_FILES['profilephoto']['name'];
+                $ProfilepicTempName = $_FILES['profilephoto']['tmp_name'];
+
+                $baseName = strtolower(pathinfo($ProfilepicName, PATHINFO_FILENAME));
+                $ext = strtolower(pathinfo($ProfilepicName, PATHINFO_EXTENSION));
+
+                // Clean the base name: remove special characters, trim underscores
+                $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
+                $cleanBase = trim($cleanBase, "_");
+
+                // Add timestamp and random string for uniqueness
+                $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
+                $newproName = $cleanBase . '_' . $uniqueString . '.' . $ext;
+                $profilePictureDestination = __DIR__ . '/../../../public/assets/img/Company/' . $newproName;
+                $uploadpropic = move_uploaded_file($ProfilepicTempName, $profilePictureDestination);
+
+                
+            } else {
                 $proimageBase64 = $data->profileimg;
             }
             if (isset($_FILES['coverphoto']) && $_FILES['coverphoto']['error'] == 0) {
-                $imageData = file_get_contents($_FILES['coverphoto']['tmp_name']); // Get the image content
-                $coverimageBase64 = base64_encode($imageData); // Encode image content in base64
-            }else{
+                $CoverpicName = $_FILES['coverphoto']['name'];
+                $CoverpicTempName = $_FILES['coverphoto']['tmp_name'];
+
+                $baseName = strtolower(pathinfo($CoverpicName, PATHINFO_FILENAME));
+                $ext = strtolower(pathinfo($CoverpicName, PATHINFO_EXTENSION));
+
+                // Clean the base name: remove special characters, trim underscores
+                $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
+                $cleanBase = trim($cleanBase, "_");
+
+                // Add timestamp and random string for uniqueness
+                $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
+                $newcoverName = $cleanBase . '_' . $uniqueString . '.' . $ext;
+                $coverPictureDestination = __DIR__ . '/../../../public/assets/img/Company/' . $newcoverName;
+                $uploadcoverpic = move_uploaded_file($CoverpicTempName, $coverPictureDestination);
+                
+                if ($uploadcoverpic) {
+                    $coverimageBase64 = $newcoverName;
+                } else {
+                    $coverimageBase64 = $data->coverimg;
+                }
+            } else {
                 $coverimageBase64 = $data->coverimg;
             }
+
             $updatedata = [
                 'Name' => $_POST['Name'] ?? '',
                 'ContactPerson' => $_POST['ContactPerson'] ?? '',
@@ -51,15 +87,22 @@ class Profile
                 'profileimg' => $proimageBase64 ?? '',
                 'coverimg' => $coverimageBase64 ?? ''
             ];
-            
-            
+
+            // show($updatedata);
             $result = $model->update($user->CompanyId, $updatedata, 'CompanyId');
             if ($result['status'] == 'success') {
-                $_SESSION['USER']=$model->first(['CompanyId'=>$user->CompanyId]);
+                $_SESSION['USER'] = $model->first(['CompanyId' => $user->CompanyId]);
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Profile update Successfully'
+                ];
                 header('Location: ../Profile/dashboard');
                 exit;
             } else {
-                echo "There was an issue saving the data.";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'There was an issue saving the data'
+                ];
             }
         }
 
