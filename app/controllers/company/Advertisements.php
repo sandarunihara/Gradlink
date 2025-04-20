@@ -52,7 +52,7 @@ class Advertisements
         $currentDate = date('Y-m-d');
         // Check if data is empty
         if (empty($data1)) {
-            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0,'pendingCount'=>0, 'numOfapplyStudents' => $numOfapplyStudents]);
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => 0, 'deactiveCount' => 0, 'pendingCount' => 0, 'numOfapplyStudents' => $numOfapplyStudents]);
         } else {
 
             $advertisementIds = [];
@@ -72,7 +72,7 @@ class Advertisements
             $deactiveData = array_filter($data1, function ($advertisement) {
                 return $advertisement->status === 'Deactive';
             });
-            
+
             $pendingData = array_filter($data1, function ($advertisement) {
                 return $advertisement->status === 'Pending';
             });
@@ -87,7 +87,7 @@ class Advertisements
             $deactiveCount = count($deactiveData);
             $pendingCount = count($pendingData);
 
-            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => $activeCount, 'deactiveCount' => $deactiveCount,'pendingCount'=>$pendingCount, 'numOfapplyStudents' => $numOfapplyStudents]);
+            $this->view('Company/Advertisements', ['data' => $data1, 'activeCount' => $activeCount, 'deactiveCount' => $deactiveCount, 'pendingCount' => $pendingCount, 'numOfapplyStudents' => $numOfapplyStudents]);
         }
     }
 
@@ -112,83 +112,94 @@ class Advertisements
     }
 
     public function create()
-{
-    $data = [];
-    $user = "";
-    if (isset($_SESSION['USER'])) {
-        $user = $_SESSION['USER'];
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $model = new C_Advertisement;
-        $maxFileSize = 5 * 1024 * 1024; // 5 MB
-        $imageBase64 = '';
-
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-            if ($_FILES['image']['size'] > $maxFileSize) {
-                $_SESSION['flash'] = [
-                    'type' => 'error',
-                    'message' => 'Error: The file is too large. Maximum allowed size is 5MB.'
-                ];
-                $this->view('Company/CreateAdvertisement', ['data' => $data]);
-                return;
-            }
-
-            $imageData = file_get_contents($_FILES['image']['tmp_name']);
-            $imageBase64 = base64_encode($imageData);
+    {
+        $data = [];
+        $user = "";
+        if (isset($_SESSION['USER'])) {
+            $user = $_SESSION['USER'];
         }
 
-        $Id = $this->getnextId();
-        $data = [
-            'advertisementId' => $Id,
-            'position' => $_POST['position'] ?? '',
-            'status' => 'Pending',
-            'description' => $_POST['description'] ?? '',
-            'numOfInterns' => $_POST['interns'] ?? '',
-            'workingMode' => $_POST['worktype'] ?? '',
-            'qualification' => $_POST['qualifications'] ?? '',
-            'deadline' => $_POST['deadline'] ?? '',
-            'image' => $imageBase64,
-            'startDate' => date('Y-m-d'),
-            'CompanyId' => $user->CompanyId
-        ];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $model = new C_Advertisement;
+            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+            $imageBase64 = '';
 
-        if ($model->validate($data)) {
-            try {
-                $result = $model->insert($data);
-                if ($result) {
-                    $_SESSION['flash'] = [
-                        'type' => 'success',
-                        'message' => 'Advertisement created successfully.'
-                    ];
-                    header('Location: ../Advertisements/dashboard');
-                    exit;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                $imageName = $_FILES['image']['name'];
+                $imageTempName = $_FILES['image']['tmp_name'];
+
+                $baseName = strtolower(pathinfo($imageName, PATHINFO_FILENAME));
+                $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+
+                // Clean the base name: remove special characters, trim underscores
+                $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
+                $cleanBase = trim($cleanBase, "_");
+
+                // Add timestamp and random string for uniqueness
+                $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
+                $newimageName = $cleanBase . '_' . $uniqueString . '.' . $ext;
+                $PictureDestination = __DIR__ . '/../../../public/assets/img/Company/advertisements/' . $newimageName;
+                $uploadcoverpic = move_uploaded_file($imageTempName, $PictureDestination);
+
+                if ($uploadcoverpic) {
+                    $imageBase64 = $newimageName;
                 } else {
-                    $_SESSION['flash'] = [
-                        'type' => 'error',
-                        'message' => 'There was an issue saving the advertisement.'
-                    ];
+                    $imageBase64 = '';
                 }
-            } catch (PDOException $e) {
-                if (str_contains($e->getMessage(), 'max_allowed_packet')) {
-                    $_SESSION['flash'] = [
-                        'type' => 'error',
-                        'message' => 'Error: Image is too large to be stored. Please use a smaller image.'
-                    ];
-                } else {
-                    $_SESSION['flash'] = [
-                        'type' => 'error',
-                        'message' => 'A database error occurred: ' . $e->getMessage()
-                    ];
-                }
+
             }
-        } else {
-            $data['errors'] = $model->errors;
-        }
-    }
 
-    $this->view('Company/CreateAdvertisement', ['data' => $data]);
-}
+            $Id = $this->getnextId();
+            $data = [
+                'advertisementId' => $Id,
+                'position' => $_POST['position'] ?? '',
+                'status' => 'Pending',
+                'description' => $_POST['description'] ?? '',
+                'numOfInterns' => $_POST['interns'] ?? '',
+                'workingMode' => $_POST['worktype'] ?? '',
+                'qualification' => $_POST['qualifications'] ?? '',
+                'deadline' => $_POST['deadline'] ?? '',
+                'image' => $imageBase64,
+                'startDate' => date('Y-m-d'),
+                'CompanyId' => $user->CompanyId
+            ];
+
+            if ($model->validate($data)) {
+                try {
+                    $result = $model->insert($data);
+                    if ($result) {
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => 'Advertisement created successfully.'
+                        ];
+                        header('Location: ../Advertisements/dashboard');
+                        exit;
+                    } else {
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => 'There was an issue saving the advertisement.'
+                        ];
+                    }
+                } catch (PDOException $e) {
+                    if (str_contains($e->getMessage(), 'max_allowed_packet')) {
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => 'Error: Image is too large to be stored. Please use a smaller image.'
+                        ];
+                    } else {
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => 'A database error occurred: ' . $e->getMessage()
+                        ];
+                    }
+                }
+            } else {
+                $data['errors'] = $model->errors;
+            }
+        }
+
+        $this->view('Company/CreateAdvertisement', ['data' => $data]);
+    }
 
 
 
@@ -210,8 +221,27 @@ class Advertisements
                 $imageBase64 = '';
                 // print_r($_FILES['image']);
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                    $imageData = file_get_contents($_FILES['image']['tmp_name']); // Get the image content
-                    $imageBase64 = base64_encode($imageData); // Encode image content in base64
+                    $imageName = $_FILES['image']['name'];
+                    $imageTempName = $_FILES['image']['tmp_name'];
+    
+                    $baseName = strtolower(pathinfo($imageName, PATHINFO_FILENAME));
+                    $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+    
+                    // Clean the base name: remove special characters, trim underscores
+                    $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
+                    $cleanBase = trim($cleanBase, "_");
+    
+                    // Add timestamp and random string for uniqueness
+                    $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
+                    $newimageName = $cleanBase . '_' . $uniqueString . '.' . $ext;
+                    $PictureDestination = __DIR__ . '/../../../public/assets/img/Company/advertisements/' . $newimageName;
+                    $uploadcoverpic = move_uploaded_file($imageTempName, $PictureDestination);
+    
+                    if ($uploadcoverpic) {
+                        $imageBase64 = $newimageName;
+                    } else {
+                        $imageBase64 = '';
+                    }
                 }
                 if (empty($imageBase64)) {
                     $imageBase64 = $data[0]->image;
