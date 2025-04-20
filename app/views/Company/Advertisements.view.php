@@ -71,9 +71,9 @@
                                     <div class="postcard" data-status="<?php echo $advertisement->status; ?>">
                                         <div class="image">
                                             <?php if (!empty($advertisement->image)): ?>
-                                                <img src="data:image/jpeg;base64,<?php echo $advertisement->image; ?>" class="logo" />
+                                                <img src="<?php echo ROOT .'/assets/img/Company/advertisements/' .  $advertisement->image; ?>" class="logo" />
                                             <?php else: ?>
-                                                <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
+                                                <img src="" class="logo" /> 
                                             <?php endif; ?>
                                             <a href="../Advertisements/send/<?php echo $advertisement->advertisementId; ?>" class="top-left-link">Show Info</a>
                                         </div>

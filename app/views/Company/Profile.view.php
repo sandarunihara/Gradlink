@@ -90,10 +90,6 @@
         function linkedin() {
             window.open(<?php echo $data->Linkedin ?>);
         }
-
-        function goeditpro() {
-            window.location.href = "<?php echo ROOT ?>/Profile/edit";
-        }
     </script>
 
 </body>

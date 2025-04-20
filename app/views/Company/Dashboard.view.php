@@ -239,7 +239,7 @@
                             listContainer.appendChild(el);
                         });
                         console.log(listContainer);
-                        
+
                     }
 
                 } catch (error) {
@@ -324,14 +324,14 @@
 
                         const html = upcoming.length > 0 ?
                             upcoming.map(event => `
-                    <div class="upcoming-event">
-                        <h4>${event.position}</h4>
-                        <p><strong>Candidate:</strong> ${event.StudentName}</p>
-                        <p><strong>Date:</strong> ${formatDate(event.start)}</p>
-                        <p><strong>Time:</strong> ${formatTime(event.start, event.end)}</p>
-                        </div>
-                `).join('') :
-                            '<p class="no-events">No upcoming interviews</p>';
+                                                <div class="upcoming-event">
+                                                    <h4>${event.position}</h4>
+                                                    <p><strong>Candidate:</strong> ${event.StudentName}</p>
+                                                    <p><strong>Date:</strong> ${formatDate(event.start)}</p>
+                                                    <p><strong>Time:</strong> ${formatTime(event.start, event.end)}</p>
+                                                    </div>
+                                            `).join('') :
+                                                        '<p class="no-events">No upcoming interviews</p>';
 
                         upcomingEventsDiv.innerHTML = html;
                     }

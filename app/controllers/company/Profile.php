@@ -42,6 +42,12 @@ class Profile
                 $profilePictureDestination = __DIR__ . '/../../../public/assets/img/Company/' . $newproName;
                 $uploadpropic = move_uploaded_file($ProfilepicTempName, $profilePictureDestination);
 
+                if ($uploadpropic) {
+                    $proimageBase64 = $newproName;
+                } else {
+                    $proimageBase64 = $data->profileimg;
+                }
+
                 
             } else {
                 $proimageBase64 = $data->profileimg;
