@@ -106,12 +106,12 @@ body {
 
 .status-badge.deactive {
     background-color: rgba(108, 117, 125, 0.1);
-    color: var(--gray);
+    color: var(--warning);
 }
 
 .status-badge.pending {
     background-color: rgba(248, 150, 30, 0.1);
-    color: var(--warning);
+    color: var(--gray);
 }
 
 .status-badge.rejected {

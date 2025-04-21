@@ -900,15 +900,19 @@ body {
                 <button class="btn btn-outline" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <?php if ($data['companyData']->block === 1): ?>
-                    <button class="btn btn-success" onclick="unblockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
-                        <i class="fas fa-lock-open"></i> Unblock
-                    </button>
-                <?php else: ?>
-                    <button class="btn btn-danger" onclick="blockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
-                        <i class="fas fa-ban"></i> Block
-                    </button>
+
+                <?php if($data['companyData']->Status != 'Pending' ):?>
+                  <?php if ($data['companyData']->block === 1): ?>
+                      <button class="btn btn-success" onclick="unblockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
+                          <i class="fas fa-lock-open"></i> Unblock
+                      </button>
+                  <?php else: ?>
+                      <button class="btn btn-danger" onclick="blockCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
+                          <i class="fas fa-ban"></i> Block
+                      </button>
+                  <?php endif; ?>
                 <?php endif; ?>
+                
             </div>
         </main>
     </div>

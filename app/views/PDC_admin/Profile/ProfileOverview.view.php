@@ -119,6 +119,9 @@
         }
 
         .profile-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             background: var(--white);
             border-radius: 8px;
             padding: 1.5rem;

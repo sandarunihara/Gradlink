@@ -127,6 +127,17 @@ class student
 		}
 		return false;
 	}
+
+	public function findregistered(){
+		$query = "SELECT * FROM $this->table WHERE block = '0' AND registered = '1'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
 	
 	
 	
@@ -140,7 +151,7 @@ class student
     }
 
 	public function findnotapplied(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied' AND block = '0'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied' AND block = '0' AND registered = '1'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -151,7 +162,7 @@ class student
 	}
 
 	public function findRecruited(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Ongoing' AND block = '0'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Ongoing' AND block = '0' AND registered = '1'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -162,7 +173,7 @@ class student
 	}
 
 	public function findRejected(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Rejected' AND block = '0'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Rejected' AND block = '0' AND registered = '1'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -173,7 +184,7 @@ class student
 	}
 
 	public function findAllBlocked(){
-		$query = "SELECT * FROM $this->table WHERE block = '1' AND Status = 'Blocked'";
+		$query = "SELECT * FROM $this->table WHERE block = '1' AND Status = 'Blocked' AND registered = '1'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -185,7 +196,18 @@ class student
 
 
 	public function findAllPending(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Pending' AND block = 0";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Pending' AND block = 0 AND registered = '1'";
+		$result = $this->query($query);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function findNotReg(){
+		$query = "SELECT * FROM $this->table WHERE block = '0' AND registered = '0'";
 		$result = $this->query($query);
 		if($result){
 			return $result;

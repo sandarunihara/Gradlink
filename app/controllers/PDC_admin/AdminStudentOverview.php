@@ -4,11 +4,11 @@ class AdminStudentOverview{
     use Controller;
     public function dashboard(){
         $model = new student;
-            $studentData = $model->findnotapplied();
+            $studentData = $model->findregistered();
 
             $this->view('PDC_admin/Student/StudentOverview', [
                 'studentData' => $studentData,
-                'activeTab' => 'Not-Applied'
+                'activeTab' => 'Registered-Students'
             ]
         );
     } 
@@ -29,6 +29,16 @@ class AdminStudentOverview{
         $this->view('PDC_admin/Student/StudentRejected', [
             'studentData' => $studentData,
             'activeTab' => 'rejected-Students'
+        ]
+    );
+    }
+
+    public function notReg(){
+        $model = new student;
+        $studentData = $model->findNotReg();
+        $this->view('PDC_admin/Student/StudentNotReg', [
+            'studentData' => $studentData,
+            'activeTab' => 'Not-Registered-Students'
         ]
     );
     }
