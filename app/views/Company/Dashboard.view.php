@@ -669,6 +669,7 @@
             <p>We're sorry, but your account has been <strong>blocked</strong> by the UCSC PDC.</p>
             <p>If you believe this is a mistake or you have questions regarding your account status, please contact PDC for further assistance.</p>
             <p><strong>Note:</strong> You will not be able to access system features until the issue is resolved.</p>
+            <p><strong style="color: red;">Blocked Reason:</strong> <?php echo $blockreson ?></p>
 
             <div class="company-info">
                 <p><strong>Company Name:</strong> <?php echo $_SESSION['USER']->Name ?></p>

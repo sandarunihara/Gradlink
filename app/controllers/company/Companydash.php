@@ -10,6 +10,13 @@ class Companydash
         if (isset($_SESSION['USER'])) {
             $user = $_SESSION['USER'];
         }
+
+        $actionlogmodel=new Action_logs;
+        $blockreson='';
+        if($user->Status == 'Blocked'){
+            $blockreson=$actionlogmodel->findDetailsforblockcompany($user->CompanyId,'block')[0]->reason;
+        }
+
         
         // show($_SESSION);
         $model = new C_Dashboard;
@@ -27,7 +34,7 @@ class Companydash
             $hasRecruited = false;
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0,'lastmonthcount'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
+            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0,'lastmonthcount'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status ,'blockreson'=>$blockreson]);
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
@@ -276,7 +283,7 @@ class Companydash
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
 
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD'=>$numOfcurrentmothAD,'lastmonthcount'=>$lastmonthcount , 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts , 'Status'=>$user->Status]);
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD'=>$numOfcurrentmothAD,'lastmonthcount'=>$lastmonthcount , 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts , 'Status'=>$user->Status,'blockreson'=>$blockreson]);
             // $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
 
         }

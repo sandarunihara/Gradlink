@@ -71,6 +71,9 @@
                                             <h4>No of interns:<span><?php echo $data[0]->numOfInterns ?></span></h4>
                                             <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
+                                            <?php if (!empty($blockresult)) : ?>
+                                                <h4 style="color:red;"><?php echo $data[0]->status ?> Reason:<span><?php echo $blockresult ?></span></h4>
+                                            <?php endif; ?>
                                         </div>
                                         <div class="ed-del">
                                             <?php if ($data[0]->status != 'Request'): ?>
@@ -88,7 +91,7 @@
 
                                                     <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
 
-                                                <?php elseif($data[0]->status === 'Active'): ?>
+                                                <?php elseif ($data[0]->status === 'Active'): ?>
 
                                                     <!-- <div class="action-buttons"> -->
                                                     <button class="add-btn" onclick="openconfirmdeleteModal()"></button>
