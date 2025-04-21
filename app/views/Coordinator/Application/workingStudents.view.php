@@ -32,7 +32,7 @@
                 <div id="applications-list" class="tab-pane active ">
 
                     <!-- Working Students -->
-                    <!-- <section class="company-list"> -->
+                    <section class="company-list">
                         <div class="list-header">
                             <h2>Recruited Students</h2>
                             <div class="search-box">
@@ -81,7 +81,7 @@
                         </table>
                     </div>
 
-                    <!-- </section> -->
+                    </section>
                 </div>
             </div>
 
