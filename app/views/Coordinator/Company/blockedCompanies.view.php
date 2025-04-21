@@ -36,6 +36,7 @@
                     <h2>Blocked Company List</h2>
 
                 </div>
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -64,6 +65,7 @@
                                             data-id="<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>"
                                             data-name="<?= htmlspecialchars(is_array($company) ? $company['company_name'] : $company->company_name) ?>"
                                             data-reason="<?= htmlspecialchars(is_array($company) ? $company['comment'] : $company->comment) ?>">
+                                            <i class="fas fa-eye"></i>  
                                             View
                                         </button>
                                     </td>
@@ -77,6 +79,7 @@
                             </tr>
                         <?php endif; ?>
                     </tbody>
+                    </div>
                 </table>
 
             </section>
