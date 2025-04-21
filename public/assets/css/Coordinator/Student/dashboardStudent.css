@@ -114,7 +114,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 table thead {
@@ -153,3 +153,26 @@ table td {
     color: #fff;
 }
 
+.table-wrapper {
+    max-height: 400px; /* adjust as needed */
+    overflow-y: auto;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrapper thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f1f5ff;
+    z-index: 1;
+}
+
+.table-wrapper {
+    scroll-behavior: smooth;
+}

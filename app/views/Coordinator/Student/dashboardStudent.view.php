@@ -36,6 +36,7 @@
                         </button>
                     </div>
                 </div>
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -70,13 +71,38 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
-
+                </div>
             </section>
 
 
 
         </main>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-box input");
+            const studentRows = document.querySelectorAll("table tbody tr");
+
+            searchInput.addEventListener("keyup", function() {
+                const query = searchInput.value.toLowerCase();
+
+                studentRows.forEach(row => {
+                    const cells = row.querySelectorAll("td");
+                    let matchFound = false;
+
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(query)) {
+                            matchFound = true;
+                        }
+                    });
+
+                    row.style.display = matchFound ? "" : "none";
+                });
+            });
+        });
+    </script>
+
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
 </body>
