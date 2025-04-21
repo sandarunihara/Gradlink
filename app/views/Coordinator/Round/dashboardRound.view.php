@@ -25,12 +25,26 @@
 
             </header>
 
-            <?php if (!empty($_SESSION['flash_message'])): ?>
-                <div class="flash-message <?= $_SESSION['flash_message']['type'] ?>">
-                    <?= $_SESSION['flash_message']['message'] ?>
-                    <?php unset($_SESSION['flash_message']); ?>
-                </div>
+            <?php if (isset($_SESSION['flash_message'])):
+                // $message = htmlspecialchars($_SESSION['flash_message']['message']);
+                $message = $_SESSION['flash_message']['message'];
+
+                $type = htmlspecialchars($_SESSION['flash_message']['type']);
+                $openModal = $_SESSION['flash_message']['open_modal'] ?? false;
+                $roundFormData = $_SESSION['flash_message']['round_data'] ?? [];
+                unset($_SESSION['flash_message']);
+            ?>
+                <script>
+                    window.__flashMessage = {
+                        message: "<?= $message ?>",
+                        type: "<?= $type ?>",
+                        openModal: <?= json_encode($openModal) ?>,
+                        roundFormData: <?= json_encode($roundFormData) ?>
+                    };
+                </script>
             <?php endif; ?>
+
+
 
             <div class="tab-content">
                 <!-- Company List Tab -->
@@ -86,6 +100,9 @@
                         <label for="endDate">End Date:</label>
                         <input type="date" id="endDate" name="endDate" required>
 
+                        <label for="vacancy">Number of applications per one student </label>
+                        <input type="number" id="vacancy" name="vacancy" required>
+
                         <button type="submit" class="update-btn">Update</button>
                     </form>
                 </div>
@@ -98,6 +115,13 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const today = new Date().toISOString().split("T")[0];
+
+            const startDate = document.getElementById("startDate");
+            const endDate = document.getElementById("endDate");
+            const vacancyField = document.getElementById("vacancy");
+
+            startDate.setAttribute("min", today);
+            endDate.setAttribute("min", today);
 
             // Highlight today's round
             document.querySelectorAll(".round-card").forEach(card => {
@@ -127,8 +151,12 @@
                     statusField.value = card.querySelector("p:nth-child(3)").innerText.split(": ")[1];
                     startDateField.value = card.querySelector("p:nth-child(4)").innerText.split(": ")[1];
                     endDateField.value = card.querySelector("p:nth-child(5)").innerText.split(": ")[1];
+                    // vacancyField.value = card.querySelector("p:nth-child(6)").innerText.split(": ")[1];
+                    vacancyField.value = card.querySelector("p:nth-child(6)")?.innerText.split(": ")[1] || '';
 
                     modal.style.display = "flex";
+
+
                 });
             });
 
@@ -148,21 +176,50 @@
             roundForm.addEventListener("submit", function(event) {
                 const today = new Date().toISOString().split("T")[0];
 
-                if (startDateField.value < today) {
-                    alert("Start date cannot be in the past!");
-                    event.preventDefault();
-                    return;
-                }
-                if (endDateField.value <= startDateField.value) {
-                    alert("End date must be after the start date!");
-                    event.preventDefault();
-                    return;
-                }
-
-                // Allow normal form submission
             });
 
         });
     </script>
+
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("roundModal");
+
+            const roundIdField = document.getElementById("roundId");
+            const roundField = document.getElementById("round");
+            const statusField = document.getElementById("status");
+            const startDateField = document.getElementById("startDate");
+            const endDateField = document.getElementById("endDate");
+            const vacancyField = document.getElementById("vacancy");
+
+            if (window.__flashMessage) {
+                const {
+                    message,
+                    type,
+                    openModal,
+                    roundFormData
+                } = window.__flashMessage;
+
+                if (typeof showToast === "function") {
+                    showToast(message, type);
+                }
+
+                if (openModal && roundFormData) {
+                    modal.style.display = "flex";
+
+                    roundIdField.value = roundFormData.roundId || "";
+                    roundField.value = roundFormData.round || "";
+                    statusField.value = roundFormData.status || "";
+                    startDateField.value = roundFormData.startDate || "";
+                    endDateField.value = roundFormData.endDate || "";
+                    vacancyField.value = roundFormData.vacancy || "";
+                }
+            }
+        });
+    </script>
+
+
 
 </html>

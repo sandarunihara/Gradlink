@@ -291,7 +291,7 @@ class ToastSystem {
     
     const messageElement = document.createElement('div');
     messageElement.className = 'toast-content';
-    messageElement.textContent = message;
+    messageElement.innerHTML = message;
     
     toast.appendChild(messageElement);
 
