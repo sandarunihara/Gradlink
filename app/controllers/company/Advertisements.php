@@ -291,22 +291,44 @@ class Advertisements
     public function delete($id)
     {
         $model = new C_Advertisement;
-        $Update_status = [
-            'status' => 'Trash'
-        ];
-        $result = $model->update($id, $Update_status, 'AdvertisementId');
-        if ($result['status'] == 'success') {
-            $_SESSION['flash'] = [
-                'type' => 'success',
-                'message' => 'Advertisement deleted successfully'
+        $data=$model->find(['advertisementId'=>$id]);
+        // show($data);
+        if($data[0]->status != 'Pending'){
+            $Update_status = [
+                'status' => 'Request'
             ];
-            header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
-            exit;
-        } else {
-            $_SESSION['flash'] = [
-                'type' => 'error',
-                'message' => 'Error: Could not delete the advertisement.'
+            $result = $model->update($id, $Update_status, 'AdvertisementId');
+            if ($result['status'] == 'success') {
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Request to Deactive advertisement was successful'
+                ];
+                header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+                exit;
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Failed to process advertisement Deactive request.'
+                ];
+            }
+        }else{
+            $Update_status = [
+                'status' => 'Deactive'
             ];
+            $result = $model->update($id, $Update_status, 'AdvertisementId');
+            if ($result['status'] == 'success') {
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Advertisement Deactive successfully'
+                ];
+                header('Location: http://localhost/Gradlink/public/company/Advertisements/dashboard');
+                exit;
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Error: Could not Deactive the advertisement.'
+                ];
+            }
         }
     }
 }
