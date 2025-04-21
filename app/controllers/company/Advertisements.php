@@ -207,6 +207,7 @@ class Advertisements
     public function send($id)
     {
 
+        $companyId=$_SESSION['USER']->CompanyId;
         $model = new C_Advertisement;
         // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $id]);
@@ -278,12 +279,28 @@ class Advertisements
             $data['success'] = $_SESSION['flash_success'] ?? '';
             $data['errors'] = $_SESSION['flash_errors'] ?? '';
 
-
             unset($_SESSION['flash_success'], $_SESSION['flash_errors']);
+            
+            $logmodel=new Action_logs;
+            // show($data[0]->status);
+            $blockresult='';
+            if($data[0]->status =='Deactive'){
+                if(empty($logmodel->findDetailsforcompany($advertisementId,'deactivate')[0])){
+                    $blockresult='';
+                }else{
+                    $blockresult=$logmodel->findDetailsforcompany($advertisementId,'deactivate')[0]->reason;
+                }
+            }elseif($data[0]->status == 'Rejected'){
+                $blockresult=$logmodel->findDetailsforcompany($advertisementId,'reject')[0]->reason;
+            }
+            if(empty($blockresult)){
+                $blockresult='';
+            }
+
         } else {
             $data['errors'] = "Advertisement not found.";
         }
-        $this->view('Company/SendAdvertisements', ['data' => $data]);
+        $this->view('Company/SendAdvertisements', ['data' => $data , 'blockresult'=>$blockresult]);
     }
 
 
