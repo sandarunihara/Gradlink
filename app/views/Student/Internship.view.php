@@ -20,17 +20,23 @@
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="filter">
-            <div class="search-container">
-                <input id="searchInput" type="text" placeholder="Search Company">
+            <div>
+                <div class="search-container">
+                    <input id="searchInput" type="text" placeholder="Search Company" oninput="searchCompany(this.value)">
+                </div>
                 <i class="fas fa-search" id="searchIcon"></i>
             </div>
             <div class="filter-by-job">
                 <i class="fas fa-filter"></i>
-                <select>
+                <select id="positionSelect" onchange="searchByPosition()">
                     <option value="all">All Jobs</option>
-                    <option value="software-engineer">Software Engineer</option>
-                    <option value="qa">Quality Assuarance Engineer</option>
-                    <option value="dev-ops-engineer">Dev-Ops Engineer</option>
+                    <?php foreach ($data['differentRoles'] as $position) { ?>
+                        <option 
+                            value="<?= htmlspecialchars($position); ?>"
+                        >
+                            <?= htmlspecialchars($position); ?>
+                        </option>
+                    <?php } ?>
                 </select>
             </div>
         </div>

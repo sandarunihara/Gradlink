@@ -49,12 +49,57 @@ class Signup
             $Model = new company;
             
             if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
-                $imageData = file_get_contents($_FILES['profile_pic']['tmp_name']); // Get the image content
-                $proimageBase64 = base64_encode($imageData); // Encode image content in base64
+                $ProfilepicName = $_FILES['profile_pic']['name'];
+                $ProfilepicTempName = $_FILES['profile_pic']['tmp_name'];
+
+                $baseName = strtolower(pathinfo($ProfilepicName, PATHINFO_FILENAME));
+                $ext = strtolower(pathinfo($ProfilepicName, PATHINFO_EXTENSION));
+
+                // Clean the base name: remove special characters, trim underscores
+                $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
+                $cleanBase = trim($cleanBase, "_");
+
+                // Add timestamp and random string for uniqueness
+                $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
+                $newproName = $cleanBase . '_' . $uniqueString . '.' . $ext;
+                $profilePictureDestination = __DIR__ . '/../../public/assets/img/Company/' . $newproName;
+                $uploadpropic = move_uploaded_file($ProfilepicTempName, $profilePictureDestination);
+
+                if ($uploadpropic) {
+                    $proimageBase64 = $newproName;
+                } else {
+                    $proimageBase64 = '';
+                }
+
+
+                // $imageData = file_get_contents($_FILES['profile_pic']['tmp_name']); // Get the image content
+                // $proimageBase64 = base64_encode($imageData); // Encode image content in base64
             }
             if (isset($_FILES['cover_pic']) && $_FILES['cover_pic']['error'] == 0) {
-                $imageData = file_get_contents($_FILES['cover_pic']['tmp_name']); // Get the image content
-                $coveimageBase64 = base64_encode($imageData); // Encode image content in base64
+                $CoverpicName = $_FILES['cover_pic']['name'];
+                $CoverpicTempName = $_FILES['cover_pic']['tmp_name'];
+
+                $baseName = strtolower(pathinfo($CoverpicName, PATHINFO_FILENAME));
+                $ext = strtolower(pathinfo($CoverpicName, PATHINFO_EXTENSION));
+
+                // Clean the base name: remove special characters, trim underscores
+                $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
+                $cleanBase = trim($cleanBase, "_");
+
+                // Add timestamp and random string for uniqueness
+                $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
+                $newcoverName = $cleanBase . '_' . $uniqueString . '.' . $ext;
+                $coverPictureDestination = __DIR__ . '/../../public/assets/img/Company/' . $newcoverName;
+                $uploadcoverpic = move_uploaded_file($CoverpicTempName, $coverPictureDestination);
+                
+                if ($uploadcoverpic) {
+                    $coveimageBase64 = $newcoverName;
+                } else {
+                    $coverimageBase64 = '$data->coverimg';
+                }
+
+                // $imageData = file_get_contents($_FILES['cover_pic']['tmp_name']); // Get the image content
+                // $coveimageBase64 = base64_encode($imageData); // Encode image content in base64
             }
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             
@@ -77,7 +122,7 @@ class Signup
                 'coverimg' => $coveimageBase64,
                 'Password' => $password,
             ];
-
+            // show($data);
             $result = $Model->insert($data);
             if ($result) {
                 if (!empty($_POST['email'])) {
@@ -217,10 +262,9 @@ class Signup
                             $data['errors'] = "Failed to upload profile picture.";
                         }
                         $_SESSION['user']['Status'] = 'NotApplied';
-                        $_SESSION['user']['block'] = 0;
                         $_SESSION['user']['completed'] = 0;
                         $_SESSION['user']['noOfAppliedAds'] = 0;
-                        $_SESSION['user']['registered'] = 0;
+                        $_SESSION['user']['registered'] = 1;
                         //show($_SESSION['user']);
                         break;
                     case 4:

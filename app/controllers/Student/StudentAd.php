@@ -17,6 +17,14 @@ class StudentAd{
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
         
+        $i = 0;
+        foreach ($data['AdDetails'] as $adDetail) {
+            $data['differentRoles'][$i] = $adDetail-> position;
+            $i++;
+        }
+        $data['differentRoles'] = array_unique($data['differentRoles']);
+        sort($data['differentRoles']);
+
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             try {
                 $advertisementId = $_GET['advertisementId'];
@@ -112,7 +120,7 @@ class StudentAd{
                 return false;  
             }
         }else{
-            //show($data);
+            //show($data["AdDetails"]);
             //show($_SESSION['USER']);
             $this-> view('Student/Internship', $data);        
         }

@@ -235,12 +235,6 @@
             const worktype = document.getElementById('worktype').value;
             const image = document.getElementById('image').files[0];
 
-            const maxFileSize = 0.9 * 1024 * 1024; // 5MB
-            if (image && image.size > maxFileSize) {
-                errorToast("The image file size exceeds the maximum allowed size of 5MB.");
-                return; // Prevent further form submission
-            }
-
             if (!position) {
                 errorToast("Please select a position from the dropdown.");
                 return;

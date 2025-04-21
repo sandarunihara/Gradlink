@@ -139,26 +139,56 @@
         }
     }
 
-    document.getElementById("searchIcon").addEventListener("click", function () {
-        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    function searchCompany(value) {
+        const searchTerm = value.toLowerCase().trim();
         const jobCards = document.querySelectorAll(".job-card");
-        
-        let companyNames = [];
-        jobCards.forEach(card => {
-            const companyName = card.querySelector(".job-details p").textContent.trim();
-            companyNames.push(companyName.toLowerCase());
-        });
-        //console.log(companyNames);
-        if(!companyNames.includes(searchTerm)){
-            errorToast("Company not found");
-        }else{
+    
+        if (searchTerm === "") {
+            // If input is empty, show all job cards
             jobCards.forEach(card => {
-                const companyName = card.querySelector(".job-details p").textContent.trim();
-                if(companyName.toLowerCase() === searchTerm){
-                    card.style.display = "block";
-                }else{
-                    card.style.display = "none";
-                }
+                card.style.display = "block";
             });
+            return;
         }
-    });
+    
+        let found = false;
+    
+        jobCards.forEach(card => {
+            const companyName = card.querySelector(".job-details p").textContent.trim().toLowerCase();
+            if (companyName.includes(searchTerm)) {
+                card.style.display = "block";
+                found = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
+    
+        if (!found) {
+            return;
+        }
+    }
+    function searchByPosition() {
+        const jobCards = document.querySelectorAll(".job-card");
+        const select = document.getElementById("positionSelect");
+        const selectedPosition = select.value.toLowerCase();
+
+        if(selectedPosition == "all"){
+            jobCards.forEach(card => {
+            card.style.display = "block";
+            });
+            return;
+        }
+        let found = false;
+    
+        jobCards.forEach(card => {
+            const companyName = card.querySelector(".job-details h3").textContent.trim().toLowerCase();
+            if (companyName === selectedPosition) {
+                card.style.display = "block";
+                found = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+    
+    

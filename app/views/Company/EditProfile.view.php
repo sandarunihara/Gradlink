@@ -34,7 +34,7 @@
                     <div class="coverphoto">
                         <label for="coverphoto">
                             <img
-                                src="<?php echo !empty($data->coverimg) ? 'data:image/jpeg;base64,' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
+                                src="<?php echo !empty($data->coverimg) ? ROOT .'/assets/img/Company/' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
                                 id="coverPreview"
                                 alt="Cover Preview" />
                         </label>
@@ -46,7 +46,7 @@
                     <div class="prophoto">
                         <label for="profilephoto">
                             <img
-                                src="<?php echo !empty($data->profileimg) ? 'data:image/jpeg;base64,' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
+                                src="<?php echo !empty($data->profileimg) ? ROOT .'/assets/img/Company/' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
                                 class="pro_logo"
                                 id="profilePreview"
                                 width="200"
@@ -133,13 +133,34 @@
         <div class="spinner"></div>
     </div>
 
-
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
 
 
 
     <script>
+        function isValidEmail(email) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        }
+
+        function isValidPhone(contactNum) {
+            const pattern = /^0(7[01245678]\d{7}|[1-9]{2}\d{7})$/;
+            return pattern.test(contactNum);
+        }
+
+        function isValidLinkedInURL(url) {
+            const pattern = /^https:\/\/(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9_-]+\/?$/;
+            return pattern.test(url);
+        }
+
+
+        function isValidWebsiteURL(url) {
+            const pattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}([\/\w.-]*)*\/?$/;
+            return pattern.test(url);
+        }
+
+
         function validateProfileForm() {
             const name = document.querySelector('input[name="Name"]').value.trim();
             const shortDesc = document.querySelector('input[name="ShortDesc"]').value.trim();
@@ -155,17 +176,17 @@
             const coverphoto = document.getElementById('coverphoto').files[0];
             const profilephoto = document.getElementById('profilephoto').files[0];
 
-            const maxFileSize = 1024 * 1024; // 5MB
+            // const maxFileSize = 1024 * 1024; // 5MB
 
-            if (coverphoto && coverphoto.size > maxFileSize) {
-                errorToast("Cover photo exceeds the maximum file size of 1MB.");
-                return false;
-            }
+            // if (!coverphoto) {
+            //     errorToast("Cover photo is required.");
+            //     return false;
+            // }
 
-            if (profilephoto && profilephoto.size > maxFileSize) {
-                errorToast("Profile photo exceeds the maximum file size of 5MB.");
-                return false;
-            }
+            // if (!profilephoto) {
+            //     errorToast("Profile photo is required.");
+            //     return false;
+            // }
 
             if (!name) {
                 errorToast("Company name is required.");
@@ -177,7 +198,7 @@
                 return false;
             }
 
-            if (!email || !email.includes('@')) {
+            if (!email || !isValidEmail(email)) {
                 errorToast("Please enter a valid email address.");
                 return false;
             }
@@ -187,17 +208,17 @@
                 return false;
             }
 
-            if (!contactNum || contactNum.length < 10) {
+            if (!contactNum || !isValidPhone(contactNum)) {
                 errorToast("Please enter a valid contact number.");
                 return false;
             }
 
-            if (!linkedin) {
-                errorToast("LinkedIn profile URL is required.");
+            if (!linkedin || !isValidLinkedInURL(linkedin)) {
+                errorToast("LinkedIn profile valid URL is required.");
                 return false;
             }
 
-            if (!website) {
+            if (!website || !isValidWebsiteURL(website)) {
                 errorToast("Website URL is required.");
                 return false;
             }
@@ -249,8 +270,11 @@
 
 
         function submitForm() {
-            document.getElementById('pro-form').submit();
-            successToast("Advertisement updated successfully");
+            document.getElementById('deleteconfirmation-modal').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('pro-form').submit();
+            }, 300); // slight delay to show animation before form submit
         }
     </script>
 

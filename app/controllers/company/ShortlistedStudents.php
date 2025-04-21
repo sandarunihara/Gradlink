@@ -158,9 +158,9 @@ class ShortlistedStudents
                 exit;
             }else{
                 $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
-                // $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
                 if ($result['status']) {
                     if ($_POST['submit_action'] != 'Reject') {
+                        $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
                         $success = "Student Job Status updated successfully.";
                         if (!empty($data[0]->Email) && !empty($companydata->Email)) {
                             $studentemail = $data[0]->Email;
