@@ -39,6 +39,7 @@
                             <button>Search</button>
                         </div>
                     </div>
+                    <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
@@ -71,7 +72,7 @@
                             <?php endif; ?>
                         </tbody>
                     </table>
-
+                    </div>
                     <!-- </section> -->
                 </div>
 
