@@ -35,11 +35,14 @@
                     <div class="list-header">
                         <h2>Applications</h2>
                         <div class="search-box">
-                            <input type="text" placeholder="Search Students" />
-                            <button> Search
+                            <input type="text" placeholder="Search Advertisements" />
+                            <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
+                <div class="table-wrapper">
+
                     <table>
                         <thead>
                             <tr>
@@ -77,6 +80,7 @@
 
                         </tbody>
                     </table>
+                    </div>
 
                     <!-- </section> -->
 

@@ -35,8 +35,15 @@
                     <!-- <section class="company-list"> -->
                         <div class="list-header">
                             <h2>Recruited Students</h2>
-
+                            <div class="search-box">
+                        <input type="text" placeholder="Search Students" />
+                        <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                    </div>
                         </div>
+                <div class="table-wrapper">
+
                         <table>
                             <thead>
                                 <tr>
@@ -72,6 +79,7 @@
 
                             </tbody>
                         </table>
+                    </div>
 
                     <!-- </section> -->
                 </div>

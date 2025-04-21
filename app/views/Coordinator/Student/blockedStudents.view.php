@@ -35,7 +35,36 @@
                 <div class="list-header">
                     <h2>Blocked Student List</h2>
 
+                    <div class="search-box">
+                        <?php
+                        $degreeSet = [];
+
+                        if (!empty($studentData)) {
+                            foreach ($studentData as $student) {
+                                $degree = is_array($student) ? $student['degree'] : $student->degree;
+                                if (!in_array($degree, $degreeSet)) {
+                                    $degreeSet[] = $degree;
+                                }
+                            }
+                            sort($degreeSet); // Optional: sort alphabetically
+                        }
+                        ?>
+                        <div class="search-field">
+                            <select id="search-degree">
+                                <option value="">All Degrees</option>
+                                <?php foreach ($degreeSet as $degree): ?>
+                                    <option value="<?= htmlspecialchars($degree) ?>"><?= htmlspecialchars($degree) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="search-field">
+                            <input type="text" id="search-name" placeholder="Search by Name" />
+                            <button class="search-icon-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
                 </div>
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -64,6 +93,8 @@
                                             data-id="<?= htmlspecialchars(is_array($student) ? $student['student_id'] : $student->student_id) ?>"
                                             data-name="<?= htmlspecialchars(is_array($student) ? $student['student_name'] : $student->student_name) ?>"
                                             data-reason="<?= htmlspecialchars(is_array($student) ? $student['comment'] : $student->comment) ?>">
+                                            <i class="fas fa-eye"></i>  
+                                            
                                             View
                                         </button>
                                     </td>
@@ -78,6 +109,7 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                </div>
 
             </section>
 

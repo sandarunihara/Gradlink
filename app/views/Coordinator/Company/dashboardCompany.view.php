@@ -36,42 +36,47 @@
                         <h2>Company List</h2>
                         <div class="search-box">
                             <input type="text" placeholder="Search Company" />
-                            <button>Search</button>
+                            <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+
                         </div>
                     </div>
                     <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Company ID</th>
-                                <th>Company Name</th>
-                                <th>Contact Person</th>
-                                <th>Email</th>
-                                <th>Contact Number</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($companyData)): ?>
-                                <?php foreach ($companyData as $company): ?>
-                                    <tr>
-                                        <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
-                                        <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
-                                        <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
-                                        <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
-                                        <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
-
-                                        <td><button class="view-btn" onclick="navigateToViewCompany('<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>');">View</button></td>
-                                    </tr>
-                                <?php endforeach ?>
-
-                            <?php else: ?>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td colspan="9">No Registered Companies</td>
+                                    <th>Company ID</th>
+                                    <th>Company Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Email</th>
+                                    <th>Contact Number</th>
+                                    <th></th>
                                 </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php if (!empty($companyData)): ?>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <tr>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
+
+                                            <td><button class="view-btn" onclick="navigateToViewCompany('<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>');">
+                                                    <i class="fas fa-eye"></i>
+                                                    View</button></td>
+                                        </tr>
+                                    <?php endforeach ?>
+
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9">No Registered Companies</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- </section> -->
                 </div>
