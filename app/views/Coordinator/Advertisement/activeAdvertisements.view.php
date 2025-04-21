@@ -34,7 +34,7 @@
                     <div class="list-header">
                         <h2>Active Advertisement List</h2>
                         <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Search Advertisements" onkeyup="filterTable()" />
+                            <input type="text" placeholder="Search Advertisements" />
                             <button class="search-icon-btn">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -91,22 +91,20 @@
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
-    function filterTable() {
-        const input = document.getElementById('searchInput');
-        const filter = input.value.toLowerCase();
-        const table = document.querySelector("table tbody");
-        const rows = table.getElementsByTagName("tr");
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-box input");
+        const tableRows = document.querySelectorAll("table tbody tr");
 
-        for (let i = 0; i < rows.length; i++) {
-            const companyCell = rows[i].getElementsByTagName("td")[0];
-            if (companyCell) {
-                const txtValue = companyCell.textContent || companyCell.innerText;
-                rows[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
-            }
-        }
-    }
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(filter) ? "" : "none";
+            });
+        });
+    });
 </script>
-
 
 </body>
 

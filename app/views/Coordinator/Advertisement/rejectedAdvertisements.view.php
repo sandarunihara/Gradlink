@@ -89,6 +89,22 @@
 
         </main>
     </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-box input");
+        const tableRows = document.querySelectorAll("table tbody tr");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(filter) ? "" : "none";
+            });
+        });
+    });
+</script>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
 </body>
