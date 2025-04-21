@@ -36,6 +36,7 @@
                     <h2>Blocked Student List</h2>
 
                 </div>
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -64,6 +65,8 @@
                                             data-id="<?= htmlspecialchars(is_array($student) ? $student['student_id'] : $student->student_id) ?>"
                                             data-name="<?= htmlspecialchars(is_array($student) ? $student['student_name'] : $student->student_name) ?>"
                                             data-reason="<?= htmlspecialchars(is_array($student) ? $student['comment'] : $student->comment) ?>">
+                                            <i class="fas fa-eye"></i>  
+                                            
                                             View
                                         </button>
                                     </td>
@@ -78,6 +81,7 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                </div>
 
             </section>
 

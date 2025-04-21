@@ -32,8 +32,9 @@
                     <h2>Registered Students</h2>
                     <div class="search-box">
                         <input type="text" placeholder="Search Students" />
-                        <button> Search
-                        </button>
+                        <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
                     </div>
                 </div>
                 <div class="table-wrapper">
@@ -42,7 +43,6 @@
                         <tr>
                             <th>Registration No.</th>
                             <th>Name</th>
-                            <th>NIC</th>
                             <th>Degree</th>
                             <th>email</th>
                             <th>Contact No</th>
@@ -55,11 +55,12 @@
                                 <tr>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_id'] : $student->student_id) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_name'] : $student->student_name) ?></td>
-                                    <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['nic'] : $student->nic) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['degree'] : $student->degree) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['student_email'] : $student->student_email) ?></td>
                                     <td> <?= htmlspecialchars(string: is_array(value: $student) ? $student['contact_no'] : $student->contact_no) ?></td>
-                                    <td><button class="view-btn" onclick="navigateToStudentProfile('<?= htmlspecialchars(is_array($student) ? $student['student_id'] : $student->student_id) ?>');">View</button></td>
+                                    <td><button class="view-btn" onclick="navigateToStudentProfile('<?= htmlspecialchars(is_array($student) ? $student['student_id'] : $student->student_id) ?>');">
+                                    <i class="fas fa-eye"></i>    
+                                    View</button></td>
                                     <!-- View -> Go to the student profile -->
                                 </tr>
                             <?php endforeach ?>
