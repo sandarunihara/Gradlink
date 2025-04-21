@@ -196,7 +196,7 @@ function isValidProfilePicture(input) {
     profilePictureError.style.display = "block";
     return false;
   }
-  if (file.size > MAX_SIZE) {
+  if (input.size > MAX_SIZE) {
     profilePictureError.innerHTML = "File size must be less than 500KB.";
     profilePictureError.style.display = "block";
     input.classList.add("invalid");
@@ -204,10 +204,10 @@ function isValidProfilePicture(input) {
   }
 
   const fileName = input.files[0].name.toLowerCase();
-  const pattern = /\.(jpg|jpeg|png)$/i;
+  const pattern = /\.(jpg|png)$/i;
 
   if (!pattern.test(fileName)) {
-    profilePictureError.innerHTML = "Invalid file type. Only JPG, JPEG, or PNG allowed.";
+    profilePictureError.innerHTML = "Invalid file type. Only JPG or PNG allowed.";
     profilePictureError.style.display = "block";
     input.classList.add("invalid");
     return false;
@@ -248,4 +248,70 @@ function isValidCV(input) {
     return true;
   }
 }
+let cropper;
+const profilePictureBtn = document.getElementById('profilePictureBtn');
+const popupBox = document.getElementById('popupBox');
+const popupContent = document.querySelector('.popup-content');
+
+const input = document.getElementById('SelectedprofilePicture');
+const previewImage = document.getElementById('previewImage');
+const imageCrop = document.getElementById('image-crop'); 
+//const croppedImageInput = document.getElementById('croppedImageInput');
+
+const profilePicture = document.getElementById('profilePicture');
+
+profilePictureBtn.addEventListener('click',  () => {
+  popupBox.classList.remove('hidden');
+});
+
+popupBox.addEventListener('click', (event) => {
+  if (!popupContent.contains(event.target)) {
+    popupBox.classList.add('hidden');
+    imageCrop.style.display = 'none';
+    input.value = '';
+  }
+});
+
+input.addEventListener('change',  (e) =>{
+  if(isValidProfilePicture(e.target)){
+    imageCrop.style.display = 'block';
+
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    previewImage.src = url;
+  
+    if (cropper) {
+      cropper.destroy();
+    }
+  
+    previewImage.onload = () => {
+      cropper = new Cropper(previewImage, {
+        aspectRatio: 1,
+        viewMode: 1,
+        minCropBoxWidth: 100,
+        minCropBoxHeight: 100,
+        responsive: true,
+        autoCropArea: 1,
+      });
+    };
+  }
+
+});
+
+document.getElementById('cropBtn').addEventListener('click', () => {
+  popupBox.classList.add('hidden');
+  imageCrop.style.display = 'none';
+
+
+  if (!cropper) return;
+
+  const canvas = cropper.getCroppedCanvas({
+    width: 400,
+    height: 400
+  });
+
+  // Convert to base64 and assign to hidden input
+  profilePicture.value = canvas.toDataURL('image/jpg');
+});
+
 

@@ -6,6 +6,8 @@
     <title>Student signup</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/allPages.css"> 
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSignup.css"> 
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+
 
 </head>
 <body>
@@ -28,7 +30,6 @@
                                 id="fname" 
                                 name="fname" 
                                 placeholder="Enter your first name" 
-                                required
                             >
                         </div>
                         <div class="input-field">
@@ -38,7 +39,6 @@
                                 id="lname" 
                                 name="lname" 
                                 placeholder="Enter your last name" 
-                                required
                             >
                         </div>
                         <div class="input-field">
@@ -48,7 +48,6 @@
                                 id="email" 
                                 name="email" 
                                 placeholder="Enter your email address (e.g. saman@gmail.com)" 
-                                required
                                 oninput="validMail(this)"
                             >
                             <span id="emailError" class="error"></span>
@@ -60,7 +59,6 @@
                                 id="NIC" 
                                 name="nic" 
                                 placeholder="Enter your NIC number (e.g. 2002********)" 
-                                required
                                 oninput="validNIC(this)"
                             >
                             <span id="nicError" class="error"></span>
@@ -72,7 +70,6 @@
                                 id="contactNumber" 
                                 name="contactNumber" 
                                 placeholder="Enter your contact number (e.g. 0712345678)"
-                                required
                                 oninput="validContactNumber(this)"
                             >
                             <span id="contactNumberError" class="error"></span>
@@ -84,7 +81,6 @@
                                 id="userId" 
                                 name="userId" 
                                 placeholder="Enter your student ID (e.g. 2021cs111)" 
-                                required
                                 oninput="validStudentIndex(this)"
                             >
                             <span id="studentIdError" class="error"></span>
@@ -126,7 +122,6 @@
                                 id="skill" 
                                 name="skill" 
                                 placeholder="Enter your skills (e.g. Java, Python, etc.)"
-                                required
                             >
                         </div>
                     </div>
@@ -152,14 +147,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Profile Picture</label>
-                            <input 
-                                type="file" 
-                                id="profilePicture" 
-                                name="profilePicture" 
-                                required
-                                onchange="isValidProfilePicture(this)"
+                            <button 
+                                type="button" 
+                                id="profilePictureBtn" 
                             >
-                            <span id="profilePictureError" class="error"></span>
+                            <input type="hidden" name="profilePicture" id="profilePicture">
+                            </button>
                         </div>
                         <div class="input-field">
                             <label>CV</label>
@@ -186,7 +179,28 @@
                 <span class="step"></span>
             </div>
         </form>
+        <!-- Popup Box -->
+        <div id="popupBox" class="popup hidden">
+            <div class="popup-content">
+                <input 
+                    type="file" 
+                    id="SelectedprofilePicture" 
+                    name="SelectedprofilePicture" 
+                    onchange="isValidProfilePicture(this)"
+                >
+                <span id="profilePictureError" class="error"></span>
+                <div id="image-crop" style="display: none;">
+                    <div class="crop-container">
+                        <img id="previewImage" />
+                    </div>
+
+                    <button type="button" id="cropBtn">Crop</button>
+                </div>
+
+            </div>
+        </div>
     </div>
     <script src="<?=ROOT?>/assets/js/Student/signup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </body>
 </html>

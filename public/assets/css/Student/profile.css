@@ -102,23 +102,36 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.profile-picture-preview-container {
-    display: none;
+/*pop up box */
+.popup {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-}
-.profile-picture-preview-content{
+  }
+  
+  .popup.hidden {
+    display: none;
+  }
+  
+  .popup-content {
     background-color: white;
-    margin: 15% auto;
     padding: 20px;
-    width: 30%;
+    border-radius: 10px;
     text-align: center;
-    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.crop-container img{
+    max-height: 400px;
+    max-width: 500px;
+}
+.error{
+    display:none;
+    color: red;
 }
