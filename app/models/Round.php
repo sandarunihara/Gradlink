@@ -35,22 +35,39 @@ class round
         return $result[0];
     }
 
-    public function update($roundId, $startDate, $endDate, $active)
+    public function update($roundId, $startDate, $endDate, $active, $vacancy)
     {
-        $query = "UPDATE $this->table SET startDate = :startDate, endDate = :endDate, active = :active WHERE roundId = :roundId";
+        $query = "UPDATE $this->table SET startDate = :startDate, endDate = :endDate, active = :active, vacancy = :vacancy WHERE roundId = :roundId";
         $params = [
             'startDate' => $startDate,
             'endDate' => $endDate,
             'roundId' => $roundId,
-            'active' => $active
+            'active' => $active,
+            'vacancy' => $vacancy
         ];
         return $this->query($query, $params);
     }
+    
 
     public function deactivateAllRoundsExcept($roundId)
     {
         $query = "UPDATE $this->table SET active = 0 WHERE roundId != :roundId";
         return $this->query($query, ['roundId' => $roundId]);
 
+    }
+
+    
+    public function getRoundStatus($roundId)
+    {
+        $query = "SELECT active FROM $this->table WHERE roundId = :roundId";
+        $params = ['roundId' => $roundId];
+        return $this->query($query, $params)[0]->active;
+    }
+
+    public function getRoundById($roundId)
+    {
+        $query = "SELECT * FROM $this->table WHERE roundId = :roundId";
+        $params = ['roundId' => $roundId];
+        return $this->query($query, $params)[0];
     }
 }
