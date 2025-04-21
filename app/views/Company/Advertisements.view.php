@@ -52,6 +52,7 @@
                                     <option value="Pending">Pending</option>
                                     <option value="Active">Active</option>
                                     <option value="Deactive">Deactive</option>
+                                    <option value="Rejected">Reject</option>
                                 </select>
                             </div>
                             <?php if($_SESSION['ROUNDID']==1) : ?>
