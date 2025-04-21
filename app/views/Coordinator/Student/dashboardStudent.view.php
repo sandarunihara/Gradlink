@@ -31,8 +31,6 @@
                 <div class="list-header">
                     <h2>Registered Students</h2>
                     <div class="search-box">
-                       
-
                         <?php
                         $degreeSet = [];
 

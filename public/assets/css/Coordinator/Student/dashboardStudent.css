@@ -129,9 +129,9 @@ body {
 
 .search-field select:hover,
 .search-field select:focus {
-    border-color: #2563eb;
+    border-color: #000000;
     background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    /* box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); */
 
 }
 
