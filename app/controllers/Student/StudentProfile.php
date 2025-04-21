@@ -114,6 +114,7 @@ class StudentProfile{
         
                     if (file_put_contents($destination, $base64)) {
                         $profile['ProfilePic'] = $safeName;
+                        $_SESSION['USER']->ProfilePic = $safeName;
                         $result1 = $student -> update($arr['StudentId'], $profile, 'StudentId');
                         if($result1['status'] !== "success"){
                             $_SESSION['errors'] = "Error updating student profile";
