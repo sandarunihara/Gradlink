@@ -34,11 +34,14 @@
                     <div class="list-header">
                         <h2>Rejected Advertisement List</h2>
                         <div class="search-box">
-                            <input type="text" placeholder="Search Company" />
-                            <button> Search
+                            <input type="text" placeholder="Search Advertisements" />
+                            <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
+                    <div class="table-wrapper">
+
                     <table>
                         <thead>
                             <tr>
@@ -61,7 +64,10 @@
                                         <td><?= htmlspecialchars($advertisement->workingMode) ?></td>
                                         <td><?= htmlspecialchars($advertisement->startdate) ?></td>
                                         <td><?= htmlspecialchars($advertisement->deadline) ?></td>
-                                        <td><button class="view-btn" onclick="navigateToViewAdvertisement('<?= htmlspecialchars($advertisement->advertisementId) ?>')">View</button></td>
+                                        <td><button class="view-btn" onclick="navigateToViewAdvertisement('<?= htmlspecialchars($advertisement->advertisementId) ?>')">
+                                        <i class="fas fa-eye"></i>      
+                                            
+                                        View</button></td>
                                         <!-- View -> Go to the advertisement -->
                                     </tr>
 
@@ -75,6 +81,7 @@
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
+                    </div>
 
                     <!-- </section> -->
                 </div>
