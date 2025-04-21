@@ -17,6 +17,8 @@ class Login
 	{
 		$data = [];
 
+		//show($_POST);
+
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
 
@@ -49,6 +51,10 @@ class Login
 				$row = $user->first($arr);
 				$roundData = new round;
 				$round = $roundData->getActiveRound();
+				//time zone
+				date_default_timezone_set('Asia/Colombo');
+				$currentDateTime = date('Y-m-d H:i:s');
+
 				if ($row && password_verify($_POST['password'], $row->Password)) {
 					RoundStatusUpdater::update();
 					
@@ -57,6 +63,7 @@ class Login
 					$_SESSION['USER'] = $row;
 					$_SESSION['PATH'] = $path;
 					$_SESSION['ROUNDID'] = $round->roundId;
+					$_SESSION['logintime'] = $currentDateTime;
 
 					if (!empty($_POST['remember_me'])) {
 						$cookieValue = base64_encode(json_encode([

@@ -934,7 +934,8 @@
                         <button type="button" class="btn btn-secondary" onclick="history.back()">
                             <i class="fas fa-arrow-left"></i> Back to Sessions
                         </button>
-                        <div class="card-actions">
+
+                        <div class="card-actions" id="session-actions">
                             <button type="button" class="btn btn-outline" id="edit-toggle-btn">
                                 <i class="fas fa-edit"></i> Edit Session
                             </button>
@@ -1163,6 +1164,18 @@
 
         document.addEventListener('DOMContentLoaded', function() {
 
+
+            const actions = document.getElementById('session-actions');
+            const sessionDate = new Date("<?= $session->session_date ?>");
+            const currentDate = new Date();
+
+            if(sessionDate < currentDate){
+                actions.style.display = 'none';
+            } else {
+                actions.style.display = 'flex';
+            }
+
+
             // Tab functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             tabBtns.forEach(btn => {
@@ -1175,8 +1188,12 @@
                     btn.classList.add('active');
                     const tabId = btn.getAttribute('data-tab');
                     document.getElementById(tabId).classList.add('active');
+
+                    
                 });
             });
+
+
 
 
             const hallname = document.getElementById('hall-number');

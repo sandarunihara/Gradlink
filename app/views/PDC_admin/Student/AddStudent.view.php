@@ -241,7 +241,7 @@
                             <label for="student-id">Student ID</label>
                             <input type="text" id="student-id" name="StudentId" placeholder="2022cs021" 
                                 value="<?= htmlspecialchars($old_data['StudentId'] ?? '') ?>" 
-                                pattern="\d{4}[a-z]{2}\d{3}"
+                                pattern="\d{4}(cs|is)\d{3}"
                                 required>
                             <?php if (!empty($errors['StudentId'])): ?>
                                 <span class="error"><?= htmlspecialchars($errors['StudentId']) ?></span>

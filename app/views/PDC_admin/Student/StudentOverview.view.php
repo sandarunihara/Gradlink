@@ -41,7 +41,7 @@
             </div>
 
             <div class="tab-content">
-                <div id="Not-Applied" class="tab-pane active">
+                <div id="Registered-Students" class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
                             <div class="search-box">
@@ -64,7 +64,7 @@
 
                             </div>
                             <div class="action-buttons">
-                            <button class="add-btn" onclick="navigateToAddStudent();" ></button>
+                            <!-- <button class="add-btn" onclick="navigateToAddStudent();" ></button> -->
                         </div>
                         </div>
                         <table>

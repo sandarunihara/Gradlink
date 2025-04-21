@@ -116,7 +116,7 @@ require "../app/libs/Exception.php";
                     'message' => 'Validation Failed'
                 ];
             }
-            header('Location: /Gradlink/public/PDC_admin/AdminStudentOverview/dashboard');
+            header('Location: /Gradlink/public/PDC_admin/AdminStudentOverview/notReg');
             exit;
         }
 
