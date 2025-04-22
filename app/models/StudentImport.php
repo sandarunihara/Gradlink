@@ -39,7 +39,7 @@ class StudentImport
                 if ($existingStudent) {
                     // Update existing student but preserve their current status
                     $studentData['Status'] = $existingStudent->Status;
-                    $this->update($existingStudent->id, $studentData);
+                    $this->update($existingStudent->id, $studentData, 'StudentId');
                 } else {
                     // Insert new student with 'Not Applied' status
                     $this->insert($studentData);
