@@ -33,7 +33,7 @@
                 <li data-title="Complains"><i class="fas fa-exclamation-circle fa-lg"></i></li>
             </a>
 
-            <a href="/GRadlink/public/PDC_coordinator/dashboardRound">
+            <a href="/GRadlink/public/PDC_coordinator/dashboardSettings">
                 <li data-title="Rounds"><i class="fas fa-cog fa-lg"></i></li>
             </a>
         </ul>
