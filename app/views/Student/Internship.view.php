@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="job-container">
-            <?php if (isset($data) && !empty($data)): ?>
+            <?php if (isset($data['AdDetails']) && !empty($data['AdDetails'])): ?>
                 <?php foreach ($data['AdDetails'] as $AdDetail): ?>
                     <div class="job-card">
                         <div class="view-button">
