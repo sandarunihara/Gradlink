@@ -23,7 +23,6 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    height: 100vh;
     background-color: var(--background);
 }
 
@@ -38,7 +37,7 @@ body {
     padding: 40px;
     background-color: var(--background);
     min-height: 100vh;
-    transition: margin-left 0.3s;
+    transition: var(--transition);
 }
 
 .header {
@@ -52,19 +51,20 @@ body {
     font-size: 2rem;
     font-weight: 600;
     color: var(--primary-dark);
-}
-
-.header-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+}
+
+.header h1 i {
+    color: var(--accent);
 }
 
 .tab-content {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 32px 24px;
+    padding: 32px;
 }
 
 .company-form {
@@ -84,6 +84,9 @@ body {
         grid-template-columns: 1fr;
         gap: 20px;
     }
+    .main-content {
+        padding: 24px 2%;
+    }
 }
 
 .form-group {
@@ -98,49 +101,38 @@ body {
     color: var(--dark-gray);
     margin-bottom: 8px;
     letter-spacing: 0.01em;
-    transition: color 0.2s;
 }
 
 .form-group input,
-.form-group select,
-.form-group textarea {
+.form-group select {
     padding: 14px 16px;
     border: 1.5px solid var(--input-border);
     border-radius: 8px;
     background: var(--input-bg);
     font-size: 1rem;
-    color: #23244a;
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    color: var(--primary-dark);
+    transition: var(--transition);
     box-shadow: 0 2px 8px rgba(67, 97, 238, 0.04);
     outline: none;
     width: 100%;
 }
 
-.form-group textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
 .form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.form-group select:focus {
     border-color: var(--input-focus);
     background: #fff;
     box-shadow: 0 0 0 2px rgba(78, 84, 200, 0.11);
 }
 
 .form-group input:hover,
-.form-group select:hover,
-.form-group textarea:hover {
+.form-group select:hover {
     border-color: var(--primary-dark);
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
+.form-group input::placeholder {
     color: #b6b9c6;
     font-size: 0.98rem;
     font-style: italic;
-    opacity: 1;
 }
 
 .format-hint {
@@ -150,13 +142,12 @@ body {
     margin-left: 2px;
 }
 
-.error-message {
+.error {
     color: var(--danger);
     font-size: 0.9rem;
     font-weight: 500;
     margin-top: 6px;
     margin-left: 2px;
-    display: none;
 }
 
 .button-line {
@@ -173,26 +164,22 @@ body {
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    transition: background 0.3s cubic-bezier(0.4,0,0.2,1), 
-                color 0.3s cubic-bezier(0.4,0,0.2,1), 
-                box-shadow 0.3s cubic-bezier(0.4,0,0.2,1), 
-                transform 0.2s cubic-bezier(0.4,0,0.2,1);
+    transition: var(--transition);
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 0 6px 20px rgba(67, 97, 238, 0.07);
-    display: inline-block;
 }
 
 .submit-btn {
-    background: #4e54c8;
+    background: var(--primary);
     color: #fff;
     box-shadow: 0 4px 14px rgba(67, 97, 238, 0.11);
 }
 
-.submit-btn:hover, .submit-btn:focus {
-    background: #3c41a2;
+.submit-btn:hover {
+    background: var(--accent);
     box-shadow: 0 8px 30px rgba(78, 84, 200, 0.18);
-    transform: translateY(-2px) scale(1.04);
+    transform: translateY(-2px);
 }
 
 .back-btn {
@@ -200,20 +187,17 @@ body {
     color: var(--primary-dark);
 }
 
-.back-btn:hover, .back-btn:focus {
+.back-btn:hover {
     background: #d1d9f0;
     color: var(--primary);
-    transform: translateY(-2px) scale(1.04);
+    transform: translateY(-2px);
 }
 
 @media (max-width: 600px) {
     .main-content {
-        padding: 18px 2% 18px 2%;
+        padding: 18px 2%;
         margin-left: 0;
         margin-top: 60px;
-    }
-    .tab-content {
-        padding: 18px 2% 18px 2%;
     }
     .button-line {
         flex-direction: column;

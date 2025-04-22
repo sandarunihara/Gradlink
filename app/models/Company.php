@@ -168,7 +168,7 @@ class company
 	public function findAllPending(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM $this->table WHERE Status = :status AND Password IS NULL AND block != 1";
+			$query = "SELECT * FROM $this->table WHERE Status = :status AND block != 1";
 
 			$result = $this->query($query, ['status' => 'Pending']);
 

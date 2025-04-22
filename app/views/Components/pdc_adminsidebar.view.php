@@ -29,6 +29,10 @@
                 <li data-title="Sessions"><i class="fas fa-calendar-alt fa-lg"></i></li>
             </a>
 
+            <a href="<?=ROOT?>/PDC_admin/AdminNotificationOverview/dashboard">
+                <li data-title="Notifications"><i class="fas fa-bell fa-lg"></i></li>
+            </a>
+
             <a href="<?=ROOT?>/PDC_admin/AdminProfileOverview/dashboard">
                 <li data-title="Profile"><i class="fas fa-user fa-lg"></i></li>
             </a>

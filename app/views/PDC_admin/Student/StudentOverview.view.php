@@ -65,7 +65,7 @@
                             </div>
                             <div class="action-buttons">
                             <!-- <button class="add-btn" onclick="navigateToAddStudent();" ></button> -->
-                        </div>
+                            </div>
                         </div>
                         <table>
                             <thead>

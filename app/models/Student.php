@@ -243,31 +243,61 @@ class student
 	public function registeredCount(){
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked'";
 		$result = $this->query($query);
-		return $result[0]->{'COUNT(*)'};
+		if(!empty($result)){
+			return $result[0]->{'COUNT(*)'};
+		}
+
+		else{
+			return 0;
+		}
 	}
 
 	public function workingCount(){
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Recruited'";
 		$result = $this->query($query);
-		return $result[0]->{'COUNT(*)'};
+		if(!empty($result)){
+			return $result[0]->{'COUNT(*)'};
+		}
+		
+		else{
+			return 0;
+		}
 	}
 
 	public function rejectedCount(){
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Rejected'";
 		$result = $this->query($query);
-		return $result[0]->{'COUNT(*)'};
+		if(!empty($result)){
+			return $result[0]->{'COUNT(*)'};
+		}
+		
+		else{
+			return 0;
+		}
 	}
 
 	public function appliedCount(){
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
 		$result = $this->query($query);
-		return $result[0]->{'COUNT(*)'};
+		if(!empty($result)){
+			return $result[0]->{'COUNT(*)'};
+		}
+		
+		else{
+			return 0;
+		}
 	}
 
 	public function notAppliedCount(){
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Not Applied'";
 		$result = $this->query($query);
-		return $result[0]->{'COUNT(*)'};
+		if(!empty($result)){
+			return $result[0]->{'COUNT(*)'};
+		}
+		
+		else{
+			return 0;
+		}
 	}
 
 	public function findby($column,$data){
@@ -318,6 +348,25 @@ class student
 			return false;
 		}
 		
+	}
+
+	public function getWeeklyRecruitedStudent($week = 5){
+		$query = "SELECT YEAR(created_at) as year,
+				         WEEK(created_at, 1) as week,
+						 COUNT(*) as count
+				  FROM $this->table
+				  WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL :week WEEK) AND Status = 'Recruited'
+				  GROUP BY year, week
+				  ORDER BY year DESC, week DESC
+				;";
+		$params = [':week' => $week];
+		$result = $this->query($query, $params);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
 	}
 
 }

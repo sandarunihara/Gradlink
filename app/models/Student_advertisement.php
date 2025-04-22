@@ -104,7 +104,13 @@ class student_advertisement
 		$query = "SELECT COUNT(*) AS count FROM studentadvertisement WHERE StudentId = :StudentId AND JobStatus != 'Reject'";
 		$params = [':StudentId' => $studentId];
 		$result = $this->query($query, $params);
-		return $result[0]->count;
+		if(!empty($result)){
+			return $result[0]->{'COUNT(*)'};
+		}
+		
+		else{
+			return 0;
+		}
 	}
 
 
@@ -125,6 +131,7 @@ class student_advertisement
 		$result = $this->query($query, $params);
 		return $result[0] -> CompanyId;
 	}
+	
 
 	function findExceptRecruited(){
 		$query = "SELECT 
