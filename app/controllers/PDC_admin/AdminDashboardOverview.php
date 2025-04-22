@@ -32,6 +32,7 @@ class AdminDashboardOverview{
         //show($weeklyRecruitment);
         //var_dump($round);
         $weeklyRecru = [];
+        show($weeklyRecruitment);
         for ($i = 0; $i < count($weeklyRecruitment) - 1 ; $i++) {
             $current = $weeklyRecruitment[$i]->count;
             $previous = $weeklyRecruitment[$i + 1]->count;
