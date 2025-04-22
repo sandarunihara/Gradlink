@@ -364,6 +364,8 @@
             const AdStats = <?php echo json_encode($barchartdata); ?>;
             const AdStatslabels = AdStats.map(item => item.label);
             const AdStatscounts = AdStats.map(item => item.count);
+            console.log(AdStatslabels);
+            
             var AdStatusOptions = {
                 series: [{
                     name: 'Advertisements',
