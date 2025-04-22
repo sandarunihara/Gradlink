@@ -84,12 +84,12 @@ class DashboardSettings
                 }
 
                 $success = $model->update($roundId, $startDate, $endDate, $active, $vacancy);
-                
-                    $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Round updated successfully'];
-                    // $this->view('Coordinator/Round/dashboardRound', ['roundData' => $model->findall()]);
-                    // header("Location: " . ROOT . "/PDC_coordinator/DashboardRound");
-                    // exit;
-            }  else {
+
+                $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Round updated successfully'];
+                // $this->view('Coordinator/Round/dashboardRound', ['roundData' => $model->findall()]);
+                // header("Location: " . ROOT . "/PDC_coordinator/DashboardRound");
+                // exit;
+            } else {
                 $_SESSION['flash_message'] = [
                     'type' => 'error',
                     'message' => implode('<br>', $errors),
@@ -103,12 +103,71 @@ class DashboardSettings
                         'vacancy' => $vacancy
                     ]
                 ];
-            
+
                 // $this->view('Coordinator/Round/dashboardRound', ['roundData' => $model->findall()]);
             }
             // $this->view('Coordinator/Round/dashboardRound', ['roundData' => $model->findall()]);
             header("Location: " . ROOT . "/PDC_coordinator/DashboardSettings");
-                    exit;
+            exit;
         }
     }
+
+    // public function importStudents()
+    // {
+    //     header('Content-Type: application/json');
+
+    //     try {
+    //         // Basic checks
+    //         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    //             throw new Exception('Invalid request method');
+    //         }
+
+    //         if (!isset($_FILES['excel_file']) || $_FILES['excel_file']['error'] !== UPLOAD_ERR_OK) {
+    //             throw new Exception('No file uploaded or upload error');
+    //         }
+
+    //         $file = $_FILES['excel_file'];
+
+    //         // Load PhpSpreadsheet
+    //         require_once(ROOT . '/vendor/autoload.php');
+
+    //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+    //         $spreadsheet = $reader->load($file['tmp_name']);
+    //         $sheet = $spreadsheet->getActiveSheet();
+
+    //         // Get all data as array
+    //         $data = $sheet->toArray();
+
+    //         // Remove header row if exists
+    //         array_shift($data);
+
+    //         // Prepare database connection
+    //         $model = new StudentImport;
+
+    //         // Insert all rows
+    //         foreach ($data as $row) {
+    //             $db->insert($table, [
+    //                 'student_id' => $row[0] ?? null,
+    //                 'name' => $row[1] ?? null,
+    //                 'degree' => $row[2] ?? null,
+    //                 'email' => $row[3] ?? null,
+    //                 'nic' => $row[4] ?? null,
+    //                 'contact_no' => $row[5] ?? null,
+    //                 'status' => $row[6] ?? 'active'
+    //             ]);
+    //         }
+
+    //         echo json_encode([
+    //             'success' => true,
+    //             'message' => 'Excel data imported successfully'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         http_response_code(400);
+    //         echo json_encode([
+    //             'success' => false,
+    //             'message' => $e->getMessage()
+    //         ]);
+    //     }
+    //     exit;
+    // }
 }

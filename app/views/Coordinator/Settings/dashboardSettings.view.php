@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Round/dashboardRound.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Components/coordinatorDashboard.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         /* Toast Notification Styles */
         .toast-container {
@@ -68,89 +70,158 @@
         .toast-info {
             background-color: #2196f3;
         }
+
+        /* Import Student Data Section */
     </style>
 </head>
 
 <body>
-    
+
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard") ?>
 
-        <!-- rounds -->
+        <!-- Main content container -->
         <main class="main-content">
-            <header class="header">
-                <div class="header-left">
-                    <h1>Rounds</h1>
-                </div>
-            </header>
+            <!-- Rounds Section -->
+            <section class="rounds-section">
+                <header class="header">
+                    <div class="header-left">
+                        <h1>Rounds</h1>
+                    </div>
+                </header>
 
-            <?php if (isset($_SESSION['flash_message'])): ?>
-                <script>
-                    window.__flashMessage = {
-                        message: "<?= $_SESSION['flash_message']['message'] ?>",
-                        type: "<?= htmlspecialchars($_SESSION['flash_message']['type']) ?>",
-                        openModal: <?= json_encode($_SESSION['flash_message']['open_modal'] ?? false) ?>,
-                        roundFormData: <?= json_encode($_SESSION['flash_message']['round_data'] ?? []) ?>
-                    };
-                </script>
-            <?php unset($_SESSION['flash_message']);
-            endif; ?>
+                <?php if (isset($_SESSION['flash_message'])): ?>
+                    <script>
+                        window.__flashMessage = {
+                            message: "<?= $_SESSION['flash_message']['message'] ?>",
+                            type: "<?= htmlspecialchars($_SESSION['flash_message']['type']) ?>",
+                            openModal: <?= json_encode($_SESSION['flash_message']['open_modal'] ?? false) ?>,
+                            roundFormData: <?= json_encode($_SESSION['flash_message']['round_data'] ?? []) ?>
+                        };
+                    </script>
+                <?php unset($_SESSION['flash_message']);
+                endif; ?>
 
-            <div class="rounds-container">
-                <?php if (!empty($roundData)): ?>
-                    <div class="rounds-grid">
-                        <?php foreach ($roundData as $round): ?>
-                            <div class="round-card <?= ($round->active == 1) ? 'active' : '' ?>"
-                                data-status="<?= htmlspecialchars($round->active) ?>">
-                                <div class="card-header">
-                                    <h3><?= htmlspecialchars($round->round) ?></h3>
-                                    <span class="status-badge <?= ($round->active == 1) ? 'active' : 'inactive' ?>">
-                                        <?= ($round->active == 1) ? 'Active' : 'Inactive' ?>
-                                    </span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="info-item">
-                                        <span class="label">Round ID:</span>
-                                        <span class="value"><?= htmlspecialchars($round->roundId) ?></span>
+                <div class="rounds-container">
+                    <?php if (!empty($roundData)): ?>
+                        <div class="rounds-grid">
+                            <?php foreach ($roundData as $round): ?>
+                                <div class="round-card <?= ($round->active == 1) ? 'active' : '' ?>"
+                                    data-status="<?= htmlspecialchars($round->active) ?>">
+                                    <div class="card-header">
+                                        <h3><?= htmlspecialchars($round->round) ?></h3>
+                                        <span class="status-badge <?= ($round->active == 1) ? 'active' : 'inactive' ?>">
+                                            <?= ($round->active == 1) ? 'Active' : 'Inactive' ?>
+                                        </span>
                                     </div>
-                                    <?php if (strtolower($round->round) !== 'none'): ?>
+                                    <div class="card-body">
                                         <div class="info-item">
-                                            <span class="label">Duration:</span>
-                                            <span class="value">
-                                                <?= htmlspecialchars($round->startDate) ?> to <?= htmlspecialchars($round->endDate) ?>
-                                            </span>
+                                            <span class="label">Round ID:</span>
+                                            <span class="value"><?= htmlspecialchars($round->roundId) ?></span>
                                         </div>
+                                        <?php if (strtolower($round->round) !== 'none'): ?>
+                                            <div class="info-item">
+                                                <span class="label">Duration:</span>
+                                                <span class="value">
+                                                    <?= htmlspecialchars($round->startDate) ?> to <?= htmlspecialchars($round->endDate) ?>
+                                                </span>
+                                            </div>
 
-                                        <div class="info-item">
-                                        <span class="label">No of applications per student:</span>
-                                        <span class="value"><?= htmlspecialchars($round->vacancy) ?></span>
+                                            <div class="info-item">
+                                                <span class="label">No of applications per student:</span>
+                                                <span class="value"><?= htmlspecialchars($round->vacancy) ?></span>
+                                            </div>
+                                        <?php endif; ?>
+
                                     </div>
-                                    <?php endif; ?>
-                                    
+                                    <div class="card-footer">
+                                        <?php if (strtolower($round->round) !== 'none'): ?>
+                                            <button class="btn manage-btn">
+                                                <i class="fas fa-cog"></i> Manage
+                                            </button>
+                                        <?php else: ?>
+                                            <button class="btn manage-btn" disabled>
+                                                <i class="fas fa-cog"></i> Manage
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                    <?php if (strtolower($round->round) !== 'none'): ?>
-                                        <button class="btn manage-btn">
-                                            <i class="fas fa-cog"></i> Manage
-                                        </button>
-                                    <?php else: ?>
-                                        <button class="btn manage-btn" disabled>
-                                            <i class="fas fa-cog"></i> Manage
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <div class="empty-state">
-                        <img src="<?= ROOT ?>/assets/images/no-rounds.svg" alt="No rounds">
-                        <h3>No Rounds Configured</h3>
-                        <p>There are currently no internship rounds scheduled.</p>
-                    </div>
-                <?php endif; ?>
-            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="empty-state">
+                            <img src="<?= ROOT ?>/assets/images/no-rounds.svg" alt="No rounds">
+                            <h3>No Rounds Configured</h3>
+                            <p>There are currently no internship rounds scheduled.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </section>
 
+            <!-- Import Student Data Section -->
+            <!-- Import Student Data Section -->
+            <section class="import-section">
+                <header class="header">
+                    <div class="header-left">
+                        <h1>Import Student Data</h1>
+                    </div>
+                </header>
+
+                <div class="upload-container">
+                    <form id="uploadForm" enctype="multipart/form-data" action="<?= ROOT ?>/PDC_coordinator/DashboardSettings/importStudents" method="POST">
+                        <div class="file-upload" id="dropZone">
+                            <i class="bi bi-file-earmark-excel fs-1 text-primary"></i>
+                            <h5>Drag & Drop Excel File Here</h5>
+                            <p class="text-muted">or</p>
+                            <input type="file" id="fileInput" name="excel_file" class="d-none" accept=".xlsx, .xls" required>
+                            <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                                Browse Files
+                            </button>
+                            <div class="template-download">
+                                <a href="<?= ROOT ?>/downloads/student_import_template.xlsx" download class="text-decoration-none">
+                                    <i class="bi bi-download"></i> Download Template
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <button type="submit" id="submitBtn" class="btn btn-success w-100" disabled>
+                                <i class="bi bi-upload"></i> Import Data
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="preview-table" id="previewTable" style="display: none;">
+                        <h5 class="mt-4">Preview (First 5 Rows)</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mt-2">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Name</th>
+                                        <th>Degree</th>
+                                        <th>Email</th>
+                                        <th>NIC</th>
+                                        <th>Contact</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="previewBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3" id="instructions">
+                        <h5><i class="bi bi-info-circle"></i> Instructions:</h5>
+                        <ul>
+                            <li>File must be in Excel format (.xlsx or .xls)</li>
+                            <li>Columns must match the template exactly</li>
+                            <li>First row should contain column headers</li>
+                            <li>Maximum file size: 5MB</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
             <!-- Round Management Modal -->
             <div id="roundModal" class="modal">
                 <div class="modal-content">
@@ -195,6 +266,9 @@
             </div>
         </main>
     </div>
+
+    <!-- SheetJS (xlsx) for client-side parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
@@ -291,8 +365,187 @@
                     document.getElementById("vacancy").value = roundFormData.vacancy || "";
                 }
             }
+
+            // File upload handling
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const previewTable = document.getElementById('previewTable');
+            const previewBody = document.getElementById('previewBody');
+            const uploadForm = document.getElementById('uploadForm');
+
+            // Handle drag and drop events
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropZone.classList.add('highlight');
+            }
+
+            function unhighlight() {
+                dropZone.classList.remove('highlight');
+            }
+
+            // Handle dropped files
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+
+            // Handle file input change
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+
+            function handleFiles(files) {
+                if (files.length === 0) return;
+
+                const file = files[0];
+
+                // Validate file type
+                if (!file.name.match(/\.(xlsx|xls)$/i)) {
+                    toastSystem.show('Please upload an Excel file (.xlsx or .xls)', 'error');
+                    return;
+                }
+
+                // Validate file size
+                if (file.size > 5 * 1024 * 1024) {
+                    toastSystem.show('File size exceeds 5MB limit', 'error');
+                    return;
+                }
+
+                // Update file input (for FormData submission)
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, {
+                            type: 'array'
+                        });
+
+                        // Get the first sheet
+                        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+
+                        // Convert to JSON
+                        const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+
+                        // Display preview
+                        displayPreview(jsonData);
+
+                        // Enable submit button
+                        submitBtn.disabled = false;
+                    } catch (error) {
+                        console.error('Error parsing Excel file:', error);
+                        toastSystem.show('Error reading Excel file. Please check the format.', 'error');
+                    }
+                };
+                reader.onerror = function() {
+                    toastSystem.show('Error reading file', 'error');
+                };
+                reader.readAsArrayBuffer(file);
+            }
+
+            function displayPreview(data) {
+                // Clear previous preview
+                previewBody.innerHTML = '';
+
+                if (data.length === 0) {
+                    previewTable.style.display = 'none';
+                    return;
+                }
+
+                // Show only first 5 rows
+                const previewRows = data.slice(0, 5);
+
+                previewRows.forEach(row => {
+                    const tr = document.createElement('tr');
+
+                    // Add cells for each expected column
+                    const columns = ['student_id', 'name', 'degree', 'email', 'nic', 'contact_no', 'status'];
+
+                    columns.forEach(col => {
+                        const td = document.createElement('td');
+                        td.textContent = row[col] || '';
+                        tr.appendChild(td);
+                    });
+
+                    previewBody.appendChild(tr);
+                });
+
+                // Show preview table
+                previewTable.style.display = 'block';
+            }
+
+            // Handle form submission
+            uploadForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                if (fileInput.files.length === 0) {
+                    toastSystem.show('Please select a file first', 'error');
+                    return;
+                }
+
+                const formData = new FormData(this);
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        toastSystem.show(result.message || 'Students imported successfully!', 'success');
+
+                        // Reset form
+                        this.reset();
+                        previewTable.style.display = 'none';
+                        previewBody.innerHTML = '';
+                    } else {
+                        toastSystem.show(result.message || 'Error importing students', 'error');
+
+                        // Show validation errors if they exist
+                        if (result.errors) {
+                            console.error('Import errors:', result.errors);
+                            // You could display these to the user in a more structured way
+                        }
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    toastSystem.show('An error occurred during upload', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-upload"></i> Import Data';
+                }
+            });
         });
     </script>
+
 </body>
 
 </html>
