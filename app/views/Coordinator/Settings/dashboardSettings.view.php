@@ -512,12 +512,36 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
                 try {
+                    console.log('Starting file upload...');
+                    
                     const response = await fetch(this.action, {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
                     });
 
-                    const result = await response.json();
+                    console.log('Response status:', response.status);
+                    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+                    
+                    // Get the response text first
+                    const responseText = await response.text();
+                    console.log('Raw response:', responseText);
+                    
+                    let result;
+                    try {
+                        // Parse the text as JSON
+                        result = JSON.parse(responseText);
+                    } catch (parseError) {
+                        console.error('JSON parse error:', parseError);
+                        console.error('Response text that failed to parse:', responseText);
+                        throw new Error('Invalid JSON response from server. Please check the server logs.');
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(result.message || `HTTP error! status: ${response.status}`);
+                    }
 
                     if (result.success) {
                         toastSystem.show(result.message || 'Students imported successfully!', 'success');
@@ -526,18 +550,14 @@
                         this.reset();
                         previewTable.style.display = 'none';
                         previewBody.innerHTML = '';
+                        submitBtn.disabled = true;
                     } else {
                         toastSystem.show(result.message || 'Error importing students', 'error');
-
-                        // Show validation errors if they exist
-                        if (result.errors) {
-                            console.error('Import errors:', result.errors);
-                            // You could display these to the user in a more structured way
-                        }
+                        console.error('Import error:', result);
                     }
                 } catch (error) {
                     console.error('Upload error:', error);
-                    toastSystem.show('An error occurred during upload', 'error');
+                    toastSystem.show(error.message || 'An error occurred during upload', 'error');
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="bi bi-upload"></i> Import Data';
