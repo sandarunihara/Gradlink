@@ -107,6 +107,58 @@ require "../app/libs/Exception.php";
             exit;
         }
 
+        public function accept($companyId){
+            $model = new company;
+            $companyData = $model->findById($companyId);
+
+            if($companyData){
+                $updateData = [
+                    'Status' => 'Ongoing',
+                    'block' => 0,
+                    'block_count' => 0,
+                    'last_blocked_at' => null
+                ];
+                
+                $updatedStatus = $model->update($companyId , $updateData , 'companyId');
+                if($updatedStatus && $updatedStatus['status'] === 'success'){
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Company accepted successfully'
+                    ];
+                }
+                else{
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Failed to accept company'
+                    ];
+                }
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Company not found'
+                ];
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+
+        public function reject($companyId){
+            $model = new company;
+            $companyData = $model->findById($companyId);
+            if($companyData){
+                
+                $result = $model->delete($companyId , 'companyId');
+                show($result);
+            }
+            else{
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'message' => 'Company not found'
+                ];
+            }
+        }
+
 
         private function sendEmail($email, $companyId, $reason) {
             try {
