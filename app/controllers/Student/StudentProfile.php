@@ -84,4 +84,53 @@ class StudentProfile{
             $this-> view('Student/ProfileEdit',$data);
         }
     }
+    function changeProfilePicture(){
+        $data = [];
+        $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
+        $student = new student;
+        $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
+        
+        if (isset($_POST['profilePicture'])) {
+            $base64 = $_POST['profilePicture'];
+        
+            // Check if it's a valid base64 image string
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
+                $imageType = strtolower($type[1]); // jpg, png, jpeg etc.
+                $base64 = substr($base64, strpos($base64, ',') + 1);
+                $base64 = base64_decode($base64);
+        
+                if ($base64 === false) {
+                    $_SESSION['errors'] = "Invalid base64 image data.";
+                } else {
+                    if (isset($_SESSION['USER']->ProfilePic) && !empty($_SESSION['USER']->ProfilePic)) {
+                        $oldPic = __DIR__ . '/../../../public/assets/img/Student/' . $_SESSION['USER']->ProfilePic;
+                        if (file_exists($oldPic)) {
+                            unlink($oldPic);
+                        }
+                    }
+
+                    $safeName = "profile_" . uniqid('', true) . "." . $imageType;
+                    $destination = __DIR__ . '/../../../public/assets/img/Student/' . $safeName;
+        
+                    if (file_put_contents($destination, $base64)) {
+                        $profile['ProfilePic'] = $safeName;
+                        $_SESSION['USER']->ProfilePic = $safeName;
+                        $result1 = $student -> update($arr['StudentId'], $profile, 'StudentId');
+                        if($result1['status'] !== "success"){
+                            $_SESSION['errors'] = "Error updating student profile";
+                        }else{
+                            $_SESSION['success'] = "Profile picture updated successfully";
+                        }
+                    } else {
+                        $_SESSION['errors'] = "Failed to save profile picture.";
+                    }
+                }
+            } else {
+                $_SESSION['errors'] = "Invalid image format.";
+            }
+        } else {
+            $_SESSION['errors'] = "No profile picture submitted.";
+        }
+        redirect('Student/StudentProfile/profile');
+    }
 }

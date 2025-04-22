@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+
 </head>
 <body>
     <?php $this->renderComponent("studentHeader", ["title" => "Profile"])  ?>
@@ -24,7 +26,7 @@
                 <div class="student-profile-picture">
                     <img 
                         id="profile-pic"
-                        src="<?=ROOT?>/assets/img/Student/<?php echo htmlspecialchars($data['Student'] -> ProfilePic)?>" 
+                        src="<?=ROOT?>/assets/img/Student/<?php echo htmlspecialchars($_SESSION['USER']->ProfilePic)?>" 
                         alt="Profile Picture"
                         >
                 </div>
@@ -124,27 +126,137 @@
         <?php unset($_SESSION['errors']);?>
     <?php } ?>
 
-    <!--Profile Picture Preview-->
-    <div id="profile-picture-preview" class="profile-picture-preview-container">
-        <div class="profile-picture-preview-content">
-            <p>fjlsllsmlcmldlsl,aal</p>
+    <!-- Popup Box -->
+    <div id="popupBox" class="popup hidden">
+        <div class="popup-content">
+            <form action="<?=ROOT?>/Student/StudentProfile/changeProfilePicture" method="POST" enctype="multipart/form-data">
+                <input 
+                    type="file" 
+                    id="SelectedprofilePicture" 
+                    name="SelectedprofilePicture" 
+                    onchange="isValidProfilePicture(this)"
+                >
+                <span id="profilePictureError" class="error"></span>
+                <div id="image-crop" style="display: none;">
+                    <div class="crop-container">
+                        <img id="previewImage" />
+                    </div>
+                    <input type="hidden" name="profilePicture" id="profilePicture">
+
+                    <button type="submit" id="cropBtn">Crop & Save</button>
+                </div>
+            </form>
         </div>
     </div>
 <script>
+    function isValidProfilePicture(input) {
+        const MAX_SIZE = 500 * 1024;
+
+        if (input.files.length === 0) {
+            profilePictureError.innerHTML = "Please upload a file.";
+            profilePictureError.style.display = "block";
+            return false;
+        }
+        const fileName = input.files[0].name.toLowerCase();
+        const pattern = /\.(jpg|png)$/i;
+
+        if (!pattern.test(fileName)) {
+            profilePictureError.innerHTML = "Invalid file type. Only JPG or PNG allowed.";
+            profilePictureError.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        } else {
+            profilePictureError.innerHTML = "";
+            profilePictureError.style.display = "none";
+            input.classList.remove("invalid");
+            return true;
+        }
+        if (input.files[0].size > MAX_SIZE) {
+            profilePictureError.innerHTML = "File size must be less than 500KB.";
+            profilePictureError.style.display = "block";
+            input.classList.add("invalid");
+            return false;
+        }
+    }
+    let cropper;
     const profilePic = document.getElementById('profile-pic');
-    const profilePicturePreview = document.getElementById('profile-picture-preview');
-    const profilePicturePreviewContent = document.querySelector('.profile-picture-preview-content');
-    profilePic.addEventListener('click', () =>{
-        profilePicturePreview.style.display = 'flex'; // Show the preview
+    const popupBox = document.getElementById('popupBox');
+    const popupContent = document.querySelector('.popup-content');
+
+    const input = document.getElementById('SelectedprofilePicture');
+    const previewImage = document.getElementById('previewImage');
+    const imageCrop = document.getElementById('image-crop'); 
+
+    const profilePicture = document.getElementById('profilePicture');
+
+    const form = document.querySelector('form');
+
+    profilePic.addEventListener('click',  () => {
+    popupBox.classList.remove('hidden');
     });
 
-    // Hide popup when clicking outside the content box
-    profilePicturePreview.addEventListener('click', (event) => {
-    if (!profilePicturePreviewContent.contains(event.target)) {
-        profilePicturePreview.style.display = 'none'; // Hide modal
+    popupBox.addEventListener('click', (event) => {
+    if (!popupContent.contains(event.target)) {
+        popupBox.classList.add('hidden');
+        imageCrop.style.display = 'none';
+        input.value = '';
+        profilePictureError.style.display = "none";
     }
     });
+
+    input.addEventListener('change',  (e) =>{
+    if(isValidProfilePicture(e.target)){
+        imageCrop.style.display = 'block';
+
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        previewImage.src = url;
+    
+        if (cropper) {
+        cropper.destroy();
+        }
+    
+        previewImage.onload = () => {
+        cropper = new Cropper(previewImage, {
+            aspectRatio: 1,
+            viewMode: 1,
+            minCropBoxWidth: 100,
+            minCropBoxHeight: 100,
+            responsive: true,
+            autoCropArea: 1,
+        });
+        };
+    }else{
+        imageCrop.style.display = 'none';
+    }
+
+    });
+
+    document.getElementById('cropBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        popupBox.classList.add('hidden');
+        imageCrop.style.display = 'none';
+
+        input.value = '';
+        profilePictureError.style.display = "none";
+
+        if (!cropper) return;
+
+        const canvas = cropper.getCroppedCanvas({
+            width: 400,
+            height: 400
+        });
+
+        // Convert to base64 and assign to hidden input
+        profilePicture.value = canvas.toDataURL('image/jpg');
+
+        setTimeout(() => form.submit(), 100);
+
+    });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
 </body>
 </html>
 

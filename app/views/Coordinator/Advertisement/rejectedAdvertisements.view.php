@@ -30,15 +30,18 @@
 
             <div class="tab-content">
                 <div id="ongoingad-list" class="tab-pane active ">
-                    <!-- <section class="company-list"> -->
+                    <section class="company-list">
                     <div class="list-header">
                         <h2>Rejected Advertisement List</h2>
                         <div class="search-box">
-                            <input type="text" placeholder="Search Company" />
-                            <button> Search
+                            <input type="text" placeholder="Search Advertisements" />
+                            <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
+                    <div class="table-wrapper">
+
                     <table>
                         <thead>
                             <tr>
@@ -61,7 +64,10 @@
                                         <td><?= htmlspecialchars($advertisement->workingMode) ?></td>
                                         <td><?= htmlspecialchars($advertisement->startdate) ?></td>
                                         <td><?= htmlspecialchars($advertisement->deadline) ?></td>
-                                        <td><button class="view-btn" onclick="navigateToViewAdvertisement('<?= htmlspecialchars($advertisement->advertisementId) ?>')">View</button></td>
+                                        <td><button class="view-btn" onclick="navigateToViewAdvertisement('<?= htmlspecialchars($advertisement->advertisementId) ?>')">
+                                        <i class="fas fa-eye"></i>      
+                                            
+                                        View</button></td>
                                         <!-- View -> Go to the advertisement -->
                                     </tr>
 
@@ -75,13 +81,30 @@
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
+                    </div>
 
-                    <!-- </section> -->
+                    </section>
                 </div>
             </div>
 
         </main>
     </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-box input");
+        const tableRows = document.querySelectorAll("table tbody tr");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(filter) ? "" : "none";
+            });
+        });
+    });
+</script>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
 </body>

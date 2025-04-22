@@ -147,7 +147,7 @@
             <a href="<?php echo ROOT ?>/Signup" class="btn btn-primary">Get Started</a>
             </div>
         </div>
-        <img src="<?=ROOT?>/assets/img/hero.jpg" alt="Internship Management Dashboard" class="hero-image">
+        <img src="https://img.freepik.com/free-photo/handsome-businessman-working-office_158595-1156.jpg?t=st=1745208562~exp=1745212162~hmac=8d3602d7c7b46ec4d19662087a18e07c82957733f0311a54a70742071a74d01e&w=1380" alt="Internship Management Dashboard" class="hero-image">
     </section>
 
     <!-- Features Section -->

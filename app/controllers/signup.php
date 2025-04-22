@@ -205,7 +205,7 @@ class Signup
         $user = null;
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if (isset($_POST['userId'])) {
-                //show($_POST);
+                //show($_FILES['cv']);
                 $userId = $_POST['userId'];
                 $userNum = strlen($userId);
 
@@ -218,7 +218,7 @@ class Signup
                             'StudentId' => $_POST['userId'],
                             'Name' => $_POST['fname'] . ' ' . $_POST['lname'],
                             'Email' => $_POST['email'],
-                            'NIC' => $_POST['NIC'],
+                            'NIC' => $_POST['nic'],
                             'ContactNum' => $_POST['contactNumber'],
                             'Github' => $_POST['github'],
                             'Linkedin' => $_POST['linkedin'],
@@ -234,32 +234,61 @@ class Signup
                         } else {
                             $data['errors'] = "Invalid User ID";
                         }
-                        $profilePictureName = $_FILES['profilePicture']['name'];
-                        $profilePictureTempName = $_FILES['profilePicture']['tmp_name'];
+                        // $profilePictureName = $_FILES['profilePicture']['name'];
+                        // $profilePictureTempName = $_FILES['profilePicture']['tmp_name'];
 
-                        $profilePictureExt = strtolower(pathinfo($profilePictureName, PATHINFO_EXTENSION));
-                        $profilePictureActualName = strtolower(pathinfo($profilePictureName, PATHINFO_FILENAME));
-                        $profilePictureNewName = preg_replace("/[^\w-]/", "_", $profilePictureActualName) . uniqid('', true) . "." . $profilePictureExt;
-                        $profilePictureDestination = __DIR__ . '/../../public/assets/img/Student/' . $profilePictureNewName;
+                        // $profilePictureExt = strtolower(pathinfo($profilePictureName, PATHINFO_EXTENSION));
+                        // $profilePictureActualName = strtolower(pathinfo($profilePictureName, PATHINFO_FILENAME));
+                        // $profilePictureNewName = preg_replace("/[^\w-]/", "_", $profilePictureActualName) . uniqid('', true) . "." . $profilePictureExt;
+                        // $profilePictureDestination = __DIR__ . '/../../public/assets/img/Student/' . $profilePictureNewName;
 
-                        if (move_uploaded_file($profilePictureTempName, $profilePictureDestination)) {
-                            $_SESSION['user']['ProfilePic'] = $profilePictureNewName;
+                        // if (move_uploaded_file($profilePictureTempName, $profilePictureDestination)) {
+                        //     $_SESSION['user']['ProfilePic'] = $profilePictureNewName;
+                        // } else {
+                        //     $data['errors'] = "Failed to upload profile picture.";
+                        // }
+                        if (isset($_POST['profilePicture'])) {
+                            $base64 = $_POST['profilePicture'];
+                        
+                            // Check if it's a valid base64 image string
+                            if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
+                                $imageType = strtolower($type[1]); // jpg, png, jpeg etc.
+                                $base64 = substr($base64, strpos($base64, ',') + 1);
+                                $base64 = base64_decode($base64);
+                        
+                                if ($base64 === false) {
+                                    $data['errors'] = "Invalid base64 image data.";
+                                } else {
+                                    $safeName = "profile_" . uniqid('', true) . "." . $imageType;
+                                    $destination = __DIR__ . '/../../public/assets/img/Student/' . $safeName;
+                        
+                                    if (file_put_contents($destination, $base64)) {
+                                        $_SESSION['user']['ProfilePic'] = $safeName;
+                                    } else {
+                                        $data['errors'] = "Failed to save profile picture.";
+                                    }
+                                }
+                            } else {
+                                $data['errors'] = "Invalid image format.";
+                            }
                         } else {
-                            $data['errors'] = "Failed to upload profile picture.";
-                        }
+                            $data['errors'] = "No profile picture submitted.";
+                        }                        
 
-                        $cvName = $_FILES['cv']['name'];
-                        $cvTempName = $_FILES['cv']['tmp_name'];
-
-                        $cvExt = strtolower(pathinfo($cvName, PATHINFO_EXTENSION));
-                        $cvActualName = strtolower(pathinfo($cvName, PATHINFO_FILENAME));
-                        $cvNewName = preg_replace("/[^\w-]/", "_", $cvActualName) . uniqid('', true) . "." . $cvExt;
-                        $cvDestination = __DIR__ . '/../../public/assets/uploads/cv/' . $cvNewName;
-
-                        if (move_uploaded_file($cvTempName, $cvDestination)) {
-                            $_SESSION['user']['cv'] = $cvNewName;
-                        } else {
-                            $data['errors'] = "Failed to upload profile picture.";
+                        if(isset($_FILES['cv']) && $_FILES['cv']['error'] == 0) {
+                            $cvName = $_FILES['cv']['name'];
+                            $cvTempName = $_FILES['cv']['tmp_name'];
+    
+                            $cvExt = strtolower(pathinfo($cvName, PATHINFO_EXTENSION));
+                            $cvActualName = strtolower(pathinfo($cvName, PATHINFO_FILENAME));
+                            $cvNewName = preg_replace("/[^\w-]/", "_", $cvActualName) . uniqid('', true) . "." . $cvExt;
+                            $cvDestination = __DIR__ . '/../../public/assets/uploads/cv/' . $cvNewName;
+    
+                            if (move_uploaded_file($cvTempName, $cvDestination)) {
+                                $_SESSION['user']['cv'] = $cvNewName;
+                            } else {
+                                $data['errors'] = "Failed to upload cv.";
+                            }
                         }
                         $_SESSION['user']['Status'] = 'NotApplied';
                         $_SESSION['user']['completed'] = 0;

@@ -22,7 +22,7 @@
                 <div class="header-left">
                     <h1>Companies</h1>
                 </div>
-                
+
             </header>
 
             <?php $activeTab = 'company-list'; ?>
@@ -31,18 +31,22 @@
             <div class="tab-content">
                 <!-- Company List Tab -->
                 <div id="company-list" class="tab-pane active ">
-                    <!-- <section class="company-list"> -->
-                        <div class="list-header">
-                            <h2>Company List</h2>
-                            <div class="search-box">
-                                <input type="text" placeholder="Search Company" />
-                                <button>Search</button>
-                            </div>
+                    <section class="company-list">
+                    <div class="list-header">
+                        <h2>Company List</h2>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search Company" />
+                            <button class="search-icon-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+
                         </div>
+                    </div>
+                    <div class="table-wrapper">
                         <table>
                             <thead>
                                 <tr>
-                                <th>Company ID</th>
+                                    <th>Company ID</th>
                                     <th>Company Name</th>
                                     <th>Contact Person</th>
                                     <th>Email</th>
@@ -51,18 +55,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($companyData)): ?>
-                                    <?php foreach($companyData as $company): ?>
-                                <tr>
-                                <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
-                                <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
-                                <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
-                                <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
-                                <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
-                                    
-                                <td><button class="view-btn" onclick="navigateToViewCompany('<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>');">View</button></td>
-                                </tr>
-                                <?php endforeach ?>
+                                <?php if (!empty($companyData)): ?>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <tr>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_id'] : $company->company_id) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['company_name'] : $company->company_name) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_person'] : $company->contact_person) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['email'] : $company->email) ?></td>
+                                            <td> <?= htmlspecialchars(string: is_array(value: $company) ? $company['contact_number'] : $company->contact_number) ?></td>
+
+                                            <td><button class="view-btn" onclick="navigateToViewCompany('<?= htmlspecialchars(is_array($company) ? $company['company_id'] : $company->company_id) ?>');">
+                                                    <i class="fas fa-eye"></i>
+                                                    View</button></td>
+                                        </tr>
+                                    <?php endforeach ?>
 
                                 <?php else: ?>
                                     <tr>
@@ -71,11 +77,8 @@
                                 <?php endif; ?>
                             </tbody>
                         </table>
-                        <!-- <div class="action-buttons">
-                            <button class="add-btn" onclick="navigateToAddCompany();">+ Add</button>
-                            <button class="blocked-btn" onclick="navigateToBlockList();">Blocked List</button>
-                        </div> -->
-                    <!-- </section> -->
+                    </div>
+                    </section>
                 </div>
 
 
@@ -83,22 +86,36 @@
         </main>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-box input");
+            const tableRows = document.querySelectorAll("table tbody tr");
+
+            searchInput.addEventListener("keyup", function() {
+                const query = searchInput.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll("td");
+                    let matchFound = false;
+
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(query)) {
+                            matchFound = true;
+                        }
+                    });
+
+                    if (matchFound) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
-    <!-- <script>
-        // JavaScript for Tabs
-        function openTab(event, tabId) {
-            const tabButtons = document.querySelectorAll(".tab-button");
-            const tabPanes = document.querySelectorAll(".tab-pane");
 
-            // Remove 'active' class from all tabs and tab content
-            tabButtons.forEach(button => button.classList.remove("active"));
-            tabPanes.forEach(pane => pane.classList.remove("active"));
-
-            // Add 'active' class to clicked tab and corresponding content
-            event.currentTarget.classList.add("active");
-            document.getElementById(tabId).classList.add("active");
-        }
-    </script> -->
 </body>
 
 </html>

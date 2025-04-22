@@ -60,7 +60,7 @@
                                 <div class="display-details">
                                     <div class="image">
                                         <?php if (!empty($data[0]->image)): ?>
-                                            <img src="<?php echo ROOT .'/assets/img/Company/advertisements/' .  $data[0]->image; ?>" class="logo" />
+                                            <img src="<?php echo ROOT . '/assets/img/Company/advertisements/' .  $data[0]->image; ?>" class="logo" />
                                         <?php else: ?>
                                             <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
                                         <?php endif; ?>
@@ -71,22 +71,33 @@
                                             <h4>No of interns:<span><?php echo $data[0]->numOfInterns ?></span></h4>
                                             <h4>Work type:<span><?php echo $data[0]->workingMode ?></span></h4>
                                             <h4>Application deadline:<span><?php echo $data[0]->deadline ?></span></h4>
+                                            <?php if (!empty($blockresult)) : ?>
+                                                <h4 style="color:red;"><?php echo $data[0]->status ?> Reason:<span><?php echo $blockresult ?></span></h4>
+                                            <?php endif; ?>
                                         </div>
                                         <div class="ed-del">
-                                            <?php if ($data[0]->status === 'Active'): ?>
-                                                <i class="fas fa-pen"
-                                                    data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
-                                                    data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
-                                                    data-qualification="<?php echo htmlspecialchars($data[0]->qualification, ENT_QUOTES) ?>"
-                                                    data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
-                                                    data-interns="<?php echo htmlspecialchars($data[0]->numOfInterns, ENT_QUOTES) ?>"
-                                                    data-workingmode="<?php echo htmlspecialchars($data[0]->workingMode, ENT_QUOTES) ?>"
-                                                    data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
-                                                    onclick="openConfirmationModal(this)">
-                                                </i>
-                                            <?php endif; ?>
-                                            <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
+                                            <?php if ($data[0]->status != 'Request'): ?>
+                                                <?php if ($data[0]->status === 'Pending'): ?>
+                                                    <i class="fas fa-pen"
+                                                        data-position="<?php echo htmlspecialchars($data[0]->position, ENT_QUOTES) ?>"
+                                                        data-description="<?php echo htmlspecialchars($data[0]->description, ENT_QUOTES) ?>"
+                                                        data-qualification="<?php echo htmlspecialchars($data[0]->qualification, ENT_QUOTES) ?>"
+                                                        data-deadline="<?php echo htmlspecialchars($data[0]->deadline, ENT_QUOTES) ?>"
+                                                        data-interns="<?php echo htmlspecialchars($data[0]->numOfInterns, ENT_QUOTES) ?>"
+                                                        data-workingmode="<?php echo htmlspecialchars($data[0]->workingMode, ENT_QUOTES) ?>"
+                                                        data-image="<?php echo htmlspecialchars($data[0]->image, ENT_QUOTES) ?>"
+                                                        onclick="openConfirmationModal(this)">
+                                                    </i>
 
+                                                    <i class="fas fa-trash" onclick="openconfirmdeleteModal()"></i>
+
+                                                <?php elseif ($data[0]->status === 'Active'): ?>
+
+                                                    <!-- <div class="action-buttons"> -->
+                                                    <button class="add-btn" onclick="openconfirmdeleteModal()"></button>
+                                                    <!-- </div> -->
+                                                <?php endif; ?>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -241,7 +252,7 @@
     <div id="deleteconfirmation-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
-            <p>Do you want to Delete the Advertisements?</p>
+            <p>Do you want to Deactive the Advertisements?</p>
             <div class="updatemodal-buttons">
                 <button class="updateyes-btn" onclick="confirmDelete('<?php echo $data[0]->advertisementId; ?>')">Yes</button>
                 <button class="updateno-btn" onclick="closeconfirmdeleteModal()">No</button>

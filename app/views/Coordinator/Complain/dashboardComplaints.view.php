@@ -101,7 +101,7 @@
 
                             <div class="modal-buttons">
                                 <button type="submit" class="submit-btn">Submit Reply</button>
-                                <button type="button" class="close-btn secondary-btn">Cancel</button>
+                                <button type="button" class="close-btn secondary-btn"></button>
                             </div>
                         </form>
                     </div>

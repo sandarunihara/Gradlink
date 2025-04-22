@@ -1,65 +1,86 @@
-/* Tabs Container */
-.tabs {
-    display: flex;
-    justify-content: start;
-    border-bottom: 2px solid #ccc;
-    margin-top: 20px;
-    gap: 5px;
+.tab-container {
+    padding: 0.5rem 0;
+    max-width: 100%;
+    overflow-x: auto;
+    border-bottom: 1px solid #eaeaea; /* subtle bottom border */
+    padding-top: 20px;
 }
 
-/* Tab Buttons */
-.tab-button {
-    padding: 12px 24px;
-    cursor: pointer;
-    border: none;
-    background-color: #f9f9f9;
-    color: #333;
-    transition: all 0.3s ease-in-out;
-    font-size: 16px;
-    border-radius: 8px 8px 0 0;
+.tab-nav {
+    display: inline-flex;
     position: relative;
-    outline: none;
+    background: transparent;
+    padding: 0;
+    gap: 8px; /* space between tabs */
 }
 
-/* Hover Effect */
-.tab-button:hover {
-    background-color: #e0e0e0;
+.tab-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: #64748b; /* slate-500 */
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    border: none;
+    background: transparent;
+    white-space: nowrap;
 }
 
-/* Active Tab */
-.tab-button.active {
-    background-color: white;
-    color: #000;
-    font-weight: bold;
-    border-bottom: 3px solid #4a8af4;
+.tab-item:hover {
+    color: #000000; /* blue-500 */
+    font-weight: 400;
 }
 
-/* Add a nice bottom shadow effect */
-.tab-button.active::after {
-    content: "";
+.tab-item.active {
+    color: #0743a3e2; /* blue-700 */
+    font-weight: 600;
+}
+
+/* Modern underline animation */
+.tab-item.active::after {
+    content: '';
     position: absolute;
-    bottom: -3px;
+    bottom: -1px; /* align with container border */
     left: 0;
     width: 100%;
     height: 3px;
-    background: #4a8af4;
+    background: #0743a3e2; /* blue-500 */
+    border-radius: 3px 3px 0 0;
+    animation: underline 0.3s ease-out;
 }
 
-/* Tab Content */
-.tab-content {
-    margin-top: 20px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+@keyframes underline {
+    from { transform: scaleX(0.8); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
 }
 
-/* Hide all tab panes initially */
-.tab-pane {
+.tab-icon {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* Remove the old indicator */
+.tab-indicator {
     display: none;
 }
 
-/* Show active tab */
-.tab-pane.active {
-    display: block;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tab-item {
+        padding: 0.5rem 0.75rem;
+        font-size: 13px;
+    }
+    
+    .tab-icon {
+        margin-right: 6px;
+        font-size: 14px;
+    }
+    
+    .tab-nav {
+        gap: 4px;
+    }
 }

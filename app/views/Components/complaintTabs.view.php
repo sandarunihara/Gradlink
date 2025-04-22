@@ -1,29 +1,51 @@
 <!-- Tabs Section -->
-<div class="tabs">
-    <button class="tab-button <?= $activeTab == 'complaint-list' ? 'active' : '' ?>" onclick=" window.location.href='/Gradlink/public/PDC_coordinator/dashboardComplaints'" >Unread Complaints</button>
-    <button class="tab-button  <?= $activeTab == 'reviewed-complaint-list' ? 'active' : '' ?>" onclick="window.location.href='/Gradlink/public/PDC_coordinator/reviewedComplaints'" >Reviewed Complaints</button>
+
+<div class="tab-container">
+    <div class="tab-nav">
+        <a href="/Gradlink/public/PDC_coordinator/dashboardComplaints" 
+           class="tab-item <?= basename($_SERVER['REQUEST_URI']) == 'dashboardComplaints' ? 'active' : '' ?>">
+            <span class="tab-label">Unread Complaints</span>
+        </a>
+
+        <a href="/Gradlink/public/PDC_coordinator/reviewedComplaints" 
+           class="tab-item <?= basename($_SERVER['REQUEST_URI']) == 'reviewedComplaints' ? 'active' : '' ?>">
+            <span class="tab-label">Reviewed Complaints</span>
+        </a>
+        
+        <div class="tab-indicator"></div>
+    </div>
 </div>
 
 <script>
-
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
     const tabs = document.querySelectorAll(".tab-button");
-    const tabContents = document.querySelectorAll(".tab-pane");
-
-    tabs.forEach((tab) => {
-        tab.addEventListener("click", function () {
+    
+    // Add ripple effect to buttons
+    tabs.forEach(tab => {
+        tab.addEventListener("click", function(e) {
             // Remove active class from all buttons
             tabs.forEach(t => t.classList.remove("active"));
+            
+            // Add active class to clicked button
             this.classList.add("active");
-
-            // Hide all tab contents
-            tabContents.forEach(content => content.classList.remove("active"));
-
-            // Show the clicked tab's content
-            const target = this.getAttribute("data-target");
-            document.getElementById(target).classList.add("active");
+            
+            // Create ripple effect
+            const ripple = document.createElement("span");
+            ripple.classList.add("ripple-effect");
+            this.appendChild(ripple);
+            
+            // Position ripple
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+            
+            // Remove ripple after animation
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
         });
     });
 });
-
 </script>
