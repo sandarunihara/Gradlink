@@ -33,19 +33,21 @@
                     <div class="filter-group">
                         <label for="date-filter">Filter by Date:</label>
                         <select id="date-filter">
-                            <option>All Dates</option>
-                            <option>Today</option>
-                            <option>This Week</option>
-                            <option>This Month</option>
+                            <option value="All Dates">All Dates</option>
+                            <option value="Today">Today</option>
+                            <option value="This Week">This Week</option>
+                            <option value="This Month">This Month</option>
                         </select>
                     </div>
+                    <!-- filter halls -->
                     <div class="filter-group">
                         <label for="hall-filter">Filter by Hall:</label>
                         <select id="hall-filter">
-                            <option>W001</option>
-                            <option>S104</option>
-                            <option>S202</option>
-                            <option>W004</option>
+                            <option value="all">All Halls</option>
+                            <option value="W001">W001</option>
+                            <option value="S104">S104</option>
+                            <option value="S202">S202</option>
+                            <option value="W004">W004</option>
                         </select>
                     </div>
                     <!-- filter companies -->
@@ -67,7 +69,9 @@
                 <div class="session-card-grid">
                     <?php if (!empty($sessionData)) : ?>
                         <?php foreach ($sessionData as $session) : ?>
-                            <div class="session-card" data-company-id="<?= htmlspecialchars($session->CompanyId) ?>">
+                            <div class="session-card" data-company-id="<?= htmlspecialchars($session->CompanyId) ?>"
+                                data-hall="<?= htmlspecialchars($session->hall_number) ?>"
+                                data-date="<?= htmlspecialchars($session->session_date) ?>">
                                 <div class="card-header">
 
                                     <h3><?= htmlspecialchars($session->session_name) ?></h3>
@@ -139,23 +143,57 @@
             });
         });
 
-        // filter companies
         document.addEventListener('DOMContentLoaded', function() {
             const companyFilter = document.getElementById('company-filter');
+            const hallFilter = document.getElementById('hall-filter');
+            const dateFilter = document.getElementById('date-filter');
 
-            companyFilter.addEventListener('change', function() {
-                const selectedCompanyId = this.value;
-                filterSessionsByCompany(selectedCompanyId);
-            });
+            companyFilter.addEventListener('change', applyFilters);
+            hallFilter.addEventListener('change', applyFilters);
+            dateFilter.addEventListener('change', applyFilters);
 
-            function filterSessionsByCompany(companyId) {
+            function applyFilters() {
+                const selectedCompanyId = companyFilter.value;
+                const selectedHall = hallFilter.value;
+                const selectedDateRange = dateFilter.value;
+
                 const sessionCards = document.querySelectorAll('.session-card');
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Normalize to start of day
 
                 sessionCards.forEach(card => {
-                    // Get the company ID from the card (we'll need to add a data attribute)
                     const cardCompanyId = card.dataset.companyId;
+                    const cardHall = card.dataset.hall;
+                    const cardDateStr = card.dataset.date;
+                    const cardDate = new Date(cardDateStr);
+                    cardDate.setHours(0, 0, 0, 0); // Normalize to start of day
 
-                    if (companyId === 'all' || cardCompanyId === companyId) {
+                    // Calculate start of week (Sunday)
+                    const startOfWeek = new Date(today);
+                    startOfWeek.setDate(today.getDate() - today.getDay());
+
+                    // Calculate start of month
+                    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+                    // Date matching logic
+                    let dateMatch = true;
+                    if (selectedDateRange !== 'All Dates') {
+                        if (selectedDateRange === 'Today') {
+                            dateMatch = cardDate.getTime() === today.getTime();
+                        } else if (selectedDateRange === 'This Week') {
+                            const endOfWeek = new Date(startOfWeek);
+                            endOfWeek.setDate(startOfWeek.getDate() + 6);
+                            dateMatch = cardDate >= startOfWeek && cardDate <= endOfWeek;
+                        } else if (selectedDateRange === 'This Month') {
+                            const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                            dateMatch = cardDate >= startOfMonth && cardDate <= endOfMonth;
+                        }
+                    }
+
+                    const companyMatch = selectedCompanyId === 'all' || cardCompanyId === selectedCompanyId;
+                    const hallMatch = selectedHall === 'all' || cardHall === selectedHall;
+
+                    if (companyMatch && hallMatch && dateMatch) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
