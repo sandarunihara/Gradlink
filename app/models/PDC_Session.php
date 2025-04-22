@@ -8,17 +8,17 @@ class PDC_Session
 
     protected $allowedColumns = [
 
-		'session_id',
-		'session_name',
-		'hall_number',
-		'session_date',
-		'time_slot',
+        'session_id',
+        'session_name',
+        'hall_number',
+        'session_date',
+        'time_slot',
         'description',
         'CompanyId',
         'deleted',
         'message_read',
         'created_at'
-	];
+    ];
 
     public function validate($data)
     {
@@ -44,25 +44,27 @@ class PDC_Session
         return empty($this->errors);
     }
 
-    public function getAvailableTimeSlotsAndDates($hall_number){
+    public function getAvailableTimeSlotsAndDates($hall_number)
+    {
         $query = "SELECT session_date, time_slot 
                   FROM $this->table 
                   WHERE hall_number = :hall_number
                   AND deleted = 0
                   ;";
-                  
+
         $params = [':hall_number' => $hall_number];
         $result = $this->query($query, $params);
         return $result ? $result : [];
     }
 
-    public function getAvailableHallAndTimeSlots($session_date){
+    public function getAvailableHallAndTimeSlots($session_date)
+    {
         $query = "SELECT hall_number, time_slot 
                   FROM $this->table 
                   WHERE session_date = :session_date
                   AND session_date >= CURDATE() AND deleted = 0
                   ;";
-                  
+
         $params = [':session_date' => $session_date];
         $result = $this->query($query, $params);
         return $result ? $result : [];
@@ -79,7 +81,8 @@ class PDC_Session
         return $result;
     }
 
-    public function findCompleted(){
+    public function findCompleted()
+    {
         $query = "SELECT c.*,s.* 
                   FROM $this->table s
                   JOIN company c ON s.CompanyId = c.CompanyID
@@ -89,7 +92,8 @@ class PDC_Session
         return $result;
     }
 
-    public function findUnregistered(){
+    public function findUnregistered()
+    {
         $query = "SELECT * 
                   FROM $this->table 
                   WHERE session_date >= CURDATE()
@@ -108,7 +112,7 @@ class PDC_Session
                  WHERE s.session_id = :id
                  ;";
         $params = [':id' => $id];
-        $result = $this->query($query , $params);
+        $result = $this->query($query, $params);
         return $result ? $result[0] : false;
     }
 
@@ -143,5 +147,25 @@ class PDC_Session
         JOIN company ON session.CompanyId = company.CompanyId";
         $result = $this->query($query);
         return $result ? $result : false;
+    }
+
+    public function getAllCompaniesUpcoming()
+    {
+        $query = "SELECT DISTINCT c.CompanyID, c.Name 
+              FROM company c
+              JOIN $this->table s ON s.CompanyId = c.CompanyID
+              WHERE s.session_date >= CURDATE() AND s.deleted = 0
+              ORDER BY c.Name ASC";
+        return $this->query($query);
+    }
+
+    public function getAllCompaniesCompleted()
+    {
+        $query = "SELECT DISTINCT c.CompanyID, c.Name 
+              FROM company c
+              JOIN $this->table s ON s.CompanyId = c.CompanyID
+              WHERE s.session_date < CURDATE() AND s.deleted = 0
+              ORDER BY c.Name ASC";
+        return $this->query($query);
     }
 }

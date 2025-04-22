@@ -1,7 +1,7 @@
 <div class="tab-container">
     <div class="tab-nav">
-        <a href="/Gradlink/public/PDC_coordinator/dashboardSession/upcoming"
-           class="tab-item <?= basename($_SERVER['REQUEST_URI']) == 'upcoming' ? 'active' : '' ?>">
+        <a href="/Gradlink/public/PDC_coordinator/dashboardSession"
+           class="tab-item <?= basename($_SERVER['REQUEST_URI']) == 'dashboardSession' ? 'active' : '' ?>">
             <!-- <span class="tab-icon">📅</span> -->
             <span class="tab-label">Upcoming</span> 
         </a>

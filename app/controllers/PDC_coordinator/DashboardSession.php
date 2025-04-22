@@ -2,19 +2,28 @@
 class DashboardSession
 {
     use Controller;
-    public function upcoming()
-    {
-        $model = new PDC_Session;
-        $sessionData = $model->findall();
-        $this->view('Coordinator/Session/dashboardSession', ['sessionData' => $sessionData]);
-    }
+    public function index()
+{
+    $model = new PDC_Session;
+    $sessionData = $model->findall();
+    $companies = $model->getAllCompaniesUpcoming(); // Add this new method
+    
+    $this->view('Coordinator/Session/dashboardSession', [
+        'sessionData' => $sessionData,
+        'companies' => $companies
+    ]);
+}
 
     public function completed()
     {
         $model = new PDC_Session;
         $sessionData = $model->findCompleted();
-        $this->view('Coordinator/Session/dashboardSession', ['sessionData' => $sessionData]);
+        $companies = $model->getAllCompaniesCompleted();
+        $this->view('Coordinator/Session/dashboardSession', [
+            'sessionData' => $sessionData,
+            'companies' => $companies
+        ]);
     }
-
+        
     
 }
