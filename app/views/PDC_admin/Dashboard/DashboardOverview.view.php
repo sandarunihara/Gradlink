@@ -139,7 +139,13 @@
                     </div>
                     <div class="metric-info">
                         <h3>Active Ads</h3>
-                        <p class="metric-value"><?= count($table) ?></p>
+                        <p class="metric-value">
+                            <?php if(empty($table)):?>
+                                <?= 'Not Available' ?>
+                            <?php else: ?>
+                                <?= count($table) ?>
+                            <?php endif; ?>
+                        </p>
                         <?php 
                             if (!empty($weeklyAdd)) {
                                 $latestweek = $weeklyAdd[0];
@@ -163,12 +169,12 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3>Student Placement Status</h3>
-                        <div class="chart-legend">
-                            <span class="legend-item"><span class="legend-color recruited"></span> Recruited</span>
-                            <span class="legend-item"><span class="legend-color rejected"></span> Rejected</span>
-                            <span class="legend-item"><span class="legend-color applied"></span> Applied</span>
-                            <span class="legend-item"><span class="legend-color shortlisted"></span> Shortlisted</span>
-                        </div>
+                            <div class="chart-legend">
+                                <span class="legend-item"><span class="legend-color recruited"></span> Recruited</span>
+                                <span class="legend-item"><span class="legend-color rejected"></span> Rejected</span>
+                                <span class="legend-item"><span class="legend-color applied"></span> Applied</span>
+                                <span class="legend-item"><span class="legend-color shortlisted"></span> Shortlisted</span>
+                            </div>
                     </div>
                     <div id="studentStatusChart"></div>
                 </div>
