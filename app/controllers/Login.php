@@ -71,7 +71,7 @@ class Login
 							'password' => $_POST['password'],
 						]));
 						// print_r($cookieValue);
-						setcookie('USER_LOGIN', $cookieValue, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
+						setcookie('USER_LOGIN', $cookieValue, time() + (20 * 60), "/"); // Cookie valid for 30 days
 					} else {
 						print_r($_POST['remember_me']);
 						// If "Remember Me" is not checked, ensure any previous cookies are cleared

@@ -11,10 +11,12 @@ class AdminDashboardOverview{
         $appliedStdCount = $studentModel->appliedCount();
         $notAppliedStdCount = $studentModel->notAppliedCount();
         $weeklyStudent = $studentModel->getWeeklyStudent();
+        $weeklyRecruitment = $studentModel->getWeeklyRecruitedStudent();
 
         $companyModel = new Company;
         $regCompCount = $companyModel->registeredCount();
         $weeklyCompany = $companyModel->getWeeklyCompany();
+        $pendingCom = $companyModel->pendingCount();
 
         $advertisementModel = new C_Advertisement;
         $topAdd = $advertisementModel->topAdvertisement();
@@ -23,16 +25,40 @@ class AdminDashboardOverview{
         $weeklyAdvertisement = $advertisementModel->getWeeklyAdvertisement();
 
         $roundModel = new Round;
-        $round = $roundModel->getRound();
+        $round = $roundModel->getActiveRound();
 
+        //show($round);
+
+        //show($weeklyRecruitment);
         //var_dump($round);
+        $weeklyRecru = [];
+        for ($i = 0; $i < count($weeklyRecruitment) - 1 ; $i++) {
+            $current = $weeklyRecruitment[$i]->count;
+            $previous = $weeklyRecruitment[$i + 1]->count;
+
+            if ($previous == 0 || $previous == null) {
+                echo "cyrtvubn";
+                $change = $current > 0 ? 100 : 0;
+            } else {
+                $change = (($current - $previous) / $previous) * 100;
+            }
+
+            $weeklyRecru[] = [
+                'week' => "Week " . $weeklyRecruitment[$i]->week,
+                'count' => $current,
+                'change' => round($change, 2),
+                'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
+            ];
+        }
+
+        //show($weeklyRecru);
 
         $weekStd = [];
         for ($i = 0; $i < count($weeklyStudent) - 1 ; $i++) {
             $current = $weeklyStudent[$i]->count;
             $previous = $weeklyStudent[$i + 1]->count;
 
-            if ($previous == 0) {
+            if ($previous == 0 || $previous == null) {
                 $change = $current > 0 ? 100 : 0;
             } else {
                 $change = (($current - $previous) / $previous) * 100;
@@ -51,7 +77,7 @@ class AdminDashboardOverview{
             $current = $weeklyCompany[$i]->count;
             $previous = $weeklyCompany[$i + 1]->count;
 
-            if ($previous == 0) {
+            if ($previous == 0 || $previous == null) {
                 $change = $current > 0 ? 100 : 0;
             } else {
                 $change = (($current - $previous) / $previous) * 100;
@@ -97,14 +123,15 @@ class AdminDashboardOverview{
                 'rejectedStdCount' => $rejectedStdCount,
                 'appliedStdCount' => $appliedStdCount,
                 'notAppliedStdCount' => $notAppliedStdCount,
-                'round' => $round
             ],
             'table' =>[],
             'company' => [],
             'weekStd' => $weekStd,
             'weekCom' => $weekCom,
             'weeklyAdd' => $weeklyAdd,
-
+            'round' => $round,
+            'recuitedStd' => $weeklyRecru,
+            'pendingCom' => $pendingCom,
         ];
 
         for($i = 0 ; $i <= 2 ; $i++){
