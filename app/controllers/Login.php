@@ -290,7 +290,7 @@ class Login
 		}
 
 		// Load the view with error or success messages
-		$this->view('createpassword', $data);
+		$this->view('createnewpassword', $data);
 	}
 }
 
