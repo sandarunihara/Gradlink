@@ -5,9 +5,39 @@ class AdminNotificationOverview {
 
     public function dashboard() {
 
+        $model = new Admin_notification;
+        $data = $model->findpending();
+
+        //show($data);
+
+
         $this->view('PDC_admin/Notification/NotificationOverview' , [
             'activeTab' => 'Pending',
-            // 'notification' => 'Pending'
+            'data' => $data
+        ]);
+    }
+
+    public function approved(){
+        $model = new Admin_notification;
+        $data = $model->findapproved();
+
+        //show($data);
+
+        $this->view('PDC_admin/Notification/NotificationApproved' , [
+            'activeTab' => 'Approved',
+            'data' => $data
+        ]);
+    }
+
+    public function rejected(){
+        $model = new Admin_notification;
+        $data = $model->findreject();
+
+        //show($data);
+
+        $this->view('PDC_admin/Notification/NotificationRejected' , [
+            'activeTab' => 'Rejected',
+            'data' => $data
         ]);
     }
 }
