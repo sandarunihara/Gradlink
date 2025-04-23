@@ -372,8 +372,36 @@
                                 <label for="ad-id"></label>
                                 <select id="ad-id" class="search-select">
                                     <option value="">Select Advertisement ID</option>
-                                    <option value="A3001">A3001</option>
-                                    <option value="A3002">A3002</option>
+                                    <?php foreach ($advertisementData as $ad): ?>
+                                        <?php
+                                        $companyName = isset($companyNames[$ad->CompanyId]) ? $companyNames[$ad->CompanyId] : 'Unknown Company';
+                                        ?>
+                                        <option value="<?= htmlspecialchars($ad->advertisementId) ?>"
+                                            data-company="<?= htmlspecialchars($companyName) ?>"
+                                            data-company-id="<?= htmlspecialchars($ad->CompanyId) ?>"
+                                            data-position="<?= htmlspecialchars($ad->position) ?>"
+                                            data-status="<?= htmlspecialchars($ad->status) ?>"
+                                            data-interns="<?= htmlspecialchars($ad->numOfInterns) ?>"
+                                            data-mode="<?= htmlspecialchars($ad->workingMode) ?>"
+                                            data-description="<?= htmlspecialchars($ad->description) ?>">
+                                            <?= htmlspecialchars($ad->advertisementId) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+
+
+                            </div>
+                            <div class="search-group">
+                                <label for="ad-company-search"></label>
+                                <select id="ad-company-search" class="search-select">
+                                    <option value="">Select Company</option>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <option value="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-id="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-name="<?= htmlspecialchars($company->Name) ?>">
+                                            <?= htmlspecialchars($company->Name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -381,10 +409,7 @@
                         </div>
 
                         <div class="info-form">
-                            <div class="form-group">
-                                <label for="ad-company">Company:</label>
-                                <input type="text" id="ad-company" readonly>
-                            </div>
+
 
                             <div class="form-group">
                                 <label for="ad-position">Position:</label>
@@ -780,37 +805,8 @@
                 });
             });
 
-            const companyData = {
-                'C2001': {
-                    name: 'Tech Corp',
-                    email: 'contact@techcorp.com',
-                    status: 'Verified',
-                    contact: 'Michael Johnson'
-                },
-                'C2002': {
-                    name: 'Innovate LLC',
-                    email: 'hr@innovate.com',
-                    status: 'Pending Verification',
-                    contact: 'Sarah Williams'
-                }
-            };
 
-            const advertisementData = {
-                'A3001': {
-                    company: 'Tech Corp',
-                    position: 'Software Developer Intern',
-                    status: 'Open',
-                    interns: 5,
-                    mode: 'Remote'
-                },
-                'A3002': {
-                    company: 'Innovate LLC',
-                    position: 'Marketing Intern',
-                    status: 'Closed',
-                    interns: 2,
-                    mode: 'Hybrid'
-                }
-            };
+
 
             // Student ID dropdown change
             document.getElementById('student-id').addEventListener('change', function() {
@@ -883,37 +879,72 @@
                 }
             });
 
-            // Advertisement search functionality
-            const adIdSelect = document.getElementById('ad-id');
-            const adCompanySelect = document.getElementById('ad-company');
+            // Advertisement ID dropdown change
+            document.getElementById('ad-id').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update company search dropdown with company ID
+                    document.getElementById('ad-company-search').value = selectedOption.dataset.companyId;
 
-            adIdSelect.addEventListener('change', function() {
-                const adId = this.value;
-                if (adId && advertisementData[adId]) {
-                    const ad = advertisementData[adId];
-                    document.getElementById('ad-position').value = ad.position;
-                    document.getElementById('ad-status').value = ad.status;
-                    document.getElementById('ad-interns').value = ad.interns;
-                    document.getElementById('ad-mode').value = ad.mode;
-                    adCompanySelect.value = ad.company;
+                    // Auto-fill form fields from data attributes
+                    // document.getElementById('ad-company').value = selectedOption.dataset.company;
+                    document.getElementById('ad-position').value = selectedOption.dataset.position;
+                    document.getElementById('ad-status').value = selectedOption.dataset.status;
+                    document.getElementById('ad-interns').value = selectedOption.dataset.interns;
+                    document.getElementById('ad-mode').value = selectedOption.dataset.mode;
+                } else {
+                    // Clear fields if no selection
+                    clearAdvertisementFields();
                 }
             });
 
-            adCompanySelect.addEventListener('change', function() {
-                const companyName = this.value;
-                if (companyName) {
-                    // Find ad by company name (in a real app, there might be multiple)
-                    for (const [id, ad] of Object.entries(advertisementData)) {
-                        if (ad.company === companyName) {
-                            document.getElementById('ad-position').value = ad.position;
-                            document.getElementById('ad-status').value = ad.status;
-                            document.getElementById('ad-interns').value = ad.interns;
-                            document.getElementById('ad-mode').value = ad.mode;
-                            adIdSelect.value = id;
+            // Company search dropdown change
+            document.getElementById('ad-company-search').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Find and select the first advertisement for this company
+                    const adSelect = document.getElementById('ad-id');
+                    let foundAd = false;
+
+                    for (let option of adSelect.options) {
+                        if (option.dataset.companyId === selectedOption.value) {
+                            adSelect.value = option.value;
+                            foundAd = true;
+
+                            // Trigger the change event to fill all fields
+                            const event = new Event('change');
+                            adSelect.dispatchEvent(event);
                             break;
                         }
                     }
+
+                    if (!foundAd) {
+                        // If no advertisements found for this company, clear fields
+                        clearAdvertisementFields();
+                    }
+                } else {
+                    // Clear fields if no selection
+                    clearAdvertisementFields();
                 }
+            });
+
+            // Function to clear all advertisement fields
+            function clearAdvertisementFields() {
+                document.getElementById('ad-id').value = '';
+                document.getElementById('ad-company-search').value = '';
+                document.getElementById('ad-position').value = '';
+                document.getElementById('ad-status').value = '';
+                document.getElementById('ad-interns').value = '';
+                document.getElementById('ad-mode').value = '';
+                document.getElementById('ad-description').value = '';
+            }
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.getAttribute('data-tab') !== 'advertisement') {
+                        clearAdvertisementFields();
+                    }
+                });
             });
 
             // Submit button functionality
