@@ -16,6 +16,8 @@ class StudentProfile{
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         
+        $studentAd = new student_advertisement;
+        $data['cv'] = $studentAd -> findresumes($arr['StudentId']);
         //show($data);
         $this-> view('Student/Profile',$data);
     }

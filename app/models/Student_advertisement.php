@@ -168,4 +168,21 @@ class student_advertisement
 			return false;
 		}
 	}
+	function findresumes($studentId){
+		$query = "SELECT sa.CV, a.position, c.Name
+			FROM studentadvertisement sa 
+			JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId
+			JOIN company c ON a.CompanyId = c.CompanyId
+			WHERE sa.StudentId = :StudentId";
+		$params = [
+			':StudentId' => $studentId
+		];
+		$result = $this->query($query, $params);
+		if($result){
+			return $result;
+		}
+		else{
+			return false;
+		}
+	}
 }
