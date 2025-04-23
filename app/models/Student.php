@@ -184,7 +184,7 @@ class student
 	}
 
 	public function findAllBlocked(){
-		$query = "SELECT * FROM $this->table WHERE block = '1' AND Status = 'Blocked' AND registered = '1'";
+		$query = "SELECT * FROM $this->table WHERE block = '1' AND Status = 'Blocked'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -241,7 +241,7 @@ class student
 	}
 
 	public function registeredCount(){
-		$query = "SELECT COUNT(*) FROM $this->table WHERE registered = '1' ";
+		$query = "SELECT COUNT(*) FROM $this->table WHERE registered = '1' AND block = '0'";
 		$result = $this->query($query);
 		if(!empty($result)){
 			return $result[0]->{'COUNT(*)'};

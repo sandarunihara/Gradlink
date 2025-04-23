@@ -92,51 +92,46 @@ body {
 }
 
 .round-badge {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-    color: white;
-    border-radius: 24px;
+    gap: 0.5rem;
+    background-color: white;
     padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    box-shadow: var(--shadow-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    position: relative;
 }
 
 .round-label {
-    margin-right: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--secondary);
 }
 
 .round-number {
     font-weight: 600;
-    background: rgba(255,255,255,0.2);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
+    color: var(--primary);
 }
 
-.round-view{
-    display: none;
+.round-view {
     position: absolute;
     top: 100%;
-    left: 0;
-    margin: 10px 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-    padding: 12px 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    z-index: 100;
-    font-family: Arial, sans-serif;
-    transition: all 0.3s ease;
+    right: 0;
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    width: 220px;
+    display: none;
+    margin-top: 0.5rem;
+    z-index: 10;
 }
 
 .round-view p {
-    margin: 0;
-    color: #495057;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 0.75rem;
+    color: var(--secondary);
+    line-height: 1.4;
 }
-
 
 /* Metrics Grid */
 .metrics-grid {
@@ -254,7 +249,7 @@ body {
 }
 
 .notification-grid{
-    display: flex;
+    display: none;
     flex-direction: column;
     position: absolute;
     top: 100%;

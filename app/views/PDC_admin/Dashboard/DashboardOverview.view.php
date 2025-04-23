@@ -52,6 +52,10 @@
                     <div class="round-badge">
                         <span class="round-label">Current Round</span>
                         <span class="round-number"><?= $round->round ?></span>
+                        <div class="round-view">
+                            <p><?= date('M d, Y', strtotime($round->startDate)) ?> - <?= date('M d, Y', strtotime($round->endDate)) ?></p>
+                            <p><?= round((time() - strtotime($round->startDate)) / (strtotime($round->endDate) - strtotime($round->startDate)) * 100) ?>% completed</p>
+                        </div>
                     </div>
 
 
@@ -70,7 +74,7 @@
                     <div class="metric-info">
                         <h3>Registered Students</h3>
                         <p class="metric-value"><?= $cards['registeredStdCount'] ?></p>
-                        <?php 
+                        <!-- <?php 
                             if (!empty($weekStd)) {
                                 $latestweek = $weekStd[0];
 
@@ -84,7 +88,7 @@
                             } else {
                                 echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> Not enough data</p>";
                             }
-                        ?>
+                        ?> -->
                     </div>
                 </div>
                 
@@ -95,7 +99,7 @@
                     <div class="metric-info">
                         <h3>Registered Companies</h3>
                         <p class="metric-value"><?= $cards['registeredCompCount'] ?></p>
-                        <?php 
+                        <!-- <?php 
                             $latestweek = $weekCom[0];
                             if ($latestweek['trend'] == 'up') {
                                 echo "<p class='metric-change positive'><i class='fas fa-arrow-up'></i> {$latestweek['change']}% from last week</p>";
@@ -104,7 +108,7 @@
                             } else {
                                 echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> No change</p>";
                             }
-                        ?>
+                        ?> -->
                     </div>
                 </div>
                 
@@ -115,7 +119,7 @@
                     <div class="metric-info">
                         <h3>Placements</h3>
                             <p class="metric-value"><?= $cards['workingStdCount'] ?></p>
-                            <?php 
+                            <!-- <?php 
                                 if (!empty($recuitedStd)) {
                                     $latestweek = $recuitedStd[0];
 
@@ -129,7 +133,7 @@
                                 } else {
                                     echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> Not enough data</p>";
                                 }
-                            ?>
+                            ?> -->
                     </div>
                 </div>
                 
@@ -146,7 +150,7 @@
                                 <?= count($table) ?>
                             <?php endif; ?>
                         </p>
-                        <?php 
+                        <!-- <?php 
                             if (!empty($weeklyAdd)) {
                                 $latestweek = $weeklyAdd[0];
 
@@ -160,7 +164,7 @@
                             } else {
                                 echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> Not enough data</p>";
                             }
-                        ?>
+                        ?> -->
                     </div>
                 </div>
             </div>

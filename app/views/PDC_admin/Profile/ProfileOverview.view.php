@@ -169,7 +169,7 @@
 
             <div class="modal-header">
                 <h2>Change Password</h2>
-                <button class="close-btn" id="closePasswordModalBtn" onclick="closemodal()">&times;</button>
+                <button class="close" id="closePasswordModalBtn" onclick="closemodal()">&times;</button>
             </div>
 
             <div class="modal-body">
@@ -280,29 +280,27 @@
 
 
 
-    <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
+    <!-- <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script> -->
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editBtn = document.getElementById('edit-btn');
             const editProfileModal = document.getElementById('editProfileModal');
             const changeBtn = document.getElementById('change-password-btn');
-            const changePasswordModal = document.getElementById('changePasswordModal');
             const closeButtons = document.querySelectorAll('.close, .btn-outline');
             const avatarInput = document.getElementById('avatarInput');
             const avatarPreview = document.getElementById('avatarPreview');
+            const passwordmodal = document.getElementById('changePasswordModal');
 
-            // Open edit profile modal
             editBtn.addEventListener("click", function() {
                 editProfileModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             });
 
-            // Open change password modal
             changeBtn.addEventListener("click", function() {
-                changePasswordModal.style.display = 'flex';
+                passwordmodal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
-            });
+            });   
 
             // Close modals
             closeButtons.forEach(button => {
@@ -314,7 +312,6 @@
                 });
             });
 
-            // Close modal when clicking outside content
             window.addEventListener('click', function(event) {
                 if (event.target.classList.contains('modal')) {
                     event.target.style.display = 'none';
@@ -322,7 +319,6 @@
                 }
             });
 
-            // Avatar preview
             avatarInput.addEventListener('change', function() {
                 const file = this.files[0];
                 if (file) {
@@ -338,19 +334,6 @@
                     reader.readAsDataURL(file);
                 }
             });
-
-            // Toggle password visibility function
-            function togglePasswordVisibility(inputId) {
-                const input = document.getElementById(inputId);
-                const icon = input.nextElementSibling;
-                if (input.type === "password") {
-                    input.type = "text";
-                    icon.classList.replace('fa-eye', 'fa-eye-slash');
-                } else {
-                    input.type = "password";
-                    icon.classList.replace('fa-eye-slash', 'fa-eye');
-                }
-            }
         });
     </script>
 </body>

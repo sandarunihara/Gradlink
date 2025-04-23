@@ -73,7 +73,10 @@ class PDC_Unreg_Session{
         return $result ? $result : [];
     }
 
-
-
+    public function unregSessionCount(){
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE deleted = 0 AND session_date >= CURDATE()";
+        $result = $this->query($query);
+        return $result ? $result[0]->count : 0;
+    }
 }
 

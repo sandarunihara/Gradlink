@@ -89,6 +89,7 @@ class C_Advertisement
                     advertisement.startdate,
                     advertisement.image,
                     advertisement.status,
+                    company.CompanyId,
                     company.Name,
                     company.profileimg,
                     company.Email

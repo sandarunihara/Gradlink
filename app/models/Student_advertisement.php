@@ -105,7 +105,7 @@ class student_advertisement
 		$params = [':StudentId' => $studentId];
 		$result = $this->query($query, $params);
 		if(!empty($result)){
-			return $result[0]->{'COUNT(*)'};
+			return $result[0]->{'count'};
 		}
 		
 		else{

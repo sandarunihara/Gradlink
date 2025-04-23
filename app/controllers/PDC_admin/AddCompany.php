@@ -107,7 +107,7 @@ class AddCompany{
                 'message' => 'Error Occured'
             ];
         }
-        header('Location: /Gradlink/public/PDC_admin/PendingCompany/dashboard');
+        header('Location: /Gradlink/public/PDC_admin/AdminCompanyOverview/dashboard');
         exit;
     }
 
