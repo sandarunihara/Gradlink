@@ -192,7 +192,7 @@ class company
 
 	public function getTotalCount(): mixed{
 		try{
-			$query = "SELECT COUNT(CompanyId) AS total FROM $this->table";
+			$query = "SELECT COUNT(CompanyId) AS total FROM $this->table WHERE Status != 'Pending' ";
 			$result = $this->query($query);
 			return $result[0]->{'total'};
 		}catch (Exception $e) {
