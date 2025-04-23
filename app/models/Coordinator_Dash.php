@@ -148,7 +148,7 @@ class Coordinator_Dash
     public function getScheduledSessions()
     {
         try {
-            $query = "SELECT * FROM session WHERE session_date >= CURDATE()";
+            $query = "SELECT * FROM session WHERE session_date >= CURDATE() AND deleted = 0";
             $result = $this->query($query);
     
             if ($result === false) {
