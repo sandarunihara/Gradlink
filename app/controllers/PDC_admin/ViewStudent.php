@@ -314,7 +314,7 @@ require "../app/libs/Exception.php";
                         <body>
                             <div class='container'>
                                 <div class='header'>
-                                    <h1>Company Blocked Notification</h1>
+                                    <h1>Student Blocked Notification</h1>
                                 </div>
                                 <div class='content'>
                                     <p>Dear User,</p>

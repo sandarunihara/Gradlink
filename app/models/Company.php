@@ -202,7 +202,7 @@ class company
 	}
 
 	public function registeredCount(){
-		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Ongoing' AND block = 0";
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Ongoing' AND block = 0";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
 	}

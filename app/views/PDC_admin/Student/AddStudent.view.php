@@ -48,9 +48,6 @@
                                 value="<?= htmlspecialchars($old_data['StudentId'] ?? '') ?>" 
                                 pattern="\d{4}(cs|is)\d{3}"
                                 required>
-                            <?php if (!empty($errors['StudentId'])): ?>
-                                <span class="error"><?= htmlspecialchars($errors['StudentId']) ?></span>
-                            <?php endif; ?>
                             <small class="format-hint">Format: 4 numbers, 2 letters, 3 numbers (e.g., 2022cs021)</small>
                         </div>
 
@@ -60,9 +57,6 @@
                                 value="<?= htmlspecialchars($old_data['NIC'] ?? '') ?>"
                                 pattern="\d{12}"
                                 required>
-                            <?php if (!empty($errors['NIC'])): ?>
-                                <span class="error"><?= htmlspecialchars($errors['NIC']) ?></span>
-                            <?php endif; ?>
                             <small class="format-hint">Format: 12 digits (e.g., 200156789012)</small>
                         </div>
 
@@ -70,18 +64,12 @@
                             <label for="student-name">Student Name</label>
                             <input type="text" id="student-name" name="Name" placeholder="Student Name"
                                 value="<?= htmlspecialchars($old_data['Name'] ?? '') ?>" required>
-                            <?php if (!empty($errors['Name'])): ?>
-                                <span class="error"><?= htmlspecialchars($errors['Name']) ?></span>
-                            <?php endif; ?>
                         </div>
                         
                         <div class="form-group">
                             <label for="student-email">Email</label>
                             <input type="email" id="student-email" name="Email" placeholder="Student Email"
                                 value="<?= htmlspecialchars($old_data['Email'] ?? '') ?>" required>
-                            <?php if (!empty($errors['Email'])): ?>
-                                <span class="error"><?= htmlspecialchars($errors['Email']) ?></span>
-                            <?php endif; ?>
                         </div>
                         
                         <div class="form-group">
@@ -91,9 +79,6 @@
                                 <option value="Computer Science" <?= ($old_data['DegreeName'] ?? '') === 'Computer Science' ? 'selected' : '' ?>>Computer Science</option>
                                 <option value="Information System" <?= ($old_data['DegreeName'] ?? '') === 'Information System' ? 'selected' : '' ?>>Information System</option>
                             </select>
-                            <?php if (!empty($errors['DegreeName'])): ?>
-                                <span class="error"><?= htmlspecialchars($errors['DegreeName']) ?></span>
-                            <?php endif; ?>
                         </div>
 
                         <div class="form-group">
@@ -104,23 +89,15 @@
                                 <option value="Pending" <?= ($old_data['Status'] ?? '') === 'Pending' ? 'selected' : '' ?>>Pending</option>
                                 <option value="Recruited" <?= ($old_data['Status'] ?? '') === 'Recruited' ? 'selected' : '' ?>>Recruited</option>
                             </select>
-                            <?php if (!empty($errors['Status'])): ?>
-                                <span class="error"><?= htmlspecialchars($errors['Status']) ?></span>
-                            <?php endif; ?>
                         </div>
 
                         <div class="form-group">
                             <label for="contact-number">Contact Number</label>
                             <input type="text" id="contact-number" name="ContactNum" placeholder="0771234567"
                                 value="<?= htmlspecialchars($old_data['ContactNum'] ?? '') ?>" 
-                                pattern="^07\d{8}$"
+                                pattern="^\d{10}$"
                                 required>
-                            <?php if (!empty($errors['ContactNum'])): ?>
-                                <span class="error"
-                                    pattern="^[0-9+\s()-]{7,20}$"
-                                ><?= htmlspecialchars($errors['ContactNum']) ?></span>
-                            <?php endif; ?>
-                            <small class="format-hint">Enter a valid phone number (e.g., +94 98765 43210 , 0733333333)</small>
+                            <small class="format-hint">Enter a valid phone number (e.g. 0733333333)</small>
                         </div>
                     </div>
                     

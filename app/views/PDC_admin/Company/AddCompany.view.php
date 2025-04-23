@@ -48,10 +48,10 @@
                                 <div class="form-group">
                                     <label for="contact-number">Contact Number</label>
                                     <input type="text" id="contact-number" placeholder="Mobile" name="contact_number" 
-                                        pattern="^[0-9+\s()-]{7,20}$"
+                                        pattern="^\d{10}$"
                                         required
                                     />
-                                    <small class="format-hint">Enter a valid phone number (e.g., +94 98765 43210 , 0733333333)</small>
+                                    <small class="format-hint">Enter a valid phone number (e.g. 0733333333)</small>
                                     </div>
                             </div>
 

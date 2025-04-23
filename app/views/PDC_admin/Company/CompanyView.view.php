@@ -234,7 +234,7 @@
                       </button>
                   <?php endif; ?>
                 <?php else: ?>
-                      <button class="btn btn-primary" onclick="navigateToAcceptCompany('<?= htmlspecialchars($data['companyData']->CompanyId) ?>')">
+                      <button class="btn btn-primary" onclick="navigateToAcceptCompany()">
                           <i class="fas fa-check"></i> Accept
                       </button>
 
@@ -307,6 +307,63 @@
         </div>
     </div>
 
+    <div id="accept-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="accept-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewCompany/accept/<?= $data['companyData']->CompanyId?>">
+                <input type="hidden" name="companyId" id="unblock-company-id" value="">
+                <div class="modal-header">
+                    <h3>Accept Company</h3>
+                </div>
+                <div class="modal-body">
+                
+                    <div id="confirmationMessage" class="modal-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="messageText">Are you sure you want to accept this company?</span>
+                    </div>
+
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Yes, Accept</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="reject-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="reject-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewCompany/reject">
+                <input type="hidden" name="companyId" id="pending-company-id" value="">
+                <div class="modal-header">
+                    <h3>Reject Company</h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="modal-field">
+                        <div class="form-group">
+                            <label for="block-reason">Reason for Rejecting</label>
+                            <textarea id="block-reason" name="reject_reason" placeholder="Enter your reason here..." required></textarea>
+                            <p id="modal-message" style="color: red; margin-top: 10px;"></p>
+                        </div>
+                    </div>
+
+                    <div id="confirmationMessage" class="modal-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="messageText"> Please provide a reason for rejecting <?= htmlspecialchars($data['companyData']->Name) ?>. This message will be sent to the company's email.</span>
+                    </div>
+
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>               
     <script>
         function blockCompany(companyId) {
@@ -322,17 +379,26 @@
         function closeModal() {
             document.getElementById("block-modal").classList.remove("active");
             document.getElementById("unblock-modal").classList.remove("active");
+            document.getElementById('accept-modal').classList.remove("active");
+            document.getElementById('reject-modal').classList.remove("active");
             document.getElementById("block-reason").value = "";
             document.getElementById("modal-message").textContent = "";
+            document.getElementById("accept-modal").textContent = "";
+            document.getElementById("reject-modal").value = "";
         }
 
-        function navigateToAcceptCompany(companyId){
-          console.log("Accepting company with ID: " + companyId);
-          window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/accept/" + companyId;
+        function navigateToAcceptCompany(){
+            document.getElementById('accept-modal').classList.add('active');
+
+        //   console.log("Accepting company with ID: " + companyId);
+        //   window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/accept/" + companyId;
         }
 
         function rejectCompany(companyId){
-          window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/reject/" + companyId;
+            console.log(companyId);
+            document.getElementById('pending-company-id').value = companyId;
+            console.log(document.getElementById('pending-company-id').value);
+            document.getElementById('reject-modal').classList.add('active');
         }
 
     </script>

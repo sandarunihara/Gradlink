@@ -10,4 +10,10 @@
                 'activeTab' => 'pending-companies'
             ]);
         } 
+
+        public function getPendingCompanyCount(){
+            $model = new company;
+            $count = $model->pendingCount();
+            echo json_encode($count);
+        }
     }
