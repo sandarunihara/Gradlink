@@ -11,13 +11,13 @@ class Companydash
             $user = $_SESSION['USER'];
         }
 
-        $actionlogmodel=new Action_logs;
-        $blockreson='';
-        if($user->Status == 'Blocked'){
-            $blockreson=$actionlogmodel->findDetailsforblockcompany($user->CompanyId,'block')[0]->reason;
+        $actionlogmodel = new Action_logs;
+        $blockreson = '';
+        if ($user->Status == 'Blocked') {
+            $blockreson = $actionlogmodel->findDetailsforblockcompany($user->CompanyId, 'block')[0]->reason;
         }
 
-        
+
         // show($_SESSION);
         $model = new C_Dashboard;
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
@@ -34,29 +34,29 @@ class Companydash
             $hasRecruited = false;
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0,'lastmonthcount'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status ,'blockreson'=>$blockreson]);
+            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0, 'numOfcurrentmothAD' => 0, 'lastmonthcount' => 0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [], 'Status' => $user->Status, 'blockreson' => $blockreson]);
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
             // show($data);
             $numOfAdvertisements = count($data);
-            
+
             $allStatuses = ["Active", "Deactive", "Pending", "Rejected"];
             $advertisementIds = [];
-            $currentmothadvertisments=[];
+            $currentmothadvertisments = [];
             foreach ($data as $item) {
                 $advertisementIds[] = $item->advertisementId;
                 $adstatus[] = $item->status;
-                if(date('Y-m', strtotime($item->created_at)) == date('Y-m')){
-                    $currentmothadvertisments[]=$item;
+                if (date('Y-m', strtotime($item->created_at)) == date('Y-m')) {
+                    $currentmothadvertisments[] = $item;
                 }
             }
-            if(!empty($currentmothadvertisments)){
-                $numOfcurrentmothAD=count($currentmothadvertisments);
-            }else{
-                $numOfcurrentmothAD=0;
+            if (!empty($currentmothadvertisments)) {
+                $numOfcurrentmothAD = count($currentmothadvertisments);
+            } else {
+                $numOfcurrentmothAD = 0;
             }
-            
+
 
             $countedadstatus = array_count_values($adstatus);
             foreach ($allStatuses as $status) {
@@ -71,6 +71,7 @@ class Companydash
             $shortliststudentIds = [];
             $pendingstudentIds = [];
             $recruitstudentIds = [];
+            $acceptstudentIds = [];
             $rejectstudentIds = [];
             $reqdata = [];
             $shortliststudent = [];
@@ -100,10 +101,18 @@ class Companydash
                 } else {
                     $ss = [];
                 }
-                $shortliststudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Shortlist'], 'studentadvertisement');
-                $pendingstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Pending'], 'studentadvertisement');
-                $recruitstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Recruit'], 'studentadvertisement');
-                $rejectstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Reject'], 'studentadvertisement');
+
+                $Shortlist = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Shortlist'], 'studentadvertisement') ?: [];
+                $InterviewScheduled = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Interview Scheduled'], 'studentadvertisement') ?: [];
+                $InterviewMarked = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Interview Marked'], 'studentadvertisement') ?: [];
+                $InterviewExpired = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Interview Expired'], 'studentadvertisement') ?: [];
+
+                $shortliststudent = array_merge($Shortlist, $InterviewScheduled, $InterviewMarked, $InterviewExpired);
+
+                $pendingstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Pending'], 'studentadvertisement')?: [];
+                $recruitstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Recruit'], 'studentadvertisement')?: [];
+                $acceptstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Accept'], 'studentadvertisement')?: [];
+                $rejectstudent = $model->find(['advertisementId' => $id, 'Jobstatus' => 'Reject'], 'studentadvertisement')?: [];
                 if (!empty($shortliststudent)) {
                     if (is_array($shortliststudent) || is_object($shortliststudent)) {
                         foreach ($shortliststudent as $student) {
@@ -131,6 +140,15 @@ class Companydash
                 } else {
                     $ss = [];
                 }
+                if (!empty($acceptstudent)) {
+                    if (is_array($acceptstudent) || is_object($acceptstudent)) {
+                        foreach ($acceptstudent as $student) {
+                            $acceptstudentIds[] = $student->StudentId;
+                        }
+                    }
+                } else {
+                    $ss = [];
+                }
                 if (!empty($rejectstudent)) {
                     if (is_array($rejectstudent) || is_object($rejectstudent)) {
                         foreach ($rejectstudent as $student) {
@@ -144,11 +162,11 @@ class Companydash
                 if (!empty($data)) {
                     if (is_array($data) || is_object($data)) {
                         foreach ($data as $item) {
-                            if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
+                            if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Interview Expired') {
                                 $hasShortlisted = true;
                             }
 
-                            if ($item->Jobstatus === 'Recruit') {
+                            if ($item->Jobstatus === 'Recruit' || $item->Jobstatus === 'Accept') {
                                 $hasRecruited = true;
                             }
                             $reqdata[] = [
@@ -181,10 +199,10 @@ class Companydash
             }
 
             sort($dates); // Sort the dates in ascending order
-            if(!empty($dates)){
+            if (!empty($dates)) {
                 $earliestDate = $dates[0]; // Earliest date
-            }else{
-                $earliestDate=time();
+            } else {
+                $earliestDate = time();
             }
             $today = time();
             $latestDate = $today; // Latest date
@@ -245,16 +263,16 @@ class Companydash
                     if (!empty($adinterview)) {
                         foreach ($adinterview as $inter) {
                             if ($inter->Date < $TodayDate) {
-                                $adkeys=[
-                                    'StudentId'=>$item->StudentId,
-                                    'advertisementId'=>$item->advertisementId
+                                $adkeys = [
+                                    'StudentId' => $item->StudentId,
+                                    'advertisementId' => $item->advertisementId
                                 ];
-                                $da=$appliedadmodal->find($adkeys,'studentadvertisement');
-                                if($da[0]->Jobstatus == 'Interview Scheduled'){
-                                    $appliedadmodal->update($item->StudentId,$item->advertisementId,['Jobstatus'=>'Interview Expired']);
+                                $da = $appliedadmodal->find($adkeys, 'studentadvertisement');
+                                if ($da[0]->Jobstatus == 'Interview Scheduled') {
+                                    $appliedadmodal->update($item->StudentId, $item->advertisementId, ['Jobstatus' => 'Interview Expired']);
                                 }
-                                if($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit'){
-                                    $interviewmodel->delete($item->InterviewId,'InterviewId');
+                                if ($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit') {
+                                    $interviewmodel->delete($item->InterviewId, 'InterviewId');
                                 }
                             }
                         }
@@ -270,12 +288,14 @@ class Companydash
             $numOfshortlistStudents = count($shortliststudentIds);
             $numOfpendingStudents = count($pendingstudentIds);
             $numOfrecruitStudents = count($recruitstudentIds);
+            $numOfacceptStudents = count($acceptstudentIds);
             $numOfrejectStudents = count($rejectstudentIds);
 
             $studentstatuschart = [
                 ['label' => 'Shortlist', 'count' => $numOfshortlistStudents],
                 ['label' => 'Pending', 'count' => $numOfpendingStudents],
                 ['label' => 'Recruit', 'count' => $numOfrecruitStudents],
+                ['label' => 'Accept', 'count' => $numOfacceptStudents],
                 ['label' => 'Reject', 'count' => $numOfrejectStudents]
             ];
 
@@ -283,7 +303,7 @@ class Companydash
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
 
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD'=>$numOfcurrentmothAD,'lastmonthcount'=>$lastmonthcount , 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts , 'Status'=>$user->Status,'blockreson'=>$blockreson]);
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD' => $numOfcurrentmothAD, 'lastmonthcount' => $lastmonthcount, 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts, 'Status' => $user->Status, 'blockreson' => $blockreson]);
             // $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
 
         }

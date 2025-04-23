@@ -79,6 +79,29 @@
 .shortbutton button:hover{
     transform: scale(1.05);
 }
+.shortbutton1{
+    text-decoration: none;
+}
+
+.shortbutton1 button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    width: 200px;
+    background: linear-gradient(135deg, #7259B6 0%, #6B6FD5 100%);
+    color: white;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px rgba(160, 160, 160, 0.25);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.shortbutton1 button:hover{
+    transform: scale(1.05);
+}
 
 .sr_filter-container{
     padding-left: 5px;

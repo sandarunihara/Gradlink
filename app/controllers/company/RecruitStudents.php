@@ -35,13 +35,13 @@ class RecruitStudents
             // }
             if (!empty($data)) {
                 foreach ($data as $item) {
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Interview Expired') {
                         $hasShortlisted = true;
                     }
-                    if ($item->Jobstatus === 'Recruit') {
+                    if ($item->Jobstatus === 'Recruit' || $item->Jobstatus === 'Accept') {
                         $hasRecruited = true;
                     }
-                    if ($item->Jobstatus == 'Recruit') {
+                    if ($item->Jobstatus == 'Recruit' || $item->Jobstatus === 'Accept') {
 
                         $notReviewed = [];
                         $notReviewedstatus = false;

@@ -13,6 +13,7 @@ class student_advertisement
 		'AdvertisementId',
 		'JobStatus',
 		'CV',
+		'Interview_mark',
 	];
 
 
