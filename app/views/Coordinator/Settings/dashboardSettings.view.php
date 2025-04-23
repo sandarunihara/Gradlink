@@ -928,7 +928,26 @@
                 }
             });
 
-            // Function to clear all advertisement fields
+            // Clear all fields
+            function clearStudentFields() {
+                document.getElementById('student-id').value = '';
+                document.getElementById('student-name').value = '';
+                document.getElementById('student-email').value = '';
+                document.getElementById('student-degree').value = '';
+                document.getElementById('student-status').value = '';
+                document.getElementById('student-ads-applied').value = '';
+                document.getElementById('student-description').value = '';
+            }
+
+            function clearCompanyFields() {
+                document.getElementById('company-id').value = '';
+                document.getElementById('company-name').value = '';
+                document.getElementById('company-email').value = '';
+                document.getElementById('company-status').value = '';
+                document.getElementById('company-contact').value = '';
+                document.getElementById('company-description').value = '';
+            }
+
             function clearAdvertisementFields() {
                 document.getElementById('ad-id').value = '';
                 document.getElementById('ad-company-search').value = '';
@@ -947,14 +966,57 @@
                 });
             });
 
-            // Submit button functionality
-            const submitBtns = document.querySelectorAll('.submit-btn');
-            submitBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const activeTab = document.querySelector('.tab-content.active').id;
-                    alert(`Changes for ${activeTab} submitted successfully!`);
-                    // In a real app, you would send data to server here
-                });
+            document.querySelector('.submit-btn').addEventListener('click', function() {
+
+                const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+                let type, companyId = null,
+                    advertisementId = null,
+                    studentId = null;
+
+                if (activeTab === 'student') {
+                    type = 'student';
+                    studentId = document.getElementById('student-id').value;
+                } else if (activeTab === 'company') {
+                    type = 'company';
+                    companyId = document.getElementById('company-id').value;
+                } else if (activeTab === 'advertisement') {
+                    type = 'advertisement';
+                    advertisementId = document.getElementById('ad-id').value;
+                }
+
+                const description = document.getElementById(`${activeTab}-description`).value;
+
+                const data = {
+                    type: type,
+                    student_id: studentId,
+                    company_id: companyId,
+                    advertisement_id: advertisementId,
+                    description: description
+                };
+
+                fetch('<?= ROOT ?>/PDC_coordinator/DashboardSettings/submitFeedback', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            toastSystem.show(data.message, 'Notification submitted successfully!', 'success');
+                            
+                            clearAdvertisementFields();
+                            clearCompanyFields();
+                            clearStudentFields();
+                        } else {
+                            toastSystem.show(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        toastSystem.show('An error occurred while submitting the notification', 'error');
+                    });
             });
         });
     </script>
