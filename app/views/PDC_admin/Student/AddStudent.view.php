@@ -11,9 +11,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/student/addStudent.css?v=<?= time() ?>">
 
+
 </head>
 
 <body>
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+
     <div class="container">
         <?php $this->renderComponent("pdc_adminsidebar") ?>
         <main class="main-content">
@@ -117,5 +132,7 @@
             </section>
         </main>
     </div>
+
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
 </body>
 </html>

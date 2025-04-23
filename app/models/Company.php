@@ -106,7 +106,7 @@ class company
 	public function findAllOngoing(): array|bool
 	{
 		try {
-			$query = "SELECT * FROM $this->table WHERE Status = :status AND Password IS NOT NULL AND block != 1";
+			$query = "SELECT * FROM $this->table WHERE Status = :status AND block != 1";
 			$result = $this->query($query, ['status' => 'Ongoing']);
 			return $result;
 		} catch (Exception $e) {
@@ -202,7 +202,7 @@ class company
 	}
 
 	public function registeredCount(){
-		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked' AND block = 0";
+		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Ongoing' AND block = 0";
 		$result = $this->query($query);
 		return $result[0]->{'COUNT(*)'};
 	}

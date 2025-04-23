@@ -154,6 +154,14 @@ class PDC_Session
         return $result ? $result : false;
     }
 
+    public function sessionCount(){
+        $query = "SELECT COUNT(*) as count FROM session WHERE deleted = 0 AND session_date >= CURDATE()";
+        $result = $this->query($query);
+        return $result ? $result[0]->count : false;
+    }
+
+
+
     public function getAllCompaniesUpcoming()
     {
         $query = "SELECT DISTINCT c.CompanyID, c.Name 

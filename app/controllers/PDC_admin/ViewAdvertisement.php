@@ -80,15 +80,41 @@ class ViewAdvertisement {
 
     public function activate($advertisementId , $action){
         $model = new C_Advertisement;
-        $companyDet = $model -> findwithcompany($advertisementId);
-        $CompanyId = $companyDet->CompanyId;
-        $mail = $companyDet->Email;
-        $data = [
-            'status' => 'Active'
-        ];
+        $notification  = new Admin_notification;
+
+        $x = $notification->findbyAdvertisementId($advertisementId);
+
+        $companyDet = $model->findwithcompany($advertisementId);
+
+        if ($companyDet && is_object($companyDet)) {
+            $CompanyId = $companyDet->CompanyId;
+            $mail = $companyDet->Email;
+            
+            $data = [
+                'status' => 'Active'
+            ];
+        } else {
+            // Handle the error: maybe redirect or show an error message
+            echo "Company details not found for advertisement ID: $advertisementId";
+            exit;
+        }
+
+        $notificationId = $x->id;
         
+
+        $notificationData = [
+            'type' => 'advertisement_request',
+            'company_id' => $CompanyId,
+            'advertisement_id' => $advertisementId,
+            'status' => 'Approved',
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $updatedNotification = $notification->update($notificationId, $notificationData, 'id');
+        //show($updatedNotification);
+
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
-        if($updatedStatus && $updatedStatus['status'] === 'success'){
+        if($updatedStatus && $updatedStatus['status'] === 'success' && $updatedNotification && $updatedNotification['status'] === 'success'){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId);
             $_SESSION['flash_message'] = [
                 'type' => 'success',

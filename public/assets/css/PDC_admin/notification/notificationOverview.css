@@ -114,6 +114,7 @@ body {
     padding: 1.25rem;
     border-left: 4px solid var(--gray-color);
     transition: var(--transition);
+    margin-top: 1.5rem;
 }
 
 .notification-item:hover {
@@ -198,6 +199,17 @@ body {
 .notification-body strong {
     font-weight: 600;
 }
+
+.no-notifications {
+    text-align: center;
+    font-size: 1.25rem;
+    color: var(--gray-color);
+    padding: 2rem;
+    background: var(--light-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
 
 .notification-actions {
     display: flex;

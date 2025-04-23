@@ -59,7 +59,13 @@ require "../app/libs/Exception.php";
                 'ContactNum' => $_POST['ContactNum'],
             ];
 
+            //show($data);
+
+            // $r = $model->validate($data);
+
+            // show($r);
             if($model->validate($data)){
+
                 if($model->validateRegisteredStudents($data)){
                     $arr = [];
                     $arr['StudentId'] = $data['StudentId'];
@@ -68,6 +74,7 @@ require "../app/libs/Exception.php";
                     $arr['Email'] = $data['Email'];
 
                     $result1 = $model->orWhere($arr, [], '', 'do_not_order');
+                    //show($result1);
                     if(empty($result1)){
                         $result = $model->insert($data);
                         if ($result) {

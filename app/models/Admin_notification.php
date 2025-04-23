@@ -16,8 +16,10 @@ class Admin_notification{
         'reason'
     ];
 
-    public function findpending(){
-        $query = "SELECT * FROM $this->table WHERE status = 'Pending'";
+    public function findpendingwithCompany(){
+        $query = "SELECT n.* , c.* FROM $this->table n
+                  JOIN company c ON n.company_id = c.CompanyId
+                  WHERE n.status = 'Pending'";
         $result = $this->query($query);
         if(empty($result)){
             return false;
@@ -49,4 +51,21 @@ class Admin_notification{
         }
     }
 
+    public function notificationCount(){
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE status = 'Pending'";
+        $result = $this->query($query);
+        if(empty($result)){
+            return false;
+        }
+        else{
+            return $result[0]->count;
+        }
+    }
+
+    public function findbyAdvertisementId($advertisementId){
+        $query = "SELECT * FROM $this->table WHERE advertisement_id = :advertisement_id";
+        $params = [':advertisement_id' => $advertisementId];
+        $result = $this->query($query, $params);
+        return $result ? $result[0] : false;
+    }
 }

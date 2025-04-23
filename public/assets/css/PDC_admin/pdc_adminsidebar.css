@@ -129,3 +129,23 @@ ul li:hover::after {
     opacity: 1;
     transform: translateY(-50%) translateX(0);
 }
+
+.fa-bell{
+    position: relative;
+    color: #e0e0ff;
+    font-size: 24px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+
+.dot-mark {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+}
+
