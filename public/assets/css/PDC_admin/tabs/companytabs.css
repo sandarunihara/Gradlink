@@ -113,3 +113,16 @@
     opacity: 0.32;
     box-shadow: 0 1px 4px #6366f1;
 } */
+
+
+.tab-dot {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+}
+

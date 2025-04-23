@@ -129,7 +129,7 @@ class student
 	}
 
 	public function findregistered(){
-		$query = "SELECT * FROM $this->table WHERE block = '0' AND registered = '1'";
+		$query = "SELECT * FROM $this->table WHERE block = '0'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -151,7 +151,7 @@ class student
     }
 
 	public function findnotapplied(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied' AND block = '0' AND registered = '1'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied' AND block = '0'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -162,7 +162,7 @@ class student
 	}
 
 	public function findRecruited(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Ongoing' AND block = '0' AND registered = '1'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Ongoing' AND block = '0'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -173,7 +173,7 @@ class student
 	}
 
 	public function findRejected(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Rejected' AND block = '0' AND registered = '1'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Rejected' AND block = '0'";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -196,7 +196,7 @@ class student
 
 
 	public function findAllPending(){
-		$query = "SELECT * FROM $this->table WHERE Status = 'Pending' AND block = 0 AND registered = '1'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'Pending' AND block = 0";
 		$result = $this->query($query);
 		if($result){
 			return $result;
@@ -258,7 +258,6 @@ class student
 		if(!empty($result)){
 			return $result[0]->{'COUNT(*)'};
 		}
-		
 		else{
 			return 0;
 		}

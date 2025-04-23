@@ -440,6 +440,12 @@ body {
     scrollbar-width: none; /* Firefox */
 }
 
+.tab-btn i {
+    font-size: 1.2rem;
+    line-height: 1;
+    vertical-align: middle;
+}
+
 .tabs::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
 }

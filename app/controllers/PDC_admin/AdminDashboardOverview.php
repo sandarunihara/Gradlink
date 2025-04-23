@@ -7,15 +7,15 @@ class AdminDashboardOverview{
         $studentModel = new Student;
         $regStdCount = $studentModel->registeredCount();
         $workingStdCount = $studentModel->workingCount();
-        $rejectedStdCount = $studentModel->rejectedCount();
-        $appliedStdCount = $studentModel->appliedCount();
+        //$rejectedStdCount = $studentModel->rejectedCount();
+        //$appliedStdCount = $studentModel->appliedCount();
         $notAppliedStdCount = $studentModel->notAppliedCount();
-        $weeklyStudent = $studentModel->getWeeklyStudent();
-        $weeklyRecruitment = $studentModel->getWeeklyRecruitedStudent();
+        //$weeklyStudent = $studentModel->getWeeklyStudent();
+        //$weeklyRecruitment = $studentModel->getWeeklyRecruitedStudent();
 
         $companyModel = new Company;
         $regCompCount = $companyModel->registeredCount();
-        $weeklyCompany = $companyModel->getWeeklyCompany();
+        // $weeklyCompany = $companyModel->getWeeklyCompany();
         $pendingCom = $companyModel->pendingCount();
         $pendingCompanies = $companyModel->findAllPending();
 
@@ -23,7 +23,7 @@ class AdminDashboardOverview{
         $topAdd = $advertisementModel->topAdvertisement();
         $topCom = $advertisementModel->topCompanyByAdd();
         $adds = $advertisementModel->findallActivewithCompany();
-        $weeklyAdvertisement = $advertisementModel->getWeeklyAdvertisement();
+        //$weeklyAdvertisement = $advertisementModel->getWeeklyAdvertisement();
         $pendingAds = $advertisementModel->findAllPendingcount();
 
         $sessions = new PDC_Session;
@@ -134,8 +134,8 @@ class AdminDashboardOverview{
                 'registeredStdCount' => $regStdCount,
                 'workingStdCount' => $workingStdCount,
                 'registeredCompCount' => $regCompCount,
-                'rejectedStdCount' => $rejectedStdCount,
-                'appliedStdCount' => $appliedStdCount,
+                // 'rejectedStdCount' => $rejectedStdCount,
+                // 'appliedStdCount' => $appliedStdCount,
                 'notAppliedStdCount' => $notAppliedStdCount,
             ],
             'table' =>[],

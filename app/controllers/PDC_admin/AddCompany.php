@@ -70,7 +70,7 @@ class AddCompany{
                 $arr['Name'] = $mappedData['Name'];
                 $arr['Email'] = $mappedData['Email'];
 
-                $result1 = $model->where($arr, [], '', 'do_not_order');
+                $result1 = $model->orWhere($arr, [], '', 'do_not_order');
                 // echo $result1;
                 if (empty($result1)) {
                     //no same company
@@ -94,6 +94,7 @@ class AddCompany{
                         'type' => 'error',
                         'message' => 'Company is already Added'
                     ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
                 }
             } else {
                 $_SESSION['flash_message'] = [
@@ -163,10 +164,9 @@ class AddCompany{
                                 <h1>Company Registration Successful</h1>
                             </div>
                             <p>Dear User,</p>
-                            <p>Your company has been added to our system and is currently in the <strong>Pending Approval</strong> status.</p>
+                            <p>Your company has been added to our system and is currently in the <strong>Ongoing</strong> status.</p>
                             <p><strong>Your Company ID:</strong> {$companyId}</p>
-                            <p>We will notify you once your company is approved.</p>
-                            <p>Thank you for your patience.</p>
+                            <p>Thank you.</p>
                             <div class='footer'>
                                 &copy; 2025 GRADLINK. All rights reserved.
                             </div>
