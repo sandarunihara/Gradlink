@@ -53,9 +53,27 @@ class C_Advertisement
         return $this->errors;
     }
 
+    function findAdvertisementById($advertisementId)
+    {
+        $query = "
+        SELECT *
+        FROM 
+            advertisement
+        WHERE 
+            advertisementId = :advertisementId
+        ";
+
+        $params = [
+            ':advertisementId' => $advertisementId
+        ];
+
+        return $this->query($query, $params);
+    }
+
+
     public function find($data)
     {
-        
+
         if (is_array($data)) {
             $keys = array_keys($data);
             $query = "SELECT * FROM $this->table WHERE ";
@@ -76,7 +94,8 @@ class C_Advertisement
         return $result;
     }
 
-    public function findwithcompany($data){
+    public function findwithcompany($data)
+    {
         $query = "SELECT 
                     advertisement.advertisementId,
                     advertisement.position,
@@ -138,7 +157,8 @@ class C_Advertisement
         }
     }
 
-    public function findallActivewithCompany(){
+    public function findallActivewithCompany()
+    {
         $query = "SELECT 
                     advertisement.advertisementId,
                     advertisement.position,
@@ -166,7 +186,8 @@ class C_Advertisement
         return $result;
     }
 
-    public function findAllPending(){
+    public function findAllPending()
+    {
         $query = "SELECT 
                     advertisement.advertisementId,
                     advertisement.position,
@@ -193,20 +214,21 @@ class C_Advertisement
     }
 
 
-    public function findAllPendingcount(){
+    public function findAllPendingcount()
+    {
         $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'Pending'";
 
         $result = $this->query($query);
 
-        if(!empty($result)){
-			return $result[0]->{'total'};
-		}		
-		else{
-			return 0;
-		}
+        if (!empty($result)) {
+            return $result[0]->{'total'};
+        } else {
+            return 0;
+        }
     }
 
-    public function findallDeactivewithCompany(){
+    public function findallDeactivewithCompany()
+    {
         $query = "SELECT 
                     advertisement.advertisementId,
                     advertisement.position,
@@ -231,7 +253,8 @@ class C_Advertisement
         return $result;
     }
 
-    public function findallRejectedwithCompany(){
+    public function findallRejectedwithCompany()
+    {
         $query = "SELECT 
                     advertisement.advertisementId,
                     advertisement.position,
@@ -256,32 +279,33 @@ class C_Advertisement
         return $result;
     }
 
-    public function OngoingAdvertisementCount() {
-        try{
+    public function OngoingAdvertisementCount()
+    {
+        try {
             $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'active'";
 
             $result = $this->query($query);
-            if(empty($result)){
+            if (empty($result)) {
                 return 0;
-            }
-            else{
+            } else {
                 return $result[0]->{'total'};
             }
-            
-        }catch (Exception $e) {
-			error_log("Error fetching total number of advertisements: " . $e->getMessage());
-			return false;
-		}
+        } catch (Exception $e) {
+            error_log("Error fetching total number of advertisements: " . $e->getMessage());
+            return false;
+        }
     }
 
-    public function deactivate($id){
+    public function deactivate($id)
+    {
         $query = "UPDATE $this->table SET status = 'Deactive' WHERE advertisementId = :advertisementId";
         $result = $this->query($query, ['advertisementId' => $id]);
         var_dump($result);
         //return $result;
     }
 
-    public function topAdvertisement(){
+    public function topAdvertisement()
+    {
         $query = "SELECT
                     a.advertisementId,
                     a.position,
@@ -297,7 +321,8 @@ class C_Advertisement
         return $result;
     }
 
-    public function topCompanyByAdd(){
+    public function topCompanyByAdd()
+    {
         $query = "SELECT
                     c.CompanyId,
                     c.Name,
@@ -313,7 +338,8 @@ class C_Advertisement
         return $result;
     }
 
-    public function getWeeklyAdvertisement($week = 5){
+    public function getWeeklyAdvertisement($week = 5)
+    {
         $query = "SELECT YEAR(created_at) as year,
                     WEEK(created_at, 1) as week,
                     COUNT(*) as count
@@ -324,10 +350,9 @@ class C_Advertisement
                     ";
         $params = [':week' => $week];
         $result = $this->query($query, $params);
-        if($result){
+        if ($result) {
             return $result;
-        }
-        else{
+        } else {
             return false;
         }
     }

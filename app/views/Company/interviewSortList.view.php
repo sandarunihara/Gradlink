@@ -19,7 +19,7 @@
             <div class="main">
                 <div class="d">
                     <div>
-                        <h1>Shortlisted Students</h1>
+                        <h1>Sorted List</h1>
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
@@ -31,62 +31,22 @@
                                 <i class="fas fa-search"></i>
                             </div>
                             <select class="role-select">
-                                <option value="all">All</option>
-                                <option value="Quality Assurance">Quality Assurance</option>
-                                <option value="Software Engineer">Software Engineer</option>
-                                <option value="Web Developer">Web Developer</option>
-                                <option value="Data Science">Data Science</option>
-                                <option value="Machine Learning">Machine Learning</option>
-                                <option value="Data Analyst">Data Analyst</option>
-                                <option value="Full Stack Developer">Full Stack Developer</option>
-                                <option value="Backend Developer">Backend Developer</option>
-                                <option value="Frontend Developer">Frontend Developer</option>
-                                <option value="DevOps Engineer">DevOps Engineer</option>
-                                <option value="Cloud Architect">Cloud Architect</option>
-                                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
-                                <option value="AI Engineer">AI Engineer</option>
-                                <option value="Mobile App Developer">Mobile App Developer</option>
-                                <option value="Blockchain Developer">Blockchain Developer</option>
-                                <option value="Game Developer">Game Developer</option>
-                                <option value="UI/UX Designer">UI/UX Designer</option>
-                                <option value="Product Manager">Product Manager</option>
-                                <option value="System Administrator">System Administrator</option>
-                                <option value="Network Engineer">Network Engineer</option>
-                                <option value="Technical Support Engineer">Technical Support Engineer</option>
-                                <option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
-                                <option value="Cloud Engineer">Cloud Engineer</option>
-                                <option value="Software Architect">Software Architect</option>
-                                <option value="Solutions Architect">Solutions Architect</option>
-                                <option value="IT Consultant">IT Consultant</option>
-                                <option value="Quality Engineer">Quality Engineer</option>
-                                <option value="Business Intelligence Analyst">Business Intelligence Analyst</option>
-                                <option value="RPA Developer">RPA Developer</option>
-                                <option value="ERP Consultant">ERP Consultant</option>
-                                <option value="Salesforce Developer">Salesforce Developer</option>
-                                <option value="SAP Consultant">SAP Consultant</option>
+                                <?php foreach ($ad_data as $ad): ?>
+                                    <option value="<?php echo $ad->id ?>"><?php echo $ad->name ?></option>
+                                <?php endforeach; ?>
                             </select>
                             <div>
-                                </div>
                             </div>
-                            <?php if ($hasinterviewmarked == 1) : ?>
-                                <a href="../ShortlistedStudents/interviewSortList" class="shortbutton1">
-                                    <button class="export-btn">View Ranked Candidates</button>
-                                </a>
-                            <?php endif; ?>
+                        </div>
                     </div>
                     <div class="sr_t">
                         <div class="sr_table">
                             <!-- Table -->
                             <div>
-
-
                                 <table class="student-table">
                                     <thead class="sr_table_t">
                                         <th>
                                             <h5>Student Name</h5>
-                                        </th>
-                                        <th>
-                                            <h5>Student Degree</h5>
                                         </th>
                                         <th>
                                             <h5>Position</h5>
@@ -95,15 +55,17 @@
                                             <h5>Action</h5>
                                         </th>
                                         <th>
+                                            <h5>Interview Mark</h5>
+                                        </th>
+                                        <th>
                                             <h5>View</h5>
                                         </th>
                                     </thead>
                                     <tbody>
                                         <?php if (isset($data) && !empty($data)): ?>
                                             <?php foreach ($data as $student): ?>
-
                                                 <?php
-                                                $status = $student['Action'];
+                                                $status = $student->Jobstatus;
                                                 switch ($status) {
                                                     case 'Recruit':
                                                         $statusText = 'Recruit';
@@ -137,15 +99,16 @@
                                                 ?>
 
                                                 <tr class="sr_row">
-                                                    <td class="name"><?php echo htmlspecialchars($student['Student Name']); ?></td>
-                                                    <td class="degree"><?php echo htmlspecialchars($student['Student Degree']); ?></td>
-                                                    <td class="position"><?php echo htmlspecialchars($student['Position']); ?></td>
+                                                    <td class="name"><?php echo htmlspecialchars($student->StudentName); ?></td>
+                                                    <td class="position"><?php echo htmlspecialchars($student->position); ?></td>
+                                                    <td class="AdvertisementIdfil" style="display: none;"><?php echo htmlspecialchars($student->AdvertisementId); ?></td>
                                                     <td>
                                                         <div class="<?php echo $statusClass; ?>">
                                                             <span class="action"><?php echo $statusText; ?></span>
                                                         </div>
                                                     </td>
-                                                    <td><a href="../ShortlistedStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>"><button class="view-profile-btn">View Profile</button></a></td>
+                                                    <td class="degree"><?php echo htmlspecialchars($student->Interview_mark); ?></td>
+                                                    <td><a href="../ShortlistedStudents/studentprofile/<?php echo $student->AdvertisementId; ?>/<?php echo $student->StudentId; ?>"><button class="view-profile-btn">View Profile</button></a></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -155,32 +118,9 @@
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
-
-
-
                             </div>
                         </div>
                     </div>
-                    
-                    <?php if (isset($removedlist) && !empty($removedlist)): ?>
-                        <?php
-                        $names = array_map(function ($student) {
-                            return htmlspecialchars($student['Student Name']);
-                        }, $removedlist);
-
-                        $nameList = implode(', ', $names);
-                        ?>
-
-                        <div class="removed-message">
-                            <strong><?php echo $nameList; ?></strong> have been recruited by another company and are therefore no longer under consideration.
-                            <form method="POST" action="">
-
-                                <button type="submit" value="close" name="submit">sub</button>
-                            </form>
-                        </div>
-                    <?php endif; ?>
-
-
                 </div>
             </div>
         </div>
@@ -200,10 +140,10 @@
 
             rows.forEach(row => {
                 const studentName = row.querySelector('.name').textContent.toLowerCase();
-                const studentPosition = row.querySelector('.position').textContent.toLowerCase(); // Position
+                const studentPosition = row.querySelector('.AdvertisementIdfil').textContent.toLowerCase(); // Position
 
                 const matchesSearch = studentName.includes(searchValue);
-                const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
+                const matchesRole = (studentPosition.toLowerCase() === selectedRole);
 
                 // Show row if it matches search, role filter, and status filter
                 if (matchesSearch && matchesRole) {
@@ -213,6 +153,10 @@
                 }
             });
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            filterTable();
+        });
     </script>
 
     <!-- Toast message from session -->

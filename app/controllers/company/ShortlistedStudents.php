@@ -23,7 +23,7 @@ class ShortlistedStudents
         $data = $model->find(['CompanyId' => $user->CompanyId], "advertisement");
 
         if (empty($data)) {
-            $this->view('Company/ShortlistedStudents', ['data' => [],'removedlist'=>[]]);
+            $this->view('Company/ShortlistedStudents', ['data' => [], 'removedlist' => [], 'hasinterviewmarked' => 0]);
             exit();
         }
 
@@ -32,9 +32,10 @@ class ShortlistedStudents
             $advertisementIds[] = $item->advertisementId;
         }
         $reqdata = [];
-        $removedlist=[];
+        $removedlist = [];
         $hasShortlisted = false;
         $hasRecruited = false;
+        $hasinterviewmarked = 0;
         foreach ($advertisementIds as $id) {
             $data = $model->findreq($id);
             // if (empty($data)) {
@@ -43,16 +44,22 @@ class ShortlistedStudents
             //     $this->view('Company/ShortlistedStudents', ['data' => $reqdata]);
             //     exit();
             // }
+            // show($data);
             if (!empty($data)) {
                 foreach ($data as $item) {
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Interview Expired') {
                         $hasShortlisted = true;
+                        if ($item->Jobstatus == 'Interview Marked') {
+                            $hasinterviewmarked = 1;
+                        }
                     }
-                    if ($item->Jobstatus === 'Recruit') {
+                    if ($item->Jobstatus === 'Recruit' || $item->Jobstatus === 'Accept') {
                         $hasRecruited = true;
                     }
-                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled'|| $item->Jobstatus == 'Interview Expired' ) {
-                        $isrecriuted=$model->find(['StudentId'=>$item->StudentId ,'Jobstatus'=>'Recruit'],'studentadvertisement');
+                    if ($item->Jobstatus == 'Shortlist' || $item->Jobstatus == 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Interview Expired') {
+                        $isrecriute = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement') ?: [];
+                        $isaccept = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Accept'], 'studentadvertisement') ?: [];
+                        $isrecriuted = array_merge($isrecriute, $isaccept);
                         if (!empty($isrecriuted)) {
                             foreach ($isrecriuted as $students) {
                                 if (!empty($students)) {
@@ -117,7 +124,7 @@ class ShortlistedStudents
         // show($removedlist);
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
-        $this->view('Company/ShortlistedStudents', ['data' => $reqdata,'removedlist'=>$removedlist]);
+        $this->view('Company/ShortlistedStudents', ['data' => $reqdata, 'removedlist' => $removedlist, 'hasinterviewmarked' => $hasinterviewmarked]);
     }
 
     public function studentprofile($advertisementId, $StudentId)
@@ -127,39 +134,56 @@ class ShortlistedStudents
         $updatemodel = new C_Dashboard;
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         // show($studentad_data[0]->CV);
-        $data[0]->adCV=$studentad_data[0]->CV;
+        $data[0]->adCV = $studentad_data[0]->CV;
         $studentJobstatus = $studentad_data[0]->Jobstatus;
         $company = new company;
         $companydata = $company->findById($_SESSION['USER']->CompanyId);
         $interviewschedule = 0;
         $interviewmodel = new interview_time_slot;
         $interviewdata = $interviewmodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId]);
+        $interviewmark = 0;
+        if (!empty($studentad_data)) {
+            $interviewmark = $studentad_data[0]->Interview_mark;
+        }
         if (!empty($interviewdata)) {
             $interviewschedule = 1;
+            // show($studentad_data[0]->Interview_mark);
         } else {
             $interviewschedule = 0;
         }
         // show($interviewdata);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_action'])) {
-            $updatedata = [
-                'Jobstatus' => $_POST['submit_action']
-            ];
-            $studentdata = [
-                'Status' => $_POST['submit_action']
-            ];
+            // show($_POST['submit_action']);
+            $submitvalue = $_POST['submit_action'];
+
+            if (is_numeric($submitvalue)) {
+                $updatedata = [
+                    'Interview_mark' => $_POST['submit_action'],
+                    'Jobstatus' => 'Interview Marked'
+                ];
+            } else {
+                $updatedata = [
+                    'Jobstatus' => $_POST['submit_action']
+                ];
+                $studentdata = [
+                    'Status' => $_POST['submit_action']
+                ];
+            }
             // show($updatedata);
-            $isrecriuted=$updatemodel->find(['StudentId'=>$StudentId ,'Jobstatus'=>'Recruit'],'studentadvertisement');
-            if(!empty($isrecriuted)){
+            $isrecriute = $updatemodel->find(['StudentId' => $StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement') ?: [];
+            $isaccept = $updatemodel->find(['StudentId' => $StudentId, 'Jobstatus' => 'Accept'], 'studentadvertisement') ?: [];
+            $isrecriuted = array_merge($isrecriute, $isaccept);
+            if (!empty($isrecriuted)) {
                 $_SESSION['flash'] = [
                     'type' => 'error',
                     'message' => 'Recruitment unsuccessful! the student has already been recruited by another company'
                 ];
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
                 exit;
-            }else{
+            } else {
                 $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
                 if ($result['status']) {
-                    if ($_POST['submit_action'] != 'Reject') {
+                    if ($submitvalue != 'Reject' && !is_numeric($submitvalue)) {
                         $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
                         $success = "Student Job Status updated successfully.";
                         if (!empty($data[0]->Email) && !empty($companydata->Email)) {
@@ -227,14 +251,15 @@ class ShortlistedStudents
                                                     <body>
                                                         <div class='email-container'>
                                                             <div class='header'>
-                                                                <h1>Welcome to {$companydata->Name}!</h1>
+                                                                <h1>Internship Offer from {$companydata->Name}</h1>
                                                             </div>
                                                             <div class='content'>
                                                                 <p>Dear {$data[0]->Name},</p>
-                                                                <p>We are thrilled to inform you that you have been selected for an internship at <strong>{$companydata->Name}</strong>. This role offers you a unique opportunity to learn, grow, and contribute to our team.</p>
-                                                                <p>Details regarding your onboarding process and responsibilities will be shared soon. If you have any immediate questions, please don't hesitate to contact us at <strong>{$companydata->ContactNum}</strong>.</p>
-                                                                <p>We are excited to welcome you aboard and look forward to a fruitful collaboration.</p>
-                                                                <p>Warm regards,</p>
+                                                                <p>We are pleased to extend to you an offer for an internship position at <strong>{$companydata->Name}</strong>.</p>
+                                                                <p>This opportunity will allow you to gain hands-on experience, work on real-world projects, and grow within a professional environment.</p>
+                                                                <p>Please review the offer and respond at your earliest convenience. If you have any questions or need clarification, feel free to contact us at <strong>{$companydata->ContactNum}</strong>.</p>
+                                                                <p>We look forward to your response and hope to welcome you to our team!</p>
+                                                                <p>Best regards,</p>
                                                                 <p><strong>{$companydata->Name}</strong></p>
                                                             </div>
                                                             <div class='footer'>
@@ -243,11 +268,10 @@ class ShortlistedStudents
                                                         </div>
                                                     </body>
                                                 </html>";
-    
                                 $mail->send();
                                 $_SESSION['flash'] = [
                                     'type' => 'success',
-                                    'message' => 'Student has been recruited and notified successfully'
+                                    'message' => 'Student has been offered the position and notified'
                                 ];
                                 header('Location: http://localhost/Gradlink/public/company/RecruitStudents/dashboard');
                                 exit;
@@ -256,7 +280,7 @@ class ShortlistedStudents
                                     'type' => 'error',
                                     'message' => "Failed to send email. Error: {$mail->ErrorInfo}"
                                 ];
-                                $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                                $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule, 'interviewmark' => $interviewmark,]);
                                 exit;
                             }
                         } else {
@@ -264,29 +288,38 @@ class ShortlistedStudents
                                 'type' => 'error',
                                 'message' => "Email not found"
                             ];
-                            $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                            $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule, 'interviewmark' => $interviewmark]);
                             exit;
                         }
                     } else {
-                        $_SESSION['flash'] = [
-                            'type' => 'success',
-                            'message' => 'Student Status updated'
-                        ];
-                        header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
-                        exit;
+                        if (is_numeric($submitvalue)) {
+                            $_SESSION['flash'] = [
+                                'type' => 'success',
+                                'message' => 'Student Interview Mark updated'
+                            ];
+                            header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
+                            exit;
+                        } else {
+                            $_SESSION['flash'] = [
+                                'type' => 'success',
+                                'message' => 'Student Status updated'
+                            ];
+                            header('Location: http://localhost/Gradlink/public/company/StudentsRequests/dashboard');
+                            exit;
+                        }
                     }
                 } else {
                     $_SESSION['flash'] = [
                         'type' => 'error',
                         'message' => "There was an issue update the Student Status Pleace Try again!"
                     ];
-                    $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+                    $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule, 'interviewmark' => $interviewmark]);
                     exit;
                 }
             }
         }
         // show($data);    
-        $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule]);
+        $this->view('Company/Studentpro', ['data' => $data, 'adId' => $advertisementId, 'url' => 'http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'interviewschedule' => $interviewschedule, 'interviewmark' => $interviewmark]);
     }
 
     public function interviewschedule($studentId, $advertisementId)
@@ -311,7 +344,6 @@ class ShortlistedStudents
                 $unavailable_date[] = $interviewdate->Date;
             }
         }
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'StudentId' => $studentId,
@@ -328,16 +360,19 @@ class ShortlistedStudents
                 'Jobstatus' => 'Interview Scheduled'
             ];
 
-            $isrecriuted=$updatemodel->find(['StudentId'=>$studentId ,'Jobstatus'=>'Recruit'],'studentadvertisement');
-            if(!empty($isrecriuted)){
+            $isrecriute = $updatemodel->find(['StudentId' => $studentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement') ?: [];
+            $isaccept = $updatemodel->find(['StudentId' => $studentId, 'Jobstatus' => 'Accept'], 'studentadvertisement') ?: [];
+            $isrecriuted = array_merge($isrecriute, $isaccept);
+            if (!empty($isrecriuted)) {
                 $_SESSION['flash'] = [
                     'type' => 'error',
                     'message' => 'Recruitment unsuccessful! the student has already been recruited by another company'
                 ];
                 header('Location: http://localhost/Gradlink/public/company/ShortlistedStudents/dashboard');
                 exit;
-            }else{
+            } else {
                 $updateresult = $updatemodel->update($studentId, $advertisementId, $updatedata);
+                
                 $result = $model->insert($data);
                 if ($result && $updateresult['status']) {
                     $success = "Interview Schedule created successfully.";
@@ -441,7 +476,7 @@ class ShortlistedStudents
                                                     </div>
                                                 </body>
                                                 </html>";
-    
+
                             $mail->send();
                             $_SESSION['flash'] = [
                                 'type' => 'success',
@@ -465,7 +500,6 @@ class ShortlistedStudents
                     $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date, 'error' => $error]);
                     exit;
                 }
-
             }
         }
         $this->view('Company/CreateSchedule', ['data' => $data, 'addata' => $addata, 'unavailable_date' => $unavailable_date]);
@@ -509,5 +543,50 @@ class ShortlistedStudents
         header('Content-Type: application/json');
         echo json_encode($events);
         exit;
+    }
+
+    // interview mark sorted list
+    public function interviewSortList()
+    {
+
+        $userID = $_SESSION['USER']->CompanyId;
+
+        $model = new C_Dashboard;
+        $data = $model->findapplicant($userID);
+        $newdata = [];
+        $adID = [];
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                if ($item->Jobstatus == 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Accept' || $item->Jobstatus == 'Interview Expired' || $item->Jobstatus == 'Recruit') {
+                    $newdata[] = $item;
+                    $adID[] = $item->AdvertisementId;
+                }
+            }
+
+            $AdModel = new C_Advertisement;
+            $uniqueAds = [];
+            if (!empty($adID)) {
+                foreach ($adID as $Id) {
+                    $adData = $AdModel->findAdvertisementById($Id);
+
+                    if (!empty($adData)) {
+                        $adName = $adData[0]->position ?? null;
+
+                        // Store only unique names
+                        if ($adName && !isset($uniqueAds[$Id])) {
+                            $uniqueAds[$Id] = (object)[
+                                'id' => $Id,
+                                'name' => $adName
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+        usort($newdata, function ($a, $b) {
+            return $b->Interview_mark <=> $a->Interview_mark;
+        });
+
+        $this->view('Company/interviewSortList', ['data' => $newdata, 'ad_data' => $uniqueAds]);
     }
 }

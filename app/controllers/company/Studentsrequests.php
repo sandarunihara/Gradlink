@@ -35,14 +35,17 @@ class StudentsRequests
             if (!empty($data)) {
                 foreach ($data as $item) {
 
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Interview Expired') {
                         $hasShortlisted = true;
                     }
 
-                    if ($item->Jobstatus === 'Recruit') {
+                    if ($item->Jobstatus === 'Recruit' || $item->Jobstatus === 'Accept') {
                         $hasRecruited = true;
                     }
-                    $isrecriuted = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement');
+                    $isrecriute = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement') ?: [];
+                    $isaccept = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Accept'], 'studentadvertisement') ?: [];
+                    $isrecriuted=array_merge($isrecriute,$isaccept);
+                    
                     if (!empty($isrecriuted)) {
                         foreach ($isrecriuted as $students) {
                             if (!empty($students)) {
@@ -107,7 +110,7 @@ class StudentsRequests
                 }
             }
         }
-        // show($removedlist);
+        // show($isaccept);
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;

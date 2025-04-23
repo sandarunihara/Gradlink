@@ -7,7 +7,7 @@ class C_Dashboard
     protected $table1 = 'advertisement';
     protected $table = 'studentadvertisement';
 
-    protected $allowedColumns = ['StudentId', 'CompanyId', 'Jobstatus'];
+    protected $allowedColumns = ['StudentId', 'CompanyId', 'AdvertisementId', 'CV', 'Interview_mark', 'Jobstatus', 'CreatedAt'];
 
     public function validate($data)
     {
@@ -63,8 +63,8 @@ class C_Dashboard
 
     function findreq($advertisementId)
     {
-    // Prepare the SQL query with placeholders for parameters
-    $query = "SELECT 
+        // Prepare the SQL query with placeholders for parameters
+        $query = "SELECT 
             studentadvertisement.*,
             student.*,
             advertisement.*,
@@ -83,16 +83,58 @@ class C_Dashboard
             student.StudentId";
 
 
-    // Bind the parameters and execute the query
-    $params = [
-        ':advertisementId' => $advertisementId
-    ];
+        // Bind the parameters and execute the query
+        $params = [
+            ':advertisementId' => $advertisementId
+        ];
 
-    $result = $this->query($query, $params); // Assuming `query` method handles the prepared statement
-    return $result;
+        $result = $this->query($query, $params); // Assuming `query` method handles the prepared statement
+        return $result;
     }
 
-    public function update($id1, $id2, $data, $id_columns = ['StudentId', 'AdvertisementId']) {
+
+    function findapplicant($companyID)
+    {
+        // SQL query to fetch student applications along with student and company info
+        $query = "
+        SELECT 
+            sa.StudentId,
+            s.Name AS StudentName,
+            s.DegreeName,
+            s.Email AS StudentEmail,
+            s.ContactNum AS StudentContact,
+            s.NIC,
+            s.cv AS UploadedCV,
+            sa.AdvertisementId,
+            a.position,
+            sa.Jobstatus,
+            sa.CreatedAt AS ApplicationDate,
+            sa.Interview_mark,
+            c.Name AS CompanyName
+        FROM 
+            studentadvertisement sa
+        JOIN 
+            student s ON sa.StudentId = s.StudentId
+        JOIN 
+            advertisement a ON sa.AdvertisementId = a.advertisementId
+        JOIN 
+            company c ON a.CompanyId = c.CompanyId
+        WHERE 
+            c.CompanyId = :companyID
+    ";
+
+        // Bind the parameter and execute the query
+        $params = [
+            ':companyID' => $companyID
+        ];
+
+        $result = $this->query($query, $params); // Assuming `query` handles prepared statements
+        return $result;
+    }
+
+
+    public function update($id1, $id2, $data, $id_columns = ['StudentId', 'AdvertisementId'])
+    {
         try {
             // Remove unwanted data if specified
             if (!empty($this->allowedColumns)) {
@@ -102,23 +144,23 @@ class C_Dashboard
                     }
                 }
             }
-    
+
             $keys = array_keys($data);
             $query = "UPDATE $this->table SET ";
-    
+
             foreach ($keys as $key) {
                 $query .= $key . " = :$key, ";
             }
-    
+
             $query = trim($query, ", ");
-            
+
             // Build the WHERE clause with both keys
             $query .= " WHERE {$id_columns[0]} = :{$id_columns[0]} AND {$id_columns[1]} = :{$id_columns[1]}";
-    
+
             // Add the IDs to the data array
             $data[$id_columns[0]] = $id1;
             $data[$id_columns[1]] = $id2;
-    
+
             // Execute the query
             $this->query($query, $data);
             // Return success message if update is successful
@@ -126,7 +168,6 @@ class C_Dashboard
                 'status' => true,
                 'message' => 'Record updated successfully.'
             ];
-    
         } catch (Exception $e) {
             // Catch any errors and return an error message
             return [
@@ -136,16 +177,17 @@ class C_Dashboard
         }
     }
 
-    public function deletead($conditions) {
+    public function deletead($conditions)
+    {
         // Build the WHERE clause dynamically from the $conditions array
         $whereClauses = [];
         foreach ($conditions as $column => $value) {
             $whereClauses[] = "$column = :$column";
         }
-    
+
         $whereSQL = implode(' AND ', $whereClauses);
         $query = "DELETE FROM $this->table WHERE $whereSQL";
-    
+
         // Execute the query and check if successful
         $success = $this->query($query, $conditions);
         if (!$success) {
@@ -154,7 +196,4 @@ class C_Dashboard
             return false;
         }
     }
-    
-    
-
 }

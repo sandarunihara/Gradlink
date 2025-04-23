@@ -49,7 +49,7 @@ class Schedule
                         if ($da[0]->Jobstatus == 'Interview Scheduled') {
                             $appliedadmodal->update($item->StudentId, $item->advertisementId, ['Jobstatus' => 'Interview Expired']);
                         }
-                        if ($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Recruit') {
+                        if ($da[0]->Jobstatus == 'Reject' || $da[0]->Jobstatus == 'Accept') {
                             $interviewmodel->delete($item->InterviewId, 'InterviewId');
                         }
                     } else {
