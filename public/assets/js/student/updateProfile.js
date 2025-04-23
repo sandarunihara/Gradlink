@@ -56,4 +56,3 @@ submitButton.addEventListener('click', function (event) {
         updateForm.submit(); // Submit the form if all validations pass
     }
 });
-

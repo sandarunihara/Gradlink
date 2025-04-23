@@ -47,16 +47,14 @@ class StudentProfile{
                 $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
                 if(!empty($data['Skills'])){
-                    $studentSkills = trim($_POST['Skill'], ",");
-                    $studentSkillsArray = explode(",", $studentSkills);
-
                     $isDelete = $skill -> delete($arr['StudentId'], 'StudentId');
-
                     if(!$isDelete){
                         throw new Exception("Error deleting student skills");
                     }
                 }
                 if(!empty($_POST['Skill'])){
+                    $studentSkills = trim($_POST['Skill'], ",");
+                    $studentSkillsArray = explode(",", $studentSkills);
                     $isInsert2 = $skill -> insertSkill($data['StudentId'] ,$studentSkillsArray);
                     if(!$isInsert2){
                         throw new Exception("Error inserting student skills");
