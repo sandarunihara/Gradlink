@@ -31,19 +31,16 @@
                     <h1>Dashboard</h1>
                 </div>
                 <div class="header-right">
-                    <i class="material-icons notification-icon">notifications</i>
-                    <div class="notification-dropdown">
-                        <ul>
-                            <li>No new notifications</li>
-                            <!-- Add more notifications here -->
-                        </ul>
+                <div class="round-badge">
+                        <span class="round-label">Current Round</span>
+                        <span class="round-number"><?= $round->round ?></span>
                     </div>
                 </div>
                 <div class="overlay"></div>
 
             </header>
 
-            <div class='round-type '>1st Round</div>
+            
 
 
             <!-- <div class="main-body"> -->
