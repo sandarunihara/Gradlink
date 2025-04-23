@@ -13,7 +13,16 @@ class DashboardSettings
         $model = new round;
         $data = $model->findall();
 
-        $this->view('Coordinator/Settings/DashboardSettings', ['roundData' => $data]);
+        $studentModel = new student();
+        $studentData = $studentModel->findall();
+
+        $companyModel = new company();
+        $companyData = $companyModel->findall();
+
+        $advertisementModel = new C_Advertisement();
+        $advertisementData = $advertisementModel->findall();
+
+        $this->view('Coordinator/Settings/DashboardSettings', ['roundData' => $data, 'studentData' => $studentData, 'companyData' => $companyData, 'advertisementData' => $advertisementData]);
     }
 
 
@@ -293,4 +302,6 @@ class DashboardSettings
         ob_end_flush();
         exit;
     }
+
+    
 }

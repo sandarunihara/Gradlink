@@ -243,8 +243,16 @@
                                 <label for="student-id"></label>
                                 <select id="student-id" class="search-select">
                                     <option value="">Select Student ID</option>
-                                    <option value="S1001">S1001</option>
-                                    <option value="S1002">S1002</option>
+                                    <?php foreach ($studentData as $student): ?>
+                                        <option value="<?= htmlspecialchars($student->StudentId) ?>"
+                                            data-applications="<?= htmlspecialchars($student->noOfAppliedAds) ?>"
+                                            data-email="<?= htmlspecialchars($student->Email) ?>"
+                                            data-degree="<?= htmlspecialchars($student->DegreeName) ?>"
+                                            data-name="<?= htmlspecialchars($student->Name) ?>"
+                                            data-status="<?= htmlspecialchars($student->Status) ?>">
+                                            <?= htmlspecialchars($student->StudentId) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -252,8 +260,16 @@
                                 <label for="student-name"></label>
                                 <select id="student-name" class="search-select">
                                     <option value="">Select Student Name</option>
-                                    <option value="John Doe">John Doe</option>
-                                    <option value="Jane Smith">Jane Smith</option>
+                                    <?php foreach ($studentData as $student): ?>
+                                        <option value="<?= htmlspecialchars($student->Name) ?>"
+                                            data-id="<?= htmlspecialchars($student->StudentId) ?>"
+                                            data-email="<?= htmlspecialchars($student->Email) ?>"
+                                            data-degree="<?= htmlspecialchars($student->DegreeName) ?>"
+                                            data-ads_applied="<?= htmlspecialchars($student->noOfAppliedAds) ?>"
+                                            data-status="<?= htmlspecialchars($student->Status) ?>">
+                                            <?= htmlspecialchars($student->Name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -295,8 +311,15 @@
                                 <label for="company-id"></label>
                                 <select id="company-id" class="search-select">
                                     <option value="">Select Company ID</option>
-                                    <option value="C2001">C2001</option>
-                                    <option value="C2002">C2002</option>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <option value="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-name="<?= htmlspecialchars($company->Name) ?>"
+                                            data-email="<?= htmlspecialchars($company->Email) ?>"
+                                            data-status="<?= htmlspecialchars($company->Status) ?>"
+                                            data-contact="<?= htmlspecialchars($company->ContactPerson) ?>">
+                                            <?= htmlspecialchars($company->CompanyId) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -304,8 +327,15 @@
                                 <label for="company-name"></label>
                                 <select id="company-name" class="search-select">
                                     <option value="">Select Company Name</option>
-                                    <option value="Tech Corp">Tech Corp</option>
-                                    <option value="Innovate LLC">Innovate LLC</option>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <option value="<?= htmlspecialchars($company->Name) ?>"
+                                            data-id="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-email="<?= htmlspecialchars($company->Email) ?>"
+                                            data-status="<?= htmlspecialchars($company->Status) ?>"
+                                            data-contact="<?= htmlspecialchars($company->ContactPerson) ?>">
+                                            <?= htmlspecialchars($company->Name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -347,17 +377,15 @@
                                 </select>
                             </div>
 
-                            <div class="search-group">
-                                <label for="ad-company"></label>
-                                <select id="ad-company" class="search-select">
-                                    <option value="">Select Company Name</option>
-                                    <option value="Tech Corp">Tech Corp</option>
-                                    <option value="Innovate LLC">Innovate LLC</option>
-                                </select>
-                            </div>
+
                         </div>
 
                         <div class="info-form">
+                            <div class="form-group">
+                                <label for="ad-company">Company:</label>
+                                <input type="text" id="ad-company" readonly>
+                            </div>
+
                             <div class="form-group">
                                 <label for="ad-position">Position:</label>
                                 <input type="text" id="ad-position" readonly>
@@ -752,24 +780,6 @@
                 });
             });
 
-            // Sample data (in a real app, this would come from an API)
-            const studentData = {
-                'S1001': {
-                    name: 'John Doe',
-                    email: 'john.doe@university.edu',
-                    degree: 'Computer Science',
-                    status: 'Active',
-                    adsApplied: 3
-                },
-                'S1002': {
-                    name: 'Jane Smith',
-                    email: 'jane.smith@university.edu',
-                    degree: 'Business Administration',
-                    status: 'Pending',
-                    adsApplied: 1
-                }
-            };
-
             const companyData = {
                 'C2001': {
                     name: 'Tech Corp',
@@ -802,67 +812,74 @@
                 }
             };
 
-            // Student search functionality
-            const studentIdSelect = document.getElementById('student-id');
-            const studentNameSelect = document.getElementById('student-name');
+            // Student ID dropdown change
+            document.getElementById('student-id').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('student-name').value = selectedOption.dataset.name;
 
-            studentIdSelect.addEventListener('change', function() {
-                const studentId = this.value;
-                if (studentId && studentData[studentId]) {
-                    const student = studentData[studentId];
-                    document.getElementById('student-email').value = student.email;
-                    document.getElementById('student-degree').value = student.degree;
-                    document.getElementById('student-status').value = student.status;
-                    document.getElementById('student-ads-applied').value = student.adsApplied;
-                    studentNameSelect.value = student.name;
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('student-email').value = selectedOption.dataset.email;
+                    document.getElementById('student-degree').value = selectedOption.dataset.degree;
+                    document.getElementById('student-status').value = selectedOption.dataset.status;
+                    document.getElementById('student-ads-applied').value = selectedOption.dataset.applications;
+
+                    // You would need to fetch ads_applied count via AJAX
+                    // For now we'll just clear it
                 }
             });
 
-            studentNameSelect.addEventListener('change', function() {
-                const studentName = this.value;
-                if (studentName) {
-                    // Find student by name
-                    for (const [id, student] of Object.entries(studentData)) {
-                        if (student.name === studentName) {
-                            document.getElementById('student-email').value = student.email;
-                            document.getElementById('student-degree').value = student.degree;
-                            document.getElementById('student-status').value = student.status;
-                            document.getElementById('student-ads-applied').value = student.adsApplied;
-                            studentIdSelect.value = id;
-                            break;
-                        }
-                    }
+            // Student Name dropdown change
+            document.getElementById('student-name').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('student-id').value = selectedOption.dataset.id;
+
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('student-email').value = selectedOption.dataset.email;
+                    document.getElementById('student-degree').value = selectedOption.dataset.degree;
+                    document.getElementById('student-ads-applied').value = selectedOption.dataset.applications;
+                    document.getElementById('student-status').value = selectedOption.dataset.status;
+
+                    // You would need to fetch ads_applied count via AJAX
+                    // For now we'll just clear it
                 }
             });
 
             // Company search functionality
-            const companyIdSelect = document.getElementById('company-id');
-            const companyNameSelect = document.getElementById('company-name');
+            // Company ID dropdown change
+            document.getElementById('company-id').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('company-name').value = selectedOption.dataset.name;
 
-            companyIdSelect.addEventListener('change', function() {
-                const companyId = this.value;
-                if (companyId && companyData[companyId]) {
-                    const company = companyData[companyId];
-                    document.getElementById('company-email').value = company.email;
-                    document.getElementById('company-status').value = company.status;
-                    document.getElementById('company-contact').value = company.contact;
-                    companyNameSelect.value = company.name;
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('company-email').value = selectedOption.dataset.email;
+                    document.getElementById('company-status').value = selectedOption.dataset.status;
+                    document.getElementById('company-contact').value = selectedOption.dataset.contact;
+                } else {
+                    // Clear fields if no selection
+                    clearCompanyFields();
                 }
             });
 
-            companyNameSelect.addEventListener('change', function() {
-                const companyName = this.value;
-                if (companyName) {
-                    // Find company by name
-                    for (const [id, company] of Object.entries(companyData)) {
-                        if (company.name === companyName) {
-                            document.getElementById('company-email').value = company.email;
-                            document.getElementById('company-status').value = company.status;
-                            document.getElementById('company-contact').value = company.contact;
-                            companyIdSelect.value = id;
-                            break;
-                        }
-                    }
+            // Company Name dropdown change
+            document.getElementById('company-name').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('company-id').value = selectedOption.dataset.id;
+
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('company-email').value = selectedOption.dataset.email;
+                    document.getElementById('company-status').value = selectedOption.dataset.status;
+                    document.getElementById('company-contact').value = selectedOption.dataset.contact;
+                } else {
+                    // Clear fields if no selection
+                    clearCompanyFields();
                 }
             });
 
