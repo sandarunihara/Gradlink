@@ -159,7 +159,6 @@
             </section>
 
             <!-- Import Student Data Section -->
-            <!-- Import Student Data Section -->
             <section class="import-section">
                 <header class="header">
                     <div class="header-left">
