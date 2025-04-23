@@ -26,6 +26,8 @@ class Dashboard
 
         $jobRolesData = $coordinatorModel->jobRoles();
         $sessions = $coordinatorModel->getScheduledSessions();
+        $roundModel = new Round;
+        $round = $roundModel->getActiveRound();
 
 
         if ($totalCompanies === null || $totalStudents === null || $totalAdvertisements === null) {
@@ -91,7 +93,7 @@ class Dashboard
         // print_r($sessionData);
         // echo '</pre>';
 
-        $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'applicationAnalysis' => $applicationGraph, 'InternPositions' => $jobRolesData, 'sessions' => $sessionData]);
+        $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'applicationAnalysis' => $applicationGraph, 'InternPositions' => $jobRolesData, 'sessions' => $sessionData, 'round' => $round]);
     }
 
 

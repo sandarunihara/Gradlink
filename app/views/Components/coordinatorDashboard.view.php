@@ -34,7 +34,7 @@
             </a>
 
             <a href="/GRadlink/public/PDC_coordinator/dashboardSettings">
-                <li data-title="Rounds"><i class="fas fa-cog fa-lg"></i></li>
+                <li data-title="Settings"><i class="fas fa-cog fa-lg"></i></li>
             </a>
         </ul>
 

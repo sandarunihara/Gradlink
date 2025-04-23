@@ -241,7 +241,7 @@ class student
 	}
 
 	public function registeredCount(){
-		$query = "SELECT COUNT(*) FROM $this->table WHERE Status != 'Blocked'";
+		$query = "SELECT COUNT(*) FROM $this->table WHERE registered = '1' ";
 		$result = $this->query($query);
 		if(!empty($result)){
 			return $result[0]->{'COUNT(*)'};

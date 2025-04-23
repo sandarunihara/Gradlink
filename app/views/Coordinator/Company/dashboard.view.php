@@ -31,19 +31,16 @@
                     <h1>Dashboard</h1>
                 </div>
                 <div class="header-right">
-                    <i class="material-icons notification-icon">notifications</i>
-                    <div class="notification-dropdown">
-                        <ul>
-                            <li>No new notifications</li>
-                            <!-- Add more notifications here -->
-                        </ul>
+                <div class="round-badge">
+                        <span class="round-label">Current Round</span>
+                        <span class="round-number"><?= $round->round ?></span>
                     </div>
                 </div>
                 <div class="overlay"></div>
 
             </header>
 
-            <div class='round-type '>1st Round</div>
+            
 
 
             <!-- <div class="main-body"> -->
@@ -54,7 +51,7 @@
                     <div class='card' onclick='navigateToDashboardCompany();'>
                         <div class='card-inner'>
                             <i class="material-icons">business</i>
-                            <h3>Companies</h3>
+                            <h3>Registered Companies</h3>
                         </div>
                         <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
 
@@ -63,7 +60,7 @@
                     <div class='card' onclick='navigateToDashboardStudent();'>
                         <div class='card-inner'>
                             <i class="material-icons">school </i>
-                            <h3>Students</h3>
+                            <h3>Registered Students</h3>
                         </div>
                         <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
                     </div>
@@ -214,9 +211,44 @@
 
                 window.onload = function() {
 
+                    CanvasJS.addColorSet("greenShades",
+                [//colorSet Array
+                "#D1FFD1",
+                "#A4FFA4",
+                "#7DFF7D",
+                "#4FFF4F",
+                "#2AFF2A",
+                "#1A4F1A",
+                "#0A1A0A"           
+                ]);
+
+                CanvasJS.addColorSet("blueShades",
+                [//colorSet Array
+                "#D1E8FF",
+                "#A4C8E1",
+                "#7DA2C1",
+                "#4F7DA2",
+                "#2A4F7D",
+                "#1A2A4F",
+                "#0A1A2A"
+                ]);
+
+                CanvasJS.addColorSet("redShades",
+                [//colorSet Array
+                "#FFD1D1",
+                "#FFA4A4",
+                "#FF7D7D",
+                "#FF4F4F",
+                "#FF2A2A",
+                "#4F1A1A",
+                "#1A0A0A"
+                ]);
+
+                
                     var chart1 = new CanvasJS.Chart("recruitment_CS", {
-                        backgroundColor: "#fffafa",
-                        theme: "light2",
+                        backgroundColor: "#ffffff",
+                        colorSet: "greenShades",
+                        // theme: "light2",
                         animationEnabled: true,
                         subtitles: [{
                             text: "Computer Science Degree",
@@ -235,8 +267,8 @@
                     });
 
                     var chart2 = new CanvasJS.Chart("recruitment_IS", {
-                        backgroundColor: "#fffafa",
-                        theme: "light2",
+                        backgroundColor: "#ffffff",
+                        colorSet: "greenShades",
                         animationEnabled: true,
                         subtitles: [{
                             text: "Information Systems Degree",
@@ -255,7 +287,8 @@
                     });
 
                     var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
-                        backgroundColor: "#fffafa",
+                        backgroundColor: "#ffffff",
+                        colorSet: "blueShades",
                         animationEnabled: true,
                         // title: {
                         //     text: "Job Roles Offered by Companies"

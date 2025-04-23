@@ -159,7 +159,6 @@
             </section>
 
             <!-- Import Student Data Section -->
-            <!-- Import Student Data Section -->
             <section class="import-section">
                 <header class="header">
                     <div class="header-left">
@@ -222,48 +221,216 @@
                     </div>
                 </div>
             </section>
-            <!-- Round Management Modal -->
-            <div id="roundModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Round Configuration</h2>
-                        <span class="close-btn">&times;</span>
+
+            <section class="admin-container">
+                <header class="header">
+                    <div class="header-left">
+                        <h1>Notify Admin</h1>
                     </div>
-                    <form id="roundForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/DashboardSettings/updateRound">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="roundId">Round ID</label>
-                                <input type="text" id="roundId" name="roundId" readonly>
+                </header>
+
+                <div class="admin-info">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="student">Student</button>
+                        <button class="tab-btn" data-tab="company">Company</button>
+                        <button class="tab-btn" data-tab="advertisement">Advertisement</button>
+                    </div>
+
+                    <div class="tab-content active" id="student">
+                        <h2>Student Information</h2>
+                        <div class="search-options">
+                            <div class="search-group">
+                                <label for="student-id"></label>
+                                <select id="student-id" class="search-select">
+                                    <option value="">Select Student ID</option>
+                                    <option value="S1001">S1001</option>
+                                    <option value="S1002">S1002</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label for="round">Round Name</label>
-                                <input type="text" id="round" name="round" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="status">Status</label>
-                                <div class="status-display" id="status"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="startDate">Start Date</label>
-                                <input type="date" id="startDate" name="startDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="endDate">End Date</label>
-                                <input type="date" id="endDate" name="endDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="vacancy">Applications per Student</label>
-                                <input type="number" id="vacancy" name="vacancy" min="1" required>
+
+                            <div class="search-group">
+                                <label for="student-name"></label>
+                                <select id="student-name" class="search-select">
+                                    <option value="">Select Student Name</option>
+                                    <option value="John Doe">John Doe</option>
+                                    <option value="Jane Smith">Jane Smith</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn primary-btn">
-                                <i class="fas fa-save"></i> Save Changes
-                            </button>
+
+                        <div class="info-form">
+                            <div class="form-group">
+                                <label for="student-email">Email:</label>
+                                <input type="email" id="student-email" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student-degree">Degree:</label>
+                                <input type="text" id="student-degree" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student-status">Application Status:</label>
+                                <input type="text" id="student-status" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student-ads-applied">No. of Advertisements Applied:</label>
+                                <input type="number" id="student-ads-applied" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student-description">Description:</label>
+                                <textarea id="student-description" rows="4"></textarea>
+                            </div>
+
+                            <button class="submit-btn">Submit</button>
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="tab-content" id="company">
+                        <h2>Company Information</h2>
+                        <div class="search-options">
+                            <div class="search-group">
+                                <label for="company-id"></label>
+                                <select id="company-id" class="search-select">
+                                    <option value="">Select Company ID</option>
+                                    <option value="C2001">C2001</option>
+                                    <option value="C2002">C2002</option>
+                                </select>
+                            </div>
+
+                            <div class="search-group">
+                                <label for="company-name"></label>
+                                <select id="company-name" class="search-select">
+                                    <option value="">Select Company Name</option>
+                                    <option value="Tech Corp">Tech Corp</option>
+                                    <option value="Innovate LLC">Innovate LLC</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="info-form">
+                            <div class="form-group">
+                                <label for="company-email">Email:</label>
+                                <input type="email" id="company-email" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company-status">Status:</label>
+                                <input type="text" id="company-status" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company-contact">Contact Person:</label>
+                                <input type="text" id="company-contact" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company-description">Description:</label>
+                                <textarea id="company-description" rows="4"></textarea>
+                            </div>
+
+                            <button class="submit-btn">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="advertisement">
+                        <h2>Advertisement Information</h2>
+                        <div class="search-options">
+                            <div class="search-group">
+                                <label for="ad-id"></label>
+                                <select id="ad-id" class="search-select">
+                                    <option value="">Select Advertisement ID</option>
+                                    <option value="A3001">A3001</option>
+                                    <option value="A3002">A3002</option>
+                                </select>
+                            </div>
+
+                            <div class="search-group">
+                                <label for="ad-company"></label>
+                                <select id="ad-company" class="search-select">
+                                    <option value="">Select Company Name</option>
+                                    <option value="Tech Corp">Tech Corp</option>
+                                    <option value="Innovate LLC">Innovate LLC</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="info-form">
+                            <div class="form-group">
+                                <label for="ad-position">Position:</label>
+                                <input type="text" id="ad-position" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ad-status">Status:</label>
+                                <input type="text" id="ad-status" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ad-interns">No. of Interns:</label>
+                                <input type="number" id="ad-interns" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ad-mode">Working Mode:</label>
+                                <input type="text" id="ad-mode" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ad-description">Description:</label>
+                                <textarea id="ad-description" rows="4"></textarea>
+                            </div>
+
+                            <button class="submit-btn">Submit</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <section />
+
+                <!-- Round Management Modal -->
+                <div id="roundModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Round Configuration</h2>
+                            <span class="close-btn">&times;</span>
+                        </div>
+                        <form id="roundForm" method="POST" action="<?= ROOT ?>/PDC_coordinator/DashboardSettings/updateRound">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="roundId">Round ID</label>
+                                    <input type="text" id="roundId" name="roundId" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="round">Round Name</label>
+                                    <input type="text" id="round" name="round" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <div class="status-display" id="status"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="startDate">Start Date</label>
+                                    <input type="date" id="startDate" name="startDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="endDate">End Date</label>
+                                    <input type="date" id="endDate" name="endDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vacancy">Applications per Student</label>
+                                    <input type="number" id="vacancy" name="vacancy" min="1" required>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn primary-btn">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
         </main>
     </div>
 
@@ -513,7 +680,7 @@
 
                 try {
                     console.log('Starting file upload...');
-                    
+
                     const response = await fetch(this.action, {
                         method: 'POST',
                         body: formData,
@@ -524,11 +691,11 @@
 
                     console.log('Response status:', response.status);
                     console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-                    
+
                     // Get the response text first
                     const responseText = await response.text();
                     console.log('Raw response:', responseText);
-                    
+
                     let result;
                     try {
                         // Parse the text as JSON
@@ -562,6 +729,184 @@
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="bi bi-upload"></i> Import Data';
                 }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('active');
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Sample data (in a real app, this would come from an API)
+            const studentData = {
+                'S1001': {
+                    name: 'John Doe',
+                    email: 'john.doe@university.edu',
+                    degree: 'Computer Science',
+                    status: 'Active',
+                    adsApplied: 3
+                },
+                'S1002': {
+                    name: 'Jane Smith',
+                    email: 'jane.smith@university.edu',
+                    degree: 'Business Administration',
+                    status: 'Pending',
+                    adsApplied: 1
+                }
+            };
+
+            const companyData = {
+                'C2001': {
+                    name: 'Tech Corp',
+                    email: 'contact@techcorp.com',
+                    status: 'Verified',
+                    contact: 'Michael Johnson'
+                },
+                'C2002': {
+                    name: 'Innovate LLC',
+                    email: 'hr@innovate.com',
+                    status: 'Pending Verification',
+                    contact: 'Sarah Williams'
+                }
+            };
+
+            const advertisementData = {
+                'A3001': {
+                    company: 'Tech Corp',
+                    position: 'Software Developer Intern',
+                    status: 'Open',
+                    interns: 5,
+                    mode: 'Remote'
+                },
+                'A3002': {
+                    company: 'Innovate LLC',
+                    position: 'Marketing Intern',
+                    status: 'Closed',
+                    interns: 2,
+                    mode: 'Hybrid'
+                }
+            };
+
+            // Student search functionality
+            const studentIdSelect = document.getElementById('student-id');
+            const studentNameSelect = document.getElementById('student-name');
+
+            studentIdSelect.addEventListener('change', function() {
+                const studentId = this.value;
+                if (studentId && studentData[studentId]) {
+                    const student = studentData[studentId];
+                    document.getElementById('student-email').value = student.email;
+                    document.getElementById('student-degree').value = student.degree;
+                    document.getElementById('student-status').value = student.status;
+                    document.getElementById('student-ads-applied').value = student.adsApplied;
+                    studentNameSelect.value = student.name;
+                }
+            });
+
+            studentNameSelect.addEventListener('change', function() {
+                const studentName = this.value;
+                if (studentName) {
+                    // Find student by name
+                    for (const [id, student] of Object.entries(studentData)) {
+                        if (student.name === studentName) {
+                            document.getElementById('student-email').value = student.email;
+                            document.getElementById('student-degree').value = student.degree;
+                            document.getElementById('student-status').value = student.status;
+                            document.getElementById('student-ads-applied').value = student.adsApplied;
+                            studentIdSelect.value = id;
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // Company search functionality
+            const companyIdSelect = document.getElementById('company-id');
+            const companyNameSelect = document.getElementById('company-name');
+
+            companyIdSelect.addEventListener('change', function() {
+                const companyId = this.value;
+                if (companyId && companyData[companyId]) {
+                    const company = companyData[companyId];
+                    document.getElementById('company-email').value = company.email;
+                    document.getElementById('company-status').value = company.status;
+                    document.getElementById('company-contact').value = company.contact;
+                    companyNameSelect.value = company.name;
+                }
+            });
+
+            companyNameSelect.addEventListener('change', function() {
+                const companyName = this.value;
+                if (companyName) {
+                    // Find company by name
+                    for (const [id, company] of Object.entries(companyData)) {
+                        if (company.name === companyName) {
+                            document.getElementById('company-email').value = company.email;
+                            document.getElementById('company-status').value = company.status;
+                            document.getElementById('company-contact').value = company.contact;
+                            companyIdSelect.value = id;
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // Advertisement search functionality
+            const adIdSelect = document.getElementById('ad-id');
+            const adCompanySelect = document.getElementById('ad-company');
+
+            adIdSelect.addEventListener('change', function() {
+                const adId = this.value;
+                if (adId && advertisementData[adId]) {
+                    const ad = advertisementData[adId];
+                    document.getElementById('ad-position').value = ad.position;
+                    document.getElementById('ad-status').value = ad.status;
+                    document.getElementById('ad-interns').value = ad.interns;
+                    document.getElementById('ad-mode').value = ad.mode;
+                    adCompanySelect.value = ad.company;
+                }
+            });
+
+            adCompanySelect.addEventListener('change', function() {
+                const companyName = this.value;
+                if (companyName) {
+                    // Find ad by company name (in a real app, there might be multiple)
+                    for (const [id, ad] of Object.entries(advertisementData)) {
+                        if (ad.company === companyName) {
+                            document.getElementById('ad-position').value = ad.position;
+                            document.getElementById('ad-status').value = ad.status;
+                            document.getElementById('ad-interns').value = ad.interns;
+                            document.getElementById('ad-mode').value = ad.mode;
+                            adIdSelect.value = id;
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // Submit button functionality
+            const submitBtns = document.querySelectorAll('.submit-btn');
+            submitBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const activeTab = document.querySelector('.tab-content.active').id;
+                    alert(`Changes for ${activeTab} submitted successfully!`);
+                    // In a real app, you would send data to server here
+                });
             });
         });
     </script>
