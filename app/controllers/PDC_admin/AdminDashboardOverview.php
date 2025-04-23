@@ -17,99 +17,112 @@ class AdminDashboardOverview{
         $regCompCount = $companyModel->registeredCount();
         $weeklyCompany = $companyModel->getWeeklyCompany();
         $pendingCom = $companyModel->pendingCount();
+        $pendingCompanies = $companyModel->findAllPending();
 
         $advertisementModel = new C_Advertisement;
         $topAdd = $advertisementModel->topAdvertisement();
         $topCom = $advertisementModel->topCompanyByAdd();
         $adds = $advertisementModel->findallActivewithCompany();
         $weeklyAdvertisement = $advertisementModel->getWeeklyAdvertisement();
+        $pendingAds = $advertisementModel->findAllPendingcount();
+
+        $sessions = new PDC_Session;
+        $session = $sessions->sessionCount();
+
+        $unregSession = new PDC_Unreg_Session;
+        $unregSessionCount = $unregSession->unregSessionCount();
+
+        $activeSession = $session + $unregSessionCount;
+        
+        //show($activeSession);
 
         $roundModel = new Round;
         $round = $roundModel->getActiveRound();
 
         //show($round);
 
+        //show($pendingCompanies);
         //show($weeklyRecruitment);
         //var_dump($round);
-        $weeklyRecru = [];
+        // $weeklyRecru = [];
         
-        for ($i = 0; $i < count($weeklyRecruitment) - 1 ; $i++) {
-            $current = $weeklyRecruitment[$i]->count;
-            $previous = $weeklyRecruitment[$i + 1]->count;
+        // for ($i = 0; $i < count($weeklyRecruitment) - 1 ; $i++) {
+        //     $current = $weeklyRecruitment[$i]->count;
+        //     $previous = $weeklyRecruitment[$i + 1]->count;
 
-            if ($previous == 0 || $previous == null) {
-                echo "cyrtvubn";
-                $change = $current > 0 ? 100 : 0;
-            } else {
-                $change = (($current - $previous) / $previous) * 100;
-            }
+        //     if ($previous == 0 || $previous == null) {
+        //         echo "cyrtvubn";
+        //         $change = $current > 0 ? 100 : 0;
+        //     } else {
+        //         $change = (($current - $previous) / $previous) * 100;
+        //     }
 
-            $weeklyRecru[] = [
-                'week' => "Week " . $weeklyRecruitment[$i]->week,
-                'count' => $current,
-                'change' => round($change, 2),
-                'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
-            ];
-        }
+        //     $weeklyRecru[] = [
+        //         'week' => "Week " . $weeklyRecruitment[$i]->week,
+        //         'count' => $current,
+        //         'change' => round($change, 2),
+        //         'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
+        //     ];
+        // }
 
         //show($weeklyRecru);
 
-        $weekStd = [];
-        for ($i = 0; $i < count($weeklyStudent) - 1 ; $i++) {
-            $current = $weeklyStudent[$i]->count;
-            $previous = $weeklyStudent[$i + 1]->count;
+        // $weekStd = [];
+        // for ($i = 0; $i < count($weeklyStudent) - 1 ; $i++) {
+        //     $current = $weeklyStudent[$i]->count;
+        //     $previous = $weeklyStudent[$i + 1]->count;
 
-            if ($previous == 0 || $previous == null) {
-                $change = $current > 0 ? 100 : 0;
-            } else {
-                $change = (($current - $previous) / $previous) * 100;
-            }
+        //     if ($previous == 0 || $previous == null) {
+        //         $change = $current > 0 ? 100 : 0;
+        //     } else {
+        //         $change = (($current - $previous) / $previous) * 100;
+        //     }
 
-            $weekStd[] = [
-                'week' => "Week " . $weeklyStudent[$i]->week,
-                'count' => $current,
-                'change' => round($change, 2),
-                'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
-            ];
-        }
+        //     $weekStd[] = [
+        //         'week' => "Week " . $weeklyStudent[$i]->week,
+        //         'count' => $current,
+        //         'change' => round($change, 2),
+        //         'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
+        //     ];
+        // }
 
-        $weekCom = [];
-        for ($i = 0; $i < count($weeklyCompany) - 1 ; $i++) {
-            $current = $weeklyCompany[$i]->count;
-            $previous = $weeklyCompany[$i + 1]->count;
+        // $weekCom = [];
+        // for ($i = 0; $i < count($weeklyCompany) - 1 ; $i++) {
+        //     $current = $weeklyCompany[$i]->count;
+        //     $previous = $weeklyCompany[$i + 1]->count;
 
-            if ($previous == 0 || $previous == null) {
-                $change = $current > 0 ? 100 : 0;
-            } else {
-                $change = (($current - $previous) / $previous) * 100;
-            }
+        //     if ($previous == 0 || $previous == null) {
+        //         $change = $current > 0 ? 100 : 0;
+        //     } else {
+        //         $change = (($current - $previous) / $previous) * 100;
+        //     }
 
-            $weekCom[] = [
-                'week' => "Week " . $weeklyCompany[$i]->week,
-                'count' => $current,
-                'change' => round($change, 2),
-                'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
-            ];
-        }
+        //     $weekCom[] = [
+        //         'week' => "Week " . $weeklyCompany[$i]->week,
+        //         'count' => $current,
+        //         'change' => round($change, 2),
+        //         'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
+        //     ];
+        // }
 
-        $weeklyAdd = [];
-        for ($i = 0; $i < count($weeklyAdvertisement) - 1 ; $i++) {
-            $current = $weeklyAdvertisement[$i]->count;
-            $previous = $weeklyAdvertisement[$i + 1]->count;
+        // $weeklyAdd = [];
+        // for ($i = 0; $i < count($weeklyAdvertisement) - 1 ; $i++) {
+        //     $current = $weeklyAdvertisement[$i]->count;
+        //     $previous = $weeklyAdvertisement[$i + 1]->count;
 
-            if ($previous == 0) {
-                $change = $current > 0 ? 100 : 0;
-            } else {
-                $change = (($current - $previous) / $previous) * 100;
-            }
+        //     if ($previous == 0) {
+        //         $change = $current > 0 ? 100 : 0;
+        //     } else {
+        //         $change = (($current - $previous) / $previous) * 100;
+        //     }
 
-            $weeklyAdd[] = [
-                'week' => "Week " . $weeklyAdvertisement[$i]->week,
-                'count' => $current,
-                'change' => round($change, 2),
-                'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
-            ];
-        }
+        //     $weeklyAdd[] = [
+        //         'week' => "Week " . $weeklyAdvertisement[$i]->week,
+        //         'count' => $current,
+        //         'change' => round($change, 2),
+        //         'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'same')
+        //     ];
+        // }
 
 
         //show($weeklyStudent);
@@ -127,30 +140,40 @@ class AdminDashboardOverview{
             ],
             'table' =>[],
             'company' => [],
-            'weekStd' => $weekStd,
-            'weekCom' => $weekCom,
-            'weeklyAdd' => $weeklyAdd,
+            // 'weekStd' => $weekStd,
+            // 'weekCom' => $weekCom,
+            // 'weeklyAdd' => $weeklyAdd,
             'round' => $round,
-            'recuitedStd' => $weeklyRecru,
+            // 'recuitedStd' => $weeklyRecru,
             'pendingCom' => $pendingCom,
+            'pendingAds' => $pendingAds,
+            'pendingCompanies' => $pendingCompanies,
+            'activeSession' => $activeSession,
         ];
 
-        for($i = 0 ; $i <= 2 ; $i++){
-            $data['table'][$i] = [
-                'advertisementId' => $adds[$i]->advertisementId,
-                'position' => $adds[$i]->position,
-                'deadline' => $adds[$i]->deadline,
-                'workingMode' => $adds[$i]->workingMode,
-                'companyName' => $adds[$i]->Name,
-            ];
 
-            $data['company'][$i] = [
-                'CompanyId' => $topCom[$i]->CompanyId,
-                'companyName' => $topCom[$i]->Name,
-                'profileimg' => $topCom[$i]->profileimg,
-                'email' => $topCom[$i]->Email,
+        for ($i = 0; $i <= 2; $i++) {
+            if (!isset($adds[$i])) continue;
+            if (!isset($topCom[$i])) continue;
+            
+            // Skip if not objects
+            if (!is_object($adds[$i]) || !is_object($topCom[$i])) continue;
+        
+            $data['table'][$i] = [
+                'advertisementId' => $adds[$i]->advertisementId ?? null,
+                'position' => $adds[$i]->position ?? null,
+                'deadline' => $adds[$i]->deadline ?? null,
+                'workingMode' => $adds[$i]->workingMode ?? null,
+                'companyName' => $adds[$i]->Name ?? null,
             ];
-        };
+        
+            $data['company'][$i] = [
+                'CompanyId' => $topCom[$i]->CompanyId ?? null,
+                'companyName' => $topCom[$i]->Name ?? null,
+                'profileimg' => $topCom[$i]->profileimg ?? null,
+                'email' => $topCom[$i]->Email ?? null,
+            ];
+        }
 
         // show($topCom);
         // show($data['company']);

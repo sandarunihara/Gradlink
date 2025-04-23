@@ -6,7 +6,7 @@ class AdminNotificationOverview {
     public function dashboard() {
 
         $model = new Admin_notification;
-        $data = $model->findpending();
+        $data = $model->findpendingwithCompany();
 
         //show($data);
 
@@ -40,4 +40,15 @@ class AdminNotificationOverview {
             'data' => $data
         ]);
     }
+
+    public function getNotificationCount(){
+        $model = new Admin_notification;
+        $data = $model->notificationCount();
+
+        //show($data);
+
+        echo json_encode($data);
+    }
+
+
 }

@@ -50,59 +50,31 @@
                             
                         </div>
 
-                        <div class="notification-item pending">
-                            <div class="notification-header">
-                                
-                                <div class="notification-type">
-                                    <i class="fas fa-building"></i>
-                                    <span>Company Signup</span>
-                                </div>
-                                <div class="notification-meta">
-                                    <span class="notification-status badge pending">Pending</span>
-                                    <span class="notification-date">Today, 10:30 AM</span>
-                                </div>
-                            </div>
-                            <div class="notification-body">
-                                <p>New company <strong>Tech Solutions Ltd</strong> has requested registration.</p>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="action-btn approve"><i class="fas fa-check"></i> Approve</button>
-                                <button class="action-btn reject"><i class="fas fa-times"></i> Reject</button>
-                                <button class="action-btn view"><i class="fas fa-eye"></i> View Details</button>
-                            </div>
-                        </div>
+                            <?php if(!empty($data)):?>
+                                <?php foreach($data as $data): ?>
+                                    <div class="notification-item rejected">
 
-                        <div class="notification-item approved">
-                            <div class="notification-header">
-                                <div class="notification-type">
-                                    <i class="fas fa-bullhorn"></i>
-                                    <span>Advertisement</span>
+                                        <div class="notification-header">
+                                            <div class="notification-type">
+                                                <i class="fas fa-user-tie"></i>
+                                                <span>Coordinator Request</span>
+                                            </div>
+                                            <div class="notification-meta">
+                                                <span class="notification-status badge rejected">Rejected</span>
+                                                <span class="notification-date">Mar 12, 2024</span>
+                                            </div>
+                                        </div>
+                                        <div class="notification-body">
+                                            <p>Coordinator access request from <strong>john.doe@email.com</strong> was rejected.</p>
+                                        </div>
+                                        
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="no-notifications">
+                                    <p>No notifications available.</p>
                                 </div>
-                                <div class="notification-meta">
-                                    <span class="notification-status badge approved">Approved</span>
-                                    <span class="notification-date">Yesterday, 2:15 PM</span>
-                                </div>
-                            </div>
-                            <div class="notification-body">
-                                <p>Advertisement <strong>"Summer Internship Program"</strong> from <strong>Global Corp</strong> was approved.</p>
-                            </div>
-                        </div>
-
-                        <div class="notification-item rejected">
-                            <div class="notification-header">
-                                <div class="notification-type">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span>Coordinator Request</span>
-                                </div>
-                                <div class="notification-meta">
-                                    <span class="notification-status badge rejected">Rejected</span>
-                                    <span class="notification-date">Mar 12, 2024</span>
-                                </div>
-                            </div>
-                            <div class="notification-body">
-                                <p>Coordinator access request from <strong>john.doe@email.com</strong> was rejected.</p>
-                            </div>
-                        </div>
+                            <?php endif; ?>
 
                     </section>
 

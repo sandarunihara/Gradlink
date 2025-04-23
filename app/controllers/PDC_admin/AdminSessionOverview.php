@@ -20,8 +20,11 @@
             $sessionData = $model->findCompleted();
             $sessionDataUnregistered = $unregisteredModel->findCompleted();
 
-            $data = array_merge($sessionData, $sessionDataUnregistered);
-            //show($data);
+            $data = array_merge(
+                is_array($sessionData) ? $sessionData : [],
+                is_array($sessionDataUnregistered) ? $sessionDataUnregistered : []
+            );
+                        //show($data);
 
             $this->view('PDC_admin/Session/SessionCompleted', 
             ['sessionData' => $data,

@@ -30,7 +30,8 @@
             </a>
 
             <a href="<?=ROOT?>/PDC_admin/AdminNotificationOverview/dashboard">
-                <li data-title="Notifications"><i class="fas fa-bell fa-lg"></i></li>
+                <li data-title="Notifications"><i class="fas fa-bell fa-lg"></i><span class="dot-mark"></span>
+                </li>
             </a>
 
             <a href="<?=ROOT?>/PDC_admin/AdminProfileOverview/dashboard">
@@ -75,6 +76,26 @@
                 localStorage.setItem('activeItem', index); // Save index of clicked item
             });
         });
+
+
+        const notificationDot = document.querySelector('.dot-mark');
+        const notificationLink = document.querySelector('.sidebar a[href*="AdminNotificationOverview"]');
+
+        fetch("<?=ROOT?>/PDC_admin/AdminNotificationOverview/getNotificationCount")
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                if (data > 0) {
+                    notificationDot.style.display = 'block';
+                } else {
+                    notificationDot.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching notification count:', error));
+        notificationLink.addEventListener('click', () => {
+            notificationDot.style.display = 'none';
+        });
+
     });
 
 </script>
