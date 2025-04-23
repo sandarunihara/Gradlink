@@ -105,7 +105,19 @@ class StudentAd{
                 if(!$isInsert3){
                     throw new Exception("Error inserting data into student_activity table");
                 }
+                
+                $action['actor_id'] = $_SESSION['USER'] -> StudentId;
+                $action['actor_role'] = 'Student';
+                $action['target_id'] = $advertisementId;
+                $action['target_type'] = 'Advertisement';
+                $action['action_type'] = 'Applied';
 
+                $actionLog = new Action_logs;
+                $isInsert3 = $actionLog ->insert($action);
+
+                if(!$isInsert3){
+                    throw new Exception("Error inserting data into action_logs table");
+                }
                 $_SESSION['success'] = "Application submitted successfully";
                 // Commit transaction
                 $this->commit(); 
