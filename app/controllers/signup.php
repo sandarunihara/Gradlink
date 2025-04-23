@@ -47,6 +47,7 @@ class Signup
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $Model = new company;
+            $admin_notification=new Admin_notification;
             
             if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
                 $ProfilepicName = $_FILES['profile_pic']['name'];
@@ -72,8 +73,6 @@ class Signup
                 }
 
 
-                // $imageData = file_get_contents($_FILES['profile_pic']['tmp_name']); // Get the image content
-                // $proimageBase64 = base64_encode($imageData); // Encode image content in base64
             }
             if (isset($_FILES['cover_pic']) && $_FILES['cover_pic']['error'] == 0) {
                 $CoverpicName = $_FILES['cover_pic']['name'];
@@ -98,8 +97,6 @@ class Signup
                     $coverimageBase64 = '$data->coverimg';
                 }
 
-                // $imageData = file_get_contents($_FILES['cover_pic']['tmp_name']); // Get the image content
-                // $coveimageBase64 = base64_encode($imageData); // Encode image content in base64
             }
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             
@@ -122,9 +119,18 @@ class Signup
                 'coverimg' => $coveimageBase64,
                 'Password' => $password,
             ];
+
+            $notification_data = [
+                'type' => 'signup_company',
+                'company_id' => $newcompanyId,
+                'status' => 'Pending',
+            ];
+            
             // show($data);
             $result = $Model->insert($data);
-            if ($result) {
+            // show($notification_data);
+            $notify_result=$admin_notification->insert($notification_data);
+            if ($result && $notify_result) {
                 if (!empty($_POST['email'])) {
                     $email = $_POST['email'];
                     $Name = $_POST['company_name'];
