@@ -26,7 +26,12 @@
 
     <button class="tab-button <?= $tabprops['activeTab'] === 'Not-Registered-Students' ? 'active' : '' ?>"
         onclick="window.location.href='/Gradlink/public/PDC_admin/AdminStudentOverview/notReg'">
-        Not-Registered-Students
+        Not Registered Students
+    </button>
+
+    <button class="tab-button <?= $tabprops['activeTab'] === 'Not-Applied-Students' ? 'active' : '' ?>"
+        onclick="window.location.href='/Gradlink/public/PDC_admin/AdminStudentOverview/notApplied'">
+        Not Applied Students
     </button>
 
 

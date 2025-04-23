@@ -293,7 +293,7 @@
                             <div class="form-group">
                                 <label for="studentId" class="form-label">Student ID</label>
                                 <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['studentData']->StudentId) ?>"
-                                    pattern="\d{4}[a-z]{2}\d{3}"
+                                    pattern="\d{4}(cs|is)\d{3}"
                                     required>
                                 <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
                             </div>
@@ -311,9 +311,10 @@
                             <div class="form-group">
                                 <label for="contact" class="form-label">Contact Number</label>
                                 <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['studentData']->ContactNum) ?>"
-                                        pattern="^[0-9+\s()-]{7,20}$"
-                                        required
+                                pattern="^\d{10}$"
+                                required
                                 ">
+                                <small class="form-hint">Enter a valid phone number (e.g. 0733333333)</small>
                                 </div>
                             <div class="form-group">
                                 <label for="degree" class="form-label">Degree Program</label>

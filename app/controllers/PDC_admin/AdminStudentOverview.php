@@ -42,4 +42,13 @@ class AdminStudentOverview{
         ]
     );
     }
+
+    public function notApplied(){
+        $model = new student;
+        $studentData = $model->findnotapplied();
+        $this->view('PDC_admin/Student/StudentNotApplied' , [
+            'studentData' => $studentData,
+            'activeTab' => 'Not-Applied-Students'
+        ]);
+    }
 }

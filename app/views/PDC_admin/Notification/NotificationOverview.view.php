@@ -4,7 +4,6 @@
 <head>
     <title>Students</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/student/overviewStudent.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -50,45 +49,46 @@
                         <!-- Optional Header Content -->
                     </div>
 
-                    <?php if (!empty($data)): ?>
-                        <?php foreach ($data as $item): ?>
-                            <div class="notification-item pending">
-                                <div class="notification-header">
-                                    <div class="notification-type">
-                                        <i class="fas fa-building"></i>
-                                        <span><?= htmlspecialchars($item->type) ?></span>
+                    <div class="notification-container">
+                        <?php if (!empty($data)): ?>
+                            <?php foreach ($data as $item): ?>
+                                <div class="notification-item">
+                                    <div class="notification-header">
+                                        <div class="notification-title">
+                                            <i class="fas fa-building"></i>
+                                            <?= htmlspecialchars($item->type) ?> Request
+                                        </div>
+                                        <div class="notification-meta">
+                                            <span class="badge pending-badge">Pending</span>
+                                            <span class="notification-date"><?= htmlspecialchars($item->created_at) ?></span>
+                                        </div>
                                     </div>
-                                    <div class="notification-meta">
-                                        <span class="notification-status badge pending"><?= htmlspecialchars($item->status) ?></span>
-                                        <span class="notification-date"><?= htmlspecialchars($item->created_at) ?></span>
+                                    
+                                    <div class="notification-body">
+                                        <p>
+                                            <strong><?= htmlspecialchars($item->Name) ?></strong> has requested registration.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="notification-actions">
+                                        <button class="action-btn approve" data-id="<?= $item->id ?>" data-type="<?= $item->type ?>">
+                                            <i class="fas fa-check"></i> Approve
+                                        </button>
+                                        <button class="action-btn reject" data-id="<?= $item->id ?>" data-type="<?= $item->type ?>">
+                                            <i class="fas fa-times"></i> Reject
+                                        </button>
+                                        <button class="action-btn view" data-id="<?= $item->id ?>">
+                                            <i class="fas fa-eye"></i> View Details
+                                        </button>
                                     </div>
                                 </div>
-
-                                <div class="notification-body">
-                                    <p>
-                                        <?= htmlspecialchars($item->type) ?>
-                                        <strong><?= htmlspecialchars($item->Name) ?></strong> has requested registration.
-                                    </p>
-                                </div>
-
-                                <div class="notification-actions">
-                                    <button class="action-btn approve">
-                                        <i class="fas fa-check"></i> Approve
-                                    </button>
-                                    <button class="action-btn reject">
-                                        <i class="fas fa-times"></i> Reject
-                                    </button>
-                                    <button class="action-btn view">
-                                        <i class="fas fa-eye"></i> View Details
-                                    </button>
-                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="no-notifications">
+                                <p>No pending notifications</p>
                             </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="no-notifications">
-                            <p>No notifications available.</p>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </section>
 
                 </div>
@@ -124,27 +124,40 @@
         });
 
 
-        const approveBtn = document.querySelector('.approve');
-        const rejectBtn = document.querySelector('.reject');
-        const viewBtn = document.querySelector('.view');
-
-        const type = document.querySelector('.notification-type span').textContent;
-
-        if(type == 'advertisement_request'){
-            approveBtn.addEventListener('click', function() {
-                window.location.href = "<?=ROOT?>/PDC_admin/ViewAdvertisement/activate/<?=$data->advertisement_id?>/Active";
-            });
-
-            rejectBtn.addEventListener('click', function() {
-                // Handle reject action
-                console.log('Rejected');
-            });
-
-            viewBtn.addEventListener('click', function() {
-                // Handle view details action
-                console.log('View Details');
-            });
+        document.addEventListener('click', function(e) {
+        // Check if the clicked element is an approve button or inside one
+        const approveBtn = e.target.closest('.approve');
+        if (approveBtn) {
+            e.preventDefault();
+            const id = approveBtn.getAttribute('data-id');
+            const type = approveBtn.getAttribute('data-type');
+            console.log('Approve clicked:', type, id);
+            
+            // Example of how to handle different types
+            // if(type.includes('advertisement')) {
+            //     window.location.href = `<?=ROOT?>/PDC_admin/ViewAdvertisement/activate/${id}/Active`;
+            // }
+            // Add other type handlers here
         }
+
+        const rejectBtn = e.target.closest('.reject');
+        if (rejectBtn) {
+            e.preventDefault();
+            const id = rejectBtn.getAttribute('data-id');
+            const type = rejectBtn.getAttribute('data-type');
+            console.log('Reject clicked:', type, id);
+            // Handle reject logic
+        }
+
+        const viewBtn = e.target.closest('.view');
+        if (viewBtn) {
+            e.preventDefault();
+            const id = viewBtn.getAttribute('data-id');
+            console.log('View clicked:', id);
+            // Handle view logic
+        }
+
+        });
 
     </script>
 

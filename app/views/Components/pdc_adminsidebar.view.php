@@ -30,8 +30,7 @@
             </a>
 
             <a href="<?=ROOT?>/PDC_admin/AdminNotificationOverview/dashboard">
-                <li data-title="Notifications"><i class="fas fa-bell fa-lg"></i><span class="dot-mark"></span>
-                </li>
+                <li data-title="Notifications"><i class="fas fa-bell fa-lg"></i></li>
             </a>
 
             <a href="<?=ROOT?>/PDC_admin/AdminProfileOverview/dashboard">
@@ -43,9 +42,20 @@
             </a> -->
         </ul>
 
-        <a href="<?=ROOT?>/logout" class="logout" data-title="Logout">
+        <a href="#" class="logout" data-title="Logout">
             <i class="fas fa-sign-out-alt fa-lg"></i>
         </a>
+
+        <div class="logout-popup" id="logoutPopup">
+            <div class="popup-content">
+                <h3>Confirm Logout</h3>
+                <p>Are you sure you want to logout?</p>
+                <div class="popup-buttons">
+                    <button class="cancel-btn" id="cancelLogout">Cancel</button>
+                    <button class="confirm-btn" id="confirmLogout">Logout</button>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>    
@@ -77,25 +87,34 @@
             });
         });
 
+        const logoutBtn = document.querySelector('.logout');
+        const logoutPopup = document.getElementById('logoutPopup');
+        const cancelLogout = document.getElementById('cancelLogout');
+        const confirmLogout = document.getElementById('confirmLogout');
 
-        const notificationDot = document.querySelector('.dot-mark');
-        const notificationLink = document.querySelector('.sidebar a[href*="AdminNotificationOverview"]');
-
-        fetch("<?=ROOT?>/PDC_admin/AdminNotificationOverview/getNotificationCount")
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data);
-                if (data > 0) {
-                    notificationDot.style.display = 'block';
-                } else {
-                    notificationDot.style.display = 'none';
-                }
-            })
-            .catch(error => console.error('Error fetching notification count:', error));
-        notificationLink.addEventListener('click', () => {
-            notificationDot.style.display = 'none';
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoutPopup.style.display = 'flex';
         });
 
+        cancelLogout.addEventListener('click', () => {
+            logoutPopup.style.display = 'none';
+        });
+
+        confirmLogout.addEventListener('click', () => {
+            window.location.href = "<?=ROOT?>/logout";
+        });
+
+        // Close popup when clicking outside
+        logoutPopup.addEventListener('click', (e) => {
+            if (e.target === logoutPopup) {
+                logoutPopup.style.display = 'none';
+            }
+        });
+
+
     });
+
+    
 
 </script>

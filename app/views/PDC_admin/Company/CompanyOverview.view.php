@@ -12,6 +12,22 @@
 </head>
 
 <body>
+
+    <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+        <script>
+            window.__flashMessage = {
+                message: "<?= $message ?>",
+                type: "<?= $type ?>"
+            };
+        </script>
+    <?php endif; ?>
+
+
     <div class="container">
         <div class="sidebar">
             <?php $this->renderComponent("pdc_adminsidebar") ?>
@@ -81,6 +97,8 @@
     </div>
 
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+
 </body>
 
 </html>

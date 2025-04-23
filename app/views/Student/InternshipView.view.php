@@ -29,7 +29,7 @@
             <div class="display-details">
                 <div class="image">
                     <?php if (!empty($data[0]->image)): ?>
-                    <img src="data:image/jpeg;base64,<?php echo $data[0]->image; ?>" class="logo" />
+                    <img src="<?php echo ROOT .'/assets/img/Company/advertisements/' .  $data[0]->image; ?>" class="logo" alt="Company Logo" />
                     <?php else: ?>
                     <img src="" class="logo" /> <!-- Optionally, you can set a default image here -->
                     <?php endif; ?>
