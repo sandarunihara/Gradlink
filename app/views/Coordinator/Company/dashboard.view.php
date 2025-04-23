@@ -243,11 +243,12 @@
                 "#4F1A1A",
                 "#1A0A0A"
                 ]);
+
                 
                     var chart1 = new CanvasJS.Chart("recruitment_CS", {
                         backgroundColor: "#ffffff",
                         colorSet: "greenShades",
-                        theme: "light2",
+                        // theme: "light2",
                         animationEnabled: true,
                         subtitles: [{
                             text: "Computer Science Degree",
