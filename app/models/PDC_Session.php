@@ -133,7 +133,12 @@ class PDC_Session
 
     public function findSessions($date)
     {
-        $query = "SELECT * FROM session WHERE session_date = :date OR session_date > :date";
+        $query = "SELECT s.*, c.Name 
+        FROM session s
+        JOIN company c ON s.CompanyId = c.CompanyId
+        WHERE s.session_date = :date OR s.session_date > :date
+        AND s.deleted = 0
+        ORDER BY s.session_date ASC;";
         $params = [':date' => $date];
         $result = $this->query($query, $params);
         return $result ? $result : false;

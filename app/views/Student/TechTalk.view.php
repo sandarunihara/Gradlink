@@ -14,42 +14,105 @@
 <body>
     <?php $this->renderComponent("studentHeader", ["title" => "Tech-Talk"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
-    <?php if(!isset($data['session'][0])): ?>
-        <div class="main-content">
-            <h2>No Tech-Talks Today</h2>
-        </div>
+    <?php if(!isset($data['session']) || empty($data['session'])): ?>
+    <div class="main-content">
+        <h2 class="no-sessions-message">No Tech-Talks Scheduled Today</h2>
+    </div>
     <?php else: ?>
         <div class="main-content">
             <article class="tech-talk-post">
                 <header class="tech-talk-header">
-                    <h2><?php echo htmlspecialchars($data['session'][0]->session_name)?></h2>
+                    <h2 class="session-title"></h2>
                     <p class="tech-talk-company">
-                        <?php echo htmlspecialchars($data['session'][0]->company_name)?>
+                        <i class="fas fa-building" aria-hidden="true"></i>
+                        <span class="company-name"></span>
                     </p>
-                    <p class="tech-talk-date">
-                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                        <?php 
-                            $date = htmlspecialchars($data['session'][0]->session_date);
-                            $formattedDate = DateTime::createFromFormat('Y-m-d', $date)->format('F j, Y');
-                            echo $formattedDate;
-                        ?>
-
-                    </p>
-                    <p class="tech-talk-time">
-                        <i class="fas fa-clock" aria-hidden="true"></i>
-                        <?php echo htmlspecialchars($data['session'][0]->time_slot)?>
-                    </p>
-                    <p class="tech-talk-venue">
-                    <?php echo htmlspecialchars($data['session'][0]->hall_number)?>
-                    </p>
+                    <div class="session-info-container">
+                        <p class="tech-talk-date">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            <span class="session-date"></span>
+                        </p>
+                        <p class="tech-talk-time">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                            <span class="session-time"></span>
+                        </p>
+                        <p class="tech-talk-venue">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <span class="session-venue"></span>
+                        </p>
+                    </div>
                 </header>
                 <section class="tech-talk-details">
-                    <p class="tech-talk-description">
-                        <?php echo htmlspecialchars($data['session'][0]->description)?>
-                    </p>
+                    <h3>About This Session:</h3>
+                    <p class="tech-talk-description"></p>
                 </section>
             </article>
+            <div class="button-container">
+                <button id="previous-button" class="nav-button" disabled>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="session-counter">
+                    <span id="current-index">1</span> of <?php echo count($data['session']); ?>
+                </span>
+                <button id="next-button" class="nav-button">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
     <?php endif; ?>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const previousButton = document.getElementById('previous-button');
+        const nextButton = document.getElementById('next-button');
+        const currentIndexDisplay = document.getElementById('current-index');
+        let currentIndex = 0;
+        const sessions = <?php echo json_encode($data['session'] ?? []); ?>;
+        const totalSessions = sessions.length;
+
+        function updateSessionDisplay(index) {
+            if (totalSessions === 0) return;
+            
+            const session = sessions[index];
+            document.querySelector('.session-title').textContent = session.session_name || 'Tech Talk';
+            document.querySelector('.company-name').textContent = session.Name || 'Guest Company';
+            
+            // Format date nicely (e.g., "Monday, January 1, 2023")
+            const sessionDate = session.session_date ? new Date(session.session_date) : new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.querySelector('.session-date').textContent = sessionDate.toLocaleDateString('en-US', dateOptions);
+            
+            document.querySelector('.session-time').textContent = session.time_slot || 'Time not specified';
+            document.querySelector('.session-venue').textContent = session.hall_number ? `Hall ${session.hall_number}` : 'Venue not specified';
+            document.querySelector('.tech-talk-description').textContent = session.description || 'No description available.';
+            
+            // Update navigation buttons state
+            previousButton.disabled = index === 0;
+            nextButton.disabled = index === totalSessions - 1;
+            
+            // Update counter
+            currentIndexDisplay.textContent = index + 1;
+        }
+
+        previousButton.addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSessionDisplay(currentIndex);
+            }
+        });
+
+        nextButton.addEventListener('click', function() {
+            if (currentIndex < totalSessions - 1) {
+                currentIndex++;
+                updateSessionDisplay(currentIndex);
+            }
+        });
+
+        // Initialize the display with the first session
+        if (totalSessions > 0) {
+            updateSessionDisplay(currentIndex);
+        }
+    });
+</script>
 </body>
 </html>

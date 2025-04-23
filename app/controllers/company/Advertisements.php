@@ -118,6 +118,7 @@ class Advertisements
         if (isset($_SESSION['USER'])) {
             $user = $_SESSION['USER'];
         }
+        $admin_notification = new Admin_notification;
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $model = new C_Advertisement;
@@ -146,7 +147,6 @@ class Advertisements
                 } else {
                     $imageBase64 = '';
                 }
-
             }
 
             $Id = $this->getnextId();
@@ -166,8 +166,15 @@ class Advertisements
 
             if ($model->validate($data)) {
                 try {
+                    $notification_data = [
+                        'type' => 'advertisement_request',
+                        'company_id' => $user->CompanyId,
+                        'advertisement_id' => $Id,
+                        'status' => 'Pending',
+                    ];
                     $result = $model->insert($data);
-                    if ($result) {
+                    $notify_result = $admin_notification->insert($notification_data);
+                    if ($result && $notify_result) {
                         $_SESSION['flash'] = [
                             'type' => 'success',
                             'message' => 'Advertisement created successfully.'
@@ -207,7 +214,7 @@ class Advertisements
     public function send($id)
     {
 
-        $companyId=$_SESSION['USER']->CompanyId;
+        $companyId = $_SESSION['USER']->CompanyId;
         $model = new C_Advertisement;
         // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $id]);
@@ -224,20 +231,20 @@ class Advertisements
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
                     $imageName = $_FILES['image']['name'];
                     $imageTempName = $_FILES['image']['tmp_name'];
-    
+
                     $baseName = strtolower(pathinfo($imageName, PATHINFO_FILENAME));
                     $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
-    
+
                     // Clean the base name: remove special characters, trim underscores
                     $cleanBase = preg_replace("/[^a-z0-9_-]/", "_", $baseName);
                     $cleanBase = trim($cleanBase, "_");
-    
+
                     // Add timestamp and random string for uniqueness
                     $uniqueString = date('Ymd_His') . '_' . bin2hex(random_bytes(4)); // more unique than uniqid
                     $newimageName = $cleanBase . '_' . $uniqueString . '.' . $ext;
                     $PictureDestination = __DIR__ . '/../../../public/assets/img/Company/advertisements/' . $newimageName;
                     $uploadcoverpic = move_uploaded_file($imageTempName, $PictureDestination);
-    
+
                     if ($uploadcoverpic) {
                         $imageBase64 = $newimageName;
                     } else {
@@ -280,41 +287,49 @@ class Advertisements
             $data['errors'] = $_SESSION['flash_errors'] ?? '';
 
             unset($_SESSION['flash_success'], $_SESSION['flash_errors']);
-            
-            $logmodel=new Action_logs;
-            // show($data[0]->status);
-            $blockresult='';
-            if($data[0]->status =='Deactive'){
-                if(empty($logmodel->findDetailsforcompany($advertisementId,'deactivate')[0])){
-                    $blockresult='';
-                }else{
-                    $blockresult=$logmodel->findDetailsforcompany($advertisementId,'deactivate')[0]->reason;
-                }
-            }elseif($data[0]->status == 'Rejected'){
-                $blockresult=$logmodel->findDetailsforcompany($advertisementId,'reject')[0]->reason;
-            }
-            if(empty($blockresult)){
-                $blockresult='';
-            }
 
+            $logmodel = new Action_logs;
+            // show($data[0]->status);
+            $blockresult = '';
+            if ($data[0]->status == 'Deactive') {
+                if (empty($logmodel->findDetailsforcompany($advertisementId, 'deactivate')[0])) {
+                    $blockresult = '';
+                } else {
+                    $blockresult = $logmodel->findDetailsforcompany($advertisementId, 'deactivate')[0]->reason;
+                }
+            } elseif ($data[0]->status == 'Rejected') {
+                $blockresult = $logmodel->findDetailsforcompany($advertisementId, 'reject')[0]->reason;
+            }
+            if (empty($blockresult)) {
+                $blockresult = '';
+            }
         } else {
             $data['errors'] = "Advertisement not found.";
         }
-        $this->view('Company/SendAdvertisements', ['data' => $data , 'blockresult'=>$blockresult]);
+        $this->view('Company/SendAdvertisements', ['data' => $data, 'blockresult' => $blockresult]);
     }
 
 
 
     public function delete($id)
     {
+        $companyId = $_SESSION['USER']->CompanyId;
         $model = new C_Advertisement;
-        $data=$model->find(['advertisementId'=>$id]);
+        $admin_notification = new Admin_notification;
+        $data = $model->find(['advertisementId' => $id]);
         // show($data);
-        if($data[0]->status != 'Pending'){
+        if ($data[0]->status != 'Pending') {
             $Update_status = [
                 'status' => 'Request'
             ];
+            $notification_data = [
+                'type' => 'advertisement_request',
+                'company_id' => $companyId,
+                'advertisement_id' => $id,
+                'status' => 'Request',
+            ];
             $result = $model->update($id, $Update_status, 'AdvertisementId');
+            $notify_result = $admin_notification->insert($notification_data);
             if ($result['status'] == 'success') {
                 $_SESSION['flash'] = [
                     'type' => 'success',
@@ -328,7 +343,7 @@ class Advertisements
                     'message' => 'Error: Failed to process advertisement Deactive request.'
                 ];
             }
-        }else{
+        } else {
             $Update_status = [
                 'status' => 'Deactive'
             ];

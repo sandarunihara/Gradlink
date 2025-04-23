@@ -196,8 +196,13 @@ class C_Advertisement
         $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'Pending'";
 
         $result = $this->query($query);
-        //show($result);
-        return $result[0]->{'total'};
+
+        if(!empty($result)){
+			return $result[0]->{'total'};
+		}		
+		else{
+			return 0;
+		}
     }
 
     public function findallDeactivewithCompany(){
@@ -255,7 +260,13 @@ class C_Advertisement
             $query = "SELECT COUNT(*) AS total FROM $this->table WHERE status = 'active'";
 
             $result = $this->query($query);
-			return $result[0]->{'total'};
+            if(empty($result)){
+                return 0;
+            }
+            else{
+                return $result[0]->{'total'};
+            }
+            
         }catch (Exception $e) {
 			error_log("Error fetching total number of advertisements: " . $e->getMessage());
 			return false;

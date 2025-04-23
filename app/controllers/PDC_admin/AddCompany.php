@@ -44,7 +44,7 @@ class AddCompany{
                 'email' => $_POST['email'] ?? '',
                 'contact_number' => $_POST['contact_number'] ?? '',
                 'contact_person' => $_POST['contact_person'] ?? '',
-                'status' => "Pending",
+                'status' => "Ongoing",
             ];
 
             $dbColumns = [
