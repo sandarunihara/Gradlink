@@ -135,6 +135,8 @@ class StudentsRequests
 
     public function studentprofile($advertisementId, $StudentId)
     {
+
+        $userid=$_SESSION["USER"]->CompanyId;
         // Get filter parameters from URL
         $position = $_GET['position'] ?? 'all';
         $status = $_GET['status'] ?? 'all';
@@ -148,6 +150,7 @@ class StudentsRequests
         ]);
         // show($backUrl);
 
+        $action_log=new Action_logs;
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
 
@@ -162,6 +165,14 @@ class StudentsRequests
             ];
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
+                $action_data=[
+                    'actor_id'=>$userid,
+                    'actor_role'=>'company',
+                    'target_id'=>$StudentId,
+                    'target_type'=>'student',
+                    'action_type'=>$_POST['submit_action']
+                ];
+                $action_log->insert($action_data);
                 if ($_POST['submit_action'] === 'Shortlist') {
                     $_SESSION['flash'] = [
                         'type' => 'success',

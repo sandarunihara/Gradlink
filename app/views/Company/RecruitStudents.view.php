@@ -23,49 +23,91 @@
                     </div>
                     <?php $this->renderComponent("companyheader") ?>
                 </div>
-                <div class="sr_main">
+                <div class="sr_mainR">
                     <div class="sr_search">
                         <div class="filterbar">
                             <div class="sr_search-container">
                                 <input id="searchInput" type="text" placeholder="Search Student">
                                 <i class="fas fa-search"></i>
                             </div>
-                            <select class="role-select">
+                            <!-- <select class="role-select">
                                 <option value="all">All</option>
                                 <option value="1">Not Review</option>
                                 <option value="">Reviewed</option>
-                            </select>
+                            </select> -->
                         </div>
                     </div>
-                    <div class="recruit-student-list">
-                        <?php if (isset($data) && !empty($data)): ?>
-                            <?php foreach ($data as $student): ?>
-                                <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="stu-profile">
-                                    <div class="profile-photo">
-                                        <?php if (!empty($student['ProfilePic'])) : ?>
-                                            <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $student['ProfilePic'] ?>" />
-                                        <?php else: ?>
-                                            <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
-                                        <?php endif ?>
-                                    </div>
-                                    <div class="student-details">
-                                        <div class="name-container">
-                                            <p class="name-detail"><?php echo htmlspecialchars($student['Student Name']); ?></p>
-                                            <p class="position-detail">Intern <?php echo htmlspecialchars($student['Position']); ?></p>
+                    <div class="filter-toggle" role="tablist" aria-label="Recruit or Accept List">
+                        <button class="filter-btn active" id="acceptlist" role="tab" onclick="showacceptlist()">Accept List</button>
+                        <button class="filter-btn " id="recruitlist" role="tab"  onclick="showrecruitlist()">Recruit List</button>
+                    </div>
+                    <div class="sub-container">
+                        <div class="recruit-student-list" id="recruit-student-list">
+                            <h4>Recruit List</h4>
+                            <?php if (isset($data) && !empty($data)): ?>
+                                <?php foreach ($data as $student): ?>
+                                    <?php if($student['Action']=='Recruit'): ?>
+                                    <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="stu-profile">
+                                        <div class="profile-photo">
+                                            <?php if (!empty($student['ProfilePic'])) : ?>
+                                                <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $student['ProfilePic'] ?>" />
+                                            <?php else: ?>
+                                                <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
+                                            <?php endif ?>
                                         </div>
-                                        <div class="report-one">
-                                            <p class="notreeviewedstatus" style="display: none;"><?php echo htmlspecialchars($student["NotReviewedstatus"]); ?></p>
-                                            <?php if ($student["NotReviewedstatus"] == true): ?>
-                                                <div class="green-dot"></div>
-                                                <p class="report-message">New unread Report Available</p>
-                                            <?php endif; ?>
+                                        <div class="student-details">
+                                            <div class="name-container">
+                                                <p class="name-detail"><?php echo htmlspecialchars($student['Student Name']); ?></p>
+                                                <p class="position-detail">Intern <?php echo htmlspecialchars($student['Position']); ?></p>
+                                            </div>
+                                            <div class="report-one">
+                                                <p class="notreeviewedstatus" style="display: none;"><?php echo htmlspecialchars($student["NotReviewedstatus"]); ?></p>
+                                                <?php if ($student["NotReviewedstatus"] == true): ?>
+                                                    <div class="green-dot"></div>
+                                                    <p class="report-message">New unread Report Available</p>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="no-events">No students Recruit yet</p>
-                        <?php endif; ?>
+                                    </a>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="no-events">No students Recruit yet</p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="Accept-student-list" id="Accept-student-list">
+                            <h4>Accepted List</h4>
+                            <?php if (isset($data) && !empty($data)): ?>
+                                <?php foreach ($data as $student): ?>
+                                    <?php if($student['Action']=='Accept'): ?>
+                                    <a href="../RecruitStudents/studentprofile/<?php echo $student["AdvertisementId"]; ?>/<?php echo $student["StudentId"]; ?>" class="stu-profile">
+                                        <div class="profile-photo">
+                                            <?php if (!empty($student['ProfilePic'])) : ?>
+                                                <img src="<?php echo ROOT ?>/assets/img/Student/<?php echo $student['ProfilePic'] ?>" />
+                                            <?php else: ?>
+                                                <img src="<?php echo ROOT ?>/assets/img/Company/pro.jpg" />
+                                            <?php endif ?>
+                                        </div>
+                                        <div class="student-details">
+                                            <div class="name-container">
+                                                <p class="name-detail"><?php echo htmlspecialchars($student['Student Name']); ?></p>
+                                                <p class="position-detail"><?php echo htmlspecialchars($student['Position']); ?></p>
+                                            </div>
+                                            <div class="report-one">
+                                                <p class="notreeviewedstatus" style="display: none;"><?php echo htmlspecialchars($student["NotReviewedstatus"]); ?></p>
+                                                <?php if ($student["NotReviewedstatus"] == true): ?>
+                                                    <div class="green-dot"></div>
+                                                    <p class="report-message">New unread Report Available</p>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <?php endif ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="no-events">No students Recruit yet</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,9 +122,11 @@
         document.querySelector('.role-select').addEventListener('change', filterTable);
 
         function filterTable() {
+            
+
             const searchValue = document.getElementById('searchInput').value.toLowerCase();
             const selectedRole = document.querySelector('.role-select').value.toLowerCase();
-            const rows = document.querySelectorAll('.stu-profile');
+            const rows = document.querySelectorAll('.name-container');
 
             rows.forEach(row => {
                 const studentName = row.querySelector('.name-detail').textContent.toLowerCase();
@@ -98,6 +142,31 @@
                     row.style.display = 'none'; // Hide the row
                 }
             });
+        }
+
+        // const buttons = document.querySelectorAll('.filter-btn');
+        // console.log(buttons);
+        
+        // buttons.forEach(btn => {
+        //     btn.addEventListener('click', () => {
+        //         buttons.forEach(b => b.classList.remove('active'));
+        //         btn.classList.add('active');
+        //     });
+        // });
+
+        function showrecruitlist(){
+            // event.preventdefault();
+            document.getElementById('acceptlist').classList.remove('active');
+            document.getElementById('recruitlist').classList.add('active');
+            document.querySelector('.recruit-student-list').style.display='flex';
+            document.querySelector('.Accept-student-list').style.display='none';
+        }
+        function showacceptlist(){
+            // event.preventdefault();
+            document.getElementById('acceptlist').classList.add('active');
+            document.getElementById('recruitlist').classList.remove('active');
+            document.querySelector('.recruit-student-list').style.display='none';
+            document.querySelector('.Accept-student-list').style.display='flex';
         }
     </script>
 
