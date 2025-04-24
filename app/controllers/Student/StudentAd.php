@@ -13,6 +13,9 @@ class StudentAd{
         $student_advertisement = new student_advertisement;
         $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
 
+        if(isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])){
+            $data['cv'] = $student_advertisement -> findresumes($_SESSION['USER'] -> StudentId);
+        }
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
@@ -29,6 +32,7 @@ class StudentAd{
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             try {
+                show($_POST);
                 $advertisementId = $_GET['advertisementId'];
                 $this->beginTransaction(); 
 
@@ -133,8 +137,7 @@ class StudentAd{
                 return false;  
             }
         }else{
-            // show($data["AdDetails"]);
-            //show($_SESSION['USER']);
+            //show($data);
             $this-> view('Student/Internship', $data);        
         }
     }
