@@ -17,6 +17,9 @@ class ViewCompany
         //         print_r($data);
         //         echo '</pre>';
         
+
+        
+
         if ($companyData) {
             
             $this->view('Coordinator/Company/viewCompany', ['companyData' => $companyData]);
