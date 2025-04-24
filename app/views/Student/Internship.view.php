@@ -55,7 +55,7 @@
                         <div class="image">
                             <?php if (!empty($AdDetail->image)): ?>
                                 <img 
-                                    src="data:image/jpeg;base64,<?= $AdDetail->image; ?>" 
+                                    src="<?php echo ROOT .'/assets/img/Company/advertisements/' .  $AdDetail->image; ?>" 
                                     alt="Advertisement Image"
                                     class="logo"
                                 >

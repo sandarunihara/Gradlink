@@ -331,7 +331,7 @@
                                                     <p><strong>Time:</strong> ${formatTime(event.start, event.end)}</p>
                                                     </div>
                                             `).join('') :
-                                                        '<p class="no-events">No upcoming interviews</p>';
+                            '<p class="no-events">No upcoming interviews</p>';
 
                         upcomingEventsDiv.innerHTML = html;
                     }
@@ -365,7 +365,7 @@
             const AdStatslabels = AdStats.map(item => item.label);
             const AdStatscounts = AdStats.map(item => item.count);
             console.log(AdStatslabels);
-            
+
             var AdStatusOptions = {
                 series: [{
                     name: 'Advertisements',
@@ -480,16 +480,18 @@
                 "Shortlist": "#6C63FF",
                 "Pending": "#FFB74D",
                 "Recruit": "#4DB6AC",
+                "Accept": "#66BB6A", 
                 "Reject": "#EF5350"
             };
 
-            // Deeper gradient color per status
             const gradientToColorsMap = {
                 "Shortlist": "#4438D1",
                 "Pending": "#F57C00",
                 "Recruit": "#00897B",
+                "Accept": "#388E3C", 
                 "Reject": "#C62828"
             };
+
 
             // Build arrays from maps
             const statusColors = statuslabels.map(label => statusColorsMap[label] || '#9E9E9E');

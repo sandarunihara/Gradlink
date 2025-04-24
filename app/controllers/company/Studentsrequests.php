@@ -35,14 +35,17 @@ class StudentsRequests
             if (!empty($data)) {
                 foreach ($data as $item) {
 
-                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus == 'Interview Expired') {
+                    if ($item->Jobstatus === 'Shortlist' || $item->Jobstatus === 'Interview Scheduled' || $item->Jobstatus === 'Interview Marked' || $item->Jobstatus == 'Interview Expired') {
                         $hasShortlisted = true;
                     }
 
-                    if ($item->Jobstatus === 'Recruit') {
+                    if ($item->Jobstatus === 'Recruit' || $item->Jobstatus === 'Accept') {
                         $hasRecruited = true;
                     }
-                    $isrecriuted = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement');
+                    $isrecriute = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Recruit'], 'studentadvertisement') ?: [];
+                    $isaccept = $model->find(['StudentId' => $item->StudentId, 'Jobstatus' => 'Accept'], 'studentadvertisement') ?: [];
+                    $isrecriuted=array_merge($isrecriute,$isaccept);
+                    
                     if (!empty($isrecriuted)) {
                         foreach ($isrecriuted as $students) {
                             if (!empty($students)) {
@@ -107,7 +110,7 @@ class StudentsRequests
                 }
             }
         }
-        // show($removedlist);
+        // show($isaccept);
         // Store the flags in session
         $_SESSION['hasShortlisted'] = $hasShortlisted;
         $_SESSION['hasRecruited'] = $hasRecruited;
@@ -132,6 +135,8 @@ class StudentsRequests
 
     public function studentprofile($advertisementId, $StudentId)
     {
+
+        $userid=$_SESSION["USER"]->CompanyId;
         // Get filter parameters from URL
         $position = $_GET['position'] ?? 'all';
         $status = $_GET['status'] ?? 'all';
@@ -145,6 +150,7 @@ class StudentsRequests
         ]);
         // show($backUrl);
 
+        $action_log=new Action_logs;
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
 
@@ -159,6 +165,14 @@ class StudentsRequests
             ];
             $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
             if ($result['status']) {
+                $action_data=[
+                    'actor_id'=>$userid,
+                    'actor_role'=>'company',
+                    'target_id'=>$StudentId,
+                    'target_type'=>'student',
+                    'action_type'=>$_POST['submit_action']
+                ];
+                $action_log->insert($action_data);
                 if ($_POST['submit_action'] === 'Shortlist') {
                     $_SESSION['flash'] = [
                         'type' => 'success',

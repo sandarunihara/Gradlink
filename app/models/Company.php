@@ -71,6 +71,15 @@ class company
 		// return $this->errors;
 	}
 
+	public function findall()
+    {
+        $query = "SELECT * FROM $this->table";
+
+        $result = $this->query($query);
+        return $result;
+		
+    }
+
 	public function validatePendingCompany($data)
 	{
 		$this->errors = [];

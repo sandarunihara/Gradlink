@@ -118,6 +118,10 @@
                                                         $statusText = 'Recruit';
                                                         $statusClass = 'Recruit';
                                                         break;
+                                                    case 'Accept':
+                                                        $statusText = 'Accept';
+                                                        $statusClass = 'Recruit';
+                                                        break;
                                                     case 'Reject':
                                                         $statusText = 'Rejected';
                                                         $statusClass = 'Reject';
@@ -134,10 +138,15 @@
                                                         $statusText = 'Shortlisted';
                                                         $statusClass = 'Shortlist';
                                                         break;
+                                                    case 'Interview Marked':
+                                                        $statusText = 'Interview Marked';
+                                                        $statusClass = 'Sendemail';
+                                                        break;
                                                     default:
                                                         $statusText = 'Pending';
                                                         $statusClass = 'Pending';
-                                                        break;
+                                                        break;;
+                                                    
                                                 }
 
                                                 ?>

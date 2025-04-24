@@ -52,6 +52,11 @@
 
                             </div>
                         </div>
+                        <div id="interviewmark">
+                                    <?php if (!empty($interviewmark)): ?>
+                                        <p>Interview Mark : <?php echo $interviewmark ?></p>
+                                    <?php endif; ?>
+                                </div>
                         <div class="stu_pro_skill">
                             <h2>Skills</h2>
                             <div class="skills">
@@ -161,17 +166,27 @@
                                         <button type="button" value="shortlist" onclick="openShortlistConfirmModal(event)" class="accept">Shortlist</button>
                                     </div>
                                 </div>
+                                
 
                                 <div class="acce_rej" id="RecruitSection">
-                                    <h3>Action :</h3>
-                                    <div class="btn">
-                                        <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
-                                        <?php if ($interviewschedule == 0): ?>
-                                            <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
-                                        <?php elseif ($interviewschedule == 1): ?>
-                                            <button type="button" value="recruit" onclick="openRecruitConfirmModal(event)" class="accept">Recruit</button>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?php if ($interviewmark != 0): ?>
+                                        <p>Interview Mark : <?php echo $interviewmark ?></p>
+                                    <?php endif; ?>
+                                    <?php if ($studentJobstatus != 'Accept' && $studentJobstatus != 'Recruit') : ?>
+                                        <h3>Action :</h3>
+                                        <div class="btn">
+                                            <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
+                                            <?php if ($interviewschedule == 0): ?>
+                                                <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
+                                            <?php elseif ($interviewschedule == 1): ?>
+                                                <?php if ($interviewmark == 0): ?>
+                                                    <button type="button" value="" onclick="openAddmarkConfirmModal(event)" class="accept">dsg</button>
+                                                <?php else: ?>
+                                                    <button type="button" value="accept" onclick="openRecruitConfirmModal(event)" class="accept">Accept</button>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
 
@@ -198,13 +213,31 @@
         </div>
     </div>
 
+    <!-- Add mark Confirmation Modal -->
+    <div id="Addmark-modal" class="updatemodal">
+        <div class="updatemodal-content">
+            <h2>Interview Marks</h2>
+            <p>Add Interview Marks for Sort Students</p>
+            <input
+                type="number"
+                id="student-mark"
+                placeholder="Enter mark"
+                style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px;" />
+
+            <div class="updatemodal-buttons">
+                <button class="updateyes-btn" onclick="submitMark()">Yes</button>
+                <button class="updateno-btn" onclick="closeAddmarkConfirmModal()">No</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Recruit Confirmation Modal -->
     <div id="Recruit-modal" class="updatemodal">
         <div class="updatemodal-content">
             <h2>Are you sure?</h2>
             <p>Do you want to Recruit this Student?</p>
             <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="confirmAction('Recruit')">Yes</button>
+                <button class="updateyes-btn" onclick="confirmAction('Accept')">Yes</button>
                 <button class="updateno-btn" onclick="closeRecruitConfirmModal()">No</button>
             </div>
         </div>
@@ -302,6 +335,15 @@
         function closeRecruitConfirmModal() {
             document.getElementById('Recruit-modal').style.display = 'none';
         }
+        // Add marks model
+        function openAddmarkConfirmModal(event) {
+            event.preventDefault();
+            document.getElementById('Addmark-modal').style.display = 'flex';
+        }
+
+        function closeAddmarkConfirmModal() {
+            document.getElementById('Addmark-modal').style.display = 'none';
+        }
 
         function openRejectModal(event) {
             event.preventDefault();
@@ -319,6 +361,7 @@
             // console.log('Action:', action);
 
             document.getElementById('actionInput').value = action;
+
             // Close the modal
             closeAllModals();
             document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
@@ -329,6 +372,24 @@
             // Submit the form
             // document.getElementById('actionForm').submit();
         }
+
+        // for get Interview Mark
+        function submitMark() {
+            const markInput = document.getElementById('student-mark');
+            const mark = markInput.value.trim();
+            document.getElementById('actionInput').value = mark;
+            if (mark === '' || isNaN(mark)) {
+                errorToast('Please enter a valid mark.');
+                return;
+            }
+
+            closeAllModals();
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loader
+            setTimeout(() => {
+                document.getElementById('actionForm').submit();
+            }, 300);
+        }
+
 
         function closeAllModals() {
             document.getElementById('Shortlist-modal').style.display = 'none';
@@ -400,6 +461,7 @@
         // Check if the URL contains "ShortlistedStudents/studentprofile"
         if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
             // Show action section, hide nope section
+            document.getElementById("interviewmark").style.display = "none";
             document.getElementById("RecruitSection").style.display = "block";
             document.getElementById("ShortlistSection").style.display = "none";
             document.getElementById("progress-report-container").style.display = "none";
@@ -408,21 +470,25 @@
         else if (currentUrl.includes("StudentsRequests/studentprofile")) {
             if (studentJobstatus === 'Pending') {
                 // Show nope section, hide action section
+                document.getElementById("interviewmark").style.display = "none";
                 document.getElementById("RecruitSection").style.display = "none";
                 document.getElementById("ShortlistSection").style.display = "block";
                 document.getElementById("progress-report-container").style.display = "none";
             } else {
                 // Show action section, hide nope section
+                document.getElementById("interviewmark").style.display = "none";
                 document.getElementById("RecruitSection").style.display = "none";
                 document.getElementById("ShortlistSection").style.display = "none";
                 document.getElementById("progress-report-container").style.display = "none";
             }
         } else if (currentUrl.includes("RecruitStudents/studentprofile")) {
+            document.getElementById("interviewmark").style.display = "block";
             document.getElementById("progress-report-container").style.display = "block";
             document.getElementById("RecruitSection").style.display = "none";
             document.getElementById("ShortlistSection").style.display = "none";
         } else {
             // Default behavior: hide both sections (optional)
+            document.getElementById("interviewmark").style.display = "none";
             document.getElementById("ShortlistSection").style.display = "none";
             document.getElementById("RecruitSection").style.display = "none";
             document.getElementById("progress-report-container").style.display = "none";
