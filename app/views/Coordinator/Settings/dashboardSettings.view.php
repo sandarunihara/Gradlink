@@ -297,7 +297,7 @@
 
                             <div class="form-group">
                                 <label for="student-description">Description:</label>
-                                <textarea id="student-description" rows="4"></textarea>
+                                <textarea id="student-des" rows="4"></textarea>
                             </div>
 
                             <button class="submit-btn">Submit</button>
@@ -358,7 +358,7 @@
 
                             <div class="form-group">
                                 <label for="company-description">Description:</label>
-                                <textarea id="company-description" rows="4"></textarea>
+                                <textarea id="company-des" rows="4"></textarea>
                             </div>
 
                             <button class="submit-btn">Submit</button>
@@ -383,7 +383,7 @@
                                             data-status="<?= htmlspecialchars($ad->status) ?>"
                                             data-interns="<?= htmlspecialchars($ad->numOfInterns) ?>"
                                             data-mode="<?= htmlspecialchars($ad->workingMode) ?>"
-                                            data-description="<?= htmlspecialchars($ad->description) ?>">
+                                            >
                                             <?= htmlspecialchars($ad->advertisementId) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -409,8 +409,6 @@
                         </div>
 
                         <div class="info-form">
-
-
                             <div class="form-group">
                                 <label for="ad-position">Position:</label>
                                 <input type="text" id="ad-position" readonly>
@@ -433,7 +431,7 @@
 
                             <div class="form-group">
                                 <label for="ad-description">Description:</label>
-                                <textarea id="ad-description" rows="4"></textarea>
+                                <textarea id="ad-des" rows="4"></textarea>
                             </div>
 
                             <button class="submit-btn">Submit</button>
@@ -805,9 +803,6 @@
                 });
             });
 
-
-
-
             // Student ID dropdown change
             document.getElementById('student-id').addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
@@ -889,7 +884,6 @@
                     // Auto-fill form fields from data attributes
                     // document.getElementById('ad-company').value = selectedOption.dataset.company;
                     document.getElementById('ad-position').value = selectedOption.dataset.position;
-                    document.getElementById('ad-status').value = selectedOption.dataset.status;
                     document.getElementById('ad-interns').value = selectedOption.dataset.interns;
                     document.getElementById('ad-mode').value = selectedOption.dataset.mode;
                 } else {
@@ -936,7 +930,7 @@
                 document.getElementById('student-degree').value = '';
                 document.getElementById('student-status').value = '';
                 document.getElementById('student-ads-applied').value = '';
-                document.getElementById('student-description').value = '';
+                document.getElementById('student-des').value = '';
             }
 
             function clearCompanyFields() {
@@ -945,7 +939,7 @@
                 document.getElementById('company-email').value = '';
                 document.getElementById('company-status').value = '';
                 document.getElementById('company-contact').value = '';
-                document.getElementById('company-description').value = '';
+                document.getElementById('company-des').value = '';
             }
 
             function clearAdvertisementFields() {
@@ -955,68 +949,98 @@
                 document.getElementById('ad-status').value = '';
                 document.getElementById('ad-interns').value = '';
                 document.getElementById('ad-mode').value = '';
-                document.getElementById('ad-description').value = '';
+                document.getElementById('ad-des').value = '';
             }
 
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     if (this.getAttribute('data-tab') !== 'advertisement') {
                         clearAdvertisementFields();
+                        clearCompanyFields();
+                        clearStudentFields();
                     }
                 });
             });
 
-            document.querySelector('.submit-btn').addEventListener('click', function() {
+            // Handle all submit buttons
+            document.querySelectorAll('.submit-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission
 
-                const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
-                let type, companyId = null,
-                    advertisementId = null,
-                    studentId = null;
+                    console.log('Submit button clicked!');
 
-                if (activeTab === 'student') {
-                    type = 'student';
-                    studentId = document.getElementById('student-id').value;
-                } else if (activeTab === 'company') {
-                    type = 'company';
-                    companyId = document.getElementById('company-id').value;
-                } else if (activeTab === 'advertisement') {
-                    type = 'advertisement';
-                    advertisementId = document.getElementById('ad-id').value;
-                }
+                    // Get the active tab content that contains this button
+                    const tabContent = this.closest('.tab-content');
+                    const activeTab = tabContent.id;
 
-                const description = document.getElementById(`${activeTab}-description`).value;
+                    console.log('Active tab:', activeTab);
 
-                const data = {
-                    type: type,
-                    student_id: studentId,
-                    company_id: companyId,
-                    advertisement_id: advertisementId,
-                    description: description
-                };
+                    let type, companyId = null,
+                        advertisementId = null,
+                        studentId = null;
 
-                fetch('<?= ROOT ?>/PDC_coordinator/DashboardSettings/submitFeedback', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            toastSystem.show(data.message, 'Notification submitted successfully!', 'success');
-                            
-                            clearAdvertisementFields();
-                            clearCompanyFields();
-                            clearStudentFields();
-                        } else {
-                            toastSystem.show(data.message, 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        toastSystem.show('An error occurred while submitting the notification', 'error');
-                    });
+                    if (activeTab === 'student') {
+                        type = 'student';
+                        studentId = document.getElementById('student-id').value;
+                    } else if (activeTab === 'company') {
+                        type = 'company';
+                        companyId = document.getElementById('company-id').value;
+                    } else if (activeTab === 'advertisement') {
+                        type = 'advertisement';
+                        advertisementId = document.getElementById('ad-id').value;
+                        // Get company ID from the selected advertisement
+                        
+                    }
+
+                    const description = document.getElementById(`${activeTab}-des`).value;
+                    // const status = document.getElementById(`${activeTab}-status`).value;
+
+                    const data = {
+                        type: type,
+                        student_id: studentId,
+                        company_id: companyId,
+                        advertisement_id: advertisementId,
+                        description: description,
+                        // status: status
+                    };
+
+                    console.log('Submitting data:', data);
+
+                    fetch('<?= ROOT ?>/PDC_coordinator/DashboardSettings/submitFeedback', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => {
+                            // First check if response is JSON
+                            const contentType = response.headers.get('content-type');
+                            if (!contentType || !contentType.includes('application/json')) {
+                                return response.text().then(text => {
+                                    throw new Error(`Invalid response: ${text.substring(0, 100)}...`);
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                toastSystem.show(data.message, 'success');
+
+                                // Clear fields based on active tab
+                                if (activeTab === 'student') clearStudentFields();
+                                else if (activeTab === 'company') clearCompanyFields();
+                                else if (activeTab === 'advertisement') clearAdvertisementFields();
+                            } else {
+                                toastSystem.show(data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            toastSystem.show(error.message || 'An error occurred while submitting', 'error');
+                        });
+                });
             });
         });
     </script>

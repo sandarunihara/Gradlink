@@ -24,8 +24,6 @@ class DashboardSettings
 
         $this->view('Coordinator/Settings/DashboardSettings', ['roundData' => $data, 'studentData' => $studentData, 'companyData' => $companyData, 'advertisementData' => $advertisementData]);
     }
-
-
     public function updateRound()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -120,7 +118,6 @@ class DashboardSettings
             exit;
         }
     }
-
     public function importStudents()
     {
         // Start output buffering
@@ -302,6 +299,51 @@ class DashboardSettings
         ob_end_flush();
         exit;
     }
+    public function submitFeedback()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    
+            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";
+
+            $type = $_POST['type'];
+            $companyId = isset($_POST['companyId']) ? $_POST['companyId'] : null;
+            $advertisementId = isset($_POST['advertisementId']) ? $_POST['advertisementId'] : null;
+            $studentId = isset($_POST['studentId']) ? $_POST['studentId'] : null;
+            $reason = $_POST['description'];
+
+            if(empty($reason)) {
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Please provide a reason for your feedback.'];
+                header("Location: " . ROOT . "/PDC_coordinator/DashboardSettings");
+                exit;
+            }
+
+            $model = new Admin_notification();
+            $data = [
+                'type' => 'coordinator_request',
+                'company_id' => $companyId,
+                'advertisement_id' => $advertisementId,
+                'student_id' => $studentId,
+                'status' => 'Pending',
+                'reason' => $reason,
+            ];
+
+            try {
+                $result = $model->insert($data);
+
+                if($result) {
+                    $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Feedback submitted successfully.'];
+                } else {
+                    $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Failed to submit feedback. Please try again.'];  
+                }
+            }
+            catch (Exception $e) {
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'An error occurred while submitting feedback: ' . $e->getMessage()];
+            }
+
+            header("Location: " . ROOT . "/PDC_coordinator/DashboardSettings");
+            exit;
+        }
+    }
 }
