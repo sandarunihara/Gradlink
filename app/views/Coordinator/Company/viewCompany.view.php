@@ -218,55 +218,314 @@
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
-        // Chat toggle functionality
         document.addEventListener('DOMContentLoaded', function() {
+            // Get all necessary elements
             const chatToggle = document.querySelector('.chat-toggle-btn');
             const chatContainer = document.querySelector('.chat-container');
             const closeBtn = document.querySelector('.chat-close-btn');
-
-            chatToggle.addEventListener('click', function() {
-                chatContainer.classList.toggle('active');
-            });
-
-            closeBtn.addEventListener('click', function() {
-                chatContainer.classList.remove('active');
-            });
-
-            // Simulate sending a message (in a real app, this would be handled via AJAX)
+            const chatMessages = document.querySelector('.chat-messages');
             const chatInput = document.querySelector('.chat-input input');
             const sendBtn = document.querySelector('.send-btn');
-            const chatMessages = document.querySelector('.chat-messages');
 
+            // Debug: Check if elements are found
+            console.log('Chat Toggle:', chatToggle);
+            console.log('Chat Container:', chatContainer);
+            console.log('Close Button:', closeBtn);
+
+            // Get company ID - Fix: Properly handle the company ID as a string
+            const companyId = '<?= isset($companyData->CompanyId) ? htmlspecialchars($companyData->CompanyId) : '' ?>';
+            let lastMessageId = 0;
+            let chatActive = false;
+            let messageCheckInterval;
+
+            // Initialize chat
+            function initChat() {
+                if (!companyId) {
+                    console.error('Company ID not found');
+                    return;
+                }
+
+                console.log('Initializing chat with company ID:', companyId);
+                
+                // Load initial messages
+                loadChatMessages();
+                
+                // Start checking for new messages every 5 seconds
+                messageCheckInterval = setInterval(checkForNewMessages, 5000);
+                
+                // Clean up interval when chat is closed
+                chatContainer.addEventListener('transitionend', function(e) {
+                    if (e.propertyName === 'right' && !chatContainer.classList.contains('active')) {
+                        clearInterval(messageCheckInterval);
+                    }
+                });
+            }
+
+            // Load existing chat messages
+            function loadChatMessages() {
+                console.log('Loading messages for company ID:', companyId);
+                fetch(`<?= ROOT ?>/PDC_coordinator/ViewCompany/getMessages?id=${companyId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text().then(text => {
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                console.error('Invalid JSON response:', text);
+                                throw new Error('Invalid JSON response from server');
+                            }
+                        });
+                    })
+                    .then(messages => {
+                        if (!Array.isArray(messages)) {
+                            console.error('Invalid messages format:', messages);
+                            return;
+                        }
+
+                        console.log('Loaded messages:', messages);
+                        chatMessages.innerHTML = '';
+                        
+                        if (messages.length > 0) {
+                            messages.forEach(message => {
+                                addMessageToChat(message, false);
+                            });
+                            
+                            // Set lastMessageId to the latest message's ID
+                            lastMessageId = messages[messages.length - 1].id;
+                            console.log('Set lastMessageId to:', lastMessageId);
+                        } else {
+                            console.log('No messages found');
+                            lastMessageId = 0;
+                        }
+
+                        scrollToBottom();
+                    })
+                    .catch(error => {
+                        console.error('Error loading messages:', error);
+                        showMessageError('Failed to load messages. Please try again.');
+                    });
+            }
+
+            // Check for new messages
+            function checkForNewMessages() {
+                if (!chatActive || !companyId) {
+                    console.log('Chat not active or no company ID, skipping check');
+                    return;
+                }
+
+                console.log('Checking for new messages with last ID:', lastMessageId);
+                fetch(`<?= ROOT ?>/PDC_coordinator/ViewCompany/checkNewMessages/${companyId}?last_id=${lastMessageId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text().then(text => {
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                console.error('Invalid JSON response:', text);
+                                throw new Error('Invalid JSON response from server');
+                            }
+                        });
+                    })
+                    .then(data => {
+                        console.log('New messages response:', data);
+                        if (data.status === 'success' && data.messages && data.messages.length > 0) {
+                            console.log('Found new messages:', data.messages);
+                            data.messages.forEach(message => {
+                                addMessageToChat(message, false);
+                            });
+                            
+                            lastMessageId = data.messages[data.messages.length - 1].id;
+                            console.log('Updated lastMessageId to:', lastMessageId);
+                            
+                            if (isNearBottom()) {
+                                scrollToBottom();
+                            }
+                            
+                            if (!chatContainer.classList.contains('active')) {
+                                showNewMessageNotification(data.new_count);
+                            }
+                        } else {
+                            console.log('No new messages found');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking new messages:', error);
+                    });
+            }
+
+            // Send a new message
             function sendMessage() {
                 const messageText = chatInput.value.trim();
-                if (messageText) {
-                    const now = new Date();
-                    const timeString = now.toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-
-                    const messageElement = document.createElement('div');
-                    messageElement.className = 'message sent';
-                    messageElement.innerHTML = `
-                <div class="message-content">
-                    <p>${messageText}</p>
-                    <span class="message-time">${timeString}</span>
-                </div>
-            `;
-
-                    chatMessages.appendChild(messageElement);
+                if (messageText && companyId) {
+                    console.log('Sending message:', messageText);
+                    // Add message to UI immediately (optimistic update)
+                    const tempMessage = {
+                        id: 'temp-' + Date.now(),
+                        message: messageText,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        isMe: true
+                    };
+                    
+                    addMessageToChat(tempMessage, true);
                     chatInput.value = '';
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    scrollToBottom();
+                    
+                    // Send to server
+                    fetch(`<?= ROOT ?>/PDC_coordinator/ViewCompany/sendMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `message=${encodeURIComponent(messageText)}&company_id=${companyId}`
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text().then(text => {
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                console.error('Invalid JSON response:', text);
+                                throw new Error('Invalid JSON response from server');
+                            }
+                        });
+                    })
+                    .then(data => {
+                        console.log('Send message response:', data);
+                        if (data.status === 'success') {
+                            const tempMsgElement = document.querySelector(`[data-temp-id="${tempMessage.id}"]`);
+                            if (tempMsgElement) {
+                                tempMsgElement.removeAttribute('data-temp-id');
+                                tempMsgElement.dataset.messageId = data.message_id;
+                            }
+                            
+                            lastMessageId = data.message_id;
+                        } else {
+                            showMessageError('Failed to send message', messageText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error sending message:', error);
+                        showMessageError('Failed to send message', messageText);
+                    });
                 }
             }
 
-            sendBtn.addEventListener('click', sendMessage);
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
+            // Add message to chat UI
+            function addMessageToChat(message, isTemp) {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${message.isMe ? 'sent' : 'received'}`;
+                
+                if (isTemp) {
+                    messageElement.dataset.tempId = message.id;
+                } else {
+                    messageElement.dataset.messageId = message.id;
                 }
-            });
+                
+                messageElement.innerHTML = `
+                    <div class="message-content">
+                        <p>${message.message}</p>
+                        <span class="message-time">${message.time}</span>
+                    </div>
+                `;
+                
+                chatMessages.appendChild(messageElement);
+            }
+
+            // Show message error
+            function showMessageError(error, originalMessage) {
+                const errorElement = document.createElement('div');
+                errorElement.className = 'message-error';
+                errorElement.textContent = error;
+                chatMessages.appendChild(errorElement);
+                
+                // Put the original message back in the input
+                chatInput.value = originalMessage;
+                chatInput.focus();
+                
+                setTimeout(() => {
+                    errorElement.remove();
+                }, 3000);
+            }
+
+            // Check if scroll is near bottom
+            function isNearBottom() {
+                return chatMessages.scrollTop + chatMessages.clientHeight + 50 >= chatMessages.scrollHeight;
+            }
+
+            // Scroll to bottom of chat
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Show new message notification
+            function showNewMessageNotification(count) {
+                const notification = document.createElement('div');
+                notification.className = 'chat-notification-badge';
+                notification.textContent = count;
+                chatToggle.appendChild(notification);
+                
+                // Add animation
+                chatToggle.classList.add('pulse');
+                setTimeout(() => {
+                    chatToggle.classList.remove('pulse');
+                }, 1000);
+            }
+
+            // Toggle chat visibility
+            if (chatToggle && chatContainer) {
+                chatToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log('Toggle button clicked');
+                    
+                    chatContainer.classList.toggle('active');
+                    chatActive = chatContainer.classList.contains('active');
+                    
+                    console.log('Chat active:', chatActive);
+                    
+                    // Remove notification badge when opening
+                    if (chatActive) {
+                        const badge = chatToggle.querySelector('.chat-notification-badge');
+                        if (badge) badge.remove();
+                        loadChatMessages();
+                    }
+                });
+            }
+
+            // Close chat
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    chatContainer.classList.remove('active');
+                    chatActive = false;
+                });
+            }
+
+            // Send message on button click
+            if (sendBtn) {
+                sendBtn.addEventListener('click', sendMessage);
+            }
+
+            // Send message on Enter key
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+            }
+
+            // Initialize chat when page loads
+            initChat();
         });
     </script>
 
