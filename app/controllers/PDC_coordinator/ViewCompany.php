@@ -17,8 +17,8 @@ class ViewCompany
         //         print_r($data);
         //         echo '</pre>';
         
-
         
+
 
         if ($companyData) {
             
