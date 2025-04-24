@@ -11,6 +11,7 @@ class Admin_notification{
         'type',
         'company_id',
         'advertisement_id',
+        'student_id',
         'status',
         'created_at',
         'reason'

@@ -80,6 +80,20 @@
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard") ?>
 
+        <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+            <script>
+                window.__flashMessage = {
+                    message: "<?= $message ?>",
+                    type: "<?= $type ?>"
+                };
+            </script>
+        <?php endif; ?>
+
         <!-- Main content container -->
         <main class="main-content">
             <!-- Rounds Section -->
@@ -99,8 +113,7 @@
                             roundFormData: <?= json_encode($_SESSION['flash_message']['round_data'] ?? []) ?>
                         };
                     </script>
-                <?php unset($_SESSION['flash_message']);
-                endif; ?>
+                <?php endif; ?>
 
                 <div class="rounds-container">
                     <?php if (!empty($roundData)): ?>
@@ -495,6 +508,17 @@
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize Toast System
             const toastSystem = new ToastSystem();
+            toastSystem.initializeContainer();
+
+            // Handle flash messages
+            if (window.__flashMessage) {
+                const { message, type } = window.__flashMessage;
+                if (type === 'success') {
+                    successToast(message);
+                } else if (type === 'error') {
+                    errorToast(message);
+                }
+            }
 
             // Set minimum dates for date inputs
             const today = new Date().toISOString().split("T")[0];
@@ -786,6 +810,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            if (window.__flashMessage) {
+                const { message, type } = window.__flashMessage;
+                toastSystem.show(message, type);
+            }
             // Tab functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -885,6 +914,7 @@
                     // document.getElementById('ad-company').value = selectedOption.dataset.company;
                     document.getElementById('ad-position').value = selectedOption.dataset.position;
                     document.getElementById('ad-interns').value = selectedOption.dataset.interns;
+                    document.getElementById('ad-status').value = selectedOption.dataset.status;
                     document.getElementById('ad-mode').value = selectedOption.dataset.mode;
                 } else {
                     // Clear fields if no selection
@@ -1023,12 +1053,13 @@
                         })
                         .then(data => {
                             if (data.success) {
-                                toastSystem.show(data.message, 'success');
-
-                                // Clear fields based on active tab
                                 if (activeTab === 'student') clearStudentFields();
                                 else if (activeTab === 'company') clearCompanyFields();
                                 else if (activeTab === 'advertisement') clearAdvertisementFields();
+                                toastSystem.show(data.message, 'success');
+
+                                // Clear fields based on active tab
+                                
                             } else {
                                 toastSystem.show(data.message, 'error');
                             }

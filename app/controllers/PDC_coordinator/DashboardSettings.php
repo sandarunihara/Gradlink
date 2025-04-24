@@ -302,6 +302,7 @@ class DashboardSettings
     public function submitFeedback()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header('Content-Type: application/json');
 
             $type = $_POST['type'];
             $companyId = isset($_POST['companyId']) ? $_POST['companyId'] : null;
@@ -310,8 +311,10 @@ class DashboardSettings
             $reason = $_POST['description'];
 
             if(empty($reason)) {
-                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Please provide a reason for your feedback.'];
-                header("Location: " . ROOT . "/PDC_coordinator/DashboardSettings");
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Please provide a reason for your feedback.'
+                ]);
                 exit;
             }
 
@@ -329,16 +332,23 @@ class DashboardSettings
                 $result = $model->insert($data);
 
                 if($result) {
-                    $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Feedback submitted successfully.'];
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Feedback submitted successfully.'
+                    ]);
                 } else {
-                    $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Failed to submit feedback. Please try again.'];  
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Failed to submit feedback. Please try again.'
+                    ]);
                 }
             }
             catch (Exception $e) {
-                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'An error occurred while submitting feedback: ' . $e->getMessage()];
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting feedback: ' . $e->getMessage()
+                ]);
             }
-
-            header("Location: " . ROOT . "/PDC_coordinator/DashboardSettings");
             exit;
         }
     }
