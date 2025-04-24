@@ -978,22 +978,21 @@
                     let type, companyId = null,
                         advertisementId = null,
                         studentId = null;
+                    let description;
 
                     if (activeTab === 'student') {
                         type = 'student';
                         studentId = document.getElementById('student-id').value;
+                        description = document.getElementById('student-des').value;
                     } else if (activeTab === 'company') {
                         type = 'company';
                         companyId = document.getElementById('company-id').value;
+                        description = document.getElementById('company-des').value;
                     } else if (activeTab === 'advertisement') {
                         type = 'advertisement';
                         advertisementId = document.getElementById('ad-id').value;
-                        // Get company ID from the selected advertisement
-                        
+                        description = document.getElementById('ad-des').value;
                     }
-
-                    const description = document.getElementById(`${activeTab}-des`).value;
-                    // const status = document.getElementById(`${activeTab}-status`).value;
 
                     const data = {
                         type: type,
@@ -1001,26 +1000,24 @@
                         company_id: companyId,
                         advertisement_id: advertisementId,
                         description: description,
-                        // status: status
                     };
 
                     console.log('Submitting data:', data);
 
+                    const formData = new FormData();
+                    formData.append('type', type);
+                    if (studentId) formData.append('studentId', studentId);
+                    if (companyId) formData.append('companyId', companyId);
+                    if (advertisementId) formData.append('AdvertisementId', advertisementId);
+                    formData.append('description', description);
+
                     fetch('<?= ROOT ?>/PDC_coordinator/DashboardSettings/submitFeedback', {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                            body: JSON.stringify(data)
+                            body: formData
                         })
                         .then(response => {
-                            // First check if response is JSON
-                            const contentType = response.headers.get('content-type');
-                            if (!contentType || !contentType.includes('application/json')) {
-                                return response.text().then(text => {
-                                    throw new Error(`Invalid response: ${text.substring(0, 100)}...`);
-                                });
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
                             }
                             return response.json();
                         })

@@ -303,13 +303,9 @@ class DashboardSettings
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
-
             $type = $_POST['type'];
             $companyId = isset($_POST['companyId']) ? $_POST['companyId'] : null;
-            $advertisementId = isset($_POST['advertisementId']) ? $_POST['advertisementId'] : null;
+            $advertisementId = isset($_POST['AdvertisementId']) ? $_POST['AdvertisementId'] : null;
             $studentId = isset($_POST['studentId']) ? $_POST['studentId'] : null;
             $reason = $_POST['description'];
 
