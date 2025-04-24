@@ -62,4 +62,13 @@ class Action_logs
         $result = $this->query($query, $params);
         return $result;
     }
+
+    public function findActionOfAdv($advertisementId){
+        $query = "SELECT * FROM $this->table
+                  WHERE  target_type = 'advertisement' AND targer_id = :target_id;
+                ";
+        $params = ['target_id' => $advertisementId];
+        $result = $this->query($query,$params);
+        return $result;
+    }
 }
