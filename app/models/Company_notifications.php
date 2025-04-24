@@ -48,4 +48,14 @@ class Company_notifications{
         return $this->query($query, $params);
     }
 
+    public function checkNewMessages($sender, $receiver, $last_id){
+        $query = "SELECT * FROM $this->table WHERE ((actor_id = :actor_id AND target_id = :target_id) OR (actor_id = :target_id AND target_id = :actor_id)) AND type='chat' AND id > :last_id ORDER BY timestamp ASC";
+        $params = [
+            'actor_id' => $sender,
+            'target_id' => $receiver,
+            'last_id' => $last_id
+        ];
+        return $this->query($query, $params);
+    }
+
 }
