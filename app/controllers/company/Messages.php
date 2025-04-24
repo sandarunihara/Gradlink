@@ -45,6 +45,18 @@ class Messages{
         $this-> view('Company/Pdc_message',['user' => $_SESSION['USER'],'data'=>$data]);
     }
 
+    public function coordinatormessage(){
+        $companyID=$_SESSION['USER']->CompanyId;
+        $coordinatorModel=new pdc_coordinator;
+        // $coordinatorName=$coordinatorModel->
+        $coordinatorID='200212601985';
+        $coordinator_message=new Company_notifications;
+        // $message=$coordinator_message->getChatMessages($coo)
+
+        // show($companyID);
+        $this->view("company/coordinatormessage");
+    }
+
     public function getunread() {
         $user = $_SESSION["USER"];
         $model = new PDC_Session;

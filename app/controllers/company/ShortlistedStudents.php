@@ -129,6 +129,8 @@ class ShortlistedStudents
 
     public function studentprofile($advertisementId, $StudentId)
     {
+        $userid = $_SESSION["USER"]->CompanyId;
+        $action_log = new Action_logs;
         $model = new C_Student;
         $data = $model->findbyId($StudentId);
         $updatemodel = new C_Dashboard;
@@ -183,6 +185,24 @@ class ShortlistedStudents
             } else {
                 $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
                 if ($result['status']) {
+                    if(!is_numeric($submitvalue)){
+                        $action_data = [
+                            'actor_id' => $userid,
+                            'actor_role' => 'company',
+                            'target_id' => $StudentId,
+                            'target_type' => 'student',
+                            'action_type' => $_POST['submit_action']
+                        ];
+                    }else{
+                        $action_data = [
+                            'actor_id' => $userid,
+                            'actor_role' => 'company',
+                            'target_id' => $StudentId,
+                            'target_type' => 'student',
+                            'action_type' => 'Interview Marked'
+                        ];
+                    }
+                    $action_log->insert($action_data);
                     if ($submitvalue != 'Reject' && !is_numeric($submitvalue)) {
                         $studentUpdate = $model->update($StudentId, $studentdata, 'StudentId');
                         $success = "Student Job Status updated successfully.";
@@ -372,7 +392,7 @@ class ShortlistedStudents
                 exit;
             } else {
                 $updateresult = $updatemodel->update($studentId, $advertisementId, $updatedata);
-                
+
                 $result = $model->insert($data);
                 if ($result && $updateresult['status']) {
                     $success = "Interview Schedule created successfully.";

@@ -92,7 +92,7 @@ class RecruitStudents
         $studentad_data = $updatemodel->find(['StudentId' => $StudentId, 'advertisementId' => $advertisementId], 'studentadvertisement');
         $data[0]->adCV=$studentad_data[0]->CV;
         $studentJobstatus = $studentad_data[0]->Jobstatus;
-
+        $interviewmark=$studentad_data[0]->Interview_mark;
         $notReviewed = [];
         $Reviewed = [];
         $report_modal = new progress_doc;
@@ -145,6 +145,6 @@ class RecruitStudents
             }
         }
 
-        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/RecruitStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'notReviewed' => $notReviewed, 'Reviewed' => $Reviewed]);
+        $this->view('Company/Studentpro', ['data' => $data, 'url' => 'http://localhost/Gradlink/public/company/RecruitStudents/dashboard', 'studentJobstatus' => $studentJobstatus, 'notReviewed' => $notReviewed, 'Reviewed' => $Reviewed ,'interviewmark'=>$interviewmark]);
     }
 }

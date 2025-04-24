@@ -52,6 +52,11 @@
 
                             </div>
                         </div>
+                        <div id="interviewmark">
+                                    <?php if (!empty($interviewmark)): ?>
+                                        <p>Interview Mark : <?php echo $interviewmark ?></p>
+                                    <?php endif; ?>
+                                </div>
                         <div class="stu_pro_skill">
                             <h2>Skills</h2>
                             <div class="skills">
@@ -161,25 +166,26 @@
                                         <button type="button" value="shortlist" onclick="openShortlistConfirmModal(event)" class="accept">Shortlist</button>
                                     </div>
                                 </div>
+                                
 
                                 <div class="acce_rej" id="RecruitSection">
                                     <?php if ($interviewmark != 0): ?>
                                         <p>Interview Mark : <?php echo $interviewmark ?></p>
                                     <?php endif; ?>
-                                    <?php if($studentJobstatus != 'Accept' && $studentJobstatus != 'Recruit') :?>
-                                    <h3>Action :</h3>
-                                    <div class="btn">
-                                        <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
-                                        <?php if ($interviewschedule == 0): ?>
-                                            <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
-                                        <?php elseif ($interviewschedule == 1): ?>
-                                            <?php if ($interviewmark == 0): ?>
-                                                <button type="button" value="" onclick="openAddmarkConfirmModal(event)" class="accept">dsg</button>
-                                            <?php else: ?>
-                                                <button type="button" value="accept" onclick="openRecruitConfirmModal(event)" class="accept">Accept</button>
+                                    <?php if ($studentJobstatus != 'Accept' && $studentJobstatus != 'Recruit') : ?>
+                                        <h3>Action :</h3>
+                                        <div class="btn">
+                                            <button type="button" onclick="openRejectModal(event)" class="reject">Reject</button>
+                                            <?php if ($interviewschedule == 0): ?>
+                                                <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
+                                            <?php elseif ($interviewschedule == 1): ?>
+                                                <?php if ($interviewmark == 0): ?>
+                                                    <button type="button" value="" onclick="openAddmarkConfirmModal(event)" class="accept">dsg</button>
+                                                <?php else: ?>
+                                                    <button type="button" value="accept" onclick="openRecruitConfirmModal(event)" class="accept">Accept</button>
+                                                <?php endif; ?>
                                             <?php endif; ?>
-                                        <?php endif; ?>
-                                    </div>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                                 <div>
@@ -455,6 +461,7 @@
         // Check if the URL contains "ShortlistedStudents/studentprofile"
         if (currentUrl.includes("ShortlistedStudents/studentprofile")) {
             // Show action section, hide nope section
+            document.getElementById("interviewmark").style.display = "none";
             document.getElementById("RecruitSection").style.display = "block";
             document.getElementById("ShortlistSection").style.display = "none";
             document.getElementById("progress-report-container").style.display = "none";
@@ -463,21 +470,25 @@
         else if (currentUrl.includes("StudentsRequests/studentprofile")) {
             if (studentJobstatus === 'Pending') {
                 // Show nope section, hide action section
+                document.getElementById("interviewmark").style.display = "none";
                 document.getElementById("RecruitSection").style.display = "none";
                 document.getElementById("ShortlistSection").style.display = "block";
                 document.getElementById("progress-report-container").style.display = "none";
             } else {
                 // Show action section, hide nope section
+                document.getElementById("interviewmark").style.display = "none";
                 document.getElementById("RecruitSection").style.display = "none";
                 document.getElementById("ShortlistSection").style.display = "none";
                 document.getElementById("progress-report-container").style.display = "none";
             }
         } else if (currentUrl.includes("RecruitStudents/studentprofile")) {
+            document.getElementById("interviewmark").style.display = "block";
             document.getElementById("progress-report-container").style.display = "block";
             document.getElementById("RecruitSection").style.display = "none";
             document.getElementById("ShortlistSection").style.display = "none";
         } else {
             // Default behavior: hide both sections (optional)
+            document.getElementById("interviewmark").style.display = "none";
             document.getElementById("ShortlistSection").style.display = "none";
             document.getElementById("RecruitSection").style.display = "none";
             document.getElementById("progress-report-container").style.display = "none";
