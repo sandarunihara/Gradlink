@@ -80,6 +80,20 @@
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard") ?>
 
+        <?php 
+        if (isset($_SESSION['flash_message'])): 
+            $message = htmlspecialchars($_SESSION['flash_message']['message']);
+            $type = htmlspecialchars($_SESSION['flash_message']['type']);
+            unset($_SESSION['flash_message']);
+        ?>
+            <script>
+                window.__flashMessage = {
+                    message: "<?= $message ?>",
+                    type: "<?= $type ?>"
+                };
+            </script>
+        <?php endif; ?>
+
         <!-- Main content container -->
         <main class="main-content">
             <!-- Rounds Section -->
@@ -99,8 +113,7 @@
                             roundFormData: <?= json_encode($_SESSION['flash_message']['round_data'] ?? []) ?>
                         };
                     </script>
-                <?php unset($_SESSION['flash_message']);
-                endif; ?>
+                <?php endif; ?>
 
                 <div class="rounds-container">
                     <?php if (!empty($roundData)): ?>
@@ -243,8 +256,16 @@
                                 <label for="student-id"></label>
                                 <select id="student-id" class="search-select">
                                     <option value="">Select Student ID</option>
-                                    <option value="S1001">S1001</option>
-                                    <option value="S1002">S1002</option>
+                                    <?php foreach ($studentData as $student): ?>
+                                        <option value="<?= htmlspecialchars($student->StudentId) ?>"
+                                            data-applications="<?= htmlspecialchars($student->noOfAppliedAds) ?>"
+                                            data-email="<?= htmlspecialchars($student->Email) ?>"
+                                            data-degree="<?= htmlspecialchars($student->DegreeName) ?>"
+                                            data-name="<?= htmlspecialchars($student->Name) ?>"
+                                            data-status="<?= htmlspecialchars($student->Status) ?>">
+                                            <?= htmlspecialchars($student->StudentId) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -252,8 +273,16 @@
                                 <label for="student-name"></label>
                                 <select id="student-name" class="search-select">
                                     <option value="">Select Student Name</option>
-                                    <option value="John Doe">John Doe</option>
-                                    <option value="Jane Smith">Jane Smith</option>
+                                    <?php foreach ($studentData as $student): ?>
+                                        <option value="<?= htmlspecialchars($student->Name) ?>"
+                                            data-id="<?= htmlspecialchars($student->StudentId) ?>"
+                                            data-email="<?= htmlspecialchars($student->Email) ?>"
+                                            data-degree="<?= htmlspecialchars($student->DegreeName) ?>"
+                                            data-ads_applied="<?= htmlspecialchars($student->noOfAppliedAds) ?>"
+                                            data-status="<?= htmlspecialchars($student->Status) ?>">
+                                            <?= htmlspecialchars($student->Name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -281,7 +310,7 @@
 
                             <div class="form-group">
                                 <label for="student-description">Description:</label>
-                                <textarea id="student-description" rows="4"></textarea>
+                                <textarea id="student-des" rows="4"></textarea>
                             </div>
 
                             <button class="submit-btn">Submit</button>
@@ -295,8 +324,15 @@
                                 <label for="company-id"></label>
                                 <select id="company-id" class="search-select">
                                     <option value="">Select Company ID</option>
-                                    <option value="C2001">C2001</option>
-                                    <option value="C2002">C2002</option>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <option value="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-name="<?= htmlspecialchars($company->Name) ?>"
+                                            data-email="<?= htmlspecialchars($company->Email) ?>"
+                                            data-status="<?= htmlspecialchars($company->Status) ?>"
+                                            data-contact="<?= htmlspecialchars($company->ContactPerson) ?>">
+                                            <?= htmlspecialchars($company->CompanyId) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -304,8 +340,15 @@
                                 <label for="company-name"></label>
                                 <select id="company-name" class="search-select">
                                     <option value="">Select Company Name</option>
-                                    <option value="Tech Corp">Tech Corp</option>
-                                    <option value="Innovate LLC">Innovate LLC</option>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <option value="<?= htmlspecialchars($company->Name) ?>"
+                                            data-id="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-email="<?= htmlspecialchars($company->Email) ?>"
+                                            data-status="<?= htmlspecialchars($company->Status) ?>"
+                                            data-contact="<?= htmlspecialchars($company->ContactPerson) ?>">
+                                            <?= htmlspecialchars($company->Name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -328,7 +371,7 @@
 
                             <div class="form-group">
                                 <label for="company-description">Description:</label>
-                                <textarea id="company-description" rows="4"></textarea>
+                                <textarea id="company-des" rows="4"></textarea>
                             </div>
 
                             <button class="submit-btn">Submit</button>
@@ -342,19 +385,40 @@
                                 <label for="ad-id"></label>
                                 <select id="ad-id" class="search-select">
                                     <option value="">Select Advertisement ID</option>
-                                    <option value="A3001">A3001</option>
-                                    <option value="A3002">A3002</option>
+                                    <?php foreach ($advertisementData as $ad): ?>
+                                        <?php
+                                        $companyName = isset($companyNames[$ad->CompanyId]) ? $companyNames[$ad->CompanyId] : 'Unknown Company';
+                                        ?>
+                                        <option value="<?= htmlspecialchars($ad->advertisementId) ?>"
+                                            data-company="<?= htmlspecialchars($companyName) ?>"
+                                            data-company-id="<?= htmlspecialchars($ad->CompanyId) ?>"
+                                            data-position="<?= htmlspecialchars($ad->position) ?>"
+                                            data-status="<?= htmlspecialchars($ad->status) ?>"
+                                            data-interns="<?= htmlspecialchars($ad->numOfInterns) ?>"
+                                            data-mode="<?= htmlspecialchars($ad->workingMode) ?>"
+                                            >
+                                            <?= htmlspecialchars($ad->advertisementId) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+
+
+                            </div>
+                            <div class="search-group">
+                                <label for="ad-company-search"></label>
+                                <select id="ad-company-search" class="search-select">
+                                    <option value="">Select Company</option>
+                                    <?php foreach ($companyData as $company): ?>
+                                        <option value="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-id="<?= htmlspecialchars($company->CompanyId) ?>"
+                                            data-name="<?= htmlspecialchars($company->Name) ?>">
+                                            <?= htmlspecialchars($company->Name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
-                            <div class="search-group">
-                                <label for="ad-company"></label>
-                                <select id="ad-company" class="search-select">
-                                    <option value="">Select Company Name</option>
-                                    <option value="Tech Corp">Tech Corp</option>
-                                    <option value="Innovate LLC">Innovate LLC</option>
-                                </select>
-                            </div>
+
                         </div>
 
                         <div class="info-form">
@@ -380,7 +444,7 @@
 
                             <div class="form-group">
                                 <label for="ad-description">Description:</label>
-                                <textarea id="ad-description" rows="4"></textarea>
+                                <textarea id="ad-des" rows="4"></textarea>
                             </div>
 
                             <button class="submit-btn">Submit</button>
@@ -437,13 +501,26 @@
     <!-- SheetJS (xlsx) for client-side parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Scripts -->
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+    <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
+        // Initialize Toast System globally
+        const toastSystem = new ToastSystem();
+        
         document.addEventListener("DOMContentLoaded", function() {
-            // Initialize Toast System
-            const toastSystem = new ToastSystem();
+            // Initialize container
+            toastSystem.initializeContainer();
+
+            // Handle flash messages
+            if (window.__flashMessage) {
+                const { message, type } = window.__flashMessage;
+                toastSystem.show(message, type);
+            }
 
             // Set minimum dates for date inputs
             const today = new Date().toISOString().split("T")[0];
@@ -735,6 +812,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            // Handle flash messages
+            if (window.__flashMessage) {
+                const { message, type } = window.__flashMessage;
+                toastSystem.show(message, type);
+            }
             // Tab functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -752,160 +835,241 @@
                 });
             });
 
-            // Sample data (in a real app, this would come from an API)
-            const studentData = {
-                'S1001': {
-                    name: 'John Doe',
-                    email: 'john.doe@university.edu',
-                    degree: 'Computer Science',
-                    status: 'Active',
-                    adsApplied: 3
-                },
-                'S1002': {
-                    name: 'Jane Smith',
-                    email: 'jane.smith@university.edu',
-                    degree: 'Business Administration',
-                    status: 'Pending',
-                    adsApplied: 1
-                }
-            };
+            // Student ID dropdown change
+            document.getElementById('student-id').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('student-name').value = selectedOption.dataset.name;
 
-            const companyData = {
-                'C2001': {
-                    name: 'Tech Corp',
-                    email: 'contact@techcorp.com',
-                    status: 'Verified',
-                    contact: 'Michael Johnson'
-                },
-                'C2002': {
-                    name: 'Innovate LLC',
-                    email: 'hr@innovate.com',
-                    status: 'Pending Verification',
-                    contact: 'Sarah Williams'
-                }
-            };
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('student-email').value = selectedOption.dataset.email;
+                    document.getElementById('student-degree').value = selectedOption.dataset.degree;
+                    document.getElementById('student-status').value = selectedOption.dataset.status;
+                    document.getElementById('student-ads-applied').value = selectedOption.dataset.applications;
 
-            const advertisementData = {
-                'A3001': {
-                    company: 'Tech Corp',
-                    position: 'Software Developer Intern',
-                    status: 'Open',
-                    interns: 5,
-                    mode: 'Remote'
-                },
-                'A3002': {
-                    company: 'Innovate LLC',
-                    position: 'Marketing Intern',
-                    status: 'Closed',
-                    interns: 2,
-                    mode: 'Hybrid'
-                }
-            };
-
-            // Student search functionality
-            const studentIdSelect = document.getElementById('student-id');
-            const studentNameSelect = document.getElementById('student-name');
-
-            studentIdSelect.addEventListener('change', function() {
-                const studentId = this.value;
-                if (studentId && studentData[studentId]) {
-                    const student = studentData[studentId];
-                    document.getElementById('student-email').value = student.email;
-                    document.getElementById('student-degree').value = student.degree;
-                    document.getElementById('student-status').value = student.status;
-                    document.getElementById('student-ads-applied').value = student.adsApplied;
-                    studentNameSelect.value = student.name;
+                    // You would need to fetch ads_applied count via AJAX
+                    // For now we'll just clear it
                 }
             });
 
-            studentNameSelect.addEventListener('change', function() {
-                const studentName = this.value;
-                if (studentName) {
-                    // Find student by name
-                    for (const [id, student] of Object.entries(studentData)) {
-                        if (student.name === studentName) {
-                            document.getElementById('student-email').value = student.email;
-                            document.getElementById('student-degree').value = student.degree;
-                            document.getElementById('student-status').value = student.status;
-                            document.getElementById('student-ads-applied').value = student.adsApplied;
-                            studentIdSelect.value = id;
-                            break;
-                        }
-                    }
+            // Student Name dropdown change
+            document.getElementById('student-name').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('student-id').value = selectedOption.dataset.id;
+
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('student-email').value = selectedOption.dataset.email;
+                    document.getElementById('student-degree').value = selectedOption.dataset.degree;
+                    document.getElementById('student-ads-applied').value = selectedOption.dataset.applications;
+                    document.getElementById('student-status').value = selectedOption.dataset.status;
+
+                    // You would need to fetch ads_applied count via AJAX
+                    // For now we'll just clear it
                 }
             });
 
             // Company search functionality
-            const companyIdSelect = document.getElementById('company-id');
-            const companyNameSelect = document.getElementById('company-name');
+            // Company ID dropdown change
+            document.getElementById('company-id').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('company-name').value = selectedOption.dataset.name;
 
-            companyIdSelect.addEventListener('change', function() {
-                const companyId = this.value;
-                if (companyId && companyData[companyId]) {
-                    const company = companyData[companyId];
-                    document.getElementById('company-email').value = company.email;
-                    document.getElementById('company-status').value = company.status;
-                    document.getElementById('company-contact').value = company.contact;
-                    companyNameSelect.value = company.name;
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('company-email').value = selectedOption.dataset.email;
+                    document.getElementById('company-status').value = selectedOption.dataset.status;
+                    document.getElementById('company-contact').value = selectedOption.dataset.contact;
+                } else {
+                    // Clear fields if no selection
+                    clearCompanyFields();
                 }
             });
 
-            companyNameSelect.addEventListener('change', function() {
-                const companyName = this.value;
-                if (companyName) {
-                    // Find company by name
-                    for (const [id, company] of Object.entries(companyData)) {
-                        if (company.name === companyName) {
-                            document.getElementById('company-email').value = company.email;
-                            document.getElementById('company-status').value = company.status;
-                            document.getElementById('company-contact').value = company.contact;
-                            companyIdSelect.value = id;
+            // Company Name dropdown change
+            document.getElementById('company-name').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update other dropdown
+                    document.getElementById('company-id').value = selectedOption.dataset.id;
+
+                    // Auto-fill form fields from data attributes
+                    document.getElementById('company-email').value = selectedOption.dataset.email;
+                    document.getElementById('company-status').value = selectedOption.dataset.status;
+                    document.getElementById('company-contact').value = selectedOption.dataset.contact;
+                } else {
+                    // Clear fields if no selection
+                    clearCompanyFields();
+                }
+            });
+
+            // Advertisement ID dropdown change
+            document.getElementById('ad-id').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Update company search dropdown with company ID
+                    document.getElementById('ad-company-search').value = selectedOption.dataset.companyId;
+
+                    // Auto-fill form fields from data attributes
+                    // document.getElementById('ad-company').value = selectedOption.dataset.company;
+                    document.getElementById('ad-position').value = selectedOption.dataset.position;
+                    document.getElementById('ad-interns').value = selectedOption.dataset.interns;
+                    document.getElementById('ad-status').value = selectedOption.dataset.status;
+                    document.getElementById('ad-mode').value = selectedOption.dataset.mode;
+                } else {
+                    // Clear fields if no selection
+                    clearAdvertisementFields();
+                }
+            });
+
+            // Company search dropdown change
+            document.getElementById('ad-company-search').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    // Find and select the first advertisement for this company
+                    const adSelect = document.getElementById('ad-id');
+                    let foundAd = false;
+
+                    for (let option of adSelect.options) {
+                        if (option.dataset.companyId === selectedOption.value) {
+                            adSelect.value = option.value;
+                            foundAd = true;
+
+                            // Trigger the change event to fill all fields
+                            const event = new Event('change');
+                            adSelect.dispatchEvent(event);
                             break;
                         }
                     }
-                }
-            });
 
-            // Advertisement search functionality
-            const adIdSelect = document.getElementById('ad-id');
-            const adCompanySelect = document.getElementById('ad-company');
-
-            adIdSelect.addEventListener('change', function() {
-                const adId = this.value;
-                if (adId && advertisementData[adId]) {
-                    const ad = advertisementData[adId];
-                    document.getElementById('ad-position').value = ad.position;
-                    document.getElementById('ad-status').value = ad.status;
-                    document.getElementById('ad-interns').value = ad.interns;
-                    document.getElementById('ad-mode').value = ad.mode;
-                    adCompanySelect.value = ad.company;
-                }
-            });
-
-            adCompanySelect.addEventListener('change', function() {
-                const companyName = this.value;
-                if (companyName) {
-                    // Find ad by company name (in a real app, there might be multiple)
-                    for (const [id, ad] of Object.entries(advertisementData)) {
-                        if (ad.company === companyName) {
-                            document.getElementById('ad-position').value = ad.position;
-                            document.getElementById('ad-status').value = ad.status;
-                            document.getElementById('ad-interns').value = ad.interns;
-                            document.getElementById('ad-mode').value = ad.mode;
-                            adIdSelect.value = id;
-                            break;
-                        }
+                    if (!foundAd) {
+                        // If no advertisements found for this company, clear fields
+                        clearAdvertisementFields();
                     }
+                } else {
+                    // Clear fields if no selection
+                    clearAdvertisementFields();
                 }
             });
 
-            // Submit button functionality
-            const submitBtns = document.querySelectorAll('.submit-btn');
-            submitBtns.forEach(btn => {
+            // Clear all fields
+            function clearStudentFields() {
+                document.getElementById('student-id').value = '';
+                document.getElementById('student-name').value = '';
+                document.getElementById('student-email').value = '';
+                document.getElementById('student-degree').value = '';
+                document.getElementById('student-status').value = '';
+                document.getElementById('student-ads-applied').value = '';
+                document.getElementById('student-des').value = '';
+            }
+
+            function clearCompanyFields() {
+                document.getElementById('company-id').value = '';
+                document.getElementById('company-name').value = '';
+                document.getElementById('company-email').value = '';
+                document.getElementById('company-status').value = '';
+                document.getElementById('company-contact').value = '';
+                document.getElementById('company-des').value = '';
+            }
+
+            function clearAdvertisementFields() {
+                document.getElementById('ad-id').value = '';
+                document.getElementById('ad-company-search').value = '';
+                document.getElementById('ad-position').value = '';
+                document.getElementById('ad-status').value = '';
+                document.getElementById('ad-interns').value = '';
+                document.getElementById('ad-mode').value = '';
+                document.getElementById('ad-des').value = '';
+            }
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const activeTab = document.querySelector('.tab-content.active').id;
-                    alert(`Changes for ${activeTab} submitted successfully!`);
-                    // In a real app, you would send data to server here
+                    if (this.getAttribute('data-tab') !== 'advertisement') {
+                        clearAdvertisementFields();
+                        clearCompanyFields();
+                        clearStudentFields();
+                    }
+                });
+            });
+
+            // Handle all submit buttons
+            document.querySelectorAll('.submit-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission
+
+                    console.log('Submit button clicked!');
+
+                    // Get the active tab content that contains this button
+                    const tabContent = this.closest('.tab-content');
+                    const activeTab = tabContent.id;
+
+                    console.log('Active tab:', activeTab);
+
+                    let type, companyId = null,
+                        advertisementId = null,
+                        studentId = null;
+                    let description;
+
+                    if (activeTab === 'student') {
+                        type = 'student';
+                        studentId = document.getElementById('student-id').value;
+                        description = document.getElementById('student-des').value;
+                    } else if (activeTab === 'company') {
+                        type = 'company';
+                        companyId = document.getElementById('company-id').value;
+                        description = document.getElementById('company-des').value;
+                    } else if (activeTab === 'advertisement') {
+                        type = 'advertisement';
+                        advertisementId = document.getElementById('ad-id').value;
+                        description = document.getElementById('ad-des').value;
+                    }
+
+                    const data = {
+                        type: type,
+                        student_id: studentId,
+                        company_id: companyId,
+                        advertisement_id: advertisementId,
+                        description: description,
+                    };
+
+                    console.log('Submitting data:', data);
+
+                    const formData = new FormData();
+                    formData.append('type', type);
+                    if (studentId) formData.append('studentId', studentId);
+                    if (companyId) formData.append('companyId', companyId);
+                    if (advertisementId) formData.append('AdvertisementId', advertisementId);
+                    formData.append('description', description);
+
+                    fetch('<?= ROOT ?>/PDC_coordinator/DashboardSettings/submitFeedback', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // alert('Response received: ' + JSON.stringify(data));
+                            if (data.success) {
+                                if (activeTab === 'student') clearStudentFields();
+                                else if (activeTab === 'company') clearCompanyFields();
+                                else if (activeTab === 'advertisement') clearAdvertisementFields();
+                                toastSystem.show(data.message, 'success');
+                            } else {
+                                toastSystem.show(data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error occurred: ' + error.message);
+                            toastSystem.show(error.message || 'An error occurred while submitting', 'error');
+                        });
                 });
             });
         });

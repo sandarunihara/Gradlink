@@ -5,7 +5,7 @@ class DashboardStudent
     public function index()
     {
         $model = new Student;
-        $data = $model->findall();
+        $data = $model->findregistered();
 
         if ($data == false || empty($data)) {
             $this->view('Coordinator/Student/dashboardStudent');
