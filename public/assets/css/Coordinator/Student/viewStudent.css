@@ -32,10 +32,14 @@
         }
 
         .content {
-            flex: 1;
-            width: 95%;
-            padding: 2rem;
-            margin-left: 5%;
+            margin-left: 150px; /* Same as sidebar width */
+    flex: 1;
+    padding: 30px;
+    margin-right: 50px;
+    margin-top: 20px;
+    background-color: #f0f0f5;
+    min-height: 100vh;
+    transition: margin-left 0.3s;
         }
 
         .header {
