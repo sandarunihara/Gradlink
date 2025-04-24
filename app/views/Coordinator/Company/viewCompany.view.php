@@ -144,19 +144,131 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Chat Container -->
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-user-info">
+                            <div class="chat-user-avatar" style="background-image: url('<?= ROOT ?>/<?= !empty($companyData->profileimg) ? htmlspecialchars($companyData->profileimg) : 'assets/images/default-profile.png' ?>')">
+                                <?php if (empty($companyData->profileimg)): ?>
+                                    <div class="initials"><?= substr(htmlspecialchars($companyData->Name), 0, 1) ?></div>
+                                <?php endif; ?>
+                            </div>
+                            <div>
+                                <h3><?= htmlspecialchars($companyData->Name) ?></h3>
+                                <span class="chat-status">Online</span>
+                            </div>
+                        </div>
+                        <button class="chat-close-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="chat-messages">
+                        <!-- Sample messages - these would be dynamically loaded from your backend -->
+                        <div class="message received">
+                            <div class="message-content">
+                                <p>Hello, we're interested in your internship program.</p>
+                                <span class="message-time">10:30 AM</span>
+                            </div>
+                        </div>
+                        <div class="message sent">
+                            <div class="message-content">
+                                <p>That's great! We'd be happy to discuss opportunities.</p>
+                                <span class="message-time">10:32 AM</span>
+                            </div>
+                        </div>
+                        <div class="message received">
+                            <div class="message-content">
+                                <p>When would be a good time for a meeting?</p>
+                                <span class="message-time">10:33 AM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input">
+                        <button class="attachment-btn">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <input type="text" placeholder="Type a message...">
+                        <button class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Toggle Button -->
+                <button class="chat-toggle-btn">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
             </div>
+
+
 
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <button class="btn btn-back" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                
+
             </div>
         </main>
     </div>
 
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
+
+    <script>
+        // Chat toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatToggle = document.querySelector('.chat-toggle-btn');
+            const chatContainer = document.querySelector('.chat-container');
+            const closeBtn = document.querySelector('.chat-close-btn');
+
+            chatToggle.addEventListener('click', function() {
+                chatContainer.classList.toggle('active');
+            });
+
+            closeBtn.addEventListener('click', function() {
+                chatContainer.classList.remove('active');
+            });
+
+            // Simulate sending a message (in a real app, this would be handled via AJAX)
+            const chatInput = document.querySelector('.chat-input input');
+            const sendBtn = document.querySelector('.send-btn');
+            const chatMessages = document.querySelector('.chat-messages');
+
+            function sendMessage() {
+                const messageText = chatInput.value.trim();
+                if (messageText) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    const messageElement = document.createElement('div');
+                    messageElement.className = 'message sent';
+                    messageElement.innerHTML = `
+                <div class="message-content">
+                    <p>${messageText}</p>
+                    <span class="message-time">${timeString}</span>
+                </div>
+            `;
+
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
 
 </body>
 
