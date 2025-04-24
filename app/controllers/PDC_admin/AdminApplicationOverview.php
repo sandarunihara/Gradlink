@@ -5,6 +5,7 @@
         public function dashboard(){
 
             $model = new Student_advertisement;
+
             $data = $model->findall();
             //show($data);
             $this-> view('PDC_admin/Application/ApplicationOverview' , 
@@ -29,7 +30,11 @@
 
         public function show($studentId , $advertisementId){
             $model = new Student_advertisement;
+            $action = new Action_logs;
+
             $data = $model->findstudentad($advertisementId, $studentId);
+
+            $actionData = $action->findActionOfAdv($advertisementId);
 
             $application = $data[0];
             $application = json_decode(json_encode($application), true);

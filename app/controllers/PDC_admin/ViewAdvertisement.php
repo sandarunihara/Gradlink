@@ -134,6 +134,9 @@ class ViewAdvertisement {
     public function reject($advertisementId , $reason , $action){
         $model = new C_Advertisement;
         $action = new Action_logs;
+        $notification  = new Admin_notification;
+
+        $x = $notification->findbyAdvertisementId($advertisementId);
 
         $companyDet = $model -> findwithcompany($advertisementId);
         $CompanyId = $companyDet->CompanyId;
@@ -154,9 +157,25 @@ class ViewAdvertisement {
             'reason' => $reason,
             'timestamp' => date('Y-m-d H:i:s')
         ];
+
+        $notificationId = $x->id;
+        
+
+        $notificationData = [
+            'type' => 'advertisement_request',
+            'company_id' => $CompanyId,
+            'advertisement_id' => $advertisementId,
+            'status' => 'Rejected',
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+
+
+        $updatedNotification = $notification->update($notificationId, $notificationData, 'id');
+        //show($actionData);
+        show($updatedNotification);
         
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
-        if($updatedStatus && $updatedStatus['status'] === 'success'){
+        if($updatedStatus && $updatedStatus['status'] === 'success' && $updatedNotification && $updatedNotification['status'] === 'success'){
             if($action->insert($actionData)){
                 $_SESSION['flash_message'] = [
                     'type' => 'success',
@@ -185,7 +204,7 @@ class ViewAdvertisement {
             $action = $_POST['action'];
             $advertisementId = $_POST['advertisementId'];
             $reason = $_POST['reason'];
-            $mail = $_POST['mail'];
+            //$mail = $_POST['mail'];
             if($action === 'deactivate'){
                 $this->deactivate($advertisementId , $reason , $action);
             }
