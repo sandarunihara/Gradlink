@@ -501,23 +501,25 @@
     <!-- SheetJS (xlsx) for client-side parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-    <script src="<?= ROOT ?>/assets/js/script.js"></script>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Scripts -->
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+    <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
+        // Initialize Toast System globally
+        const toastSystem = new ToastSystem();
+        
         document.addEventListener("DOMContentLoaded", function() {
-            // Initialize Toast System
-            const toastSystem = new ToastSystem();
+            // Initialize container
             toastSystem.initializeContainer();
 
             // Handle flash messages
             if (window.__flashMessage) {
                 const { message, type } = window.__flashMessage;
-                if (type === 'success') {
-                    successToast(message);
-                } else if (type === 'error') {
-                    errorToast(message);
-                }
+                toastSystem.show(message, type);
             }
 
             // Set minimum dates for date inputs
@@ -811,6 +813,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
+            // Handle flash messages
             if (window.__flashMessage) {
                 const { message, type } = window.__flashMessage;
                 toastSystem.show(message, type);
@@ -1052,20 +1055,19 @@
                             return response.json();
                         })
                         .then(data => {
+                            // alert('Response received: ' + JSON.stringify(data));
                             if (data.success) {
                                 if (activeTab === 'student') clearStudentFields();
                                 else if (activeTab === 'company') clearCompanyFields();
                                 else if (activeTab === 'advertisement') clearAdvertisementFields();
                                 toastSystem.show(data.message, 'success');
-
-                                // Clear fields based on active tab
-                                
                             } else {
                                 toastSystem.show(data.message, 'error');
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
+                            alert('Error occurred: ' + error.message);
                             toastSystem.show(error.message || 'An error occurred while submitting', 'error');
                         });
                 });
