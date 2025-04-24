@@ -14,6 +14,31 @@ class Company_notifications{
         'type'
     ];
 
+    public function getChat($company_id, $coordinator_id, $limit = 100) {
+        // Ensure $limit is a safe integer
+        $limit = (int)$limit;
+        $query = "
+            SELECT *
+            FROM $this->table
+            WHERE 
+                (
+                    (actor_id = :company_id AND target_id = :coordinator_id)
+                    OR
+                    (actor_id = :coordinator_id AND target_id = :company_id)
+                )
+                AND type = 'chat'
+            ORDER BY timestamp ASC
+            LIMIT $limit
+        ";
+        $params = [
+            'company_id' => $company_id,
+            'coordinator_id' => $coordinator_id
+        ];
+        return $this->query($query, $params);
+    }
+    
+
+
     //Get chat messages between 2 users
     public function getChatMessages($actor_id, $target_id, $limit=100){
         $query = "SELECT * FROM $this->table WHERE (actor_id = :actor_id AND target_id = :target_id) OR (actor_id = :target_id AND target_id = :actor_id) AND type='chat' ORDER BY timestamp ASC LIMIT :limit";

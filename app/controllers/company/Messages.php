@@ -17,8 +17,24 @@ class Messages{
                 }
             }
         }
-        // show($data);
-        $this-> view('Company/Messages',['data'=>$data]);
+
+        $message_coodinator=0;
+        $company_notmodel=new Company_notifications;
+        $coordinatorID='2002126019';
+        $message_data=$company_notmodel->getChat($user->CompanyId,$coordinatorID);
+        if(!empty($message_data)){
+            $message_coodinator=1;
+        }else{
+            $message_coodinator=0;
+        }
+        $i=0;
+        foreach($message_data as $message){
+            if($message->read_status === 0 && $message->actor_id ==='2002126019'){
+                $i=$i+1;
+            }
+        }
+        // show($message_data);
+        $this-> view('Company/Messages',['data'=>$data ,'message_coodinator'=>$message_coodinator ,'message_count'=>$i]);
     }
 
     public function techtalk(){
@@ -47,14 +63,25 @@ class Messages{
 
     public function coordinatormessage(){
         $companyID=$_SESSION['USER']->CompanyId;
-        $coordinatorModel=new pdc_coordinator;
+        // $coordinatorModel=new pdc_coordinator;
         // $coordinatorName=$coordinatorModel->
-        $coordinatorID='200212601985';
+        $coordinatorID='2002126019';
         $coordinator_message=new Company_notifications;
-        // $message=$coordinator_message->getChatMessages($coo)
 
-        // show($companyID);
-        $this->view("company/coordinatormessage");
+        $coordinator_message->markAsRead($coordinatorID,$companyID);
+
+        $message=$coordinator_message->getChat($companyID,$coordinatorID);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['companymessage'])) {
+
+            $result=$coordinator_message->sendMessage($companyID,$coordinatorID,$_POST['companymessage']);
+            if($result){
+                header('Location: http://localhost/Gradlink/public/company/Messages/coordinatormessage');
+            }
+            // show($result);
+        }
+
+        $this->view("company/coordinatormessage" ,['data'=>$message]);
     }
 
     public function getunread() {

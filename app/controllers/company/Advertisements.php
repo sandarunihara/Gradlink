@@ -120,6 +120,7 @@ class Advertisements
         }
         $admin_notification = new Admin_notification;
 
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $model = new C_Advertisement;
             $maxFileSize = 5 * 1024 * 1024; // 5 MB
@@ -179,8 +180,23 @@ class Advertisements
                             'type' => 'success',
                             'message' => 'Advertisement created successfully.'
                         ];
-                        header('Location: ../Advertisements/dashboard');
+
+                        echo "<script>window.location.href = 'http://localhost/Gradlink/public/company/Advertisements/dashboard';</script>";
                         exit;
+
+                        // if (headers_sent()) {
+                        //     header("Location: http://localhost/Gradlink/public/company/Advertisements/dashboard");
+                        //     exit;
+                        // } else {
+                        //     echo "<script>window.location.href = 'http://localhost/Gradlink/public/company/Advertisements/dashboard';</script>";
+                        //     exit;
+                        // }
+
+                        // echo '<meta http-equiv="refresh" content="0;url=http://localhost/Gradlink/public/company/Advertisements/dashboard">';
+                        // exit;
+                        
+                        // header('Location:http://localhost/Gradlink/public/company/Advertisements/dashboard');
+                        // exit;
                     } else {
                         $_SESSION['flash'] = [
                             'type' => 'error',
@@ -203,8 +219,8 @@ class Advertisements
             } else {
                 $data['errors'] = $model->errors;
             }
+            // show($_SESSION['flash']);
         }
-
         $this->view('Company/CreateAdvertisement', ['data' => $data]);
     }
 
