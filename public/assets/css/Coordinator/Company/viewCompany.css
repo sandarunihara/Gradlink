@@ -527,6 +527,8 @@ transform-origin: left;
     visibility: hidden;
     opacity: 0;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-container.active {
@@ -637,6 +639,9 @@ transform-origin: left;
     background-color: white;
     border-top: 1px solid #eee;
     align-items: center;
+    position: relative;
+    z-index: 1002;
+    margin-top: auto;
 }
 
 .chat-input input {
@@ -646,6 +651,14 @@ transform-origin: left;
     border-radius: 20px;
     outline: none;
     font-size: 14px;
+    background-color: white;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+.chat-input input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
 }
 
 .attachment-btn, .send-btn {
@@ -655,6 +668,11 @@ transform-origin: left;
     cursor: pointer;
     font-size: 18px;
     padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.attachment-btn:hover, .send-btn:hover {
+    color: #3498db;
 }
 
 .send-btn {

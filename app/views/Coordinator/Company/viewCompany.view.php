@@ -156,7 +156,7 @@
                             </div>
                             <div>
                                 <h3><?= htmlspecialchars($companyData->Name) ?></h3>
-                                <span class="chat-status">Online</span>
+                                
                             </div>
                         </div>
                         <button class="chat-close-btn">
@@ -187,9 +187,7 @@
                     </div>
 
                     <div class="chat-input">
-                        <button class="attachment-btn">
-                            <i class="fas fa-paperclip"></i>
-                        </button>
+                       
                         <input type="text" placeholder="Type a message...">
                         <button class="send-btn">
                             <i class="fas fa-paper-plane"></i>
@@ -295,6 +293,9 @@
                             // Set lastMessageId to the latest message's ID
                             lastMessageId = messages[messages.length - 1].id;
                             console.log('Set lastMessageId to:', lastMessageId);
+
+                            // Mark messages as read after loading
+                            markMessagesAsRead();
                         } else {
                             console.log('No messages found');
                             lastMessageId = 0;
@@ -306,6 +307,31 @@
                         console.error('Error loading messages:', error);
                         showMessageError('Failed to load messages. Please try again.');
                     });
+            }
+
+            // Mark messages as read
+            function markMessagesAsRead() {
+                if (!companyId) return;
+                
+                fetch(`<?= ROOT ?>/PDC_coordinator/ViewCompany/markAsRead`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `company_id=${companyId}`
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Messages marked as read:', data);
+                })
+                .catch(error => {
+                    console.error('Error marking messages as read:', error);
+                });
             }
 
             // Check for new messages

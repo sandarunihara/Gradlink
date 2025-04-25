@@ -16,23 +16,38 @@ class Company_notifications{
 
     //Get chat messages between 2 users
     public function getChatMessages($actor_id, $target_id){
-        
-        $query = "SELECT * FROM $this->table 
-                 WHERE ((actor_id = :actor_id AND target_id = :target_id) 
-                 OR (actor_id = :target_id AND target_id = :actor_id)) 
-                 AND type = 'chat' 
-                 ORDER BY timestamp ASC";
-                 
-        $params = [
-            'actor_id' => $actor_id,
-            'target_id' => $target_id
-        ];
-        
-        
-        $result = $this->query($query, $params);
-
-        // Ensure we always return an array
-        return is_array($result) ? $result : [];
+        try {
+            $query = "SELECT * FROM $this->table 
+                     WHERE ((actor_id = :actor_id AND target_id = :target_id) 
+                     OR (actor_id = :target_id AND target_id = :actor_id)) 
+                     AND type = 'chat' 
+                     ORDER BY timestamp ASC";
+                     
+            $params = [
+                'actor_id' => $actor_id,
+                'target_id' => $target_id
+            ];
+            
+            // Log the query and parameters for debugging
+            error_log("Chat Messages Query: " . $query);
+            error_log("Chat Messages Params: " . print_r($params, true));
+            
+            $result = $this->query($query, $params);
+            
+            // Log the result for debugging
+            error_log("Chat Messages Result: " . print_r($result, true));
+            
+            // Ensure we always return an array
+            if (!is_array($result)) {
+                error_log("Chat Messages: Result is not an array");
+                return [];
+            }
+            
+            return $result;
+        } catch (Exception $e) {
+            error_log("Error in getChatMessages: " . $e->getMessage());
+            return [];
+        }
     }
 
     //Send a chat message
@@ -60,18 +75,33 @@ class Company_notifications{
         return $this->query($query, $params);
     }
 
-    public function checkNewMessages($sender, $receiver, $last_id){
-        $query = "SELECT * FROM $this->table 
-                 WHERE ((actor_id = :actor_id AND target_id = :target_id) 
-                 OR (actor_id = :target_id AND target_id = :actor_id)) 
-                 AND type='chat' AND id > :last_id 
-                 ORDER BY timestamp ASC";
-        $params = [
-            'actor_id' => $sender,
-            'target_id' => $receiver,
-            'last_id' => $last_id
-        ];
-        return $this->query($query, $params);
+    public function checkNewMessages($coordinatorId, $companyId, $lastId = 0)
+    {
+        try {
+            $query = "SELECT * FROM $this->table 
+                     WHERE ((actor_id = :actor_id AND target_id = :target_id) 
+                     OR (actor_id = :target_id AND target_id = :actor_id)) 
+                     AND type = 'chat' 
+                     AND id > :last_id 
+                     ORDER BY timestamp ASC";
+            
+            $params = [
+                ':actor_id' => $coordinatorId,
+                ':target_id' => $companyId,
+                ':last_id' => (int)$lastId
+            ];
+            
+            $result = $this->query($query, $params);
+            
+            if ($result) {
+                return $result;
+            }
+            
+            return [];
+        } catch (Exception $e) {
+            error_log("Error in checkNewMessages: " . $e->getMessage());
+            return [];
+        }
     }
 
 }

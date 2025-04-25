@@ -22,6 +22,9 @@ class ViewCompany
         $companyNotificationsModel = new Company_notifications();
         $messages = $companyNotificationsModel->getChatMessages($coordinatorId, $id);
 
+        // echo 'pre';
+        // print_r($messages);
+        // echo '<pre>';
         if (!is_array($messages)) {
             $messages = [];
         }
@@ -56,6 +59,7 @@ class ViewCompany
             return;
         }
 
+        
         $coordinatorId = $_SESSION['USER']->CoordinatorId;
         // Verify the IDs are not empty
         if (empty($coordinatorId) || empty($id)) {
@@ -68,7 +72,8 @@ class ViewCompany
         // First try to get messages
         $messages = $companyNotificationsModel->getChatMessages($coordinatorId, $id);
 
-        
+        // Log the raw messages for debugging
+        error_log("Raw messages from getChatMessages: " . print_r($messages, true));
 
         // Initialize formatted messages array
         $formattedMessages = [];
@@ -86,7 +91,12 @@ class ViewCompany
                 $formattedMessages[] = $formattedMessage;
                 error_log("Formatted message: " . print_r($formattedMessage, true));
             }
+        } else {
+            error_log("No messages found or invalid format");
         }
+
+        // Log the final formatted messages
+        error_log("Final formatted messages: " . print_r($formattedMessages, true));
 
         echo json_encode($formattedMessages);
     }
@@ -120,7 +130,7 @@ class ViewCompany
     public function checkNewMessages($companyId)
     {
         $coordinatorId = $_SESSION['USER']->CoordinatorId;
-        $lastId = $_POST['last_id'] ?? null;
+        $lastId = $_GET['last_id'] ?? 0;
         $companyNotificationsModel = new Company_notifications();
         $newMessages = $companyNotificationsModel->checkNewMessages($coordinatorId, $companyId, $lastId);
 
@@ -146,5 +156,29 @@ class ViewCompany
             'messages' => $formattedMessages,
             'new_count' => count($formattedMessages)
         ]);
+    }
+
+    public function markAsRead()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $companyId = $_POST['company_id'] ?? null;
+            $coordinatorId = $_SESSION['USER']->CoordinatorId;
+
+            if (empty($companyId) || empty($coordinatorId)) {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid company or coordinator ID']);
+                return;
+            }
+
+            $companyNotificationsModel = new Company_notifications();
+            $result = $companyNotificationsModel->markAsRead($coordinatorId, $companyId);
+
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Messages marked as read']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to mark messages as read']);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+        }
     }
 }
