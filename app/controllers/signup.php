@@ -235,9 +235,9 @@ class Signup
         $data = [];
         $user = null;
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            show($_POST);
-            if (isset($_POST['userId'])) {
-                $userId = $_POST['userId'];
+            //show($_POST);
+            if (isset($_POST['studentId'])) {
+                $userId = $_POST['studentId'];
                 $userNum = strlen($userId);
 
                 switch ($userNum) {
@@ -246,8 +246,8 @@ class Signup
                         $id_column = 'StudentId';
 
                         $_SESSION['user'] = ([
-                            'StudentId' => $_POST['userId'],
-                            'Name' => $_POST['fname'] . ' ' . $_POST['lname'],
+                            'StudentId' => $_POST['studentId'],
+                            'Name' => $_POST['name'],
                             'Email' => $_POST['email'],
                             'NIC' => $_POST['nic'],
                             'ContactNum' => $_POST['contactNumber'],
