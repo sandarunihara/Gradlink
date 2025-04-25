@@ -44,35 +44,51 @@
                             <span class="m_date"><?php echo $senddate ?></span> -->
                         </div>
                     </div>
-
                     <div class="chat-container">
-                        <div class="m_content1">
-                            <div class="message message-received">
-                                <div class="message-bubble">
-                                    Hi there! How can I help you today?
-                                    <span class="message-time">10:00 AM</span>
-                                </div>
-                            </div>
-                            <div class="message message-sent">
-                                <div class="message-bubble">
-                                    Hello! I have a question about my order.
-                                    <span class="message-time">10:01 AM</span>
-                                </div>
-                            </div>
+                        <div class="m_content1" id="chat-messages">
+                            <?php if (!empty($data)) : ?>
+                                <?php foreach ($data as $message) : ?>
+                                    <?php if ($message->actor_id !== $_SESSION['USER']->CompanyId): ?>
+                                        <div class="message message-received">
+                                            <div class="message-bubble">
+                                                <?php echo $message->message ?>
+                                                <span class="message-time"><?php echo $message->timestamp ?></span>
+                                            </div>
+                                        </div>
+                                    <?php else : ?>
+                                        <div class="message message-sent">
+                                            <div class="message-bubble">
+                                                <?php echo $message->message ?>
+                                                <span class="message-time"><?php echo $message->timestamp ?></span>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No Massage </p>
+                            <?php endif; ?>
                             <!-- More messages here -->
                         </div>
-                        <div class="chat-input-area">
-                            <input type="text" class="chat-input" placeholder="Type your message...">
-                            <button class="chat-send-btn">Send</button>
-                        </div>
+                        <form method="post" class="chat-input-area">
+                            <input type="text" class="chat-input" name="companymessage" placeholder="Type your message...">
+                            <button type="submit" class="chat-send-btn">Send</button>
+                        </form>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
     </div>
+    <script>
+            function scrollToBottom() {
+                var chat = document.getElementById('chat-messages');
+                if (chat) {
+                    chat.scrollTop = chat.scrollHeight;
+                }
+            }
+
+        // Scroll on page load
+        window.onload = scrollToBottom;
+    </script>
 </body>
 
 </html>

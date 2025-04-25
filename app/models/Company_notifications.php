@@ -1,7 +1,8 @@
 <?php
 
-class Company_notifications{
-    use Model; 
+class Company_notifications
+{
+    use Model;
     protected $table = 'company_notifications';
 
     protected $allowedColumns = [
@@ -14,7 +15,28 @@ class Company_notifications{
         'type'
     ];
 
+    public function getChat($company_id, $coordinator_id, $limit = 100)
+    {
+        // Ensure $limit is a safe integer
+        $limit = (int)$limit;
+        $query = "SELECT * FROM $this->table 
+        WHERE ((actor_id = :company_id AND target_id = :coordinator_id) 
+            OR (actor_id = :coordinator_id AND target_id = :company_id)) 
+            AND type = 'chat' 
+        ORDER BY timestamp ASC 
+        LIMIT $limit";
+
+        $params = [
+            'company_id' => $company_id,
+            'coordinator_id' => $coordinator_id
+        ];
+        return $this->query($query, $params);
+    }
+
+
+
     //Get chat messages between 2 users
+
     public function getChatMessages($actor_id, $target_id){
         try {
             $query = "SELECT * FROM $this->table 
@@ -48,10 +70,12 @@ class Company_notifications{
             error_log("Error in getChatMessages: " . $e->getMessage());
             return [];
         }
-    }
+
+   
 
     //Send a chat message
-    public function sendMessage($sender, $receiver, $message){
+    public function sendMessage($sender, $receiver, $message)
+    {
         $data = [
             'actor_id' => $sender,
             'target_id' => $receiver,
@@ -68,6 +92,7 @@ class Company_notifications{
     public function markAsRead($sender, $receiver){
         $query = "UPDATE $this->table SET read_status = 1 
                  WHERE actor_id = :actor_id AND target_id = :target_id AND type='chat'";
+
         $params = [
             'actor_id' => $sender,
             'target_id' => $receiver
@@ -75,6 +100,7 @@ class Company_notifications{
         return $this->query($query, $params);
     }
 
+<
     public function checkNewMessages($coordinatorId, $companyId, $lastId = 0)
     {
         try {
@@ -102,6 +128,6 @@ class Company_notifications{
             error_log("Error in checkNewMessages: " . $e->getMessage());
             return [];
         }
-    }
 
+    }
 }

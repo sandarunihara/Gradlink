@@ -104,7 +104,7 @@ class C_Dashboard
             s.Email AS StudentEmail,
             s.ContactNum AS StudentContact,
             s.NIC,
-            s.cv AS UploadedCV,
+            sa.cv AS UploadedCV,
             sa.AdvertisementId,
             a.position,
             sa.Jobstatus,

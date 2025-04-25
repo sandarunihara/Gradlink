@@ -47,8 +47,6 @@ class Profile
                 } else {
                     $proimageBase64 = $data->profileimg;
                 }
-
-                
             } else {
                 $proimageBase64 = $data->profileimg;
             }
@@ -68,7 +66,7 @@ class Profile
                 $newcoverName = $cleanBase . '_' . $uniqueString . '.' . $ext;
                 $coverPictureDestination = __DIR__ . '/../../../public/assets/img/Company/' . $newcoverName;
                 $uploadcoverpic = move_uploaded_file($CoverpicTempName, $coverPictureDestination);
-                
+
                 if ($uploadcoverpic) {
                     $coverimageBase64 = $newcoverName;
                 } else {
@@ -102,8 +100,12 @@ class Profile
                     'type' => 'success',
                     'message' => 'Profile update Successfully'
                 ];
-                header('Location: ../Profile/dashboard');
+
+                echo "<script>window.location.href = 'http://localhost/Gradlink/public/company/Profile/dashboard';</script>";
                 exit;
+
+                // header('Location: ../Profile/dashboard');
+                // exit;
             } else {
                 $_SESSION['flash'] = [
                     'type' => 'error',
