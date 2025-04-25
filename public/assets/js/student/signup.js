@@ -3,18 +3,24 @@ const nextBtn = document.getElementById("nextBtn");
 const tab = document.getElementsByClassName("tab");
 const regForm = document.getElementById("regForm");
 const step = document.getElementsByClassName("step");
-const cv = document.getElementById("cv");
-const emailError = document.getElementById("emailError");
-const contactNumberError = document.getElementById("contactNumberError");
 const studentIdError = document.getElementById("studentIdError");
 const descriptionError = document.getElementById("descriptionError");
-const profilePictureError = document.getElementById("profilePictureError");
-const cvError = document.getElementById("cvError");
-const nicError = document.getElementById("nicError");
+
+const popupBox = document.getElementById('popupBox');
+const popupContent = document.querySelector('.popup-content');
+const input = document.getElementById('SelectedprofilePicture');
+
+const previewImage = document.getElementById('previewImage');
+const imageCrop = document.getElementById('image-crop'); 
+const profilePictureError = document.getElementById('profilePictureError');
+const profilePicture = document.getElementById('profilePicture');
+
+let cropper;
 
 var currentTab = 0;
 
 showTab(currentTab);
+
 
 // This function will display the specified tab of the form
 function showTab(n) {
@@ -35,74 +41,49 @@ function showTab(n) {
   fixStepIndicator(n);
 }
 
-// This function will figure out which tab to display
-function nextPrev(n) {
-  var x = tab;
+async function validateForm() {
+  const x = tab;
+  const y = x[currentTab].querySelectorAll("input[name ='SelectedprofilePicture'], textarea[name='shortDesc']");
+  let valid = true;
+  const results = [];
 
-  if (n == 1 && !validateForm()) return false;
+  for (let i = 0; i < y.length; i++) {
+    const input = y[i];
+    if (input.name === "studentId") {
+      results.push(await validStudentIndex(input));
+    } else if (input.name === "shortDesc") {
+      results.push(isShortDescriptionValid(input));
+    } else if (input.name === "SelectedprofilePicture") {
+      results.push(isValidProfilePicture(input));
+    } else {
+      if (input.value === "") {
+        input.classList.add("invalid");
+        valid = false;
+      } else {
+        input.classList.remove("invalid");
+      }
+    }
+  }
 
-  x[currentTab].style.display = "none";
+  if (results.includes(false)) valid = false;
 
-  currentTab = currentTab + n;
+  if (valid) step[currentTab].className += " finish";
 
-  if (currentTab >= x.length) {
+  return valid;
+}
+
+async function nextPrev(n) {
+  if (n === 1 && !(await validateForm())) return false;
+
+  tab[currentTab].style.display = "none";
+  currentTab += n;
+
+  if (currentTab >= tab.length) {
     regForm.submit();
-
     return false;
   }
 
   showTab(currentTab);
-}
-
-// This function deals with validation of the form fields
-function validateForm() {
-  var x,
-    y,
-    i,
-    valid = true;
-
-  let results = [];
-  x = tab;
-  y = x[currentTab].querySelectorAll("input[required], textarea[required]");
-
-  for (i = 0; i < y.length; i++) {
-    if (y[i].name == "email") {
-      results.push(validMail(y[i]));
-    }
-    if (y[i].name == "contactNumber") {
-      results.push(validContactNumber(y[i]));
-    }
-    if (y[i].name == "nic") {
-      results.push(validNIC(y[i]));
-    }
-    if (y[i].name == "studentId") {
-      results.push(validStudentIndex(y[i]));
-    }
-    if (y[i].name == "shortDesc") {
-      results.push(isShortDescriptionValid(y[i]));
-    }
-    if (y[i].name == "profilePicture") {
-      results.push(isValidProfilePicture(y[i]));
-    }
-    if (y[i].name == "cv") {
-      results.push(isValidCV(y[i]));
-    }
-    if (y[i].value == "") {
-      y[i].className += " invalid";
-      valid = false;
-    } else {
-      y[i].classList.remove("invalid");
-    }
-  }
-
-  //console.log(results);
-  if (results.includes(false)) {
-    valid = false;
-  }
-  if (valid) {
-    step[currentTab].className += " finish";
-  }
-  return valid;
 }
 
 // This function removes the "active" class of all steps
@@ -117,72 +98,69 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-function validMail(input) {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!pattern.test(input.value)) {
-    emailError.innerHTML = "Invalid email address";
-    emailError.style.display = "block";
-    input.classList.add("invalid");
-    return false;
-  } else {
-    emailError.innerHTML = "";
-    emailError.style.display = "none";
-    input.classList.remove("invalid");
-    return true;
-  }
-}
-function validNIC(input) {
-  const pattern = /^\d{12}$/;
-
-  if (!pattern.test(input.value)) {
-    nicError.innerHTML = "Invalid NIC number";
-    nicError.style.display = "block";
-    input.classList.add("invalid");
-    return false;
-  }else{
-    nicError.innerHTML = "";
-    nicError.style.display = "none";
-    input.classList.remove("invalid");
-    return true;
-  }
-}
-function validContactNumber(number) {
-  const numValue = number.value.trim();
-  if (!/^\d{10}$/.test(numValue)) {
-    contactNumberError.innerHTML = "Invalid contact number";
-    contactNumberError.style.display = "block";
-    number.classList.add("invalid");
-    return false;
-  } else {
-    contactNumberError.innerHTML = "";
-    contactNumberError.style.display = "none";
-    number.classList.remove("invalid");
-    return true;
-  }
-}
-function validStudentIndex(index) {
+async function validStudentIndex(index) {
   const pattern = /^\d{4}(cs|is)\d{3}$/;
+  
   if (!pattern.test(index.value)) {
     studentIdError.innerHTML = "Invalid student index number";
     studentIdError.style.display = "block";
     index.classList.add("invalid");
     return false;
-  } else {
-    studentIdError.innerHTML = "";
-    studentIdError.style.display = "none";
-    index.classList.remove("invalid");
-    return true;
+  }
+
+  studentIdError.innerHTML = "";
+  studentIdError.style.display = "none";
+  index.classList.remove("invalid");
+
+  try {
+    const response = await fetch(`${BASE_URL}/signup/fetchStudentDetails`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: 'studentId=' + encodeURIComponent(index.value),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      document.getElementById("email").value = data.student.Email;
+      document.getElementById("contactNumber").value = data.student.ContactNum;
+      document.getElementById("NIC").value = data.student.NIC;
+      document.getElementById("name").value = data.student.Name;
+      return true;
+    } else {
+      studentIdError.textContent = data.message;
+      studentIdError.style.display = "block";
+      index.classList.add("invalid");
+
+      // Clear fields
+      document.getElementById("email").value = "";
+      document.getElementById("contactNumber").value = "";
+      document.getElementById("NIC").value = "";
+      document.getElementById("name").value = "";
+
+      return false;
+    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+    studentIdError.textContent = "Error fetching student details";
+    studentIdError.style.display = "block";
+    index.classList.add("invalid");
+    return false;
   }
 }
 
+
+
 function isShortDescriptionValid(description) {
-  const words = description.value.trim().split(/\s+/);
-  if (words.length > 50) {
-    descriptionError.innerHTML = "Description is too long";
+  if (description.value.trim() === "") {
+    description.classList.add("invalid");
+    descriptionError.innerHTML = "Description is required.";
     descriptionError.style.display = "block";
     return false;
   } else {
+    description.classList.remove("invalid");
     descriptionError.innerHTML = "";
     descriptionError.style.display = "none";
     return true;
@@ -190,16 +168,23 @@ function isShortDescriptionValid(description) {
 }
 function isValidProfilePicture(input) {
   const MAX_SIZE = 500 * 1024;
-
+  if (!input.files) {
+    profilePictureError.innerHTML = "Profile picture is required.";
+    profilePictureError.style.display = "block";
+    input.classList.add("invalid");
+    return false;
+  }
   if (input.files.length === 0) {
     profilePictureError.innerHTML = "Please upload a file.";
     profilePictureError.style.display = "block";
+    input.classList.add("invalid");
     return false;
   }
-  if (input.size > MAX_SIZE) {
+  if (input.files[0].size > MAX_SIZE) {
     profilePictureError.innerHTML = "File size must be less than 500KB.";
     profilePictureError.style.display = "block";
     input.classList.add("invalid");
+    SelectedprofilePicture.value ='';
     return false;
   }
 
@@ -210,6 +195,7 @@ function isValidProfilePicture(input) {
     profilePictureError.innerHTML = "Invalid file type. Only JPG or PNG allowed.";
     profilePictureError.style.display = "block";
     input.classList.add("invalid");
+    SelectedprofilePicture.value = '';
     return false;
   } else {
     profilePictureError.innerHTML = "";
@@ -218,88 +204,42 @@ function isValidProfilePicture(input) {
     return true;
   }
 }
-function isValidCV(input) {
-
-  const file = input.files[0];
-  const validMimeType = "application/pdf";
-  const validExtension = ".pdf";
-  let isValid = true;
-
-  // Check MIME type
-  if (file.type !== validMimeType) {
-    isValid = false;
-  }
-
-  // Check file extension
-  const fileName = file.name.toLowerCase();
-  if (!fileName.endsWith(validExtension)) {
-    isValid = false;
-  }
-
-  if (!isValid) {
-    cvError.innerHTML = "Invalid file type. Only PDF is allowed.";
-    cvError.style.display = "block";
-    input.classList.add("invalid");
-    return false;
-  } else {
-    cvError.innerHTML = "";
-    cvError.style.display = "none";
-    input.classList.remove("invalid");
-    return true;
-  }
-}
-let cropper;
-const profilePictureBtn = document.getElementById('profilePictureBtn');
-const popupBox = document.getElementById('popupBox');
-const popupContent = document.querySelector('.popup-content');
-
-const input = document.getElementById('SelectedprofilePicture');
-const previewImage = document.getElementById('previewImage');
-const imageCrop = document.getElementById('image-crop'); 
-//const croppedImageInput = document.getElementById('croppedImageInput');
-
-const profilePicture = document.getElementById('profilePicture');
-
-profilePictureBtn.addEventListener('click',  () => {
-  popupBox.classList.remove('hidden');
-});
 
 popupBox.addEventListener('click', (event) => {
   if (!popupContent.contains(event.target)) {
-    popupBox.classList.add('hidden');
-    imageCrop.style.display = 'none';
-    input.value = '';
+    popupBox.classList.remove("show");
+    SelectedprofilePicture.value = '';
   }
 });
+function openCropper(input){
+    if(isValidProfilePicture(input)){
+      popupBox.classList.add("show");
 
-input.addEventListener('change',  (e) =>{
-  if(isValidProfilePicture(e.target)){
-    imageCrop.style.display = 'block';
-
-    const file = e.target.files[0];
-    const url = URL.createObjectURL(file);
-    previewImage.src = url;
+      imageCrop.style.display = 'block';
   
-    if (cropper) {
-      cropper.destroy();
+      const file = input.files[0];
+      const url = URL.createObjectURL(file);
+      previewImage.src = url;
+    
+      if (cropper) {
+        cropper.destroy();
+      }
+    
+      previewImage.onload = () => {
+        cropper = new Cropper(previewImage, {
+          aspectRatio: 1,
+          viewMode: 1,
+          minCropBoxWidth: 100,
+          minCropBoxHeight: 100,
+          responsive: true,
+          autoCropArea: 1,
+        });
+      };
     }
-  
-    previewImage.onload = () => {
-      cropper = new Cropper(previewImage, {
-        aspectRatio: 1,
-        viewMode: 1,
-        minCropBoxWidth: 100,
-        minCropBoxHeight: 100,
-        responsive: true,
-        autoCropArea: 1,
-      });
-    };
   }
-
-});
 
 document.getElementById('cropBtn').addEventListener('click', () => {
-  popupBox.classList.add('hidden');
+  popupBox.classList.remove("show");
   imageCrop.style.display = 'none';
 
 

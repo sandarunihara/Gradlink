@@ -6,6 +6,8 @@
     <title>Gradlink | Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
+    <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
     <style>
         :root {
             --deep-blue: #0A2463;
@@ -374,7 +376,6 @@
 
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/login.js"></script>
-    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             localStorage.clear(); // Clear local storage on page load
@@ -406,12 +407,12 @@
 
     <?php if (!empty($data['errors'])): ?>
         <script>
-            errorToast("Invalid credentials. Please try again.");
+            errorToast("<?php echo $data['errors']; ?>");
         </script>
     <?php endif; ?>
     <?php if (!empty($data['success'])): ?>
         <script>
-            successToast("Login successful!");
+            successToast("<?php echo $data['success']; ?>");
         </script>
     <?php endif; ?>
 
