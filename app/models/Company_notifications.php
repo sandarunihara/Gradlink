@@ -71,7 +71,7 @@ class Company_notifications
             return [];
         }
 
-   
+    }
 
     //Send a chat message
     public function sendMessage($sender, $receiver, $message)
@@ -100,7 +100,7 @@ class Company_notifications
         return $this->query($query, $params);
     }
 
-<
+
     public function checkNewMessages($coordinatorId, $companyId, $lastId = 0)
     {
         try {
