@@ -368,5 +368,17 @@ class student
 		}
 	}
 
+	public function checkStudentId($studentId){
+		$query = "SELECT * FROM $this->table WHERE StudentId = :studentId";
+		$params = [':studentId' => $studentId];
+		$result = $this->query($query, $params);
+		if($result){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 }
 

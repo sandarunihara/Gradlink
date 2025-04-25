@@ -34,8 +34,19 @@ class Studentdash{
             $date = DateTime::createFromFormat('Y-m-d', $dateString);
             $data['day'] = $date->format('jS');
         }
+
+        $interviewData = $interview_time_slot->findInterviews($arr['StudentId']);
+
+        $sessionModel = new PDC_Session;
+        $sessionData = $sessionModel->findAllUpcomingSessions();
+
+        // echo "<pre>";
+        // print_r($sessionData);
+        // print_r($interviewData);
+        // echo "</pre>";
+
         //show($data);
-        $this-> view('Student/Dashboard',$data);
+        $this-> view('Student/Dashboard',['data'=> $data, 'interviewData' => $interviewData, 'sessionData' => $sessionData]);
     }  
 
 
