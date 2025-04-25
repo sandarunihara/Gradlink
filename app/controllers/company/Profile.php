@@ -21,7 +21,14 @@ class Profile
             $user = $_SESSION['USER'];
         }
         $model = new company;
+        $all_company_data=$model->findAll([],[],'');
         $data = $model->first(['CompanyId' => $user->CompanyId]);
+        foreach ($all_company_data as $key => $company) {
+            if ($data->CompanyId == $company->CompanyId) {
+                unset($all_company_data[$key]);
+            }
+        }
+
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // show($_POST);
@@ -114,7 +121,6 @@ class Profile
             }
         }
 
-
-        $this->view('Company/EditProfile', ['data' => $data, 'user' => $user]);
+        $this->view('Company/EditProfile', ['data' => $data, 'user' => $user ,'all_company_data'=>$all_company_data]);
     }
 }

@@ -174,8 +174,8 @@ class Advertisements
                         'status' => 'Pending',
                     ];
                     $result = $model->insert($data);
-                    $notify_result = $admin_notification->insert($notification_data);
-                    if ($result && $notify_result) {
+                    // $notify_result = $admin_notification->insert($notification_data);
+                    if ($result) {
                         $_SESSION['flash'] = [
                             'type' => 'success',
                             'message' => 'Advertisement created successfully.'

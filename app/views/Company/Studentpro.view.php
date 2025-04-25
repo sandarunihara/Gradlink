@@ -180,7 +180,7 @@
                                                 <a class="view-profile-btn" href="<?php echo ROOT ?>/company/ShortlistedStudents/interviewschedule/<?php echo $data[0]->StudentId; ?>/<?php echo $adId ?>">Schedule Interview</a>
                                             <?php elseif ($interviewschedule == 1): ?>
                                                 <?php if ($interviewmark == 0): ?>
-                                                    <button type="button" value="" onclick="openAddmarkConfirmModal(event)" class="accept">dsg</button>
+                                                    <button type="button" value="" onclick="openAddmarkConfirmModal(event)" class="accept">Add Interview Mark</button>
                                                 <?php else: ?>
                                                     <button type="button" value="accept" onclick="openRecruitConfirmModal(event)" class="accept">Accept</button>
                                                 <?php endif; ?>

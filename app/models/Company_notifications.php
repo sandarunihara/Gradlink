@@ -62,6 +62,16 @@ class Company_notifications
         return $this->insert($data);
     }
 
+    public function getUnRead($sender, $receiver)
+    {
+        $query = "UPDATE $this->table SET read_status = 0 WHERE actor_id = :actor_id AND target_id = :target_id AND type='chat'";
+        $params = [
+            'actor_id' => $sender,
+            'target_id' => $receiver
+        ];
+        return $this->query($query, $params);
+    }
+
     public function markAsRead($sender, $receiver)
     {
         $query = "UPDATE $this->table SET read_status = 1 WHERE actor_id = :actor_id AND target_id = :target_id AND type='chat'";

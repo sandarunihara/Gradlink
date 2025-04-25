@@ -291,6 +291,42 @@ tr:last-child td {
   background-color: #e1faf5;
   border: 2px solid #e1faf5;
 }
+.Accept {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  outline: none;
+  border-radius: 5px;
+  color: #198754; /* Bootstrap green */
+  background-color: #eafaf1;
+  border: 2px solid #eafaf1;
+}
+
+.SendemailExpired {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  outline: none;
+  border-radius: 5px;
+  color: #a94442; /* Dark red tone for expired */
+  background-color: #f9d6d5;
+  border: 2px solid #f9d6d5;
+}
+
+.InterviewMarked {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  outline: none;
+  border-radius: 5px;
+  color: #856404; /* Golden brown tone */
+  background-color: #fff3cd;
+  border: 2px solid #fff3cd;
+}
+
 
 /* ******************* Recruit Student ****************** */
 /* c6cbfa
