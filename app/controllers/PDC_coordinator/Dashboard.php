@@ -18,12 +18,13 @@ class Dashboard
         $rejectedCSCount = $coordinatorModel->rejectedCSCount();
         $recruitedCSCount = $coordinatorModel->recruitedCSCount();
         $CSCount = $coordinatorModel->totalCSCount();
+       
 
         $pendingISCount = $coordinatorModel->pendingISCount();
         $rejectedISCount = $coordinatorModel->rejectedISCount();
         $recruitedISCount = $coordinatorModel->recruitedISCount();
         $ISCount = $coordinatorModel->totalISCount();
-
+        
         $jobRolesData = $coordinatorModel->jobRoles();
         $sessions = $coordinatorModel->getScheduledSessions();
         $roundModel = new Round;
@@ -57,16 +58,43 @@ class Dashboard
 
         $notAppliedCSCount = $CSCount - ($pendingCSCount + $rejectedCSCount + $recruitedCSCount);
         $notAppliedISCount = $ISCount - ($pendingISCount + $rejectedISCount + $recruitedISCount);
-        $applicationGraph = [
-            'pendingCSCount' => (($pendingCSCount * 100) / $CSCount) ?? 0,
-            'rejectedCSCount' => (($rejectedCSCount * 100) / $CSCount) ?? 0,
-            'recruitedCSCount' => (($recruitedCSCount * 100) / $CSCount) ?? 0,
-            'notAppliedCSCount' => (($notAppliedCSCount * 100) / $CSCount),
-            'pendingISCount' => (($pendingISCount * 100) / $ISCount) ?? 0,
-            'rejectedISCount' => (($rejectedISCount * 100) / $ISCount) ?? 0,
-            'recruitedISCount' => (($recruitedISCount * 100) / $ISCount) ?? 0,
-            'notAppliedISCount' => (($notAppliedISCount * 100) / $ISCount),
-        ];
+        
+        
+        
+        
+            
+            if($CSCount > 0) {
+              $applicationGraph = [  
+                'pendingCSCount' => (($pendingCSCount * 100) / $CSCount) ?? 0,
+                'rejectedCSCount' => (($rejectedCSCount * 100) / $CSCount) ?? 0,
+                'recruitedCSCount' => (($recruitedCSCount * 100) / $CSCount) ?? 0,
+                'notAppliedCSCount' => (($notAppliedCSCount * 100) / $CSCount) ?? 0,
+            ];
+            } else {
+                $applicationGraph = [
+                    'pendingCSCount' => 0,
+                    'rejectedCSCount' => 0,
+                    'recruitedCSCount' => 0,
+                    'notAppliedCSCount' => 0,
+                ];
+            }
+                
+            
+            if($ISCount > 0) {
+                $applicationGraph = [
+                'pendingISCount' => (($pendingISCount * 100) / $ISCount) ?? 0,
+                'rejectedISCount' => (($rejectedISCount * 100) / $ISCount) ?? 0,
+                'recruitedISCount' => (($recruitedISCount * 100) / $ISCount) ?? 0,
+                'notAppliedISCount' => (($notAppliedISCount * 100) / $ISCount) ?? 0,];
+            } else {
+                $applicationGraph = [
+                'pendingISCount' => 0,
+                'rejectedISCount' => 0,
+                'recruitedISCount' => 0,
+                'notAppliedISCount' => 0,];
+            }
+            
+        
 
         if (is_array($sessions)) { // Ensure $sessions is an array before looping
             foreach ($sessions as $session) {
