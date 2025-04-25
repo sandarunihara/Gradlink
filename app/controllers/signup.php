@@ -152,8 +152,8 @@ class Signup
             // show($data);
             $result = $Model->insert($data);
             // show($notification_data);
-            $notify_result = $admin_notification->insert($notification_data);
-            if ($result && $notify_result) {
+            // $notify_result = $admin_notification->insert($notification_data);
+            if ($result) {
                 if (!empty($_POST['email'])) {
                     $email = $_POST['email'];
                     $Name = $_POST['company_name'];
