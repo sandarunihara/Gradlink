@@ -43,7 +43,7 @@
                                             <span id="notificationCount" class="badge"></span>
                                         </div>
                                         <div id="notificationDropdown" class="dropdown-content" style="display: none;">
-                                            <i class="fas fa-close" onclick="toggleNotifications()"></i>
+                                            <i class="fas fa-close" ></i>
                                             <div id="notificationsList">
                                                 <p>Loading notifications...</p>
                                             </div>
@@ -156,22 +156,35 @@
 
                                             foreach ($firstEight as $item) {
                                                 $status = $item['Status'];
+                                                
                                                 switch ($status) {
                                                     case 'Recruit':
                                                         $Statusname = 'Recruit';
                                                         $statusClass = 'status Recruit';
+                                                        break;
+                                                    case 'Accept':
+                                                        $Statusname = 'Accept';
+                                                        $statusClass = 'status Accept';
                                                         break;
                                                     case 'Reject':
                                                         $Statusname = 'Rejected';
                                                         $statusClass = 'status Reject';
                                                         break;
                                                     case 'Interview Scheduled':
-                                                        $Statusname = 'Scheduled';
+                                                        $Statusname = 'Interview Scheduled';
                                                         $statusClass = 'status Sendemail';
+                                                        break;
+                                                    case 'Interview Expired':
+                                                        $Statusname = 'Interview Expired';
+                                                        $statusClass = 'status SendemailExpired';
                                                         break;
                                                     case 'Shortlist':
                                                         $Statusname = 'Shortlisted';
-                                                        $statusClass = 'status Shortlist';
+                                                        $statusClass = 'statusShortlist';
+                                                        break;
+                                                    case 'Interview Marked':
+                                                        $Statusname = 'Interview Marked';
+                                                        $statusClass = 'status InterviewMarked';
                                                         break;
                                                     default:
                                                         $Statusname = 'Pending';
@@ -208,8 +221,7 @@
 
         <script>
             function toggleNotifications() {
-                const dropdown = document.getElementById("notificationDropdown");
-                dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+                window.location.href='http://localhost/Gradlink/public/company/Messages/dashboard';
             }
 
             async function loadNotifications() {
@@ -229,16 +241,16 @@
                         badge.textContent = data.length;
                         badge.style.display = 'inline-block';
 
-                        data.forEach(item => {
-                            const el = document.createElement('div');
-                            el.classList.add('notification-item');
-                            el.innerHTML = `
-                                            <strong>${item.session_name}</strong><br>
-                                            <span>${item.session_date} | ${item.time_slot}</span>
-                                        `;
-                            listContainer.appendChild(el);
-                        });
-                        console.log(listContainer);
+                        // data.forEach(item => {
+                        //     const el = document.createElement('div');
+                        //     el.classList.add('notification-item');
+                        //     el.innerHTML = `
+                        //                     <strong>${item.session_name}</strong><br>
+                        //                     <span>${item.session_date} | ${item.time_slot}</span>
+                        //                 `;
+                        //     listContainer.appendChild(el);
+                        // });
+                        // console.log(listContainer);
 
                     }
 

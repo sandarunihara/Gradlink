@@ -34,7 +34,7 @@
                     <div class="coverphoto">
                         <label for="coverphoto">
                             <img
-                                src="<?php echo !empty($data->coverimg) ? ROOT .'/assets/img/Company/' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
+                                src="<?php echo !empty($data->coverimg) ? ROOT . '/assets/img/Company/' . $data->coverimg : ROOT . '/assets/img/Company/coverpic.jpg'; ?>"
                                 id="coverPreview"
                                 alt="Cover Preview" />
                         </label>
@@ -46,7 +46,7 @@
                     <div class="prophoto">
                         <label for="profilephoto">
                             <img
-                                src="<?php echo !empty($data->profileimg) ? ROOT .'/assets/img/Company/' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
+                                src="<?php echo !empty($data->profileimg) ? ROOT . '/assets/img/Company/' . $data->profileimg : ROOT . '/assets/img/Company/companypro.png'; ?>"
                                 class="pro_logo"
                                 id="profilePreview"
                                 width="200"
@@ -139,6 +139,15 @@
 
 
     <script>
+        const existingEmails = <?php echo json_encode(array_values(array_map(function ($company) {
+                                    return $company->Email;
+                                }, $all_company_data))); ?>;
+        
+        const existingNames = <?php echo json_encode(array_values(array_map(function ($company) {
+                                    return $company->Name;
+                                }, $all_company_data))); ?>;
+                                console.log(existingNames);
+                                
         function isValidEmail(email) {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailPattern.test(email);
@@ -176,17 +185,15 @@
             const coverphoto = document.getElementById('coverphoto').files[0];
             const profilephoto = document.getElementById('profilephoto').files[0];
 
-            // const maxFileSize = 1024 * 1024; // 5MB
+            if(existingEmails.includes(email)){
+                errorToast("Email already exists.Use another one");
+                return false;
+            }
 
-            // if (!coverphoto) {
-            //     errorToast("Cover photo is required.");
-            //     return false;
-            // }
-
-            // if (!profilephoto) {
-            //     errorToast("Profile photo is required.");
-            //     return false;
-            // }
+            if(existingNames.includes(name)){
+                errorToast("Name already exists.Use another one");
+                return false;
+            }
 
             if (!name) {
                 errorToast("Company name is required.");

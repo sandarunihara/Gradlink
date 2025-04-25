@@ -330,6 +330,17 @@
 .status.Sendemail {
   color: #00cea8;
 }
+.Accept {
+  color: #198754;
+}
+
+.SendemailExpired {
+  color: #a94442; 
+}
+
+.InterviewMarked {
+  color: #856404;
+}
 
 /* Charts Section */
 .chart-toggle {

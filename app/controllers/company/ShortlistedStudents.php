@@ -185,7 +185,7 @@ class ShortlistedStudents
             } else {
                 $result = $updatemodel->update($StudentId, $advertisementId, $updatedata);
                 if ($result['status']) {
-                    if(!is_numeric($submitvalue)){
+                    if (!is_numeric($submitvalue)) {
                         $action_data = [
                             'actor_id' => $userid,
                             'actor_role' => 'company',
@@ -193,7 +193,7 @@ class ShortlistedStudents
                             'target_type' => 'student',
                             'action_type' => $_POST['submit_action']
                         ];
-                    }else{
+                    } else {
                         $action_data = [
                             'actor_id' => $userid,
                             'actor_role' => 'company',
@@ -528,6 +528,7 @@ class ShortlistedStudents
     public function getInterviewSchedules()
     {
         $companyID = $_SESSION['USER']->CompanyId;
+        $coordinatorID = '200212601985';
         $advertisementModel = new C_Advertisement;
         $interviewmodel = new interview_time_slot;
         $student = new student;

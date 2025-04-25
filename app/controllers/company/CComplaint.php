@@ -25,15 +25,8 @@ class CComplaint
         ];
         $res=$model->where($req,[], '', 'do_not_order');
         $data=$res[0];
-        $replydata=$reply_model->where($req,[],'','do_not_order');
-        if(!empty($replydata)){
-            $reply=$replydata[0]->Reply;
-        }
-        if(!empty($reply)){
-            $data->Reply = $reply;
-        }else{
-            $data->Reply ='';
-        }
+        
+        
         $this->view('Company/ViewComplaint',['data'=>$data]);
     }
 

@@ -182,6 +182,10 @@
     const existingEmails = <?php echo json_encode(array_map(function ($company) {
                               return $company->Email;
                             }, $alldata)); ?>;
+    
+    const existingNames = <?php echo json_encode(array_map(function ($company) {
+                              return $company->Name;
+                            }, $alldata)); ?>;
 
     let currentTab = 0;
 
@@ -190,7 +194,8 @@
 
       const fields = [{
           id: "name",
-          message: "Company name is required"
+          message: "Company name is required",
+          type:"name"
         },
         {
           id: "description",
@@ -229,7 +234,7 @@
         {
           id: "linkedin",
           message: "Valid linkedin is required",
-          type: "url"
+          type: "linkedin"
         },
         {
           id: "website",
@@ -280,6 +285,12 @@
               field.message = "This email is already in use";
             }
           } else if (field.type === "url" && !/^https?:\/\/.+\..+/.test(value)) {
+            showError = true;
+            field.message = "Enter a valid URL";
+          }else if (field.type === "name" && existingNames.includes(value)) {
+            showError = true;
+            field.message = "This company is already registered";
+          }else if (field.type === "linkedin" && !/^https:\/\/(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9_-]+\/?$/.test(value)) {
             showError = true;
             field.message = "Enter a valid URL";
           } else if (field.type === "phone" && !/^0\d{9}$/.test(value)) {
