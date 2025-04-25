@@ -17,8 +17,33 @@ class Signup
         $this->view('roleSelection');
     }
     public function student()
-    {
+    {   
         $this->view('studentSignup');
+    }
+    public function fetchStudentDetails()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $arr['StudentId'] = $_POST['studentId'];
+            $_SESSION['student'] = $arr['StudentId'];
+            
+            $student_import = new studentimport;
+            $studentNew = $student_import->where($arr, [], '', 'do_not_order')[0];
+            
+            $student = new student;
+            $student = $student->checkStudentId($arr['StudentId']);
+
+            header('Content-Type: application/json');
+            if (!empty($studentNew)) {
+                if($student){
+                    echo json_encode(['success' => false, 'message' => 'Student already registered', 'registered' => 1]);
+                    exit;
+                }
+                echo json_encode(['success' => true, 'student' => $studentNew, 'registered' => 0]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Student not found', 'registered' => 0]);
+            }
+            exit;
+        }
     }
 
     public function getCompanynextId()
@@ -210,8 +235,8 @@ class Signup
         $data = [];
         $user = null;
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            show($_POST);
             if (isset($_POST['userId'])) {
-                //show($_FILES['cv']);
                 $userId = $_POST['userId'];
                 $userNum = strlen($userId);
 
@@ -240,19 +265,6 @@ class Signup
                         } else {
                             $data['errors'] = "Invalid User ID";
                         }
-                        // $profilePictureName = $_FILES['profilePicture']['name'];
-                        // $profilePictureTempName = $_FILES['profilePicture']['tmp_name'];
-
-                        // $profilePictureExt = strtolower(pathinfo($profilePictureName, PATHINFO_EXTENSION));
-                        // $profilePictureActualName = strtolower(pathinfo($profilePictureName, PATHINFO_FILENAME));
-                        // $profilePictureNewName = preg_replace("/[^\w-]/", "_", $profilePictureActualName) . uniqid('', true) . "." . $profilePictureExt;
-                        // $profilePictureDestination = __DIR__ . '/../../public/assets/img/Student/' . $profilePictureNewName;
-
-                        // if (move_uploaded_file($profilePictureTempName, $profilePictureDestination)) {
-                        //     $_SESSION['user']['ProfilePic'] = $profilePictureNewName;
-                        // } else {
-                        //     $data['errors'] = "Failed to upload profile picture.";
-                        // }
                         if (isset($_POST['profilePicture'])) {
                             $base64 = $_POST['profilePicture'];
                         

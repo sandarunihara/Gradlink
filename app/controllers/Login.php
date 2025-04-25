@@ -46,9 +46,13 @@ class Login
 				default:
 					$user = null;
 			}
-
 			if ($user) {
 				$row = $user->first($arr);
+				if($row ->block){
+					$data['errors'] = "Your account is blocked. Please contact the administrator.";
+					$this->view('login', $data);
+					return;
+				}
 				$roundData = new round;
 				$round = $roundData->getActiveRound();
 				//time zone
