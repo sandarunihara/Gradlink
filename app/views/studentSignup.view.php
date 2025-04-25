@@ -24,22 +24,16 @@
                     </span>
                     <div class="fields">
                         <div class="input-field">
-                            <label>First Name</label>
+                            <label>Student ID</label>
                             <input 
                                 type="text" 
-                                id="fname" 
-                                name="fname" 
-                                placeholder="Enter your first name" 
+                                id="studentId" 
+                                name="studentId" 
+                                placeholder="Enter your student ID (e.g. 2021cs111)" 
+                                oninput="validStudentIndex(this)"
+                                required
                             >
-                        </div>
-                        <div class="input-field">
-                            <label>Last Name</label>
-                            <input 
-                                type="text" 
-                                id="lname" 
-                                name="lname" 
-                                placeholder="Enter your last name" 
-                            >
+                            <span id="studentIdError" class="error"></span>
                         </div>
                         <div class="input-field">
                             <label>Email</label>
@@ -47,21 +41,8 @@
                                 type="email" 
                                 id="email" 
                                 name="email" 
-                                placeholder="Enter your email address (e.g. saman@gmail.com)" 
-                                oninput="validMail(this)"
+                                readonly
                             >
-                            <span id="emailError" class="error"></span>
-                        </div>
-                        <div class="input-field">
-                            <label>NIC</label>
-                            <input 
-                                type="text" 
-                                id="NIC" 
-                                name="nic" 
-                                placeholder="Enter your NIC number (e.g. 2002********)" 
-                                oninput="validNIC(this)"
-                            >
-                            <span id="nicError" class="error"></span>
                         </div>
                         <div class="input-field">
                             <label>Contact Number</label>
@@ -69,21 +50,26 @@
                                 type="tel" 
                                 id="contactNumber" 
                                 name="contactNumber" 
-                                placeholder="Enter your contact number (e.g. 0712345678)"
-                                oninput="validContactNumber(this)"
+                                readonly
                             >
-                            <span id="contactNumberError" class="error"></span>
                         </div>
                         <div class="input-field">
-                            <label>Student ID</label>
+                            <label>NIC</label>
                             <input 
                                 type="text" 
-                                id="userId" 
-                                name="userId" 
-                                placeholder="Enter your student ID (e.g. 2021cs111)" 
-                                oninput="validStudentIndex(this)"
+                                id="NIC" 
+                                name="nic" 
+                                readonly
                             >
-                            <span id="studentIdError" class="error"></span>
+                        </div>
+                        <div class="input-field">
+                            <label>Name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                readonly
+                            >
                         </div>
                     </div>
                 </div>
@@ -133,10 +119,9 @@
                         <textarea
                             id="description" 
                             name="shortDesc" 
-                            placeholder="Enter a brief description about yourself (50 words)" 
+                            placeholder="Enter a brief description about yourself" 
                             cols="50" 
                             rows="5"
-                            required
                             oninput="isShortDescriptionValid(this)"
                         ></textarea>
                         <span id="descriptionError" class="error"></span>
@@ -147,22 +132,14 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Profile Picture</label>
-                            <button 
-                                type="button" 
-                                id="profilePictureBtn" 
-                            >
-                            <input type="hidden" name="profilePicture" id="profilePicture">
-                            </button>
-                        </div>
-                        <div class="input-field">
-                            <label>CV</label>
                             <input 
                                 type="file" 
-                                id="cv" 
-                                name="cv"
-                                onchange="isValidCV(this)"
+                                id="SelectedprofilePicture" 
+                                name="SelectedprofilePicture" 
+                                oninput="openCropper(this)"
                             >
-                            <span id="cvError" class="error"></span>
+                            <span id="profilePictureError" class="error"></span>
+                            <input type="hidden" name="profilePicture" id="profilePicture">
                         </div>
                     </div>
                 </div>
@@ -180,18 +157,11 @@
             </div>
         </form>
         <!-- Popup Box -->
-        <div id="popupBox" class="popup hidden">
+        <div id="popupBox" class="popup">
             <div class="popup-content">
-                <input 
-                    type="file" 
-                    id="SelectedprofilePicture" 
-                    name="SelectedprofilePicture" 
-                    onchange="isValidProfilePicture(this)"
-                >
-                <span id="profilePictureError" class="error"></span>
                 <div id="image-crop" style="display: none;">
                     <div class="crop-container">
-                        <img id="previewImage" />
+                        <img id="previewImage"/>
                     </div>
 
                     <button type="button" id="cropBtn">Crop</button>
@@ -200,6 +170,9 @@
             </div>
         </div>
     </div>
+    <script>
+        const BASE_URL = "<?= ROOT ?>";
+    </script>
     <script src="<?=ROOT?>/assets/js/Student/signup.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </body>
