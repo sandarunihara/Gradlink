@@ -7,7 +7,7 @@
 }
 
 .card {
-    background-color: #ECF0F1;;
+    background-color: #ffffff;;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);    
@@ -30,7 +30,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 .recent-activity {
-    background-color: #F9F9F9;
+    background-color: #ffffff;
     padding: 10px;
     border-radius: 8px;
     margin-top: 30px;
@@ -59,7 +59,7 @@ h1, h3 {
 }
 button{
     padding: 10px 20px;
-    background-color: #3498DB;
+    background-color: #0743a3e2;
     color: white;
     font-size: 16px;
     border: none;
@@ -68,7 +68,24 @@ button{
     transition: background-color 0.3s ease;
 }
 button:hover{
-    background-color: #2980B9;
+    background-color: #073580;
+}
+
+.activity-calendar-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.activity-container{
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    transition: all 0.3s ease;
 }
 
 /* Calendar Styles */
@@ -161,11 +178,15 @@ button:hover{
 }
 
 .calendar-day.today {
-    background: #4299e1;
+    background: #0743a3e2;
     color: white;
     font-weight: 600;
 }
-
+.calendar-day.today:hover {
+    background: #b9d5f9;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+}
 .calendar-day.has-event::after {
     content: '';
     position: absolute;
@@ -173,7 +194,7 @@ button:hover{
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: #4299e1;
+    background: #0743a3e2;
 }
 
 .calendar-day.today.has-event::after {

@@ -46,7 +46,8 @@
                 <button onclick="location.href='<?= ROOT ?>/Student/StudentScheduleInterview/Interview';">View Interview</button>
             </div>
         </div>
-        
+
+        <div class="activity-calendar-container">
         <div class="activity-container">
             <div class="recent-activity">
                 <h3>Recent Activity</h3>
@@ -84,6 +85,7 @@
                 <!-- Calendar days will be populated by JavaScript -->
             </div>
         </div>
+        </div>
 
         <!-- Event Details Modal -->
         <div class="modal" id="event-modal">
@@ -101,30 +103,42 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Sample data - in a real app, this would come from your backend
-            const events = {
-                '2023-06-15': [{
-                        time: '10:00 AM',
-                        type: 'interview',
-                        title: 'Interview with ABC Company'
-                    },
-                    {
-                        time: '2:00 PM',
-                        type: 'session',
-                        title: 'Career Development Workshop'
-                    }
-                ],
-                '2023-06-20': [{
-                    time: '11:30 AM',
+            const interviewData = <?php echo json_encode($interviewData); ?>;
+            const sessionData = <?php echo json_encode($sessionData); ?>;
+
+            const events = {};
+
+            interviewData.forEach(interview => {
+                const date = new Date(interview.InterviewDate);
+                const dateStr = formatDateForCalendar(date);
+                const timeStr = formatTime(interview.StartTime);
+
+                if (!events[dateStr]) {
+                    events[dateStr] = [];
+                }
+
+                events[dateStr].push({
                     type: 'interview',
-                    title: 'Technical Interview with XYZ Corp'
-                }],
-                '2023-06-25': [{
-                    time: '9:00 AM',
+                    title: interview.CompanyName || 'Interview',
+                    time: timeStr
+                });
+            });
+
+            sessionData.forEach(session => {
+                const date = new Date(session.session_date);
+                const dateStr = formatDateForCalendar(date);
+                const timeStr = session.time_slot;
+
+                if (!events[dateStr]) {
+                    events[dateStr] = [];
+                }
+
+                events[dateStr].push({
                     type: 'session',
-                    title: 'Resume Review Session'
-                }]
-            };
+                    title: session.session_name || 'Session',
+                    time: timeStr
+                });
+            });
 
             let currentDate = new Date();
             let currentMonth = currentDate.getMonth();
@@ -139,6 +153,20 @@
             const modalDate = document.getElementById('modal-date');
             const eventList = document.getElementById('event-list');
             const closeModal = document.getElementById('close-modal');
+
+            function formatDateForCalendar(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
+            function formatTime(time) {
+                const [hours, minutes] = time.split(':').map(Number);
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+                return `${String(formattedHours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
+            }
 
             // Render calendar
             function renderCalendar() {
@@ -182,7 +210,7 @@
                     }
 
                     // Check if this day has events
-                    const dateStr = formatDate(currentYear, currentMonth + 1, i);
+                    const dateStr = formatDateForCalendar(new Date(currentYear, currentMonth, i));
                     if (events[dateStr]) {
                         dayElement.classList.add('has-event');
 
@@ -212,13 +240,7 @@
                     calendarDays.appendChild(dayElement);
                 }
             }
-
-            // Format date as YYYY-MM-DD
-            function formatDate(year, month, day) {
-                return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            }
-
-            // Show events modal
+            
             function showEventsModal(dateStr, day) {
                 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'
