@@ -20,17 +20,21 @@ class Messages{
 
         $message_coodinator=0;
         $company_notmodel=new Company_notifications;
-        $coordinatorID='2002126019';
+        // show($user->CompanyId);
+        $coordinatorID='200212601985';
         $message_data=$company_notmodel->getChat($user->CompanyId,$coordinatorID);
+        // show($message_data);
         if(!empty($message_data)){
             $message_coodinator=1;
         }else{
             $message_coodinator=0;
         }
         $i=0;
-        foreach($message_data as $message){
-            if($message->read_status === 0 && $message->actor_id ==='2002126019'){
-                $i=$i+1;
+        if(!empty($message_data)){
+            foreach($message_data as $message){
+                if($message->read_status === 0 && $message->actor_id ==='200212601985'){
+                    $i=$i+1;
+                }
             }
         }
         // show($message_data);
@@ -65,12 +69,14 @@ class Messages{
         $companyID=$_SESSION['USER']->CompanyId;
         // $coordinatorModel=new pdc_coordinator;
         // $coordinatorName=$coordinatorModel->
-        $coordinatorID='2002126019';
+        $coordinatorID='200212601985';
         $coordinator_message=new Company_notifications;
 
         $coordinator_message->markAsRead($coordinatorID,$companyID);
 
         $message=$coordinator_message->getChat($companyID,$coordinatorID);
+
+        // show($message);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['companymessage'])) {
 
