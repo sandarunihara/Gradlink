@@ -16,15 +16,6 @@ class Company_notifications{
 
     //Get chat messages between 2 users
     public function getChatMessages($actor_id, $target_id){
-        error_log("Getting chat messages for actor_id: $actor_id and target_id: $target_id");
-        
-        // First check if the table exists
-        $tableCheck = $this->query("SHOW TABLES LIKE '$this->table'");
-        error_log("Table check result: " . print_r($tableCheck, true));
-        
-        // Get table structure
-        $structure = $this->query("DESCRIBE $this->table");
-        error_log("Table structure: " . print_r($structure, true));
         
         $query = "SELECT * FROM $this->table 
                  WHERE ((actor_id = :actor_id AND target_id = :target_id) 
@@ -37,19 +28,9 @@ class Company_notifications{
             'target_id' => $target_id
         ];
         
-        error_log("Executing query: $query with params: " . print_r($params, true));
         
         $result = $this->query($query, $params);
-        
-        error_log("Query result: " . print_r($result, true));
-        
-        // If no results, try a simpler query to check if there are any messages at all
-        if (empty($result)) {
-            $checkQuery = "SELECT COUNT(*) as count FROM $this->table WHERE type = 'chat'";
-            $countResult = $this->query($checkQuery);
-            error_log("Total chat messages count: " . print_r($countResult, true));
-        }
-        
+
         // Ensure we always return an array
         return is_array($result) ? $result : [];
     }

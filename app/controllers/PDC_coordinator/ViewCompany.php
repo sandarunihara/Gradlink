@@ -18,7 +18,6 @@ class ViewCompany
             echo "No data found";
             return;
         }
-
         $coordinatorId = $_SESSION['USER']->CoordinatorId;
         $companyNotificationsModel = new Company_notifications();
         $messages = $companyNotificationsModel->getChatMessages($coordinatorId, $id);
@@ -58,12 +57,8 @@ class ViewCompany
         }
 
         $coordinatorId = $_SESSION['USER']->CoordinatorId;
-        error_log("Getting messages for coordinator: $coordinatorId and company: $id");
-        error_log("Session data: " . print_r($_SESSION, true));
-
         // Verify the IDs are not empty
         if (empty($coordinatorId) || empty($id)) {
-            error_log("Empty coordinator ID or company ID");
             echo json_encode(['error' => 'Invalid coordinator or company ID']);
             return;
         }
@@ -72,18 +67,8 @@ class ViewCompany
         
         // First try to get messages
         $messages = $companyNotificationsModel->getChatMessages($coordinatorId, $id);
-        error_log("Raw messages from database: " . print_r($messages, true));
 
-        // If no messages, try to insert a test message
-        if (empty($messages)) {
-            error_log("No messages found, inserting test message");
-            $testMessage = "Test message at " . date('Y-m-d H:i:s');
-            $companyNotificationsModel->sendMessage($coordinatorId, $id, $testMessage);
-            
-            // Try to get messages again
-            $messages = $companyNotificationsModel->getChatMessages($coordinatorId, $id);
-            error_log("Messages after test insert: " . print_r($messages, true));
-        }
+        
 
         // Initialize formatted messages array
         $formattedMessages = [];
@@ -103,7 +88,6 @@ class ViewCompany
             }
         }
 
-        error_log("Final formatted messages: " . print_r($formattedMessages, true));
         echo json_encode($formattedMessages);
     }
 
