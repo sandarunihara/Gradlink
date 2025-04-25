@@ -67,8 +67,8 @@
                                         <span class="m_name">PDC Coordinator</span>
                                         <?php if ($message_count != 0): ?>
                                             <span class="m_time" style="color:rgb(0, 95, 24);">+<?php echo $message_count ?> Unread Messages</span>
-                                            <?php else : ?>
-                                                <span class="m_time" style="color:rgb(0, 0, 0);">No Unread Messages</span>
+                                        <?php else : ?>
+                                            <span class="m_time" style="color:rgb(0, 0, 0);">No Unread Messages</span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -76,7 +76,23 @@
                         <?php endif; ?>
 
                     <?php else : ?>
-                        <p class="no-events">No Message found</p>
+                        <?php if ($message_coodinator == 1): ?>
+                            <a href="../Messages/coordinatormessage" class="m_container">
+                                <div class="m_de">
+                                    <img src="<?php echo ROOT ?>/assets/img/Company/pdcphoto.jpg" class="image" />
+                                    <div class="m_content">
+                                        <span class="m_name">PDC Coordinator</span>
+                                        <?php if ($message_count != 0): ?>
+                                            <span class="m_time" style="color:rgb(0, 95, 24);">+<?php echo $message_count ?> Unread Messages</span>
+                                        <?php else : ?>
+                                            <span class="m_time" style="color:rgb(0, 0, 0);">No Unread Messages</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php else: ?>
+                            <p class="no-events">No Message found</p>
+                        <?php endif; ?>
                     <?php endif ?>
 
                 </div>

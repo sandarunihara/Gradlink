@@ -1,7 +1,8 @@
 <?php
 
-class Company_notifications{
-    use Model; 
+class Company_notifications
+{
+    use Model;
     protected $table = 'company_notifications';
 
     protected $allowedColumns = [
@@ -14,33 +15,29 @@ class Company_notifications{
         'type'
     ];
 
-    public function getChat($company_id, $coordinator_id, $limit = 100) {
+    public function getChat($company_id, $coordinator_id, $limit = 100)
+    {
         // Ensure $limit is a safe integer
         $limit = (int)$limit;
-        $query = "
-            SELECT *
-            FROM $this->table
-            WHERE 
-                (
-                    (actor_id = :company_id AND target_id = :coordinator_id)
-                    OR
-                    (actor_id = :coordinator_id AND target_id = :company_id)
-                )
-                AND type = 'chat'
-            ORDER BY timestamp ASC
-            LIMIT $limit
-        ";
+        $query = "SELECT * FROM $this->table 
+        WHERE ((actor_id = :company_id AND target_id = :coordinator_id) 
+            OR (actor_id = :coordinator_id AND target_id = :company_id)) 
+            AND type = 'chat' 
+        ORDER BY timestamp ASC 
+        LIMIT $limit";
+
         $params = [
             'company_id' => $company_id,
             'coordinator_id' => $coordinator_id
         ];
         return $this->query($query, $params);
     }
-    
+
 
 
     //Get chat messages between 2 users
-    public function getChatMessages($actor_id, $target_id, $limit=100){
+    public function getChatMessages($actor_id, $target_id, $limit = 100)
+    {
         $query = "SELECT * FROM $this->table WHERE (actor_id = :actor_id AND target_id = :target_id) OR (actor_id = :target_id AND target_id = :actor_id) AND type='chat' ORDER BY timestamp ASC LIMIT :limit";
         $params = [
             'actor_id' => $actor_id,
@@ -51,7 +48,8 @@ class Company_notifications{
     }
 
     //Send a chat message
-    public function sendMessage($sender, $receiver, $message){
+    public function sendMessage($sender, $receiver, $message)
+    {
         $data = [
             'actor_id' => $sender,
             'target_id' => $receiver,
@@ -64,7 +62,8 @@ class Company_notifications{
         return $this->insert($data);
     }
 
-    public function markAsRead($sender, $receiver){
+    public function markAsRead($sender, $receiver)
+    {
         $query = "UPDATE $this->table SET read_status = 1 WHERE actor_id = :actor_id AND target_id = :target_id AND type='chat'";
         $params = [
             'actor_id' => $sender,
@@ -73,7 +72,8 @@ class Company_notifications{
         return $this->query($query, $params);
     }
 
-    public function checkNewMessages($sender, $receiver, $last_id){
+    public function checkNewMessages($sender, $receiver, $last_id)
+    {
         $query = "SELECT * FROM $this->table WHERE ((actor_id = :actor_id AND target_id = :target_id) OR (actor_id = :target_id AND target_id = :actor_id)) AND type='chat' AND id > :last_id ORDER BY timestamp ASC";
         $params = [
             'actor_id' => $sender,
@@ -82,5 +82,4 @@ class Company_notifications{
         ];
         return $this->query($query, $params);
     }
-
 }
