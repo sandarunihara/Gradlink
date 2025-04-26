@@ -100,6 +100,53 @@ class student_advertisement
 
 		return $result;
 	}
+	function findAppliedCompaniesByAdvertisementId($studentId,$advertisementId){
+		$query = "SELECT 
+					studentadvertisement.Jobstatus, 
+					studentadvertisement.CreatedAt,
+					advertisement.position, 
+					advertisement.advertisementId,
+					company.Name,
+					company.profileimg
+              FROM 
+                    studentadvertisement
+              JOIN 
+                    advertisement ON studentadvertisement.advertisementId = advertisement.advertisementId
+              JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+              WHERE 
+                    studentadvertisement.StudentId = :StudentId AND studentadvertisement.AdvertisementId = :AdvertisementId";
+		$params = [
+			':StudentId' => $studentId,
+			':AdvertisementId' => $advertisementId
+		];
+		$result = $this->query($query, $params);
+
+		return $result;
+	}
+	function findInternshipOfferDetails($studentId){
+		$query = "SELECT 
+					studentadvertisement.Jobstatus, 
+					studentadvertisement.CreatedAt,
+					advertisement.position, 
+					advertisement.advertisementId,
+					company.Name,
+					company.profileimg
+              FROM 
+                    studentadvertisement
+              JOIN 
+                    advertisement ON studentadvertisement.advertisementId = advertisement.advertisementId
+              JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+              WHERE 
+                    studentadvertisement.StudentId = :StudentId AND studentadvertisement.JobStatus = 'Accept'";
+		$params = [
+			':StudentId' => $studentId
+		];
+		$result = $this->query($query, $params);
+
+		return $result;
+	}
 
 	function noOfAppliedCompanies($studentId){
 		$query = "SELECT COUNT(*) AS count FROM studentadvertisement WHERE StudentId = :StudentId AND JobStatus != 'Reject'";
@@ -183,6 +230,50 @@ class student_advertisement
 			return $result;
 		}
 		else{
+			return false;
+		}
+	}
+	function updateJobStatus($advertisementId, $studentId, $jobStatus){
+		$query = "UPDATE studentadvertisement SET JobStatus = :JobStatus WHERE AdvertisementId = :AdvertisementId AND StudentId = :StudentId";
+		$params = [
+			':JobStatus' => $jobStatus,
+			':AdvertisementId' => $advertisementId,
+			':StudentId' => $studentId
+		];
+		$result = $this->query($query, $params);
+		if(!$result){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function deleteStudentAD($conditions)
+    {
+        // Build the WHERE clause dynamically from the $conditions array
+        $whereClauses = [];
+        foreach ($conditions as $column => $value) {
+            $whereClauses[] = "$column = :$column";
+        }
+
+        $whereSQL = implode(' AND ', $whereClauses);
+        $query = "DELETE FROM $this->table WHERE $whereSQL";
+
+        // Execute the query and check if successful
+        $success = $this->query($query, $conditions);
+        if (!$success) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	public function deleteAllOtherStudentApplications($studentId)
+	{
+		$query = "DELETE FROM $this->table WHERE StudentId = :StudentId AND JobStatus != 'Reject'";
+		$params = [':StudentId' => $studentId];
+		$success = $this->query($query, $params);
+		if (!$success) {
+			return true;
+		} else {
 			return false;
 		}
 	}

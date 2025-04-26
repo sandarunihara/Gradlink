@@ -14,11 +14,15 @@ class Studentdash{
         $data['student_activities'] = $student_activity->findLeatest($arr['StudentId']);
 
         $data['numOfAppliedCompanies'] = 0;
+        $data['intenshipOffers'] = 0;
         if(empty($data['student_applied_companies'])){
             $data['numOfAppliedCompanies'] = 0;
         }else{
             foreach ($data['student_applied_companies'] as $company) {
-                if ($company->Jobstatus == "Pending") {
+                if($company->Jobstatus == "Accept"){
+                    $data['intenshipOffers']++;
+                }
+                if ($company->Jobstatus == "Pending" || $company->Jobstatus == "Shortlisted") {
                     $data['numOfAppliedCompanies']++;
                 }
             }
