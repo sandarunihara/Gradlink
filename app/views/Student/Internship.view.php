@@ -117,14 +117,21 @@
                 class="cv-upload"
             >
             <span id="errorId" class="error"></span>
-            <button
-                type="button"
-                id="defaultCV"
-                default-cv = '<?php echo json_encode($_SESSION['USER'] -> cv);?>'
-            >
-            Choose Default Resume
-            </button>
-            <br>
+            <?php if(isset($data['cv']) && !empty($data['cv'])){ ?>
+                <?php foreach ($data['cv'] as $cv): ?>
+                    <div class="cv-container">
+                        <input
+                            type="radio"
+                            name="cvId"
+                            id="cvId"
+                            value="<?= htmlspecialchars($cv->CV); ?>"
+                        >
+                        <label for="cvId" class="cv-label" id="cvLabel">
+                            <?= htmlspecialchars($cv->position . ' - ' . $cv->Name); ?>
+                        </label>
+                    </div>
+                <?php endforeach; ?>
+            <?php } ?>
             <button 
                 type="submit"
                 id="okBtn"

@@ -21,7 +21,14 @@ class Profile
             $user = $_SESSION['USER'];
         }
         $model = new company;
+        $all_company_data=$model->findAll([],[],'');
         $data = $model->first(['CompanyId' => $user->CompanyId]);
+        foreach ($all_company_data as $key => $company) {
+            if ($data->CompanyId == $company->CompanyId) {
+                unset($all_company_data[$key]);
+            }
+        }
+
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // show($_POST);
@@ -47,8 +54,6 @@ class Profile
                 } else {
                     $proimageBase64 = $data->profileimg;
                 }
-
-                
             } else {
                 $proimageBase64 = $data->profileimg;
             }
@@ -68,7 +73,7 @@ class Profile
                 $newcoverName = $cleanBase . '_' . $uniqueString . '.' . $ext;
                 $coverPictureDestination = __DIR__ . '/../../../public/assets/img/Company/' . $newcoverName;
                 $uploadcoverpic = move_uploaded_file($CoverpicTempName, $coverPictureDestination);
-                
+
                 if ($uploadcoverpic) {
                     $coverimageBase64 = $newcoverName;
                 } else {
@@ -102,8 +107,12 @@ class Profile
                     'type' => 'success',
                     'message' => 'Profile update Successfully'
                 ];
-                header('Location: ../Profile/dashboard');
+
+                echo "<script>window.location.href = 'http://localhost/Gradlink/public/company/Profile/dashboard';</script>";
                 exit;
+
+                // header('Location: ../Profile/dashboard');
+                // exit;
             } else {
                 $_SESSION['flash'] = [
                     'type' => 'error',
@@ -112,7 +121,6 @@ class Profile
             }
         }
 
-
-        $this->view('Company/EditProfile', ['data' => $data, 'user' => $user]);
+        $this->view('Company/EditProfile', ['data' => $data, 'user' => $user ,'all_company_data'=>$all_company_data]);
     }
 }

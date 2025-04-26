@@ -30,11 +30,11 @@
                                 <input id="searchInput" type="text" placeholder="Search Student">
                                 <i class="fas fa-search"></i>
                             </div>
-                            <!-- <select class="role-select">
+                            <select class="role-select">
                                 <option value="all">All</option>
                                 <option value="1">Not Review</option>
                                 <option value="">Reviewed</option>
-                            </select> -->
+                            </select>
                         </div>
                     </div>
                     <div class="filter-toggle" role="tablist" aria-label="Recruit or Accept List">
@@ -119,24 +119,23 @@
 
     <script>
         document.getElementById('searchInput').addEventListener('input', filterTable);
-        document.querySelector('.role-select').addEventListener('change', filterTable);
+        // document.querySelector('.role-select').addEventListener('change', filterTable);
 
         function filterTable() {
             
-
             const searchValue = document.getElementById('searchInput').value.toLowerCase();
-            const selectedRole = document.querySelector('.role-select').value.toLowerCase();
-            const rows = document.querySelectorAll('.name-container');
-
+            // const selectedRole = document.querySelector('.role-select').value.toLowerCase();
+            const rows = document.querySelectorAll('.stu-profile');
+            
             rows.forEach(row => {
                 const studentName = row.querySelector('.name-detail').textContent.toLowerCase();
-                const studentPosition = row.querySelector('.notreeviewedstatus').textContent.toLowerCase(); // Position
+                // const studentPosition = row.querySelector('.notreeviewedstatus').textContent.toLowerCase(); // Position
 
                 const matchesSearch = studentName.includes(searchValue);
-                const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
+                // const matchesRole = (selectedRole === "all" || studentPosition.toLowerCase() === selectedRole);
 
                 // Show row if it matches search, role filter, and status filter
-                if (matchesSearch && matchesRole) {
+                if (matchesSearch ) {
                     row.style.display = ''; // Show the row
                 } else {
                     row.style.display = 'none'; // Hide the row

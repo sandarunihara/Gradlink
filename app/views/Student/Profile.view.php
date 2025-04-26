@@ -97,16 +97,12 @@
                 <div class="student-edit">
                     <button onclick="location.href='<?=ROOT?>/Student/StudentProfile/ProfileEdit';">Update Profile</button>
                 </div>
-                <?php if($data['Student'] -> cv != null){ ?>
-                    <div class="cv-download">
-                        <a href="<?=ROOT?>/assets/uploads/cv/ <?php echo htmlspecialchars($data['Student'] -> cv)?>" target="_blank">
-                            <button>
-                                <i class="fas fa-file-arrow-down"></i> 
-                                <span>Download Resume</span>
-                            </button>
-                        </a>
-                    </div>
-                <?php } ?>
+                <div class="cv-download">
+                    <button id="downloadBtn">
+                        <i class="fas fa-file-arrow-down"></i> 
+                        <span>Download Resume</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>   
@@ -126,9 +122,9 @@
         <?php unset($_SESSION['errors']);?>
     <?php } ?>
 
-    <!-- Popup Box -->
+    <!-- Popup Box For profile picture -->
     <div id="popupBox" class="popup hidden">
-        <div class="popup-content">
+        <div class="popup-content" id="popupContentProfile">
             <form action="<?=ROOT?>/Student/StudentProfile/changeProfilePicture" method="POST" enctype="multipart/form-data">
                 <input 
                     type="file" 
@@ -146,6 +142,12 @@
                     <button type="submit" id="cropBtn">Crop & Save</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- Popup Box For cv download -->
+    <div id="popupBoxCV" class="popup hidden">
+        <div class="popup-content" id="popupContentCV">
+            <!-- CV links will be injected here -->
         </div>
     </div>
 <script>
@@ -191,8 +193,35 @@
 
     const form = document.querySelector('form');
 
+    const downloadBtn = document.getElementById('downloadBtn');
+    const popupContentCV = document.getElementById('popupContentCV');
+
+    downloadBtn.addEventListener('click', () =>{
+        popupBoxCV.classList.remove('hidden');
+    });
+    popupBoxCV.addEventListener('click', (event) => {
+    if (!popupContentCV.contains(event.target)) {
+        popupBoxCV.classList.add('hidden');
+    }
+    });
+    let cv = <?php echo json_encode($data['cv']); ?>;
+    if (cv && cv.length > 0) {
+        for (let i = 0; i < cv.length; i++) {
+            const cvName = cv[i].CV;
+            const position = cv[i].position;
+            const companyName = cv[i].Name;
+            const cvLink = `<?=ROOT?>/assets/img/Student/${cvName}`;
+            const p = document.createElement('p');
+            p.innerHTML = `<a href="${cvLink}" target="_blank">${position} - ${companyName}</a>`;
+            popupContentCV.appendChild(p);
+        }
+    }else{
+        const p = document.createElement('p');
+        p.innerHTML = `<a href="#">No CVs available</a>`;
+        popupContent.appendChild(p);
+    }
     profilePic.addEventListener('click',  () => {
-    popupBox.classList.remove('hidden');
+        popupBox.classList.remove('hidden');
     });
 
     popupBox.addEventListener('click', (event) => {

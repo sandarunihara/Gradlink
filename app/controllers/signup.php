@@ -17,8 +17,33 @@ class Signup
         $this->view('roleSelection');
     }
     public function student()
-    {
+    {   
         $this->view('studentSignup');
+    }
+    public function fetchStudentDetails()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $arr['StudentId'] = $_POST['studentId'];
+            $_SESSION['student'] = $arr['StudentId'];
+            
+            $student_import = new studentimport;
+            $studentNew = $student_import->where($arr, [], '', 'do_not_order')[0];
+            
+            $student = new student;
+            $student = $student->checkStudentId($arr['StudentId']);
+
+            header('Content-Type: application/json');
+            if (!empty($studentNew)) {
+                if($student){
+                    echo json_encode(['success' => false, 'message' => 'Student already registered', 'registered' => 1]);
+                    exit;
+                }
+                echo json_encode(['success' => true, 'student' => $studentNew, 'registered' => 0]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Student not found', 'registered' => 0]);
+            }
+            exit;
+        }
     }
 
     public function getCompanynextId()
@@ -34,21 +59,22 @@ class Signup
             $paddingLength = max(3, strlen((string)$nextId));
 
             // Format the new companyId (e.g., 'c001', 'c1000', etc.)
-            return 'c' . str_pad($nextId, $paddingLength, '0', STR_PAD_LEFT);
+            return 'C' . str_pad($nextId, $paddingLength, '0', STR_PAD_LEFT);
         } else {
             // Start from 'a001' if there are no existing entries
-            return 'c001';
+            return 'C001';
         }
     }
 
     public function company()
     {
-
+        $Model = new company;
+        $all_company_data=$Model->findAll([],[],'');
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $Model = new company;
-            $admin_notification=new Admin_notification;
-            
+            $admin_notification = new Admin_notification;
+
             if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
                 $ProfilepicName = $_FILES['profile_pic']['name'];
                 $ProfilepicTempName = $_FILES['profile_pic']['tmp_name'];
@@ -71,8 +97,6 @@ class Signup
                 } else {
                     $proimageBase64 = '';
                 }
-
-
             }
             if (isset($_FILES['cover_pic']) && $_FILES['cover_pic']['error'] == 0) {
                 $CoverpicName = $_FILES['cover_pic']['name'];
@@ -90,16 +114,15 @@ class Signup
                 $newcoverName = $cleanBase . '_' . $uniqueString . '.' . $ext;
                 $coverPictureDestination = __DIR__ . '/../../public/assets/img/Company/' . $newcoverName;
                 $uploadcoverpic = move_uploaded_file($CoverpicTempName, $coverPictureDestination);
-                
+
                 if ($uploadcoverpic) {
                     $coveimageBase64 = $newcoverName;
                 } else {
                     $coverimageBase64 = '$data->coverimg';
                 }
-
             }
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            
+
             $newcompanyId = $this->getCompanynextId();
             $data = [
                 'CompanyId' => $newcompanyId,
@@ -125,12 +148,12 @@ class Signup
                 'company_id' => $newcompanyId,
                 'status' => 'Pending',
             ];
-            
+
             // show($data);
             $result = $Model->insert($data);
             // show($notification_data);
-            $notify_result=$admin_notification->insert($notification_data);
-            if ($result && $notify_result) {
+            // $notify_result = $admin_notification->insert($notification_data);
+            if ($result) {
                 if (!empty($_POST['email'])) {
                     $email = $_POST['email'];
                     $Name = $_POST['company_name'];
@@ -153,7 +176,7 @@ class Signup
 
                                         Welcome to <strong>GradLink</strong>!<br><br>
 
-                                        Your Company User ID is: <strong>{$newcompanyId}</strong><br>
+                                        Your Company User ID is: <strong>{$_POST['email']}</strong><br>
                                         Please use this User ID to log in to your company account on GradLink.<br><br>
 
                                         <p>Thank you for registering with us.</p>
@@ -171,8 +194,26 @@ class Signup
                                 'type' => 'success',
                                 'message' => 'Your User ID sent to your email. Please check your inbox'
                             ];
-                                header('Location: http://localhost/Gradlink/public/login');
-                                exit;
+                            // show("<script>window.location.href = 'http://localhost/Gradlink/public/login';</script>");
+                            // echo "<script>window.location.href = 'http://localhost/Gradlink/public/login';</script>";
+                            // exit;
+
+                            // echo '<meta http-equiv="refresh" content="0;url=http://localhost/Gradlink/public/login">';
+                            // exit;
+
+                            if (ob_get_length()) {
+                                ob_end_clean();
+                            }
+                            header('Location: http://localhost/Gradlink/public/login');
+                            exit;
+
+                            // Fallback for browsers that don't support header redirection
+                            echo "<script>window.location.href = 'http://localhost/Gradlink/public/login';</script>";
+                            // echo "If you are not redirected, <a href='http://localhost/Gradlink/public/login'>click here</a>.";
+                            exit;
+
+                            // header('Location: http://localhost/Gradlink/public/login');
+                            // exit;
                         } catch (Exception $e) {
                             $_SESSION['flash'] = [
                                 'type' => 'error',
@@ -196,12 +237,15 @@ class Signup
                     'type' => 'error',
                     'message' => "Account registration failed. Please try again later"
                 ];
-                header('Location: http://localhost/Gradlink/public/signup/company');
+                echo "<script>window.location.href = 'http://localhost/Gradlink/public/signup/company';</script>";
                 exit;
+
+                // header('Location: http://localhost/Gradlink/public/signup/company');
+                // exit;
             }
         }
 
-        $this->view('companySignup');
+        $this->view('companySignup',['alldata'=>$all_company_data]);
     }
 
 
@@ -210,9 +254,9 @@ class Signup
         $data = [];
         $user = null;
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if (isset($_POST['userId'])) {
-                //show($_FILES['cv']);
-                $userId = $_POST['userId'];
+            //show($_POST);
+            if (isset($_POST['studentId'])) {
+                $userId = $_POST['studentId'];
                 $userNum = strlen($userId);
 
                 switch ($userNum) {
@@ -221,8 +265,8 @@ class Signup
                         $id_column = 'StudentId';
 
                         $_SESSION['user'] = ([
-                            'StudentId' => $_POST['userId'],
-                            'Name' => $_POST['fname'] . ' ' . $_POST['lname'],
+                            'StudentId' => $_POST['studentId'],
+                            'Name' => $_POST['name'],
                             'Email' => $_POST['email'],
                             'NIC' => $_POST['nic'],
                             'ContactNum' => $_POST['contactNumber'],
@@ -240,34 +284,21 @@ class Signup
                         } else {
                             $data['errors'] = "Invalid User ID";
                         }
-                        // $profilePictureName = $_FILES['profilePicture']['name'];
-                        // $profilePictureTempName = $_FILES['profilePicture']['tmp_name'];
-
-                        // $profilePictureExt = strtolower(pathinfo($profilePictureName, PATHINFO_EXTENSION));
-                        // $profilePictureActualName = strtolower(pathinfo($profilePictureName, PATHINFO_FILENAME));
-                        // $profilePictureNewName = preg_replace("/[^\w-]/", "_", $profilePictureActualName) . uniqid('', true) . "." . $profilePictureExt;
-                        // $profilePictureDestination = __DIR__ . '/../../public/assets/img/Student/' . $profilePictureNewName;
-
-                        // if (move_uploaded_file($profilePictureTempName, $profilePictureDestination)) {
-                        //     $_SESSION['user']['ProfilePic'] = $profilePictureNewName;
-                        // } else {
-                        //     $data['errors'] = "Failed to upload profile picture.";
-                        // }
                         if (isset($_POST['profilePicture'])) {
                             $base64 = $_POST['profilePicture'];
-                        
+
                             // Check if it's a valid base64 image string
                             if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
                                 $imageType = strtolower($type[1]); // jpg, png, jpeg etc.
                                 $base64 = substr($base64, strpos($base64, ',') + 1);
                                 $base64 = base64_decode($base64);
-                        
+
                                 if ($base64 === false) {
                                     $data['errors'] = "Invalid base64 image data.";
                                 } else {
                                     $safeName = "profile_" . uniqid('', true) . "." . $imageType;
                                     $destination = __DIR__ . '/../../public/assets/img/Student/' . $safeName;
-                        
+
                                     if (file_put_contents($destination, $base64)) {
                                         $_SESSION['user']['ProfilePic'] = $safeName;
                                     } else {
@@ -279,17 +310,17 @@ class Signup
                             }
                         } else {
                             $data['errors'] = "No profile picture submitted.";
-                        }                        
+                        }
 
-                        if(isset($_FILES['cv']) && $_FILES['cv']['error'] == 0) {
+                        if (isset($_FILES['cv']) && $_FILES['cv']['error'] == 0) {
                             $cvName = $_FILES['cv']['name'];
                             $cvTempName = $_FILES['cv']['tmp_name'];
-    
+
                             $cvExt = strtolower(pathinfo($cvName, PATHINFO_EXTENSION));
                             $cvActualName = strtolower(pathinfo($cvName, PATHINFO_FILENAME));
                             $cvNewName = preg_replace("/[^\w-]/", "_", $cvActualName) . uniqid('', true) . "." . $cvExt;
                             $cvDestination = __DIR__ . '/../../public/assets/uploads/cv/' . $cvNewName;
-    
+
                             if (move_uploaded_file($cvTempName, $cvDestination)) {
                                 $_SESSION['user']['cv'] = $cvNewName;
                             } else {
@@ -433,7 +464,6 @@ class Signup
                             $result1 = $user->insert($_SESSION['user'], $id_column);
                             if (!$result1) {
                                 throw new Exception("Failed to insert student table data.");
-
                             }
                             $result2 = $skill->insertSkill($id, $skills);
                             //show($skills);

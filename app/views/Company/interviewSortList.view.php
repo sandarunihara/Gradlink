@@ -73,7 +73,7 @@
                                                         break;
                                                     case 'Accept':
                                                         $statusText = 'Accept';
-                                                        $statusClass = 'Recruit';
+                                                        $statusClass = 'Accept';
                                                         break;
                                                     case 'Reject':
                                                         $statusText = 'Rejected';
@@ -85,11 +85,11 @@
                                                         break;
                                                     case 'Interview Expired':
                                                         $statusText = 'Interview Expired';
-                                                        $statusClass = 'Sendemail';
+                                                        $statusClass = 'SendemailExpired';
                                                         break;
                                                     case 'Interview Marked':
                                                         $statusText = 'Interview Marked';
-                                                        $statusClass = 'Sendemail';
+                                                        $statusClass = 'InterviewMarked';
                                                         break;
                                                     default:
                                                         $statusText = 'Awaiting';

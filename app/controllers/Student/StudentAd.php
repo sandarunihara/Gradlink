@@ -13,6 +13,9 @@ class StudentAd{
         $student_advertisement = new student_advertisement;
         $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
 
+        if(isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])){
+            $data['cv'] = $student_advertisement -> findresumes($_SESSION['USER'] -> StudentId);
+        }
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
@@ -29,15 +32,17 @@ class StudentAd{
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             try {
+                //show($_POST);
                 $advertisementId = $_GET['advertisementId'];
                 $this->beginTransaction(); 
 
-
-                if ($_SESSION['ROUNDID'] == 1 && $noOfAppliedAds >= $data['Student'] -> vacancy){
-                    throw new Exception("You have reached the limit of 5 applications in this round.");
+                $round = new Round;
+                $currentRoundDetails = $round -> getActiveRound();
+                if ($_SESSION['ROUNDID'] == 1 && $noOfAppliedAds >= $currentRoundDetails->vacancy){
+                    throw new Exception("You have reached the limit of applications in this round.");
                 }
 
-                if(array_key_exists('use_default_cv', $_POST)){ 
+                if(array_key_exists('cvId', $_POST)){ 
                     
                     $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
                     $student = new student;
@@ -54,6 +59,7 @@ class StudentAd{
                         throw new Exception("Error inserting data into student_advertisement table");
                     }
                 }else{
+                    //show($_FILES);
                     $file = $_FILES['file'];
                     $fileName = $_FILES['file']['name'];
                     $fileTempName = $_FILES['file']['tmp_name'];
@@ -133,8 +139,7 @@ class StudentAd{
                 return false;  
             }
         }else{
-            // show($data["AdDetails"]);
-            //show($_SESSION['USER']);
+            //show($data);
             $this-> view('Student/Internship', $data);        
         }
     }

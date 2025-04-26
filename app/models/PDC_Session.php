@@ -181,4 +181,14 @@ class PDC_Session
               ORDER BY c.Name ASC";
         return $this->query($query);
     }
+
+    public function findAllUpcomingSessions()
+    {
+        $query = "SELECT * 
+        FROM $this->table 
+        JOIN company ON session.CompanyId = company.CompanyId
+        WHERE session_date >= CURDATE() AND deleted = 0";
+        
+        return $this->query($query);
+    }
 }

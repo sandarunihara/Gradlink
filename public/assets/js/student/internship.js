@@ -7,9 +7,18 @@
     const form = document.querySelector('form');
     const errorId = document.getElementById('errorId');
     const cvUpload = document.getElementById('cvUpload');
-    const defaultCV = document.getElementById('defaultCV');
-    const defaltMessage = document.getElementById('defaultMessage');
-    
+
+    const radios = document.getElementsByName('cvId');
+
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            cvUpload.style.display = "none";
+            cvUpload.value = "";
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+        });
+    });
     // Show popup when any "Apply" button is clicked
     applyButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -28,50 +37,7 @@
             window.location.href = url;
         });
     });
-    addEventListener("DOMContentLoaded", () => {
-        localStorage.setItem("clicked", "false");
-    });
 
-    defaultCV.addEventListener('click', ()=> {
-        const cv = JSON.parse(defaultCV.getAttribute('default-cv'));
-
-        const clicked = localStorage.getItem("clicked");
-        if(clicked === "false"){
-            const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
-            const extension = cv.split('.').pop();
-            let masked;
-    
-            if(fileNameWithoutExtension.length < 5){
-                masked = cv;
-            }else{
-                const visiblePart = fileNameWithoutExtension.slice(-5);
-                masked = "***" + visiblePart + "." + extension;
-            }
-    
-            cvUpload.style.display = "none";
-            defaltMessage.innerText = masked;
-            defaltMessage.classList.remove('hidden');
-    
-            const defaultInput = document.createElement('input');
-            defaultInput.type = 'hidden';
-            defaultInput.name = 'use_default_cv';
-            defaultInput.value = cv;
-            form.appendChild(defaultInput);
-
-
-            localStorage.setItem("clicked", "true");
-        }else{
-            const defaultInput = document.querySelector('input[name="use_default_cv"]');
-            if (defaultInput) {
-                form.removeChild(defaultInput);
-            }
-            cvUpload.style.display = "block";
-            defaltMessage.innerText = "";
-            defaltMessage.classList.add('hidden');
-            localStorage.setItem("clicked", "false");
-        }
-
-    });
     // Handle file upload when "OK" button is clicked
     okBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -88,9 +54,10 @@
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
             cvUpload.style.display = "block";
-            defaltMessage.innerText = "";
-            defaltMessage.classList.add('hidden');
+            cvUpload.value = "";
+            errorId.innerHTML = "";
             popupBox.classList.add('hidden');
+            radios.forEach(radio => radio.checked = false);
         }
     });
     function validateFile(input){
@@ -132,6 +99,7 @@
             input.classList.add("invalid");
             return false;
         } else {
+            radios.forEach(radio => radio.checked = false);
             errorId.innerHTML = "";
             errorId.style.display = "none";
             input.classList.remove("invalid");

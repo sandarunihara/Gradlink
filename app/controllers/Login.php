@@ -21,34 +21,44 @@ class Login
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$userNum = strlen($_POST['userId']);
-
-			switch ($userNum) {
-				case 9:
-					$user = new student;
-					$arr['StudentId'] = $_POST['userId'];
-					$path = 'Student/StudentDash/dashboard';
-					break;
-				case 4:
-					$user = new company;
-					$arr['CompanyId'] = $_POST['userId'];
+			// show($_POST['userId']);
+			if(filter_var(($_POST['userId']), FILTER_VALIDATE_EMAIL)){
+				$user = new company;
+					$arr['Email'] = $_POST['userId'];
 					$path = 'company/Companydash/Dashboard';
-					break;
-				case 5:
-					$user = new pdc_assistant;
-					$arr['AssistantId'] = $_POST['userId'];
-					$path = 'PDC_admin/AdminDashboardOverview/dashboard';
-					break;
-				case 12:
-					$user = new pdc_coordinator;
-					$arr['CoordinatorId'] = $_POST['userId'];
-					$path = 'PDC_coordinator/Dashboard';
-					break;
-				default:
-					$user = null;
+			}else{
+				switch ($userNum) {
+					case 9:
+						$user = new student;
+						$arr['StudentId'] = $_POST['userId'];
+						$path = 'Student/StudentDash/dashboard';
+						break;
+					// case filter_var(($_POST['userId']), FILTER_VALIDATE_EMAIL):
+					// 	$user = new company;
+					// 	$arr['Email'] = $_POST['userId'];
+					// 	$path = 'company/Companydash/Dashboard';
+					// 	break;
+					case 5:
+						$user = new pdc_assistant;
+						$arr['AssistantId'] = $_POST['userId'];
+						$path = 'PDC_admin/AdminDashboardOverview/dashboard';
+						break;
+					case 12:
+						$user = new pdc_coordinator;
+						$arr['CoordinatorId'] = $_POST['userId'];
+						$path = 'PDC_coordinator/Dashboard';
+						break;
+					default:
+						$user = null;
+				}
 			}
-
 			if ($user) {
 				$row = $user->first($arr);
+				if($row ->block){
+					$data['errors'] = "Your account is blocked. Please contact the administrator.";
+					$this->view('login', $data);
+					return;
+				}
 				$roundData = new round;
 				$round = $roundData->getActiveRound();
 				//time zone
@@ -57,7 +67,7 @@ class Login
 
 				if ($row && password_verify($_POST['password'], $row->Password)) {
 					RoundStatusUpdater::update();
-					
+
 					// Set session for the user
 					session_start();
 					$_SESSION['USER'] = $row;
@@ -113,37 +123,48 @@ class Login
 				$userId = $_POST['userId'];
 				$userNum = strlen($userId);
 
-				switch ($userNum) {
-					case 9:
-						$user = new student;
-						$searchKey = ['StudentId' => $userId];
-						$id_column = 'StudentId';
-						break;
-					case 4:
-						$user = new company;
-						$searchKey = ['CompanyId' => $userId];
+				if(filter_var(($_POST['userId']), FILTER_VALIDATE_EMAIL)){
+					$user = new company;
+						$searchKey = ['Email' => $_POST['userId']];
+						// show($searchKey);
 						$id_column = 'CompanyId';
-						break;
-					case 5:
-						$user = new pdc_assistant;
-						$searchKey = ['AssistantId' => $userId];
-						$id_column = 'AssistantId';
-						break;
-					case 12:
-						$user = new pdc_coordinator;
-						$searchKey = ['CoordinatorId' => $userId];
-						$id_column = 'CoordinatorId';
-						break;
-					default:
-						$data['errors'] = "Invalid User ID";
-						break;
+				}else{
+					switch ($userNum) {
+						case 9:
+							$user = new student;
+							$searchKey = ['StudentId' => $userId];
+							$id_column = 'StudentId';
+							break;
+						// case 4:
+						// 	$user = new company;
+						// 	$searchKey = ['CompanyId' => $userId];
+						// 	$id_column = 'CompanyId';
+						// 	break;
+						case 5:
+							$user = new pdc_assistant;
+							$searchKey = ['AssistantId' => $userId];
+							$id_column = 'AssistantId';
+							break;
+						case 12:
+							$user = new pdc_coordinator;
+							$searchKey = ['CoordinatorId' => $userId];
+							$id_column = 'CoordinatorId';
+							break;
+						default:
+							$data['errors'] = "Invalid User ID";
+							break;
+					}
+
 				}
+
+
 
 				if ($user && empty($data['errors'])) {
 					$row = $user->first($searchKey);
 					if ($row) {
 						$data['rowdata'] = $row;
-						$_SESSION['USER_ID'] = $userId;
+						// show($row);
+						$_SESSION['USER_ID'] = $row->CompanyId;
 
 						$otp = random_int(100000, 999999);
 
@@ -174,7 +195,7 @@ class Login
 							$data['errors'] = "User email not found.";
 						}
 					} else {
-						$data['errors'] = "Invalid User ID";
+						$data['errors'] = "Invalid User ID or Email";
 						// redirect('login');
 					}
 				}
@@ -183,31 +204,35 @@ class Login
 					$userId = $_SESSION['USER_ID'];
 					$userNum = strlen($userId);
 
-					switch ($userNum) {
-						case 9:
-							$user = new student;
-							$searchKey = ['StudentId' => $userId];
-							$id_column = 'StudentId';
-							break;
-						case 4:
-							$user = new company;
-							$searchKey = ['CompanyId' => $userId];
-							$id_column = 'CompanyId';
-							break;
-						case 5:
-							$user = new pdc_assistant;
-							$searchKey = ['AssistantId' => $userId];
-							$id_column = 'AssistantId';
-							break;
-						case 12:
-							$user = new pdc_coordinator;
-							$searchKey = ['CoordinatorId' => $userId];
-							$id_column = 'CoordinatorId';
-							break;
-						default:
-							$data['errors'] = "Invalid User ID";
-							break;
-					}
+					
+						switch ($userNum) {
+							case 9:
+								$user = new student;
+								$searchKey = ['StudentId' => $userId];
+								$id_column = 'StudentId';
+								break;
+							case 4:
+								$user = new company;
+								$searchKey = ['CompanyId' => $userId];
+								$id_column = 'CompanyId';
+								break;
+							case 5:
+								$user = new pdc_assistant;
+								$searchKey = ['AssistantId' => $userId];
+								$id_column = 'AssistantId';
+								break;
+							case 12:
+								$user = new pdc_coordinator;
+								$searchKey = ['CoordinatorId' => $userId];
+								$id_column = 'CoordinatorId';
+								break;
+							default:
+								$data['errors'] = "Invalid User ID";
+								break;
+						}
+
+					
+
 
 					if ($user && empty($data['errors'])) {
 						$row = $user->first($searchKey);
