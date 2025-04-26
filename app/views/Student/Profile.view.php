@@ -97,12 +97,12 @@
                 <div class="student-edit">
                     <button onclick="location.href='<?=ROOT?>/Student/StudentProfile/ProfileEdit';">Update Profile</button>
                 </div>
-                <div class="cv-download">
+                <!-- <div class="cv-download">
                     <button id="downloadBtn">
                         <i class="fas fa-file-arrow-down"></i> 
                         <span>Download Resume</span>
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>   

@@ -14,11 +14,15 @@ class Studentdash{
         $data['student_activities'] = $student_activity->findLeatest($arr['StudentId']);
 
         $data['numOfAppliedCompanies'] = 0;
+        $data['intenshipOffers'] = 0;
         if(empty($data['student_applied_companies'])){
             $data['numOfAppliedCompanies'] = 0;
         }else{
             foreach ($data['student_applied_companies'] as $company) {
-                if ($company->Jobstatus == "Pending") {
+                if($company->Jobstatus == "Accept"){
+                    $data['intenshipOffers']++;
+                }
+                if ($company->Jobstatus == "Pending" || $company->Jobstatus == "Shortlisted") {
                     $data['numOfAppliedCompanies']++;
                 }
             }
@@ -40,24 +44,8 @@ class Studentdash{
         $sessionModel = new PDC_Session;
         $sessionData = $sessionModel->findAllUpcomingSessions();
 
-        // echo "<pre>";
-        // print_r($sessionData);
-        // print_r($interviewData);
-        // echo "</pre>";
-
         //show($data);
         $this-> view('Student/Dashboard',['data'=> $data, 'interviewData' => $interviewData, 'sessionData' => $sessionData]);
     }  
-
-
-    // public function renderoption($componentName, $componentProps = []){
-    //     $fileName = "../app/views/Student/" . $componentName . ".view.php";
-    //     if (file_exists($fileName)) {
-    //         require $fileName;
-    //     } else {
-    //         echo "Component not found";
-    //     }
-    // }
- 
 }
 

@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/complaintView.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/ComplaintConferm.css"> 
+
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 <body>
@@ -24,12 +25,6 @@
     <?php $this->renderComponent("studentHeader" , ["title" => "Complaint"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
-        <a href="<?=ROOT?>/Student/StudentComplaint/complaint/0" class="backreq">
-            <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 18l-6-6 6-6"></path>
-            </svg>
-            <h3>Back</h3>
-        </a>
         <div id="view-complaint-box">
             <div class="complaint-description-box">
                 <h2>Complaint Description</h2>
@@ -59,34 +54,15 @@
             ?>
         </div>
     </div>
-    <!-- Confirmation Modal -->
-    <div id="deleteConfirmationModal" class="updatemodal">
-        <div class="updatemodal-content">
-            <h2>Are you sure?</h2>
-            <p>Do you want to delete the complaint?</p>
-            <div class="updatemodal-buttons">
-                <button class="updateyes-btn" onclick="location.href='<?=ROOT?>/Student/StudentComplaint/deleteComplaint?complaintId=<?= $complaintId; ?>'">Yes</button>
-                <button class="updateno-btn" onclick="closeConfirmDeleteModal()">No</button>
-            </div>
-        </div>
-    </div>
-<script>
-    // Get references to modal and buttons
-    const complaintDeleteBtn = document.getElementById('complaintDeleteBtn');
-    const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
-    const yesButton = document.querySelector('.updateyes-btn');
-    const noButton = document.querySelector('.updateno-btn');
+    <?php $this->renderComponent("studentComplaintConferm", 
+    ["url" => ROOT . "/Student/StudentComplaint/deleteComplaint?complaintId=" . $complaintId, 
+        "button" => "complaintDeleteBtn",
+        "message" => "Do you want to delete the complaint?"
+    ]) ?>
+    <script>
+        const complaintDeleteBtn = document.getElementById('complaintDeleteBtn');
 
-    // Show confirmation modal when "Delete Complaint" is clicked
-    complaintDeleteBtn.addEventListener('click', () => {
-        deleteConfirmationModal.style.display = 'flex'; // Show modal
-    });
-
-    // Close confirmation modal when "No" button is clicked
-    function closeConfirmDeleteModal() {
-        deleteConfirmationModal.style.display = 'none'; // Hide modal
-    }
-</script>
+    </script>
 </body>
 </html>
 
