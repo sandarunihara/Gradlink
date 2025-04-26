@@ -135,7 +135,7 @@ class StudentComplaint{
             $_SESSION['success'] = "Complaint deleted successfully";
 
             $this->commit();
-            show($_SESSION);
+            //show($_SESSION);
             redirect('Student/StudentComplaint/complaint');
             return true;
 
@@ -143,7 +143,7 @@ class StudentComplaint{
             //methana awlk thiynwa transaction eka rollback wenne na
             $this->rollback();
             $_SESSION['errors'] = "Error deleting complaint: " . $e -> getMessage();
-            show($_SESSION);
+            //show($_SESSION);
             redirect('Student/StudentComplaint/complaint');
             return false;
         }

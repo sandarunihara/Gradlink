@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">  
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/appliedCompanies.css"> 
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css"> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -16,12 +15,6 @@
     <?php $this->renderComponent("studentHeader", ["title" => "Applied Companies"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
-        <a href="<?=ROOT?>/Student/StudentDash/dashboard" class="backreq">
-            <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 18l-6-6 6-6"></path>
-            </svg>
-            <h3>Back</h3>
-        </a>
         <div class="progress-report-table-div">
             <div class="progress-report-table-background">
                 <!-- Table -->

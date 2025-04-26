@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Student/dashboard.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
+    <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 </head>
 
 <body>
@@ -45,8 +46,36 @@
                 <?php endif; ?>
                 <button onclick="location.href='<?= ROOT ?>/Student/StudentScheduleInterview/Interview';">View Interview</button>
             </div>
+            <div class="card">
+                <h3>Internship Offers</h3>
+                <?php if ($data['intenshipOffers'] == 0): ?>
+                    <p>You have no internship offers.</p>
+                <?php else: ?>
+                    <?php if ($data['intenshipOffers'] == 1 ): ?>
+                        <p>You have <?php echo htmlspecialchars($data['intenshipOffers']) ?> internship offer.</p>
+                    <?php else: ?>
+                        <p>You have <?php echo htmlspecialchars($data['intenshipOffers']) ?> internship offers.</p>
+                    <?php endif; ?> 
+                <?php endif; ?>
+                <button onclick="location.href='<?= ROOT ?>/Student/StudentAppliedCompanies/InternshipOffers';">View Offers</button>
+            </div>
         </div>
+<!-- Toast -->
+<div id="toast-container" class="toast-container"></div>
 
+<?php if(array_key_exists('success', $_SESSION)){ ?>
+        <script>
+            successToast("<?= $_SESSION['success'] ?>");
+        </script>
+    <?php unset($_SESSION['success']);?>
+<?php }?>
+
+<?php if(array_key_exists('errors', $_SESSION)){ ?>
+        <script>
+            errorToast("<?= $_SESSION['errors'] ?>");
+        </script>
+    <?php unset($_SESSION['errors']);?>
+<?php }?>
         <div class="activity-calendar-container">
         <div class="activity-container">
             <div class="recent-activity">

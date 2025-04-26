@@ -1,0 +1,178 @@
+/* Table Container Styles */
+.progress-report-table-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.progress-report-table-wrapper {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Table Styles */
+.progress-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+}
+
+.progress-report-table th,
+.progress-report-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.progress-report-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+    position: sticky;
+    top: 0;
+}
+
+.progress-report-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 2px;
+}
+
+.btn i {
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.view-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.view-btn:hover {
+    background-color: #138496;
+}
+
+.accept-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.accept-btn:hover {
+    background-color: #218838;
+}
+
+.reject-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.reject-btn:hover {
+    background-color: #c82333;
+}
+
+/* Action Buttons Container */
+.actions-cell {
+    min-width: 200px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+a{
+    text-decoration: none;
+}
+/* No Data Message */
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+}
+.warning-message {
+    color: #dc3545;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+/* Responsive Table */
+@media (max-width: 768px) {
+    .progress-report-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .progress-report-table-wrapper {
+        padding: 10px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        margin: 2px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-report-table th,
+    .progress-report-table td {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+    
+    .progress-report-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+        margin-right: 10px;
+    }
+    
+    .progress-report-table tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .progress-report-table td {
+        display: flex;
+        align-items: center;
+        border-bottom: none;
+    }
+}
