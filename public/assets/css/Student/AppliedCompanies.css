@@ -46,7 +46,8 @@
 
 .pending, 
 .rejected,
-.recruit {
+.recruit,
+.accept {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
@@ -82,4 +83,11 @@
     background-color: orange;
     color: white;
 }
-
+.accept{
+    color: green;
+    border: 2px solid green;
+}
+.accept:hover {
+    background-color: green;
+    color: white;
+}

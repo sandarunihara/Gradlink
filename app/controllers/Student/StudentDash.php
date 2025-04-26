@@ -40,24 +40,8 @@ class Studentdash{
         $sessionModel = new PDC_Session;
         $sessionData = $sessionModel->findAllUpcomingSessions();
 
-        // echo "<pre>";
-        // print_r($sessionData);
-        // print_r($interviewData);
-        // echo "</pre>";
-
         //show($data);
         $this-> view('Student/Dashboard',['data'=> $data, 'interviewData' => $interviewData, 'sessionData' => $sessionData]);
     }  
-
-
-    // public function renderoption($componentName, $componentProps = []){
-    //     $fileName = "../app/views/Student/" . $componentName . ".view.php";
-    //     if (file_exists($fileName)) {
-    //         require $fileName;
-    //     } else {
-    //         echo "Component not found";
-    //     }
-    // }
- 
 }
 
