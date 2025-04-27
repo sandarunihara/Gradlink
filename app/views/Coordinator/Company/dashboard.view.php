@@ -30,7 +30,7 @@
                     <h1>Dashboard</h1>
                 </div>
                 <div class="header-right">
-                <div class="round-badge">
+                    <div class="round-badge">
                         <span class="round-label">Current Round</span>
                         <span class="round-number"><?= $round->round ?></span>
                     </div>
@@ -75,53 +75,52 @@
                         </div>
                         <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div>
 
-                        <div class="company-performance">
-                            <div class="calendar-title">
-                                <h2>Scheduled Tech Talk Sessions</h2>
-                            </div>
+                    </div>
+                    <div class="company-performance">
+                        <div class="calendar-title">
+                            <h2>Scheduled Tech Talk Sessions</h2>
+                        </div>
 
-                            <div class="calendar-container">
-                                <div id="calendar">
-                                    <div class="calendar-header">
-                                        <button class="prev" onclick="changeMonth(-1)">&#10094; Previous</button>
-                                        <div id="calendar-month">Month Year</div>
-                                        <button class="next" onclick="changeMonth(1)">Next &#10095;</button>
-                                    </div>
-                                    <div class="calendar-days" id="calendar-days"></div>
+                        <div class="calendar-container">
+                            <div id="calendar">
+                                <div class="calendar-header">
+                                    <button class="prev" onclick="changeMonth(-1)">&#10094; Previous</button>
+                                    <div id="calendar-month">Month Year</div>
+                                    <button class="next" onclick="changeMonth(1)">Next &#10095;</button>
                                 </div>
-                            </div>
-
-                            <div id="schedule-modal" class="modal">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 id="session-title" class="modal-title">Session Details</h2>
-                                        <button class="close-btn" onclick="closeModal()">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="session-meta">
-                                            <div class="meta-item">
-                                                <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                                </svg>
-                                                <span id="session-date"></span>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="session-list" id="session-details"></div>
-                                    </div>
-                                    
-                                </div>
+                                <div class="calendar-days" id="calendar-days"></div>
                             </div>
                         </div>
 
+                        <div id="schedule-modal" class="modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 id="session-title" class="modal-title">Session Details</h2>
+                                    <button class="close-btn" onclick="closeModal()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="session-meta">
+                                        <div class="meta-item">
+                                            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                                            </svg>
+                                            <span id="session-date"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="session-list" id="session-details"></div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
 
@@ -138,77 +137,74 @@
 
 
         <script>
-            
-                var jobRolesData = <?php echo json_encode($InternPositions, JSON_NUMERIC_CHECK); ?>;
-                var formattedJobRoles = jobRolesData.map(role => ({
-                    y: role.count,
-                    label: role.position
-                }));
+            var jobRolesData = <?php echo json_encode($InternPositions, JSON_NUMERIC_CHECK); ?>;
+            var formattedJobRoles = jobRolesData.map(role => ({
+                y: role.count,
+                label: role.position
+            }));
 
-                window.onload = function() {
+            window.onload = function() {
 
-                    CanvasJS.addColorSet("greenShades",
-                [//colorSet Array
-                "#D1FFD1",
-                "#A4FFA4",
-                "#7DFF7D",
-                "#4FFF4F",
-                "#2AFF2A",
-                "#1A4F1A",
-                "#0A1A0A"           
-                ]);
+                CanvasJS.addColorSet("greenShades",
+                    [ //colorSet Array
+                        "#D1FFD1",
+                        "#A4FFA4",
+                        "#7DFF7D",
+                        "#4FFF4F",
+                        "#2AFF2A",
+                        "#1A4F1A",
+                        "#0A1A0A"
+                    ]);
 
                 CanvasJS.addColorSet("blueShades",
-                [//colorSet Array
-                "#D1E8FF",
-                "#A4C8E1",
-                "#7DA2C1",
-                "#4F7DA2",
-                "#2A4F7D",
-                "#1A2A4F",
-                "#0A1A2A"
-                ]);
+                    [ //colorSet Array
+                        "#D1E8FF",
+                        "#A4C8E1",
+                        "#7DA2C1",
+                        "#4F7DA2",
+                        "#2A4F7D",
+                        "#1A2A4F",
+                        "#0A1A2A"
+                    ]);
 
                 CanvasJS.addColorSet("redShades",
-                [//colorSet Array
-                "#FFD1D1",
-                "#FFA4A4",
-                "#FF7D7D",
-                "#FF4F4F",
-                "#FF2A2A",
-                "#4F1A1A",
-                "#1A0A0A"
-                ]);
+                    [ //colorSet Array
+                        "#FFD1D1",
+                        "#FFA4A4",
+                        "#FF7D7D",
+                        "#FF4F4F",
+                        "#FF2A2A",
+                        "#4F1A1A",
+                        "#1A0A0A"
+                    ]);
 
-                
-                    
 
-                    var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
-                        backgroundColor: "#ffffff",
-                        colorSet: "blueShades",
-                        animationEnabled: true,
-                        // title: {
-                        //     text: "Job Roles Offered by Companies"
-                        // },
-                        axisY: {
-                            title: "Number of Job Openings",
-                            includeZero: true
-                        },
-                        data: [{
-                            type: "bar",
-                            indexLabel: "{y}",
-                            indexLabelPlacement: "inside",
-                            indexLabelFontWeight: "bolder",
-                            indexLabelFontColor: "white",
-                            dataPoints: formattedJobRoles
-                        }]
-                    });
 
-                    chart3.render();
 
-                }
+                var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
+                    backgroundColor: "#ffffff",
+                    colorSet: "blueShades",
+                    animationEnabled: true,
+                    // title: {
+                    //     text: "Job Roles Offered by Companies"
+                    // },
+                    axisY: {
+                        title: "Number of Job Openings",
+                        includeZero: true
+                    },
+                    data: [{
+                        type: "bar",
+                        indexLabel: "{y}",
+                        indexLabelPlacement: "inside",
+                        indexLabelFontWeight: "bolder",
+                        indexLabelFontColor: "white",
+                        dataPoints: formattedJobRoles
+                    }]
+                });
 
-           
+                chart3.render();
+
+            }
         </script>
 
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
