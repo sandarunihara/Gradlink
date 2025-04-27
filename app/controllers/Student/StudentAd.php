@@ -47,12 +47,13 @@ class StudentAd{
                 $advertisement = new C_Advertisement;
 
                 $slectedRoleDetails = $student_advertisement ->where($arr, [], 'CreatedAt', 'asc');
-
-                $new['AdvertisementId'] = $slectedRoleDetails[0] -> AdvertisementId;
-                $selectedPosition = $advertisement -> where($new, [], '', 'do_not_order')[0] -> position;
-                $selectedPosition = strtolower(str_replace(' ', '', $selectedPosition));
-                if($currentRoundDetails -> roundId == 1 && $selectedPosition != $position && $slectedRoleDetails[0] -> Jobstatus != 'Recruit'){
-                    throw new Exception("You have already applied for a different position in this round.");
+                if(!empty($slectedRoleDetails)){
+                    $new['AdvertisementId'] = $slectedRoleDetails[0] -> AdvertisementId;
+                    $selectedPosition = $advertisement -> where($new, [], '', 'do_not_order')[0] -> position;
+                    $selectedPosition = strtolower(str_replace(' ', '', $selectedPosition));
+                    if($currentRoundDetails -> roundId == 1 && $selectedPosition != $position && $slectedRoleDetails[0] -> Jobstatus != 'Recruit'){
+                        throw new Exception("You have already applied for a different position in this round.");
+                    }
                 }
                 if(!($currentRoundDetails -> roundId == 1 || $currentRoundDetails -> roundId == 2)){
                     throw new Exception("The application process is currently unavailable. Please wait for the round to begin.");
