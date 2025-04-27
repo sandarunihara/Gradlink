@@ -31,15 +31,30 @@
         public function show($studentId , $advertisementId){
             $model = new Student_advertisement;
             $action = new Action_logs;
+            $progress = new Progress_doc;
 
             $data = $model->findstudentad($advertisementId, $studentId);
 
             $actionData = $action->findActionOfAdv($advertisementId);
 
+            $progressData = $progress->findstudent($studentId);
+
+            //show($progressData);
+
             $application = $data[0];
+
+            $applicationData = [
+                'application' => $application,
+                'actionData' => $actionData,
+                'progressData' => $progressData
+            ];
+
+            //show($applicationData);
+
             $application = json_decode(json_encode($application), true);
             //show($application);
 
-            $this-> view('PDC_admin/Application/ApplicationView' , ['application' => $application]);
+            $this-> view('PDC_admin/Application/ApplicationView' , ['applicationData' => $applicationData]);
+            
         }
     }

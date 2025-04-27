@@ -57,5 +57,14 @@ class AdminProfileOverview{
         exit;
     }
 
+    // public function changePassword(){
+    //     $_SESSION['flash_message'] = [
+    //         'type' => 'success',
+    //         'message' => 'password changed successfully  '
+    //     ];
+    //     header('Location: ' . ROOT . '/PDC_admin/AdminProfileOverview/dashboard');
+    //     exit;
+    // }
+
     
 }

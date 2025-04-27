@@ -13,7 +13,7 @@ class ViewAdvertisement {
     public function show($advertisementId) {
         $model = new C_Advertisement;
         $data = $model->findwithcompany($advertisementId);
-        //var_dump($data);
+        //show($data);
         if ($data) {
             $this->view('PDC_admin/Advertisement/AdvertisementView', ['data' => $data]);
         } else {
@@ -81,6 +81,20 @@ class ViewAdvertisement {
     public function activate($advertisementId , $action){
         $model = new C_Advertisement;
         $notification  = new Admin_notification;
+        $action = new Action_logs;
+
+        $actor_id = $_SESSION['USER']->AssistantId;
+
+        $actionData = [
+            'actor_id' => $actor_id,
+            'actor_role' => 'admin',
+            'target_id' => $advertisementId,
+            'target_type' => 'advertisement',
+            'action_type' => 'accept',
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+
+
 
         $x = $notification->findbyAdvertisementId($advertisementId);
 
@@ -114,7 +128,7 @@ class ViewAdvertisement {
         //show($updatedNotification);
 
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
-        if($updatedStatus && $updatedStatus['status'] === 'success' && $updatedNotification && $updatedNotification['status'] === 'success'){
+        if($updatedStatus && $updatedStatus['status'] === 'success' && $updatedNotification && $updatedNotification['status'] === 'success' && $action->insert($actionData)){
             $this->sendEmail($mail , $CompanyId , $action , $advertisementId);
             $_SESSION['flash_message'] = [
                 'type' => 'success',
@@ -172,7 +186,7 @@ class ViewAdvertisement {
 
         $updatedNotification = $notification->update($notificationId, $notificationData, 'id');
         //show($actionData);
-        show($updatedNotification);
+        //show($updatedNotification);
         
         $updatedStatus = $model->update($advertisementId,$data,'advertisementId');
         if($updatedStatus && $updatedStatus['status'] === 'success' && $updatedNotification && $updatedNotification['status'] === 'success'){

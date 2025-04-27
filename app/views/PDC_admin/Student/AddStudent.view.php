@@ -44,60 +44,62 @@
                     <div class="filling-form">
                         <div class="form-group">
                             <label for="student-id">Student ID</label>
-                            <input type="text" id="student-id" name="StudentId" placeholder="2022cs021" 
-                                value="<?= htmlspecialchars($old_data['StudentId'] ?? '') ?>" 
-                                pattern="\d{4}(cs|is)\d{3}"
-                                required>
+                            <input type="text" id="student-id" name="StudentId" placeholder="2022cs021">
                             <small class="format-hint">Format: 4 numbers, 2 letters, 3 numbers (e.g., 2022cs021)</small>
+                            <p class="error-message basic">Student ID cannot be empty</p>
+                            <p class="error-message pattern">Student ID not valid pattern</p>
                         </div>
 
                         <div class="form-group">
                             <label for="student-nic">Student NIC</label>
                             <input type="text" id="student-nic" name="NIC" placeholder="Student NIC"
-                                value="<?= htmlspecialchars($old_data['NIC'] ?? '') ?>"
-                                pattern="\d{12}"
-                                required>
+                                >
                             <small class="format-hint">Format: 12 digits (e.g., 200156789012)</small>
+                            <p class="error-message basic">NIC cannot be empty</p>
+                            <p class="error-message pattern">NIC ID not valid pattern</p>
                         </div>
 
                         <div class="form-group">
                             <label for="student-name">Student Name</label>
-                            <input type="text" id="student-name" name="Name" placeholder="Student Name"
-                                value="<?= htmlspecialchars($old_data['Name'] ?? '') ?>" required>
+                            <input type="text" id="student-name" name="Name" placeholder="Student Name">
+                            <p class="error-message">Student Name cannot be empty</p>
                         </div>
                         
                         <div class="form-group">
                             <label for="student-email">Email</label>
-                            <input type="email" id="student-email" name="Email" placeholder="Student Email"
-                                value="<?= htmlspecialchars($old_data['Email'] ?? '') ?>" required>
+                            <input type="email" id="student-email" name="Email" placeholder="Student Email">
+                            <p class="error-message">Student Email cannot be empty</p>
                         </div>
                         
                         <div class="form-group">
                             <label for="degree-name">Degree Name</label>
                             <select id="degree-name" name="DegreeName" required>
-                                <option value="" disabled <?= empty($old_data['DegreeName']) ? 'selected' : '' ?>>Select Degree</option>
-                                <option value="Computer Science" <?= ($old_data['DegreeName'] ?? '') === 'Computer Science' ? 'selected' : '' ?>>Computer Science</option>
-                                <option value="Information System" <?= ($old_data['DegreeName'] ?? '') === 'Information System' ? 'selected' : '' ?>>Information System</option>
+                                <option value="" disabled >Select Degree</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information System">Information System</option>
                             </select>
+                            <p class="error-message">Select a Degree Name empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="status">Status</label>
-                            <select id="status" name="Status" required>
-                                <option value="" disabled <?= empty($old_data['Status']) ? 'selected' : '' ?>>Select Status</option>
-                                <option value="Not Applied" <?= ($old_data['Status'] ?? 'Not Applied') === 'Not Applied' ? 'selected' : '' ?>>Not Applied</option>
-                                <option value="Pending" <?= ($old_data['Status'] ?? '') === 'Pending' ? 'selected' : '' ?>>Pending</option>
-                                <option value="Recruited" <?= ($old_data['Status'] ?? '') === 'Recruited' ? 'selected' : '' ?>>Recruited</option>
+                            <select id="status" name="Status" >
+                                <option value="" disabled >Select Status</option>
+                                <option value="Not Applied">Not Applied</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Recruited">Recruited</option>
                             </select>
+                            <p class="error-message">Select a Status</p>
                         </div>
 
                         <div class="form-group">
                             <label for="contact-number">Contact Number</label>
                             <input type="text" id="contact-number" name="ContactNum" placeholder="0771234567"
-                                value="<?= htmlspecialchars($old_data['ContactNum'] ?? '') ?>" 
-                                pattern="^\d{10}$"
-                                required>
+                                >
                             <small class="format-hint">Enter a valid phone number (e.g. 0733333333)</small>
+                            <p class="error-message basic">Contact Number cannot be empty</p>
+                            <p class="error-message pattern">Contact Number not valid pattern</p>
+
                         </div>
                     </div>
                     
@@ -111,5 +113,80 @@
     </div>
 
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
+
+    <script>
+
+        const studentform = document.querySelector('.company-form')
+
+        studentform.addEventListener('submit' , function(e){
+
+            let haserror = false
+
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(msg => msg.style.display = 'none');
+
+            const studentId = document.getElementById('student-id');
+            const studentIdValue = studentId.value.trim()
+            if(studentIdValue === ""){
+                studentId.parentElement.querySelector('.error-message.basic').style.display = 'block'
+                haserror = true
+            }
+            else if(!/^\d{4}(cs|is)\d{3}$/.test(studentIdValue)){
+                studentId.parentElement.querySelector('.error-message.pattern').style.display = 'block'
+                haserror = true
+            }
+
+            const studentnic = document.getElementById('student-nic');
+            const studentnicValue = studentnic.value.trim()
+            if(studentnicValue === ""){
+                studentnic.parentElement.querySelector('.error-message.basic').style.display = 'block'
+                haserror = true
+            }
+            else if(!/^\d{12}$/.test(studentnicValue)){
+                studentnic.parentElement.querySelector('.error-message.pattern').style.display = 'block'
+                haserror = true
+            }
+
+            const studentName = document.getElementById('student-name')
+            if(studentName.value.trim() === ""){
+                studentName.nextElementSibling.style.display = 'block'
+                haserror = true
+            }
+
+            const studentEmail = document.getElementById('student-email')
+            if(studentEmail.value.trim() === ""){
+                studentEmail.nextElementSibling.style.display = 'block'
+                haserror = true
+            }
+
+            const degree = document.getElementById('degree-name')
+            if(degree.value.trim() === ""){
+                degree.nextElementSibling.style.display = 'block'
+                haserror = true
+            }
+
+            const status = document.getElementById('status')
+            if(status.value.trim() === ""){
+                status.nextElementSibling.style.display = 'block'
+                haserror = true
+            }
+
+            const number = document.getElementById('contact-number');
+            const numberValue = number.value.trim();
+            if (numberValue === "") {
+                number.parentElement.querySelector('.error-message.basic').style.display = 'block';
+                haserror = true;
+            } else if (!/^\d{10}$/.test(numberValue)) {
+                number.parentElement.querySelector('.error-message.pattern').style.display = 'block';
+                haserror = true;
+            }
+
+            if(haserror){
+                e.preventDefault()
+            }
+        })
+
+    </script>
+
 </body>
 </html>

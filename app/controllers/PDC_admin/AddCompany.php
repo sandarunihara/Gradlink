@@ -92,9 +92,10 @@ class AddCompany{
                 } else {
                     $_SESSION['flash_message'] = [
                         'type' => 'error',
-                        'message' => 'Company is already Added'
+                        'message' => 'Company Name or Email Already Used'
                     ];
                     header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
                 }
             } else {
                 $_SESSION['flash_message'] = [

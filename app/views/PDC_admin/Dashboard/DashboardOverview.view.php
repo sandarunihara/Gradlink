@@ -6,460 +6,437 @@
     <title>Admin Dashboard | PDC</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/dashboard/overviewDashboard.css">
 
 </head>
 <body>
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar") ?>
-        
+        <?php $this->renderComponent("pdc_adminsidebar")  ?>
+
         <main class="main-content">
             <!-- Header Section -->
-            <header class="header">
-                <div class="header-left">
-                    <h1>Dashboard Overview</h1>
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Dashboard Overview</h1>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <div class="notification-wrapper">
+                            <button class="notification-btn">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge"></span>
+                            </button>
+                            
+                            <div class="notification-dropdown">
+
+                                <?php if(($data['adNotifications'] ?? 0) == 0 && ($data['pdcNotifications'] ?? 0) == 0):?>
+                                    <div class="notification-item">
+                                        <span>No requests</span>
+                                    </div>
+
+                                <?php else:?>
+
+                                    <div class="notification-item" id='adv-item'>
+                                        <i class="fas fa-ad"></i> 
+                                        <span>Deactivation requests</span>
+                                        <span class="count-badge" id='adv-req'></span>
+                                    </div>
+
+                                    <div class="notification-item" id='pdc-item'>
+                                        <i class="fas fa-user-tie"></i> 
+                                        <span>PDC Cordinator requests</span>
+                                        <span class="count-badge" id='pdc-req'></span>
+                                    </div>
+
+                                <?php endif;?>
+
+                            </div>
+                        </div>
+
+                        <div class="round-indicator">
+                            <div class="round-badge">
+                                <span><?= htmlspecialchars($data['round']->round ?? 'N/A') ?></span>
+                                <div class="round-tooltip">
+                                    <div class="progress-container">
+                                        <div class="progress-labels">
+                                            <span><?= isset($data['round']->startDate) ? date('M d, Y', strtotime($data['round']->startDate)) : 'N/A' ?></span>
+                                            <span><?= isset($data['round']->endDate) ? date('M d, Y', strtotime($data['round']->endDate)) : 'N/A' ?></span>       
+                                        </div>
+                                        <div class="progress-bar">
+                                            <?php
+                                            $percentage = 0;
+                                            $daysRemaining = 0;
+                                            
+                                            if (isset($data['round']->startDate) && isset($data['round']->endDate)) {
+                                                $startTime = strtotime($data['round']->startDate);
+                                                $endTime = strtotime($data['round']->endDate);
+                                                $now = time();
+
+                                                if ($startTime && $endTime && $endTime > $startTime) {
+                                                    $totalDuration = $endTime - $startTime;
+                                                    $elapsed = $now - $startTime;
+                                                    $remaining = $endTime - $now;
+                                                    
+                                                    $percentage = min(100, max(0, ($elapsed / $totalDuration) * 100));
+                                                    $percentage = round($percentage);
+                                                    
+                                                    $daysRemaining = max(0, floor($remaining / (60 * 60 * 24)));
+                                                }
+                                            }
+                                            ?>
+
+                                            <div class="progress-fill" style="width: <?= $percentage ?>%"></div>
+                                            <div class="progress-marker" style="left: <?= $percentage ?>%"></div>
+                                        </div>
+                                        <p><?= $percentage ?>% completed</p>
+                                        <p class="days-remaining"><?= $daysRemaining ?> days remaining</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="header-right">
-                    <div class="notification">
-                        <i class="fas fa-bell"></i>
-                        <span class="dot"></span>
-                    </div>
-
-                    <div class="notification-grid">
-                        <div class="notification-item">
-                            <i class="fas fa-building"></i>
-                            <span class="notification-text">New company registration pending</span>
-                        </div>
-                        <div class="notification-item">
-                            <i class="fas fa-user-graduate"></i> 
-                            <span class="notification-text">New student registration pending</span>
-                        </div>
-                        <div class="notification-item">
-                            <i class="fas fa-ad"></i> 
-                            <span class="notification-text">New advertisement pending</span>
-                        </div>
-                        <div class="notification-item">
-                            <i class="fas fa-ad"></i> 
-                            <span class="notification-text">Advertisement deactivate request</span>
-                        </div>
-                    </div>
-
-                    <div class="round-badge">
-                        <span class="round-label">Current Round</span>
-                        <span class="round-number"><?= $round->round ?></span>
-                        <div class="round-view">
-                            <p><?= date('M d, Y', strtotime($round->startDate)) ?> - <?= date('M d, Y', strtotime($round->endDate)) ?></p>
-                            <p><?= round((time() - strtotime($round->startDate)) / (strtotime($round->endDate) - strtotime($round->startDate)) * 100) ?>% completed</p>
-                        </div>
-                    </div>
-
-
-                    <div class="round-view">
-                        <p><?= $round->startDate ?> - <?=$round->endDate?></p>
-                    </div>
-                </div>
-                
             </header>
 
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <div class="metric-info">
-                        <h3>Registered Students</h3>
-                        <p class="metric-value"><?= $cards['registeredStdCount'] ?></p>
-                        <!-- <?php 
-                            if (!empty($weekStd)) {
-                                $latestweek = $weekStd[0];
-
-                                if ($latestweek['trend'] == 'up') {
-                                    echo "<p class='metric-change positive'><i class='fas fa-arrow-up'></i> {$latestweek['change']}% from last week</p>";
-                                } else if ($latestweek['trend'] == 'down') {
-                                    echo "<p class='metric-change negative'><i class='fas fa-arrow-down'></i> {$latestweek['change']}% from last week</p>";
-                                } else {
-                                    echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> No change</p>";
-                                }
-                            } else {
-                                echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> Not enough data</p>";
-                            }
-                        ?> -->
-                    </div>
+            <!-- Key Metrics Section -->
+            <section class="metrics-section">
+                <div class="section-header">
+                    <h2>Key Performance Indicators</h2>
+                    <p class="section-subtitle">Current placement round statistics</p>
                 </div>
                 
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="metric-info">
-                        <h3>Registered Companies</h3>
-                        <p class="metric-value"><?= $cards['registeredCompCount'] ?></p>
-                        <!-- <?php 
-                            $latestweek = $weekCom[0];
-                            if ($latestweek['trend'] == 'up') {
-                                echo "<p class='metric-change positive'><i class='fas fa-arrow-up'></i> {$latestweek['change']}% from last week</p>";
-                            } else if ($latestweek['trend'] == 'down') {
-                                echo "<p class='metric-change negative'><i class='fas fa-arrow-down'></i> {$latestweek['change']}% from last week</p>";
-                            } else {
-                                echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> No change</p>";
-                            }
-                        ?> -->
-                    </div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="metric-info">
-                        <h3>Placements</h3>
-                            <p class="metric-value"><?= $cards['workingStdCount'] ?></p>
-                            <!-- <?php 
-                                if (!empty($recuitedStd)) {
-                                    $latestweek = $recuitedStd[0];
-
-                                    if ($latestweek['trend'] == 'up') {
-                                        echo "<p class='metric-change positive'><i class='fas fa-arrow-up'></i> {$latestweek['change']}% from last week</p>";
-                                    } else if ($latestweek['trend'] == 'down') {
-                                        echo "<p class='metric-change negative'><i class='fas fa-arrow-down'></i> {$latestweek['change']}% from last week</p>";
-                                    } else {
-                                        echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> No change</p>";
-                                    }
-                                } else {
-                                    echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> Not enough data</p>";
-                                }
-                            ?> -->
-                    </div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fas fa-file-contract"></i>
-                    </div>
-                    <div class="metric-info">
-                        <h3>Active Ads</h3>
-                        <p class="metric-value">
-                            <?php if(empty($table)):?>
-                                <?= 'Not Available' ?>
-                            <?php else: ?>
-                                <?= count($table) ?>
-                            <?php endif; ?>
-                        </p>
-                        <!-- <?php 
-                            if (!empty($weeklyAdd)) {
-                                $latestweek = $weeklyAdd[0];
-
-                                if ($latestweek['trend'] == 'up') {
-                                    echo "<p class='metric-change positive'><i class='fas fa-arrow-up'></i> {$latestweek['change']}% from last week</p>";
-                                } else if ($latestweek['trend'] == 'down') {
-                                    echo "<p class='metric-change negative'><i class='fas fa-arrow-down'></i> {$latestweek['change']}% from last week</p>";
-                                } else {
-                                    echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> No change</p>";
-                                }
-                            } else {
-                                echo "<p class='metric-change neutral'><i class='fas fa-minus'></i> Not enough data</p>";
-                            }
-                        ?> -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="charts-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>Student Placement Status</h3>
-                            <div class="chart-legend">
-                                <span class="legend-item"><span class="legend-color recruited"></span> Recruited</span>
-                                <span class="legend-item"><span class="legend-color rejected"></span> Rejected</span>
-                                <span class="legend-item"><span class="legend-color applied"></span> Applied</span>
-                                <span class="legend-item"><span class="legend-color shortlisted"></span> Shortlisted</span>
-                            </div>
-                    </div>
-                    <div id="studentStatusChart"></div>
-                </div>
-                
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>Placement Trends (5 Years)</h3>
-                        <div class="chart-legend">
-                            <span class="legend-item"><span class="legend-color cs"></span> CS</span>
-                            <span class="legend-item"><span class="legend-color is"></span> IS</span>
+                <div class="metrics-grid">
+                    <div class="metric-card" id="std">
+                        <div class="metric-icon student">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Registered Students</h3>
+                            <div class="metric-value"><?= $data['cards']['registeredStdCount'] ?? 0 ?></div>
+                            <!-- <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: <?= ($data['importcount']->total ?? 0) > 0 ? round(($data['cards']['registeredStdCount'] ?? 0) / $data['importcount']->total * 100) : 0 ?>%"></div>
+                                </div>
+                                <div class="progress-label"><?= ($data['importcount']->total ?? 0) > 0 ? round(($data['cards']['registeredStdCount'] ?? 0) / $data['importcount']->total * 100) : 0 ?>%</div>
+                            </div> -->
                         </div>
                     </div>
-                    <div id="placementTrendChart"></div>
+                    
+                    <div class="metric-card" id="com">
+                        <div class="metric-icon company">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Registered Companies</h3>
+                            <div class="metric-value"><?= $data['cards']['registeredCompCount'] ?? 0 ?></div>
+                            <div class="progress-container">
+                                <!-- Progress bar removed as it was commented out -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card" id="working">
+                        <div class="metric-icon placement">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Placements</h3>
+                            <div class="metric-value"><?= $data['cards']['workingStdCount'] ?? 0 ?></div>
+                            <!-- <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: <?= ($data['importcount']->total ?? 0) > 0 ? round(($data['cards']['workingStdCount'] ?? 0) / $data['importcount']->total * 100) : 0 ?>%"></div>
+                                </div>
+                                <div class="progress-label"><?= ($data['importcount']->total ?? 0) > 0 ? round(($data['cards']['workingStdCount'] ?? 0) / $data['importcount']->total * 100) : 0 ?>% placement rate</div>
+                            </div> -->
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card" id="adv">
+                        <div class="metric-icon ad">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>Active Ads</h3>
+                            <div class="metric-value"><?= $data['activeAds'] ?? 0 ?></div>
+                            <!-- Progress bar removed as it was commented out -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Content Grid -->
+            <div class="dashboard-grid">
+                <!-- Quick Actions Panel -->
+                <div class="quick-actions-panel">
+                    <div class="panel-header">
+                        <h3>Quick Actions</h3>
+                        <p>Frequently used tasks</p>
+                    </div>
+                    <div class="actions-grid">
+    
+                    <a href="<?=ROOT?>/PDC_admin/PendingCompany/dashboard" class="action-card">
+                        <div class="action-icon company">
+                            <i class="fas fa-building"></i>
+                            <span class="badge com"></span>
+                        </div>
+                        <span>Company Approvals</span>
+                    </a>
+                    <a href="<?=ROOT?>/PDC_admin/PendingAdvertisement/dashboard" class="action-card">
+                        <div class="action-icon ad">
+                            <i class="fas fa-ad"></i>
+                            <span class="badge ad"></span>
+                        </div>
+                        <span>Ad Approvals</span>
+                    </a>
+                        <a href="<?=ROOT?>/PDC_admin/AdminProfileOverview/dashboard" class="action-card">
+                            <div class="action-icon settings">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <span>Profile</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Round Timeline -->
+                <div class="timeline-panel">
+                    <div class="panel-header">
+                        <h3>Round Timeline</h3>
+                        <div class="time-remaining">
+                            <i class="fas fa-clock"></i>
+                            <span><?= $daysRemaining ?> days remaining</span>
+                        </div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <?= $percentage ?>%"></div>
+                                <div class="progress-marker" style="left: <?= $percentage ?>%">
+                                    <div class="marker-tooltip">Today</div>
+                                </div>
+                            </div>
+                            <div class="progress-labels">
+                                <span><?= isset($data['round']->startDate) ? date('M d, Y', strtotime($data['round']->startDate)) : 'N/A' ?></span>
+                                <span><?= isset($data['round']->endDate) ? date('M d, Y', strtotime($data['round']->endDate)) : 'N/A' ?></span>       
+                            </div>
+                        </div>
+                        <div class="milestones">
+                            <div class="milestone completed">
+                                <div class="milestone-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="milestone-details">
+                                    <h4>Round Started</h4>
+                                    <p><?= isset($data['round']->startDate) ? date('M d, Y', strtotime($data['round']->startDate)) : 'N/A' ?></p>
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <div class="milestone-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="milestone-details">
+                                    <h4>Round Ends</h4>
+                                    <p><?= isset($data['round']->endDate) ? date('M d, Y', strtotime($data['round']->endDate)) : 'N/A' ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="data-section">
-                <div class="data-card">
-                    <div class="data-header">
-                        <h3>Recent Advertisements</h3>
-                        <a href="<?= ROOT ?>/PDC_admin/AdminAdvertisementOverview/dashboard" class="view-all">View All</a>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Company</th>
-                                    <th>Position</th>
-                                    <th>Deadline</th>
-                                    <th>Type</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if(!empty($table)): ?>
-                                    <?php foreach($table as $advertisement): ?>
+            <!-- Recent Activity Section -->
+            <section class="activity-section">
+                <div class="section-header">
+                    
+                </div>
+                
+                <div class="activity-content">
+                    <div class="data-table">
+                        <div class="table-header">
+                            <h3>Recent Advertisements</h3>
+                            <a href="<?=ROOT?>/PDC_admin/AdminAdvertisementOverview/dashboard" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Company</th>
+                                        <th>Position</th>
+                                        <th>Deadline</th>
+                                        <th>Type</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php foreach(($data['table'] ?? []) as $advs):?>
+
                                         <tr>
-                                            <td>#<?= $advertisement['advertisementId'] ?></td>
-                                            <td><?= $advertisement['companyName'] ?></td>
-                                            <td><?= $advertisement['position'] ?></td>
-                                            <td><?= date('M d, Y', strtotime($advertisement['deadline'])) ?></td>
-                                            <td><span class="status-badge <?= strtolower($advertisement['workingMode']) ?>"><?= $advertisement['workingMode'] ?></span></td>
+                                            <td># <?= $advs['advertisementId'] ?? 'N/A' ?></td>
                                             <td>
-                                                <a href="<?= ROOT ?>/PDC_admin/ViewAdvertisement/show/<?= $advertisement['advertisementId'] ?>" class="action-btn view-btn">
+                                                <div class="company-cell">
+                                                    <img src="<?=ROOT?>/assets/img/Company/wso2_20250421_184914_bb4c739b.png" alt="Company Logo">
+                                                    <?= $advs['companyName'] ?? 'N/A' ?>
+                                                </div>
+                                            </td>
+                                            <td><?= $advs['position'] ?? 'N/A' ?></td>
+                                            <td><?= $advs['deadline'] ?? 'N/A' ?></td>
+                                            <td><span class="status-badge fulltime"><?= $advs['workingMode'] ?? 'N/A' ?></span></td>
+                                            <td>
+                                                <a href="<?=ROOT?>/PDC_admin/ViewAdvertisement/show/<?= $advs['advertisementId'] ?? '' ?>" class="action-btn">
                                                     <i class="fas fa-eye"></i> View
                                                 </a>
                                             </td>
                                         </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="6" class="no-data">No advertisements found</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+                                    
+                                    <?php endforeach;?>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="sidebar-cards">
-                    <div class="sidebar-card">
-                        <div class="data-header">
+                    
+                    <div class="top-companies">
+                        <div class="panel-header">
                             <h3>Top Hiring Companies</h3>
-                            <a href="<?= ROOT ?>/PDC_admin/AdminCompanyOverview/dashboard" class="view-all">View All</a>
+                            <a href="<?=ROOT?>/PDC_admin/AdminCompanyOverview/dashboard" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
                         </div>
                         <div class="companies-list">
-                            <?php if (!empty($company)): ?>
-                                <?php foreach($company as $comp): ?>
-                                    <div class="company-item">
-                                        <img src="data:image/jpeg;base64,<?= $comp['profileimg'] ?>" alt="<?= $comp['companyName'] ?>">
-                                        <div class="company-info">
-                                            <h4><?= $comp['companyName'] ?></h4>
-                                            <p><?= $comp['Industry'] ?? 'N/A' ?></p>
+
+                            <?php foreach(($data['company'] ?? []) as $company):?>
+
+                                <div class="company-card">
+                                    <img src="<?=ROOT?>/assets/img/Company/wso2_20250421_184914_bb4c739b.png" alt="Company Logo">
+                                    <div class="company-details">
+                                        <h4><?= htmlspecialchars($company['companyName'] ?? 'N/A') ?></h4>
+                                        <div class="stats">
+                                            <span class="email"><i class="fas fa-envelope"></i><?= htmlspecialchars($company['email'] ?? 'N/A') ?></span>
                                         </div>
-                                        <a href="<?= ROOT ?>/PDC_admin/ViewCompany/show/<?= $comp['CompanyId'] ?>" class="view-btn">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
                                     </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <div class="no-data">No companies found</div>
-                            <?php endif; ?>
+                                    <a href="<?=ROOT?>/PDC_admin/ViewCompany/show/<?= $company['CompanyId'] ?? '' ?>" class="view-btn" aria-label="View company details">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </div>
+
+                            <?php endforeach;?>
+
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
     </div>
 
     <script>
-        // Student Status Chart
+        document.addEventListener("DOMContentLoaded", function () {
 
+            const notificationBtn = document.querySelector('.notification-btn');
+            const notificationDropdown = document.querySelector('.notification-dropdown');
+            const notificationDot = document.querySelector('.notification-badge');
+            const advReq = document.getElementById('adv-req');
+            const pdcReq = document.getElementById('pdc-req');
+            const advItem = document.getElementById('adv-item');
+            const pdcItem = document.getElementById('pdc-item');
+            const roundBadge = document.querySelector('.round-badge');
+            const roundTooltip = document.querySelector('.round-tooltip');
+            const comBadge = document.querySelector('.badge.com');
+            const adBadge = document.querySelector('.badge.ad');
 
-        document.addEventListener("DOMContentLoaded" , function() {
-           
-        
+            const allNotifications = Number('<?= $data['allNotifications'] ?? 0 ?>');
+            const adNotifications = Number('<?= $data['adNotifications'] ?? 0 ?>');
+            const pdcNotifications = Number('<?= $data['pdcNotifications'] ?? 0 ?>');
+            const pendingComCount = Number('<?= $data['pendingCom'] ?? 0 ?>');
+            const pendingAds = Number('<?= $data['pendingAds'] ?? 0 ?>');
 
-        var studentStatusOptions = {
-            series: [{
-                name: 'Students',
-                data: [
-                    <?= intval($cards['workingStdCount']) ?>, 
-                    <?= intval($cards['rejectedStdCount']) ?>, 
-                    <?= intval($cards['appliedStdCount']) ?>, 
-                    <?= intval($cards['notAppliedStdCount']) ?>
-                ]
-            }],
-            chart: {
-                type: 'bar',
-                height: 350,
-                toolbar: { 
-                    show: false 
-                },
-                background: 'transparent',
-                foreColor: '#333'
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 6,
-                    horizontal: false,
-                    columnWidth: '65%',
-                    distributed: true,
-                    endingShape: 'rounded',
-                    dataLabels: {
-                        position: 'top'
-                    }
-                },
-            },
-            dataLabels: {
-                enabled: true,
-                formatter: function(val) {
-                    return val;
-                },
-                offsetY: -20,
-                style: {
-                    fontSize: '12px',
-                    colors: ["#333"]
-                }
-            },
-            colors: ['rgba(76, 175, 80, 0.85)', 'rgba(244, 67, 54, 0.85)', 'rgba(255, 193, 7, 0.85)', 'rgba(33, 150, 243, 0.85)'],
-            xaxis: {
-                categories: ['Recruited', 'Rejected', 'Applied', 'Shortlisted'],
-                axisBorder: {
-                    show: true,
-                    color: '#e0e0e0'
-                },
-                axisTicks: {
-                    show: true,
-                    color: '#e0e0e0'
-                }
-            },
-            yaxis: {
-                title: { 
-                    text: 'Number of Students',
-                    style: {
-                        color: '#333',
-                        fontSize: '14px'
-                    }
-                },
-                min: 0,
-                tickAmount: 5,
-                labels: {
-                    formatter: function(val) {
-                        return Math.floor(val);
-                    }
-                },
-                axisBorder: {
-                    show: true,
-                    color: '#e0e0e0'
-                }
-            },
-            grid: {
-                borderColor: '#f1f1f1',
-                strokeDashArray: 3,
-                position: 'back',
-                xaxis: {
-                    lines: {
-                        show: false
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: true
-                    }
-                }
-            },
-            tooltip: {
-                y: {
-                    formatter: function (val) {
-                        return val + " students";
-                    }
-                },
-                style: {
-                    fontSize: '14px'
-                }
-            },
-            states: {
-                hover: {
-                    filter: {
-                        type: 'darken',
-                        value: 0.7
-                    }
+            if (allNotifications <= 0) {
+                notificationDot.style.display = 'none';
+            }
+
+            if (adNotifications > 0) {
+                advReq.style.display = 'block';
+                advReq.textContent = adNotifications;
+                advItem.style.display = 'flex';
+            } else {
+                advItem.style.display = 'none';
+            }
+
+            if (pdcNotifications > 0) {
+                pdcReq.style.display = 'block';
+                pdcReq.textContent = pdcNotifications;
+                pdcItem.style.display = 'flex';
+            } else {
+                pdcItem.style.display = 'none';
+            }
+
+            notificationBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function () {
+                notificationDropdown.classList.remove('active');
+            });
+
+            advItem?.addEventListener('click', () => {
+                window.location.href = "<?=ROOT?>/PDC_admin/AdminNotificationOverview/dashboard";
+            });
+
+            pdcItem?.addEventListener('click', () => {
+                window.location.href = "<?=ROOT?>/PDC_admin/AdminNotificationOverview/dashboard";
+            });
+
+            roundBadge.addEventListener('mouseenter', () => {
+                roundTooltip.classList.add('visible');
+            });
+
+            roundBadge.addEventListener('mouseleave', () => {
+                roundTooltip.classList.remove('visible');
+            });
+
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            updateBadge(comBadge, pendingComCount);
+            updateBadge(adBadge, pendingAds);
+
+            function updateBadge(badgeElement, count) {
+                if (count > 0) {
+                    badgeElement.style.display = 'flex';
+                    badgeElement.textContent = count;
+                } else {
+                    badgeElement.style.display = 'none';
                 }
             }
-        };
 
-        var studentStatusChart = new ApexCharts(document.querySelector("#studentStatusChart"), studentStatusOptions);
-        studentStatusChart.render();
+            const student = document.getElementById('std');
+            const company = document.getElementById('com');
+            const working = document.getElementById('working');
+            const adv = document.getElementById('adv');
 
-        // Placement Trend Chart
-        var placementTrendOptions = {
-            series: [{
-                name: 'Computer Science',
-                data: [200, 250, 350, 450, 500]
-            }, {
-                name: 'Information Systems',
-                data: [180, 200, 300, 400, 450]
-            }],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: { show: false }
-            },
-            colors: ['#3F51B5', '#9C27B0'],
-            dataLabels: { enabled: false },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            xaxis: {
-                categories: ['2019', '2020', '2021', '2022', '2023'],
-            },
-            yaxis: {
-                title: { text: 'Number of Placements' }
-            },
-            tooltip: {
-                y: {
-                    formatter: function (val) {
-                        return val + " placements"
-                    }
-                }
-            },
-            legend: { position: 'top' }
-        };
+            student.addEventListener('click' , ()=>{
+                window.location.href = "<?=ROOT?>/PDC_admin/AdminStudentOverview/dashboard"
+            })
 
-        var placementTrendChart = new ApexCharts(document.querySelector("#placementTrendChart"), placementTrendOptions);
-        placementTrendChart.render();
+            company.addEventListener('click' , ()=>{
+                window.location.href = "<?=ROOT?>/PDC_admin/AdminCompanyOverview/dashboard"
+            })
 
+            working.addEventListener('click' , ()=>{
+                window.location.href = "<?=ROOT?>/PDC_admin/AdminApplicationOverview/working"
+            })
 
-        const roundbtn = document.querySelector('.round-badge');
-        const round = document.querySelector('.round-view');
+            adv.addEventListener('click' , ()=>{
+                window.location.href = "<?=ROOT?>/PDC_admin/AdminAdvertisementOverview/dashboard"
+            })
 
-        roundbtn.addEventListener('mouseover' , () =>{
-            round.style.display = 'block';
         });
-
-        roundbtn.addEventListener('mouseout' , () =>{
-            round.style.display = 'none';
-        });
-
-        const notification = document.querySelector('.notification');
-        const dot = document.querySelector('.dot');
- 
-        const companypending = <?php echo json_encode($pendingCom); ?>;
-
-        // console.log(companypending);
-
-        function updateNotificationDot(){
-            if(companypending > 0){
-                dot.style.display = 'block';
-            }
-            else{
-                dot.style.display = 'none';
-            }
-        }
-
-        updateNotificationDot();
-        
-    });
-
     </script>
+
 </body>
 </html>

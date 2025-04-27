@@ -29,12 +29,13 @@
                     <div class="filling-form">
                         <div class="form-group">
                             <label for="session-name">Session Name</label>
-                            <input type="text" id="session-name" name="session_name" placeholder="Session Name" required>
+                            <input type="text" id="session-name" name="session_name" placeholder="Session Name">
+                            <p class="error-message">Session Name cannot be empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
-                            <select id="company-name" name="company_name" required>
+                            <select id="company-name" name="company_name">
                                 <option value="">Select Company</option>
                                 <?php 
                                     foreach($companyData as $company){
@@ -42,6 +43,7 @@
                                     }
                                 ?>
                             </select>
+                            <p class="error-message">Company Name cannot be empty</p>
                         </div>
 
                         <div class="form-group" style="display: none;">
@@ -50,20 +52,24 @@
 
                         <div class="form-group">
                             <label for="email-address">Email Address</label>
-                            <input type="email" id="email-address" name="email" placeholder="Company Email" required>
+                            <input type="email" id="email-address" name="email" placeholder="Company Email">
+                            <p class="error-message">Email cannot be empty</p>
+
                         </div>
 
                         <div class="form-group">
                             <label for="contact-person">Contact Person</label>
-                            <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person" required>
+                            <input type="text" id="contact-person" name="contact_person" placeholder="Contact Person">
+                            <p class="error-message">Contact Person cannot be empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="contact-number">Contact Number</label>
                             <input type="text" id="contact-number" name="contact_number" placeholder="Contact Number" 
-                                pattern="^\d{10}$"
-                                required>
+                                >
                             <small class="format-hint">Enter a valid phone number (e.g. 0733333333)</small>
+                            <p class="error-message basic">Contact Number cannot be empty</p>
+                            <p class="error-message pattern">Contact Number not in valid pattern</p>
                         </div>
 
                         <div class="form-group">
@@ -78,19 +84,24 @@
                                 name="session_date" 
                                 placeholder="Session Date" 
                                 min="<?= date('Y-m-d') ?>" 
-                                required>
+                                >
+
+                            <p class="error-message">Session Date cannot be empty</p>
+
                         </div>
 
                         <div class="form-group">
                             <label for="time-slot">Time Slot</label>
-                            <select id="time-slot" name="time_slot" required>
+                            <select id="time-slot" name="time_slot">
                             </select>
+                            <p class="error-message">Time Slot cannot be empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="hall-number">Hall Name</label>
-                            <select id="hall-number" name="hall_number" required>
+                            <select id="hall-number" name="hall_number">
                             </select>
+                            <p class="error-message">Hall Name cannot be empty</p>
                         </div>
                     </div>
 
@@ -273,6 +284,72 @@
                         console.error("Error filtering halls based on time slot:", error);
                     });
             });
+
+
+            const sessionform = document.querySelector('.company-form')
+
+            sessionform.addEventListener('submit' , function(e){
+
+                let haserror = false
+
+                const errors = document.querySelectorAll('.error-message');
+                errors.forEach(msg => msg.style.display = 'none');
+
+                function showError(fieldId) {
+                    const field = document.getElementById(fieldId)
+                    const errorMsg = field.closest('.form-group').querySelector('.error-message')
+                    if (errorMsg) errorMsg.style.display = 'block'
+                    return true
+                }
+
+                if (document.getElementById('session-name').value.trim() === "") {
+                    haserror = showError('session-name')
+                }
+
+                if(document.getElementById('company-name').value.trim() === ""){
+                    haserror = showError('company-name')
+                }
+
+                if (document.getElementById('email-address').value.trim() === "") {
+                    haserror = showError('email-address')
+                }
+
+                if (document.getElementById('contact-person').value.trim() === "") {
+                    haserror = showError('contact-person')
+                }
+
+                if (document.getElementById('session-date').value.trim() === "") {
+                    haserror = showError('session-date')
+                }
+
+                if (document.getElementById('time-slot').value.trim() === "") {
+                    haserror = showError('time-slot')
+                }
+
+                if (document.getElementById('hall-number').value.trim() === "") {
+                    haserror = showError('hall-number')
+                }
+
+                const number = document.getElementById('contact-number')
+                const numberValue = number.value.trim()
+                if (numberValue === "") {
+                    number.closest('.form-group').querySelector('.error-message.basic').style.display = 'block'
+                    haserror = true
+                } else if (!/^\d{10}$/.test(numberValue)) {
+                    number.closest('.form-group').querySelector('.error-message.pattern').style.display = 'block'
+                    haserror = true
+                }
+
+                if (haserror) {
+                    e.preventDefault()
+                }
+
+            })
+
+
+
+
+
         })
 
     </script>

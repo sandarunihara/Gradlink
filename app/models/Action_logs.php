@@ -65,7 +65,8 @@ class Action_logs
 
     public function findActionOfAdv($advertisementId){
         $query = "SELECT * FROM $this->table
-                  WHERE  target_type = 'advertisement' AND targer_id = :target_id;
+                  WHERE  target_id = :target_id
+                  ORDER BY timestamp DESC;
                 ";
         $params = ['target_id' => $advertisementId];
         $result = $this->query($query,$params);
