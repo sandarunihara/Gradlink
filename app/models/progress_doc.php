@@ -1,5 +1,5 @@
 <?php
-    class progress_doc
+    class Progress_doc
     {
         
         use Model;
