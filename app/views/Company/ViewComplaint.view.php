@@ -45,8 +45,8 @@
                             <div class="complaint-description-box">
                                 <h3>Coordinator's Response</h3>
                                 <p class="complaint-description">
-                                    <?php if (!empty($data->Reply)): ?>
-                                        <?php echo $data->Reply ?>
+                                    <?php if (!empty($data->reply)): ?>
+                                        <?php echo $data->reply ?>
                                     <?php else : ?>
                                         Not Review yet
                                     <?php endif; ?>
