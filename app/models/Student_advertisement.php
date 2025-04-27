@@ -39,7 +39,7 @@ class student_advertisement
 	{
 		// Prepare the SQL query with placeholders for parameters
 		$query = "SELECT 
-    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail
+    				s.*,a.*,c.*,sa.*,c.Name AS CompanyName,s.Name AS StudentName,c.Email AS CompanyEmail,s.Email AS StudentEmail,s.block AS blockstd,c.block AS blockcompany,a.status AS advStatus
 					FROM studentadvertisement sa
 					JOIN student s ON sa.StudentId = s.StudentId 
 					JOIN advertisement a ON sa.AdvertisementId = a.AdvertisementId  
@@ -56,7 +56,7 @@ class student_advertisement
 
 		// Assuming `query` method handles the prepared statement and returns the result
 		$result = $this->query($query, $params);
-		// show($result);
+		//show($result);
 		return $result;
 	}
 

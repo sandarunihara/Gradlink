@@ -864,3 +864,13 @@ margin: 0;
 .btn-outline:hover {
     background-color: rgba(67, 97, 238, 0.1);
 }
+
+.error-message {
+    color: var(--danger);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-left: 2px;
+    display: none;
+}
+

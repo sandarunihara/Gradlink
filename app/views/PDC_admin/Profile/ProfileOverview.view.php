@@ -122,30 +122,6 @@
                                     ?>
                                 </span>
                             </div>
-                            
-                            <!-- <div class="info-item">
-                                <span class="info-label">Password Last Changed:</span>
-                                <span class="info-value">
-                                    <?php
-                                    if(isset($data[0]->password_changed_at)) {
-                                        $changedTime = new DateTime($data[0]->password_changed_at);
-                                        $interval = $changedTime->diff(new DateTime());
-                                        
-                                        if($interval->y > 0) {
-                                            echo $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
-                                        } elseif($interval->m > 0) {
-                                            echo $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
-                                        } elseif($interval->d > 0) {
-                                            echo $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
-                                        } else {
-                                            echo 'Today';
-                                        }
-                                    } else {
-                                        echo 'Never changed';
-                                    }
-                                    ?>
-                                </span>
-                            </div> -->
                         </div>
                         
                         <div class="action-buttons">
@@ -164,47 +140,48 @@
         </main>
     </div>
 
-    <div class="modal" id='changePasswordModal'>
+    <div class="modal-password" id='changePasswordModal'>
         <div class="modal-content">
-
             <div class="modal-header">
                 <h2>Change Password</h2>
-                <button class="close" id="closePasswordModalBtn" onclick="closemodal()">&times;</button>
+                    <button class="close" id="closePasswordModalBtn">&times;</button>
             </div>
 
             <div class="modal-body">
-                <form id="changePasswordForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/changePassword/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST">
+                <form id="changePasswordForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/changePassword" method="POST">
                     
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
-                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword">
+                        <p class="error-message">This field should not be empty</p>
                         <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('currentPassword')"></i>
                     </div>
                     
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword">
                         <div class="password-strength-meter">
                             <div class="strength-bar"></div>
                         </div>
                         <small class="password-requirements">
                             Password must be at least 8 characters long and contain:
                         </small>
+                        <p class="error-message">This field should not be empty</p>
                         <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('newPassword')"></i>
                     </div>
                     
                     <div class="form-group">
                         <label for="confirmPassword">Confirm New Password</label>
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
                         <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('confirmPassword')"></i>
                         <small id="passwordMatchError" class="text-error" style="display:none;color:var(--accent-color);">Passwords do not match</small>
+                        <p class="error-message">This field should not be empty</p>
                     </div>
                     
                     <div class="modal-footer">
-                        <button class="btn btn-outline close-btn" onclick="closemodal()">Cancel</button>
+                        <button class="btn btn-outline" id="closePasswordModalBtn">Cancel</button>
                         <button type="submit" class="btn btn-primary" id="savePasswordBtn">Change Password</button>
                     </div>
-                
                 </form>
             
             </div>
@@ -219,7 +196,7 @@
                 <button class="close" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="profileForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/edit/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST" enctype="multipart/form-data">
+                <form id="profileForm" class="profile-form" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/edit/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST" enctype="multipart/form-data">
                     <div class="avatar-upload">
                         <img src="<?= ROOT ?>/assets/images/default-avatar.jpg" alt="Avatar Preview" class="avatar-preview" id="avatarPreview">
                         <div class="avatar-upload-btn">
@@ -234,36 +211,43 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="fullName">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" name="fullName" value="<?= htmlspecialchars($data[0]->Name) ?>" required>
+                            <input type="text" class="form-control" id="fullName" name="fullName" value="<?= htmlspecialchars($data[0]->Name) ?>">
+                            <p class="error-message">Name cannot be empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($data[0]->Email) ?>" required>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($data[0]->Email) ?>">
+                            <p class="error-message">Email cannot be empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="contactNumber">Contact Number</label>
-                            <input type="tel" class="form-control" id="contactNumber" name="contactNumber" value="<?= htmlspecialchars($data[0]->contact_number) ?>" required>
+                            <input type="tel" class="form-control" id="contactNumber" name="contactNumber" value="<?= htmlspecialchars($data[0]->contact_number) ?>">
+                            <small class="format-hint">Enter a valid phone number (e.g. 0733333333)</small>
+                            <p class="error-message basic">Contact Number cannot be empty</p>
+                            <p class="error-message pattern">Contact Number not valid pattern</p>
                         </div>
 
                         <div class="form-group">
                             <label for="dob">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" name="dob" value="<?= htmlspecialchars($data[0]->dob) ?>" required>
+                            <input type="date" class="form-control" id="dob" name="dob" value="<?= htmlspecialchars($data[0]->dob) ?>">
+                            <p class="error-message">Select a date</p>
                         </div>
 
                         <div class="form-group">
                             <label for="gender">Gender</label>
-                            <select class="form-control" id="gender" name="gender" required>
+                            <select class="form-control" id="gender" name="gender">
                                 <option value="Male" <?= $data[0]->gender == 'Male' ? 'selected' : '' ?>>Male</option>
                                 <option value="Female" <?= $data[0]->gender == 'Female' ? 'selected' : '' ?>>Female</option>
                                 <option value="Other" <?= $data[0]->gender == 'Other' ? 'selected' : '' ?>>Other</option>
                             </select>
+                            <p class="error-message">Select a Gender</p>
                         </div>
 
                         <div class="form-group full-width">
                             <label for="address">Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3" required><?= htmlspecialchars($data[0]->address) ?></textarea>
+                            <textarea class="form-control" id="address" name="address" rows="3"><?= htmlspecialchars($data[0]->address) ?></textarea>
                         </div>
                     </div>
 
@@ -279,61 +263,207 @@
     </div>
 
 
-
-    <!-- <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script> -->
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editBtn = document.getElementById('edit-btn');
             const editProfileModal = document.getElementById('editProfileModal');
             const changeBtn = document.getElementById('change-password-btn');
-            const closeButtons = document.querySelectorAll('.close, .btn-outline');
+            const passwordModal = document.getElementById('changePasswordModal');
+            const closeButtons = document.querySelectorAll('.close, .close-btn, .btn-outline');
             const avatarInput = document.getElementById('avatarInput');
             const avatarPreview = document.getElementById('avatarPreview');
-            const passwordmodal = document.getElementById('changePasswordModal');
+            //const closePasswordModalBtn = document.getElementById('closePasswordModalBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            
+
+            const paswd = document.querySelector('.modal-password')
+            const paswdclose = document.getElementById('closePasswordModalBtn')
+            
+            changeBtn.addEventListener('click' , ()=>{
+                paswd.style.display = 'flex';
+                document.body.style.overflow = 'hidden'
+            })
+
+            paswdclose.addEventListener('click' , ()=>{
+                paswd.style.display = 'none';
+                document.body.style.overflow = 'auto'
+            })
+
+            function close(){
+                paswd.style.display = 'none'
+                document.body.style.overflow = 'hidden'
+
+            }
+
+            function openModal(modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
 
             editBtn.addEventListener("click", function() {
-                editProfileModal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            });
+                openModal(editProfileModal);
+            }); 
 
-            changeBtn.addEventListener("click", function() {
-                passwordmodal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            });   
-
-            // Close modals
             closeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                    document.body.style.overflow = 'auto';
-                });
+                button.addEventListener('click', closeModal);
             });
+
+            // if (closePasswordModalBtn) {
+            //     closePasswordModalBtn.addEventListener('click', closeModal);
+            // }
+            
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', closeModal);
+            }
 
             window.addEventListener('click', function(event) {
                 if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                    document.body.style.overflow = 'auto';
+                    closeModal();
                 }
             });
 
-            avatarInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    if (file.size > 2 * 1024 * 1024) {
-                        alert('File size exceeds 2MB limit');
-                        this.value = '';
-                        return;
+            if (avatarInput) {
+                avatarInput.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        if (file.size > 2 * 1024 * 1024) {
+                            alert('File size exceeds 2MB limit');
+                            this.value = '';
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            avatarPreview.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
                     }
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        avatarPreview.src = e.target.result;
+                });
+            }
+
+            const profileform = document.getElementById('profileForm');
+            if (profileform) {
+                profileform.addEventListener('submit', function(e) {
+                    let haserror = false;
+                    const errors = document.querySelectorAll('.error-message');
+                    errors.forEach(msg => msg.style.display = 'none');
+
+                    function showError(fieldId) {
+                        const field = document.getElementById(fieldId);
+                        const errorMsg = field.closest('.form-group').querySelector('.error-message');
+                        if (errorMsg) errorMsg.style.display = 'block';
+                        return true;
                     }
-                    reader.readAsDataURL(file);
+
+                    if (document.getElementById('fullName').value.trim() === "") {
+                        haserror = showError('fullName');
+                    }
+
+                    if (document.getElementById('email').value.trim() === "") {
+                        haserror = showError('email');
+                    }
+
+                    const number = document.getElementById('contactNumber');
+                    const numberValue = number.value.trim();
+                    if (numberValue === "") {
+                        number.closest('.form-group').querySelector('.error-message.basic').style.display = 'block';
+                        haserror = true;
+                    } else if (!/^\d{10}$/.test(numberValue)) {
+                        number.closest('.form-group').querySelector('.error-message.pattern').style.display = 'block';
+                        haserror = true;
+                    }
+
+                    if (document.getElementById('dob').value.trim() === "") {
+                        haserror = showError('dob');
+                    }
+
+                    if (document.getElementById('gender').value.trim() === "") {
+                        haserror = showError('gender');
+                    }
+
+                    if (haserror) {
+                        e.preventDefault();
+                    }
+                });
+            }
+
+            function togglePasswordVisibility(fieldId) {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.type = field.type === 'password' ? 'text' : 'password';
+                }
+            }
+
+            const newPassword = document.getElementById('newPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordMatchError = document.getElementById('passwordMatchError');
+            const passwordform = document.getElementById('changePasswordForm');
+
+            if (newPassword && confirmPassword) {
+                [newPassword, confirmPassword].forEach(field => {
+                    field.addEventListener('input', function() {
+                        if (newPassword.value && confirmPassword.value) {
+                            if (newPassword.value !== confirmPassword.value) {
+                                passwordMatchError.style.display = 'block';
+                            } else {
+                                passwordMatchError.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            }
+
+            passwordform.addEventListener('submit', function(e) {
+                let haserror = false;
+                const errors = document.querySelectorAll('.error-message');
+                errors.forEach(msg => msg.style.display = 'none');
+
+                function showError(fieldId) {
+                    const field = document.getElementById(fieldId);
+                    const errorMsg = field.closest('.form-group').querySelector('.error-message');
+                    if (errorMsg) errorMsg.style.display = 'block';
+                    return true;
+                }
+
+                if (document.getElementById('currentPassword').value.trim() === "") {
+                    haserror = showError('currentPassword');
+                }
+
+                if (document.getElementById('newPassword').value.trim() === "") {
+                    haserror = showError('newPassword');
+                }
+
+                if (document.getElementById('confirmPassword').value.trim() === "") {
+                    haserror = showError('confirmPassword');
+                }
+
+                const newPass = document.getElementById('newPassword').value;
+                const confirmPass = document.getElementById('confirmPassword').value;
+                if (newPass && confirmPass && newPass !== confirmPass) {
+                    passwordMatchError.style.display = 'block';
+                    haserror = true;
+                }
+
+                if (haserror) {
+                    e.preventDefault();
                 }
             });
+
+
+
+
         });
     </script>
 </body>

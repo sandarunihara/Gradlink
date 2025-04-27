@@ -130,9 +130,8 @@ class student
 		return false;
 	}
 
-	public function findregistered()
-	{
-		$query = "SELECT * FROM $this->table WHERE block = '0'";
+	public function findregistered(){
+		$query = "SELECT * FROM $this->table WHERE block = '0' AND registered = '1'";
 		$result = $this->query($query);
 		if ($result) {
 			return $result;

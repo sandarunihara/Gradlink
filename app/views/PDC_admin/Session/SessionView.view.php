@@ -122,8 +122,8 @@
                     </div>
 
                     <div style="display: flex; gap: 1.5rem; margin: 1.5rem;">
-                        <div class="avatar" style="background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%); color: #065f46;">
-                            <?= substr(htmlspecialchars($session->Name), 0, 1) ?>
+                        <div class="company-logo" style="background-image: url('<?= ROOT ?>/assets/img/Company/<?= htmlspecialchars($session->profileimg) ?>');">
+                            <!-- <?= substr(htmlspecialchars($session->Name), 0, 1) ?> -->
                         </div>
                         <div>
                             <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: #065f46;">
@@ -223,13 +223,14 @@
             <div class="update-modal-body">
                 <span class="close" onclick="closeUpdateModal()">&times;</span>
 
-                <form id="sessionUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/edit/<?= htmlspecialchars($session->session_id) ?>">
+                <form id="sessionUpdateForm" class="update-form" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/edit/<?= htmlspecialchars($session->session_id) ?>">
                     
                     <div class="form-group">
                         <label for="session-name" class="form-label">Session Name</label>
                         <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
                             value="<?= htmlspecialchars($session->session_name) ?>" 
-                        required>
+                        >
+                        <p class="error-message">Session Name cannot be empty</p>
                     </div>
 
                     <div class="form-group" style="display: none;">
@@ -269,15 +270,18 @@
                                 name="session_date" 
                                 placeholder="Session Date"
                                 min="<?= date('Y-m-d') ?>" 
-                                required>
+                                >
+                            <p class="error-message">Session Date cannot be empty</p>
+
                         </div>
 
                         <div class="form-group">
                             <label for="time" class="form-label">Time Slot</label>
                             <select id="time-slot" name="time_slot" 
                                 value="<?= htmlspecialchars($session->time_slot) ?>"
-                                required>
+                                >
                             </select>
+                            <p class="error-message">Time Slot cannot be empty</p>
                         </div>
                     </div>
                     
@@ -286,8 +290,9 @@
                             <label for="hall-number" class="form-label">Hall Name</label>
                             <select id="hall-number" name="hall_number" 
                                 value="<?= htmlspecialchars($session->hall_number) ?>"
-                                required>
+                                >
                             </select>
+                            <p class="error-message">Hall Name cannot be empty</p>
                         </div>
                     </div>
                     
@@ -469,6 +474,45 @@
                         console.error("Error filtering halls based on time slot:", error);
                     });
             });
+
+
+            const sessionform = document.querySelector('.update-form')
+
+            sessionform.addEventListener('submit' , function(e){
+                let haserror = false
+
+                const errors = document.querySelectorAll('.error-message');
+                errors.forEach(msg => msg.style.display = 'none');
+
+                function showError(fieldId) {
+                    const field = document.getElementById(fieldId)
+                    const errorMsg = field.closest('.form-group').querySelector('.error-message')
+                    if (errorMsg) errorMsg.style.display = 'block'
+                    return true
+                }
+
+                if (document.getElementById('session-name').value.trim() === "") {
+                    haserror = showError('session-name')
+                }
+
+                if (document.getElementById('session-date').value.trim() === "") {
+                    haserror = showError('session-date')
+                }
+
+                if (document.getElementById('time-slot').value.trim() === "") {
+                    haserror = showError('time-slot')
+                }
+
+                if (document.getElementById('hall-number').value.trim() === "") {
+                    haserror = showError('hall-number');
+                }
+
+                if (haserror) {
+                    e.preventDefault()
+                }
+
+            })
+
 
 
 

@@ -186,6 +186,35 @@ class C_Advertisement
         return $result;
     }
 
+    public function findallActivewithCompanyByDate(){
+        $query = "SELECT 
+                    advertisement.advertisementId,
+                    advertisement.position,
+                    advertisement.description,
+                    advertisement.qualification,
+                    advertisement.numOfInterns,
+                    advertisement.workingMode,
+                    advertisement.deadline,
+                    advertisement.CompanyId,
+                    advertisement.startdate,
+                    advertisement.image,
+                    company.Name,
+                    company.profileimg
+                FROM 
+                    advertisement
+                JOIN 
+                    company ON advertisement.CompanyId = company.CompanyId
+                WHERE
+                    advertisement.status = 'Active' 
+                    AND company.block = 0
+                ORDER BY advertisement.deadline ASC;
+                    ";
+
+
+        $result = $this->query($query);
+        return $result;
+    }
+
     public function findAllPending()
     {
         $query = "SELECT 

@@ -120,6 +120,8 @@ class StudentImport
     ];
 }
 
+
+
 protected function simplifyErrorMessage($error)
 {
     // Simplify common database errors for user display
@@ -138,4 +140,17 @@ protected function simplifyErrorMessage($error)
     
     return 'Database operation failed';
 }
-} 
+
+public function getCount(){
+    $query = "SELECT COUNT(*) as total FROM $this->table
+              WHERE StudentId is not null;     
+            ";
+    $result = $this->query($query);
+    if(!empty($result)){
+        return $result[0];
+    }
+    else{
+        return 0;
+    }
+}
+}

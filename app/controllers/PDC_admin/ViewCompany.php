@@ -12,6 +12,7 @@ require "../app/libs/Exception.php";
         public function show($companyId){
             $model = new company;
             $companyData = $model->findById($companyId);
+            //show($companyData);
             $action = new Action_logs;
 
 
@@ -103,7 +104,7 @@ require "../app/libs/Exception.php";
                     'message' => 'Company is already blocked'
                 ];
             }
-            header('Location: ' . ROOT . '<?=ROOT?>/PDC_admin/BlockCompany/dashboard');
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
 

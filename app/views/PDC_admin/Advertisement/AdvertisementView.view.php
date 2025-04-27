@@ -62,7 +62,7 @@
                 <div class="card-body">
                     <div class="advertisement-media">
                         <div class="media-container">
-                            <img src="data:image/jpeg;base64,<?= htmlspecialchars($data->image) ?>" alt="Advertisement Image" class="advertisement-image">
+                            <img src="<?php echo ROOT .'/assets/img/Company/advertisements/' .  $data->image; ?>" alt="Advertisement Image" class="advertisement-image">
                         </div>
                     </div>
                     

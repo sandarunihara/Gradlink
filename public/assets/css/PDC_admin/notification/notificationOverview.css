@@ -152,6 +152,25 @@ body {
     gap: 0.5rem;
 }
 
+
+/* Notification item styling based on status */
+.notification-item.pending {
+    border-left: 4px solid var(--warning-color);
+    background-color: rgba(248, 150, 30, 0.03);
+}
+
+.notification-item.read {
+    border-left: 4px solid var(--gray-color);
+    opacity: 0.9;
+}
+
+/* Adjust hover effect for read notifications */
+.notification-item.read:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
 .badge {
     padding: 0.35rem 0.75rem;
     border-radius: 20px;
@@ -165,6 +184,12 @@ body {
     background-color: var(--warning-light);
     color: var(--warning-color);
 }
+
+.badge.read-badge {
+    background-color: var(--gray-light);
+    color: var(--gray-color);
+}
+
 
 .notification-date {
     color: var(--gray-color);

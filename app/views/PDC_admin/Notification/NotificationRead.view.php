@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Students</title>
+    <title>Notifications</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
 
 
             <div class="tab-content">
-            <div class="tab-pane active">
+                <div class="tab-pane active">
                     <section class="company-list">
                         <div class="list-header">
                         </div>
@@ -90,31 +90,21 @@
                                                             <p>No reason to show</p>
                                                         <?php endif; ?>
 
-                                                        <div class="notification-actions">
-                                                            <form method="post" action="<?= ROOT ?>/PDC_admin/AdminNotificationOverview/updateAndRedirect">
-                                                                <input type="hidden" name="type" value="<?= $type ?>">
-                                                                <input type="hidden" name="id" value="<?= $targetId ?>">
-                                                                <input type="hidden" name="notification_id" value="<?= $item->id ?>">
-                                                                <button class="action-btn view">
-                                                                    <i class="fas fa-eye"></i> View
-                                                                </button>
-                                                            </form>
-                                                        </div>
                                                 <?php else: ?>
                                                     <p>Unknown notification type.</p>
                                                 <?php endif; ?>
                                             </div>
-
+                                        </div>
 
                                     <?php elseif($item->type == 'deactivation_request'):?>
-                                        <div class="notification-item">
+                                        <div class="notification-item <?= strtolower($item->status) ?>">
                                             <div class="notification-header">
                                                 <div class="notification-title">
                                                     <i class="fas fa-power-off"></i>
                                                     Deactivation Request
                                                 </div>
                                                 <div class="notification-meta">
-                                                    <span class="badge pending-badge"><?= htmlspecialchars($item->status) ?></span>
+                                                    <span class="badge <?= strtolower($item->status) ?>-badge"><?= htmlspecialchars($item->status) ?></span>
                                                     <span class="notification-date"><?= htmlspecialchars($item->created_at) ?></span>
                                                 </div>
                                             </div>
@@ -123,18 +113,7 @@
                                                 <p>
                                                     <strong><?= htmlspecialchars($item->Name) ?></strong> has requested account deactivation.
                                                 </p>
-                                            </div>
-                                            
-                                            <div class="notification-actions">
-                                                <button class="action-btn approve" data-id="<?= $item->advertisement_id ?>" data-type="<?= $item->type ?>" onclick="approveDeactivation(this)">
-                                                    <i class="fas fa-check"></i> Approve
-                                                </button>
-                                                <button class="action-btn reject" data-id="<?= $item->advertisement_id ?>" data-type="<?= $item->type ?>" onclick="rejectDeactivation(this)">
-                                                    <i class="fas fa-times"></i> Reject
-                                                </button>
-                                                <button class="action-btn view" data-id="<?= $item->advertisement_id ?>" data-type="<?= $item->type ?>" onclick="viewDeactivation(this)">
-                                                    <i class="fas fa-eye"></i> View Details
-                                                </button>
+                                                
                                             </div>
                                         </div>
                                     <?php endif;?>
@@ -154,31 +133,52 @@
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                
-                button.classList.add('active');
-                
-                const tabId = button.getAttribute('data-tab');
-                document.querySelector(`.tab-content[data-tab="${tabId}"]`).classList.add('active');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    button.classList.add('active');
+                    
+                    const tabId = button.getAttribute('data-tab');
+                    document.querySelector(`.tab-content[data-tab="${tabId}"]`).classList.add('active');
+                });
             });
+
+            if (tabButtons.length > 0) {
+                tabButtons[0].click();
+            }
+
+            // Handle flash messages
+            if (window.__flashMessage) {
+                showToast(window.__flashMessage.message, window.__flashMessage.type);
+            }
         });
 
-        if (tabButtons.length > 0) {
-            tabButtons[0].click();
+        function approveDeactivation(button) {
+            const id = button.getAttribute('data-id');
+            const type = button.getAttribute('data-type');
+            // Implement approval logic here
+            console.log(`Approving ${type} with ID: ${id}`);
         }
-        });
 
-        
+        function rejectDeactivation(button) {
+            const id = button.getAttribute('data-id');
+            const type = button.getAttribute('data-type');
+            // Implement rejection logic here
+            console.log(`Rejecting ${type} with ID: ${id}`);
+        }
 
+        function viewDeactivation(button) {
+            const id = button.getAttribute('data-id');
+            const type = button.getAttribute('data-type');
+            // Implement view details logic here
+            console.log(`Viewing ${type} with ID: ${id}`);
+        }
     </script>
 
-    </body>
-
+</body>
 </html>

@@ -46,11 +46,14 @@
     
         <main class="content">
             <div class="company-header">
-                <div class="cover-image" style="background-image: url('<?= ROOT ?>/<?= !empty($data['companyData']->coverimg) ? htmlspecialchars($data['companyData']->coverimg) : 'assets/images/default-cover.jpg' ?>')">
-                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/<?= !empty($data['companyData']->profileimg) ? htmlspecialchars($data['companyData']->profileimg) : 'assets/images/default-profile.png' ?>')">
+                    
+                <div class="cover-image" style="background-image: url('<?= ROOT ?>/assets/img/Company/<?= htmlspecialchars($data['companyData']->coverimg) ?>')">                    
+                    <div class="company-logo" style="background-image: url('<?= ROOT ?>/assets/img/Company/<?= htmlspecialchars($data['companyData']->profileimg) ?>')">
+
                         <?php if (empty($data['companyData']->profileimg)): ?>
                             <div class="initials"><?= substr(htmlspecialchars($data['companyData']->Name), 0, 1) ?></div>
                         <?php endif; ?>
+                        
                     </div>
                 </div>
                 <div class="company-title">

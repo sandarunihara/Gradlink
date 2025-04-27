@@ -34,8 +34,8 @@
         </div>
         <main class="content">
             <div class="profile-header">
-                <img src="<?= ROOT ?>/assets/images/default-profile.png" alt="Profile Image" class="profile-image">
-                <div class="profile-title">
+            <img src="<?= ROOT ?>/assets/img/Student/<?= htmlspecialchars($data['studentData']->ProfilePic ?? 'default-profile.png') ?>" alt="Profile Image" class="profile-image">
+            <div class="profile-title">
                     <h1><?= htmlspecialchars($data['studentData']->Name) ?></h1>
                     <span class="status <?= $data['studentData']->Status === 'Blocked' ? 'status-blocked' : ($data['studentData']->Status === 'Pending' ? 'status-pending' : 'status-active') ?>">
                         <i class="fas fa-<?= $data['studentData']->Status === 'Blocked' ? 'ban' : ($data['studentData']->Status === 'Pending' ? 'clock' : 'check-circle') ?>"></i>
@@ -125,7 +125,7 @@
                             <?php foreach ($data['applications'] as $application): ?>
                                 <div class="application-card">
                                     <div class="application-header">
-                                        <img src="data:image/jpeg;base64,<?= htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
+                                        <img src="<?=ROOT .'/assets/img/Company/' . htmlspecialchars($application['CompanyLogo']) ?>" alt="Company Logo" class="company-logo">
                                         <div class="company-info">
                                             <div class="company-name"><?= htmlspecialchars($application['ComName']) ?></div>
                                             <span class="application-status 
@@ -147,8 +147,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                </div>
-                
+            </div>            
 
             <div class="info-card">
                 <div class="card-header">
@@ -279,13 +278,16 @@
                     <form id="studentUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewStudent/edit/<?= htmlspecialchars($data['studentData']->StudentId) ?>">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="name" class="form-label">Full Name</label>
-                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['studentData']->Name) ?>" required>
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" name="Name" class="form-control" value="<?= htmlspecialchars($data['studentData']->Name) ?>">
+                                <p class="error-message">Name cannot be empty</p>
                             </div>
+                            
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['studentData']->Email) ?>" required>
+                                <input type="email" id="email" name="Email" class="form-control" value="<?= htmlspecialchars($data['studentData']->Email) ?>">
                                 <small class="form-hint">Format: example@domain.com</small>
+                                <p class="error-message">Email cannot be empty</p>
                             </div>
                         </div>
 
@@ -293,17 +295,18 @@
                             <div class="form-group">
                                 <label for="studentId" class="form-label">Student ID</label>
                                 <input type="text" id="studentId" name="StudentId" class="form-control" value="<?= htmlspecialchars($data['studentData']->StudentId) ?>"
-                                    pattern="\d{4}(cs|is)\d{3}"
-                                    required>
+                                    >
                                 <small class="form-hint">Format: YYYYLLNNN (e.g., 2023cs001)</small>
+                                <p class="error-message basic">Student ID cannot be empty</p>
+                                <p class="error-message pattern">Student ID not valid pattern</p>
                             </div>
                             <div class="form-group">
                                 <label for="nic" class="form-label">NIC Number</label>
                                 <input type="text" id="nic" name="NIC" class="form-control" value="<?= htmlspecialchars($data['studentData']->NIC) ?>"
-                                    pattern="^\d{12}$"
-                                    required
                                     >
                                 <small class="form-hint">Format: 200456789012</small>
+                                <p class="error-message basic">NIC cannot be empty</p>
+                                <p class="error-message pattern">NIC ID not valid pattern</p>
                             </div>
                         </div>
 
@@ -311,11 +314,13 @@
                             <div class="form-group">
                                 <label for="contact" class="form-label">Contact Number</label>
                                 <input type="tel" id="contact" name="ContactNum" class="form-control" value="<?= htmlspecialchars($data['studentData']->ContactNum) ?>"
-                                pattern="^\d{10}$"
-                                required
-                                ">
+                                >
                                 <small class="form-hint">Enter a valid phone number (e.g. 0733333333)</small>
-                                </div>
+                                <p class="error-message basic">Contact Number cannot be empty</p>
+                                <p class="error-message pattern">Contact Number not valid pattern</p>
+                            </div>
+
+
                             <div class="form-group">
                                 <label for="degree" class="form-label">Degree Program</label>
                                 <select id="degree" name="DegreeName" class="form-control">
@@ -327,29 +332,11 @@
                                     </option>
                                 </select>
                             </div>
+
                         </div>
 
                         <div class="form-group">
                             <input type="text" id="status" name="Status" class="form-control" value="<?= htmlspecialchars($data['studentData']->Status) ?>" hidden>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="github" class="form-label">GitHub Profile</label>
-                            <input type="url" id="github" name="Github" class="form-control" value="<?= !empty($data['studentData']->Github) ? htmlspecialchars($data['Github']) : '' ?>" placeholder="https://github.com/username"
-                                pattern="https?://github\.com/.+">
-                            <small class="form-hint">Format: https://github.com/username</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="linkedin" class="form-label">LinkedIn Profile</label>
-                            <input type="url" id="linkedin" name="Linkedin" class="form-control" value="<?= !empty($data['studentData']->Linkedin) ? htmlspecialchars($data['Linkedin']) : '' ?>" placeholder="https://linkedin.com/in/username"
-                                pattern="https?://(www\.)?linkedin\.com/in/.+">
-                            <small class="form-hint">Format: https://linkedin.com/in/username</small>    
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description" class="form-label">Student Description</label>
-                            <textarea id="description" name="ShortDesc" class="form-control form-textarea"><?= !empty($data['studentData']->ShortDesc) ? htmlspecialchars($data['studentData']->ShortDesc) : '' ?></textarea>
                         </div>
 
                         <div class="form-actions">
@@ -391,6 +378,76 @@
             document.getElementById("block-reason").value = "";
             document.getElementById("modal-message").textContent = "";
         }
+
+
+        const studentUpdateForm = document.getElementById('studentUpdateForm');
+        
+        studentUpdateForm.addEventListener('submit' , function(e){
+
+            let haserrorUpdate = false
+
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(msg => msg.style.display = 'none');
+
+            const studentName = document.getElementById('name')
+            if(studentName.value.trim() === ""){
+                studentName.nextElementSibling.style.display = 'block'
+                haserrorUpdate = true
+            }
+
+
+        // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+
+
+            const studentEmail = document.getElementById('email');
+            const emailError = studentEmail.closest('.form-group').querySelector('.error-message');
+
+            if(studentEmail.value.trim() === ""){
+                emailError.style.display = 'block';
+                haserrorUpdate = true;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            const studentId = document.getElementById('studentId');
+            const studentIdValue = studentId.value.trim()
+            if(studentIdValue === ""){
+                studentId.parentElement.querySelector('.error-message.basic').style.display = 'block'
+                haserrorUpdate = true
+            }
+            else if(!/^\d{4}(cs|is)\d{3}$/.test(studentIdValue)){
+                studentId.parentElement.querySelector('.error-message.pattern').style.display = 'block'
+                haserrorUpdate = true
+            }
+
+            const studentnic = document.getElementById('nic');
+            const studentnicValue = studentnic.value.trim()
+            if(studentnicValue === ""){
+                studentnic.parentElement.querySelector('.error-message.basic').style.display = 'block'
+                haserrorUpdate = true
+            }
+            else if(!/^\d{12}$/.test(studentnicValue)){
+                studentnic.parentElement.querySelector('.error-message.pattern').style.display = 'block'
+                haserrorUpdate = true
+            }
+
+            const number = document.getElementById('contact');
+            const numberValue = number.value.trim();
+            if (numberValue === "") {
+                number.parentElement.querySelector('.error-message.basic').style.display = 'block';
+                haserrorUpdate = true;
+            } else if (!/^\d{10}$/.test(numberValue)) {
+                number.parentElement.querySelector('.error-message.pattern').style.display = 'block';
+                haserrorUpdate = true;
+            }
+
+            if(haserrorUpdate){
+                e.preventDefault()
+            }
+
+        })
+
+
     </script>
 </body>
 </html>

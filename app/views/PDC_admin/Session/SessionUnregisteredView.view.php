@@ -189,13 +189,14 @@
                 <span class="close" onclick="closeUpdateModal()">&times;</span>
             </div>
             <div class="update-modal-body">
-                <form id="sessionUpdateForm" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/editUnreg/<?= htmlspecialchars($session->session_id) ?>">
+                <form id="sessionUpdateForm" class="update-session" method="post" action="<?= ROOT ?>/PDC_admin/ViewSession/editUnreg/<?= htmlspecialchars($session->session_id) ?>">
                     
                     <div class="form-group">
                         <label for="session-name" class="form-label">Session Name</label>
                         <input type="text" id="session-name" name="session_name" placeholder="Session Name" 
                             value="<?= htmlspecialchars($session->session_name) ?>" 
-                        required>
+                        >
+                        <p class="error-message">Session Name cannot be empty</p>
                     </div>
 
                     <div class="form-group" style="display: none;">
@@ -229,15 +230,17 @@
                                 name="session_date" 
                                 placeholder="Session Date"
                                 min="<?= date('Y-m-d') ?>" 
-                                required>
+                                >
+                            <p class="error-message">Session Date cannot be empty</p>
                         </div>
 
                         <div class="form-group">
                             <label for="time" class="form-label">Time Slot</label>
                             <select id="time-slot" name="time_slot" 
                                 value="<?= htmlspecialchars($session->time_slot) ?>"
-                                required>
+                                >
                             </select>
+                            <p class="error-message">Time Slot cannot be empty</p>
                         </div>
                     </div>
                     
@@ -246,8 +249,9 @@
                             <label for="hall-number" class="form-label">Hall Name</label>
                             <select id="hall-number" name="hall_number" 
                                 value="<?= htmlspecialchars($session->hall_number) ?>"
-                                required>
+                                >
                             </select>
+                            <p class="error-message">Hall Name cannot be empty</p>
                         </div>
                     </div>
                     
@@ -423,6 +427,46 @@
                         console.error("Error filtering halls based on time slot:", error);
                     });
             });
+
+
+            const sessionform = document.querySelector('.update-session')
+
+            sessionform.addEventListener('submit' , function(e){
+
+                let haserror = false
+
+                const errors = document.querySelectorAll('.error-message');
+                errors.forEach(msg => msg.style.display = 'none');
+
+                function showError(fieldId) {
+                    const field = document.getElementById(fieldId)
+                    const errorMsg = field.closest('.form-group').querySelector('.error-message')
+                    if (errorMsg) errorMsg.style.display = 'block'
+                    return true
+                }
+
+                if (document.getElementById('session-name').value.trim() === "") {
+                    haserror = showError('session-name')
+                }
+
+                if (document.getElementById('session-date').value.trim() === "") {
+                    haserror = showError('session-date')
+                }
+
+                if (document.getElementById('time-slot').value.trim() === "") {
+                    haserror = showError('time-slot')
+                }
+
+                if (document.getElementById('hall-number').value.trim() === "") {
+                    haserror = showError('hall-number')
+                }
+
+                if (haserror) {
+                    e.preventDefault()
+                }
+
+            })
+
 
             
         });

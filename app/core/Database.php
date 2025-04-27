@@ -3,7 +3,7 @@
 
         private static $connection = null;
 
-        //for local host
+        // for local host
         // private function connect(){
         //     $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
         //     try {
