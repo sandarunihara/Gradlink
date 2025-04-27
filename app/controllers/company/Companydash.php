@@ -34,7 +34,7 @@ class Companydash
             $hasRecruited = false;
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
-            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0, 'numOfcurrentmothAD' => 0, 'lastmonthcount' => 0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [], 'Status' => $user->Status, 'blockreson' => $blockreson]);
+            $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0, 'numOfcurrentmothAD' => 0, 'lastmonthcount' => 0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [], 'Status' => $user->Status, 'blockreson' => $blockreson, 'rounddata'=>[] ]);
         } else {
             // $ad_model = new C_Advertisement;
             // $ad_data = $ad_model->findall();
@@ -251,6 +251,7 @@ class Companydash
             $interviewmodel = new interview_time_slot;
             $admodal = new C_Advertisement;
             $appliedadmodal = new C_Dashboard;
+            $roundmodel=new round;
             $interviewdata = [];
             foreach ($advertisementIds as $id) {
                 $interview_para = [
@@ -282,7 +283,7 @@ class Companydash
 
 
 
-
+            $rounddata=$roundmodel->getActiveRound();
 
             $numOfapplyStudents = count($studentIds);
             $numOfshortlistStudents = count($shortliststudentIds);
@@ -303,7 +304,10 @@ class Companydash
             $_SESSION['hasShortlisted'] = $hasShortlisted;
             $_SESSION['hasRecruited'] = $hasRecruited;
 
-            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD' => $numOfcurrentmothAD, 'lastmonthcount' => $lastmonthcount, 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts, 'Status' => $user->Status, 'blockreson' => $blockreson]);
+            
+            // show($_SESSION);
+            // show($rounddata);
+            $this->view('Company/Dashboard', ['data' => $reqdata, 'numOfStudents' => $numOfapplyStudents, 'numOfShortlistStudents' => $numOfshortlistStudents, 'numOfAdvertisements' => $numOfAdvertisements, 'numOfcurrentmothAD' => $numOfcurrentmothAD, 'lastmonthcount' => $lastmonthcount, 'barchartdata' => $barchartdata, 'studentstatuschart' => $studentstatuschart, 'countedadstatus' => $countedadstatus, 'monthlyCounts' => $monthlyCounts, 'Status' => $user->Status, 'blockreson' => $blockreson,'rounddata'=>$rounddata]);
             // $this->view('Company/Dashboard', ['data' => [], 'numOfStudents' => 0, 'numOfShortlistStudents' => 0, 'numOfAdvertisements' => 0,'numOfcurrentmothAD'=>0, 'barchartdata' => [], 'studentstatuschart' => [], 'countedadstatus' => [], 'monthlyCounts' => [] , 'Status'=>$user->Status]);
 
         }

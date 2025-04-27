@@ -117,6 +117,18 @@
 .d_allsummery {
   width: 100%;
 }
+.placement-message {
+  background-color: #ffe0e0; /* soft red background */
+  color: #b30000; /* deep red text */
+  padding: 5px 10px;
+  border: 1px solid #ffcccc;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .stats {
   display: flex;
   width: 100%;

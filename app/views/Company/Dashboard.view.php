@@ -31,10 +31,12 @@
                     <div class="d">
                         <div class="upper-header">
                             <h1>DashBoard</h1>
-                            <span class="round-badge">
-                                <span class="round-label">Current Placement Round</span>
-                                <span class="round-number"><?= $_SESSION['ROUNDID'] ?></span>
-                            </span>
+                            <?php if (!empty($rounddata)): ?>
+                                <span class="round-badge">
+                                    <span class="round-label">Current Placement </span>
+                                    <span class="round-number"><?php echo $rounddata->round  ?></span>
+                                </span>
+                            <?php endif; ?>
                             <div class="d_pro">
                                 <div class="d_profile">
                                     <div class="notification-wrapper">
@@ -42,8 +44,9 @@
                                             <i class="fas fa-bell"></i>
                                             <span id="notificationCount" class="badge"></span>
                                         </div>
+
                                         <div id="notificationDropdown" class="dropdown-content" style="display: none;">
-                                            <i class="fas fa-close" ></i>
+                                            <i class="fas fa-close"></i>
                                             <div id="notificationsList">
                                                 <p>Loading notifications...</p>
                                             </div>
@@ -53,6 +56,11 @@
                                 <div>
                                 </div>
                             </div>
+                            <?php if ($rounddata->round === 'None'): ?>
+                                <div class="placement-message">
+                                    You cannot perform any activities until the placement round starts.
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="overview">
@@ -156,7 +164,7 @@
 
                                             foreach ($firstEight as $item) {
                                                 $status = $item['Status'];
-                                                
+
                                                 switch ($status) {
                                                     case 'Recruit':
                                                         $Statusname = 'Recruit';
@@ -221,7 +229,7 @@
 
         <script>
             function toggleNotifications() {
-                window.location.href='http://localhost/Gradlink/public/company/Messages/dashboard';
+                window.location.href = 'http://localhost/Gradlink/public/company/Messages/dashboard';
             }
 
             async function loadNotifications() {
@@ -492,7 +500,7 @@
                 "Shortlist": "#6C63FF",
                 "Pending": "#FFB74D",
                 "Recruit": "#4DB6AC",
-                "Accept": "#66BB6A", 
+                "Accept": "#66BB6A",
                 "Reject": "#EF5350"
             };
 
@@ -500,7 +508,7 @@
                 "Shortlist": "#4438D1",
                 "Pending": "#F57C00",
                 "Recruit": "#00897B",
-                "Accept": "#388E3C", 
+                "Accept": "#388E3C",
                 "Reject": "#C62828"
             };
 
