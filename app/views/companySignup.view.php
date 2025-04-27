@@ -162,7 +162,7 @@
   <div id="Recruit-modal" class="updatemodal">
     <div class="updatemodal-content">
       <h2>Are you sure?</h2>
-      <p>Do you want to Recruit this Student?</p>
+      <p>Do you want to Register as Company?</p>
       <div class="updatemodal-buttons">
         <button class="updateyes-btn" onclick="confirmAction()">Yes</button>
         <button class="updateno-btn" onclick="closeRecruitConfirmModal()">No</button>

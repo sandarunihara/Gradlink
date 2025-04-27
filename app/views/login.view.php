@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gradlink | Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/toast.css"> 
-    <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Student/toast.css">
+    <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script>
     <style>
         :root {
             --deep-blue: #0A2463;
@@ -70,7 +71,7 @@
             right: -50%;
             width: 100%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
         }
 
         .logo-header {
@@ -247,7 +248,8 @@
             color: var(--dark-gray);
         }
 
-        .divider::before, .divider::after {
+        .divider::before,
+        .divider::after {
             content: '';
             flex: 1;
             border-bottom: 1px solid var(--medium-gray);
@@ -277,32 +279,36 @@
             .login-container {
                 flex-direction: column;
             }
-            
-            .login-left, .login-right {
+
+            .login-left,
+            .login-right {
                 padding: 40px;
             }
-            
+
             .login-illustration img {
                 display: none;
             }
         }
 
         @media (max-width: 576px) {
-            .login-left, .login-right {
+
+            .login-left,
+            .login-right {
                 padding: 30px 20px;
             }
-            
+
             .form-options {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .forgot-password {
                 margin-top: 12px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="login-wrapper">
         <div class="login-container">
@@ -319,7 +325,8 @@
 
                 <!-- Image placed here in the left panel -->
                 <div class="login-illustration">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Students collaborating" class="login-image">                </div>
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Students collaborating" class="login-image">
+                </div>
             </div>
 
             <!-- Right Panel with Login Form -->
@@ -375,7 +382,6 @@
     </div>
 
     <div id="toast-container" class="toast-container"></div>
-    <script src="<?php echo ROOT ?>/assets/js/login.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             localStorage.clear(); // Clear local storage on page load
@@ -419,11 +425,17 @@
     <!-- Toast message from session -->
     <?php if (isset($_SESSION['flash'])): ?>
         <script>
-            window.__flashMessage = <?php echo json_encode($_SESSION['flash']); ?>;
+            hello = <?php echo json_encode($_SESSION['flash']); ?>;
+            if (hello.type = 'success') {
+                successToast(hello.message);
+            } else {
+                errorToast(hello.message);
+            }
         </script>
     <?php
         unset($_SESSION['flash']);
     endif;
     ?>
 </body>
+
 </html>

@@ -81,7 +81,7 @@
     </div>
 
     <div id="toast-container" class="toast-container"></div>
-    <script src="<?php echo ROOT ?>/assets/js/toast.js"></script>
+    <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script> 
 
     <?php if (!empty($data['success'])): ?>
         <script>
