@@ -73,7 +73,7 @@ class StudentAd{
                     $data2['StudentId'] = $arr['Student'] -> StudentId;
                     $data2['AdvertisementId'] = $advertisementId;
                     $data2['JobStatus'] = "Pending";
-                    $data2['CV'] = $arr['Student'] -> cv;
+                    $data2['CV'] = $_POST['cvId'];
                     $student_advertisement = new student_advertisement;
                     $isInsert2 = $student_advertisement -> insert($data2);
 

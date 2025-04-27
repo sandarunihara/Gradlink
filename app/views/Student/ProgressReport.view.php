@@ -67,7 +67,7 @@
                                         </td>
                                         <td>
                                             <a 
-                                                href="<?=ROOT?>/assets/uploads/progress_docs/ <?php echo htmlspecialchars($ProgressDoc -> Name)?>" 
+                                                href="<?=ROOT?>/assets/uploads/progress_docs/<?php echo htmlspecialchars($ProgressDoc -> Name)?>" 
                                                 target="_blank">
                                                     <div class="<?php echo $statusClass; ?>">
                                                         <?php echo $statusText; ?>
