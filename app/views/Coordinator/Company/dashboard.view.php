@@ -185,7 +185,6 @@
                                     <span>Advertisements</span>
                                 </div>
                                 <div class="approval-count"><?= $dashboardDetails['pendingAdvertisements'] ?? 0 ?></div>
-                                <button class="btn btn-review" onclick="navigateToPendingAds()">Review</button>
                             </div>
                             <div class="approval-item">
                                 <div class="approval-type">
@@ -193,7 +192,6 @@
                                     <span>Company Registrations</span>
                                 </div>
                                 <div class="approval-count"><?= $dashboardDetails['pendingCompanies'] ?? 0 ?></div>
-                                <button class="btn btn-review" onclick="navigateToPendingCompanies()">Review</button>
                             </div>
                         </div>
                     </div>
@@ -214,8 +212,8 @@
                             </div>
                         </div>
                         <div class="blocked-actions">
-                            <button class="btn btn-outline" onclick="navigateToBlockedList('companies')">View Companies</button>
-                            <button class="btn btn-outline" onclick="navigateToBlockedList('students')">View Students</button>
+                            <button class="btn btn-outline" onclick="navigateToBlockedCompanyList()">View Blocked Companies</button>
+                            <button class="btn btn-outline" onclick="navigateToBlockedStudentList()">View Blocked Students</button>
                         </div>
                     </div>
 

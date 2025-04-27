@@ -46,6 +46,14 @@ function navigateToComplaints() {
     window.location.href = "/Gradlink/public/pdc_coordinator/dashboardComplaints";
 }
 
+function navigateToBlockedCompanyList(){
+    window.location.href = "/Gradlink/public/pdc_coordinator/blockedCompanies";
+}
+
+function navigateToBlockedStudentList(){
+    window.location.href = "/Gradlink/public/pdc_coordinator/blockedStudents";
+}
+
 function clickDeleteBtn(company_id) {
     const userConfirmed = confirm("Are you sure you want to delete this Company?");
     if (userConfirmed) {

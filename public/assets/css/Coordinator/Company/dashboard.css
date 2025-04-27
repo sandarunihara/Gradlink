@@ -546,12 +546,16 @@
   
   .btn-outline {
     background-color: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
   }
   
   .btn-outline:hover {
     background-color: #e3f2fd;
+  }
+
+  .btn:hover {
+    background-color: #fdeaea;
   }
   
   /* Blocked Entities */
