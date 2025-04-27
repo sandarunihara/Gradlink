@@ -74,7 +74,8 @@ class StudentImport
                 'Email' => $student['email'],
                 'NIC' => $student['nic'],
                 'ContactNum' => $student['contact_no'],
-                'Status' => 'Not Applied'  // Set default status
+                'Status' => 'Not Applied',  // Set default status
+                // 'insert_status' => 0
             ];
 
             // Check if student already exists
