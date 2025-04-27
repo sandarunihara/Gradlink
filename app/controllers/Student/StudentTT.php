@@ -17,7 +17,7 @@ class StudentTT{
 
         // $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
 
-        show($data);
+        //show($data);
         $this-> view('Student/TechTalk',$data);
     }
 }
