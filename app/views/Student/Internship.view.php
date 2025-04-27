@@ -107,8 +107,6 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
-            <span id="defaultMessage" class="hidden"></span>
-            <br>
             <input 
                 type="file" 
                 id="cvUpload" 

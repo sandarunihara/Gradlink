@@ -27,32 +27,35 @@
                             $advertisement = new C_Advertisement;
 
                             $slectedRoleDetails = $student_advertisement->where($arr, [], 'CreatedAt', 'asc');
-                            $advertisementId['AdvertisementId'] = $slectedRoleDetails[0]->AdvertisementId;
-                            $selectedPosition = $advertisement->where($advertisementId, [], '', 'do_not_order')[0]->position;
-
                             $state = 0;
-                            foreach($slectedRoleDetails as $slectedRoleDetail):
-                                if($slectedRoleDetail->Jobstatus == 'Recruit'): 
-                                    $advertisementId['AdvertisementId'] = $slectedRoleDetail->AdvertisementId;
-                                    $selectedJob = $advertisement->where($advertisementId, [], '', 'do_not_order')[0]->position;
-                                    $state = 1;
+                            if(!empty($slectedRoleDetails)):
+                                $advertisementId['AdvertisementId'] = $slectedRoleDetails[0]->AdvertisementId;
+                                $selectedPosition = $advertisement->where($advertisementId, [], '', 'do_not_order')[0]->position;
+                                foreach($slectedRoleDetails as $slectedRoleDetail):
+                                    if($slectedRoleDetail->Jobstatus == 'Recruit'): 
+                                        $advertisementId['AdvertisementId'] = $slectedRoleDetail->AdvertisementId;
+                                        $selectedJob = $advertisement->where($advertisementId, [], '', 'do_not_order')[0]->position;
+                                        $state = 1;
                         ?>
                                     <div class="status-container recruited">
                                         <i class="fas fa-check-circle"></i>
                                         <span class="status-text"><?php echo htmlspecialchars($selectedJob)?></span>
                                     </div>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                             <?php if($state != 1): ?>
                                 <div class="status-container">
                                     <div class="remaining-applications">
                                         <span class="status-label">Remaining:</span>
                                         <span class="status-value"><?php echo htmlspecialchars($remaining) ?></span>
                                     </div>
-                                    <div class="selected-position">
-                                        <span class="status-label">Selected:</span>
-                                        <span class="status-value"><?php echo htmlspecialchars($selectedPosition)?></span>
-                                    </div>
+                                    <?php if(!empty($slectedRoleDetails)): ?>
+                                        <div class="selected-position">
+                                            <span class="status-label">Selected:</span>
+                                            <span class="status-value"><?php echo htmlspecialchars($selectedPosition)?></span>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
                     <?php elseif ($_SESSION['ROUNDID'] == 2): ?>

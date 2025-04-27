@@ -24,7 +24,7 @@
         button.addEventListener('click', () => {
             popupBox.classList.remove('hidden');
             const advertisementId = button.getAttribute('data-advertisement-id');
-            form.action = form.action + '?advertisementId=' + encodeURIComponent(advertisementId);
+            form.action = 'http://localhost/Gradlink/public' + '/Student/StudentAd/advertisement/?advertisementId=' + encodeURIComponent(advertisementId);
         });
     });
     // show advertisement when view button is clicked
