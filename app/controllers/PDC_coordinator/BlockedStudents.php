@@ -22,7 +22,7 @@ class BlockedStudents
                     'degree' => $studentDetail->DegreeName,
                     'student_email' => $studentDetail->Email,
                     'contact_no' => $studentDetail->ContactNum,
-                    'comment' => $studentDetail->commentBlock,
+                    'comment' => $studentDetail->reason,
                 ];
             }
         $this->view('Coordinator/Student/blockedStudents', ['blockedStudentData' => $blockedStudentData]);

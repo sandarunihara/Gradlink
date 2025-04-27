@@ -398,9 +398,74 @@
     margin-top: 15px;
 }
 
+/* Preview Table Styles */
 .preview-table {
-    margin-top: 20px;
-    display: none;
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    background-color: white;
+}
+
+.preview-table h5 {
+    padding: 12px 16px;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.preview-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.preview-table th {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: 600;
+    padding: 12px 15px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+}
+
+.preview-table td {
+    padding: 10px 15px;
+    border-top: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.preview-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.preview-table tbody tr:hover {
+    background-color: #f1f8ff;
+}
+
+/* Status badge styles */
+.preview-table td:last-child {
+    font-weight: 500;
+}
+
+.preview-table .status-not-applied {
+    color: #6c757d;
+}
+
+.preview-table .status-active {
+    color: #28a745;
+}
+
+.preview-table .status-inactive {
+    color: #dc3545;
 }
 
 .import-section {

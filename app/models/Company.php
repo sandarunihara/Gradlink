@@ -190,7 +190,16 @@ class company
 
 	public function findAllBlocked(): array|bool{
 		try{
-			$query = "SELECT * FROM $this->table WHERE block = 1 AND Status = 'Blocked'";
+			$query = "SELECT * 
+			FROM $this->table c 
+			JOIN action_logs a ON c.CompanyId = a.target_id
+			WHERE c.block = 1 AND a.action_type = 'block'
+			AND a.timestamp = (
+    					SELECT MAX(a2.timestamp) 
+    					FROM action_logs a2 
+    					WHERE a2.target_id = c.CompanyId 
+      					AND a2.action_type = 'block'
+ 							 )";
 			$result = $this->query($query);
 			return $result;
 		} catch (Exception $e) {

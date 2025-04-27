@@ -17,6 +17,18 @@ class Admin_notification{
         'reason'
     ];
 
+    public function getAllPending(){
+        $query = "SELECT * FROM $this->table WHERE status = 'Pending' AND type = 'coordinator_request' AND type = 'coordinator_request' ";
+        $result = $this->query($query);
+        return $result;
+    }
+
+    public function getAllRead(){
+        $query = "SELECT * FROM $this->table WHERE status = 'Read'";
+        $result = $this->query($query);
+        return $result;
+    }
+
     public function findpendingwithCompany(){
         $query = "SELECT n.* , c.* FROM $this->table n
                   JOIN company c ON n.company_id = c.CompanyId
@@ -53,7 +65,7 @@ class Admin_notification{
     }
 
     public function notificationCount(){
-        $query = "SELECT COUNT(*) as count FROM $this->table WHERE status = 'Pending'";
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE status = 'Pending' AND type = 'deactivation_request' OR type = 'coordinator_request'";
         $result = $this->query($query);
         if(empty($result)){
             return false;
@@ -68,5 +80,27 @@ class Admin_notification{
         $params = [':advertisement_id' => $advertisementId];
         $result = $this->query($query, $params);
         return $result ? $result[0] : false;
+    }
+
+    public function countAdv(){
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE status = 'Pending' AND type = 'deactivation_request'";
+        $result = $this->query($query);
+        if(empty($result)){
+            return false;
+        }
+        else{
+            return $result[0]->count;
+        }
+    }
+
+    public function countPdc(){
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE status = 'Pending' AND type = 'coordinator_request'";
+        $result = $this->query($query);
+        if(empty($result)){
+            return false;
+        }
+        else{
+            return $result[0]->count;
+        }
     }
 }

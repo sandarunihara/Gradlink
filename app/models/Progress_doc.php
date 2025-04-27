@@ -37,4 +37,17 @@
 
         return $result;
     }
+
+    public function findstudent($StudentId) {
+        $query = "SELECT r.*, r.Status AS reportStatus 
+                  FROM $this->table r 
+                  WHERE r.StudentId = :StudentId";
+                  
+        $params = ['StudentId' => $StudentId];
+        $result = $this->query($query, $params);
+        
+        return $result;
+    }
+
+
     }

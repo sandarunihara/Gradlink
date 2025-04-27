@@ -75,7 +75,7 @@
 //   // Private variables
 //   const activeToasts = new Set();
 //   const toastContainer = document.getElementById('toast-container');
-  
+
 //   // Private methods
 //   function createToastElement(message, type) {
 //     const toastId = `toast-${Date.now()}`;
@@ -98,7 +98,7 @@
 //     show: function(type, message) {
 //       // Don't show duplicate toasts
 //       if (activeToasts.has(type)) return;
-      
+
 //       // Create and show toast
 //       const {id, element} = createToastElement(message, type);
 //       toastContainer.appendChild(element);
@@ -121,7 +121,7 @@
 //     init: function() {
 //       // Clear existing toasts on init
 //       document.querySelectorAll('.toast-message').forEach(toast => toast.remove());
-      
+
 //       // Load any pending toasts from localStorage
 //       ['error', 'success'].forEach(type => {
 //         const message = localStorage.getItem(`toast_${type}`);
@@ -160,17 +160,17 @@
 //   show(message, type, options = {}) {
 //     const { autoClose = 5000, closeButton = true } = options;
 //     const toastId = `toast-${Date.now()}`;
-    
+
 //     if (this.activeToasts.has(toastId)) return;
 //     this.activeToasts.add(toastId);
 
 //     const toast = document.createElement('div');
 //     toast.id = toastId;
 //     toast.className = `toast-message toast-${type}`;
-    
+
 //     const messageElement = document.createElement('div');
 //     messageElement.textContent = message;
-    
+
 //     toast.appendChild(messageElement);
 
 //     if (closeButton) {
@@ -281,18 +281,18 @@ class ToastSystem {
   show(message, type, options = {}) {
     const { autoClose = 3000, closeButton = true } = options;
     const toastId = `toast-${Date.now()}`;
-    
+
     if (this.activeToasts.has(toastId)) return;
     this.activeToasts.add(toastId);
 
     const toast = document.createElement('div');
     toast.id = toastId;
     toast.className = `toast-message toast-${type}`;
-    
+
     const messageElement = document.createElement('div');
     messageElement.className = 'toast-content';
     messageElement.innerHTML = message;
-    
+
     toast.appendChild(messageElement);
 
     if (closeButton) {
@@ -323,7 +323,7 @@ class ToastSystem {
     if (toast) {
       toast.style.opacity = '0';
       toast.style.transform = 'translateX(100%)';
-      
+
       setTimeout(() => {
         toast.remove();
         this.activeToasts.delete(toastId);

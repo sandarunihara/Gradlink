@@ -870,3 +870,13 @@ body {
     cursor: pointer;
     font-size: 16px;
 }
+
+.error-message {
+    color: var(--danger);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-left: 2px;
+    display: none;
+}
+
