@@ -50,10 +50,7 @@
                         <div class="stat-content">
                             <h3>Registered Companies</h3>
                             <h1><?= $dashboardDetails['companyCount'] ?? 0 ?></h1>
-                            <div class="stat-trend">
-                                <i class="material-icons trend-up">trending_up</i>
-                                <span>12% from last month</span>
-                            </div>
+                            
                         </div>
                     </div>
 
@@ -64,10 +61,7 @@
                         <div class="stat-content">
                             <h3>Registered Students</h3>
                             <h1><?= $dashboardDetails['studentCount'] ?? 0 ?></h1>
-                            <div class="stat-trend">
-                                <i class="material-icons trend-up">trending_up</i>
-                                <span>8% from last month</span>
-                            </div>
+                            
                         </div>
                     </div>
 
@@ -78,10 +72,7 @@
                         <div class="stat-content">
                             <h3>Ongoing Ads</h3>
                             <h1><?= $dashboardDetails['ongoingAdvertisementCount'] ?? 0 ?></h1>
-                            <div class="stat-trend">
-                                <i class="material-icons trend-up">trending_up</i>
-                                <span>5 new this week</span>
-                            </div>
+                            
                         </div>
                     </div>
 
