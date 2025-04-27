@@ -512,6 +512,28 @@
         // Initialize Toast System globally
         const toastSystem = new ToastSystem();
         
+        // Custom toast function for import section
+        function showImportToast(message, type) {
+            const toastContainer = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `toast-message toast-${type} show`;
+            
+            const closeBtn = document.createElement("button");
+            closeBtn.className = "toast-close-btn";
+            closeBtn.innerHTML = "✖";
+            closeBtn.onclick = function() {
+                toast.remove();
+            };
+            
+            const content = document.createElement("div");
+            content.className = "toast-content";
+            content.textContent = message;
+            
+            toast.appendChild(content);
+            toast.appendChild(closeBtn);
+            toastContainer.appendChild(toast);
+        }
+        
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize container
             toastSystem.initializeContainer();
@@ -788,7 +810,7 @@
                     }
 
                     if (result.success) {
-                        toastSystem.show(result.message || 'Students imported successfully!', 'success');
+                        showImportToast(result.message || 'Students imported successfully!', 'success');
 
                         // Reset form
                         this.reset();
@@ -796,12 +818,12 @@
                         previewBody.innerHTML = '';
                         submitBtn.disabled = true;
                     } else {
-                        toastSystem.show(result.message || 'Error importing students', 'error');
+                        showImportToast(result.message || 'Error importing students', 'error');
                         console.error('Import error:', result);
                     }
                 } catch (error) {
                     console.error('Upload error:', error);
-                    toastSystem.show(error.message || 'An error occurred during upload', 'error');
+                    showImportToast(error.message || 'An error occurred during upload', 'error');
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="bi bi-upload"></i> Import Data';
