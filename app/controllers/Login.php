@@ -110,6 +110,8 @@ class Login
 				}
 			}
 		}
+		// $dsafasd= ROOT;
+		// show($_SESSION);
 		$this->view('login', $data);
 	}
 
