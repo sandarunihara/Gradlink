@@ -21,7 +21,7 @@ class BlockedCompanies
                     'email' => $companydetail->Email,
                     'contact_person' => $companydetail->ContactPerson,
                     'contact_number' => $companydetail->ContactNum,
-                    'comment' => $companydetail->commentBlock,
+                    'comment' => $companydetail->reason,
                     'status' => $companydetail->Status,
                 ];
             }
