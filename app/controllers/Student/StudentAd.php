@@ -34,6 +34,8 @@ class StudentAd{
             try {
                 //show($_POST);
                 $advertisementId = $_GET['advertisementId'];
+                $position = $_GET['position'];
+
                 $this->beginTransaction(); 
 
                 $round = new Round;
@@ -47,7 +49,8 @@ class StudentAd{
                 $slectedRoleDetails = $student_advertisement ->where($arr, [], 'CreatedAt', 'asc');
                 $new['AdvertisementId'] = $slectedRoleDetails[0] -> AdvertisementId;
                 $selectedPosition = $advertisement -> where($new, [], '', 'do_not_order')[0] -> position;
-                if($_SESSION['ROUNDID'] == 1 && $selectedPosition != $_POST['position'] && $slectedRoleDetails[0] -> Jobstatus != 'Recruit'){
+                $selectedPosition = strtolower(str_replace(' ', '', $selectedPosition));
+                if($_SESSION['ROUNDID'] == 1 && $selectedPosition != $position && $slectedRoleDetails[0] -> Jobstatus != 'Recruit'){
                     throw new Exception("You have already applied for a different position in this round.");
                 }
                 if(!($_SESSION['ROUNDID'] == 1 || $_SESSION['ROUNDID'] == 2)){
@@ -173,7 +176,9 @@ class StudentAd{
         $data = $model->find(['advertisementId' => $advertisementId]);
         $student_advertisement = new student_advertisement;
         $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
-
+        if(isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])){
+            $data['cv'] = $student_advertisement -> findresumes($_SESSION['USER'] -> StudentId);
+        }
         //show($data);
         $this-> view('Student/InternshipView', $data);
     }

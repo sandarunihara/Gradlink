@@ -90,6 +90,7 @@
                                 <button 
                                     class="applyBtn" 
                                     data-advertisement-id="<?= htmlspecialchars($AdDetail->advertisementId); ?>"
+                                    data-position="<?= htmlspecialchars($AdDetail->position); ?>"
                                 >
                                 Apply
                                 </button>
