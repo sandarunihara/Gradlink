@@ -65,7 +65,7 @@
                         </div>
                     </div>
 
-                    <div class="stat-card" onclick="navigateToDashboardCompany();">
+                    <div class="stat-card" onclick="navigateToDasboardAdvertisement();">
                         <div class="stat-icon ads">
                             <i class="material-icons">featured_video</i>
                         </div>

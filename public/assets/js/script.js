@@ -38,6 +38,14 @@ function naviagteToViewPendingAdvertisement(advertisement_id) {
 
 }
 
+function navigateToDasboardAdvertisement() {
+    window.location.href = "/Gradlink/public/pdc_coordinator/dashboardAdvertisement/active";
+}
+
+function navigateToComplaints() {
+    window.location.href = "/Gradlink/public/pdc_coordinator/dashboardComplaints";
+}
+
 function clickDeleteBtn(company_id) {
     const userConfirmed = confirm("Are you sure you want to delete this Company?");
     if (userConfirmed) {
