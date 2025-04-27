@@ -80,8 +80,8 @@
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard") ?>
 
-        <?php 
-        if (isset($_SESSION['flash_message'])): 
+        <?php
+        if (isset($_SESSION['flash_message'])):
             $message = htmlspecialchars($_SESSION['flash_message']['message']);
             $type = htmlspecialchars($_SESSION['flash_message']['type']);
             unset($_SESSION['flash_message']);
@@ -395,8 +395,7 @@
                                             data-position="<?= htmlspecialchars($ad->position) ?>"
                                             data-status="<?= htmlspecialchars($ad->status) ?>"
                                             data-interns="<?= htmlspecialchars($ad->numOfInterns) ?>"
-                                            data-mode="<?= htmlspecialchars($ad->workingMode) ?>"
-                                            >
+                                            data-mode="<?= htmlspecialchars($ad->workingMode) ?>">
                                             <?= htmlspecialchars($ad->advertisementId) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -503,7 +502,7 @@
 
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
-    
+
     <!-- Scripts -->
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
@@ -511,14 +510,39 @@
     <script>
         // Initialize Toast System globally
         const toastSystem = new ToastSystem();
-        
+
+        // Custom toast function for import section
+        function showImportToast(message, type) {
+            const toastContainer = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `toast-message toast-${type} show`;
+
+            const closeBtn = document.createElement("button");
+            closeBtn.className = "toast-close-btn";
+            closeBtn.innerHTML = "✖";
+            closeBtn.onclick = function() {
+                toast.remove();
+            };
+
+            const content = document.createElement("div");
+            content.className = "toast-content";
+            content.textContent = message;
+
+            toast.appendChild(content);
+            toast.appendChild(closeBtn);
+            toastContainer.appendChild(toast);
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize container
             toastSystem.initializeContainer();
 
             // Handle flash messages
             if (window.__flashMessage) {
-                const { message, type } = window.__flashMessage;
+                const {
+                    message,
+                    type
+                } = window.__flashMessage;
                 toastSystem.show(message, type);
             }
 
@@ -715,7 +739,7 @@
                 // Clear previous preview
                 previewBody.innerHTML = '';
 
-                if (data.length === 0) {
+                if (!data || data.length === 0) {
                     previewTable.style.display = 'none';
                     return;
                 }
@@ -726,22 +750,35 @@
                 previewRows.forEach(row => {
                     const tr = document.createElement('tr');
 
-                    // Add cells for each expected column
-                    const columns = ['student_id', 'name', 'degree', 'email', 'nic', 'contact_no', 'status'];
+                    // Create cells for each column in the exact order of your table headers
+                    const cells = [
+                        row.student_id || row.StudentId || '',
+                        row.name || row.Name || '',
+                        row.degree || row.DegreeName || '',
+                        row.email || row.Email || '',
+                        row.nic || row.NIC || '',
+                        row.contact_no || row.ContactNum || '',
+                        row.status || row.Status || 'Not Applied' // Default status
+                    ];
 
-                    columns.forEach(col => {
+                    cells.forEach((cellContent, index) => {
                         const td = document.createElement('td');
-                        td.textContent = row[col] || '';
+                        td.textContent = cellContent;
+
+                        // Add status class to last cell
+                        if (index === 6) {
+                            const statusClass = cellContent.toLowerCase().replace(' ', '-');
+                            td.classList.add(`status-${statusClass}`);
+                        }
+
                         tr.appendChild(td);
                     });
-
                     previewBody.appendChild(tr);
                 });
 
                 // Show preview table
                 previewTable.style.display = 'block';
             }
-
             // Handle form submission
             uploadForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
@@ -788,7 +825,7 @@
                     }
 
                     if (result.success) {
-                        toastSystem.show(result.message || 'Students imported successfully!', 'success');
+                        showImportToast(result.message || 'Students imported successfully!', 'success');
 
                         // Reset form
                         this.reset();
@@ -796,12 +833,12 @@
                         previewBody.innerHTML = '';
                         submitBtn.disabled = true;
                     } else {
-                        toastSystem.show(result.message || 'Error importing students', 'error');
+                        showImportToast(result.message || 'Error importing students', 'error');
                         console.error('Import error:', result);
                     }
                 } catch (error) {
                     console.error('Upload error:', error);
-                    toastSystem.show(error.message || 'An error occurred during upload', 'error');
+                    showImportToast(error.message || 'An error occurred during upload', 'error');
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="bi bi-upload"></i> Import Data';
@@ -815,7 +852,10 @@
 
             // Handle flash messages
             if (window.__flashMessage) {
-                const { message, type } = window.__flashMessage;
+                const {
+                    message,
+                    type
+                } = window.__flashMessage;
                 toastSystem.show(message, type);
             }
             // Tab functionality

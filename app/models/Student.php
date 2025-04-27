@@ -1,7 +1,7 @@
-<?php 
+<?php
 class student
 {
-	
+
 	use Model;
 
 	protected $table = 'student';
@@ -31,10 +31,11 @@ class student
 		'created_at'
 	];
 
-	public function validate($data , $ispartialData = false){
+	public function validate($data, $ispartialData = false)
+	{
 		$this->errors = []; // Clear errors each time validate is called
 
-		if($ispartialData == false){
+		if ($ispartialData == false) {
 			if (empty($data['StudentId']) || !preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
 				$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
 			}
@@ -50,14 +51,13 @@ class student
 			if (empty($data['DegreeName']) || !in_array($data['DegreeName'], ['Computer Science', 'Information System'])) {
 				$this->errors['DegreeName'] = "Please select a valid Degree Name.";
 			}
-			if (empty($data['Status']) || !in_array($data['Status'], ['Not Applied', 'Pending', 'Ongoing' , 'Rejected'])) {
+			if (empty($data['Status']) || !in_array($data['Status'], ['Not Applied', 'Pending', 'Ongoing', 'Rejected'])) {
 				$this->errors['Status'] = "Please select a valid Status.";
 			}
 			if (empty($data['ContactNum']) || !preg_match('/^\+?\d{10,15}$/', $data['ContactNum'])) {
 				$this->errors['ContactNum'] = "Contact number must be 10-15 digits and may start with '+'.";
 			}
-		}
-		else{
+		} else {
 			if (isset($data['StudentId']) && (!preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId']))) {
 				$this->errors['StudentId'] = "Student ID must be in the format '2022cs021'.";
 			}
@@ -84,7 +84,8 @@ class student
 		return empty($this->errors);
 	}
 
-	public function validating($data){
+	public function validating($data)
+	{
 		$this->errors = [];
 
 		if (!preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
@@ -106,7 +107,8 @@ class student
 	}
 
 
-	public function validateRegisteredStudents($data){
+	public function validateRegisteredStudents($data)
+	{
 		$this->errors = [];
 
 		if (empty($data['StudentId']) || !preg_match('/^\d{4}[a-zA-Z]{2}\d{3}$/', $data['StudentId'])) {
@@ -128,108 +130,119 @@ class student
 		return false;
 	}
 
-	public function findregistered(){
+	public function findregistered()
+	{
 		$query = "SELECT * FROM $this->table WHERE block = '0'";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
-	
-	
-	
+
+
+
 	public function findall()
-    {
-        $query = "SELECT * FROM $this->table";
+	{
+		$query = "SELECT * FROM $this->table";
 
-        $result = $this->query($query);
-        return $result;
-		
-    }
+		$result = $this->query($query);
+		return $result;
+	}
 
-	public function findnotapplied(){
+	public function findnotapplied()
+	{
 		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied' AND block = '0'";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
-	public function findRecruited(){
+	public function findRecruited()
+	{
 		$query = "SELECT * FROM $this->table WHERE Status = 'Ongoing' AND block = '0'";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
-	public function findRejected(){
+	public function findRejected()
+	{
 		$query = "SELECT * FROM $this->table WHERE Status = 'Rejected' AND block = '0'";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
-	public function findAllBlocked(){
-		$query = "SELECT * FROM $this->table WHERE block = '1' AND Status = 'Blocked'";
+	public function findAllBlocked()
+	{
+		$query = "SELECT * 
+					FROM $this->table s
+					JOIN action_logs a ON s.StudentId = a.target_id
+					WHERE s.block = '1' 
+  					AND a.action_type = 'block'
+ 					AND a.timestamp = (
+    					SELECT MAX(a2.timestamp) 
+    					FROM action_logs a2 
+    					WHERE a2.target_id = s.StudentId 
+      					AND a2.action_type = 'block'
+ 							 )";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
 
-	public function findAllPending(){
+	public function findAllPending()
+	{
 		$query = "SELECT * FROM $this->table WHERE Status = 'Pending' AND block = 0";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
-	public function findNotReg(){
+	public function findNotReg()
+	{
 		$query = "SELECT * FROM $this->table WHERE block = '0' AND registered = '0'";
 		$result = $this->query($query);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
 
-	public function find($id){
-        $query = "SELECT * FROM $this->table WHERE StudentId = :id";
-        $params = [':id' => $id];
-        $result = $this->query($query, $params);
-        return $result ? $result[0] : null;
-    }
+	public function find($id)
+	{
+		$query = "SELECT * FROM $this->table WHERE StudentId = :id";
+		$params = [':id' => $id];
+		$result = $this->query($query, $params);
+		return $result ? $result[0] : null;
+	}
 
-	public function firstMatch($conditions = []){
+	public function firstMatch($conditions = [])
+	{
 		$where = [];
 		$params = [];
 
-		foreach($conditions as $key => $value){
+		foreach ($conditions as $key => $value) {
 			$where[] = "$key = :$key";
 			$params[":$key"] = $value;
 		}
@@ -240,95 +253,94 @@ class student
 		return $result ? $result[0] : null;
 	}
 
-	public function registeredCount(){
+	public function registeredCount()
+	{
 		$query = "SELECT COUNT(*) FROM $this->table WHERE registered = '1' AND block = '0'";
 		$result = $this->query($query);
-		if(!empty($result)){
+		if (!empty($result)) {
 			return $result[0]->{'COUNT(*)'};
-		}
-
-		else{
+		} else {
 			return 0;
 		}
 	}
 
-	public function workingCount(){
+	public function workingCount()
+	{
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Recruited'";
 		$result = $this->query($query);
-		if(!empty($result)){
+		if (!empty($result)) {
 			return $result[0]->{'COUNT(*)'};
-		}
-		else{
+		} else {
 			return 0;
 		}
 	}
 
-	public function rejectedCount(){
+	public function rejectedCount()
+	{
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Rejected'";
 		$result = $this->query($query);
-		if(!empty($result)){
+		if (!empty($result)) {
 			return $result[0]->{'COUNT(*)'};
-		}
-		
-		else{
+		} else {
 			return 0;
 		}
 	}
 
-	public function appliedCount(){
+	public function appliedCount()
+	{
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Pending'";
 		$result = $this->query($query);
-		if(!empty($result)){
+		if (!empty($result)) {
 			return $result[0]->{'COUNT(*)'};
-		}
-		
-		else{
+		} else {
 			return 0;
 		}
 	}
 
-	public function notAppliedCount(){
+	public function notAppliedCount()
+	{
 		$query = "SELECT COUNT(*) FROM $this->table WHERE Status = 'Not Applied'";
 		$result = $this->query($query);
-		if(!empty($result)){
+		if (!empty($result)) {
 			return $result[0]->{'COUNT(*)'};
-		}
-		
-		else{
+		} else {
 			return 0;
 		}
 	}
 
-	public function findby($column,$data){
-        $query = "SELECT * FROM $this->table WHERE $column = :data LIMIT 1";
-        $params = [':data' => $data];
-        $result = $this->query($query, $params);
-        return $result ? $result[0] : false;
-    }
+	public function findby($column, $data)
+	{
+		$query = "SELECT * FROM $this->table WHERE $column = :data LIMIT 1";
+		$params = [':data' => $data];
+		$result = $this->query($query, $params);
+		return $result ? $result[0] : false;
+	}
 
-	public function findStudent($data) {
-        // Check if $data is an associative array or a single value
-        if (is_array($data)) {
-            $keys = array_keys($data);
-            $query = "SELECT * FROM student WHERE ";
-        
-            foreach ($keys as $key) {
-                $query .= $key . " = :" . $key . " AND ";
-            }
-        
-            $query = trim($query, "AND "); // Trim the trailing "AND"
-            
-            $result = $this->query($query, $data);
-        } else {
-            // Assume $data is a single ID (like CompanyId)
-            $query = "SELECT * FROM student WHERE StudentId = :StudentId";
-            $result = $this->query($query, ['StudentId' => $data]);
-        }
-    
-        return $result;
-    }
+	public function findStudent($data)
+	{
+		// Check if $data is an associative array or a single value
+		if (is_array($data)) {
+			$keys = array_keys($data);
+			$query = "SELECT * FROM student WHERE ";
 
-	public function getWeeklyStudent($week = 5){
+			foreach ($keys as $key) {
+				$query .= $key . " = :" . $key . " AND ";
+			}
+
+			$query = trim($query, "AND "); // Trim the trailing "AND"
+
+			$result = $this->query($query, $data);
+		} else {
+			// Assume $data is a single ID (like CompanyId)
+			$query = "SELECT * FROM student WHERE StudentId = :StudentId";
+			$result = $this->query($query, ['StudentId' => $data]);
+		}
+
+		return $result;
+	}
+
+	public function getWeeklyStudent($week = 5)
+	{
 		$query = "SELECT YEAR(created_at) as year,
     			         WEEK(created_at, 1) as week,
                          COUNT(*) as count
@@ -340,16 +352,15 @@ class student
 		$params = [':week' => $week];
 		$result = $this->query($query, $params);
 		//show($result);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
-		
 	}
 
-	public function getWeeklyRecruitedStudent($week = 5){
+	public function getWeeklyRecruitedStudent($week = 5)
+	{
 		$query = "SELECT YEAR(created_at) as year,
 				         WEEK(created_at, 1) as week,
 						 COUNT(*) as count
@@ -360,25 +371,22 @@ class student
 				;";
 		$params = [':week' => $week];
 		$result = $this->query($query, $params);
-		if($result){
+		if ($result) {
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
-	public function checkStudentId($studentId){
+	public function checkStudentId($studentId)
+	{
 		$query = "SELECT * FROM $this->table WHERE StudentId = :studentId";
 		$params = [':studentId' => $studentId];
 		$result = $this->query($query, $params);
-		if($result){
+		if ($result) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
-
 }
-

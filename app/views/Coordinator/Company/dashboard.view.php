@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorCalendar.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
@@ -39,10 +38,6 @@
                 <div class="overlay"></div>
 
             </header>
-
-            
-
-
             <!-- <div class="main-body"> -->
             <?php
             if (!empty($dashboardDetails)):
@@ -74,53 +69,11 @@
                     </div>
                 </div>
                 <div class="analysis-container">
-                    <div class="recruitment-analysis">
-                        <div class="title">
-                            <p>Recruitment Analysis</p>
-                        </div>
-
-                        <div class="graphs">
-                            <div id="recruitment_CS" style="height: 370px; width: 100%;"></div>
-                            <div id="recruitment_IS" style="height: 370px; width: 100%; margin-top: 20px;"></div>
-                        </div>
-                    </div>
-
                     <div class="company-performance">
                         <div class="title">
                             <p>Internships Offered by Companies</p>
                         </div>
                         <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div>
-
-
-                        <!-- <div class="company-performance" style="margin-top: 30px;">
-                                <div class="title" style="margin-top: 20px;">
-                                    <p>Scheduled Tech Talk Sessions</p>
-                                </div>
-
-
-                                <div class="calendar-container">
-                                    <div id="calendar">
-                                        <div class="calendar-header">
-                                            <button class="prev" onclick="changeMonth(-1)">&#10094;</button>
-                                            <div id="calendar-month"></div>
-                                            <button class="next" onclick="changeMonth(1)">&#10095;</button>
-                                        </div>
-                                        <div class="calendar-days" id="calendar-days"></div>
-                                    </div>
-                                </div>
-
-                                <div id="schedule-modal" class="modal">
-                                    <div class="modal-content">
-                                        <span class="close" onclick="closeModal()">&times;</span>
-                                        <h2 id="session-title"></h2>
-                                        <ul id="session-details"></ul>
-                                    </div>
-                                </div>
-
-
-                                <!-- <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div> -->
-                        <!-- </div> -->
-
 
                         <div class="company-performance">
                             <div class="calendar-title">
@@ -134,7 +87,6 @@
                                         <div id="calendar-month">Month Year</div>
                                         <button class="next" onclick="changeMonth(1)">Next &#10095;</button>
                                     </div>
-
                                     <div class="calendar-days" id="calendar-days"></div>
                                 </div>
                             </div>
@@ -186,23 +138,7 @@
 
 
         <script>
-            <?php
-            if (!empty($applicationAnalysis)):
-                $applicationCSGraphPoints = array(
-                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingCSCount'] ?? '')),
-                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedCSCount'] ?? '')),
-                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedCSCount'] ?? '')),
-                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedCSCount'] ?? '')),
-                );
-
-                $applicationISGraphPoints = array(
-                    array("label" => "Pending", "symbol" => "Pending", "y" => htmlspecialchars($applicationAnalysis['pendingISCount'] ?? '')),
-                    array("label" => "Rejected", "symbol" => "Rejected", "y" => htmlspecialchars($applicationAnalysis['rejectedISCount'] ?? '')),
-                    array("label" => "Recruited", "symbol" => "Recruited", "y" => htmlspecialchars($applicationAnalysis['recruitedISCount'] ?? '')),
-                    array("label" => "Not Applied", "symbol" => "Not Applied", "y" => htmlspecialchars($applicationAnalysis['notAppliedISCount'] ?? '')),
-                );
-            ?>
-
+            
                 var jobRolesData = <?php echo json_encode($InternPositions, JSON_NUMERIC_CHECK); ?>;
                 var formattedJobRoles = jobRolesData.map(role => ({
                     y: role.count,
@@ -245,46 +181,7 @@
                 ]);
 
                 
-                    var chart1 = new CanvasJS.Chart("recruitment_CS", {
-                        backgroundColor: "#ffffff",
-                        colorSet: "greenShades",
-                        // theme: "light2",
-                        animationEnabled: true,
-                        subtitles: [{
-                            text: "Computer Science Degree",
-                            fontSize: 20,
-                        }],
-                        data: [{
-                            type: "doughnut",
-                            radius: "90%",
-                            innerRadius: "50%",
-                            indexLabel: "{symbol} - {y}",
-                            yValueFormatString: "#,##0.0\"%\"",
-                            showInLegend: true,
-                            legendText: "{label} : {y}",
-                            dataPoints: <?php echo json_encode($applicationCSGraphPoints, JSON_NUMERIC_CHECK); ?>
-                        }]
-                    });
-
-                    var chart2 = new CanvasJS.Chart("recruitment_IS", {
-                        backgroundColor: "#ffffff",
-                        colorSet: "greenShades",
-                        animationEnabled: true,
-                        subtitles: [{
-                            text: "Information Systems Degree",
-                            fontSize: 20,
-                        }],
-                        data: [{
-                            type: "doughnut",
-                            radius: "90%",
-                            innerRadius: "50%",
-                            indexLabel: "{symbol} - {y}",
-                            yValueFormatString: "#,##0.0\"%\"",
-                            showInLegend: true,
-                            legendText: "{label} : {y}",
-                            dataPoints: <?php echo json_encode($applicationISGraphPoints, JSON_NUMERIC_CHECK); ?>
-                        }]
-                    });
+                    
 
                     var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
                         backgroundColor: "#ffffff",
@@ -307,15 +204,11 @@
                         }]
                     });
 
-                    chart1.render();
-                    chart2.render();
                     chart3.render();
 
                 }
 
-            <?php else: ?>
-                console.warn("No application analysis data available.");
-            <?php endif; ?>
+           
         </script>
 
         <script src="<?= ROOT ?>/assets/js/script.js"></script>
