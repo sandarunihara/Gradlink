@@ -147,8 +147,26 @@
                             <div class="calendar-days" id="calendar-days"></div>
                         </div>
 
-                        <!-- Upcoming Sessions -->
-                        
+                        <!-- Session Details Modal -->
+                        <div id="schedule-modal" class="modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 id="session-title" class="modal-title">Session Details</h2>
+                                    <button class="close-btn" onclick="closeModal()">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="session-meta">
+                                        <div class="meta-item">
+                                            <i class="material-icons">event</i>
+                                            <span id="session-date"></span>
+                                        </div>
+                                    </div>
+                                    <div class="session-list" id="session-details"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -204,27 +222,6 @@
                     
                 </div>
 
-                <!-- Session Details Modal -->
-                <div id="schedule-modal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 id="session-title" class="modal-title">Session Details</h2>
-                            <button class="close-btn" onclick="closeModal()">
-                                <i class="material-icons">close</i>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="session-meta">
-                                <div class="meta-item">
-                                    <i class="material-icons">event</i>
-                                    <span id="session-date"></span>
-                                </div>
-                            </div>
-                            <div class="session-list" id="session-details"></div>
-                        </div>
-                    </div>
-                </div>
-
             <?php else: ?>
                 <div class="empty-state">
                     <i class="material-icons">info</i>
@@ -278,8 +275,8 @@
             }
 
             // Calendar functions
-            let currentMonth = new Date();
             const sessionData = <?php echo json_encode($sessions); ?>;
+            let currentMonth = new Date();
 
             function renderCalendar(month) {
                 const firstDayOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
@@ -307,7 +304,9 @@
                 // Fill in the days of the month
                 for (let day = 1; day <= numberOfDays; day++) {
                     const currentDay = new Date(month.getFullYear(), month.getMonth(), day);
-                    const dayString = currentDay.toISOString().split('T')[0];
+                    // Format date as YYYY-MM-DD without timezone offset
+                    const dayString = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    
                     const dayCell = document.createElement('div');
                     dayCell.classList.add('calendar-day');
                     dayCell.innerText = day;
@@ -342,7 +341,8 @@
                 const sessions = sessionData[date];
 
                 // Format date for display
-                const dateObj = new Date(date);
+                const [year, month, day] = date.split('-');
+                const dateObj = new Date(year, month - 1, day);
                 const formattedDate = dateObj.toLocaleDateString(undefined, {
                     weekday: 'long',
                     year: 'numeric',
