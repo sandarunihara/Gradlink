@@ -3,139 +3,246 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Coordinator Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Coordinator/Company/dashboard.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorDashboard.css">
-    <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Components/coordinatorCalendar.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Components/coordinatorDashboard.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Components/coordinatorCalendar.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-
 </head>
 
 <body>
-
     <div class="container">
         <?php $this->renderComponent("coordinatorDashboard") ?>
-
 
         <main class="main-content">
             <header class="header">
                 <div class="header-left">
                     <h1>Dashboard</h1>
+                    <p class="welcome-text">Welcome back! Here's what's happening today.</p>
                 </div>
                 <div class="header-right">
+                    <div class="date-display">
+                        <i class="material-icons">today</i>
+                        <span><?= date('l, F j, Y') ?></span>
+                    </div>
                     <div class="round-badge">
                         <span class="round-label">Current Round</span>
                         <span class="round-number"><?= $round->round ?></span>
                     </div>
                 </div>
                 <div class="overlay"></div>
-
             </header>
-            <!-- <div class="main-body"> -->
-            <?php
-            if (!empty($dashboardDetails)):
-            ?>
-                <div class="main-cards">
-                    <div class='card' onclick='navigateToDashboardCompany();'>
-                        <div class='card-inner'>
+
+            <?php if (!empty($dashboardDetails)): ?>
+                <!-- Quick Stats Section -->
+                <div class="quick-stats">
+                    <div class="stat-card" onclick="navigateToDashboardCompany();">
+                        <div class="stat-icon company">
                             <i class="material-icons">business</i>
+                        </div>
+                        <div class="stat-content">
                             <h3>Registered Companies</h3>
-                        </div>
-                        <h1><?php echo $dashboardDetails['companyCount'] ?? 0; ?></h1>
-
-                    </div>
-
-                    <div class='card' onclick='navigateToDashboardStudent();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">school </i>
-                            <h3>Registered Students</h3>
-                        </div>
-                        <h1><?php echo $dashboardDetails['studentCount'] ?? 0; ?></h1>
-                    </div>
-                    <div class='card' onclick='navigateToDashboardCompany();'>
-                        <div class='card-inner'>
-                            <i class="material-icons">featured_video</i>
-                            <h3>Ongoing Advertisements</h3>
-                        </div>
-                        <h1><?php echo $dashboardDetails['ongoingAdvertisementCount'] ?? 0; ?></h1>
-
-                    </div>
-                </div>
-                <div class="analysis-container">
-                    <div class="company-performance">
-                        <div class="title">
-                            <p>Internships Offered by Companies</p>
-                        </div>
-                        <div id="jobRolesChartContainer" style="width: 100%; height: 370px;"></div>
-
-                    </div>
-                    <div class="company-performance">
-                        <div class="calendar-title">
-                            <h2>Scheduled Tech Talk Sessions</h2>
-                        </div>
-
-                        <div class="calendar-container">
-                            <div id="calendar">
-                                <div class="calendar-header">
-                                    <button class="prev" onclick="changeMonth(-1)">&#10094; Previous</button>
-                                    <div id="calendar-month">Month Year</div>
-                                    <button class="next" onclick="changeMonth(1)">Next &#10095;</button>
-                                </div>
-                                <div class="calendar-days" id="calendar-days"></div>
+                            <h1><?= $dashboardDetails['companyCount'] ?? 0 ?></h1>
+                            <div class="stat-trend">
+                                <i class="material-icons trend-up">trending_up</i>
+                                <span>12% from last month</span>
                             </div>
                         </div>
+                    </div>
 
-                        <div id="schedule-modal" class="modal">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2 id="session-title" class="modal-title">Session Details</h2>
-                                    <button class="close-btn" onclick="closeModal()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                        </svg>
+                    <div class="stat-card" onclick="navigateToDashboardStudent();">
+                        <div class="stat-icon student">
+                            <i class="material-icons">school</i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Registered Students</h3>
+                            <h1><?= $dashboardDetails['studentCount'] ?? 0 ?></h1>
+                            <div class="stat-trend">
+                                <i class="material-icons trend-up">trending_up</i>
+                                <span>8% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" onclick="navigateToDashboardCompany();">
+                        <div class="stat-icon ads">
+                            <i class="material-icons">featured_video</i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Ongoing Ads</h3>
+                            <h1><?= $dashboardDetails['ongoingAdvertisementCount'] ?? 0 ?></h1>
+                            <div class="stat-trend">
+                                <i class="material-icons trend-up">trending_up</i>
+                                <span>5 new this week</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" onclick="navigateToComplaints();">
+                        <div class="stat-icon complaints">
+                            <i class="material-icons">report</i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Complaints</h3>
+                            <h1><?= $dashboardDetails['complaintCount'] ?? 0 ?></h1>
+                            <div class="complaint-breakdown">
+                                <span class="unread"><?= $dashboardDetails['unreadComplaints'] ?? 0 ?> unread</span>
+                                <span class="resolved"><?= $dashboardDetails['resolvedComplaints'] ?? 0 ?> resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="content-grid">
+                    <!-- Left Column -->
+                    <div class="content-column">
+                        <!-- Internships Chart -->
+                        <div class="dashboard-card chart-card">
+                            <div class="card-header">
+                                <h2>Internships Offered by Companies</h2>
+                                
+                            </div>
+                            <div id="jobRolesChartContainer" style="width: 100%; height: 300px;"></div>
+                        </div>
+
+                        <!-- Applications Summary -->
+                        <div class="dashboard-card applications-card">
+                            <div class="card-header">
+                                <h2>Applications Summary</h2>
+                                <a href="#" class="view-all">View All</a>
+                            </div>
+                            <div class="applications-stats">
+                                <div class="app-stat">
+                                    <div class="stat-value"><?= $dashboardDetails['totalApplications'] ?? 0 ?></div>
+                                    <div class="stat-label">Total Applications</div>
+                                </div>
+                                <div class="app-stat">
+                                    <div class="stat-value"><?= $dashboardDetails['recruitedStudents'] ?? 0 ?></div>
+                                    <div class="stat-label">Recruited</div>
+                                </div>
+                                <div class="app-stat">
+                                    <div class="stat-value"><?= $dashboardDetails['pendingApplications'] ?? 0 ?></div>
+                                    <div class="stat-label">Pending</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="content-column">
+                        <!-- Calendar Section -->
+                        <div class="dashboard-card calendar-card">
+                            <div class="card-header">
+                                <h2>Scheduled Tech Talks</h2>
+                                <div class="calendar-actions">
+                                    <button class="btn-icon" onclick="changeMonth(-1)">
+                                        <i class="material-icons">chevron_left</i>
+                                    </button>
+                                    <button class="btn-icon" onclick="changeMonth(1)">
+                                        <i class="material-icons">chevron_right</i>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="session-meta">
-                                        <div class="meta-item">
-                                            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                                            </svg>
-                                            <span id="session-date"></span>
-                                        </div>
+                            </div>
+                            <div id="calendar-month" class="calendar-month"></div>
+                            <div class="calendar-days" id="calendar-days"></div>
+                        </div>
 
-                                    </div>
-                                    <div class="session-list" id="session-details"></div>
+                        <!-- Upcoming Sessions -->
+                        
+                    </div>
+                </div>
+
+                <!-- Additional Sections -->
+                <div class="secondary-grid">
+                    <!-- Pending Approvals -->
+                    <div class="dashboard-card pending-approvals">
+                        <div class="card-header">
+                            <h2>Pending Approvals</h2>
+                            <span class="badge"><?= $dashboardDetails['pendingApprovals'] ?? 0 ?></span>
+                        </div>
+                        <div class="approval-items">
+                            <div class="approval-item">
+                                <div class="approval-type">
+                                    <i class="material-icons">description</i>
+                                    <span>Advertisements</span>
                                 </div>
-
+                                <div class="approval-count"><?= $dashboardDetails['pendingAdvertisements'] ?? 0 ?></div>
+                                <button class="btn btn-review" onclick="navigateToPendingAds()">Review</button>
+                            </div>
+                            <div class="approval-item">
+                                <div class="approval-type">
+                                    <i class="material-icons">business</i>
+                                    <span>Company Registrations</span>
+                                </div>
+                                <div class="approval-count"><?= $dashboardDetails['pendingCompanies'] ?? 0 ?></div>
+                                <button class="btn btn-review" onclick="navigateToPendingCompanies()">Review</button>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Blocked Entities -->
+                    <div class="dashboard-card blocked-entities">
+                        <div class="card-header">
+                            <h2>Blocked Entities</h2>
+                        </div>
+                        <div class="blocked-stats">
+                            <div class="blocked-stat">
+                                <div class="stat-value"><?= $dashboardDetails['blockedCompanies'] ?? 0 ?></div>
+                                <div class="stat-label">Companies</div>
+                            </div>
+                            <div class="blocked-stat">
+                                <div class="stat-value"><?= $dashboardDetails['blockedStudents'] ?? 0 ?></div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                        </div>
+                        <div class="blocked-actions">
+                            <button class="btn btn-outline" onclick="navigateToBlockedList('companies')">View Companies</button>
+                            <button class="btn btn-outline" onclick="navigateToBlockedList('students')">View Students</button>
+                        </div>
+                    </div>
 
+                    
                 </div>
 
+                <!-- Session Details Modal -->
+                <div id="schedule-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="session-title" class="modal-title">Session Details</h2>
+                            <button class="close-btn" onclick="closeModal()">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="session-meta">
+                                <div class="meta-item">
+                                    <i class="material-icons">event</i>
+                                    <span id="session-date"></span>
+                                </div>
+                            </div>
+                            <div class="session-list" id="session-details"></div>
+                        </div>
+                    </div>
+                </div>
 
             <?php else: ?>
-                <p>Empty Data</p>
+                <div class="empty-state">
+                    <i class="material-icons">info</i>
+                    <h3>No Dashboard Data Available</h3>
+                    <p>Please check back later or contact support if this persists.</p>
+                </div>
             <?php endif; ?>
-
-            <!-- </div> -->
-
         </main>
-
-
+        <script src="<?= ROOT ?>/assets/js/script.js"></script>
         <script>
             var jobRolesData = <?php echo json_encode($InternPositions, JSON_NUMERIC_CHECK); ?>;
             var formattedJobRoles = jobRolesData.map(role => ({
@@ -144,82 +251,53 @@
             }));
 
             window.onload = function() {
+                CanvasJS.addColorSet("dashboardColors", [
+                    "#3498db", "#2ecc71", "#e74c3c", "#f39c12", "#9b59b6",
+                    "#1abc9c", "#d35400", "#34495e", "#16a085", "#c0392b"
+                ]);
 
-                CanvasJS.addColorSet("greenShades",
-                    [ //colorSet Array
-                        "#D1FFD1",
-                        "#A4FFA4",
-                        "#7DFF7D",
-                        "#4FFF4F",
-                        "#2AFF2A",
-                        "#1A4F1A",
-                        "#0A1A0A"
-                    ]);
-
-                CanvasJS.addColorSet("blueShades",
-                    [ //colorSet Array
-                        "#D1E8FF",
-                        "#A4C8E1",
-                        "#7DA2C1",
-                        "#4F7DA2",
-                        "#2A4F7D",
-                        "#1A2A4F",
-                        "#0A1A2A"
-                    ]);
-
-                CanvasJS.addColorSet("redShades",
-                    [ //colorSet Array
-                        "#FFD1D1",
-                        "#FFA4A4",
-                        "#FF7D7D",
-                        "#FF4F4F",
-                        "#FF2A2A",
-                        "#4F1A1A",
-                        "#1A0A0A"
-                    ]);
-
-
-
-
-                var chart3 = new CanvasJS.Chart("jobRolesChartContainer", {
+                var chart = new CanvasJS.Chart("jobRolesChartContainer", {
                     backgroundColor: "#ffffff",
-                    colorSet: "blueShades",
+                    colorSet: "dashboardColors",
                     animationEnabled: true,
-                    // title: {
-                    //     text: "Job Roles Offered by Companies"
-                    // },
                     axisY: {
-                        title: "Number of Job Openings",
-                        includeZero: true
+                        title: "Number of Openings",
+                        includeZero: true,
+                        gridThickness: 0,
+                        lineThickness: 1
+                    },
+                    axisX: {
+                        labelAngle: -45,
+                        interval: 1
                     },
                     data: [{
                         type: "bar",
                         indexLabel: "{y}",
                         indexLabelPlacement: "inside",
-                        indexLabelFontWeight: "bolder",
+                        indexLabelFontWeight: "bold",
                         indexLabelFontColor: "white",
                         dataPoints: formattedJobRoles
                     }]
                 });
 
-                chart3.render();
+                chart.render();
 
+                // Initialize calendar
+                renderCalendar(new Date());
             }
-        </script>
 
-        <script src="<?= ROOT ?>/assets/js/script.js"></script>
-
-        <script>
+            // Calendar functions
             let currentMonth = new Date();
-            const sessionData = <?php echo json_encode($sessions); ?>
+            const sessionData = <?php echo json_encode($sessions); ?>;
 
             function renderCalendar(month) {
                 const firstDayOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
                 const lastDayOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
 
                 const monthName = month.toLocaleString('default', {
-                    month: 'long'
-                }) + ' ' + month.getFullYear();
+                    month: 'long',
+                    year: 'numeric'
+                });
                 document.getElementById('calendar-month').innerText = monthName;
 
                 const daysContainer = document.getElementById('calendar-days');
@@ -231,25 +309,34 @@
                 // Blank days for the start of the month
                 for (let i = 0; i < firstDayIndex; i++) {
                     const blankCell = document.createElement('div');
-                    blankCell.classList.add('calendar-day');
+                    blankCell.classList.add('calendar-day', 'empty');
                     daysContainer.appendChild(blankCell);
                 }
 
                 // Fill in the days of the month
                 for (let day = 1; day <= numberOfDays; day++) {
-                    const currentDay = new Date(month.getFullYear(), month.getMonth(), day, 12);
-                    const dayString = currentDay.toISOString().split('T')[0]; // format: YYYY-MM-DD
+                    const currentDay = new Date(month.getFullYear(), month.getMonth(), day);
+                    const dayString = currentDay.toISOString().split('T')[0];
                     const dayCell = document.createElement('div');
                     dayCell.classList.add('calendar-day');
                     dayCell.innerText = day;
                     dayCell.setAttribute('data-date', dayString);
 
-                    // Add session labels if there are sessions on that day
-                    if (sessionData[dayString]) {
-                        // Add a class to highlight the day if there are sessions
-                        dayCell.classList.add('session-day');
+                    // Highlight today
+                    const today = new Date();
+                    if (currentDay.getDate() === today.getDate() && 
+                        currentDay.getMonth() === today.getMonth() && 
+                        currentDay.getFullYear() === today.getFullYear()) {
+                        dayCell.classList.add('today');
+                    }
 
-                        // Add an onclick event to show session details
+                    // Add session indicator if there are sessions
+                    if (sessionData[dayString]) {
+                        dayCell.classList.add('has-sessions');
+                        const sessionIndicator = document.createElement('div');
+                        sessionIndicator.classList.add('session-indicator');
+                        dayCell.appendChild(sessionIndicator);
+                        
                         dayCell.onclick = function() {
                             showSessionDetails(dayString);
                         };
@@ -259,20 +346,18 @@
                 }
             }
 
-
             function showSessionDetails(date) {
                 const modal = document.getElementById('schedule-modal');
                 const sessions = sessionData[date];
 
                 // Format date for display
                 const dateObj = new Date(date);
-                const options = {
+                const formattedDate = dateObj.toLocaleDateString(undefined, {
                     weekday: 'long',
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
-                };
-                const formattedDate = dateObj.toLocaleDateString(undefined, options);
+                });
 
                 // Set modal content
                 document.getElementById('session-title').textContent = 'Session Details';
@@ -287,32 +372,27 @@
                     const sessionItem = document.createElement('div');
                     sessionItem.className = 'session-item';
                     sessionItem.innerHTML = `
-            <h3 class="session-name">${session.session_name}</h3>
-            <p class="session-company">${session.Company}</p>
-            <div class="meta-item" style="margin-bottom: 8px;">
-                <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <span>${session.time}</span>
-            </div>
-            <div class="meta-item">
-                <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>Hall: ${session.hall}</span>
-            </div>
-            <p class="session-description">${session.description}</p>
-        `;
+                        <h3 class="session-name">${session.session_name}</h3>
+                        <p class="session-company">${session.Company}</p>
+                        <div class="session-meta">
+                            <div class="meta-item">
+                                <i class="material-icons">schedule</i>
+                                <span>${session.time}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="material-icons">location_on</i>
+                                <span>Hall: ${session.hall}</span>
+                            </div>
+                        </div>
+                        <p class="session-description">${session.description}</p>
+                    `;
                     detailsContainer.appendChild(sessionItem);
                 });
 
                 // Show modal
-                const modal1 = document.getElementById('schedule-modal');
-                modal1.style.display = 'flex'; // Force display
+                modal.style.display = 'flex';
                 setTimeout(() => {
-                    modal1.classList.add('active'); // Add animation class
+                    modal.classList.add('active');
                 }, 10);
             }
 
@@ -321,47 +401,51 @@
                 modal.classList.remove('active');
                 setTimeout(() => {
                     modal.style.display = 'none';
-                }, 300); // Match this with your CSS transition duration
+                }, 300);
             }
-
-            // Close modal when clicking outside of it
-            window.onclick = function(event) {
-                const modal = document.getElementById('schedule-modal');
-                if (event.target === modal) {
-                    closeModal();
-                }
-            };
 
             function changeMonth(offset) {
                 currentMonth.setMonth(currentMonth.getMonth() + offset);
                 renderCalendar(currentMonth);
             }
 
-            // Initial render
-            renderCalendar(currentMonth);
+            // Navigation functions
+            // function navigateToDashboardCompany() {
+            //     window.location.href = '<?= ROOT ?>/coordinator/companies';
+            // }
 
+            // function navigateToDashboardStudent() {
+            //     window.location.href = '<?= ROOT ?>/coordinator/students';
+            // }
 
-            // Notifications
-            const notificationIcon = document.querySelector(".notification-icon");
-            const notificationDropdown = document.querySelector(".notification-dropdown");
-            const overlay = document.querySelector(".overlay");
+            // function navigateToComplaints() {
+            //     window.location.href = '<?= ROOT ?>/coordinator/complaints';
+            // }
 
-            notificationIcon.addEventListener("click", function() {
-                notificationDropdown.classList.toggle("active");
-                overlay.classList.toggle("active"); // Show/hide overlay
-            });
+            // function navigateToPendingAds() {
+            //     window.location.href = '<?= ROOT ?>/coordinator/advertisements/pending';
+            // }
 
-            // Close dropdown when clicking outside
-            document.addEventListener("click", function(event) {
-                if (!notificationIcon.contains(event.target) && !notificationDropdown.contains(event.target)) {
-                    notificationDropdown.classList.remove("active");
-                    overlay.classList.remove("active"); // Hide overlay
+            // function navigateToPendingCompanies() {
+            //     window.location.href = '<?= ROOT ?>/coordinator/companies/pending';
+            // }
+
+            // function navigateToBlockedList(type) {
+            //     window.location.href = `<?= ROOT ?>/coordinator/${type}/blocked`;
+            // }
+
+            // function viewSessionDetails(id) {
+            //     window.location.href = `<?= ROOT ?>/coordinator/sessions/view/${id}`;
+            // }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('schedule-modal');
+                if (event.target === modal) {
+                    closeModal();
                 }
-            });
+            };
         </script>
-
-
-
+    </div>
 </body>
-
 </html>
