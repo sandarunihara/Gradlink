@@ -39,7 +39,7 @@
                     if($status === "notReviewed"){
                         echo "No response yet";
                     }else{
-                        $reply = $data['CoordinatorComplaint'] -> Reply;
+                        $reply = $data['Complaint'] -> reply;
                         echo $reply;
                     }
                     ?>

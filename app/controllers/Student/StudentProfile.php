@@ -47,7 +47,7 @@ class StudentProfile{
                 $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
                 if(!empty($data['Skills'])){
-                    $isDelete = $skill -> delete($arr['StudentId'], 'StudentId');
+                    $isDelete = $skill -> deleteSkil($arr['StudentId'], 'StudentId');
                     if(!$isDelete){
                         throw new Exception("Error deleting student skills");
                     }

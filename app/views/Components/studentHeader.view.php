@@ -58,7 +58,7 @@
                                     <?php endif; ?>
                                 </div>
                             <?php endif; ?>
-                    <?php elseif ($_SESSION['ROUNDID'] == 2): ?>
+                    <?php elseif ($currentRoundDetails -> roundId == 2): ?>
                         <div class="status-container unlimited">
                             <i class="fas fa-infinity"></i>
                             <span class="status-text">Unlimited applications</span>

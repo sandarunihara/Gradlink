@@ -40,20 +40,22 @@ class StudentAd{
 
                 $round = new Round;
                 $currentRoundDetails = $round -> getActiveRound();
-                if ($_SESSION['ROUNDID'] == 1 && $noOfAppliedAds >= $currentRoundDetails->vacancy){
+                if ($currentRoundDetails -> roundId == 1 && $noOfAppliedAds >= $currentRoundDetails->vacancy){
                     throw new Exception("You have reached the limit of applications in this round.");
                 }
                 $student_advertisement = new student_advertisement;
                 $advertisement = new C_Advertisement;
 
                 $slectedRoleDetails = $student_advertisement ->where($arr, [], 'CreatedAt', 'asc');
-                $new['AdvertisementId'] = $slectedRoleDetails[0] -> AdvertisementId;
-                $selectedPosition = $advertisement -> where($new, [], '', 'do_not_order')[0] -> position;
-                $selectedPosition = strtolower(str_replace(' ', '', $selectedPosition));
-                if($_SESSION['ROUNDID'] == 1 && $selectedPosition != $position && $slectedRoleDetails[0] -> Jobstatus != 'Recruit'){
-                    throw new Exception("You have already applied for a different position in this round.");
+                if(!empty($slectedRoleDetails)){
+                    $new['AdvertisementId'] = $slectedRoleDetails[0] -> AdvertisementId;
+                    $selectedPosition = $advertisement -> where($new, [], '', 'do_not_order')[0] -> position;
+                    $selectedPosition = strtolower(str_replace(' ', '', $selectedPosition));
+                    if($currentRoundDetails -> roundId == 1 && $selectedPosition != $position && $slectedRoleDetails[0] -> Jobstatus != 'Recruit'){
+                        throw new Exception("You have already applied for a different position in this round.");
+                    }
                 }
-                if(!($_SESSION['ROUNDID'] == 1 || $_SESSION['ROUNDID'] == 2)){
+                if(!($currentRoundDetails -> roundId == 1 || $currentRoundDetails -> roundId == 2)){
                     throw new Exception("The application process is currently unavailable. Please wait for the round to begin.");
                 }
                 foreach($slectedRoleDetails as $slectedRoleDetail){

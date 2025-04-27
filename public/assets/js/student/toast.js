@@ -14,10 +14,10 @@ function errorToast(message) {
   // Append the toast to the container
   toastContainer.appendChild(toast);
 
-  // Automatically remove the toast after 5 seconds
+  // Automatically remove the toast after 10 seconds
   setTimeout(() => {
     toast.remove();
-  }, 5000);
+  }, 10000);
 }
 
 // Success message
@@ -34,10 +34,10 @@ function successToast(message) {
   // Append the toast to the container
   toastContainer.appendChild(toast);
 
-  // Automatically remove the toast after 5 seconds
+  // Automatically remove the toast after 10 seconds
   setTimeout(() => {
     toast.remove();
-  }, 5000);
+  }, 10000);
 }
 
 // Close toast function
@@ -45,18 +45,3 @@ function closeToast(toastElement, messageType) {
   toastElement.parentElement.remove();
 }
 
-// Display stored toasts on page load
-window.addEventListener("DOMContentLoaded", () => {
-  const errorMessage = localStorage.getItem("errorMessage");
-  const successMessage = localStorage.getItem("successMessage");
-
-  // Show the error toast if there's a stored error message
-  if (errorMessage) {
-    errorToast(errorMessage);
-  }
-
-  // Show the success toast if there's a stored success message
-  if (successMessage) {
-    successToast(successMessage);
-  }
-});

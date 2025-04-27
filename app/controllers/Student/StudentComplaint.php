@@ -83,10 +83,6 @@ class StudentComplaint{
         $complaint = new complaint;
         $data['Complaint'] = $complaint -> first($arr);
 
-        if($data['Complaint'] -> Status === "reviewed"){
-            $pdc_coordinator_complaint = new pdc_coordinator_complaint;
-            $data['CoordinatorComplaint'] = $pdc_coordinator_complaint -> first($arr);
-        }
         //set up the delete button
         $createdDate = (explode(' ', $data['Complaint'] -> CreatedAt))[0];
         $createdTime = (explode(' ', $data['Complaint'] -> CreatedAt))[1];
