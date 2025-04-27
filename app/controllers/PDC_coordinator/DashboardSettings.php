@@ -253,7 +253,18 @@ class DashboardSettings
             $result = $model->importStudents($processedData);
 
             if (!$result['success']) {
-                throw new Exception(implode("\n", $result['errors']));
+                $errorMessage = $result['message'] . "\n";
+                
+                if (!empty($result['errors'])) {
+                    $errorMessage .= "Details:\n" . implode("\n", $result['errors']);
+                }
+                
+                if (!empty($result['duplicates'])) {
+                    $errorMessage .= "\n\nNote: " . count($result['duplicates']) . 
+                                     " records were updated because they already existed";
+                }
+                
+                throw new Exception($errorMessage);
             }
 
             // Clear any output buffer
@@ -262,7 +273,8 @@ class DashboardSettings
             // Send success response
             $response = [
                 'success' => true,
-                'message' => 'Students imported successfully'
+                'message' => $result['message'],
+                'stats' => $result['stats']
             ];
             
             echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
