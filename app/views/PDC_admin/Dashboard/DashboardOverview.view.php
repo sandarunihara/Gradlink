@@ -24,10 +24,10 @@
                     
                     <div class="header-actions">
                         <div class="notification-wrapper">
-                            <button class="notification-btn">
+                            <!-- <button class="notification-btn">
                                 <i class="fas fa-bell"></i>
                                 <span class="notification-badge"></span>
-                            </button>
+                            </button> -->
                             
                             <div class="notification-dropdown">
 
@@ -277,7 +277,7 @@
                                             <td># <?= $advs['advertisementId'] ?? 'N/A' ?></td>
                                             <td>
                                                 <div class="company-cell">
-                                                    <img src="<?=ROOT?>/assets/img/Company/wso2_20250421_184914_bb4c739b.png" alt="Company Logo">
+                                                    <img src="<?=ROOT?>/assets/img/Company/<?= htmlspecialchars($advs['profileimg'])?>" alt="Company Logo">
                                                     <?= $advs['companyName'] ?? 'N/A' ?>
                                                 </div>
                                             </td>
@@ -308,7 +308,7 @@
                             <?php foreach(($data['company'] ?? []) as $company):?>
 
                                 <div class="company-card">
-                                    <img src="<?=ROOT?>/assets/img/Company/wso2_20250421_184914_bb4c739b.png" alt="Company Logo">
+                                    <img src="<?=ROOT?>/assets/img/Company/<?= htmlspecialchars($company['profileimg'])?>" alt="Company Logo">
                                     <div class="company-details">
                                         <h4><?= htmlspecialchars($company['companyName'] ?? 'N/A') ?></h4>
                                         <div class="stats">

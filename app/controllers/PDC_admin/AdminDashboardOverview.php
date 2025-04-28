@@ -75,7 +75,7 @@ class AdminDashboardOverview{
             'pdcNotifications' => $pdcNotifications,
         ];
 
-        //show($data);
+        //show($adds);
 
         for ($i = 0; $i <= 2; $i++) {
             if (!isset($adds[$i])) continue;
@@ -87,6 +87,7 @@ class AdminDashboardOverview{
                 'deadline' => $adds[$i]->deadline ?? null,
                 'workingMode' => $adds[$i]->workingMode ?? null,
                 'companyName' => $adds[$i]->Name ?? null,
+                'profileimg' => $adds[$i]->profileimg ?? null
             ];
         }
 

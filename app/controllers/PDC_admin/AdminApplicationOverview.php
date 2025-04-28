@@ -35,7 +35,11 @@
 
             $data = $model->findstudentad($advertisementId, $studentId);
 
-            $actionData = $action->findActionOfAdv($advertisementId);
+            $companyId = $data[0]->CompanyId;
+
+            $assistantId = $_SESSION['USER']->AssistantId; 
+
+            $actionData = $action->findActionOfAdv($advertisementId , $studentId , $companyId , $assistantId);
 
             $progressData = $progress->findstudent($studentId);
 

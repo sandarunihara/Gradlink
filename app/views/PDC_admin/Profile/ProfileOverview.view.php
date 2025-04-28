@@ -37,7 +37,7 @@
 
             <div class="profile-container">
                 <div class="profile-header">
-                    <img src="<?= ROOT ?>/assets/images/default-avatar.jpg" alt="Admin Avatar" class="profile-avatar">
+                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="Admin Avatar" class="profile-avatar">
                     <div class="profile-info">
                         <h2><?= $data[0]->Name ?></h2>
                         <p><?= $data[0]->Email ?></p>

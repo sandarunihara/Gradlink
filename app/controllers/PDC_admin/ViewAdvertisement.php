@@ -105,7 +105,8 @@ class ViewAdvertisement {
             $mail = $companyDet->Email;
             
             $data = [
-                'status' => 'Active'
+                'status' => 'Active',
+                'startdate' => date('Y-m-d H:i:s')
             ];
         } else {
             // Handle the error: maybe redirect or show an error message
@@ -235,11 +236,11 @@ class ViewAdvertisement {
         try {
             $mail = new PHPMailer(true);
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+            $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'gradlink6@gmail.com'; // Your email
-            $mail->Password = 'sesk zjnj mhvb uxlh'; // Your app password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS encryption
+            $mail->Username = 'gradlink6@gmail.com'; 
+            $mail->Password = 'sesk zjnj mhvb uxlh';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
             $mail->setFrom('gradlink6@gmail.com', 'Gradlink');

@@ -34,8 +34,8 @@ class AdminStudentOverview{
     }
 
     public function notReg(){
-        $model = new student;
-        $studentData = $model->findNotReg();
+        $model = new StudentImport;
+        $studentData = $model->getAll();
         $this->view('PDC_admin/Student/StudentNotReg', [
             'studentData' => $studentData,
             'activeTab' => 'Not-Registered-Students'
