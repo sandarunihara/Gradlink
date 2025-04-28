@@ -23,7 +23,6 @@
 .card p {
     font-size: 16px;
     margin-bottom: 20px;
-    color: red;
 }
 .card:hover {
     transform: translateY(-10px);
@@ -305,3 +304,9 @@ button:hover{
     background: #c6f6d5;
     color: #276749;
 }
+.safe{
+    color:#2E7D32;
+}
+.danger{
+    color: #9c4221;
+}   

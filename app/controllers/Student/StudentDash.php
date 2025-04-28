@@ -15,6 +15,7 @@ class Studentdash{
 
         $data['numOfAppliedCompanies'] = 0;
         $data['intenshipOffers'] = 0;
+        $data['recruit'] = 0;
         if(empty($data['student_applied_companies'])){
             $data['numOfAppliedCompanies'] = 0;
         }else{
@@ -24,6 +25,10 @@ class Studentdash{
                 }
                 if ($company->Jobstatus == "Pending" || $company->Jobstatus == "Shortlisted") {
                     $data['numOfAppliedCompanies']++;
+                }
+                if($company->Jobstatus == 'Recruit'){
+                    $data['recruit'] = 1;
+                    break;
                 }
             }
         }
