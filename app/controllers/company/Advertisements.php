@@ -339,7 +339,7 @@ class Advertisements
                 'status' => 'Request'
             ];
             $notification_data = [
-                'type' => 'advertisement_request',
+                'type' => 'deactivation_request',
                 'company_id' => $companyId,
                 'advertisement_id' => $id,
                 'status' => 'Request',

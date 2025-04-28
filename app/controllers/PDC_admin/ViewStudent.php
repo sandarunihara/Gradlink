@@ -56,6 +56,15 @@ require "../app/libs/Exception.php";
             $this-> view('PDC_admin/Student/StudentView' , $data);
         }
 
+        public function showUnreg($studentId){
+            $model = new StudentImport;
+            $data = $model->find($studentId);
+            $data = (array) $data;
+            // show($data);
+            
+            $this->view('PDC_admin/Student/UnregStudentView' , $data);
+        }
+
         // public function remove($studentId){
         //     $model = new student;
         //     $data = $model->delete($studentId,'StudentId');

@@ -89,7 +89,7 @@
                                             <td><?= htmlspecialchars(is_array($student) ? $student['DegreeName'] : $student->DegreeName) ?></td>
                                             <td><?= htmlspecialchars(is_array($student) ? $student['Email'] : $student->Email) ?></td>
                                             <td><?= htmlspecialchars(is_array($student) ? $student['Status'] : $student->Status) ?></td>
-                                            <td><button class="view-btn action-btn" onclick="navigateToShowStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')"><i class="fas fa-eye"></i> View</button></td>
+                                            <td><button class="view-btn action-btn" onclick="navigateToShowUnregStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')"><i class="fas fa-eye"></i> View</button></td>
 
                                             <!-- <td><button class="btn delete-btn" id="delete-btn" onclick="navigateToDeleteStudent('<?= htmlspecialchars(is_array($student) ? $student['StudentId'] : $student->StudentId) ?>')">Delete</button></td> -->
                                             <td></td>

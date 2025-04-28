@@ -1,18 +1,23 @@
 <div class="header-container">
     <div class="header-left">
         <h1 class="header-title"><?php echo isset($title) ? htmlspecialchars($title) : 'Default Title'; ?></h1>
-        
+        <?php 
+            $round = new Round;
+            $currentRoundDetails = $round->getActiveRound();
+        ?>
         <div class="header-info-container">
             <!-- Round Badge -->
-            <div class="round-badge">
-                <span class="round-label">Current Round</span>
-                <span class="round-number"><?php echo isset($_SESSION['ROUNDID']) ? htmlspecialchars($_SESSION['ROUNDID']) : 'N/A'; ?></span>
-            </div>
+            <?php if(isset($currentRoundDetails -> roundId) && $currentRoundDetails -> roundId != 3){ ?>
+                <div class="round-badge">
+                    <span class="round-label">Current Round</span>
+                    <span class="round-number"><?php echo isset($currentRoundDetails -> roundId) ? htmlspecialchars($currentRoundDetails -> roundId) : 'N/A'; ?></span>
+                </div>
+            <?php } ?>
             
             <!-- Remaining Chances Info -->
-            <?php if (isset($_SESSION['ROUNDID'])): ?>
+            <?php if (isset($currentRoundDetails -> roundId)): ?>
                 <div class="remaining-info">
-                    <?php if ($_SESSION['ROUNDID'] == 1): ?>
+                    <?php if ($currentRoundDetails -> roundId): ?>
                         <?php  
                             $arr['StudentId'] = $_SESSION['USER']->StudentId;
                             $student = new student;

@@ -7,6 +7,8 @@ class StudentAd{
         $data =[];
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
 
+        $round = new Round;
+        $currentRoundDetails = $round -> getActiveRound();
         $model = new Student_AD;
         $data['AdDetails'] = $model -> getAdDetails();
 
@@ -29,7 +31,9 @@ class StudentAd{
             $data['differentRoles'] = array_unique($data['differentRoles']);
             sort($data['differentRoles']);
         }
-
+        if ($currentRoundDetails -> roundId != 1 && $currentRoundDetails -> roundId != 2){
+            $data['AdDetails'] = 0;
+        }
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             try {
                 //show($_POST);

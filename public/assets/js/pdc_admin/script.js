@@ -64,6 +64,11 @@ function navigateToShowStudent(studentId){
     window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/show/" + studentId;
 }
 
+function navigateToShowUnregStudent(studentId){
+    console.log("navigate to,",studentId);
+    window.location.href = "/Gradlink/public/PDC_admin/ViewStudent/showUnreg/" + studentId;
+}
+
 function navigateToShowCompany(companyId){
     window.location.href = "/Gradlink/public/PDC_admin/ViewCompany/show/" + companyId;
 }

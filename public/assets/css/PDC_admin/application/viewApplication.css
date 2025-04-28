@@ -261,15 +261,16 @@
     color: var(--status-deactive-text);
   }
   
-  /* Avatar & Empty States */
   .avatar {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    object-fit: cover;
     border: 3px solid white;
     box-shadow: var(--box-shadow);
     background-color: var(--primary-light);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,8 +278,7 @@
     font-weight: 600;
     color: var(--primary);
     flex-shrink: 0;
-  }
-  
+}
   .empty-state {
     display: flex;
     flex-direction: column;

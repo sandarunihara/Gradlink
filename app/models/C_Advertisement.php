@@ -200,7 +200,7 @@ class C_Advertisement
                     advertisement.image,
                     company.Name,
                     company.profileimg
-                FROM 
+                FROM
                     advertisement
                 JOIN 
                     company ON advertisement.CompanyId = company.CompanyId
