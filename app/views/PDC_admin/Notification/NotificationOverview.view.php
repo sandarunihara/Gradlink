@@ -112,31 +112,41 @@
                                         </article>
 
                                     <?php elseif($item->type == 'deactivation_request'): ?>
-                                        <article class="notification-item">
+                                        <article class="notification-item <?= strtolower($item->status) ?>">
                                             <div class="notification-header">
                                                 <h2 class="notification-title">
                                                     <i class="fas fa-power-off" aria-hidden="true"></i>
                                                     Deactivation Request
                                                 </h2>
                                                 <div class="notification-meta">
-                                                    <span class="badge pending-badge"><?= htmlspecialchars($item->status) ?></span>
+                                                    <span class="badge <?= strtolower($item->status) ?>-badge">
+                                                        <?= htmlspecialchars($item->status) ?>
+                                                    </span>
                                                     <time class="notification-date"><?= htmlspecialchars($item->created_at) ?></time>
                                                 </div>
                                             </div>
                                             
                                             <div class="notification-body">
                                                 <p>
-                                                    <strong><?= htmlspecialchars($item->Name) ?></strong> has requested advertisment deactivation.
+                                                    <strong>Advertisement ID:</strong> <?= htmlspecialchars($item->advertisement_id) ?>
                                                 </p>
+                                                <p>
+                                                    <strong>Company ID:</strong> <?= htmlspecialchars($item->company_id) ?>
+                                                </p>
+                                                <?php if (!empty($item->reason)): ?>
+                                                    <p><strong>Reason:</strong> <?= htmlspecialchars($item->reason) ?></p>
+                                                <?php endif; ?>
                                             </div>
-                                            
+
                                             <div class="notification-actions">
-                                                <button type="button" class="action-btn view" 
-                                                    data-id="<?= $item->advertisement_id ?>" 
-                                                    data-type="<?= $item->type ?>" 
-                                                    onclick="viewDeactivation(this)">
-                                                    <i class="fas fa-eye" aria-hidden="true"></i> View Details
-                                                </button>
+                                                <form method="post" action="<?= ROOT ?>/PDC_admin/AdminNotificationOverview/updateAndRedirect">
+                                                    <input type="hidden" name="type" value="advertisement">
+                                                    <input type="hidden" name="id" value="<?= $item->advertisement_id ?>">
+                                                    <input type="hidden" name="notification_id" value="<?= $item->id ?>">
+                                                    <button type="submit" class="action-btn view">
+                                                        <i class="fas fa-eye" aria-hidden="true"></i> View Advertisement
+                                                    </button>
+                                                </form>
                                             </div>
                                         </article>
                                     <?php endif; ?>
@@ -153,24 +163,19 @@
         </main>
     </div>
 
-    <!-- JavaScript -->
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tab functionality
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
                     
-                    // Add active class to clicked button
                     button.classList.add('active');
                     
-                    // Show corresponding content
                     const tabId = button.getAttribute('data-tab');
                     const correspondingContent = document.querySelector(`.tab-content[data-tab="${tabId}"]`);
                     if (correspondingContent) {
@@ -179,33 +184,14 @@
                 });
             });
 
-            // Activate first tab by default if available
             if (tabButtons.length > 0) {
                 tabButtons[0].click();
             }
+
+            if (window.__flashMessage) {
+                showToast(window.__flashMessage.message, window.__flashMessage.type);
+            }
         });
-
-        // Deactivation functions (placeholder - implement as needed)
-        function approveDeactivation(button) {
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            console.log(`Approving deactivation for ${type} ID: ${id}`);
-            // Add your AJAX/API call here
-        }
-
-        function rejectDeactivation(button) {
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            console.log(`Rejecting deactivation for ${type} ID: ${id}`);
-            // Add your AJAX/API call here
-        }
-
-        function viewDeactivation(button) {
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            console.log(`Viewing deactivation details for ${type} ID: ${id}`);
-            // Add your navigation logic here
-        }
     </script>
 </body>
 </html>

@@ -18,7 +18,7 @@ class Admin_notification{
     ];
 
     public function getAllPending(){
-        $query = "SELECT * FROM $this->table WHERE status = 'Pending' AND type = 'coordinator_request' AND type = 'coordinator_request' ";
+        $query = "SELECT * FROM $this->table WHERE status = 'Request'";
         $result = $this->query($query);
         return $result;
     }

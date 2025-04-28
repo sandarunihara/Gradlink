@@ -100,7 +100,7 @@
                 
                 <div class="card-footer">
                     <div class="action-buttons">
-                        <?php if ($data->status == 'Active'): ?>
+                        <?php if ($data->status == 'Active' || $data->status == 'Request'): ?>
                             <button class="btn btn-danger" onclick="openModal('<?= htmlspecialchars($data->advertisementId) ?>', 'deactivate', '<?= htmlspecialchars($data->Email) ?>')">
                                 <i class="fas fa-ban"></i> Deactivate
                             </button>

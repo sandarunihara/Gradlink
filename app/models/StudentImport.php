@@ -155,9 +155,18 @@ public function getCount(){
 }
 
 public function getAll(){
-    $query = "SELECT * FROM $this->table";
-    $result = $this->query($query);
-    return $result;
+        $query = "SELECT t.*
+                  FROM $this->table t
+                  LEFT JOIN student s ON t.StudentId = s.StudentId
+                  WHERE s.StudentId IS NULL
+                  ";
+        
+        $result = $this->query($query);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
 }
 
 public function find($StudentId){

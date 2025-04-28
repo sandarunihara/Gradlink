@@ -2,19 +2,20 @@
 <html lang="en">
 
 <head>
-    <title>Notifications</title>
+    <title>Notifications - PDC Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/pdc_adminsidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/tabs/companytabs.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/notification/notificationOverview.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/PDC_admin/notification/notificationRead.css?v=<?= time() ?>">
 </head>
 
 <body>
-
-    <?php 
-        if (isset($_SESSION['flash_message'])): 
+    <?php if (isset($_SESSION['flash_message'])): ?>
+        <?php 
             $message = htmlspecialchars($_SESSION['flash_message']['message']);
             $type = htmlspecialchars($_SESSION['flash_message']['type']);
             unset($_SESSION['flash_message']);
@@ -27,97 +28,120 @@
         </script>
     <?php endif; ?>
 
-
     <div class="container">
-        <?php $this->renderComponent("pdc_adminsidebar")  ?>
-        <div class="main-content">
-            <div class="header">
+        <?php $this->renderComponent("pdc_adminsidebar") ?>
+        
+        <main class="main-content">
+            <header class="header">
                 <div class="header-left">
                     <h1>Notifications</h1>
                 </div>
-            </div>
+            </header>
 
-            <div class="tabs-container">
+            <!-- Notification Type Tabs -->
+            <nav class="tabs-container">
                 <?php $this->renderPDC_adminTabs("notificationTabs", ['activeTab' => $activeTab]); ?>
-            </div>
+            </nav>
 
-
+            <!-- Notification Content Area -->
             <div class="tab-content">
                 <div class="tab-pane active">
-                    <section class="company-list">
-                        <div class="list-header">
-                        </div>
-
+                    <section class="notification-list">
                         <div class="notification-container">
                             <?php if (!empty($data)): ?>
-                                <?php foreach ($data as $item): ?>
-                                    <?php if($item->type == 'coordinator_request'):?>                                        
-                                        <div class="notification-item <?= strtolower($item->status) ?>">
-                                            <div class="notification-header">
-                                                <div class="notification-title">
-                                                    <i class="fas fa-user-tie"></i>
-                                                    Coordinator Request
-                                                </div>
-                                                <div class="notification-meta">
-                                                    <span class="badge <?= strtolower($item->status) ?>-badge"><?= htmlspecialchars($item->status) ?></span>
-                                                    <span class="notification-date"><?= htmlspecialchars($item->created_at) ?></span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="notification-body">
-                                                <?php
-                                                    $type = '';
-                                                    $targetId = '';
-                                                    if (!empty($item->student_id)) {
-                                                        $type = 'student';
-                                                        $targetId = $item->student_id;
-                                                    } elseif (!empty($item->company_id)) {
-                                                        $type = 'company';
-                                                        $targetId = $item->company_id;
-                                                    } elseif (!empty($item->advertisement_id)) {
-                                                        $type = 'advertisement';
-                                                        $targetId = $item->advertisement_id;
-                                                    }
-                                                ?>
+                                <!-- Coordinator Requests Section -->
+                                <div class="notification-type-section">
 
-                                                <?php if ($type && $targetId): ?>
-                                                    <p>
-                                                        <strong><?= ucfirst($type) ?> ID: <?= htmlspecialchars($targetId) ?></strong></p>
+                                    <?php foreach ($data as $item): ?>
+                                        <?php if($item->type == 'coordinator_request'): ?>
+                                            <article class="notification-item <?= strtolower($item->status) ?>">
+                                                <div class="notification-header">
+                                                    <h3 class="notification-title">Coordinator Access Request</h3>
+                                                    <div class="notification-meta">
+                                                        <span class="badge <?= strtolower($item->status) ?>-badge">
+                                                            <?= htmlspecialchars($item->status) ?>
+                                                        </span>
+                                                        <time class="notification-date"><?= htmlspecialchars($item->created_at) ?></time>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="notification-body">
+                                                    <?php
+                                                        $type = '';
+                                                        $targetId = '';
+                                                        if (!empty($item->student_id)) {
+                                                            $type = 'student';
+                                                            $targetId = $item->student_id;
+                                                        } elseif (!empty($item->company_id)) {
+                                                            $type = 'company';
+                                                            $targetId = $item->company_id;
+                                                        } elseif (!empty($item->advertisement_id)) {
+                                                            $type = 'advertisement';
+                                                            $targetId = $item->advertisement_id;
+                                                        }
+                                                    ?>
+
+                                                    <?php if ($type && $targetId): ?>
+                                                        <p><strong>Target:</strong> <?= ucfirst($type) ?> (ID: <?= htmlspecialchars($targetId) ?>)</p>
 
                                                         <?php if (!empty($item->reason)): ?>
-                                                            <p><?= htmlspecialchars($item->reason) ?></p>
-                                                        <?php else: ?>
-                                                            <p>No reason to show</p>
+                                                            <p><strong>Reason:</strong> <?= htmlspecialchars($item->reason) ?></p>
                                                         <?php endif; ?>
 
-                                                <?php else: ?>
-                                                    <p>Unknown notification type.</p>
-                                                <?php endif; ?>
-                                            </div>
-                                        </div>
+                                                        <div class="notification-actions">
+                                                            <form method="post" action="<?= ROOT ?>/PDC_admin/AdminNotificationOverview/updateAndRedirect">
+                                                                <input type="hidden" name="type" value="<?= $type ?>">
+                                                                <input type="hidden" name="id" value="<?= $targetId ?>">
+                                                                <input type="hidden" name="notification_id" value="<?= $item->id ?>">
+                                                                <button type="submit" class="action-btn view">
+                                                                    <i class="fas fa-eye"></i> View Details
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <p>Invalid notification data</p>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </article>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
 
-                                    <?php elseif($item->type == 'deactivation_request'):?>
-                                        <div class="notification-item <?= strtolower($item->status) ?>">
-                                            <div class="notification-header">
-                                                <div class="notification-title">
-                                                    <i class="fas fa-power-off"></i>
-                                                    Deactivation Request
+                                <!-- Deactivation Requests Section -->
+                                <div class="notification-type-section">
+                                    <?php foreach ($data as $item): ?>
+                                        <?php if($item->type == 'deactivation_request'): ?>
+                                            <article class="notification-item <?= strtolower($item->status) ?>">
+                                                <div class="notification-header">
+                                                    <h3 class="notification-title">Advertisement Deactivation Request</h3>
+                                                    <div class="notification-meta">
+                                                        <span class="badge <?= strtolower($item->status) ?>-badge">
+                                                            <?= htmlspecialchars($item->status) ?>
+                                                        </span>
+                                                        <time class="notification-date"><?= htmlspecialchars($item->created_at) ?></time>
+                                                    </div>
                                                 </div>
-                                                <div class="notification-meta">
-                                                    <span class="badge <?= strtolower($item->status) ?>-badge"><?= htmlspecialchars($item->status) ?></span>
-                                                    <span class="notification-date"><?= htmlspecialchars($item->created_at) ?></span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="notification-body">
-                                                <p>
-                                                    <strong><?= htmlspecialchars($item->Name) ?></strong> has requested account deactivation.
-                                                </p>
                                                 
-                                            </div>
-                                        </div>
-                                    <?php endif;?>
-                                <?php endforeach; ?>
+                                                <div class="notification-body">
+                                                    <p><strong>Requested by:</strong> <?= htmlspecialchars($item->company_id) ?></p>
+                                                    <p><strong>Advertisement:</strong> <?= htmlspecialchars($item->advertisement_id) ?></p>
+                                                
+
+                                                    <div class="notification-actions">
+                                                        <form method="post" action="<?= ROOT ?>/PDC_admin/AdminNotificationOverview/updateAndRedirect">
+                                                            <input type="hidden" name="type" value="deactivation">
+                                                            <input type="hidden" name="id" value="<?= $item->requested_by_id ?>">
+                                                            <input type="hidden" name="notification_id" value="<?= $item->id ?>">
+                                                            <button type="submit" class="action-btn view">
+                                                                <i class="fas fa-eye"></i> View Account
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
                             <?php else: ?>
                                 <div class="no-notifications">
                                     <p>No pending notifications</p>
@@ -127,12 +151,13 @@
                     </section>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
@@ -148,37 +173,16 @@
                 });
             });
 
+            // Activate first tab by default
             if (tabButtons.length > 0) {
                 tabButtons[0].click();
             }
 
-            // Handle flash messages
+            // Show flash message if exists
             if (window.__flashMessage) {
                 showToast(window.__flashMessage.message, window.__flashMessage.type);
             }
         });
-
-        function approveDeactivation(button) {
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            // Implement approval logic here
-            console.log(`Approving ${type} with ID: ${id}`);
-        }
-
-        function rejectDeactivation(button) {
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            // Implement rejection logic here
-            console.log(`Rejecting ${type} with ID: ${id}`);
-        }
-
-        function viewDeactivation(button) {
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            // Implement view details logic here
-            console.log(`Viewing ${type} with ID: ${id}`);
-        }
     </script>
-
 </body>
 </html>
