@@ -62,21 +62,22 @@ class DashboardComplaints
             $reply = $_POST['reply'] ?? null; // Get the reply from the POST request
             $complaintId = $_POST['complaintId'] ?? null; // Get the complaint ID from the POST request
 
-            //      echo "<pre>";
-            // print_r($_POST);
-            // echo "</pre>";
-
             if ($reply && $complaintId) {
                 $complaintModel = new complaint;
                 $success = $complaintModel->addReply($complaintId, $reply);
 
-                $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Reply added successfully.'];
-                
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Reply added successfully.'
+                ]);
+                exit;
             } else {
-                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Invalid input.'];
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Invalid input.'
+                ]);
+                exit;
             }
-            header("Location: " . ROOT . "/PDC_coordinator/dashboardComplaints");
-            exit;
         }
     }
 
