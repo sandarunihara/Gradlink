@@ -90,7 +90,7 @@ class StudentAppliedCompanies{
                 $action['actor_role'] = 'Student';
                 $action['target_id'] = $advertisementId;
                 $action['target_type'] = 'Advertisement';
-                $action['action_type'] = 'Applied';
+                $action['action_type'] = 'Accept';
 
                 $actionLog = new Action_logs;
                 $isInsert3 = $actionLog ->insert($action);

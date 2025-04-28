@@ -58,17 +58,14 @@ class StudentComplaint{
                 
                 $_SESSION['success'] = "Complaint added successfully";
                 
-                // Commit transaction
                 $this->commit();
                 
-                //show($data);
                 redirect('Student/StudentComplaint/complaint');
                 return true;
             } catch (Exception $e) {
-                $this->rollback(); // Rollback transaction on error
+                $this->rollback();
                 $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
                 
-                //show($data);
                 redirect('Student/StudentComplaint/complaint');
                 return false;
             }
@@ -83,7 +80,6 @@ class StudentComplaint{
         $complaint = new complaint;
         $data['Complaint'] = $complaint -> first($arr);
 
-        //set up the delete button
         $createdDate = (explode(' ', $data['Complaint'] -> CreatedAt))[0];
         $createdTime = (explode(' ', $data['Complaint'] -> CreatedAt))[1];
         $currentDate = date('Y-m-d');
@@ -101,7 +97,6 @@ class StudentComplaint{
         }else{
             $data['Complaint'] -> Delete = 0;
         }
-        //show($data);
         $this-> view('Student/ComplaintView', $data);
     }
     public function deleteComplaint(){
@@ -114,11 +109,14 @@ class StudentComplaint{
             $complaint = new complaint;
             $isDelete1 = $complaint -> delete($complaintId, 'ComplaintId');
 
+            if($isDelete1){
+                throw new Exception("Error deleting complaint");
+            }
             $pdc_coordinator_complaint = new pdc_coordinator_complaint;
             $isDelete2 = $pdc_coordinator_complaint -> delete($complaintId, 'ComplaintId');
-            
-            if(!($isDelete1 && $isDelete2)){
-                throw new Exception("Error deleting complaint");
+
+            if($isDelete2){
+                throw new Exception("Error deleting complaint from pdc_coordinator_complaint table");
             }
 
             $student_activity = new student_activity;
@@ -131,15 +129,12 @@ class StudentComplaint{
             $_SESSION['success'] = "Complaint deleted successfully";
 
             $this->commit();
-            //show($_SESSION);
             redirect('Student/StudentComplaint/complaint');
             return true;
 
         } catch (Exception $e) {
-            //methana awlk thiynwa transaction eka rollback wenne na
             $this->rollback();
             $_SESSION['errors'] = "Error deleting complaint: " . $e -> getMessage();
-            //show($_SESSION);
             redirect('Student/StudentComplaint/complaint');
             return false;
         }
