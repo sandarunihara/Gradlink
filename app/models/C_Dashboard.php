@@ -38,6 +38,24 @@ class C_Dashboard
         return false;
     }
 
+    function searchStudentsByName($namePart)
+    {
+        $query = "SELECT * FROM $this->table WHERE `Name` LIKE '%$namePart%'";
+
+        $result = $this->query($query);
+        return $result;
+    }
+
+    function getStudentsOrderedByName()
+    {
+        $query = "SELECT * FROM $this->table ORDER BY `Name` ASC";
+
+        $result = $this->query($query);
+        return $result;
+    }
+
+
+
     function find($data, $table)
     {
         $keys = array_keys($data);
