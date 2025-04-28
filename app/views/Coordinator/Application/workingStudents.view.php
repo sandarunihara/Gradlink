@@ -89,6 +89,30 @@
     </div>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.querySelector(".search-box input");
+        const tableRows = document.querySelectorAll("table tbody tr");
+
+        searchInput.addEventListener("keyup", function() {
+            const query = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll("td");
+                let matchFound = false;
+
+                cells.forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(query)) {
+                        matchFound = true;
+                    }
+                });
+
+                row.style.display = matchFound ? "" : "none";
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>

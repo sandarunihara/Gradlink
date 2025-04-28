@@ -4,6 +4,122 @@ class Coordinator_Dash
 {
     use Model;
 
+
+    public function unreadComplaintsCount(){
+        try {
+            $query = "SELECT COUNT(*) AS unreadComplaints
+                        FROM complaint
+                        WHERE status = 'notReviewed'";
+
+            $result = $this->query($query);
+            return $result[0]->{'unreadComplaints'};
+        } catch (Exception $e) {
+            error_log("Error fetching unread complaints count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function readComplaintsCount(){
+        try {
+            $query = "SELECT COUNT(*) AS readComplaints
+                        FROM complaint
+                        WHERE status = 'Reviewed'";
+
+            $result = $this->query($query);
+            return $result[0]->{'readComplaints'};
+        } catch (Exception $e) {
+            error_log("Error fetching read complaints count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function totalApplicationsCount(){
+        try {
+            $query = "SELECT COUNT(*) AS totalApplications
+                        FROM studentadvertisement
+                        WHERE Jobstatus NOT IN ('Reject', 'Recruit')";
+
+            $result = $this->query($query);
+            return $result[0]->{'totalApplications'};
+        } catch (Exception $e) {
+            error_log("Error fetching total applications count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function recruitedCount(){
+        try {
+            $query = "SELECT COUNT(*) AS recruitedCount
+                        FROM studentadvertisement
+                        WHERE Jobstatus = 'Recruit'";
+
+            $result = $this->query($query);
+            return $result[0]->{'recruitedCount'};
+        } catch (Exception $e) {
+            error_log("Error fetching recruited count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+   public function pendingAdvertisementCount(): mixed
+    {
+        try {
+            $query = "SELECT COUNT(*) AS pendingAdvertisementCount
+                        FROM advertisement
+                        WHERE status = 'Request'";
+
+            $result = $this->query($query);
+            return $result[0]->{'pendingAdvertisementCount'};
+        } catch (Exception $e) {
+            error_log("Error fetching pending advertisement count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function pendingCompanyCount(): mixed
+    {
+        try {
+            $query = "SELECT COUNT(*) AS pendingCompanyCount
+                        FROM company
+                        WHERE Status = 'Pending'";
+
+            $result = $this->query($query);
+            return $result[0]->{'pendingCompanyCount'};
+        } catch (Exception $e) {
+            error_log("Error fetching pending company count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function blockedCompanyCount(){
+        try {
+            $query = "SELECT COUNT(*) AS blockedCompanyCount
+                        FROM company
+                        WHERE block = 1";
+
+            $result = $this->query($query);
+            return $result[0]->{'blockedCompanyCount'};
+        } catch (Exception $e) {
+            error_log("Error fetching blocked company count: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function blockedStudentCount(){
+        try {
+            $query = "SELECT COUNT(*) AS blockedStudentCount
+                        FROM student
+                        WHERE block = 1";
+
+            $result = $this->query($query);
+            return $result[0]->{'blockedStudentCount'};
+        } catch (Exception $e) {
+            error_log("Error fetching blocked student count: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+
     public function pendingCSCount(): mixed
     {
         try {
