@@ -152,6 +152,7 @@
                                                     <span class="value"><?= htmlspecialchars($round->vacancy) ?></span>
                                                 </div>
                                             <?php endif; ?>
+
                                         <?php endif; ?>
 
                                     </div>
@@ -489,15 +490,11 @@
                                     <label for="endDate">End Date</label>
                                     <input type="date" id="endDate" name="endDate" required>
                                 </div>
-                                <div class="form-group normal-vacancy">
+
+                                <div class="form-group vacancy-unlimited">
                                     <label for="vacancy">Applications per Student</label>
-                                    <input type="number" id="vacancyNumber" name="vacancy" min="1" required>
+                                    <input type="number" id="vacancy" name="vacancy" min="1" required>
                                 </div>
-                                <div class="form-group vacancy-unlimited" style="display: none;">
-                                    <label for="vacancy">Applications per Student</label>
-                                    <input type="text" id="vacancyUnlimited" name="vacancy" min="1" value="Unlimited" required>
-                                </div>
-                            
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn primary-btn">
@@ -590,21 +587,14 @@
                         document.getElementById("endDate").value = dates[1].trim();
                     }
 
-                    const normalVacancyDiv = document.querySelector(".normal-vacancy");
-                    const unlimitedVacancyDiv = document.querySelector(".vacancy-unlimited");
-
-                    if(roundId == 2) {
-                        normalVacancyDiv.style.display = "none";
-                        unlimitedVacancyDiv.style.display = "block";
-                        document.getElementById("vacancyUnlimited").value = "Unlimited";
+                    const roundId = document.getElementById("roundId").value;
+                    if (roundId == 2) {
+                        document.querySelector(".vacancy-unlimited").style.display = "none";
+                        document.getElementById("vacancy").value = 500;
                     } else {
-                        normalVacancyDiv.style.display = "block";
-                        unlimitedVacancyDiv.style.display = "none";
-                        const vacancyValue = card.querySelector(".info-item:nth-child(3) .value").innerText;
-                        document.getElementById("vacancyNumber").value = vacancyValue === "Unlimited" ? "" : vacancyValue;
+                        document.querySelector(".vacancy-unlimited").style.display = "block";
+                        document.getElementById("vacancy").value = card.querySelector(".info-item:nth-child(3) .value").innerText;
                     }
-                    
-
                     modal.style.display = "flex";
                 });
             });
@@ -623,11 +613,13 @@
                     return false;
                 }
 
+
                 const vacancy = document.getElementById("vacancy").value;
                 if (vacancy < 1) {
                     e.preventDefault();
                     toastSystem.show("Applications per student must be at least 1", "error");
                     return false;
+
                 }
 
                 return true;
