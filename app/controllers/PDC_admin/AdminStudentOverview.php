@@ -6,6 +6,7 @@ class AdminStudentOverview{
         $model = new student;
             $studentData = $model->findregistered();
 
+            //show($studentData);
             $this->view('PDC_admin/Student/StudentOverview', [
                 'studentData' => $studentData,
                 'activeTab' => 'Registered-Students'
@@ -36,6 +37,7 @@ class AdminStudentOverview{
     public function notReg(){
         $model = new StudentImport;
         $studentData = $model->getAll();
+        //show($studentData);
         $this->view('PDC_admin/Student/StudentNotReg', [
             'studentData' => $studentData,
             'activeTab' => 'Not-Registered-Students'
