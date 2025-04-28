@@ -70,7 +70,7 @@
                             <i class="material-icons">featured_video</i>
                         </div>
                         <div class="stat-content">
-                            <h3>Ongoing Ads</h3>
+                            <h3>Ongoing Advertisements</h3>
                             <h1><?= $dashboardDetails['ongoingAdvertisementCount'] ?? 0 ?></h1>
                             
                         </div>
@@ -108,7 +108,7 @@
                         <div class="dashboard-card applications-card">
                             <div class="card-header">
                                 <h2>Applications Summary</h2>
-                                <a href="#" class="view-all">View All</a>
+                                <a href="<?= ROOT ?>/PDC_coordinator/dashboardApplication" class="view-all">View All</a>
                             </div>
                             <div class="applications-stats">
                                 <div class="app-stat">
