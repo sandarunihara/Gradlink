@@ -52,7 +52,7 @@ class AdminNotificationOverview {
 
     public function updateAndRedirect(){
         $model = new Admin_notification;
-        show($_POST);
+        //show($_POST);
         $id = $_POST['notification_id'];
         $type = $_POST['type'];
         $type_id = $_POST['id'];
@@ -65,11 +65,11 @@ class AdminNotificationOverview {
                     exit;
 
                 case 'advertisement':
-                    header("Location:" . ROOT . "/PDC_admin/ViewAdvertisement/show" . $type_id);
+                    header("Location:" . ROOT . "/PDC_admin/ViewAdvertisement/show/" . $type_id);
                     exit;
 
                 case 'company':
-                    header("Location:" . ROOT . "/PDC_admin/ViewCompanyshow" . $type_id);
+                    header("Location:" . ROOT . "/PDC_admin/ViewCompany/show/" . $type_id);
                     exit;
             }
         }

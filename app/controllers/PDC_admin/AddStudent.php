@@ -48,7 +48,7 @@ require "../app/libs/Exception.php";
         }
 
         public function submit(){
-            $model = new student;
+            $model = new StudentImport;
             $data = [
                 'StudentId' => $_POST['StudentId'],
                 'NIC' => $_POST['NIC'],
@@ -64,67 +64,59 @@ require "../app/libs/Exception.php";
             // $r = $model->validate($data);
 
             // show($r);
-            if($model->validate($data)){
+                
+            $arr = [];
+            $arr['StudentId'] = $data['StudentId'];
+            $arr['NIC'] = $data['NIC'];
+            $arr['Name'] = $data['Name'];
+            $arr['Email'] = $data['Email'];
 
-                if($model->validateRegisteredStudents($data)){
-                    $arr = [];
-                    $arr['StudentId'] = $data['StudentId'];
-                    $arr['NIC'] = $data['NIC'];
-                    $arr['Name'] = $data['Name'];
-                    $arr['Email'] = $data['Email'];
-
-                    $result1 = $model->orWhere($arr, [], '', 'do_not_order');
-                    //show($result1);
-                    if(empty($result1)){
-                        $result = $model->insert($data);
-                        if ($result) {
-                            $this->sendEmail($data['Email'], $data['StudentId']);
-                            $_SESSION['flash_message'] = [
-                                'type' => 'success',
-                                'message' => 'Student successfully Registered'
-                            ];
-                        } else {
-                            $_SESSION['flash_message'] = [
-                                'type' => 'error',
-                                'message' => 'Failed to register Student'
-                            ];
-                        }
-
-                    }
-                    else{
-                        $conflic = [];
-                            $existing = $result1[0];
-
-                            if($existing->StudentId == $data['StudentId']){
-                                $conflic[] = "Student ID already exists";
-                            }
-                            if($existing->NIC == $data['NIC']){
-                                $conflic[] = "NIC already exists";
-                            }
-                            if($existing->Email == $data['Email']){
-                                $conflic[] = "Email already exists";
-                            }
-                            if($existing->Name == $data['Name']){
-                                $conflic[] = "Name already exists";
-                            }
-                            
-                            $_SESSION['flash_message'] = [
-                                'type' => 'error',
-                                'message' => 'Student cannot be registered: ' . implode(', ', array_unique($conflic))
-                            ];
-                            header('Location: ' . $_SERVER['HTTP_REFERER']);
-                            exit;
-                        }
+            $result1 = $model->orWhere($arr, [], '', 'do_not_order');
+            //show($result1);
+            if(empty($result1)){
+                $result = $model->insert($data);
+                if ($result) {
+                    $this->sendEmail($data['Email'], $data['StudentId']);
+                    $_SESSION['flash_message'] = [
+                        'type' => 'success',
+                        'message' => 'Student successfully Registered'
+                    ];
+                } else {
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Failed to register Student'
+                    ];
                 }
+
             }
             else{
-                $_SESSION['flash_message'] = [
-                    'type' => 'error',
-                    'message' => 'Validation Failed'
-                ];
-            }
+                $conflic = [];
+                    $existing = $result1[0];
+
+                    if($existing->StudentId == $data['StudentId']){
+                        $conflic[] = "Student ID already exists";
+                    }
+                    if($existing->NIC == $data['NIC']){
+                        $conflic[] = "NIC already exists";
+                    }
+                    if($existing->Email == $data['Email']){
+                        $conflic[] = "Email already exists";
+                    }
+                    if($existing->Name == $data['Name']){
+                        $conflic[] = "Name already exists";
+                    }
+                    
+                    $_SESSION['flash_message'] = [
+                        'type' => 'error',
+                        'message' => 'Student cannot be registered: ' . implode(', ', array_unique($conflic))
+                    ];
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
+                }
+
             header('Location: /Gradlink/public/PDC_admin/AdminStudentOverview/notReg');
             exit;
+
         }
 
 

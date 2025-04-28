@@ -153,4 +153,19 @@ public function getCount(){
         return 0;
     }
 }
+
+public function getAll(){
+    $query = "SELECT * FROM $this->table";
+    $result = $this->query($query);
+    return $result;
+}
+
+public function find($StudentId){
+    $query = "SELECT * FROM $this->table WHERE StudentId = :StudentId";
+    $param = ['StudentId' => $StudentId];
+    $result = $this->query($query,$param);
+    return $result[0];
+}
+
+
 }

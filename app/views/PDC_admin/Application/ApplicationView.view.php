@@ -114,43 +114,24 @@
                                                                             <i class="fas fa-file-pdf"></i>
                                                                             <span class="document-name"><?= htmlspecialchars(pathinfo($report->Name, PATHINFO_FILENAME)) ?>.pdf</span>
                                                                             <span class="document-date">Submitted: <?= date('M d, Y', strtotime($report->SubmissionDate)) ?></span>
-                                                                            <!-- <span class="document-status status-approved">
-                                                                                <i class="fas fa-check-circle"></i>
-                                                                                Approved
-                                                                            </span> -->
                                                                         </div>
                                                                         <div class="document-actions">
-                                                                            <!-- <a href="<?= ROOT ?>/<?= htmlspecialchars($report->file_path) ?>" 
+                                                                            <a href="<?= ROOT ?>/<?= htmlspecialchars($report->file_path) ?>" 
                                                                             target="_blank" 
                                                                             class="btn btn-icon btn-outline btn-sm"
                                                                             title="View">
                                                                                 <i class="fas fa-eye"></i>
-                                                                            </a> -->
-                                                                            <a href="<?= ROOT ?>/<?= htmlspecialchars($report->file_path) ?>" 
+                                                                            </a>
+                                                                            <!-- <a href="<?= ROOT ?>/<?= htmlspecialchars($report->file_path) ?>" 
                                                                             download 
                                                                             class="btn btn-icon btn-outline btn-sm"
                                                                             title="Download">
                                                                                 <i class="fas fa-download"></i>
-                                                                            </a>
+                                                                            </a> -->
                                                                         </div>
                                                                     </div>
                                                                 <?php else: ?>
-                                                                    <div class="document-item document-pending">
-                                                                        <div class="document-info">
-                                                                            <i class="fas fa-file-pdf"></i>
-                                                                            <span class="document-name"><?= htmlspecialchars(pathinfo($report->Name, PATHINFO_FILENAME)) ?>.pdf</span>
-                                                                            <span class="document-date">Submitted: <?= date('M d, Y', strtotime($report->SubmissionDate)) ?></span>
-                                                                            <span class="document-status status-pending">
-                                                                                <i class="fas fa-clock"></i>
-                                                                                Pending Approval
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="document-actions">
-                                                                            <span class="btn btn-icon btn-outline btn-sm disabled" title="Pending Approval">
-                                                                                <i class="fas fa-eye-slash"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
+                                                                    <p class="no-documents">progress reports not approved yet</p>
                                                                 <?php endif; ?>
                                                             <?php endforeach; ?>
                                                         </div>
@@ -169,10 +150,10 @@
                                                         <div class="document-info">
                                                             <i class="fas fa-file-pdf"></i>
                                                             <span class="document-name">Student_CV.pdf</span>
-                                                            <span class="document-status status-approved">
+                                                            <!-- <span class="document-status status-approved">
                                                                 <i class="fas fa-check-circle"></i>
                                                                 Submitted
-                                                            </span>
+                                                            </span> -->
                                                         </div>
                                                         <div class="document-actions">
                                                             <a href="<?= ROOT ?>/<?= htmlspecialchars($applicationData['application']->CV) ?>" 
@@ -181,12 +162,12 @@
                                                             title="View">
                                                                 <i class="fas fa-eye"></i>
                                                             </a>
-                                                            <a href="<?= ROOT ?>/<?= htmlspecialchars($applicationData['application']->CV) ?>" 
+                                                            <!-- <a href="<?= ROOT ?>/<?= htmlspecialchars($applicationData['application']->CV) ?>" 
                                                             download 
                                                             class="btn btn-icon btn-outline btn-sm"
                                                             title="Download">
                                                                 <i class="fas fa-download"></i>
-                                                            </a>
+                                                            </a> -->
                                                         </div>
                                                     </div>
                                                 <?php else: ?>

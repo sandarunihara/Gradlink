@@ -63,13 +63,26 @@ class Action_logs
         return $result;
     }
 
-    public function findActionOfAdv($advertisementId){
+    public function findActionOfAdv($advertisementId, $studentId, $companyId ,$assistantId){
         $query = "SELECT * FROM $this->table
-                  WHERE  target_id = :target_id
-                  ORDER BY timestamp DESC;
-                ";
-        $params = ['target_id' => $advertisementId];
-        $result = $this->query($query,$params);
+                  WHERE target_id = :target_id 
+                    AND (
+                        (actor_id = :student_id AND actor_role = 'student') 
+                        OR 
+                        (actor_id = :company_id AND actor_role = 'company')
+                        OR
+                        (actor_id = :admin_id AND actor_role = 'admin')
+                    )
+                  ORDER BY timestamp DESC;";
+        
+        $params = [
+            'target_id' => $advertisementId,
+            'student_id' => $studentId,
+            'company_id' => $companyId,
+            'admin_id' => $assistantId
+        ];
+        
+        $result = $this->query($query, $params);
         return $result;
     }
 }
