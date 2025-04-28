@@ -22,10 +22,11 @@ class StudentAppliedCompanies{
                 if($data['student_applied_companies'][$i]->Jobstatus == 'Accept' || 
                     $data['student_applied_companies'][$i]->Jobstatus == 'Interview Marked' ||
                     $data['student_applied_companies'][$i]->Jobstatus == 'Interview Scheduled' ||
-                    $data['student_applied_companies'][$i]->Jobstatus = 'Shortlisted' ||
-                    $data['student_applied_companies'][$i]->Jobstatus = 'Interview Expired'){
+                    $data['student_applied_companies'][$i]->Jobstatus == 'Shortlisted' ||
+                    $data['student_applied_companies'][$i]->Jobstatus == 'Interview Expired' ||
+                    $data['student_applied_companies'][$i]->Jobstatus == 'Pending'){
                     
-                        $data['student_applied_companies'][$i]->Jobstatus = 'Pending ';
+                        $data['student_applied_companies'][$i]->Jobstatus = 'Applied';
                 }
             }
         }

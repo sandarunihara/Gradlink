@@ -25,19 +25,19 @@
         <div class="dashboard-cards">
             <div class="card">
                 <h3>Current Applications</h3>
-                <?php if ($data['numOfAppliedCompanies'] == 0): ?>
-                    <p>You have no active applications.</p>
+                <?php if ($data['numOfAppliedCompanies'] == 0 && $data['recruit'] == 1): ?>
+                    <p class="safe">You have no active applications.</p>
                 <?php else: ?>
-                    <p>You have <?php echo htmlspecialchars($data['numOfAppliedCompanies']) ?> active applications.</p>
+                    <p class="danger">You have <?php echo htmlspecialchars($data['numOfAppliedCompanies']) ?> active applications.</p>
                 <?php endif; ?>
                 <button onclick="location.href='<?= ROOT ?>/Student/StudentAppliedCompanies/AppliedCompanies';">View Applications</button>
             </div>
             <div class="card">
                 <h3>Upcoming Interviews</h3>
-                <?php if (empty($data['interview_time_slot'])): ?>
-                    <p>You have no upcoming interviews.</p>
+                <?php if (empty($data['interview_time_slot']) || $data['recruit'] == 1): ?>
+                    <p class="safe">You have no upcoming interviews.</p>
                 <?php else: ?>
-                    <p>Your next interview is on
+                    <p class="danger">Your next interview is on
                         <?php
                         echo (htmlspecialchars($data['day']) . " ");
                         echo (htmlspecialchars($data['monthName']) . ".");
@@ -49,12 +49,12 @@
             <div class="card">
                 <h3>Internship Offers</h3>
                 <?php if ($data['intenshipOffers'] == 0): ?>
-                    <p>You have no internship offers.</p>
+                    <p class="safe">You have no internship offers.</p>
                 <?php else: ?>
                     <?php if ($data['intenshipOffers'] == 1 ): ?>
-                        <p>You have <?php echo htmlspecialchars($data['intenshipOffers']) ?> internship offer.</p>
+                        <p class="danger">You have <?php echo htmlspecialchars($data['intenshipOffers']) ?> internship offer.</p>
                     <?php else: ?>
-                        <p>You have <?php echo htmlspecialchars($data['intenshipOffers']) ?> internship offers.</p>
+                        <p class="danger">You have <?php echo htmlspecialchars($data['intenshipOffers']) ?> internship offers.</p>
                     <?php endif; ?> 
                 <?php endif; ?>
                 <button onclick="location.href='<?= ROOT ?>/Student/StudentAppliedCompanies/InternshipOffers';">View Offers</button>
