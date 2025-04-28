@@ -18,7 +18,7 @@ class StudentAd{
         if(isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])){
             $data['cv'] = $student_advertisement -> findresumes($_SESSION['USER'] -> StudentId);
         }
-        $student = new student;
+        $student = new student; 
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         $noOfAppliedAds = $data['Student'] -> noOfAppliedAds;
     
@@ -120,6 +120,7 @@ class StudentAd{
                 }
                 
                 $data1['noOfAppliedAds'] = $noOfAppliedAds + 1;
+                $data1['Status']='Pending';
                 $isUpdate = $student -> update($arr['StudentId'], $data1, 'StudentId');
 
                 if ($isUpdate['status'] !== "success"){

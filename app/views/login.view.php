@@ -361,7 +361,7 @@
                             <input type="checkbox" id="remember_me" name="remember_me">
                             <label for="remember_me">Remember me</label>
                         </div>
-                        <a href="http://localhost/Gradlink/public/login/createpassword" class="forgot-password">Forgot password?</a>
+                        <a href="http://localhost/Gradlink/public/login/createpassword" class="forgot-password">Create password?</a>
                     </div>
 
                     <button type="submit" class="login-btn">
