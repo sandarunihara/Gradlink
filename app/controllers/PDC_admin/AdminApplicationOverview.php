@@ -39,11 +39,11 @@
 
             $assistantId = $_SESSION['USER']->AssistantId; 
 
-            $actionData = $action->findActionOfAdv($advertisementId , $studentId , $companyId , $assistantId);
+            $actionData = $action->getAdvertisementTimeline($advertisementId , $studentId , $companyId);
 
             $progressData = $progress->findstudent($studentId);
 
-            //show($progressData);
+            //show($actionData);
 
             $application = $data[0];
 

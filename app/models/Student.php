@@ -152,7 +152,7 @@ class student
 
 	public function findnotapplied()
 	{
-		$query = "SELECT * FROM $this->table WHERE Status = 'Not Applied' AND block = '0'";
+		$query = "SELECT * FROM $this->table WHERE Status = 'NotApplied' AND block = '0'";
 		$result = $this->query($query);
 		if ($result) {
 			return $result;
