@@ -18,9 +18,11 @@
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
         <div class="progress-report-navbar">
-            <div class="add-progress-report">
-                <button id="addNewBtn">+ Add New</button>
-            </div>
+            <?php if (isset($data['recruit']) && $data['recruit'] == 1){ ?>
+                <div class="add-progress-report">
+                    <button id="addNewBtn">+ Add New</button>
+                </div>
+            <?php } ?>
         </div>
 
         <div class="progress-report-table-div">
@@ -65,7 +67,7 @@
                                         </td>
                                         <td>
                                             <a 
-                                                href="<?=ROOT?>/assets/uploads/progress_docs/ <?php echo htmlspecialchars($ProgressDoc -> Name)?>" 
+                                                href="<?=ROOT?>/assets/uploads/progress_docs/<?php echo htmlspecialchars($ProgressDoc -> Name)?>" 
                                                 target="_blank">
                                                     <div class="<?php echo $statusClass; ?>">
                                                         <?php echo $statusText; ?>

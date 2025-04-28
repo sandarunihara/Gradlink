@@ -13,38 +13,32 @@ class Dashboard
         $totalCompanies = $companyModel->getTotalCount();
         $totalStudents = $studentModel->registeredCount();
         $totalAdvertisements = $advertisementModel->OngoingAdvertisementCount();
-
-        $pendingCSCount = $coordinatorModel->pendingCSCount();
-        $rejectedCSCount = $coordinatorModel->rejectedCSCount();
-        $recruitedCSCount = $coordinatorModel->recruitedCSCount();
-        $CSCount = $coordinatorModel->totalCSCount();
-       
-
-        $pendingISCount = $coordinatorModel->pendingISCount();
-        $rejectedISCount = $coordinatorModel->rejectedISCount();
-        $recruitedISCount = $coordinatorModel->recruitedISCount();
-        $ISCount = $coordinatorModel->totalISCount();
+        $unreadComplaints = $coordinatorModel->unreadComplaintsCount();
+        $readComplaints = $coordinatorModel->readComplaintsCount();
+        $complaintCount = $readComplaints + $unreadComplaints;
+        
         
         $jobRolesData = $coordinatorModel->jobRoles();
         $sessions = $coordinatorModel->getScheduledSessions();
         $roundModel = new Round;
         $round = $roundModel->getActiveRound();
 
+        $totalApplications = $coordinatorModel->totalApplicationsCount();
+        $recruitedCount = $coordinatorModel->recruitedCount();
+
+        $pendingAdvertisements = $coordinatorModel->pendingAdvertisementCount();
+        $pendingCompanies = $coordinatorModel->pendingCompanyCount();
+        $pendingApprovals = $pendingAdvertisements + $pendingCompanies;
+
+        $blockedCompanies = $coordinatorModel->blockedCompanyCount();
+        $blockedStudents = $coordinatorModel->blockedStudentCount();
 
         if ($totalCompanies === null || $totalStudents === null || $totalAdvertisements === null) {
             $this->view('Coordinator/Company/dashboard');
             return;
         }
 
-        if ($pendingCSCount === null || $rejectedCSCount === null || $recruitedCSCount === null || $CSCount === null) {
-            $this->view('Coordinator/Company/dashboard');
-            return;
-        }
-
-        if ($pendingISCount === null || $rejectedISCount === null || $recruitedISCount === null || $ISCount === null) {
-            $this->view('Coordinator/Company/dashboard');
-            return;
-        }
+                        
 
         $dashboardData = [];
         $applicationGraph = [];
@@ -54,45 +48,18 @@ class Dashboard
             'companyCount' => $totalCompanies ?? 0,
             'studentCount' => $totalStudents ?? 0,
             'ongoingAdvertisementCount' => $totalAdvertisements ?? 0,
+            'unreadComplaints' => $unreadComplaints ?? 0,
+            'resolvedComplaints' => $readComplaints ?? 0,
+            'complaintCount' => $complaintCount ?? 0,
+            'totalApplications' => $totalApplications ?? 0,
+            'recruitedStudents' => $recruitedCount ?? 0,
+            'pendingApprovals' => $pendingApprovals ?? 0,
+            'pendingAdvertisements' => $pendingAdvertisements ?? 0,
+            'pendingCompanies' => $pendingCompanies ?? 0,
+            'blockedCompanies' => $blockedCompanies ?? 0,
+            'blockedStudents' => $blockedStudents ?? 0,
         ];
 
-        $notAppliedCSCount = $CSCount - ($pendingCSCount + $rejectedCSCount + $recruitedCSCount);
-        $notAppliedISCount = $ISCount - ($pendingISCount + $rejectedISCount + $recruitedISCount);
-        
-        
-        
-        
-            
-            if($CSCount > 0) {
-              $applicationGraph = [  
-                'pendingCSCount' => (($pendingCSCount * 100) / $CSCount) ?? 0,
-                'rejectedCSCount' => (($rejectedCSCount * 100) / $CSCount) ?? 0,
-                'recruitedCSCount' => (($recruitedCSCount * 100) / $CSCount) ?? 0,
-                'notAppliedCSCount' => (($notAppliedCSCount * 100) / $CSCount) ?? 0,
-            ];
-            } else {
-                $applicationGraph = [
-                    'pendingCSCount' => 0,
-                    'rejectedCSCount' => 0,
-                    'recruitedCSCount' => 0,
-                    'notAppliedCSCount' => 0,
-                ];
-            }
-                
-            
-            if($ISCount > 0) {
-                $applicationGraph = [
-                'pendingISCount' => (($pendingISCount * 100) / $ISCount) ?? 0,
-                'rejectedISCount' => (($rejectedISCount * 100) / $ISCount) ?? 0,
-                'recruitedISCount' => (($recruitedISCount * 100) / $ISCount) ?? 0,
-                'notAppliedISCount' => (($notAppliedISCount * 100) / $ISCount) ?? 0,];
-            } else {
-                $applicationGraph = [
-                'pendingISCount' => 0,
-                'rejectedISCount' => 0,
-                'recruitedISCount' => 0,
-                'notAppliedISCount' => 0,];
-            }
             
         
 
@@ -110,7 +77,8 @@ class Dashboard
                     'hall' => $session->hall_number,
                     'time' => $session->time_slot,
                     'description' => $session->description,
-                    'Company' => $companyName
+                    'Company' => $companyName,
+                    'formattedDate' => $sessionDate
                 ];
 
                 // $sessionData[$formattedDate][] = $session->session_name; // Use object property
@@ -121,7 +89,7 @@ class Dashboard
         // print_r($sessionData);
         // echo '</pre>';
 
-        $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'applicationAnalysis' => $applicationGraph, 'InternPositions' => $jobRolesData, 'sessions' => $sessionData, 'round' => $round]);
+        $this->view('Coordinator/Company/dashboard', ['dashboardDetails' => $dashboardData, 'InternPositions' => $jobRolesData, 'sessions' => $sessionData, 'round' => $round]);
     }
 
 

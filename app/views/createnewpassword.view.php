@@ -59,13 +59,19 @@
             </p>
 
             <form class="passwordcontainer" method="post" enctype="multipart/form-data" onsubmit="return validatePasswords()">
-                <div>
+            <div>
                     <label for="password">Create New Password</label>
-                    <input type="text" name="password" id="password" placeholder="password">
+                    <div class="password-toggle-wrapper">
+                        <input type="password" name="password" id="password" placeholder="password">
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password')">Show</button>
+                    </div>
                 </div>
                 <div>
                     <label for="confirmpassword">Confirm Password</label>
-                    <input type="text" name="confirmpassword" id="confirmpassword" placeholder="confirm password">
+                    <div class="password-toggle-wrapper">
+                        <input type="password" name="confirmpassword" id="confirmpassword" placeholder="confirm password">
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirmpassword')">Show</button>
+                    </div>
                 </div>
                 <p id="passwordRequirements" class="details">
                     Password must be at least 8 characters long and include:
@@ -134,6 +140,17 @@
             return true;
         }
 
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            const toggleBtn = input.nextElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+                toggleBtn.textContent = "Hide";
+            } else {
+                input.type = "password";
+                toggleBtn.textContent = "Show";
+            }
+        }
 
 
         function validatePasswords() {

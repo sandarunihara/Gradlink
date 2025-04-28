@@ -199,6 +199,45 @@
         });
     </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.querySelector(".search-box input");
+        const tableRows = document.querySelectorAll("table tbody tr");
+        const noResultsRow = document.querySelector("tbody tr td[colspan]");
+
+        searchInput.addEventListener("keyup", function() {
+            const query = searchInput.value.trim().toLowerCase();
+            let anyVisible = false;
+
+            tableRows.forEach(row => {
+                // Skip the "No Applications Found" row
+                if (row.contains(noResultsRow)) return;
+                
+                const cells = row.querySelectorAll("td");
+                let matchFound = false;
+
+                cells.forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(query)) {
+                        matchFound = true;
+                    }
+                });
+
+                if (matchFound) {
+                    row.style.display = "";
+                    anyVisible = true;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Handle "No results" message visibility
+            if (noResultsRow) {
+                const parentRow = noResultsRow.closest("tr");
+                parentRow.style.display = (query && !anyVisible) ? "" : "none";
+            }
+        });
+    });
+</script>
 
 </body>
 

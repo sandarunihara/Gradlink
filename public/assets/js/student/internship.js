@@ -24,7 +24,10 @@
         button.addEventListener('click', () => {
             popupBox.classList.remove('hidden');
             const advertisementId = button.getAttribute('data-advertisement-id');
-            form.action = form.action + '?advertisementId=' + encodeURIComponent(advertisementId);
+            const position = button.getAttribute('data-position').replace(/\s+/g, '').toLowerCase();
+            form.action = 'http://localhost/Gradlink/public' + 
+                '/Student/StudentAd/advertisement/?advertisementId=' + encodeURIComponent(advertisementId) + 
+                '&position=' + encodeURIComponent(position);
         });
     });
     // show advertisement when view button is clicked

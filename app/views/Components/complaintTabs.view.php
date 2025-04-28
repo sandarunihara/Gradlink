@@ -9,7 +9,7 @@
 
         <a href="/Gradlink/public/PDC_coordinator/reviewedComplaints" 
            class="tab-item <?= basename($_SERVER['REQUEST_URI']) == 'reviewedComplaints' ? 'active' : '' ?>">
-            <span class="tab-label">Reviewed Complaints</span>
+            <span class="tab-label">Resolved Complaints</span>
         </a>
         
         <div class="tab-indicator"></div>

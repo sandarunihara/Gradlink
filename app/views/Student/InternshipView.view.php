@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentSidebar.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/studentHeader.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/internshipView.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/Student/backIcon.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -18,12 +17,6 @@
     <?php $this->renderComponent("studentHeader", ["title" => "Internships"])  ?>
     <?php $this->renderComponent("studentSidebar")  ?>
     <div class="main-content">
-        <a href="<?=ROOT?>/Student/StudentAd/advertisement" class="backreq">
-            <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 18l-6-6 6-6"></path>
-            </svg>
-            <h3>Back</h3>
-        </a>
         <div class="sub_container">
             <?php if (isset($data) && !empty($data)): ?>
             <div class="display-details">
@@ -77,6 +70,7 @@
                     <button
                         id="applyBtn"
                         data-advertisement-id="<?= htmlspecialchars($data[0]->advertisementId); ?>"
+                        data-position="<?= htmlspecialchars($data[0]->position); ?>"
                     >
                     Apply
                     </button>
@@ -89,8 +83,6 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
-            <span id="defaultMessage" class="hidden"></span>
-            <br>
             <input 
                 type="file" 
                 id="cvUpload" 
@@ -99,14 +91,23 @@
                 class="cv-upload"
             >
             <span id="errorId" class="error"></span>
-            <button
-                type="button"
-                id="defaultCV"
-                default-cv = '<?php echo json_encode($_SESSION['USER'] -> cv);?>'
-            >
-            Choose Default Resume
-            </button>
-            <br>
+            <?php if(isset($data['cv']) && !empty($data['cv'])){ ?>
+                <?php foreach ($data['cv'] as $cv): ?>
+                    <div class="cv-container">
+                        <input
+                            type="radio"
+                            name="cvId"
+                            id="<?= htmlspecialchars(pathinfo($cv->Name, PATHINFO_FILENAME)); ?>"
+                            value="<?= htmlspecialchars($cv->CV); ?>"
+                        >
+                        <a href="<?=ROOT?>/assets/uploads/cv/<?php echo htmlspecialchars($cv->CV)?>" target="_blank">
+                            <label for="cvId" class="cv-label" id="cvLabel">
+                                <?= htmlspecialchars($cv->position . ' - ' . $cv->Name); ?>
+                            </label>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            <?php } ?>
             <button 
                 type="submit"
                 id="okBtn"
@@ -126,57 +127,24 @@
     const form = document.querySelector('form');
     const errorId = document.getElementById('errorId');
     const cvUpload = document.getElementById('cvUpload');
-    const defaultCV = document.getElementById('defaultCV');
-    const defaltMessage = document.getElementById('defaultMessage');
+    const radios = document.getElementsByName('cvId');
 
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            cvUpload.style.display = "none";
+            cvUpload.value = "";
+            errorId.innerHTML = "";
+            errorId.style.display = "none";
+        });
+    });
     // Show popup when any "Apply" button is clicked
     applyBtn.addEventListener('click', () => {
         popupBox.classList.remove('hidden');
         const advertisementId = applyBtn.getAttribute('data-advertisement-id');
-        form.action = form.action + '?advertisementId=' + encodeURIComponent(advertisementId);
-
-    });
-    addEventListener("DOMContentLoaded", () => {
-        localStorage.setItem("clicked", "false");
-    });
-    defaultCV.addEventListener('click', ()=> {
-        const cv = JSON.parse(defaultCV.getAttribute('default-cv'));
-
-        const clicked = localStorage.getItem("clicked");
-        if(clicked === "false"){
-            const fileNameWithoutExtension = cv.split('.').slice(0, -1).join('.');
-            const extension = cv.split('.').pop();
-            let masked;
-
-            if(fileNameWithoutExtension.length < 5){
-                masked = cv;
-            }else{
-                const visiblePart = fileNameWithoutExtension.slice(-5);
-                masked = "***" + visiblePart + "." + extension;
-            }
-
-            cvUpload.style.display = "none";
-            defaltMessage.innerText = masked;
-            defaltMessage.classList.remove('hidden');
-
-            const defaultInput = document.createElement('input');
-            defaultInput.type = 'hidden';
-            defaultInput.name = 'use_default_cv';
-            defaultInput.value = cv;
-            form.appendChild(defaultInput);
-            localStorage.setItem("clicked", "true");
-        }else{
-            const defaultInput = document.querySelector('input[name="use_default_cv"]');
-            if (defaultInput) {
-                form.removeChild(defaultInput);
-            }
-            cvUpload.style.display = "block";
-            defaltMessage.innerText = "";
-            defaltMessage.classList.add('hidden');
-            localStorage.setItem("clicked", "false");
-        }
-
-
+        const position = applyBtn.getAttribute('data-position').replace(/\s+/g, '').toLowerCase();
+        form.action = 'http://localhost/Gradlink/public' + 
+                '/Student/StudentAd/advertisement/?advertisementId=' + encodeURIComponent(advertisementId) + 
+                '&position=' + encodeURIComponent(position);
     });
     okBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -238,9 +206,10 @@
     popupBox.addEventListener('click', (event) => {
         if (!popupContent.contains(event.target)) {
             cvUpload.style.display = "block";
-            defaltMessage.innerText = "";
-            defaltMessage.classList.add('hidden');
+            cvUpload.value = "";
+            errorId.innerHTML = "";
             popupBox.classList.add('hidden');
+            radios.forEach(radio => radio.checked = false);
         }
     });
 </script>

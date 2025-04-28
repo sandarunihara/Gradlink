@@ -11,6 +11,18 @@ class StudentProgress{
         $data['Student'] = $student -> first($arr);
         $progress_doc = new progress_doc;
         $data['ProgressDocs'] = $progress_doc -> where($arr,[], '', 'do_not_order');
+
+        $student_advertisement = new student_advertisement;
+        $slectedRoleDetails = $student_advertisement->where($arr, [], 'CreatedAt', 'asc');
+        
+        $advertisement = new C_Advertisement;
+        foreach($slectedRoleDetails as $slectedRoleDetail){
+            if($slectedRoleDetail->Jobstatus == 'Recruit'){
+                $advertisementId['AdvertisementId'] = $slectedRoleDetail->AdvertisementId;
+                $selectedJob = $advertisement->where($advertisementId, [], '', 'do_not_order')[0]->position;
+                $data['recruit'] = 1;
+            }
+        }
         if(isset($_SESSION['success'])){
             $data['success'] = $_SESSION['success'];
         }

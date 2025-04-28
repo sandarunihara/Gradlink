@@ -13,9 +13,8 @@
     <a class="backbtn" href="<?php echo ROOT ?>/login">
         <i class="fas fa-chevron-left"></i>
     </a>
-    <img src="<?= ROOT ?>/assets/img/glogo.png" alt="Gradlink Logo" class="logo-overlay">
     <div class="maincontainer">
-        <?php if(isset($data['user']) && !isset($data['user']['otp'])): ?>
+        <?php if (isset($data['user']) && !isset($data['user']['otp'])): ?>
             <form method="post" onsubmit="return validotp()">
                 <div class="otp-input-container">
                     <label for="otp">Verification Code</label>
@@ -57,11 +56,17 @@
             <form class="passwordcontainer" method="post" enctype="multipart/form-data" onsubmit="return validatePasswords()">
                 <div>
                     <label for="password">Create New Password</label>
-                    <input type="text" name="password" id="password" placeholder="password">
+                    <div class="password-toggle-wrapper">
+                        <input type="password" name="password" id="password" placeholder="password">
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password')">Show</button>
+                    </div>
                 </div>
                 <div>
                     <label for="confirmpassword">Confirm Password</label>
-                    <input type="text" name="confirmpassword" id="confirmpassword" placeholder="confirm password">
+                    <div class="password-toggle-wrapper">
+                        <input type="password" name="confirmpassword" id="confirmpassword" placeholder="confirm password">
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirmpassword')">Show</button>
+                    </div>
                 </div>
                 <p id="passwordRequirements" class="details">
                     Password must be at least 8 characters long and include:
@@ -79,13 +84,13 @@
     <div id="toast-container" class="toast-container"></div>
     <script src="<?php echo ROOT ?>/assets/js/student/toast.js"></script>
 
-    <?php if(array_key_exists('success', $data)){ ?>
+    <?php if (array_key_exists('success', $data)) { ?>
         <script>
             const success = "<?php echo addslashes($data['success']); ?>";
             successToast(success);
         </script>
     <?php } ?>
-    <?php if(array_key_exists('errors', $data)){ ?>
+    <?php if (array_key_exists('errors', $data)) { ?>
         <script>
             const errors = "<?php echo addslashes($data['errors']); ?>";
             errorToast(errors);
@@ -130,7 +135,17 @@
             return true;
         }
 
-
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            const toggleBtn = input.nextElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+                toggleBtn.textContent = "Hide";
+            } else {
+                input.type = "password";
+                toggleBtn.textContent = "Show";
+            }
+        }
 
         function validatePasswords() {
             const password = document.getElementById('password').value;

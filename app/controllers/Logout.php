@@ -1,7 +1,7 @@
 <?php
 class Logout
 {
-	use BaseController;
+	use Controller;
 
 	public function index()
 	{

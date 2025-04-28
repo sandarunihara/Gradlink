@@ -90,6 +90,7 @@
                                 <button 
                                     class="applyBtn" 
                                     data-advertisement-id="<?= htmlspecialchars($AdDetail->advertisementId); ?>"
+                                    data-position="<?= htmlspecialchars($AdDetail->position); ?>"
                                 >
                                 Apply
                                 </button>
@@ -107,8 +108,6 @@
     <div class="popup-content">
         <form action="<?= ROOT ?>/Student/StudentAd/advertisement/" method="post" enctype="multipart/form-data">
             <h2>Upload Your CV</h2>
-            <span id="defaultMessage" class="hidden"></span>
-            <br>
             <input 
                 type="file" 
                 id="cvUpload" 
@@ -123,12 +122,14 @@
                         <input
                             type="radio"
                             name="cvId"
-                            id="cvId"
+                            id="<?= htmlspecialchars(pathinfo($cv->Name, PATHINFO_FILENAME)); ?>"
                             value="<?= htmlspecialchars($cv->CV); ?>"
                         >
-                        <label for="cvId" class="cv-label" id="cvLabel">
-                            <?= htmlspecialchars($cv->position . ' - ' . $cv->Name); ?>
-                        </label>
+                        <a href="<?=ROOT?>/assets/uploads/cv/<?php echo htmlspecialchars($cv->CV)?>" target="_blank">
+                            <label for="cvId" class="cv-label" id="cvLabel">
+                                <?= htmlspecialchars($cv->position . ' - ' . $cv->Name); ?>
+                            </label>
+                        </a>
                     </div>
                 <?php endforeach; ?>
             <?php } ?>
