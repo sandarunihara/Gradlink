@@ -11,6 +11,65 @@
     <link rel="stylesheet" href="<?= ROOT ?> /assets/css/Coordinator/Complain/dashboardComplain.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 350px;
+        }
+
+        .toast-message {
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-content {
+            flex-grow: 1;
+        }
+
+        .toast-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 18px;
+            padding: 0;
+        }
+
+        .toast-success {
+            background-color: #4caf50;
+        }
+
+        .toast-error {
+            background-color: #f44336;
+        }
+
+        .toast-warning {
+            background-color: #ff9800;
+        }
+
+        .toast-info {
+            background-color: #2196f3;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,21 +94,15 @@
                 <button class="filter-btn" data-filter="company">Company Complaints</button>
             </div>
 
-            <?php if (!empty($_SESSION['flash_message'])): ?>
-                <div class="flash-message <?= $_SESSION['flash_message']['type'] ?>">
-                    <?= $_SESSION['flash_message']['message'] ?>
-                    <?php unset($_SESSION['flash_message']); ?>
-                </div>
+            <?php if (isset($_SESSION['flash_message'])): ?>
+                <script>
+                    window.__flashMessage = {
+                        message: "<?= $_SESSION['flash_message']['message'] ?>",
+                        type: "<?= htmlspecialchars($_SESSION['flash_message']['type']) ?>"
+                    };
+                </script>
             <?php endif; ?>
 
-            <p class="flash-message">
-                <?php if (isset($_SESSION['flash_message'])): ?>
-                    <span class="<?= $_SESSION['flash_message']['type'] ?>">
-                        <?= $_SESSION['flash_message']['message'] ?>
-                    </span>
-                    <?php unset($_SESSION['flash_message']); ?>
-                <?php endif; ?>
-            </p>
             <div class="complaints-grid" id="complaintsGrid">
                 <!-- Example card; dynamically generate from PHP or JS -->
                 <?php foreach ($complaints as $complaint): ?>
@@ -115,17 +168,28 @@
 
         </main>
     </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 
     <script>
-        document.querySelectorAll('.mark-reviewed-btn').forEach(button => {
+        document.addEventListener("DOMContentLoaded", () => {
+            const toastSystem = new ToastSystem();
 
-            button.addEventListener('click', () => {
-                const complaintId = button.getAttribute('data-id');
+            // Handle flash messages
+            if (window.__flashMessage) {
+                const { message, type } = window.__flashMessage;
+                toastSystem.show(message, type);
+            }
 
-                console.log(complaintId);
+            document.querySelectorAll('.mark-reviewed-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const complaintId = button.getAttribute('data-id');
 
-                fetch("<?= ROOT ?>/PDC_coordinator/dashboardComplaints/markReviewed", {
+                    fetch("<?= ROOT ?>/PDC_coordinator/dashboardComplaints/markReviewed", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded",
@@ -134,22 +198,20 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
                         if (data.success) {
-                            location.reload();
+                            toastSystem.show(data.message, 'success');
                             button.closest('.complaint-card').remove();
-                            alert(data.message);
                         } else {
-                            alert('Failed to update status.');
+                            toastSystem.show('Failed to update status.', 'error');
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
+                        toastSystem.show('An error occurred while updating the status.', 'error');
                     });
+                });
             });
-        });
 
-        document.addEventListener("DOMContentLoaded", () => {
             const replyModal = document.getElementById('replyModal');
             const replyForm = document.getElementById('replyForm');
 
@@ -185,16 +247,39 @@
             replyModal.addEventListener('click', (e) => {
                 if (e.target === replyModal) closeModal();
             });
-        });
 
+            // Handle form submission
+            replyForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        toastSystem.show(data.message, 'success');
+                        closeModal();
+                        location.reload();
+                    } else {
+                        toastSystem.show(data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toastSystem.show('An error occurred while adding the reply.', 'error');
+                });
+            });
 
-        // Close the modal
-        document.querySelector('.close-btn').addEventListener('click', () => {
-            document.getElementById('replyModal').classList.add('hidden');
-        });
-
-
-        document.addEventListener("DOMContentLoaded", () => {
+            // Filter functionality
             const filterButtons = document.querySelectorAll('.filter-btn');
             const complaintCards = document.querySelectorAll('.complaint-card');
 
@@ -215,9 +300,6 @@
                 });
             });
         });
-
-   
-        
     </script>
 
 
