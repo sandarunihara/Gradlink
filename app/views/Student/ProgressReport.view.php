@@ -49,7 +49,7 @@
                                     <?php
                                         $status = $ProgressDoc -> Status;
                                         $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
-                                        $statusText = ($status == 'reviewed') ? 'Reviewed' : 'Not Reviewed';
+                                        $statusText = ($status == 'Approved') ? 'Reviewed' : 'Not Reviewed';
                                     ?>
 
                                     <tr>
