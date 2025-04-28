@@ -90,6 +90,9 @@ class DashboardSettings
                     $model->deactivateAllRoundsExcept($roundId);
                 }
 
+                if($roundId == 2){
+                    $vacancy = 500; // Set vacancy to 0 for round 2
+                }
                 $success = $model->update($roundId, $startDate, $endDate, $active, $vacancy);
 
                 $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Round updated successfully'];
