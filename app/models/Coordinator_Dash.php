@@ -66,7 +66,7 @@ class Coordinator_Dash
         try {
             $query = "SELECT COUNT(*) AS pendingAdvertisementCount
                         FROM advertisement
-                        WHERE status = 'Request'";
+                        WHERE status = 'Pending'";
 
             $result = $this->query($query);
             return $result[0]->{'pendingAdvertisementCount'};

@@ -81,9 +81,15 @@
 
             window.onload = function () {
 
+                CanvasJS.addColorSet("dashboardColors", [
+                    "#3498db", "#2ecc71", "#e74c3c", "#f39c12", "#9b59b6",
+                    "#1abc9c", "#d35400", "#34495e", "#16a085", "#c0392b"
+                ]);
+
                 var chart1 = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
-                    backgroundColor: "#fffafa",
+                    colorSet: "dashboardColors",
+                    backgroundColor: "#ffffff",
                     data: [{
                         type: "pie",
                         yValueFormatString: "#,##0", // Removes decimal points
