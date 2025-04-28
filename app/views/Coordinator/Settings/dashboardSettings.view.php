@@ -140,10 +140,18 @@
                                                 </span>
                                             </div>
 
-                                            <div class="info-item">
-                                                <span class="label">No of applications per student:</span>
-                                                <span class="value"><?= htmlspecialchars($round->vacancy) ?></span>
-                                            </div>
+                                            <?php
+                                            if ($round->roundId == 2): ?>
+                                                <div class="info-item">
+                                                    <span class="label">No of applications per student:</span>
+                                                    <span class="value"> Unlimited</span>
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="info-item">
+                                                    <span class="label">No of applications per student:</span>
+                                                    <span class="value"><?= htmlspecialchars($round->vacancy) ?></span>
+                                                </div>
+                                            <?php endif; ?>
                                         <?php endif; ?>
 
                                     </div>
@@ -481,10 +489,15 @@
                                     <label for="endDate">End Date</label>
                                     <input type="date" id="endDate" name="endDate" required>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group normal-vacancy">
                                     <label for="vacancy">Applications per Student</label>
-                                    <input type="number" id="vacancy" name="vacancy" min="1" required>
+                                    <input type="number" id="vacancyNumber" name="vacancy" min="1" required>
                                 </div>
+                                <div class="form-group vacancy-unlimited" style="display: none;">
+                                    <label for="vacancy">Applications per Student</label>
+                                    <input type="text" id="vacancyUnlimited" name="vacancy" min="1" value="Unlimited" required>
+                                </div>
+                            
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn primary-btn">
@@ -576,6 +589,21 @@
                         document.getElementById("startDate").value = dates[0].trim();
                         document.getElementById("endDate").value = dates[1].trim();
                     }
+
+                    const normalVacancyDiv = document.querySelector(".normal-vacancy");
+                    const unlimitedVacancyDiv = document.querySelector(".vacancy-unlimited");
+
+                    if(roundId == 2) {
+                        normalVacancyDiv.style.display = "none";
+                        unlimitedVacancyDiv.style.display = "block";
+                        document.getElementById("vacancyUnlimited").value = "Unlimited";
+                    } else {
+                        normalVacancyDiv.style.display = "block";
+                        unlimitedVacancyDiv.style.display = "none";
+                        const vacancyValue = card.querySelector(".info-item:nth-child(3) .value").innerText;
+                        document.getElementById("vacancyNumber").value = vacancyValue === "Unlimited" ? "" : vacancyValue;
+                    }
+                    
 
                     modal.style.display = "flex";
                 });
