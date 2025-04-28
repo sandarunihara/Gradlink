@@ -142,12 +142,12 @@
         const existingEmails = <?php echo json_encode(array_values(array_map(function ($company) {
                                     return $company->Email;
                                 }, $all_company_data))); ?>;
-        
+
         const existingNames = <?php echo json_encode(array_values(array_map(function ($company) {
                                     return $company->Name;
                                 }, $all_company_data))); ?>;
-                                console.log(existingNames);
-                                
+        console.log(existingNames);
+
         function isValidEmail(email) {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailPattern.test(email);
@@ -169,6 +169,27 @@
             return pattern.test(url);
         }
 
+        function isvalidnic() {
+            const nicoldpattern = /^[0-9]{9}[vVxX]$/;
+            const nicnewpattern = /^[0-9]{12}$/;
+        }
+
+        function getAgeFromNIC(nic) {
+            let birthYear;
+
+            if (nic.length === 10) {
+                birthYear = parseInt('19' + nic.substring(0, 2));
+            } else if (nic.length === 12) {
+                birthYear = parseInt(nic.substring(0, 4));
+            } else {
+                return 'Invalid NIC number';
+            }
+
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - birthYear;
+
+            return age;
+        }
 
         function validateProfileForm() {
             const name = document.querySelector('input[name="Name"]').value.trim();
@@ -185,12 +206,12 @@
             const coverphoto = document.getElementById('coverphoto').files[0];
             const profilephoto = document.getElementById('profilephoto').files[0];
 
-            if(existingEmails.includes(email)){
+            if (existingEmails.includes(email)) {
                 errorToast("Email already exists.Use another one");
                 return false;
             }
 
-            if(existingNames.includes(name)){
+            if (existingNames.includes(name)) {
                 errorToast("Name already exists.Use another one");
                 return false;
             }

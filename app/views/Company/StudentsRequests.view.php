@@ -146,7 +146,6 @@
                                                         $statusText = 'Pending';
                                                         $statusClass = 'Pending';
                                                         break;;
-                                                    
                                                 }
 
                                                 ?>
@@ -264,8 +263,12 @@
             "Figma", "Adobe XD", "Sketch", "Photoshop", "Illustrator",
 
             //  Other Technologies
-            "WebSockets", "REST API", "GraphQL API", "MQTT", "WebRTC"
+            "WebSockets", "REST API", "GraphQL API", "MQTT", "WebRTC",
+
+            //  QA Development & Testing
+            "Selenium", "Cypress", "Playwright", "Appium", "JUnit", "TestNG", "Postman", "Cucumber", "Capybara", "RSpec", "Jest", "Mocha", "Karma", "Jasmine", "Chai", "Robot Framework", "Puppeteer", "SoapUI", "LoadRunner", "Tosca", "GitLab CI", "Jenkins CI", "Docker for Testing", "Kubernetes for Testing", "Test Automation", "API Testing", "Unit Testing", "Integration Testing", "Regression Testing", "Performance Testing", "Security Testing", "Manual Testing", "Cross-browser Testing"
         ];
+
 
         function showSuggestions() {
             const input = document.getElementById('searchInput');
