@@ -61,12 +61,12 @@
                             <?php if (!empty($data)): ?>
                                 <?php foreach ($data as $row) : ?>
                                     <tr>
-                                        <td><a href="#" class="open-modal student-link" data-student='<?= json_encode($row) ?>'><?= htmlspecialchars($row->StudentId) ?></a></td>
+                                        <td><a href="#" class="open-modal student-link" data-student='<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>'><?= htmlspecialchars($row->StudentId) ?></a></td>
                                         <td><?= htmlspecialchars($row->StudentName) ?></td>
                                         <td><?= htmlspecialchars($row->DegreeName) ?></td>
-                                        <td><a href="#" class="open-modal company-link" data-company='<?= json_encode($row) ?>'><?= htmlspecialchars($row->CompanyName) ?></a></td>
+                                        <td><a href="#" class="open-modal company-link" data-company='<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>'><?= htmlspecialchars($row->CompanyName) ?></a></td>
                                         <td><?= htmlspecialchars($row->position) ?></td>
-                                        <td><a href="#" class="open-modal ad-link" data-ad='<?= json_encode($row) ?>'><?= htmlspecialchars($row->advertisementId) ?></a></td>
+                                        <td><a href="#" class="open-modal ad-link" data-ad='<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>'><?= htmlspecialchars($row->advertisementId) ?></a></td>
                                         <td><?= htmlspecialchars($row->Jobstatus) ?></td>
                                     </tr>
 
