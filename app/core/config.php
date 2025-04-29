@@ -10,7 +10,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DBHOST', $_ENV["DBHOST"]);  
     define('DBUSER', $_ENV["DBUSER"]);
     define('DBPASS', $_ENV["DBPASS"]);
-    define('DBDRIVER', $_ENV["DBDRIVER"]);
+    // define('DBDRIVER', $_ENV["DBDRIVER"]);
 
     define('ROOT', 'http://localhost/Gradlink/public');
 } else {
@@ -19,7 +19,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DBHOST', 'localhost');
     define('DBUSER', 'root');
     define('DBPASS', '');
-    define('DBDRIVER', '');
+    // define('DBDRIVER', '');
     
     define('ROOT', 'https://Gradlink.com');
 }
