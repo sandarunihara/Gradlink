@@ -30,18 +30,15 @@ class StudentProgress{
             $data['errors'] = $_SESSION['errors'];
         }
 
-        //show($data);
         $this-> view('Student/ProgressReport', $data);
     }
     public function addProgressReport(){
         $data = [];
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             try {
-                // Start transaction
                 $this->beginTransaction(); 
 
                 $file = $_FILES['file'];
-                //show($file);
                 $fileName = $_FILES['file']['name'];
                 $fileTempName = $_FILES['file']['tmp_name'];
                 $fileSize = $_FILES['file']['size'];
@@ -80,15 +77,13 @@ class StudentProgress{
 
                 $_SESSION['success'] = "Progress report added successfully";
 
-                //show($data);
                 redirect('Student/StudentProgress/progressReport');
                 
-                // Commit transaction
                 $this->commit(); 
                 return true;
 
             } catch (Exception $e) {
-                $this->rollback(); // Rollback transaction on error
+                $this->rollback(); 
                 $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
                 redirect('Student/StudentProgress/progressReport');
                 return false;                        

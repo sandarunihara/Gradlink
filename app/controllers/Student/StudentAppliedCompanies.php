@@ -30,7 +30,6 @@ class StudentAppliedCompanies{
                 }
             }
         }
-        //show($data);
         $this-> view('Student/AppliedCompanies',$data);
     }  
     public function ViewAppliedCompanies($id){
@@ -38,10 +37,8 @@ class StudentAppliedCompanies{
         $arr['StudentId'] = $_SESSION['USER'] -> StudentId;
         
         $model = new C_Advertisement;
-        // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $id]);
         $advertisementId = $id;
-        //show($data);
         $this-> view('Student/ViewAppliedAdDash',$data);
     }
     function InternshipOffers(){
@@ -58,7 +55,6 @@ class StudentAppliedCompanies{
                 $data['student_applied_companies'][$i]->date = $date[0];
             }
         }
-        //show($data);
         $this-> view('Student/InternshipOffers',$data);
     }
     function studentReply(){
@@ -99,16 +95,13 @@ class StudentAppliedCompanies{
                     throw new Exception("Error inserting data into action_logs table");
                 }
                 $_SESSION['success'] = "You have accepted the offer successfully.";
-                // Commit transaction
                 $this->commit(); 
 
-                //show($data);
                 redirect('Student/StudentDash/dashboard');
                 return true;
             } catch (Exception $e) {
                 $this->rollback();
                 $_SESSION['errors'] = "Error deleting complaint: " . $e -> getMessage();
-                //show($_SESSION);
                 redirect('Student/StudentDash/dashboard');
                 return false;
             }
@@ -148,16 +141,13 @@ class StudentAppliedCompanies{
                     throw new Exception("Error inserting data into action_logs table");
                 }
                 $_SESSION['success'] = "You have rejected the offer successfully.";
-                // Commit transaction
                 $this->commit(); 
 
-                //show($data);
                 redirect('Student/StudentDash/dashboard');
                 return true;
             } catch (Exception $e) {
                 $this->rollback();
                 $_SESSION['errors'] = "Error deleting complaint: " . $e -> getMessage();
-                //show($_SESSION);
                 redirect('Student/StudentDash/dashboard');
                 return false;
             }

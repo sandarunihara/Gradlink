@@ -9,15 +9,6 @@ class StudentTT{
         $date = date('Y-m-d');
         $data['session'] = $session->findSessions($date);
 
-        // $company = new Company;
-        // foreach($data['session'] as $key => $value){
-        //     $companyId = $value->CompanyId;
-        //     $data['session'][$key]->companyName = $company->where('CompanyID', $companyId)->CompanyName;
-        // }
-
-        // $data['Complaints'] = $complaint -> where($arr,[], '', 'do_not_order');
-
-        //show($data);
         $this-> view('Student/TechTalk',$data);
     }
 }

@@ -10,15 +10,12 @@ class StudentProfile{
         $skill = new student_skill;
         $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
-        // $certificate = new certificate;
-        // $data['Certificates'] = $certificate -> where($arr, [], '', 'do_not_order');
 
         $student = new student;
         $data['Student'] = $student -> where($arr, [], '', 'do_not_order')[0];
         
         $studentAd = new student_advertisement;
         $data['cv'] = $studentAd -> findresumes($arr['StudentId']);
-        //show($data);
         $this-> view('Student/Profile',$data);
     }
     public function profileEdit(){        
@@ -33,7 +30,6 @@ class StudentProfile{
         $data['Skills'] = $skill -> where($arr, [], '', 'do_not_order');
 
         if($_SERVER['REQUEST_METHOD'] == "POST"){    
-            //show($_POST);
             try {
                 $this->beginTransaction();
 
@@ -73,14 +69,13 @@ class StudentProfile{
                 redirect('Student/StudentProfile/profile');
                 return true;
             } catch (Exception $e) {
-                $this->rollback(); // Rollback transaction on error
+                $this->rollback();
                 $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
                 
                 redirect('Student/StudentProfile/profile');
                 return false;            
             }
         }else{
-            //show($data);
             $this-> view('Student/ProfileEdit',$data);
         }
     }
@@ -93,9 +88,8 @@ class StudentProfile{
         if (isset($_POST['profilePicture'])) {
             $base64 = $_POST['profilePicture'];
         
-            // Check if it's a valid base64 image string
             if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
-                $imageType = strtolower($type[1]); // jpg, png, jpeg etc.
+                $imageType = strtolower($type[1]);
                 $base64 = substr($base64, strpos($base64, ',') + 1);
                 $base64 = base64_decode($base64);
         

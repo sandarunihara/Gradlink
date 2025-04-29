@@ -11,7 +11,6 @@ class StudentScheduleInterview{
 
         $interview_time_slot = new interview_time_slot;
         $data['interview_time_slot'] = $interview_time_slot->findInterviews($arr['StudentId']);
-        //show($data);
         $this-> view('Student/ScheduleInterviews', $data);
     }  
 

@@ -48,7 +48,7 @@
                                 <?php foreach ($data['ProgressDocs'] as $ProgressDoc): ?>
                                     <?php
                                         $status = $ProgressDoc -> Status;
-                                        $statusClass = ($status == 'reviewed') ? 'reviewed' : 'not-reviewed';
+                                        $statusClass = ($status == 'Approved') ? 'reviewed' : 'not-reviewed';
                                         $statusText = ($status == 'Approved') ? 'Reviewed' : 'Not Reviewed';
                                     ?>
 
