@@ -37,13 +37,13 @@
 
             <div class="profile-container">
                 <div class="profile-header">
-                    <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="Admin Avatar" class="profile-avatar">
+                    <!-- <img src="<?= ROOT ?>/assets/img/Company/pdcphoto.jpg" alt="Admin Avatar" class="profile-avatar">
                     <div class="profile-info">
                         <h2><?= $data[0]->Name ?></h2>
                         <p><?= $data[0]->Email ?></p>
                         <p>+<?= $data[0]->contact_number ?></p>
                         <span class="role-badge">Administrator</span>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="profile-sections">
@@ -125,9 +125,9 @@
                         </div>
                         
                         <div class="action-buttons">
-                            <button class="btn btn-outline" id='change-password-btn'>
+                            <!-- <button class="btn btn-outline" id='change-password-btn'>
                                 <i class="fas fa-key"></i> Change Password
-                            </button>
+                            </button> -->
                             <button class="btn btn-primary" id='edit-btn'>
                                 <i class="fas fa-user-edit"></i> Edit Profile
                             </button>
@@ -148,7 +148,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="changePasswordForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/changePassword" method="POST">
+                <!-- <form id="changePasswordForm" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/changePassword" method="POST"> -->
                     
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
@@ -197,7 +197,7 @@
             </div>
             <div class="modal-body">
                 <form id="profileForm" class="profile-form" action="<?= ROOT ?>/PDC_admin/AdminProfileOverview/edit/<?= htmlspecialchars($data[0]->AssistantId) ?>" method="POST" enctype="multipart/form-data">
-                    <div class="avatar-upload">
+                    <!-- <div class="avatar-upload">
                         <img src="<?= ROOT ?>/assets/images/default-avatar.jpg" alt="Avatar Preview" class="avatar-preview" id="avatarPreview">
                         <div class="avatar-upload-btn">
                             <label for="avatarInput" class="upload-btn">
@@ -206,7 +206,7 @@
                             <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;">
                             <span class="avatar-note">Recommended: Square image, max 2MB (JPG, PNG)</span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-grid">
                         <div class="form-group">
@@ -266,205 +266,196 @@
     <script src="<?= ROOT ?>/assets/js/toast.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const editBtn = document.getElementById('edit-btn');
-            const editProfileModal = document.getElementById('editProfileModal');
-            const changeBtn = document.getElementById('change-password-btn');
-            const passwordModal = document.getElementById('changePasswordModal');
-            const closeButtons = document.querySelectorAll('.close, .close-btn, .btn-outline');
-            const avatarInput = document.getElementById('avatarInput');
-            const avatarPreview = document.getElementById('avatarPreview');
-            //const closePasswordModalBtn = document.getElementById('closePasswordModalBtn');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const cancelEditBtn = document.getElementById('cancelEditBtn');
-            
+    const editBtn = document.getElementById('edit-btn');
+    const editProfileModal = document.getElementById('editProfileModal');
 
-            const paswd = document.querySelector('.modal-password')
-            const paswdclose = document.getElementById('closePasswordModalBtn')
-            
-            changeBtn.addEventListener('click' , ()=>{
-                paswd.style.display = 'flex';
-                document.body.style.overflow = 'hidden'
-            })
+    // const changeBtn = document.getElementById('change-password-btn');
+    // const passwordModal = document.getElementById('changePasswordModal');
 
-            paswdclose.addEventListener('click' , ()=>{
-                paswd.style.display = 'none';
-                document.body.style.overflow = 'auto'
-            })
+    const closeButtons = document.querySelectorAll('.close, .close-btn, .btn-outline');
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+    // const closePasswordModalBtn = document.getElementById('closePasswordModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
 
-            function close(){
-                paswd.style.display = 'none'
-                document.body.style.overflow = 'hidden'
+    // const paswd = document.querySelector('.modal-password');
+    // const paswdclose = document.getElementById('closePasswordModalBtn');
 
-            }
+    /*
+    changeBtn.addEventListener('click', ()=>{
+        paswd.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
 
-            function openModal(modal) {
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
+    paswdclose.addEventListener('click', ()=>{
+        paswd.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+    */
 
-            function closeModal() {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.style.display = 'none';
-                });
-                document.body.style.overflow = 'auto';
-            }
+    function openModal(modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
 
-            editBtn.addEventListener("click", function() {
-                openModal(editProfileModal);
-            }); 
-
-            closeButtons.forEach(button => {
-                button.addEventListener('click', closeModal);
-            });
-
-            // if (closePasswordModalBtn) {
-            //     closePasswordModalBtn.addEventListener('click', closeModal);
-            // }
-            
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeModal);
-            }
-            
-            if (cancelEditBtn) {
-                cancelEditBtn.addEventListener('click', closeModal);
-            }
-
-            window.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    closeModal();
-                }
-            });
-
-            if (avatarInput) {
-                avatarInput.addEventListener('change', function() {
-                    const file = this.files[0];
-                    if (file) {
-                        if (file.size > 2 * 1024 * 1024) {
-                            alert('File size exceeds 2MB limit');
-                            this.value = '';
-                            return;
-                        }
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            avatarPreview.src = e.target.result;
-                        }
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-
-            const profileform = document.getElementById('profileForm');
-            if (profileform) {
-                profileform.addEventListener('submit', function(e) {
-                    let haserror = false;
-                    const errors = document.querySelectorAll('.error-message');
-                    errors.forEach(msg => msg.style.display = 'none');
-
-                    function showError(fieldId) {
-                        const field = document.getElementById(fieldId);
-                        const errorMsg = field.closest('.form-group').querySelector('.error-message');
-                        if (errorMsg) errorMsg.style.display = 'block';
-                        return true;
-                    }
-
-                    if (document.getElementById('fullName').value.trim() === "") {
-                        haserror = showError('fullName');
-                    }
-
-                    if (document.getElementById('email').value.trim() === "") {
-                        haserror = showError('email');
-                    }
-
-                    const number = document.getElementById('contactNumber');
-                    const numberValue = number.value.trim();
-                    if (numberValue === "") {
-                        number.closest('.form-group').querySelector('.error-message.basic').style.display = 'block';
-                        haserror = true;
-                    } else if (!/^\d{10}$/.test(numberValue)) {
-                        number.closest('.form-group').querySelector('.error-message.pattern').style.display = 'block';
-                        haserror = true;
-                    }
-
-                    if (document.getElementById('dob').value.trim() === "") {
-                        haserror = showError('dob');
-                    }
-
-                    if (document.getElementById('gender').value.trim() === "") {
-                        haserror = showError('gender');
-                    }
-
-                    if (haserror) {
-                        e.preventDefault();
-                    }
-                });
-            }
-
-            function togglePasswordVisibility(fieldId) {
-                const field = document.getElementById(fieldId);
-                if (field) {
-                    field.type = field.type === 'password' ? 'text' : 'password';
-                }
-            }
-
-            const newPassword = document.getElementById('newPassword');
-            const confirmPassword = document.getElementById('confirmPassword');
-            const passwordMatchError = document.getElementById('passwordMatchError');
-            const passwordform = document.getElementById('changePasswordForm');
-
-            if (newPassword && confirmPassword) {
-                [newPassword, confirmPassword].forEach(field => {
-                    field.addEventListener('input', function() {
-                        if (newPassword.value && confirmPassword.value) {
-                            if (newPassword.value !== confirmPassword.value) {
-                                passwordMatchError.style.display = 'block';
-                            } else {
-                                passwordMatchError.style.display = 'none';
-                            }
-                        }
-                    });
-                });
-            }
-
-            passwordform.addEventListener('submit', function(e) {
-                let haserror = false;
-                const errors = document.querySelectorAll('.error-message');
-                errors.forEach(msg => msg.style.display = 'none');
-
-                function showError(fieldId) {
-                    const field = document.getElementById(fieldId);
-                    const errorMsg = field.closest('.form-group').querySelector('.error-message');
-                    if (errorMsg) errorMsg.style.display = 'block';
-                    return true;
-                }
-
-                if (document.getElementById('currentPassword').value.trim() === "") {
-                    haserror = showError('currentPassword');
-                }
-
-                if (document.getElementById('newPassword').value.trim() === "") {
-                    haserror = showError('newPassword');
-                }
-
-                if (document.getElementById('confirmPassword').value.trim() === "") {
-                    haserror = showError('confirmPassword');
-                }
-
-                const newPass = document.getElementById('newPassword').value;
-                const confirmPass = document.getElementById('confirmPassword').value;
-                if (newPass && confirmPass && newPass !== confirmPass) {
-                    passwordMatchError.style.display = 'block';
-                    haserror = true;
-                }
-
-                if (haserror) {
-                    e.preventDefault();
-                }
-            });
-
-
-
-
+    function closeModal() {
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
         });
+        document.body.style.overflow = 'auto';
+    }
+
+    editBtn.addEventListener("click", function() {
+        openModal(editProfileModal);
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+    if (cancelEditBtn) {
+        cancelEditBtn.addEventListener('click', closeModal);
+    }
+
+    window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal();
+        }
+    });
+
+    if (avatarInput) {
+        avatarInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('File size exceeds 2MB limit');
+                    this.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    avatarPreview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    const profileform = document.getElementById('profileForm');
+    if (profileform) {
+        profileform.addEventListener('submit', function(e) {
+            let haserror = false;
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(msg => msg.style.display = 'none');
+
+            function showError(fieldId) {
+                const field = document.getElementById(fieldId);
+                const errorMsg = field.closest('.form-group').querySelector('.error-message');
+                if (errorMsg) errorMsg.style.display = 'block';
+                return true;
+            }
+
+            if (document.getElementById('fullName').value.trim() === "") {
+                haserror = showError('fullName');
+            }
+
+            if (document.getElementById('email').value.trim() === "") {
+                haserror = showError('email');
+            }
+
+            const number = document.getElementById('contactNumber');
+            const numberValue = number.value.trim();
+            if (numberValue === "") {
+                number.closest('.form-group').querySelector('.error-message.basic').style.display = 'block';
+                haserror = true;
+            } else if (!/^\d{10}$/.test(numberValue)) {
+                number.closest('.form-group').querySelector('.error-message.pattern').style.display = 'block';
+                haserror = true;
+            }
+
+            if (document.getElementById('dob').value.trim() === "") {
+                haserror = showError('dob');
+            }
+
+            if (document.getElementById('gender').value.trim() === "") {
+                haserror = showError('gender');
+            }
+
+            if (haserror) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /*
+    function togglePasswordVisibility(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.type = field.type === 'password' ? 'text' : 'password';
+        }
+    }
+
+    const newPassword = document.getElementById('newPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordMatchError = document.getElementById('passwordMatchError');
+    const passwordform = document.getElementById('changePasswordForm');
+
+    if (newPassword && confirmPassword) {
+        [newPassword, confirmPassword].forEach(field => {
+            field.addEventListener('input', function() {
+                if (newPassword.value && confirmPassword.value) {
+                    if (newPassword.value !== confirmPassword.value) {
+                        passwordMatchError.style.display = 'block';
+                    } else {
+                        passwordMatchError.style.display = 'none';
+                    }
+                }
+            });
+        });
+    }
+
+    passwordform.addEventListener('submit', function(e) {
+        let haserror = false;
+        const errors = document.querySelectorAll('.error-message');
+        errors.forEach(msg => msg.style.display = 'none');
+
+        function showError(fieldId) {
+            const field = document.getElementById(fieldId);
+            const errorMsg = field.closest('.form-group').querySelector('.error-message');
+            if (errorMsg) errorMsg.style.display = 'block';
+            return true;
+        }
+
+        if (document.getElementById('currentPassword').value.trim() === "") {
+            haserror = showError('currentPassword');
+        }
+
+        if (document.getElementById('newPassword').value.trim() === "") {
+            haserror = showError('newPassword');
+        }
+
+        if (document.getElementById('confirmPassword').value.trim() === "") {
+            haserror = showError('confirmPassword');
+        }
+
+        const newPass = document.getElementById('newPassword').value;
+        const confirmPass = document.getElementById('confirmPassword').value;
+        if (newPass && confirmPass && newPass !== confirmPass) {
+            passwordMatchError.style.display = 'block';
+            haserror = true;
+        }
+
+        if (haserror) {
+            e.preventDefault();
+        }
+    });
+    */
+});
+
     </script>
 </body>
 
