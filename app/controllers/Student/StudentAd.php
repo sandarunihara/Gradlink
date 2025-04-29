@@ -160,7 +160,7 @@ class StudentAd{
                 redirect('Student/StudentAd/advertisement');
                 return true;
             } catch (Exception $e) {
-                $this->rollback(); // Rollback transaction on error
+                $this->rollback();
                 $_SESSION['errors'] = "Transaction failed: " . $e->getMessage();
 
                 redirect('Student/StudentAd/advertisement');
@@ -177,15 +177,12 @@ class StudentAd{
 
         $advertisementId = $_GET['advertisementId'];
         $model = new C_Advertisement;
-        //show($advertisementId);
-        // Find the advertisement by ID
         $data = $model->find(['advertisementId' => $advertisementId]);
         $student_advertisement = new student_advertisement;
         $data['AppliedCompanies'] = $student_advertisement ->where($arr,[], '', 'do_not_order');
         if(isset($data['AppliedCompanies']) && !empty($data['AppliedCompanies'])){
             $data['cv'] = $student_advertisement -> findresumes($_SESSION['USER'] -> StudentId);
         }
-        //show($data);
         $this-> view('Student/InternshipView', $data);
     }
 }

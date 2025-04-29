@@ -49,7 +49,6 @@ class Studentdash{
         $sessionModel = new PDC_Session;
         $sessionData = $sessionModel->findAllUpcomingSessions();
 
-        //show($data);
         $this-> view('Student/Dashboard',['data'=> $data, 'interviewData' => $interviewData, 'sessionData' => $sessionData]);
     }  
 }
