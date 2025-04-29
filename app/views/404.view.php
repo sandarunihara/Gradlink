@@ -122,5 +122,26 @@
             </a>
         </div>
     </div>
+    <script>
+        const name = "9876543278V"
+        const newid = "20023540128"
+        const date = new Date(); // Current date
+        const year = date.getFullYear();  // 2024
+        const month = date.getMonth() + 1; // 5 (0-indexed, so +1 for real month)
+        const day = date.getDate()
+        const time = date.getHours();
+        const min = date.getMinutes()
+        const mili = date.getSeconds();
+
+        let n = newid.substring(0,4)
+
+
+
+        const num1 = 12;
+        const num2 = 34;
+
+        const result = num1.toString() + num2.toString();
+        console.log(mili);
+    </script>
 </body>
 </html>

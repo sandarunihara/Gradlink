@@ -1,7 +1,7 @@
 <div class="page">
     <div class="sidebar">
         <div class="profile">
-            <img src="<?= ROOT ?>/assets/images/profile_img.jpg" alt="">
+            <img src="<?= ROOT ?>/assets/img/Company/pdcphoto.jpg" alt="">
         </div>
 
         <ul>

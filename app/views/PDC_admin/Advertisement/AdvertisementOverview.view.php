@@ -48,9 +48,9 @@
                 <div class="tab-pane active" id="advertisement-list">
                 <section class="company-list">
                     <div class="list-header">
-                            <div class="search-box">
+                            <div class="search-rectangle">
                                 <input type="text" id='search-query' placeholder="Search Advertisement" />
-                                <button onclick="searchAdd()">Search</button>
+                                <button>Search</button>
                             </div>
                     </div>
                     <table>
@@ -93,6 +93,30 @@
         </main>
     </div>
     <script src="<?= ROOT ?>/assets/js/pdc_admin/script.js"></script>
+    <script>
+        const searchInput = document.querySelector('.search-rectangle input'); // get input box
+const adRows = document.querySelectorAll('tbody tr'); // all table rows
+
+searchInput.addEventListener('input', function () {
+    const searchTerm = this.value.toLowerCase(); // get the latest typed value
+
+    adRows.forEach(row => { // Correct spelling
+        const positionCell = row.querySelector('td:nth-child(2)'); // 2nd column = Position
+        if (positionCell) {
+            const positionText = positionCell.textContent.toLowerCase();
+            const matches = searchTerm === '' || positionText.includes(searchTerm);
+
+            if (matches) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+});
+
+
+    </script>
 
 </body>
 

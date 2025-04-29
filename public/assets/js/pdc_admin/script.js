@@ -404,7 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const matchesSearch = searchTerm === '' ||
                                     nameCell.textContent.toLowerCase().includes(searchTerm) ||
-                                    idCell.textContent.toLowerCase().includes(searchTerm);
+                                    idCell.textContent.toLowerCase().includes(searchTerm)
+                                    // degreeCell.textContent.trim().toLowerCase().includes(searchTerm)
 
                 console.log("Degree to show:", degreeToShow);
                 console.log("Cell content:", degreeCell.textContent.trim());
